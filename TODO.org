@@ -12,6 +12,9 @@
 *** DONE move BOF/EOF to model/playlist
 *** DONE URL playlist parameter
 *** DONE fix flicker on list drag
+*** DONE move to github.transcriptaze
+*** DONE commit as user transcriptaze
+
 
 *** TODO add new track playlists:tracklist
       - playlist weirdness on open if new track is added to selected+closed playlist
@@ -241,11 +244,6 @@
       - https://webkit.org/blog/16547/better-typography-with-text-wrap-pretty/
       - handwriting font
          - https://chameth.com/making-a-font-of-my-handwriting/
-
-** Publish
-      - (?) rename to yamm
-      - [ ] move to github.transcriptaze
-      - [ ] commit as user transcriptaze
 
 ** TLA+
       - send EVENT.STOPPED event on receiving EVENT.STOP  even if state is already STOPPED

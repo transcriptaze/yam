@@ -124,6 +124,10 @@ dialog.error {
   }
 
   body.fullscreen {
+    div.content {
+      height: calc(100dvh - env(safe-area-inset-top));
+    }
+
     toolbar {
       margin-bottom: 8px;
     }
@@ -134,7 +138,7 @@ dialog.error {
     grid-row: 1;
 
     width: 100dvw;
-    height: 100%;
+    height: calc(100% - env(safe-area-inset-top));
     justify-self: center;
     align-self: stretch;
   }

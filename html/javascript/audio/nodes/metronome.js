@@ -134,6 +134,7 @@ export class MetronomeNode extends AudioWorkletNode {
       timeSignature: v?.timeSignature,
       pulse: v?.pulse,
       sections: v?.sections ?? [],
+      loops: v?.loops ?? INF,
     })
 
     this.#sections = new Map(
@@ -280,6 +281,7 @@ function transmogrify(track) {
     timeSignature: track.timeSignature ?? '',
     pulse: PULSE.pulseToInt(track.pulse ?? ''),
     loop: track.loop,
+    loops: track.loops ?? INF,
     delay: clamp(durationToMS(delay), 0, 5000),
 
     bars: bars,

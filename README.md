@@ -1,17 +1,19 @@
 ![build](https://github.com/twystd/yam/workflows/build/badge.svg)
 
-# Yet Another .. Metronome
+# Yet Another Metronome
 
 **IN DEVELOPMENT**
 
-Just one more WebAudio metronome to join the hundreds (thousands ?) out there - but this one is mine.
+Just one more WebAudio metronome to join the hundreds (thousands ?) of others out there - but this one is mine!
 
-It's designed exclusively for the use of almost-but-not-entirely ham-fisted acoustic fingerstyle guitarists
-without any appreciable musical ability who play an old-but-adored Taylor 310e and need all the help they can
-get i.e. YMMV.
+## Disclaimer
 
-Oh, and developed and tested exclusively on Google Chrome on a Pixel 5a. It will be a miracle if it works at
-all on anything else but hey, if you want to try it out it's hosted on _Cloudflare Pages_:
+This is very much a personal project i.e. it's designed exclusively for the use of an almost-but-not-entirely ham-fisted 
+acoustic fingerstyle guitarist without any appreciable musical ability who plays an old-but-adored Taylor 310e and needs
+all the help he can get. If that description is not you then YMMV :-).
+
+Oh, and (currently at least) developed and tested exclusively for Google Chrome on a Pixel 5a. It will be a major surprise
+(and minor miracle) if it works at all on anything else but if you do want to try it out it's hosted on _Cloudflare Pages_:
 
 https://yam-8sz.pages.dev
 
@@ -49,10 +51,16 @@ https://yam-8sz.pages.dev
 
 ## Installation
 
-Download and unpack the _yam.zip_ file from the latest [release](https://github.com/transcriptaze/yam/releases) or from the 
-most recent [nightly](https://github.com/transcriptaze/yam/actions/workflows/nightly.yml) build.
+Download and unpack the _yam.zip_ file from the most recent [nightly](https://github.com/transcriptaze/yam/actions/workflows/nightly.yml) build.
 
-It must be hosted by a web server - both Python and NodeJS work but whatever you have will work (it's entirely static).
+It must be hosted by a web server - both Python and NodeJS work but whatever you have will work (it's entirely static) as long
+as CORS is enabled and has the following headers:
+```
+  Access-Control-Allow-Origin: *
+  Access-Control-Allow-Methods: GET, OPTIONS
+  Cross-Origin-Embedder-Policy: require-corp
+  Cross-Origin-Opener-Policy: same-origin
+```
 
 ### Python
 ```
@@ -61,7 +69,7 @@ python3 httpd.py
 
 ### NodeJS
 ```
-http-server html -o --cors
+http-server html --cors
 ```
 
 ## License
@@ -101,9 +109,10 @@ Everything in this repository is licensed under [GPL-3.0](https://github.com/tra
    - Robin Kylander
 
 6. Bravura SMUFL font
-   - https://github.com/steinbergmedia/bravura
-   - Steinberg
+   - [Bravura](https://github.com/steinbergmedia/bravura)
+   - [SIL Open Font License 1.1](https://openfontlicense.org)
+   - [Steinberg](https://www.steinberg.net)
 
 7. Lato font
-   - https://https://www.latofonts.com
-   - Lato Fonts
+   - [Lato Fonts](https://www.latofonts.com)
+   - [SIL Open Font License 1.1](https://openfontlicense.org)

@@ -13,27 +13,28 @@
 ## Android
 1.  https://developer.chrome.com/docs/devtools/remote-debugging
 2.  https://stackoverflow.com/questions/37256331/is-it-possible-to-open-developer-tools-console-in-chrome-on-android-phone
+3.  https://github.com/liriliri/eruda
+4.  https://stackoverflow.com/questions/37256331/is-it-possible-to-open-developer-tools-console-in-chrome-on-android-phone
 3.  https://stackoverflow.com/questions/14530734/handle-both-mouse-and-touch-events-on-touch-screens
-4.  https://www.slingacademy.com/article/combine-touch-and-pointer-events-for-universal-input-in-javascript
-5.  https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events/Multi-touch_interaction
-6.  https://www.sitepoint.com/unifying-touch-and-mouse-with-pointer-events
-7.  https://www.smashingmagazine.com/2022/03/guide-hover-pointer-media-queries
-8.  https://support.google.com/chrome/thread/18609718/how-to-get-drag-drop-working-with-touch-screen-working-on-latest-version-of-chrome
-9.  https://github.com/pixijs/pixijs/issues/6038
-10. https://developer.chrome.com/blog/pointer-events
-11. https://w3c.github.io/pointerevents/#the-touch-action-css-property
-12. https://javascript.info/pointer-events
-12. BPM knob
+5.  https://www.slingacademy.com/article/combine-touch-and-pointer-events-for-universal-input-in-javascript
+6.  https://developer.mozilla.org/en-US/docs/Web/API/Pointer_events/Multi-touch_interaction
+7.  https://www.sitepoint.com/unifying-touch-and-mouse-with-pointer-events
+8.  https://www.smashingmagazine.com/2022/03/guide-hover-pointer-media-queries
+9.  https://support.google.com/chrome/thread/18609718/how-to-get-drag-drop-working-with-touch-screen-working-on-latest-version-of-chrome
+10.  https://github.com/pixijs/pixijs/issues/6038
+11. https://developer.chrome.com/blog/pointer-events
+12. https://w3c.github.io/pointerevents/#the-touch-action-css-property
+13. https://javascript.info/pointer-events
+14. BPM knob
     - dx/20, dy/10 is nice and precise
     - dx/10, dy/5  is a reasonable compromise
     - https://github.com/w3c/pointerevents/issues/346
-13. Thin white line at top of page in fullscreen mode.
-14. https://stackoverflow.com/questions/76026292/why-is-window-innerheight-incorrect-until-i-tap-chrome-android
-15. https://issues.chromium.org/issues/41489650
-16. Google "Android Chrome website shortcut window height bug"
-17. https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
-18. https://www.joshwcomeau.com/snippets/css/full-height/
-
+15. Thin white line at top of page in fullscreen mode.
+16. https://stackoverflow.com/questions/76026292/why-is-window-innerheight-incorrect-until-i-tap-chrome-android
+17. https://issues.chromium.org/issues/41489650
+18. Google "Android Chrome website shortcut window height bug"
+19. https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
+20. https://www.joshwcomeau.com/snippets/css/full-height
 
 ## Control knob
 1. https://github.com/jherrm/knobs

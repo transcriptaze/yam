@@ -29,8 +29,12 @@
     "chai": "^5.2.0",
     "eslint": "^9.20.0",
     "globals": "^15.15.0",
+    "http-server": "^14.1.1",
     "jsdom": "^26.1.0",
     "mocha": "^11.1.0",
     "sass": "^1.87.0"
+  },
+  "dependencies": {
+    "save-dev": "^0.0.1-security"
   }
 }

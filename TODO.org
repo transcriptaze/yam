@@ -6,7 +6,8 @@
   - https://meodai.github.io/rampensau
   - https://media.licdn.com/dms/image/v2/D562DAQGfvMUPSACz_w/profile-treasury-image-shrink_1280_1280/B56ZWG1lWtGsAY-/0/1741723950693?e=1754978400&v=beta&t=2tcCb8xsZ0Re296TPxb2j_SWUkJEik7x-nb-dh5Jhfs
   - https://jakub.kr/components/oklch-colors
-  - https://daniel.do/article/making-noisy-svgs/
+  - https://daniel.do/article/making-noisy-svgs
+  - https://github.com/liriliri/eruda
 
 *** DONE track loop
 *** DONE move BOF/EOF to model/playlist
@@ -14,7 +15,7 @@
 *** DONE fix flicker on list drag
 *** DONE move to github.transcriptaze
 *** DONE commit as user transcriptaze
-
+*** DONE fix portrait + fullscreen layout
 
 *** TODO add new track playlists:tracklist
       - playlist weirdness on open if new track is added to selected+closed playlist
@@ -30,6 +31,7 @@
       - the muted from the track above gets copied over
 
 ** Fixes
+*** TODO portrait/fullscreen: put something (title?) in the 'safe area' at the top
 *** TODO allow BPM changes while playing a track
 *** TODO move start/stop/delay to clock
 *** TODO wait for metronome to start before enabling 'stop' (confusing double click)
@@ -277,6 +279,8 @@
 6. Scripting
     - WASM
     - Scheme
+    - DSL
+    - structure editor
 
 7. Floating tempo
    - Bezier curve

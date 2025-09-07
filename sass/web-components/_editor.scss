@@ -1,0 +1,245 @@
+:host(.component-editor) {
+  div.track-editor {
+    box-sizing: border-box;
+
+    height: 100%;
+    padding: 4px;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto 1fr;
+    row-gap: 4px;
+    align-items: start;
+
+    div.track {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    div.metronome {
+      grid-column: 1;
+      grid-row: 2;
+    }
+
+    div.sections {
+      grid-column: 1;
+      grid-row: 3;
+    }
+
+    div.track {
+      box-sizing: border-box;
+
+      background: #c0c0c040;
+      width: 100%;
+      height: fit-content;
+      padding-top: 12px;
+      padding-left: 8px;
+      padding-right: 8px;
+      padding-bottom: 8px;
+      border-top-left-radius: 16px;
+      border-top-right-radius: 16px;
+
+      display: grid;
+      grid-template-columns: auto auto 1fr auto;
+      grid-template-rows: auto auto;
+      column-gap: 4px;
+      row-gap: 12px;
+
+      #title {
+        grid-column: 1 / 4;
+        grid-row: 1;
+      }
+
+      #save {
+        grid-column: 4;
+        grid-row: 1;
+      }
+
+      yam-time-signature {
+        grid-column: 1;
+        grid-row: 2;
+      }
+
+      yam-mm {
+        grid-column: 2;
+        grid-row: 2;
+      }
+
+      yam-loop {
+        grid-column: 3 / 5;
+        grid-row: 2;
+      }
+    }
+
+    div.metronome {
+      box-sizing: border-box;
+
+      background: #c0c0c040;
+      width: 100%;
+      height: fit-content;
+      padding-top: 12px;
+      padding-left: 8px;
+      padding-right: 8px;
+      padding-bottom: 8px;
+
+      display: grid;
+      grid-template-columns: auto auto 1fr;
+      grid-template-rows: auto;
+      align-items: center;
+      column-gap: 4px;
+
+      label {
+        grid-column: 1;
+        grid-row: 1;
+
+        margin-right: 8px;
+      }
+
+      input {
+        grid-columns: 2;
+        grid-row: 1;
+
+        min-width: 4em;
+      }
+    }
+
+    div.sections {
+      box-sizing: border-box;
+
+      background: #c0c0c040;
+      width: 100%;
+      height: 100%;
+      padding-top: 12px;
+      padding-left: 8px;
+      padding-right: 8px;
+      padding-bottom: 4px;
+
+      border-bottom-left-radius: 16px;
+      border-bottom-right-radius: 16px;
+
+      font-size: 0.9em;
+
+      overflow: hidden;
+      overflow-y: scroll;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar { 
+        display: none;
+      }
+
+      ul {
+        box-sizing: border-box;
+
+        margin-top: 8px;
+        margin-bottom: 8px;
+        margin-left: 0px;
+        margin-right: 0px;
+
+        padding-top: 0px;
+        padding-bottom: 0px;
+        padding-left: 4px;
+        padding-right: 4px;
+
+        list-style: none;
+
+        li {
+          height: auto;
+          margin-top: 2px;
+        }
+
+        li:first-child {
+          border-top-left-radius: 8px;
+          border-top-right-radius: 8px;
+          overflow: hidden;
+        }
+
+        li:last-child {
+          border-bottom-left-radius: 8px;
+          border-bottom-right-radius: 8px;
+          overflow: hidden;
+        }
+      }
+    }
+
+    input {
+      background: #ffffff;
+      border: none;
+      border-radius: 4px;
+
+      padding-top: 8px;
+      padding-bottom: 8px;
+      padding-left: 12px;
+      padding-right: 12px;
+
+      font-size: 0.9em;    
+      font-weight: 500;
+      text-overflow: ellipsis;
+      outline: none;
+
+      user-select: text;
+      pointer-events: auto;
+    }
+
+    input:invalid {
+      color: red;
+    }
+
+    input:disabled + label {
+      color: gray;
+      cursor: not-allowed;
+    }
+
+    button {
+      background: transparent;
+      margin: 0px;
+      padding: 0px;
+      line-height: 0;
+      border: none;
+      outline: none;
+
+      img {
+        height: 28px;
+      }
+    }
+
+    button:disabled {
+      img {
+        filter: grayscale(100%) opacity(50%);
+      }
+    }
+
+    details.disabled{
+      color: gray;
+      pointer-events: none;
+      cursor: not-allowed;
+    }
+
+    yam-time-signature {
+      height: 48px;
+    }
+
+    yam-mm {
+      box-sizing: border-box;
+      height: 48px;
+      margin-left: 16px;
+    }
+
+    yam-loop {
+      box-sizing: border-box;
+      justify-self: end;
+
+      height: 48px;
+      margin-right: 24px;
+    }
+  }
+
+  @media (max-width: 768px) and (orientation:portrait) {
+    div.track-editor {
+    }
+  }
+
+  @media (max-width: 1024px) and (orientation: landscape) {
+    div.track-editor {
+    }
+  }
+}

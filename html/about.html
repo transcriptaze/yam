@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html class="about">
+  <head>
+    <title>Yet Another Metronome - About</title>
+    <link rel="icon"       href="./images/favicon.png" />
+    <link rel="stylesheet" href="./css/YAM.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  </head>
+
+  <body>
+    <div class="content">
+      <main class="about">
+        <h1><img src="./images/logo.png" />Yet Another Metronome</h1>
+
+        <h2>User guide</h2>
+          <ul class="guide">
+            <li><img src="./images/settings.svg"   draggable="false"/>Opens the settings page</li>
+            <li><img src="./images/fullscreen.svg" draggable="false"/>Toggles fullscreen mode</li>
+            <li><img src="./images/wakelock.svg"   draggable="false"/>Wake lock state indicator</li>
+          </ul>
+
+        <h2>Source code</h2>
+        <a class="github" href="https://github.com/transcriptaze/yam" draggable="false">
+          <img class="github" src="./images/github-mark.svg" draggable="false" />
+          https://github.com/transcriptaze/yam
+        </a>
+
+        <h2>License</h2>
+        <p>GNU General Public License Version 3</p>
+
+        <h2>Attributions and acknowledgments</h2>
+        <ol>
+          <li>
+            <div>
+              <p>Icons by <a href="https://www.svgrepo.com" target="_blank">SVG Repo</a></p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>Bravura font by <a href="https://github.com/steinbergmedia/bravura" target="_blank">Steinberg</a></p>
+            </div>
+          </li>
+          <li>
+            <div>
+              <p>Lato font by <a href="https://https://www.latofonts.com" target="_blank">Lato Fonts</a></p>
+            </div>
+          </li>
+        </ol>
+      </main>
+
+      <toolbar>
+         <div class="menu">
+           <div class="left-menu">
+             <a href="./index.html">
+                <img id="metronome" class="visible" src="./images/metronome.svg" draggable="false" />
+             </a>
+             <a href="./index.html#playlist">
+               <img id="playlist" class="visible" src="./images/playlist.svg" draggable="false" />
+             </a>
+           </div>
+           <div class="right-menu">
+             <img id="settings" class="visible" src="./images/settings.svg" draggable="false" />
+           </div>
+         </div>
+      </toolbar>
+
+    </div>
+  </body>
+
+  <!-- SCRIPTS -->
+  <script type="module">
+    import { show } from './javascript/YAM.js'
+
+    const metronome = document.querySelector('toolbar img#metronome')
+    const playlist = document.querySelector('toolbar img#playlist')
+    const settings = document.querySelector('toolbar #settings')
+
+    // metronome.addEventListener('click', () => show('metronome'))
+    // playlist.addEventListener('click', () => show('playlist'))
+  </script>
+
+</html>

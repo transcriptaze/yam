@@ -1,0 +1,133 @@
+main.about {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  margin-top: 16px;
+  margin-bottom: 16px;
+  margin-left: 64px;
+  margin-right: 64px;
+
+  h1 {
+    display: flex;
+    align-items: center;
+    column-gap: 12px;
+    font-size: 1.5em; 
+
+    img {
+      width: 64px;
+    }
+  }
+
+  h2 {
+     font-size: 1em;
+     margin-top: 16px;
+     margin-bottom: 8px;
+  }
+
+
+  img {
+    user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;  
+  }
+
+  img.github {
+    width: 36px;
+    padding-top: 8px;
+    padding-bottom: 8px;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+
+  a {
+    font-size: 0.9em;
+    text-decoration: none;
+    color: steelblue;
+  }
+
+  a.github {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 60px 1fr;
+    align-items: center;
+  }
+
+  p {
+    max-width: 60%;
+    margin-top: 0px;
+    margin-bottom: 8px;
+    font-size: 0.9em;
+  }
+
+  p.license {
+    margin-top: 4px;
+    font-size: 0.8em;
+  }
+
+  ol {
+    margin-top: 0px;
+  }
+
+  ul.guide {
+    list-style-type: none;
+  }
+
+  ul.guide img {
+    height: 32px;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+  }
+
+  ul.guide li {
+    display: grid;
+    grid-template-rows: auto;
+    grid-template-columns: 60px 1fr;
+    align-items: center;
+  }
+}
+
+
+@media (max-width: 768px) and (orientation:portrait) {
+  main.about {
+    height: calc(100% - 48px);
+    margin-left: 0px;
+    margin-right: 0px;
+
+    padding-top: 16px;
+    padding-bottom: 0px;
+    padding-left: 16px;
+    padding-right: 24px;
+
+    h1 {
+      font-size: 1.2em; 
+    }
+
+    ul {
+      padding-left: 12px;
+      padding-right: 24px;
+    }
+
+    p {
+      max-width: 100%;
+    }
+  }
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+  main.about {
+    width: calc(100% - 48px);
+    height: calc(100% - 48px);
+
+    margin-top: 16px;
+    margin-bottom: 32px;
+    margin-left: 24px;
+    margin-right: 24px;
+
+    overflow-y: scroll;
+  }
+}

@@ -1,0 +1,26 @@
+div.beat {
+  height: 100%;
+  width: 100%;
+
+  background-color: black;
+}
+
+:host(.block) div.beat{
+  border-radius: 8px;
+  clip-path: inset(0 round 8px); 
+}
+
+:host(.diamond) div.beat{
+  border-radius: 0px;
+  clip-path: polygon(
+    50%  25%,   // top
+    75%  50%,   // right
+    50%  75%,   // bottom
+    25%  50%    // left
+  );
+}
+
+div.beat.on {
+  background-color: red;
+}
+

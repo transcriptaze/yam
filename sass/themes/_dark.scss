@@ -1,0 +1,14 @@
+@use '../palettes/default' as colours;
+@use 'sass:color';
+
+$white: colours.$white;
+$black: colours.$black;
+$grey: colours.$grey;
+
+[data-theme="dark"] {
+  --background: #{$black};
+
+  --track-colour-muted: #{$grey};
+  --track-colour-deleting: #{$grey};
+  --playlist-colour-deleting: #{$grey};
+}

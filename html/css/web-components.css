@@ -1,0 +1,1484 @@
+:root {
+  --background: #ffffff url("../images/textures/ricepaper_v3.png");
+  --track-colour-muted: #a0a0a0;
+  --track-colour-deleting: #a0a0a0;
+  --playlist-colour-deleting: #a0a0a0;
+}
+
+[data-theme=light] {
+  --background: #ffffff url("../images/textures/ricepaper_v3.png");
+  --track-colour-muted: #a0a0a0;
+  --track-colour-deleting: #a0a0a0;
+  --playlist-colour-deleting: #a0a0a0;
+}
+
+[data-theme=dark] {
+  --background: #222222;
+  --track-colour-muted: #a0a0a0;
+  --track-colour-deleting: #a0a0a0;
+  --playlist-colour-deleting: #a0a0a0;
+}
+
+div.metronome {
+  height: 100%;
+  padding-left: 32px;
+  padding-right: 32px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  grid-template-rows: auto;
+  justify-items: center;
+  align-items: center;
+  column-gap: 24px;
+  background: none;
+  border: none;
+  outline: none;
+}
+div.metronome button {
+  background: none;
+  border: none;
+  outline: none;
+}
+div.metronome button img {
+  filter: invert(69%) sepia(59%) saturate(1%) hue-rotate(21deg) brightness(100%) contrast(91%);
+  transition: opacity 0.125s ease-in-out, transform 0.2s ease-in-out;
+}
+div.metronome button:enabled img {
+  filter: none;
+}
+div.metronome #play {
+  grid-column: 2;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  height: 100%;
+}
+div.metronome #play img {
+  grid-row: 1;
+  grid-column: 1;
+  height: 100%;
+}
+div.metronome #play img.hidden {
+  visibility: hidden;
+}
+div.metronome #play img.play {
+  opacity: 1;
+  transform: scale(1.25);
+}
+div.metronome #play img.stop {
+  opacity: 0;
+  transform: scale(0.75);
+}
+div.metronome #back {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: start;
+}
+div.metronome #back img {
+  width: 48px;
+}
+div.metronome #next {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+}
+div.metronome #next img {
+  width: 48px;
+}
+
+div.metronome.playing #play img.play {
+  opacity: 0;
+  transform: scale(0.75);
+}
+div.metronome.playing #play img.stop {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1);
+}
+
+:host(.component-mm) div.MM {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-template-rows: auto;
+  align-items: center;
+  column-gap: 8px;
+  background: none;
+  height: 100%;
+}
+:host(.component-mm) div.MM button.pulse {
+  grid-column: 1;
+  grid-row: 1;
+  width: fit-content;
+  height: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+:host(.component-mm) div.MM button.pulse img {
+  height: 100%;
+}
+:host(.component-mm) div.MM input {
+  grid-column: 2;
+  grid-row: 1;
+  align-self: center;
+  justify-self: center;
+}
+:host(.component-mm) div.MM [popover] {
+  top: calc(anchor(bottom) - 12px);
+  left: calc(anchor(left) + 12px);
+  margin: 0px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+  background: #ffffff;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  width: fit-content;
+}
+:host(.component-mm) div.MM div.content {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(1px, 1fr);
+  grid-template-rows: auto;
+  column-gap: 2px;
+}
+:host(.component-mm) div.MM div.content li {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background: #f0f0f0;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-radius: 4px;
+}
+:host(.component-mm) div.MM div.content li img {
+  height: 24px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+:host(.component-mm) button:disabled img {
+  filter: grayscale(100%) opacity(50%);
+}
+:host(.component-mm) input {
+  width: 48px;
+  height: fit-content;
+  background: transparent;
+  padding-left: 0px;
+  padding-right: 16px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  color: #444444;
+  font-size: 20px;
+  font-weight: 600;
+  text-align: left;
+}
+:host(.component-mm) input:invalid {
+  color: red;
+}
+:host(.component-mm) input:disabled {
+  color: #a0a0a0;
+}
+
+:host(.component-mm:not([figura=eighth])) #list > div > li[data-pulse=eighth] {
+  display: none;
+}
+
+div.time-signature {
+  height: 100%;
+}
+div.time-signature button {
+  width: fit-content;
+  height: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+div.time-signature button div {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  grid-template-rows: minmax(0, 1fr);
+  height: 100%;
+}
+div.time-signature button div img {
+  height: 100%;
+}
+div.time-signature button div img.hidden {
+  display: none;
+}
+div.time-signature button div img.stave {
+  grid-column: 1/4;
+  grid-row: 1;
+}
+div.time-signature button div img.clef {
+  grid-column: 1;
+  grid-row: 1;
+}
+div.time-signature button div img.tactus {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+}
+div.time-signature button div img.figura {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+}
+div.time-signature button div img.common {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+}
+div.time-signature button div img.cut {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+}
+div.time-signature button:disabled img {
+  filter: grayscale(100%) opacity(50%);
+}
+div.time-signature div#list {
+  top: calc(anchor(bottom) + 8px);
+  left: calc(anchor(left) + 12px);
+  margin: 0px;
+  padding: 0px;
+  background: transparent;
+  outline: none;
+  border: none;
+}
+div.time-signature div#list div.content {
+  background: white;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 4px;
+  padding-right: 4px;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto;
+  align-items: start;
+  row-gap: 8px;
+}
+div.time-signature div#list div.content ul {
+  grid-column: 1;
+  grid-row: 1;
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  width: 172px;
+  height: fit-content;
+  columns: 36px;
+  column-gap: 8px;
+  column-rule: dotted;
+  column-rule-width: thin;
+}
+div.time-signature div#list div.content ul li {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-bottom: 4px;
+}
+div.time-signature div#list div.content ul li img {
+  height: 32px;
+}
+div.time-signature div#list div.content div.custom {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  row-gap: 4px;
+  margin: 0px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+div.time-signature div#list div.content div.custom input {
+  background: #e0e0e0;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  font-size: 0.8em;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+div.time-signature div#list div.content div.custom input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+div.time-signature div#list div.content div.custom input:invalid {
+  color: red;
+}
+
+div.pads {
+  background: transparent;
+  border: none;
+  width: 100%;
+  height: 48px;
+  overflow: visible;
+  margin-top: 12px;
+  display: flex;
+  flex-direction: row;
+  column-gap: 8px;
+  justify-content: center;
+  align-items: center;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+div.pads yam-beat {
+  flex-grow: 1;
+  flex-shrink: 1;
+  height: 48px;
+  max-width: 48px;
+  min-width: 12px;
+}
+div.pads yam-beat.diamond {
+  height: 24px;
+  max-width: 24px;
+}
+
+div.beat {
+  height: 100%;
+  width: 100%;
+  background-color: black;
+}
+
+:host(.block) div.beat {
+  border-radius: 8px;
+  clip-path: inset(0 round 8px);
+}
+
+:host(.diamond) div.beat {
+  border-radius: 0px;
+  clip-path: polygon(50% 25%, 75% 50%, 50% 75%, 25% 50%);
+}
+
+div.beat.on {
+  background-color: red;
+}
+
+:host(.component-knob) .knob {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  justify-items: center;
+  align-items: center;
+  overflow: visible;
+  padding: 0px 0px 0px 0px;
+  margin-top: -20px;
+  margin-bottom: -20px;
+  touch-action: none;
+}
+:host(.component-knob) .knob input[type=range] {
+  display: none;
+}
+:host(.component-knob) .knob div.background {
+  box-sizing: border-box;
+  grid-column: 1;
+  grid-row: 1;
+  width: 98%;
+  height: 98%;
+  border-radius: 50%;
+  overflow: hidden;
+  background: radial-gradient(circle at 50% 50%, #000000, rgba(192, 192, 192, 0));
+  filter: contrast(200%) brightness(500%);
+  opacity: 40%;
+}
+:host(.component-knob) .knob div.background svg {
+  mix-blend-mode: multiply;
+}
+:host(.component-knob) .knob svg {
+  grid-column: 1;
+  grid-row: 1;
+  box-sizing: border-box;
+  background: transparent;
+  width: 200px;
+  height: 200px;
+  margin: 20px;
+  overflow: visible;
+  z-index: 2;
+}
+:host(.component-knob) .knob div.overlay {
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  z-index: 3;
+  touch-action: none;
+}
+:host(.component-knob) .knob div.overlay.dragging {
+  cursor: grab;
+}
+
+.wheel {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  overflow: visible;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  touch-action: none;
+}
+.wheel input[type=range] {
+  display: none;
+}
+.wheel svg {
+  grid-column: 1;
+  grid-row: 1;
+  background: transparent;
+  width: 100%;
+  overflow: visible;
+  z-index: 2;
+}
+.wheel div.overlay {
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  touch-action: none;
+}
+.wheel div.overlay.dragging {
+  cursor: grab;
+}
+
+:host(.component-progress-bar) {
+  background: var(--accent-color, pink);
+}
+:host(.component-progress-bar) div {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: transparent;
+}
+:host(.component-progress-bar) canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: 1px solid rgba(224, 224, 224, 0.2509803922);
+}
+
+:host(.component-loop) div.loop {
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+:host(.component-loop) div.loop label {
+  width: 48px;
+  height: 28px;
+  background: url("/images/loop.svg") no-repeat center/contain;
+  filter: invert(25%) sepia(25%) saturate(8%) hue-rotate(3deg) brightness(99%) contrast(99%);
+}
+:host(.component-loop) div.loop input[type=checkbox] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+:host(.component-loop) div.loop input[type=checkbox]:checked + label {
+  filter: invert(20%) sepia(22%) saturate(6017%) hue-rotate(356deg) brightness(95%) contrast(94%);
+}
+:host(.component-loop) div.loop input[type=checkbox]:disabled + label {
+  filter: grayscale(40%) opacity(40%);
+}
+:host(.component-loop) div.loop input[type=checkbox] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+:host(.component-info) {
+  --accent-color: #71a9a0;
+  --text: #222222;
+}
+:host(.component-info) div.container {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+}
+:host(.component-info) div.title {
+  height: 32px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto;
+  align-items: center;
+  column-gap: 8px;
+  background: rgba(192, 192, 192, 0.2509803922);
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  border: none;
+  border-radius: 4px 4px 4px 4px;
+}
+:host(.component-info) div.title input {
+  background: none;
+  border: none;
+  border-radius: 4px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  font-size: 0.9em;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  outline: none;
+  user-select: text;
+  pointer-events: auto;
+}
+:host(.component-info) div.title input:invalid {
+  color: red;
+}
+:host(.component-info) div.title button {
+  background: transparent;
+  margin: 0px;
+  padding: 0px;
+  line-height: 0;
+  border: none;
+  outline: none;
+}
+:host(.component-info) div.title button img {
+  height: 28px;
+}
+:host(.component-info) div.title button:disabled img {
+  filter: grayscale(100%) opacity(50%);
+}
+:host(.component-info) div.detail {
+  visibility: hidden;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+  align-items: center;
+  height: fit-content;
+  background: rgba(192, 192, 192, 0.2509803922);
+  margin-top: 2px;
+  border: none;
+  border-radius: 0px 0px 4px 4px;
+  overflow: hidden;
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+:host(.component-info) div.detail div.overlay {
+  grid-column: 1;
+  grid-row: 1;
+  height: 100%;
+  background: var(--accent-color);
+  opacity: 60%;
+}
+:host(.component-info) div.detail div.progress {
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  height: 100%;
+}
+:host(.component-info) div.detail yam-progress {
+  width: 100%;
+  height: 100%;
+  background: var(--accent-color);
+}
+:host(.component-info) div.detail progress {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  width: 100%;
+  height: 100%;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+:host(.component-info) div.detail progress::-webkit-progress-bar {
+  background: none;
+}
+:host(.component-info) div.detail progress::-webkit-progress-value {
+  background: var(--accent-color);
+  opacity: 90%;
+}
+:host(.component-info) div.detail progress::-moz-progress-bar {
+  background: var(--accent-color);
+  opacity: 90%;
+}
+:host(.component-info) div.detail div.text {
+  grid-column: 1;
+  grid-row: 1;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto;
+  align-items: center;
+  background: transparent;
+  min-height: 16px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  font-size: 0.8em;
+  font-style: italic;
+  font-weight: normal;
+  color: #222222;
+  z-index: 2;
+}
+:host(.component-info) div.detail div.text.playing {
+  font-style: normal;
+  font-weight: bold;
+  color: var(--text-color);
+}
+:host(.component-info) div.detail span.infinity {
+  font-size: 1.25em;
+  font-weight: 500;
+  overflow: visible;
+  line-height: 15px;
+}
+:host(.component-info) div.container.details div.title {
+  border-radius: 4px 4px 0 0;
+}
+:host(.component-info) div.container.details div.detail {
+  visibility: visible;
+}
+
+:host(.component-playlists) div.playlists {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 1fr auto;
+}
+:host(.component-playlists) div.playlists div.list {
+  grid-column: 1/3;
+  grid-row: 1/3;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  margin-left: 0px;
+  margin-right: 0px;
+  border-radius: 12px;
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+:host(.component-playlists) div.playlists div.list::-webkit-scrollbar {
+  display: none;
+}
+:host(.component-playlists) div.playlists div.list ul {
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+}
+:host(.component-playlists) div.playlists div.list ul li {
+  height: auto;
+  margin-top: 2px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto;
+  align-items: center;
+  column-gap: 0px;
+}
+:host(.component-playlists) div.playlists div.list ul li div.grip {
+  grid-column: 1/3;
+  grid-row: 1;
+  align-self: start;
+}
+:host(.component-playlists) div.playlists div.list ul li yam-playlist {
+  grid-column: 1/3;
+  grid-row: 1;
+  flex-grow: 1;
+}
+:host(.component-playlists) div.playlists div.grip {
+  box-sizing: border-box;
+  width: 0px;
+  height: 100%;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 8px;
+  padding-right: 32px;
+  background: transparent;
+  pointer-events: auto;
+  cursor: grab;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  align-items: center;
+}
+:host(.component-playlists) div.playlists div.grip img {
+  width: 16px;
+}
+:host(.component-playlists) div.playlists yam-playlist {
+  display: block;
+}
+:host(.component-playlists) div.playlists #plus {
+  grid-column: 2;
+  grid-row: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: none;
+  margin: 8px;
+  padding: 4px;
+  border: none;
+  border-radius: 50%;
+  z-index: 2;
+}
+:host(.component-playlists) div.playlists #plus img {
+  width: 40px;
+  filter: invert(24%) sepia(7%) saturate(6%) hue-rotate(314deg) brightness(97%) contrast(88%);
+}
+:host(.component-playlists) div.playlists.unsortable div.grip {
+  display: none;
+}
+:host(.component-playlists) yam-tracklist {
+  display: none;
+}
+@media (max-width: 768px) and (orientation: portrait) {
+  :host(.component-playlists) div.playlists div.grip {
+    width: 48px;
+    padding-left: 16px;
+  }
+}
+@media (max-width: 1024px) and (orientation: landscape) {
+  :host(.component-playlists) div.playlists div.grip {
+    width: 48px;
+    padding-left: 16px;
+  }
+}
+
+:host(.component-playlist) div.playlist {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  row-gap: 2px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+:host(.component-playlist) div.playlist summary {
+  display: grid;
+  grid-template-columns: 36px 1fr auto;
+  grid-template-rows: auto;
+  background: rgba(255, 128, 0, 0.2509803922);
+  color: #804000;
+  overflow: hidden;
+  outline: none;
+}
+:host(.component-playlist) div.playlist summary div.placeholder {
+  grid-column: 1;
+  grid-row: 1;
+}
+:host(.component-playlist) div.playlist summary div.title {
+  grid-column: 2;
+  grid-row: 1;
+}
+:host(.component-playlist) div.playlist summary div.menu {
+  grid-column: 3;
+  grid-row: 1;
+  box-sizing: border-box;
+}
+:host(.component-playlist) div.playlist summary div.menu {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  justify-items: end;
+  align-items: center;
+}
+:host(.component-playlist) div.playlist summary div.menu #menu {
+  grid-column: 1;
+  grid-row: 1;
+}
+:host(.component-playlist) div.playlist summary div.menu #menu img {
+  width: 16px;
+}
+:host(.component-playlist) div.playlist summary div.menu #save {
+  grid-column: 1;
+  grid-row: 1;
+  display: none;
+}
+:host(.component-playlist) div.playlist summary div.menu #save img {
+  width: 32px;
+}
+:host(.component-playlist) div.playlist summary button {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  align-items: center;
+  background: none;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 8px;
+  padding-right: 4px;
+  border: none;
+  outline: none;
+  background: transparent;
+}
+:host(.component-playlist) div.playlist summary [popover] {
+  top: calc(anchor(bottom) + 4px);
+  left: calc(anchor(left) - 60px);
+  transform: translateX(0px);
+  margin: 0px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+  background: #ffffff;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  width: fit-content;
+  height: fit-content;
+}
+:host(.component-playlist) div.playlist summary [popover] div {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(2px, 1fr);
+  grid-template-rows: auto;
+  column-gap: 4px;
+}
+:host(.component-playlist) div.playlist summary [popover] div img {
+  height: 32px;
+  width: auto;
+  border-radius: 4px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+:host(.component-playlist) div.playlist summary img {
+  height: 24px;
+  width: auto;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+:host(.component-playlist) div.playlist div.title {
+  box-sizing: border-box;
+  padding-top: 4px;
+  padding-bottom: 4px;
+}
+:host(.component-playlist) div.playlist div.title input {
+  box-sizing: border-box;
+  width: 100%;
+  padding-top: 6px;
+  padding-bottom: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  background: none;
+  font-weight: 500;
+  text-align: center;
+  text-overflow: ellipsis;
+  pointer-events: none;
+  user-select: none;
+}
+:host(.component-playlist) div.playlist div.tracks {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+}
+:host(.component-playlist) div.playlist div.tracks div.list {
+  grid-column: 1;
+  grid-row: 1;
+}
+:host(.component-playlist) div.playlist div.tracks yam-tracklist {
+  grid-column: 1;
+  grid-row: 1;
+  display: none;
+}
+:host(.component-playlist) div.playlist div.list {
+  display: flex;
+  flex-direction: column;
+  justify-items: start;
+  background: rgba(254, 254, 254, 0.2509803922);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+:host(.component-playlist) div.playlist div.list ul {
+  overflow: hidden;
+  overflow-y: auto;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  list-style: none;
+}
+:host(.component-playlist) div.playlist div.list ul li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto;
+  column-gap: 0px;
+  align-items: center;
+}
+:host(.component-playlist) div.playlist div.list ul li div.grip {
+  grid-column: 1/3;
+  grid-row: 1;
+}
+:host(.component-playlist) div.playlist div.list ul li yam-playlist-item {
+  grid-column: 1/3;
+  grid-row: 1;
+  flex-grow: 1;
+}
+:host(.component-playlist) div.playlist div.list button {
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-left: 8px;
+  margin-right: 8px;
+  border: 1px solid #222222;
+  border-radius: 8px;
+}
+:host(.component-playlist) div.playlist div.list button img {
+  width: 32px;
+}
+:host(.component-playlist) div.playlist div.tracks.hidden {
+  display: none;
+}
+:host(.component-playlist) div.playlist div.grip {
+  width: 28px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 4px;
+  padding-right: 4px;
+  z-index: 2;
+  cursor: grab;
+}
+:host(.component-playlist) div.playlist div.grip img {
+  width: 16px;
+}
+:host(.component-playlist) div.playlist yam-playlist-item {
+  margin-left: 32px;
+  margin-top: 4px;
+}
+:host(.component-playlist) div.playlist.selected summary div.title input {
+  font-weight: bold;
+}
+:host(.component-playlist) div.playlist.editing div.title input {
+  background: rgba(252, 252, 252, 0.5019607843);
+  text-align: left;
+  pointer-events: auto;
+  user-select: text;
+}
+:host(.component-playlist) div.playlist.editing div.menu #menu {
+  display: none;
+}
+:host(.component-playlist) div.playlist.editing div.menu #save {
+  display: block;
+}
+:host(.component-playlist) div.playlist.editing div.tracks div.list {
+  display: none;
+}
+:host(.component-playlist) div.playlist.editing div.tracks yam-tracklist {
+  display: block;
+}
+:host(.component-playlist) div.playlist.selected.editing summary {
+  grid-template-columns: 16px 1fr auto;
+}
+:host(.component-playlist) details:not([open]) #edit {
+  display: none;
+}
+@media (max-width: 768px) and (orientation: portrait) {
+  :host(.component-playlist) div.playlist div.grip {
+    width: 48px;
+    padding-left: 12px;
+  }
+  :host(.component-playlist) div.playlist div.grip img {
+    width: 20px;
+  }
+  :host(.component-playlist) div.playlist div.menu button {
+    padding-right: 12px;
+  }
+  :host(.component-playlist) div.playlist yam-playlist-item {
+    margin-left: 40px;
+  }
+}
+@media (max-width: 1024px) and (orientation: landscape) {
+  :host(.component-playlist) div.playlist div.grip {
+    width: 36px;
+    padding-left: 8px;
+  }
+  :host(.component-playlist) div.playlist div.grip img {
+    width: 20px;
+  }
+  :host(.component-playlist) div.playlist div.menu button {
+    padding-right: 12px;
+  }
+  :host(.component-playlist) div.playlist yam-playlist-item {
+    margin-left: 36px;
+  }
+}
+
+:host(.component-playlist#all) div.playlist summary {
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+}
+
+:host-context(li:last-child) div.playlist summary {
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+
+:host-context(li:last-child) div.playlist[open] summary {
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+}
+
+:host-context(.unsortable) div.playlist summary div.grip {
+  visibility: hidden;
+}
+:host-context(.unsortable) div.playlist.editing div.grip {
+  display: none;
+}
+:host(.component-playlist[uuid="00000000-0000-0000-0000-000000000000"]) img#trash {
+  display: none;
+}
+
+:host(.component-playlist.deleting) div.playlist div.title input {
+  color: var(--playlist-colour-deleting);
+  font-style: italic;
+  font-weight: normal;
+  text-decoration: line-through;
+}
+:host(.component-playlist.deleting) div.playlist img#trash {
+  filter: invert(13%) sepia(88%) saturate(7445%) hue-rotate(0deg) brightness(103%) contrast(112%);
+  transition: filter 0.5s ease;
+}
+
+div.playlist-track {
+  width: 100%;
+  margin-bottom: 6px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  grid-template-rows: auto;
+  align-items: center;
+  column-gap: 4px;
+  color: #444444;
+  font-size: 0.9em;
+  border-bottom: 1px solid #aaaaaa;
+}
+div.playlist-track #title {
+  overflow: hidden;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+}
+div.playlist-track button {
+  background: none;
+  border: none;
+  outline: none;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  align-items: center;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 20px;
+  padding-right: 0px;
+}
+div.playlist-track button img {
+  width: 16px;
+}
+div.playlist-track [popover] {
+  top: calc(anchor(bottom) + 12px);
+  left: calc(anchor(left) + 24px);
+  transform: translateX(-100%);
+  background: #ffffff;
+  margin: 0px;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+  width: fit-content;
+  height: fit-content;
+}
+div.playlist-track [popover] button {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+}
+div.playlist-track [popover] button img {
+  grid-column: 1;
+  grid-row: 1;
+  height: 28px;
+  width: auto;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+div.playlist-track [popover] button img.muted {
+  visibility: visible;
+}
+div.playlist-track [popover] button img.unmuted {
+  visibility: hidden;
+}
+div.playlist-track [popover] img {
+  height: 24px;
+  width: auto;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+div.playlist-track [popover]:popover-open {
+  display: flex;
+  flex-direction: row;
+  column-gap: 8px;
+  opacity: 1;
+  transition: opacity 150ms ease-in;
+}
+div.playlist-track [popover]:popover-open::backdrop {
+  background-color: transparent;
+}
+@starting-style {
+  div.playlist-track [popover]:popover-open {
+    opacity: 0;
+  }
+}
+
+:host(.selected) div.playlist-track div#title {
+  font-weight: bold;
+}
+
+:host(.muted) div.playlist-track #title {
+  color: var(--track-colour-muted);
+  font-style: italic;
+}
+:host(.muted) div.playlist-track img.muted {
+  visibility: hidden;
+}
+:host(.muted) div.playlist-track img.unmuted {
+  visibility: visible;
+}
+
+:host(.deleting) div.playlist-track #title {
+  color: var(--track-colour-deleting);
+  font-style: italic;
+  text-decoration: line-through;
+}
+:host(.deleting) div.playlist-track img#trash {
+  filter: invert(13%) sepia(88%) saturate(7445%) hue-rotate(0deg) brightness(103%) contrast(112%);
+  transition: filter 0.5s ease;
+}
+
+:host(.component-tracklist) div.tracklist ul {
+  list-style-type: none;
+  margin-left: 0px;
+  padding-left: 4px;
+  padding-right: 12px;
+}
+:host(.component-tracklist) div.tracklist ul li + li {
+  margin-top: 2px;
+}
+
+:host(.component-tracklist-item) div.tracklist-item {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  grid-template-rows: auto;
+  column-gap: 0px;
+}
+:host(.component-tracklist-item) div.tracklist-item input[type=checkbox] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+:host(.component-tracklist-item) div.tracklist-item .checkbox {
+  width: 20px;
+  height: 20px;
+  background: url("/images/checkbox-unchecked.svg") no-repeat center/contain;
+  display: inline-block;
+  margin-right: 8px;
+}
+:host(.component-tracklist-item) div.tracklist-item label {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto;
+  color: #666666;
+  font-size: 0.9em;
+  font-style: normal;
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+:host(.component-tracklist-item) div.tracklist-item label #title {
+  width: 100%;
+  overflow: hidden;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+}
+:host(.component-tracklist-item) div.tracklist-item input[type=checkbox]:checked ~ label {
+  color: #222222;
+  font-style: normal;
+  font-weight: 500;
+}
+:host(.component-tracklist-item) div.tracklist-item input[type=checkbox]:checked ~ label .checkbox {
+  background: url("/images/checkbox-checked.svg") no-repeat center/contain;
+}
+
+:host(.component-editor) div.track-editor {
+  box-sizing: border-box;
+  height: 100%;
+  padding: 4px;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto 1fr;
+  row-gap: 4px;
+  align-items: start;
+}
+:host(.component-editor) div.track-editor div.track {
+  grid-column: 1;
+  grid-row: 1;
+}
+:host(.component-editor) div.track-editor div.metronome {
+  grid-column: 1;
+  grid-row: 2;
+}
+:host(.component-editor) div.track-editor div.sections {
+  grid-column: 1;
+  grid-row: 3;
+}
+:host(.component-editor) div.track-editor div.track {
+  box-sizing: border-box;
+  background: rgba(192, 192, 192, 0.2509803922);
+  width: 100%;
+  height: fit-content;
+  padding-top: 12px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 8px;
+  border-top-left-radius: 16px;
+  border-top-right-radius: 16px;
+  display: grid;
+  grid-template-columns: auto auto 1fr auto;
+  grid-template-rows: auto auto;
+  column-gap: 4px;
+  row-gap: 12px;
+}
+:host(.component-editor) div.track-editor div.track #title {
+  grid-column: 1/4;
+  grid-row: 1;
+}
+:host(.component-editor) div.track-editor div.track #save {
+  grid-column: 4;
+  grid-row: 1;
+}
+:host(.component-editor) div.track-editor div.track yam-time-signature {
+  grid-column: 1;
+  grid-row: 2;
+}
+:host(.component-editor) div.track-editor div.track yam-mm {
+  grid-column: 2;
+  grid-row: 2;
+}
+:host(.component-editor) div.track-editor div.track yam-loop {
+  grid-column: 3/5;
+  grid-row: 2;
+}
+:host(.component-editor) div.track-editor div.metronome {
+  box-sizing: border-box;
+  background: rgba(192, 192, 192, 0.2509803922);
+  width: 100%;
+  height: fit-content;
+  padding-top: 12px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 8px;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  grid-template-rows: auto;
+  align-items: center;
+  column-gap: 4px;
+}
+:host(.component-editor) div.track-editor div.metronome label {
+  grid-column: 1;
+  grid-row: 1;
+  margin-right: 8px;
+}
+:host(.component-editor) div.track-editor div.metronome input {
+  grid-columns: 2;
+  grid-row: 1;
+  min-width: 4em;
+}
+:host(.component-editor) div.track-editor div.sections {
+  box-sizing: border-box;
+  background: rgba(192, 192, 192, 0.2509803922);
+  width: 100%;
+  height: 100%;
+  padding-top: 12px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 4px;
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+  font-size: 0.9em;
+  overflow: hidden;
+  overflow-y: scroll;
+  scrollbar-width: none;
+}
+:host(.component-editor) div.track-editor div.sections::-webkit-scrollbar {
+  display: none;
+}
+:host(.component-editor) div.track-editor div.sections ul {
+  box-sizing: border-box;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  margin-left: 0px;
+  margin-right: 0px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 4px;
+  padding-right: 4px;
+  list-style: none;
+}
+:host(.component-editor) div.track-editor div.sections ul li {
+  height: auto;
+  margin-top: 2px;
+}
+:host(.component-editor) div.track-editor div.sections ul li:first-child {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  overflow: hidden;
+}
+:host(.component-editor) div.track-editor div.sections ul li:last-child {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+  overflow: hidden;
+}
+:host(.component-editor) div.track-editor input {
+  background: #ffffff;
+  border: none;
+  border-radius: 4px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 12px;
+  padding-right: 12px;
+  font-size: 0.9em;
+  font-weight: 500;
+  text-overflow: ellipsis;
+  outline: none;
+  user-select: text;
+  pointer-events: auto;
+}
+:host(.component-editor) div.track-editor input:invalid {
+  color: red;
+}
+:host(.component-editor) div.track-editor input:disabled + label {
+  color: gray;
+  cursor: not-allowed;
+}
+:host(.component-editor) div.track-editor button {
+  background: transparent;
+  margin: 0px;
+  padding: 0px;
+  line-height: 0;
+  border: none;
+  outline: none;
+}
+:host(.component-editor) div.track-editor button img {
+  height: 28px;
+}
+:host(.component-editor) div.track-editor button:disabled img {
+  filter: grayscale(100%) opacity(50%);
+}
+:host(.component-editor) div.track-editor details.disabled {
+  color: gray;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+:host(.component-editor) div.track-editor yam-time-signature {
+  height: 48px;
+}
+:host(.component-editor) div.track-editor yam-mm {
+  box-sizing: border-box;
+  height: 48px;
+  margin-left: 16px;
+}
+:host(.component-editor) div.track-editor yam-loop {
+  box-sizing: border-box;
+  justify-self: end;
+  height: 48px;
+  margin-right: 24px;
+}
+:host(.component-section) div.section {
+  width: 100%;
+  height: fit-content;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  grid-template-rows: auto;
+  column-gap: 3px;
+}
+:host(.component-section) div.section #name {
+  grid-column: 1;
+  grid-row: 1;
+}
+:host(.component-section) div.section #role {
+  grid-column: 2;
+  grid-row: 1;
+}
+:host(.component-section) div.section #measures {
+  grid-column: 3;
+  grid-row: 1;
+}
+:host(.component-section) div.section input {
+  box-sizing: border-box;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 6px;
+  padding-right: 6px;
+  font-size: 0.9em;
+  text-overflow: ellipsis;
+  border: none;
+  outline: none;
+}
+:host(.component-section) div.section input::placeholder {
+  font-style: italic;
+  color: #a0a0a0;
+}
+:host(.component-section) div.section #role {
+  width: 6em;
+  color: gray;
+  text-align: left;
+  font-style: italic;
+  font-weight: normal;
+}
+:host(.component-section) div.section #measures {
+  width: 3em;
+  color: gray;
+  text-align: center;
+  font-style: italic;
+  font-weight: normal;
+  -moz-appearance: textfield;
+}
+:host(.component-section) div.section #measures::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}

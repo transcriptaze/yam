@@ -1,0 +1,182 @@
+div.metronome {
+  display: grid;
+  grid-template-columns: 1fr auto auto 1fr;
+  grid-template-rows: auto auto auto auto 1fr;
+  grid-template-areas: 
+    "pads pads pads pads"
+    "info info info info"
+    "metrics metrics metrics metrics"
+    "spare3 bpm bpm spare4"
+    "spare5 metronome metronome spare6";
+  justify-items: center;
+  align-items: start;
+
+  yam-pads {
+    grid-area: pads;
+    width: 300px;
+    height: 80px;
+    outline: none;
+    overflow: hidden;
+  }
+
+  yam-info {
+    grid-area: info;
+    justify-self: stretch;
+
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+
+  div.metrics {
+    grid-area: metrics;
+
+    display: grid;
+    grid-template-columns: 1fr auto auto auto 1fr;
+    grid-template-rows: auto;
+    align-items: center;
+    column-gap: 12px;
+
+    height: 48px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+
+    yam-time-signature {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: end;
+    }
+
+    yam-mm {
+      grid-column: 3;
+      grid-row: 1;
+      justify-self: center;
+    }
+
+    yam-loop {
+      grid-column: 4;
+      grid-row: 1;
+      justify-self: start;
+
+      height: 100%;
+      outline: none;
+    }
+  }
+
+  div.bpm {
+    display: grid;
+    grid-area: bpm;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+    grid-template-areas: 
+      "knob"
+      "wheel";
+
+    yam-knob {
+      grid-area: knob;
+      margin-top: 24px;
+      margin-bottom: 24px;
+      outline: none;
+    }
+
+    yam-wheel {
+      display: none;
+      grid-area: wheel;
+      width: 200px;
+      outline: none;
+    }
+  }
+
+  yam-metronome {
+    grid-area: metronome;
+
+    height: 100%;
+    outline: none;
+  }
+
+  yam-time-signature {
+    height: 100%;
+    outline: none;
+  }
+
+  yam-mm {
+    height: 100%;
+    outline: none;
+  }
+
+  yam-loop {
+    height: 100%;
+    outline: none;
+  }
+}
+
+@media (max-width: 768px) and (orientation:portrait) {
+  div.metronome {
+    yam-pads {
+      width: calc(100vw - 32px);
+    }
+
+    div.metrics {
+      height: 64px;
+    }
+
+    yam-mm::part(BPM) {
+      font-size: 24px;
+    }
+
+    yam-wheel {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+  div.metronome {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas: "pads pads" "metrics info" "bpm metronome";
+    justify-items: center;
+    align-items: start;
+
+    yam-pads {
+      width: calc(100% - 32px);
+    }
+
+    yam-info {
+      width: 80%;
+      align-self: center;
+    }
+
+    div.metrics {
+      justify-self: end;
+      height: 64px;
+
+      yam-time-signature {
+        justify-self: start;
+      }
+
+      yam-mm::part(BPM) {
+        font-size: 24px;
+      }
+    }
+
+    div.bpm {
+      align-self: center;
+
+      yam-knob {
+        display: none;
+      }
+
+      yam-wheel {
+        display: block;
+      }
+    }
+
+    yam-metronome {
+      justify-self: start;
+
+      margin-left: 12px;
+      margin-right: 12px;
+    }
+  }
+}

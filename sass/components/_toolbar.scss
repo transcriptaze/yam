@@ -1,0 +1,359 @@
+toolbar {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+  padding-right: 8px;
+
+  div.menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+
+    div.left-menu {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+    }
+
+    div.right-menu {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+  }
+
+  button {
+    background: transparent;
+    border: none;
+    outline: none;
+
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+
+    img {
+      width: 36px;
+    }
+  }
+
+  button:disabled {
+    display: none;
+    img {
+      filter: invert(87%) sepia(5%) saturate(0%) hue-rotate(349deg) brightness(91%) contrast(83%);
+    }
+  }
+
+  a {
+    padding-top: 6px;
+    padding-bottom: 6px;
+    padding-left: 6px;
+    padding-right: 6px;
+
+    img {
+      width: 36px;
+    }  
+  }
+
+  #wakelock.active {
+    img {
+      filter: invert(10%) sepia(99%) saturate(5774%) hue-rotate(14deg) brightness(90%) contrast(121%);
+    }
+  }
+}
+
+toolbar.metronome {
+  #metronome {
+    display: none;
+  }
+
+  #playlist {
+    display: none;
+  }
+
+  #edit {
+    display: none;
+  }
+
+  #bug {
+    display: none;
+  }
+}
+
+toolbar.playlist {
+  #metronome {
+    display: none;
+  }
+
+  #playlist {
+    display: none;
+  }
+
+  #edit {
+    display: none;
+  }
+
+  #bug {
+    display: none;
+  }
+}
+
+// toolbar img#bug {
+//   filter: invert(78%) sepia(0%) saturate(34%) hue-rotate(219deg) brightness(98%) contrast(95%);
+// }
+
+// toolbar img#bug.enabled {
+//   filter: none;
+// }
+
+@media (max-width: 768px) and (orientation:portrait) {
+  toolbar {
+    width: calc(100vw - 4px);
+    padding-left: 4px;
+    padding-right: 4px;
+
+    div.menu {
+      width: 100%;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      column-gap: 8px;
+
+      div.left-menu {
+        width: fit-content;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+      }
+
+      div.right-menu {
+        width: fit-content;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  toolbar.metronome {
+    #playlist {
+      display: block;
+    }
+
+    #load {
+      display: none;
+    }
+
+    #save {
+      display: none;
+    }
+
+    #bug {
+      display: none;
+    }
+
+    #settings {
+      display: none;
+    }
+  }
+
+  toolbar.metronome.editable {
+    #edit {
+      display: block;
+    }
+  }
+
+  toolbar.playlist {
+    #reset {
+      display: none;
+    }
+
+    #metronome {
+      display: block;
+    }
+
+    #edit {
+      display: none;
+    }
+
+    #fullscreen {
+      display: none;
+    }
+
+    #wakelock {
+      display: none;
+    }
+  }
+
+  toolbar.editor {
+    #reset {
+      display: none;
+    }
+
+    #metronome {
+      display: block;
+    }
+
+    #playlist {
+      display: block;
+    }
+
+    #edit {
+      display: none;
+    }
+
+
+    #load {
+      display: none;
+    }
+
+    #save {
+      display: none;
+    }
+
+    #fullscreen {
+      display: none;
+    }
+
+    #wakelock {
+      display: none;
+    }
+
+    #settings {
+      display: none;
+    }
+
+    #bug {
+      display: none;
+    }
+  }
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+  toolbar {
+    grid-column: 2;
+    grid-row: 1;
+
+    height: 100vh;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    z-index: 2;
+
+    div.menu {
+      padding-top: 4px;
+      padding-bottom: 4px;
+
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      row-gap: 8px;
+
+      div.left-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+      }
+
+      div.right-menu {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+    }
+  }
+
+  toolbar.metronome {
+    #playlist {
+      display: block;
+    }
+
+    #load {
+      display: none;
+    }
+
+    #save {
+      display: none;
+    }
+
+    #settings {
+      display: none;
+    }
+  }
+
+  toolbar.metronome.editable {
+    #edit {
+      display: block;
+    }
+  }
+
+  toolbar.playlist {
+    #reset {
+      display: none;
+    }
+
+    #metronome {
+      display: block;
+    }
+
+    #fullscreen {
+      display: none;
+    }
+
+    #wakelock {
+      display: none;
+    }
+
+    #settings {
+      display: none;
+    }
+  }
+
+  toolbar.editor {
+    #reset {
+      display: none;
+    }
+
+    #metronome {
+      display: block;
+    }
+
+    #playlist {
+      display: block;
+    }
+
+    #edit {
+      display: none;
+    }
+
+    #load {
+      display: none;
+    }
+
+    #save {
+      display: none;
+    }
+
+    #settings {
+      display: none;
+    }
+
+    #fullscreen {
+      display: none;
+    }
+
+    #wakelock {
+      display: none;
+    }
+
+    #settings {
+      display: none;
+    }
+
+    #bug {
+      display: none;
+    }
+  }
+}

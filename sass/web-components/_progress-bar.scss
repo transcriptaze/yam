@@ -1,0 +1,29 @@
+:host(.component-progress-bar) {
+  background: var(--accent-color, pink);
+
+  div {
+    position: relative;
+    display: block;
+    
+    width: 100%;
+    height: 100%;
+   
+    margin: 0;
+    padding: 0;   
+    border: none;
+    background: transparent;
+  }
+
+  canvas {
+    position: absolute; // mega-hack for canvas resizing problem :-(
+    top: 0; 
+    left: 0;
+
+    width: 100%;
+    height: 100%;  
+
+    margin: 0;
+    padding: 0;   
+    border: 1px solid #e0e0e040;
+  }
+}

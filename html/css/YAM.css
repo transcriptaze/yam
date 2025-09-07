@@ -1,0 +1,929 @@
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: bold;
+  src: url("../fonts/Lato/Lato-Bold.woff2");
+}
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  src: url("../fonts/Lato/Lato-Medium.woff2");
+}
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  src: url("../fonts/Lato/Lato-Semibold.woff2");
+}
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/Lato/Lato-Regular.woff2");
+}
+:root {
+  --background: #ffffff url("../images/textures/ricepaper_v3.png");
+  --track-colour-muted: #a0a0a0;
+  --track-colour-deleting: #a0a0a0;
+  --playlist-colour-deleting: #a0a0a0;
+}
+
+[data-theme=light] {
+  --background: #ffffff url("../images/textures/ricepaper_v3.png");
+  --track-colour-muted: #a0a0a0;
+  --track-colour-deleting: #a0a0a0;
+  --playlist-colour-deleting: #a0a0a0;
+}
+
+[data-theme=dark] {
+  --background: #222222;
+  --track-colour-muted: #a0a0a0;
+  --track-colour-deleting: #a0a0a0;
+  --playlist-colour-deleting: #a0a0a0;
+}
+
+main {
+  background: inherit;
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 1fr 1fr;
+  grid-template-rows: 660px;
+  grid-template-areas: "dummy metronome playlist editor";
+  column-gap: 8px;
+  align-items: stretch;
+  height: 693px;
+  margin: 0;
+  padding-top: 24px;
+  padding-bottom: 24px;
+  padding-left: 16px;
+  padding-right: 16px;
+  border: none;
+  overflow-y: hidden;
+}
+
+div.panel {
+  width: 320px;
+  border: 1px solid red;
+  border-radius: 16px;
+}
+
+div.metronome {
+  grid-area: metronome;
+}
+
+div.playlists {
+  grid-area: playlist;
+  display: block;
+  overflow-y: auto;
+  min-height: 0;
+}
+div.playlists yam-playlists {
+  display: block;
+  height: 100%;
+}
+
+div.editor {
+  grid-area: editor;
+  display: block;
+  overflow-y: auto;
+  min-height: 0;
+}
+div.editor yam-editor {
+  padding: 0;
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+  main {
+    padding: 0px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    column-gap: 0px;
+    overflow: hidden;
+  }
+  div.panel {
+    width: 100dvw;
+    border: none;
+    border-radius: 0px;
+  }
+  div.metronome {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  div.metronome.hidden {
+    display: none;
+  }
+  div.playlists {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  div.playlists.hidden {
+    display: none;
+  }
+  div.editor {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  div.editor.hidden {
+    display: none;
+  }
+}
+@media (max-width: 1024px) and (orientation: landscape) {
+  main {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    column-gap: 0px;
+    padding: 0px;
+    overflow: hidden;
+  }
+  div.panel {
+    width: 100%;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border: none;
+    border-radius: 0px;
+  }
+  div.metronome {
+    grid-column: 1;
+    grid-row: 1;
+    width: fit-content;
+    height: fit-content;
+  }
+  div.metronome.hidden {
+    display: none;
+  }
+  div.playlists {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  div.playlists.hidden {
+    display: none;
+  }
+  div.editor {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  div.editor.hidden {
+    display: none;
+  }
+}
+html.settings main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  margin-left: 64px;
+  margin-right: 64px;
+}
+html.settings main h1 {
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+  font-size: 1.5em;
+}
+html.settings main h1 img {
+  width: 64px;
+}
+html.settings main h2 {
+  font-size: 1em;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+html.settings main img {
+  user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+}
+html.settings main div.settings {
+  min-width: 200px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto;
+  column-gap: 12px;
+}
+html.settings main div.settings label {
+  width: fit-content;
+  align-self: center;
+}
+html.settings main div.settings select {
+  width: fit-content;
+  min-width: 128px;
+  border: 2px solid #ddd;
+  background: #eee;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  transition: 0.4s;
+}
+html.settings main div.settings select, html.settings main div.settings select::picker(select) {
+  appearance: base-select;
+}
+html.settings main div.settings select option {
+  display: flex;
+  justify-content: flex-start;
+  border: 1px solid #ddd;
+  background: #eee;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 8px;
+  padding-right: 8px;
+  transition: 0.4s;
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+  html.settings maint {
+    height: calc(100% - 48px);
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-top: 16px;
+    padding-bottom: 0px;
+    padding-left: 16px;
+    padding-right: 24px;
+  }
+  html.settings maint h1 {
+    font-size: 1.2em;
+  }
+}
+@media (max-width: 1024px) and (orientation: landscape) {
+  html.settings main {
+    width: calc(100% - 48px);
+    height: calc(100% - 48px);
+    margin-top: 16px;
+    margin-bottom: 32px;
+    margin-left: 24px;
+    margin-right: 24px;
+    overflow-y: scroll;
+  }
+}
+main.about {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  margin-left: 64px;
+  margin-right: 64px;
+}
+main.about h1 {
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+  font-size: 1.5em;
+}
+main.about h1 img {
+  width: 64px;
+}
+main.about h2 {
+  font-size: 1em;
+  margin-top: 16px;
+  margin-bottom: 8px;
+}
+main.about img {
+  user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+}
+main.about img.github {
+  width: 36px;
+  padding-top: 8px;
+  padding-bottom: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
+main.about a {
+  font-size: 0.9em;
+  text-decoration: none;
+  color: steelblue;
+}
+main.about a.github {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 60px 1fr;
+  align-items: center;
+}
+main.about p {
+  max-width: 60%;
+  margin-top: 0px;
+  margin-bottom: 8px;
+  font-size: 0.9em;
+}
+main.about p.license {
+  margin-top: 4px;
+  font-size: 0.8em;
+}
+main.about ol {
+  margin-top: 0px;
+}
+main.about ul.guide {
+  list-style-type: none;
+}
+main.about ul.guide img {
+  height: 32px;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+main.about ul.guide li {
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: 60px 1fr;
+  align-items: center;
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+  main.about {
+    height: calc(100% - 48px);
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-top: 16px;
+    padding-bottom: 0px;
+    padding-left: 16px;
+    padding-right: 24px;
+  }
+  main.about h1 {
+    font-size: 1.2em;
+  }
+  main.about ul {
+    padding-left: 12px;
+    padding-right: 24px;
+  }
+  main.about p {
+    max-width: 100%;
+  }
+}
+@media (max-width: 1024px) and (orientation: landscape) {
+  main.about {
+    width: calc(100% - 48px);
+    height: calc(100% - 48px);
+    margin-top: 16px;
+    margin-bottom: 32px;
+    margin-left: 24px;
+    margin-right: 24px;
+    overflow-y: scroll;
+  }
+}
+main.unsupported {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+div#unsupported {
+  margin-top: 128px;
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 12px;
+  padding-right: 12px;
+  border: 1px solid grey;
+  border-radius: 4px;
+}
+div#unsupported div {
+  margin-bottom: 32px;
+}
+div#unsupported ul {
+  margin-top: 8px;
+  list-style: inside;
+}
+
+toolbar {
+  display: flex;
+  justify-content: flex-end;
+  padding-top: 8px;
+  padding-right: 8px;
+}
+toolbar div.menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+toolbar div.menu div.left-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+toolbar div.menu div.right-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+toolbar button {
+  background: transparent;
+  border: none;
+  outline: none;
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+toolbar button img {
+  width: 36px;
+}
+toolbar button:disabled {
+  display: none;
+}
+toolbar button:disabled img {
+  filter: invert(87%) sepia(5%) saturate(0%) hue-rotate(349deg) brightness(91%) contrast(83%);
+}
+toolbar a {
+  padding-top: 6px;
+  padding-bottom: 6px;
+  padding-left: 6px;
+  padding-right: 6px;
+}
+toolbar a img {
+  width: 36px;
+}
+toolbar #wakelock.active img {
+  filter: invert(10%) sepia(99%) saturate(5774%) hue-rotate(14deg) brightness(90%) contrast(121%);
+}
+
+toolbar.metronome #metronome {
+  display: none;
+}
+toolbar.metronome #playlist {
+  display: none;
+}
+toolbar.metronome #edit {
+  display: none;
+}
+toolbar.metronome #bug {
+  display: none;
+}
+
+toolbar.playlist #metronome {
+  display: none;
+}
+toolbar.playlist #playlist {
+  display: none;
+}
+toolbar.playlist #edit {
+  display: none;
+}
+toolbar.playlist #bug {
+  display: none;
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+  toolbar {
+    width: calc(100vw - 4px);
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+  toolbar div.menu {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    column-gap: 8px;
+  }
+  toolbar div.menu div.left-menu {
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+  }
+  toolbar div.menu div.right-menu {
+    width: fit-content;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+  }
+  toolbar.metronome #playlist {
+    display: block;
+  }
+  toolbar.metronome #load {
+    display: none;
+  }
+  toolbar.metronome #save {
+    display: none;
+  }
+  toolbar.metronome #bug {
+    display: none;
+  }
+  toolbar.metronome #settings {
+    display: none;
+  }
+  toolbar.metronome.editable #edit {
+    display: block;
+  }
+  toolbar.playlist #reset {
+    display: none;
+  }
+  toolbar.playlist #metronome {
+    display: block;
+  }
+  toolbar.playlist #edit {
+    display: none;
+  }
+  toolbar.playlist #fullscreen {
+    display: none;
+  }
+  toolbar.playlist #wakelock {
+    display: none;
+  }
+  toolbar.editor #reset {
+    display: none;
+  }
+  toolbar.editor #metronome {
+    display: block;
+  }
+  toolbar.editor #playlist {
+    display: block;
+  }
+  toolbar.editor #edit {
+    display: none;
+  }
+  toolbar.editor #load {
+    display: none;
+  }
+  toolbar.editor #save {
+    display: none;
+  }
+  toolbar.editor #fullscreen {
+    display: none;
+  }
+  toolbar.editor #wakelock {
+    display: none;
+  }
+  toolbar.editor #settings {
+    display: none;
+  }
+  toolbar.editor #bug {
+    display: none;
+  }
+}
+@media (max-width: 1024px) and (orientation: landscape) {
+  toolbar {
+    grid-column: 2;
+    grid-row: 1;
+    height: 100vh;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    z-index: 2;
+  }
+  toolbar div.menu {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    row-gap: 8px;
+  }
+  toolbar div.menu div.left-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
+  toolbar div.menu div.right-menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+  }
+  toolbar.metronome #playlist {
+    display: block;
+  }
+  toolbar.metronome #load {
+    display: none;
+  }
+  toolbar.metronome #save {
+    display: none;
+  }
+  toolbar.metronome #settings {
+    display: none;
+  }
+  toolbar.metronome.editable #edit {
+    display: block;
+  }
+  toolbar.playlist #reset {
+    display: none;
+  }
+  toolbar.playlist #metronome {
+    display: block;
+  }
+  toolbar.playlist #fullscreen {
+    display: none;
+  }
+  toolbar.playlist #wakelock {
+    display: none;
+  }
+  toolbar.playlist #settings {
+    display: none;
+  }
+  toolbar.editor #reset {
+    display: none;
+  }
+  toolbar.editor #metronome {
+    display: block;
+  }
+  toolbar.editor #playlist {
+    display: block;
+  }
+  toolbar.editor #edit {
+    display: none;
+  }
+  toolbar.editor #load {
+    display: none;
+  }
+  toolbar.editor #save {
+    display: none;
+  }
+  toolbar.editor #settings {
+    display: none;
+  }
+  toolbar.editor #fullscreen {
+    display: none;
+  }
+  toolbar.editor #wakelock {
+    display: none;
+  }
+  toolbar.editor #settings {
+    display: none;
+  }
+  toolbar.editor #bug {
+    display: none;
+  }
+}
+div.metronome {
+  display: grid;
+  grid-template-columns: 1fr auto auto 1fr;
+  grid-template-rows: auto auto auto auto 1fr;
+  grid-template-areas: "pads pads pads pads" "info info info info" "metrics metrics metrics metrics" "spare3 bpm bpm spare4" "spare5 metronome metronome spare6";
+  justify-items: center;
+  align-items: start;
+}
+div.metronome yam-pads {
+  grid-area: pads;
+  width: 300px;
+  height: 80px;
+  outline: none;
+  overflow: hidden;
+}
+div.metronome yam-info {
+  grid-area: info;
+  justify-self: stretch;
+  margin-left: 12px;
+  margin-right: 12px;
+}
+div.metronome div.metrics {
+  grid-area: metrics;
+  display: grid;
+  grid-template-columns: 1fr auto auto auto 1fr;
+  grid-template-rows: auto;
+  align-items: center;
+  column-gap: 12px;
+  height: 48px;
+  margin-top: 8px;
+  margin-bottom: 8px;
+}
+div.metronome div.metrics yam-time-signature {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: end;
+}
+div.metronome div.metrics yam-mm {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: center;
+}
+div.metronome div.metrics yam-loop {
+  grid-column: 4;
+  grid-row: 1;
+  justify-self: start;
+  height: 100%;
+  outline: none;
+}
+div.metronome div.bpm {
+  display: grid;
+  grid-area: bpm;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto;
+  grid-template-areas: "knob" "wheel";
+}
+div.metronome div.bpm yam-knob {
+  grid-area: knob;
+  margin-top: 24px;
+  margin-bottom: 24px;
+  outline: none;
+}
+div.metronome div.bpm yam-wheel {
+  display: none;
+  grid-area: wheel;
+  width: 200px;
+  outline: none;
+}
+div.metronome yam-metronome {
+  grid-area: metronome;
+  height: 100%;
+  outline: none;
+}
+div.metronome yam-time-signature {
+  height: 100%;
+  outline: none;
+}
+div.metronome yam-mm {
+  height: 100%;
+  outline: none;
+}
+div.metronome yam-loop {
+  height: 100%;
+  outline: none;
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+  div.metronome yam-pads {
+    width: calc(100vw - 32px);
+  }
+  div.metronome div.metrics {
+    height: 64px;
+  }
+  div.metronome yam-mm::part(BPM) {
+    font-size: 24px;
+  }
+  div.metronome yam-wheel {
+    display: none;
+  }
+}
+@media (max-width: 1024px) and (orientation: landscape) {
+  div.metronome {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto 1fr;
+    grid-template-areas: "pads pads" "metrics info" "bpm metronome";
+    justify-items: center;
+    align-items: start;
+  }
+  div.metronome yam-pads {
+    width: calc(100% - 32px);
+  }
+  div.metronome yam-info {
+    width: 80%;
+    align-self: center;
+  }
+  div.metronome div.metrics {
+    justify-self: end;
+    height: 64px;
+  }
+  div.metronome div.metrics yam-time-signature {
+    justify-self: start;
+  }
+  div.metronome div.metrics yam-mm::part(BPM) {
+    font-size: 24px;
+  }
+  div.metronome div.bpm {
+    align-self: center;
+  }
+  div.metronome div.bpm yam-knob {
+    display: none;
+  }
+  div.metronome div.bpm yam-wheel {
+    display: block;
+  }
+  div.metronome yam-metronome {
+    justify-self: start;
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+}
+:root {
+  --vh: 100vh;
+}
+
+html {
+  height: 100%;
+  background: black;
+  font-family: "Lato";
+  box-sizing: border-box;
+  user-select: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+}
+
+body {
+  background: var(--background);
+  margin: 0px;
+  padding-top: 0px;
+}
+body div.content {
+  width: 100dvw;
+  height: 100dvh;
+  display: grid;
+  grid-template-rows: 1fr;
+  grid-template-columns: 1fr auto;
+  overflow: hidden;
+}
+
+main {
+  grid-column: 1/3;
+  grid-row: 1;
+  justify-self: center;
+  height: 645px;
+}
+
+toolbar {
+  grid-row: 1;
+  grid-column: 2;
+}
+
+dialog.import {
+  margin-top: 128px;
+  padding: 8px;
+  outline: none;
+  border: none;
+  border-radius: 8px;
+}
+dialog.import div {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 12px;
+  padding-right: 12px;
+  display: grid;
+  grid-template-columns: 1f 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 16px;
+  row-gap: 12px;
+  justify-items: center;
+  align-items: center;
+}
+dialog.import div p.message {
+  grid-column: 1/3;
+  grid-row: 1;
+  font-size: 0.9em;
+  text-align: center;
+}
+dialog.import div button {
+  width: 80px;
+  height: 32px;
+}
+dialog.import div button[value=cancel] {
+  grid-column: 1;
+  grid-row: 2;
+  color: #a00000;
+}
+dialog.import div button[value=ok] {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+dialog.error p.message {
+  color: #ff0000;
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+  body div.content {
+    height: --vh;
+    margin-top: env(safe-area-inset-top);
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto;
+  }
+  body.fullscreen toolbar {
+    margin-bottom: 8px;
+  }
+  main {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100dvw;
+    height: 100%;
+    justify-self: center;
+    align-self: stretch;
+  }
+  toolbar {
+    grid-column: 1;
+    grid-row: 2;
+  }
+}
+@media (max-width: 1024px) and (orientation: landscape) {
+  body div.content {
+    height: 100dvh;
+    width: calc(100dvw - env(safe-area-inset-left));
+    margin-left: env(safe-area-inset-left);
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr;
+  }
+  main {
+    grid-column: 1;
+    grid-row: 1;
+    width: 100%;
+    height: 100%;
+  }
+  toolbar {
+    grid-column: 2;
+    grid-row: 1;
+  }
+}

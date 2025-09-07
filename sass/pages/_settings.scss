@@ -1,0 +1,110 @@
+html.settings main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  margin-top: 16px;
+  margin-bottom: 16px;
+  margin-left: 64px;
+  margin-right: 64px;
+
+  h1 {
+    display: flex;
+    align-items: center;
+    column-gap: 12px;
+    font-size: 1.5em; 
+
+    img {
+      width: 64px;
+    }
+  }
+
+  h2 {
+     font-size: 1em;
+     margin-top: 16px;
+     margin-bottom: 8px;
+  }
+
+  img {
+    user-select: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;  
+  }
+
+  div.settings {
+    min-width: 200px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto;
+    column-gap: 12px;
+
+    label {
+      width: fit-content;
+      align-self: center;
+    }
+
+    select {
+      width: fit-content;
+      min-width: 128px;
+      border: 2px solid #ddd;
+      background: #eee;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      padding-left: 8px;
+      padding-right: 8px;
+      transition: 0.4s;
+
+      &, &::picker(select) {
+        appearance: base-select;    
+      }
+
+      option {
+        display: flex;
+        justify-content: flex-start;
+
+        border: 1px solid #ddd;
+        background: #eee;
+        
+        padding-top: 4px;
+        padding-bottom: 4px;
+        padding-left: 8px;
+        padding-right: 8px;
+        transition: 0.4s;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 768px) and (orientation:portrait) {
+  html.settings maint {
+    height: calc(100% - 48px);
+    margin-left: 0px;
+    margin-right: 0px;
+
+    padding-top: 16px;
+    padding-bottom: 0px;
+    padding-left: 16px;
+    padding-right: 24px;
+
+    h1 {
+      font-size: 1.2em; 
+    }
+  }
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+  html.settings main {
+    width: calc(100% - 48px);
+    height: calc(100% - 48px);
+
+    margin-top: 16px;
+    margin-bottom: 32px;
+    margin-left: 24px;
+    margin-right: 24px;
+
+    overflow-y: scroll;
+  }
+}

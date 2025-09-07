@@ -1,0 +1,155 @@
+main {
+  background: inherit;
+
+  display: grid;
+  grid-template-columns: 0.5fr 1fr 1fr 1fr;
+  grid-template-rows: 660px;
+  grid-template-areas: "dummy metronome playlist editor";
+  column-gap: 8px;
+  align-items: stretch;
+
+  height: 693px;
+  margin: 0;
+
+  padding-top: 24px;
+  padding-bottom: 24px;
+  padding-left: 16px;
+  padding-right: 16px;
+
+  border: none;
+  overflow-y: hidden; 
+}
+
+div.panel {
+  width: 320px;
+
+  border: 1px solid red;  
+  border-radius: 16px;
+}
+
+div.metronome {
+  grid-area: metronome;
+}
+
+div.playlists {
+  grid-area: playlist;
+  display: block;
+  
+  overflow-y: auto;
+  min-height: 0;
+    
+  yam-playlists {
+     display: block;
+     height: 100%;
+  }
+}
+
+div.editor {
+  grid-area: editor;
+  display: block;
+
+  overflow-y: auto;
+  min-height: 0;
+    
+  yam-editor {
+    padding: 0;  
+  }
+}
+
+@media (max-width: 768px) and (orientation:portrait) {
+  main {
+    padding: 0px;
+
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    column-gap: 0px;
+
+    overflow: hidden;
+  }
+
+  div.panel {
+    width: 100dvw;
+
+    border: none;  
+    border-radius: 0px;
+  }
+
+  div.metronome {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  div.metronome.hidden {
+    display: none;
+  }
+
+  div.playlists {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  div.playlists.hidden {
+    display: none;
+  }
+
+  div.editor {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  div.editor.hidden {
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+  main {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    column-gap: 0px;
+
+    padding: 0px;
+    overflow: hidden;
+  }
+
+  div.panel {
+    width: 100%;
+    padding-top: 0px;
+    padding-bottom: 0px;
+
+    border: none;  
+    border-radius: 0px;
+  }
+
+  div.metronome {
+    grid-column: 1;
+    grid-row: 1;
+
+    width: fit-content;
+    height: fit-content;
+  }
+
+  div.metronome.hidden {
+    display: none;
+  }
+
+  div.playlists {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  div.playlists.hidden {
+    display: none;
+  }
+
+  div.editor {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  div.editor.hidden {
+    display: none;
+  }
+}

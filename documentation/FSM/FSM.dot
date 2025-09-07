@@ -1,0 +1,22 @@
+digraph FSM {
+    rankdir=TB;
+
+    node [shape = circle];
+    
+    start [shape = point];
+    stopped [label="Stopped"];
+    starting [label="Starting"];
+    playing [label="Playing"];
+    stopping [label="Stopping"];
+    
+    start -> stopped;
+    stopped -> starting [label="Play"];
+    starting -> playing [label="250ms"];
+    starting -> stopped [label="Stop"];
+    playing -> stopping [label="Stop"];
+    playing -> playing [label="Beat (set sound)"];
+    stopping -> stopped [label="Beat (set silence)"];
+    stopping -> starting [label="Play"];
+    
+    { rank = same; start; stopped; starting; playing }
+}

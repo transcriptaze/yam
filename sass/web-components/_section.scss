@@ -1,0 +1,70 @@
+:host(.component-section) {
+  div.section {
+    width: 100%;
+    height: fit-content;
+
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    grid-template-rows: auto;
+    column-gap: 3px;
+
+    #name {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    #role {
+      grid-column: 2;
+      grid-row: 1;
+    }
+
+    #measures {
+      grid-column: 3;
+      grid-row: 1;
+    }
+
+    input {
+      box-sizing: border-box;
+
+      padding-top: 6px;
+      padding-bottom: 6px;
+      padding-left: 6px;
+      padding-right: 6px;
+
+      font-size: 0.9em;
+      text-overflow: ellipsis;
+
+      border: none;
+      outline: none;
+    }
+
+    input::placeholder {
+      font-style: italic;
+      color: #a0a0a0;
+    }
+
+    #role {
+      width: 6em;
+      color: gray;
+
+      text-align: left;
+      font-style: italic;
+      font-weight: normal;
+    }
+
+    #measures {
+      width: 3em;
+      color: gray;
+
+      text-align: center;
+      font-style: italic;
+      font-weight: normal;
+
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+      }
+
+      -moz-appearance:textfield;
+    }
+  }
+}

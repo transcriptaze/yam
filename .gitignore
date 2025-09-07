@@ -2,3 +2,5 @@
 node_modules
 workdir
 dist
+NOTES.md
+TODO.org

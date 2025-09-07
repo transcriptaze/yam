@@ -4,6 +4,8 @@ import { Clock } from './clock.js'
 import { State, BUFFERSIZE } from '../shared/state.js'
 import { DOTTED_QUARTER } from '../shared/constants.js'
 
+const INF = Number.POSITIVE_INFINITY
+
 let DEBUG = false
 
 export class Metronome extends AudioWorkletProcessor {
@@ -13,10 +15,12 @@ export class Metronome extends AudioWorkletProcessor {
     divisions: null,
     pulse: null,
     sections: [],
+    loops: INF,
     delay: 0,
   }
 
   #section = null
+  #loops = 0
   #cued = []
   #delay = 0
 
@@ -96,8 +100,6 @@ export class Metronome extends AudioWorkletProcessor {
 
       case 'track':
         this.#track = transmogrify(event.data.track)
-        console.log(this.#track)
-
         this.restart()
         break
 
@@ -133,6 +135,7 @@ export class Metronome extends AudioWorkletProcessor {
   play() {
     if (this.FSM.onPlay()) {
       this.section = null
+      this.#loops = 0
       this.clock.reset()
     }
   }
@@ -185,6 +188,7 @@ export class Metronome extends AudioWorkletProcessor {
     if (playing) {
       if (this.FSM.onPlay()) {
         this.section = null
+        this.#loops = 0
         this.clock.reset()
       }
     }
@@ -242,7 +246,13 @@ export class Metronome extends AudioWorkletProcessor {
           this.flip(FSM.STATE.STOPPED, null, 0, 0, parameters)
           log('STOP', clock.t, clock.time, BPM, cluck.bar, cluck.beat, gain, tactus, figura)
 
-          if (loop && this.FSM.onPlay()) {
+          this.#loops++
+
+          const loops = this.track?.loops ?? INF
+
+          console.log('>>>> ', loops, this.#loops)
+
+          if (loop && (loops == INF || this.#loops < loops) && this.FSM.onPlay()) {
             this.section = null
             this.clock.reset()
           } else {
@@ -257,14 +267,6 @@ export class Metronome extends AudioWorkletProcessor {
         }
       }
     } else if (this.stopping) {
-      // const cluck = clock.tick(BPM, tactus, figura, pulse, N)
-      //
-      // if (cluck.click) {
-      //   this.FSM.onStopped()
-      //   this.flip(FSM.STATE.STOPPED, null, 0, 0, parameters)
-      //   log('STOP', clock.t, clock.time, BPM, cluck.bar, cluck.beat, gain, tactus, figura)
-      // }
-
       this.FSM.onStopped()
       this.flip(FSM.STATE.STOPPED, null, 0, 0, parameters)
       log('STOP', clock.t, clock.time, BPM, Number.NaN, Number.NaN, gain, tactus, figura)

@@ -29,6 +29,7 @@ export class Track extends EventTarget {
   #metronome = {
     BPM: 120,
     loop: false,
+    loops: INF,
   }
 
   static clone(track) {
@@ -42,6 +43,7 @@ export class Track extends EventTarget {
       metronome: {
         BPM: track.BPM,
         loop: track.loop ?? false,
+        loops: track.loops ?? INF,
       },
     })
   }
@@ -61,6 +63,7 @@ export class Track extends EventTarget {
     this.#metronome = {
       BPM: object.metronome?.BPM ?? 120,
       loop: object.metronome?.loop ?? false,
+      loops: object.metronome?.loops ?? INF,
     }
   }
 
@@ -79,6 +82,7 @@ export class Track extends EventTarget {
       metronome: {
         BPM: this.BPM,
         loop: this.loop,
+        loops: this.loops,
       },
     }
   }
@@ -138,6 +142,10 @@ export class Track extends EventTarget {
   set loop(v) {
     this.#metronome.loop = v === true
     this.dispatchEvent(new Event('modified'))
+  }
+
+  get loops() {
+    return this.#metronome?.loops ?? INF
   }
 
   get timeSignature() {
@@ -204,6 +212,7 @@ export class Track extends EventTarget {
     this.#metronome = {
       BPM: track.#metronome.BPM,
       loop: track.#metronome.loop,
+      loops: track.#metronome.loops,
     }
   }
 

@@ -25,7 +25,7 @@ It will be a pleasant surprise and/or minor miracle if it works at all on anythi
 
 ## Screenshots
 
-<img width="400" src="documentation/images/portrait.png">
+<img width="320" src="documentation/images/metronome.png"><img width="320" src="documentation/images/playlists.png"><img width="320" src="documentation/images/edit.png">
 
 
 ## Supported browsers
@@ -60,7 +60,7 @@ It will be a pleasant surprise and/or minor miracle if it works at all on anythi
 
 ## Installation
 
-Download and unpack the _yam.zip_ file from the most recent [nightly](https://github.com/transcriptaze/yam/actions/workflows/nightly.yml) build.
+Download and unpack the _yam-nightly.zip_ file from the most recent [nightly](https://github.com/transcriptaze/yam/actions/workflows/nightly.yml) build.
 
 It needs to be hosted by a web server - the repo includes scripts for the _Python_ and _NodeJS_ built-in HTTP servers - but the web app
 is entirely static so whatever you have will probably work as long as CORS is enabled and has the following headers:

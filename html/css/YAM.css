@@ -444,6 +444,12 @@ toolbar a {
 toolbar a img {
   width: 36px;
 }
+toolbar #settings {
+  display: none;
+}
+toolbar #bug {
+  display: none;
+}
 toolbar #wakelock.active img {
   filter: invert(10%) sepia(99%) saturate(5774%) hue-rotate(14deg) brightness(90%) contrast(121%);
 }
@@ -457,9 +463,6 @@ toolbar.metronome #playlist {
 toolbar.metronome #edit {
   display: none;
 }
-toolbar.metronome #bug {
-  display: none;
-}
 
 toolbar.playlist #metronome {
   display: none;
@@ -468,9 +471,6 @@ toolbar.playlist #playlist {
   display: none;
 }
 toolbar.playlist #edit {
-  display: none;
-}
-toolbar.playlist #bug {
   display: none;
 }
 
@@ -506,12 +506,6 @@ toolbar.playlist #bug {
     display: none;
   }
   toolbar.metronome #save {
-    display: none;
-  }
-  toolbar.metronome #bug {
-    display: none;
-  }
-  toolbar.metronome #settings {
     display: none;
   }
   toolbar.metronome.editable #edit {
@@ -556,12 +550,6 @@ toolbar.playlist #bug {
   toolbar.editor #wakelock {
     display: none;
   }
-  toolbar.editor #settings {
-    display: none;
-  }
-  toolbar.editor #bug {
-    display: none;
-  }
 }
 @media (max-width: 1024px) and (orientation: landscape) {
   toolbar {
@@ -601,9 +589,6 @@ toolbar.playlist #bug {
   toolbar.metronome #save {
     display: none;
   }
-  toolbar.metronome #settings {
-    display: none;
-  }
   toolbar.metronome.editable #edit {
     display: block;
   }
@@ -617,9 +602,6 @@ toolbar.playlist #bug {
     display: none;
   }
   toolbar.playlist #wakelock {
-    display: none;
-  }
-  toolbar.playlist #settings {
     display: none;
   }
   toolbar.editor #reset {
@@ -640,19 +622,10 @@ toolbar.playlist #bug {
   toolbar.editor #save {
     display: none;
   }
-  toolbar.editor #settings {
-    display: none;
-  }
   toolbar.editor #fullscreen {
     display: none;
   }
   toolbar.editor #wakelock {
-    display: none;
-  }
-  toolbar.editor #settings {
-    display: none;
-  }
-  toolbar.editor #bug {
     display: none;
   }
 }

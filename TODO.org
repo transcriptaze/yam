@@ -16,6 +16,7 @@
 *** DONE move to github.transcriptaze
 *** DONE commit as user transcriptaze
 *** DONE fix portrait + fullscreen layout
+*** DONE remove settings from toolbar entirely
 
 *** TODO add new track playlists:tracklist
       - playlist weirdness on open if new track is added to selected+closed playlist

@@ -25,7 +25,7 @@ It will be a pleasant surprise and/or minor miracle if it works at all on anythi
 
 ## Screenshots
 
-<img width="320" src="documentation/images/metronome.png"><img width="320" src="documentation/images/playlists.png"><img width="320" src="documentation/images/edit.png">
+<img src="documentation/images/screenshot.png">
 
 
 ## Supported browsers

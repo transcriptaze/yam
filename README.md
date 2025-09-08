@@ -4,7 +4,7 @@
 
 **-- IN DEVELOPMENT --**
 
-Just one more _WebAudio_ metronome web-app to add to the many, many other metronomes out there.
+Just one more _WebAudio_ metronome web app to add to the many, many other metronomes out there.
 
 YAM is pretty much designed exclusively for use by an _almost but not entirely_ ham-fisted acoustic fingerstyle
 guitarist without any appreciable musical ability who plays an _old but adored_ Taylor 310e and needs all the
@@ -22,9 +22,10 @@ https://yam-8sz.pages.dev
 This is very much a personal project and (currently at least) developed and tested exclusively with Google Chrome on a Pixel 5a.
 It will be a pleasant surprise and/or minor miracle if it works at all on anything else but you never know.
 
+
 ## Screenshots
 
-|<img width="480" src="documentation/images/portrait.png">|<img width="640" src="documentation/images/landscape.png">|
+<img width="400" src="documentation/images/portrait.png">
 
 
 ## Supported browsers
@@ -56,11 +57,12 @@ It will be a pleasant surprise and/or minor miracle if it works at all on anythi
 |             | Firefox    |                |        |
 |             | Safari     |                |        |
 
+
 ## Installation
 
 Download and unpack the _yam.zip_ file from the most recent [nightly](https://github.com/transcriptaze/yam/actions/workflows/nightly.yml) build.
 
-CORS requires it to be hosted by a web server - the repo includes scripts for the _Python_ and _NodeJS_ built-in HTTP servers - but the web app
+It needs to be hosted by a web server - the repo includes scripts for the _Python_ and _NodeJS_ built-in HTTP servers - but the web app
 is entirely static so whatever you have will probably work as long as CORS is enabled and has the following headers:
 ```
   Access-Control-Allow-Origin: *
@@ -76,7 +78,7 @@ python3 httpd.py
 
 ### NodeJS
 ```
-node https.mjs
+node httpd.mjs
 ```
 
 ## License

@@ -2,29 +2,36 @@
 
 # Yet Another Metronome
 
-**IN DEVELOPMENT**
+**-- IN DEVELOPMENT --**
 
-Just one more WebAudio metronome to join the hundreds (thousands ?) of others out there - but this one is mine!
+Just one more _WebAudio_ metronome web-app to add to the many, many other metronomes out there.
 
-## Disclaimer
+YAM is pretty much designed exclusively for use by an _almost but not entirely_ ham-fisted acoustic fingerstyle
+guitarist without any appreciable musical ability who plays an _old but adored_ Taylor 310e and needs all the
+help he can get. If that description is not you (it probably isn't 😄) then YMMV!
 
-This is very much a personal project i.e. it's designed exclusively for the use of an almost-but-not-entirely ham-fisted 
-acoustic fingerstyle guitarist without any appreciable musical ability who plays an old-but-adored Taylor 310e and needs
-all the help he can get. If that description is not you then YMMV :-).
-
-Oh, and (currently at least) developed and tested exclusively for Google Chrome on a Pixel 5a. It will be a major surprise
-(and minor miracle) if it works at all on anything else but if you do want to try it out it's hosted on _Cloudflare Pages_:
+It's available online if you want to try it out:
 
 https://yam-8sz.pages.dev
 
-(or follow the installation instructions below to run your own copy).
+(or follow the installation instructions [below](#installation) to run your own local version).
+
+
+## Disclaimer
+
+This is very much a personal project and (currently at least) developed and tested exclusively with Google Chrome on a Pixel 5a.
+It will be a pleasant surprise and/or minor miracle if it works at all on anything else but you never know.
+
+## Screenshots
+
+|<img width="480" src="documentation/images/portrait.png">|<img width="640" src="documentation/images/landscape.png">|
 
 
 ## Supported browsers
 
 | Platform    | Browser    | Version        | Ok     |
 |-------------|------------|----------------|--------|
-| **MacOs**   | Chrome     | -              | Yes    |
+| **MacOs**   | Chrome     | (recent)       | Yes    |
 |             | Firefox    |                |        |
 |             | Safari     |                |        |
 |             | Opera      |                |        |
@@ -53,8 +60,8 @@ https://yam-8sz.pages.dev
 
 Download and unpack the _yam.zip_ file from the most recent [nightly](https://github.com/transcriptaze/yam/actions/workflows/nightly.yml) build.
 
-It must be hosted by a web server - both Python and NodeJS work but whatever you have will work (it's entirely static) as long
-as CORS is enabled and has the following headers:
+CORS requires it to be hosted by a web server - the repo includes scripts for the _Python_ and _NodeJS_ built-in HTTP servers - but the web app
+is entirely static so whatever you have will probably work as long as CORS is enabled and has the following headers:
 ```
   Access-Control-Allow-Origin: *
   Access-Control-Allow-Methods: GET, OPTIONS
@@ -69,12 +76,13 @@ python3 httpd.py
 
 ### NodeJS
 ```
-http-server html --cors
+node https.mjs
 ```
 
 ## License
 
 Everything in this repository is licensed under [GPL-3.0](https://github.com/transcriptaze/yam/blob/master/LICENSE). 
+
 
 ## Attributions
 

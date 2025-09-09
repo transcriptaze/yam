@@ -6,7 +6,7 @@
 
 Just one more _WebAudio_ metronome web app to add to the many, many other metronomes out there.
 
-YAM is pretty much designed exclusively for use by an _almost but not entirely_ ham-fisted acoustic fingerstyle
+YAM is pretty much designed exclusively for use by an _almost but not entirely ham-fisted_ acoustic fingerstyle
 guitarist without any appreciable musical ability who plays an _old but adored_ Taylor 310e and needs all the
 help he can get. If that description is not you (it probably isn't 😄) then YMMV!
 

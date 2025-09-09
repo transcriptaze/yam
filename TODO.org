@@ -18,6 +18,10 @@
 *** DONE fix portrait + fullscreen layout
 *** DONE remove settings from toolbar entirely
 
+*** TODO loop count
+**** DONE editor
+**** TODO count-down in metronome
+
 *** TODO add new track playlists:tracklist
       - playlist weirdness on open if new track is added to selected+closed playlist
       - something to do with the isopen/selected logic because the handles are showing
@@ -137,7 +141,6 @@
 *** TODO hover styles
 *** TODO lock
 *** TODO clone
-*** TODO counted loops
 *** TODO coloured sections
 
 ** Pads

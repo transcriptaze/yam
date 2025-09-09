@@ -145,7 +145,9 @@ export class Track extends EventTarget {
   }
 
   get loops() {
-    return this.#metronome?.loops ?? INF
+    const loops = Number.parseInt(`${this.#metronome?.loops ?? INF}`)
+
+    return [2,3,4,5].includes(loops) ? loops : INF
   }
 
   get timeSignature() {
@@ -252,6 +254,7 @@ export class Track extends EventTarget {
     this.#tempo = object?.tempo ?? this.#tempo
     this.#metronome.BPM = object?.BPM ?? this.#metronome.BPM
     this.#metronome.loop = object?.loop ?? this.#metronome.loop
+    this.#metronome.loops = object?.loops ?? this.#metronome.loops
   }
 
   prune() {

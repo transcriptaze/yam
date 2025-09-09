@@ -628,6 +628,7 @@ function onEdited(event) {
         tempo: event.detail.tempo,
         BPM: event.detail.BPM,
         loop: event.detail.loop,
+        loops: event.detail.loops,
       })
 
       track.save()

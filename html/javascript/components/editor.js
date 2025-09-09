@@ -1,4 +1,4 @@
-import { EVENTS } from '../constants.js'
+import { EVENTS, INF } from '../constants.js'
 import * as generators from '../generators.js'
 
 export class Editor extends HTMLElement {
@@ -50,6 +50,7 @@ export class Editor extends HTMLElement {
     const timeSignature = container.querySelector('yam-time-signature')
     const mm = container.querySelector('yam-mm')
     const loop = container.querySelector('yam-loop')
+    const loops = container.querySelector('#loops')
     const BPM = container.querySelector('#BPM')
     const sections = container.querySelector('div.sections details')
     const ul = sections.querySelector('ul')
@@ -64,11 +65,14 @@ export class Editor extends HTMLElement {
     mm.pulse = track?.pulse ?? 'quarter'
     mm.BPM = track?.tempo ?? 120
 
+    BPM.value = track?.BPM ?? track?.tempo ?? 120
+    BPM.disabled = track == null
+
     loop.enabled = track?.loopable ?? false
     loop.loop = track?.loop ?? false
 
-    BPM.value = track?.BPM ?? track?.tempo ?? 120
-    BPM.disabled = track == null
+    loops.disabled = track == null
+    loops.value = [2, 3, 4, 5].includes(track?.loops) ? track.loops : -`1`
 
     if (track == null) {
       sections.classList.add('disabled')
@@ -124,8 +128,9 @@ export class Editor extends HTMLElement {
         const title = container.querySelector('input#title')
         const timeSignature = container.querySelector('yam-time-signature')
         const mm = container.querySelector('yam-mm')
+        const bpm = container.querySelector('#BPM')
         const loop = container.querySelector('yam-loop')
-        const bpm = container.querySelector('input#BPM')
+        const loops = container.querySelector('#loops')
 
         const BPM = Number.parseInt(bpm.value)
 
@@ -141,6 +146,7 @@ export class Editor extends HTMLElement {
               tempo: mm.BPM,
               BPM: !Number.isNaN(BPM) && BPM >= 40 && BPM <= 200 ? BPM : null,
               loop: loop.loop,
+              loops: ['2', '3', '4', '5'].includes(loops.value) ? Number.parseInt(loops.value) : INF,
             },
           }),
         )
@@ -148,20 +154,6 @@ export class Editor extends HTMLElement {
     },
   }
 }
-
-// function transmogrify(track) {
-//   return [...generators.transmogrify(track)].map((v) => {
-//     return v
-//     // {
-//     //   ID: v.ID,
-//     //   role: v.role,
-//     //   name: v.name,
-//     //   measures: v.measures,
-//     //   colour: v.colour,
-//     //   start: v.start,
-//     // }
-//   })
-// }
 
 function* transmogrify(track) {
   const sections = track?.sections ?? []

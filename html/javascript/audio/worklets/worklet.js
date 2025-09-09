@@ -250,8 +250,6 @@ export class Metronome extends AudioWorkletProcessor {
 
           const loops = this.track?.loops ?? INF
 
-          console.log('>>>> ', loops, this.#loops)
-
           if (loop && (loops == INF || this.#loops < loops) && this.FSM.onPlay()) {
             this.section = null
             this.clock.reset()

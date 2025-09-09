@@ -1,3 +1,27 @@
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: bold;
+  src: url("../fonts/Lato/Lato-Bold.woff2");
+}
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 500;
+  src: url("../fonts/Lato/Lato-Medium.woff2");
+}
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: 600;
+  src: url("../fonts/Lato/Lato-Semibold.woff2");
+}
+@font-face {
+  font-family: "Lato";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/Lato/Lato-Regular.woff2");
+}
 :root {
   --background: #ffffff url("../images/textures/ricepaper_v3.png");
   --track-colour-muted: #a0a0a0;
@@ -1300,10 +1324,6 @@ div.playlist-track [popover]:popover-open::backdrop {
   grid-column: 2;
   grid-row: 2;
 }
-:host(.component-editor) div.track-editor div.track yam-loop {
-  grid-column: 3/5;
-  grid-row: 2;
-}
 :host(.component-editor) div.track-editor div.metronome {
   box-sizing: border-box;
   background: rgba(192, 192, 192, 0.2509803922);
@@ -1314,20 +1334,31 @@ div.playlist-track [popover]:popover-open::backdrop {
   padding-right: 8px;
   padding-bottom: 8px;
   display: grid;
-  grid-template-columns: auto auto 1fr;
+  grid-template-columns: auto auto 1fr auto auto;
   grid-template-rows: auto;
   align-items: center;
   column-gap: 4px;
 }
-:host(.component-editor) div.track-editor div.metronome label {
+:host(.component-editor) div.track-editor div.metronome label[for=BPM] {
   grid-column: 1;
   grid-row: 1;
   margin-right: 8px;
 }
-:host(.component-editor) div.track-editor div.metronome input {
+:host(.component-editor) div.track-editor div.metronome #BPM {
   grid-columns: 2;
   grid-row: 1;
-  min-width: 4em;
+  min-width: 2em;
+}
+:host(.component-editor) div.track-editor div.metronome #BPM::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+}
+:host(.component-editor) div.track-editor div.metronome yam-loop {
+  grid-column: 4;
+  grid-row: 1;
+}
+:host(.component-editor) div.track-editor div.metronome #loops {
+  grid-column: 5;
+  grid-row: 1;
 }
 :host(.component-editor) div.track-editor div.sections {
   box-sizing: border-box;
@@ -1427,7 +1458,13 @@ div.playlist-track [popover]:popover-open::backdrop {
   box-sizing: border-box;
   justify-self: end;
   height: 48px;
-  margin-right: 24px;
+}
+:host(.component-editor) div.track-editor select {
+  font-size: 1em;
+  font-weight: bold;
+}
+:host(.component-editor) div.track-editor select, :host(.component-editor) div.track-editor select::picker(select) {
+  appearance: base-select;
 }
 :host(.component-section) div.section {
   width: 100%;

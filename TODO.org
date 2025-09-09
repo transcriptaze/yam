@@ -342,6 +342,7 @@
       - squeaky hamster wheel
       - reversed/mirrored/upside-down
       - wind up clock spring before you can use it
+      - 3D printed with layer lines + dimensionally inaccurate controls
 
 *** Pi day
       - 3.1418:4 time

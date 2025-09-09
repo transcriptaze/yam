@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" 
+     version="1.1"
+     viewBox="0 0 120 120">
+  <g fill="#000000" transform="translate(3.25,5.25)">
+    <path d="M10,55.5 c-1,-31 2,-35 13,-35 7,0  41,0  41,0 v-18 l23,24  -22,22  v-17  h-45 v25  c0,0 -4,0 -10,0 z" />
+    <path d="M90,44.5 c0,23   2,36 -13,36 -1,0 -42,0 -42,0 v17  l-22,-23 22,-22 -1,18 h45  v-26 c0,0  9,0  10,0 z" />
+    <g transform="translate(-17.5,-10) scale(1.2)">
+      <rect x="60.5" y="57" width="40" height="40" ry="8" fill="#ffffff" stroke="#222222" stroke-width="0.9" />
+
+      <!-- 1 -->
+      <g transform="translate(71.54,88.9) scale(3.05)">
+        <path fill="#000000" stroke="#000000" stroke-width="0.25" d="M2.98,0 h1.55v-8.03 h-0.08 l-3.5,1.27 v1.33 l2.03,-0.73z" />
+      </g>
+
+    </g>
+  </g>
+</svg>

@@ -467,11 +467,18 @@
           <button id="save" disabled><img src="./images/save.svg" draggable="false"/></button>
           <yam-time-signature tabindex="-1" enterkeyhint="done" disabled></yam-time-signature>
           <yam-mm             tabindex="-1" enterkeyhint="done" disabled></yam-mm>
-          <yam-loop           tabindex="-1" enterkeyhint="done" disabled></yam-loop>
         </div>
         <div class="metronome">
           <input  id="BPM" type="number" min="40" max="200" step="1" disabled />
           <label for="BPM">BPM</label>
+          <yam-loop tabindex="-1" enterkeyhint="done" disabled></yam-loop>
+          <select id="loops" disabled>
+            <option value="-1">&infin;</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
         </div>
         <div class="sections">
           <details class="disabled">

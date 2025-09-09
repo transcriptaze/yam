@@ -6,7 +6,7 @@
 
 Just one more _WebAudio_ metronome web app to add to the many, many other metronomes out there.
 
-YAM is pretty much designed exclusively for use by an _almost but not entirely_ ham-fisted acoustic fingerstyle
+YAM is pretty much designed exclusively for use by an _almost but not entirely ham-fisted_ acoustic fingerstyle
 guitarist without any appreciable musical ability who plays an _old but adored_ Taylor 310e and needs all the
 help he can get. If that description is not you (it probably isn't 😄) then YMMV!
 
@@ -89,33 +89,33 @@ Everything in this repository is licensed under [GPL-3.0](https://github.com/tra
 ## Attributions
 
 1. Metronome icon
-   - https://www.svgrepo.com/svg/390025/metronome-tempo-beat-bpm
+   - [SVGRepo](https://www.svgrepo.com/svg/390025/metronome-tempo-beat-bpm)
+   - [CC Attribution License](https://www.svgrepo.com/page/licensing)
    - Music Glyphs Icons
-   - CC Attribution License
    - wishforge.games
 
 2. Settings icon
-   - https://www.svgrepo.com/svg/304474/settings
+   - [SVGRepo](https://www.svgrepo.com/svg/304474/settings)
+   - [PD License](https://www.svgrepo.com/page/licensing)
    - Simple App Development Icons
-   - PD License
    - Significa Labs   
 
 3. Library icon
-   - https://www.svgrepo.com/svg/506838/list
+   - [SVGRepo](https://www.svgrepo.com/svg/506838/list)
+   - [PD License](https://www.svgrepo.com/page/licensing)
    - Start Universal Tiny Oval Icons
-   - PD License
    - Salah Elimam   
 
 4. Song file icon
-   - https://www.svgrepo.com/svg/478380/music-file-1
+   - [SVGRepo](https://www.svgrepo.com/svg/478380/music-file-1)
+   - [PD License](https://www.svgrepo.com/page/licensing)
    - Communication Icooon Mono Vectors
-   - PD License
    - Icooon Mono
 
 5. RIFF icon
-   - https://www.svgrepo.com/svg/427846/song-music-sound
+   - [SVGRepo](https://www.svgrepo.com/svg/427846/song-music-sound)
+   - [CC Attribution License](https://www.svgrepo.com/page/licensing)
    - Stylish Tiny Intertface Icons
-   - CC Attribution License
    - Robin Kylander
 
 6. Bravura SMUFL font

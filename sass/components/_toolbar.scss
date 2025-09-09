@@ -55,6 +55,14 @@ toolbar {
     }  
   }
 
+  #settings {
+    display: none;
+  }
+
+  #bug {
+    display: none;
+  }
+
   #wakelock.active {
     img {
       filter: invert(10%) sepia(99%) saturate(5774%) hue-rotate(14deg) brightness(90%) contrast(121%);
@@ -74,10 +82,6 @@ toolbar.metronome {
   #edit {
     display: none;
   }
-
-  #bug {
-    display: none;
-  }
 }
 
 toolbar.playlist {
@@ -90,10 +94,6 @@ toolbar.playlist {
   }
 
   #edit {
-    display: none;
-  }
-
-  #bug {
     display: none;
   }
 }
@@ -148,14 +148,6 @@ toolbar.playlist {
     #save {
       display: none;
     }
-
-    #bug {
-      display: none;
-    }
-
-    #settings {
-      display: none;
-    }
   }
 
   toolbar.metronome.editable {
@@ -217,14 +209,6 @@ toolbar.playlist {
     }
 
     #wakelock {
-      display: none;
-    }
-
-    #settings {
-      display: none;
-    }
-
-    #bug {
       display: none;
     }
   }
@@ -277,10 +261,6 @@ toolbar.playlist {
     #save {
       display: none;
     }
-
-    #settings {
-      display: none;
-    }
   }
 
   toolbar.metronome.editable {
@@ -303,10 +283,6 @@ toolbar.playlist {
     }
 
     #wakelock {
-      display: none;
-    }
-
-    #settings {
       display: none;
     }
   }
@@ -336,23 +312,11 @@ toolbar.playlist {
       display: none;
     }
 
-    #settings {
-      display: none;
-    }
-
     #fullscreen {
       display: none;
     }
 
     #wakelock {
-      display: none;
-    }
-
-    #settings {
-      display: none;
-    }
-
-    #bug {
       display: none;
     }
   }

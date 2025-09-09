@@ -64,11 +64,6 @@
         grid-column: 2;
         grid-row: 2;
       }
-
-      yam-loop {
-        grid-column: 3 / 5;
-        grid-row: 2;
-      }
     }
 
     div.metronome {
@@ -83,23 +78,37 @@
       padding-bottom: 8px;
 
       display: grid;
-      grid-template-columns: auto auto 1fr;
+      grid-template-columns: auto auto 1fr auto auto;
       grid-template-rows: auto;
       align-items: center;
       column-gap: 4px;
 
-      label {
+      label[for="BPM"] {
         grid-column: 1;
         grid-row: 1;
 
         margin-right: 8px;
       }
 
-      input {
+      #BPM {
         grid-columns: 2;
         grid-row: 1;
 
-        min-width: 4em;
+        min-width: 2em;
+
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+        }
+      }
+
+      yam-loop {
+        grid-column: 4;
+        grid-row: 1;
+      }
+
+      #loops {
+        grid-column: 5;
+        grid-row: 1;
       }
     }
 
@@ -229,9 +238,17 @@
       justify-self: end;
 
       height: 48px;
-      margin-right: 24px;
     }
-  }
+
+    select {
+      font-size: 1em;
+      font-weight: bold;
+
+      &, &::picker(select) {
+        appearance: base-select;    
+      }
+    }
+ }
 
   @media (max-width: 768px) and (orientation:portrait) {
     div.track-editor {

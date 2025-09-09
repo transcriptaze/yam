@@ -8,6 +8,7 @@ export class Playlist extends HTMLElement {
   #UUID = ''
   #title = '---'
   #selected = null
+  #updated = false
   #tracks = []
   #tracklist = null
 
@@ -118,6 +119,8 @@ export class Playlist extends HTMLElement {
 
     if (this.isopen) {
       this.#set(this.#tracks)
+    } else {
+      this.#updated = true
     }
 
     if (selected === true) {
@@ -154,8 +157,9 @@ export class Playlist extends HTMLElement {
     const ul = tracks.querySelector('ul')
 
     // NTS: only render tracks on open
-    if (ul.children.length === 0) {
+    if (ul.children.length === 0 || this.#updated) {
       this.#set(this.#tracks)
+      this.#updated = false
     }
 
     container.setAttribute('open', '')

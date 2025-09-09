@@ -22,10 +22,14 @@
 **** DONE editor
 **** TODO count-down in metronome
 
-*** TODO add new track playlists:tracklist
-      - playlist weirdness on open if new track is added to selected+closed playlist
-      - something to do with the isopen/selected logic because the handles are showing
-      - arbitrarily makes 'All Tracks' selected sometimes
+*** TODO add new track
+**** DONE fix playlist weirdness if new track is added to selected+closed playlist
+**** TODO set editor track
+**** TODO update open tracklist widget
+
+*** TODO clear current track
+**** TODO on selecting another playlist
+**** TODO on load from file
 
 *** TODO connectedCallback: event handler duplication
 *** TODO reset UI if selected track is removed from playlist

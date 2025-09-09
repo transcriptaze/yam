@@ -147,7 +147,7 @@ export class Track extends EventTarget {
   get loops() {
     const loops = Number.parseInt(`${this.#metronome?.loops ?? INF}`)
 
-    return [2,3,4,5].includes(loops) ? loops : INF
+    return [2, 3, 4, 5].includes(loops) ? loops : INF
   }
 
   get timeSignature() {

@@ -54,6 +54,13 @@ export class Loop extends HTMLElement {
     }
   }
 
+  set enabled(v) {
+    const shadow = this.shadowRoot
+    const loop = shadow.querySelector('input')
+
+    loop.disabled = v !== true
+  }
+
   get loop() {
     const shadow = this.shadowRoot
     const loop = shadow.querySelector('input')
@@ -68,11 +75,12 @@ export class Loop extends HTMLElement {
     loop.checked = v === true
   }
 
-  set enabled(v) {
+  set loops(v) {
     const shadow = this.shadowRoot
     const loop = shadow.querySelector('input')
+    const N = parseInt(`${v}`)
 
-    loop.disabled = v !== true
+      loop.dataset.loops = Number.isNaN(N) ? '' : `${N}`
   }
 }
 

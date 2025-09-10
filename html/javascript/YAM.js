@@ -4,7 +4,7 @@ import * as fs from './fs.js'
 import { state } from './models/state.js'
 import { settings } from './settings.js'
 import * as log from './log.js'
-import { DEFAULT } from './constants.js'
+import { DEFAULT, INF } from './constants.js'
 import { EVENTS } from './constants.js'
 
 const LOGTAG = 'YAM'
@@ -49,6 +49,7 @@ export function initialise() {
   widgets.mm.pulse = state.pulse
   widgets.mm.BPM = state.BPM
   widgets.loop.loop = state.loop
+  widgets.loop.loops = INF
   widgets.knob.BPM = state.BPM
   widgets.knob.tempo = null
 
@@ -377,6 +378,7 @@ function onMM(event) {
 
 function onLoop(event) {
   state.loop = event.detail.loop
+
   engine.setLoop(state.loop)
 }
 
@@ -502,6 +504,7 @@ function onSelected(event) {
   widgets.knob.BPM = track?.BPM
   widgets.loop.enabled = track?.loopable ?? false
   widgets.loop.loop = track?.loop ?? false
+  widgets.loop.loops = track?.loops ?? INF
   widgets.metronome.bof = playlist?.BOF(track) ?? true
   widgets.metronome.eof = playlist?.EOF(track) ?? true
 

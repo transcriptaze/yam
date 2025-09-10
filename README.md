@@ -60,10 +60,11 @@ It will be a pleasant surprise and/or minor miracle if it works at all on anythi
 
 ## Installation
 
-Download and unpack the _yam-nightly.zip_ file from the most recent [nightly](https://github.com/transcriptaze/yam/actions/workflows/nightly.yml) build.
+Download and unpack the _yam-nightly.zip_ file from the most recent [nightly](https://github.com/transcriptaze/yam/actions/workflows/nightly.yml)
+build - and host the _html_ folder on a web server of your choice.
 
-It needs to be hosted by a web server - the repo includes scripts for the _Python_ and _NodeJS_ built-in HTTP servers - but the web app
-is entirely static so whatever you have will probably work as long as CORS is enabled and has the following headers:
+The repo includes scripts for the _Python_ and _NodeJS_ built-in HTTP servers, but the web app is entirely static so whatever
+you have will probably work as long as CORS is enabled and has the following headers:
 ```
   Access-Control-Allow-Origin: *
   Access-Control-Allow-Methods: GET, OPTIONS
@@ -72,11 +73,13 @@ is entirely static so whatever you have will probably work as long as CORS is en
 ```
 
 ### Python
+To run the built-in _Python_ HTTP server:
 ```
 python3 httpd.py
 ```
 
 ### NodeJS
+To run the built-in _NodeJS_ HTTP server:
 ```
 node httpd.mjs
 ```

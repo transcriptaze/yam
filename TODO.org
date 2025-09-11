@@ -18,11 +18,11 @@
 *** DONE fix portrait + fullscreen layout
 *** DONE remove settings from toolbar entirely
 
-*** TODO loop count
+*** DONE loop count
 **** DONE editor
 **** DONE loop count badge
 **** DONE count-down
-**** TODO fix colours
+**** DONE fix colours
 
 *** DONE add new track
 **** DONE fix playlist weirdness if new track is added to selected+closed playlist
@@ -125,6 +125,7 @@
 *** TODO soft/medium/loud sets
 
 ** Playlists
+*** TODO autoplay
 *** TODO save URL as bookmark
 *** TODO flag modified tracks
 *** TODO playlist indicator for back/next (e.g. dots)
@@ -348,6 +349,7 @@
       - reversed/mirrored/upside-down
       - wind up clock spring before you can use it
       - 3D printed with layer lines + dimensionally inaccurate controls
+      - left-handed day (everything reversed including ticks i.e. tock-tock-tock-tick)
 
 *** Pi day
       - 3.1418:4 time

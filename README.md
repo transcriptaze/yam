@@ -2,7 +2,7 @@
 
 # Yet Another Metronome
 
-**-- IN DEVELOPMENT --**
+**-- IN DEVELOPMENT (PRE-ALPHA) --**
 
 Just one more _WebAudio_ metronome web app to add to the many, many other metronomes out there.
 
@@ -30,32 +30,32 @@ It will be a pleasant surprise and/or minor miracle if it works at all on anythi
 
 ## Supported browsers
 
-| Platform    | Browser    | Version        | Ok     |
-|-------------|------------|----------------|--------|
-| **MacOs**   | Chrome     | (recent)       | Yes    |
-|             | Firefox    |                |        |
-|             | Safari     |                |        |
-|             | Opera      |                |        |
-|             | DuckDuckGo |                | **NO** |
-|             |            |                |        |
-| **Windows** | Chrome     |                |        |
-|             | Firefox    |                |        |
-|             | Edge       |                |        |
-|             | Opera      |                |        |
-|             | DuckDuckGo |                |        |
-|             |            |                |        |
-| **Linux**   | Chrome     |                |        |
-|             | Firefox    |                |        |
-|             | Opera      |                |        |
-|             | DuckDuckGo |                |        |
-|             |            |                |        |
-| **Android** | Chrome     |                | Yes    |
-|             | Firefox    |                |        |
-|             | DuckDuckGo |                | **NO** |
-|             |            |                |        |
-| **iOS**     | Chrome     |                |        |
-|             | Firefox    |                |        |
-|             | Safari     |                |        |
+| Platform    | Browser    | Version        | Ok               |
+|-------------|------------|----------------|------------------|
+| **MacOs**   | Chrome     | (recent'ish)   | Yes              |
+|             | Firefox    |                |                  |
+|             | Safari     |                |                  |
+|             | Opera      |                |                  |
+|             | DuckDuckGo |                | **NO**           |
+|             |            |                |                  |
+| **Windows** | Chrome     |                |                  |
+|             | Firefox    |                |                  |
+|             | Edge       |                |                  |
+|             | Opera      |                |                  |
+|             | DuckDuckGo |                | **UNLIKELY**     |
+|             |            |                |                  |
+| **Linux**   | Chrome     |                |                  |
+|             | Firefox    |                |                  |
+|             | Opera      |                |                  |
+|             | DuckDuckGo |                | **PROBABLY NOT** |
+|             |            |                |                  |
+| **Android** | Chrome     |                | Yes              |
+|             | Firefox    |                |                  |
+|             | DuckDuckGo |                | **NO**           |
+|             |            |                |                  |
+| **iOS**     | Chrome     |                |                  |
+|             | Firefox    |                |                  |
+|             | Safari     |                |                  |
 
 
 ## Installation

@@ -1,6 +1,13 @@
+import { INF } from '../constants.js'
+
 export class Loop extends HTMLElement {
   static get observedAttributes() {
     return []
+  }
+
+  #loops = {
+    loops: INF,
+    count: 0,
   }
 
   #handlers = {
@@ -80,7 +87,32 @@ export class Loop extends HTMLElement {
     const loop = shadow.querySelector('input')
     const N = parseInt(`${v}`)
 
-      loop.dataset.loops = Number.isNaN(N) ? '' : `${N}`
+    this.#loops.loops = !Number.isNaN(N) ? N : INF
+
+    const remaining = this.#loops.loops - this.#loops.count
+
+    if (remaining > 0 && remaining !== INF) {
+      loop.dataset.loops = `${remaining}`
+    } else {
+      loop.dataset.loops = ''
+    }
+  }
+
+  redraw({ loops }) {
+    if (loops.loops !== this.#loops.loops || loops.count !== this.#loops.count) {
+      this.#loops.loops = loops.loops
+      this.#loops.count = loops.count
+
+      const remaining = this.#loops.loops - this.#loops.count
+      const shadow = this.shadowRoot
+      const loop = shadow.querySelector('input')
+
+      if (remaining > 0 && remaining !== INF) {
+        loop.dataset.loops = `${remaining}`
+      } else {
+        loop.dataset.loops = ''
+      }
+    }
   }
 }
 

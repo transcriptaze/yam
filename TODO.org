@@ -20,7 +20,9 @@
 
 *** TODO loop count
 **** DONE editor
-**** TODO count-down in metronome
+**** DONE loop count badge
+**** DONE count-down
+**** TODO fix colours
 
 *** TODO add new track
 **** DONE fix playlist weirdness if new track is added to selected+closed playlist
@@ -121,6 +123,7 @@
 *** TODO has
 *** TODO get 
 *** TODO versioning (newer versions get downloaded)
+*** TODO soft/medium/loud sets
 
 ** Playlists
 *** TODO save URL as bookmark
@@ -249,6 +252,8 @@
 
 ** Plugins
       - statistics
+      - make-me-a-sandwich JSON editor pages
+      - MIDI file import/export
 
 ** About
       - https://webkit.org/blog/16547/better-typography-with-text-wrap-pretty/
@@ -273,6 +278,7 @@
      - midi
      - json
    - fermata
+   - rallentando
 
 3. 'listen'
    - for start

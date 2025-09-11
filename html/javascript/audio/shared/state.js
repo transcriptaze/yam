@@ -11,7 +11,8 @@ const DIVISIONS = 20
 const BPM = 24
 const TIMESIGNATURE = 28 // 16 bytes
 const PULSE = 44
-const _SPARE = 48 // 16 bytes
+const LOOPS = 48
+const _SPARE = 52 // 12 bytes
 
 const HEADER = 8
 const DATA = 64
@@ -37,6 +38,7 @@ export class State {
     this.BPM = null
     this.timeSignature = null
     this.pulse = null
+    this.loops = null
   }
 
   get #head() {
@@ -101,7 +103,7 @@ export class State {
   }
 
   set state(v) {
-    this.#setUint32(STATE, v)
+    this.#setUint32(STATE, v ?? 0)
   }
 
   get section() {
@@ -109,7 +111,7 @@ export class State {
   }
 
   set section(v) {
-    this.#setUint32(SECTION, v)
+    this.#setUint32(SECTION, v ?? 0)
   }
 
   get bar() {
@@ -117,7 +119,7 @@ export class State {
   }
 
   set bar(v) {
-    this.#setUint32(BAR, v)
+    this.#setUint32(BAR, v ?? 0)
   }
 
   get beat() {
@@ -125,7 +127,7 @@ export class State {
   }
 
   set beat(v) {
-    this.#setFloat32(BEAT, v)
+    this.#setFloat32(BEAT, v ?? 0)
   }
 
   get beats() {
@@ -133,7 +135,7 @@ export class State {
   }
 
   set beats(v) {
-    this.#setUint32(BEATS, v)
+    this.#setUint32(BEATS, v ?? 0)
   }
 
   get divisions() {
@@ -141,7 +143,7 @@ export class State {
   }
 
   set divisions(v) {
-    this.#setUint32(DIVISIONS, v)
+    this.#setUint32(DIVISIONS, v ?? 0)
   }
 
   get BPM() {
@@ -149,7 +151,7 @@ export class State {
   }
 
   set BPM(v) {
-    this.#setUint32(BPM, v)
+    this.#setUint32(BPM, v ?? 120)
   }
 
   get timeSignature() {
@@ -170,7 +172,15 @@ export class State {
   }
 
   set pulse(v) {
-    this.#setFloat32(PULSE, v)
+    this.#setFloat32(PULSE, v ?? 0.0)
+  }
+
+  get loops() {
+    return this.#getUint32(LOOPS)
+  }
+
+  set loops(v) {
+    this.#setUint32(LOOPS, v ?? 0)
   }
 
   reset() {

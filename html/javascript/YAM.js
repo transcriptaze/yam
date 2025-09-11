@@ -656,8 +656,10 @@ function onEdited(event) {
         widgets.knob.BPM = track.BPM
         widgets.knob.tempo = track.tempo
         widgets.wheel.BPM = track.BPM
+        widgets.loop.loops = track.loops
 
         // ... update engine
+        engine.setTrack(track)
         engine.setLoop(track.loop)
       }
 
@@ -778,6 +780,7 @@ function animate(id) {
   const BPM = engine.BPM()
   const timeSignature = engine.timeSignature()
   const pulse = engine.pulse()
+  const loops = engine.loops()
 
   const runstate = {
     playing: playing,
@@ -786,6 +789,7 @@ function animate(id) {
     beats: beats,
     divisions: divisions,
     pulse: pulse,
+    loops: loops,
   }
 
   widgets.pads.redraw(beat, runstate)
@@ -794,6 +798,7 @@ function animate(id) {
   widgets.mm.redraw(BPM, pulse, runstate)
   widgets.knob.redraw(BPM, runstate)
   widgets.wheel.redraw(BPM, runstate)
+  widgets.loop.redraw(runstate)
 
   if (!stopped) {
     requestAnimationFrame(() => animate(id))

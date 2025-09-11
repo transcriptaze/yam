@@ -118,6 +118,10 @@ class Engine {
   get divisions() {
     return this.metronome.divisions ?? 0
   }
+
+  get loops() {
+    return this.metronome?.loops ?? 0
+  }
 }
 
 const engine = new Engine()
@@ -160,6 +164,10 @@ export function timeSignature() {
 
 export function pulse() {
   return engine != null && engine.initialised ? engine.pulse : 'quarter'
+}
+
+export function loops() {
+  return engine != null && engine.initialised ? engine.loops : 0
 }
 
 export function load(track) {

@@ -19,6 +19,7 @@ const INF = Number.POSITIVE_INFINITY
 
 export class MetronomeNode extends AudioWorkletNode {
   #state = null
+  #loops = INF
   #sections = new Map()
 
   #cache = {
@@ -32,6 +33,7 @@ export class MetronomeNode extends AudioWorkletNode {
     BPM: 120,
     timeSignature: '4:4',
     pulse: 'quarter',
+    loops: 0,
   }
 
   constructor(context, tick, tock, stick, subscribers) {
@@ -137,6 +139,8 @@ export class MetronomeNode extends AudioWorkletNode {
       loops: v?.loops ?? INF,
     })
 
+    this.#loops = v?.loops ?? INF
+
     this.#sections = new Map(
       track.sections.map((u) => [
         u.ID,
@@ -224,6 +228,13 @@ export class MetronomeNode extends AudioWorkletNode {
     return this.#cache.pulse
   }
 
+  get loops() {
+    return {
+      loops: this.#loops,
+      count: this.#cache.loops,
+    }
+  }
+
   #flipped(state) {
     this.#cache.playing = state.state === STATE.PLAYING
     this.#cache.stopped = state.state === STATE.STOPPED
@@ -235,6 +246,7 @@ export class MetronomeNode extends AudioWorkletNode {
     this.#cache.BPM = state.BPM
     this.#cache.timeSignature = state.timeSignature
     this.#cache.pulse = PULSE.get(state.pulse)?.name ?? ''
+    this.#cache.loops = state.loops
   }
 }
 

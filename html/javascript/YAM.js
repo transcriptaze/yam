@@ -584,6 +584,8 @@ function onSave() {
         playlist.add(track)
         playlist.save()
       }
+
+      widgets.editor.track = track
     }
 
     track.update(object)

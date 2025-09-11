@@ -24,10 +24,9 @@
 **** DONE count-down
 **** TODO fix colours
 
-*** TODO add new track
+*** DONE add new track
 **** DONE fix playlist weirdness if new track is added to selected+closed playlist
-**** TODO set editor track
-**** TODO update open tracklist widget
+**** DONE set editor track
 
 *** TODO clear current track
 **** TODO on selecting another playlist

@@ -135,6 +135,7 @@ export class Editor extends HTMLElement {
           return {
             name: v.name,
             role: v.role,
+            measures: v.measures,
           }
         })
 
@@ -181,18 +182,21 @@ function* transmogrify(track) {
 
     const role = _roles(section.role)
     const name = _names(null, role)
+    let bars = 0
 
     const clicks = section.clicks ?? null
     const subsections = []
 
     if (_subsections.length == 0) {
-      subsections.push({
-        measures: section.measures ?? (['count-in', 'anacrusis'].includes(role) ? 1 : Number.POSITIVE_INFINITY),
-        tempo: tempo,
-        timeSignature: timeSignature,
-        pulse: pulse,
-        clicks: clicks,
-      })
+      // subsections.push({
+      //   measures:
+      //   tempo: tempo,
+      //   timeSignature: timeSignature,
+      //   pulse: pulse,
+      //   clicks: clicks,
+      // })
+
+      bars = section.measures ?? (['count-in', 'anacrusis'].includes(role) ? 1 : Number.POSITIVE_INFINITY)
     } else {
       for (const subsection of _subsections) {
         tempo = subsection.tempo ?? tempo
@@ -207,9 +211,9 @@ function* transmogrify(track) {
           clicks: subsection.clicks ?? clicks,
         })
       }
-    }
 
-    const bars = subsections.reduce((measures, v) => measures + v.measures, 0)
+      bars = section.measures ?? (['count-in', 'anacrusis'].includes(role) ? 1 : Number.POSITIVE_INFINITY)
+    }
 
     yield {
       role: {
@@ -221,7 +225,7 @@ function* transmogrify(track) {
         track: section.name,
         generated: name,
       },
-      // subsections: subsections,
+      subsections: subsections,
       measures: bars,
     }
 

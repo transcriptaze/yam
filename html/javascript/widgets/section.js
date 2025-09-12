@@ -1,6 +1,33 @@
+import { INF } from '../constants.js'
+
 export class Section extends HTMLElement {
   static get observedAttributes() {
     return []
+  }
+
+  #section = {}
+
+  #handlers = {
+    role: {
+      change: (e) => {
+        const shadow = this.shadowRoot
+        const measures = shadow.querySelector('#measures')
+
+        if (e.target.value === 'anacrusis') {
+          measures.readOnly = false
+          measures.placeholder = '1'
+
+          measures.setAttribute('min', 1)
+          measures.setAttribute('max', 1)
+          measures.reportValidity()
+        } else {
+          measures.readOnly = (this.#section?.subsections?.length ?? 0) > 0
+          measures.setAttribute('min', 1)
+          measures.removeAttribute('max')
+          measures.reportValidity()
+        }
+      },
+    },
   }
 
   constructor() {
@@ -21,6 +48,11 @@ export class Section extends HTMLElement {
 
   connectedCallback() {
     this.classList.add('component-section')
+
+    const shadow = this.shadowRoot
+    const role = shadow.querySelector('#role')
+
+    role.addEventListener('input', this.#handlers.role.change)
   }
 
   disconnectedCallback() {}
@@ -42,6 +74,19 @@ export class Section extends HTMLElement {
     role.placeholder = v?.role?.generated ?? ''
 
     measures.value = v?.measures ?? 0
+    measures.placeholder = role.value === 'anacrusis' ? 1 : '∞'
+
+    if (role.value === 'anacrusis') {
+      measures.setAttribute('min', 1)
+      measures.setAttribute('max', 1)
+      measures.readOnly = false
+    } else {
+      measures.setAttribute('min', 1)
+      measures.removeAttribute('max')
+      measures.readOnly = (v.subsections?.length ?? 0) > 0
+    }
+
+    this.#section = v
   }
 
   get name() {
@@ -56,6 +101,23 @@ export class Section extends HTMLElement {
     const role = shadow.querySelector('#role')
 
     return role.value.trim()
+  }
+
+  get measures() {
+    const shadow = this.shadowRoot
+    const measures = shadow.querySelector('#measures')
+
+    if (measures.value === '') {
+      return INF
+    } else {
+      const N = Number.parseInt(measures.value)
+
+      if (Number.isNaN(N)) {
+        return undefined
+      } else {
+        return N
+      }
+    }
   }
 }
 

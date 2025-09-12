@@ -275,6 +275,17 @@ export class Track extends EventTarget {
         } else if (v.role != null && v.role === '') {
           delete section.role
         }
+
+        // ... measures
+        if (section.subsections == null || sections.subsections.length == 0) {
+          if (section.role === 'anacrusis') {
+            section.measures = 1
+          } else if (v.measures == INF) {
+            section.measures = INF
+          } else if (!Number.isNaN(v.measures)) {
+            section.measures = v.measures
+          }
+        }
       }
     })
   }

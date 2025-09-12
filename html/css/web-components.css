@@ -1523,9 +1523,20 @@ div.playlist-track [popover]:popover-open::backdrop {
   border: none;
   outline: none;
 }
+:host(.component-section) div.section input:invalid {
+  color: red;
+}
 :host(.component-section) div.section input::placeholder {
   font-style: italic;
   color: #a0a0a0;
+}
+:host(.component-section) div.section input[readonly] {
+  color: gray;
+  font-style: italic;
+  font-weight: normal;
+}
+:host(.component-section) div.section input[readonly]:invalid {
+  color: red;
 }
 :host(.component-section) div.section #role {
   width: 6em;
@@ -1536,10 +1547,8 @@ div.playlist-track [popover]:popover-open::backdrop {
 }
 :host(.component-section) div.section #measures {
   width: 3em;
-  color: gray;
   text-align: center;
-  font-style: italic;
-  font-weight: normal;
+  font-style: normal;
   -moz-appearance: textfield;
 }
 :host(.component-section) div.section #measures::-webkit-inner-spin-button {

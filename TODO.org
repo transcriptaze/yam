@@ -32,6 +32,7 @@
 
 ** Fixes
 *** TODO editor: metronome div vertical alignment
+*** TODO editor: role drop down list
 *** TODO portrait/fullscreen: put something (title?) in the 'safe area' at the top
 *** TODO allow BPM changes while playing a track
 *** TODO move start/stop/delay to clock

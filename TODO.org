@@ -9,16 +9,9 @@
   - https://daniel.do/article/making-noisy-svgs
   - https://github.com/liriliri/eruda
 
-*** DONE track loop
-*** DONE move BOF/EOF to model/playlist
-*** DONE URL playlist parameter
-*** DONE fix flicker on list drag
-*** DONE move to github.transcriptaze
-*** DONE commit as user transcriptaze
-*** DONE fix portrait + fullscreen layout
-*** DONE remove settings from toolbar entirely
-*** DONE loop count
-*** DONE add new track
+*** TODO clear current track
+**** TODO on selecting another playlist
+**** TODO on load from file
 
 *** TODO Firefox
 **** DONE time-signature layout
@@ -29,10 +22,6 @@
 **** TODO editor time signature popover
 **** TODO editor: loop count font
 
-*** TODO clear current track
-**** TODO on selecting another playlist
-**** TODO on load from file
-
 *** TODO connectedCallback: event handler duplication
 *** TODO reset UI if selected track is removed from playlist
 *** TODO fix dangling popover on track delete
@@ -42,6 +31,7 @@
       - the muted from the track above gets copied over
 
 ** Fixes
+*** TODO editor: metronome div vertical alignment
 *** TODO portrait/fullscreen: put something (title?) in the 'safe area' at the top
 *** TODO allow BPM changes while playing a track
 *** TODO move start/stop/delay to clock

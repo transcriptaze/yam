@@ -43,6 +43,13 @@ export class Section extends HTMLElement {
 
     measures.value = v?.measures ?? 0
   }
+
+  get name() {
+    const shadow = this.shadowRoot
+    const name = shadow.querySelector('#name')
+
+    return name.value.trim()
+  }
 }
 
 customElements.define('yam-section', Section)

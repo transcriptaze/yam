@@ -255,6 +255,16 @@ export class Track extends EventTarget {
     this.#metronome.BPM = object?.BPM ?? this.#metronome.BPM
     this.#metronome.loop = object?.loop ?? this.#metronome.loop
     this.#metronome.loops = object?.loops ?? this.#metronome.loops
+
+    const sections = object?.sections ?? []
+
+    sections.forEach((v, i) => {
+      if (i < this.#sections.length) {
+        const section = this.sections[i]
+
+        section.name = v.name ?? section.name
+      }
+    })
   }
 
   prune() {

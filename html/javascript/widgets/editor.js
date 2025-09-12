@@ -131,6 +131,13 @@ export class Editor extends HTMLElement {
         const bpm = container.querySelector('#BPM')
         const loop = container.querySelector('yam-loop')
         const loops = container.querySelector('#loops')
+        const sections = Array.from(container.querySelector('div.sections ul').querySelectorAll('yam-section')).map((v) => {
+          return {
+            name: v.name,
+          }
+        })
+
+        console.log({ sections })
 
         const BPM = Number.parseInt(bpm.value)
 
@@ -147,6 +154,7 @@ export class Editor extends HTMLElement {
               BPM: !Number.isNaN(BPM) && BPM >= 40 && BPM <= 200 ? BPM : null,
               loop: loop.loop,
               loops: ['2', '3', '4', '5'].includes(loops.value) ? Number.parseInt(loops.value) : INF,
+              sections: [...sections],
             },
           }),
         )
@@ -159,9 +167,7 @@ function* transmogrify(track) {
   const sections = track?.sections ?? []
   const _roles = generators.roles()
   const _names = generators.names()
-  // const _colours = generators.colours()
 
-  // let ID = 0
   let tempo = track?.BPM ?? 120
   let timeSignature = track?.timeSignature ?? '4:4'
   let pulse = track?.pulse ?? ''
@@ -170,14 +176,12 @@ function* transmogrify(track) {
   for (const section of sections) {
     const _subsections = section.subsections ?? []
 
-    // ID++
     tempo = section.tempo ?? tempo
     timeSignature = section.timeSignature ?? timeSignature
     pulse = section.pulse ?? pulse
 
     const role = _roles(section.role)
     const name = _names(null, role)
-    // const colour = _colours(section.colour, role)
 
     const clicks = section.clicks ?? null
     const subsections = []
@@ -209,7 +213,6 @@ function* transmogrify(track) {
     const bars = subsections.reduce((measures, v) => measures + v.measures, 0)
 
     yield {
-      // ID: ID,
       role: {
         track: section.role,
         generated: role,
@@ -219,7 +222,6 @@ function* transmogrify(track) {
         track: section.name,
         generated: name,
       },
-      // colour: colour,
       // subsections: subsections,
       measures: bars,
     }

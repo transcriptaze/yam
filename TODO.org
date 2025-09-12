@@ -10,8 +10,9 @@
   - https://github.com/liriliri/eruda
 
 *** TODO clear current track
-**** TODO on selecting another playlist
+**** DONE on selecting another playlist
 **** TODO on load from file
+**** TODO stop engine if playing
 
 *** TODO Firefox
 **** DONE time-signature layout
@@ -21,6 +22,7 @@
 **** TODO editor section layout
 **** TODO editor time signature popover
 **** TODO editor: loop count font
+**** TODO set width/height for SVGs
 
 *** TODO connectedCallback: event handler duplication
 *** TODO reset UI if selected track is removed from playlist
@@ -31,6 +33,8 @@
       - the muted from the track above gets copied over
 
 ** Fixes
+*** TODO metricals: jump around as pulse/BPM change
+*** TODO playlists loaded from file include deleted playlists
 *** TODO editor: metronome div vertical alignment
 *** TODO editor: role drop down list
 *** TODO portrait/fullscreen: put something (title?) in the 'safe area' at the top
@@ -240,6 +244,13 @@
       - sound sets
       - click patterns
       - (?) knob PID constants
+
+** Textures
+      - Master of Poisons (book cover)
+      - Penrose tiles
+      - 'hat' tiles
+      - Navaho weaves
+      - Ndebele patterns
 
 ** Plugins
       - statistics

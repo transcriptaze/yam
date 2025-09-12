@@ -68,6 +68,8 @@ export class TimeSignature extends HTMLElement {
   }
 
   connectedCallback() {
+    this.classList.add('component-time-signature')
+
     const shadow = this.shadowRoot
     const list = shadow.querySelector('#list')
     const ul = shadow.querySelector('div.content ul')

@@ -213,10 +213,12 @@ div.metronome.playing #play img.stop {
   display: none;
 }
 
-div.time-signature {
+:host(.component-time-signature) div.time-signature {
+  display: inline-block;
   height: 100%;
 }
-div.time-signature button {
+:host(.component-time-signature) div.time-signature button {
+  display: inline-block;
   width: fit-content;
   height: 100%;
   background: none;
@@ -224,50 +226,50 @@ div.time-signature button {
   outline: none;
   cursor: pointer;
 }
-div.time-signature button div {
+:host(.component-time-signature) div.time-signature button div {
   display: grid;
   grid-template-columns: auto auto 1fr;
   grid-template-rows: minmax(0, 1fr);
   height: 100%;
 }
-div.time-signature button div img {
+:host(.component-time-signature) div.time-signature button div img {
   height: 100%;
 }
-div.time-signature button div img.hidden {
+:host(.component-time-signature) div.time-signature button div img.hidden {
   display: none;
 }
-div.time-signature button div img.stave {
+:host(.component-time-signature) div.time-signature button div img.stave {
   grid-column: 1/4;
   grid-row: 1;
 }
-div.time-signature button div img.clef {
+:host(.component-time-signature) div.time-signature button div img.clef {
   grid-column: 1;
   grid-row: 1;
 }
-div.time-signature button div img.tactus {
+:host(.component-time-signature) div.time-signature button div img.tactus {
   grid-column: 2;
   grid-row: 1;
   justify-self: center;
 }
-div.time-signature button div img.figura {
+:host(.component-time-signature) div.time-signature button div img.figura {
   grid-column: 2;
   grid-row: 1;
   justify-self: center;
 }
-div.time-signature button div img.common {
+:host(.component-time-signature) div.time-signature button div img.common {
   grid-column: 2;
   grid-row: 1;
   justify-self: center;
 }
-div.time-signature button div img.cut {
+:host(.component-time-signature) div.time-signature button div img.cut {
   grid-column: 2;
   grid-row: 1;
   justify-self: center;
 }
-div.time-signature button:disabled img {
+:host(.component-time-signature) div.time-signature button:disabled img {
   filter: grayscale(100%) opacity(50%);
 }
-div.time-signature div#list {
+:host(.component-time-signature) div.time-signature div#list {
   top: calc(anchor(bottom) + 8px);
   left: calc(anchor(left) + 12px);
   margin: 0px;
@@ -276,7 +278,7 @@ div.time-signature div#list {
   outline: none;
   border: none;
 }
-div.time-signature div#list div.content {
+:host(.component-time-signature) div.time-signature div#list div.content {
   background: white;
   padding-top: 8px;
   padding-bottom: 8px;
@@ -288,7 +290,7 @@ div.time-signature div#list div.content {
   align-items: start;
   row-gap: 8px;
 }
-div.time-signature div#list div.content ul {
+:host(.component-time-signature) div.time-signature div#list div.content ul {
   grid-column: 1;
   grid-row: 1;
   list-style: none;
@@ -301,16 +303,16 @@ div.time-signature div#list div.content ul {
   column-rule: dotted;
   column-rule-width: thin;
 }
-div.time-signature div#list div.content ul li {
+:host(.component-time-signature) div.time-signature div#list div.content ul li {
   display: flex;
   justify-content: center;
   width: 100%;
   margin-bottom: 4px;
 }
-div.time-signature div#list div.content ul li img {
+:host(.component-time-signature) div.time-signature div#list div.content ul li img {
   height: 32px;
 }
-div.time-signature div#list div.content div.custom {
+:host(.component-time-signature) div.time-signature div#list div.content div.custom {
   grid-column: 1;
   grid-row: 2;
   align-self: stretch;
@@ -322,7 +324,7 @@ div.time-signature div#list div.content div.custom {
   padding-left: 4px;
   padding-right: 4px;
 }
-div.time-signature div#list div.content div.custom input {
+:host(.component-time-signature) div.time-signature div#list div.content div.custom input {
   background: #e0e0e0;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -335,11 +337,19 @@ div.time-signature div#list div.content div.custom input {
   text-align: center;
   -moz-appearance: textfield;
 }
-div.time-signature div#list div.content div.custom input::-webkit-inner-spin-button {
+:host(.component-time-signature) div.time-signature div#list div.content div.custom input::-webkit-inner-spin-button {
   -webkit-appearance: none;
 }
-div.time-signature div#list div.content div.custom input:invalid {
+:host(.component-time-signature) div.time-signature div#list div.content div.custom input:invalid {
   color: red;
+}
+@-moz-document url-prefix() {
+  :host(.component-time-signature) img.tactus {
+    margin-left: 8px;
+  }
+  :host(.component-time-signature) img.figura {
+    margin-left: 8px;
+  }
 }
 
 div.pads {

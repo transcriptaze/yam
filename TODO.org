@@ -17,16 +17,17 @@
 *** DONE commit as user transcriptaze
 *** DONE fix portrait + fullscreen layout
 *** DONE remove settings from toolbar entirely
-
 *** DONE loop count
-**** DONE editor
-**** DONE loop count badge
-**** DONE count-down
-**** DONE fix colours
-
 *** DONE add new track
-**** DONE fix playlist weirdness if new track is added to selected+closed playlist
-**** DONE set editor track
+
+*** TODO Firefox
+**** DONE time-signature layout
+**** TODO pulse layout
+**** TODO MM/time signature popover
+**** TODO controls layout
+**** TODO editor section layout
+**** TODO editor time signature popover
+**** TODO editor: loop count font
 
 *** TODO clear current track
 **** TODO on selecting another playlist
@@ -81,7 +82,6 @@
 *** TODO use different font/colour for track that is in playlist (so that you know you are editing a playlist item)
 *** TODO consistently pass the whole track as a parameter (and not just the UUID)
       - OR at least stop mixing up track UUID and track
-*** TODO Firefox MM/time signature CSS
 *** TODO Firefox save doesn't update playlist
 *** TODO resize knob/fix SVG overflow
 *** TODO move engine.set to onModified

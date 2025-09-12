@@ -262,7 +262,19 @@ export class Track extends EventTarget {
       if (i < this.#sections.length) {
         const section = this.sections[i]
 
-        section.name = v.name ?? section.name
+        // ... section name
+        if (v.name != null && v.name !== '') {
+          section.name = v.name
+        } else if (v.name != null && v.name === '') {
+          delete section.name
+        }
+
+        // ... section role
+        if (v.role != null && v.role !== '') {
+          section.role = v.role
+        } else if (v.role != null && v.role === '') {
+          delete section.role
+        }
       }
     })
   }

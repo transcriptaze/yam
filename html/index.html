@@ -492,9 +492,20 @@
       <div class="track-section">
         <div class="section">
           <input  id="name"     type="text"   autocomplete="off" />
-          <input  id="role"     type="text"   readonly />
+          <input  id="role"     type="text"   list="roles" />
           <input  id="measures" type="number" readonly />
         </div>
+        <datalist id="roles">
+          <option value="intro">intro</option>
+          <option value="verse">verse</option>
+          <option value="chorus">chorus</option>
+          <option value="outro">outro</option>
+          <option value="count-in">count-in</option>
+          <option value="anacrusis">anacrusis</option>
+          <option value="bridge">bridge</option>
+          <option value="turnaround">turnaround</option>
+          <option value="other">other</option>
+        </datalist>
       </div>
     </template>
 

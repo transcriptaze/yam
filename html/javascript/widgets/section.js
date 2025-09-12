@@ -50,6 +50,13 @@ export class Section extends HTMLElement {
 
     return name.value.trim()
   }
+
+  get role() {
+    const shadow = this.shadowRoot
+    const role = shadow.querySelector('#role')
+
+    return role.value.trim()
+  }
 }
 
 customElements.define('yam-section', Section)

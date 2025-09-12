@@ -134,10 +134,9 @@ export class Editor extends HTMLElement {
         const sections = Array.from(container.querySelector('div.sections ul').querySelectorAll('yam-section')).map((v) => {
           return {
             name: v.name,
+            role: v.role,
           }
         })
-
-        console.log({ sections })
 
         const BPM = Number.parseInt(bpm.value)
 

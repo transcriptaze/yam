@@ -1,4 +1,4 @@
-import { tap } from '../../html/javascript/components/knob.js'
+import { tap } from '../../html/javascript/widgets/knob.js'
 import { describe, it } from 'mocha'
 import { expect } from 'chai'
 

@@ -38,14 +38,6 @@ dequeue(seq) ==
     [ head |-> Head(seq), tail |-> Tail(seq) ]
 
 
-(* Action: start/stop button click *)
-Click ==
-    /\ thread = << >>
-    /\ thread' = enqueue(thread,EVENT_CLICK)
-    /\ UNCHANGED << buttonLabel, buttonState >>
-    /\ UNCHANGED << clockState >>
-
-
 (* Action: toggle on start/stop button click *)
 StartStop ==
     /\ thread # << >>

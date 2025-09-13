@@ -38,9 +38,23 @@
       outline: none;
     }
 
+    input:invalid {
+      color: red;
+    }
+
     input::placeholder {
       font-style: italic;
       color: #a0a0a0;
+    }
+
+    input[readonly] {
+      color: gray;
+      font-style: italic;
+      font-weight: normal;
+    }
+
+    input[readonly]:invalid {
+      color: red;
     }
 
     #role {
@@ -54,11 +68,9 @@
 
     #measures {
       width: 3em;
-      color: gray;
 
       text-align: center;
-      font-style: italic;
-      font-weight: normal;
+      font-style: normal;
 
       &::-webkit-inner-spin-button {
         -webkit-appearance: none;

@@ -255,6 +255,39 @@ export class Track extends EventTarget {
     this.#metronome.BPM = object?.BPM ?? this.#metronome.BPM
     this.#metronome.loop = object?.loop ?? this.#metronome.loop
     this.#metronome.loops = object?.loops ?? this.#metronome.loops
+
+    const sections = object?.sections ?? []
+
+    sections.forEach((v, i) => {
+      if (i < this.#sections.length) {
+        const section = this.sections[i]
+
+        // ... section name
+        if (v.name != null && v.name !== '') {
+          section.name = v.name
+        } else if (v.name != null && v.name === '') {
+          delete section.name
+        }
+
+        // ... section role
+        if (v.role != null && v.role !== '') {
+          section.role = v.role
+        } else if (v.role != null && v.role === '') {
+          delete section.role
+        }
+
+        // ... measures
+        if (section.subsections == null || sections.subsections.length == 0) {
+          if (section.role === 'anacrusis') {
+            section.measures = 1
+          } else if (v.measures == INF) {
+            section.measures = INF
+          } else if (!Number.isNaN(v.measures)) {
+            section.measures = v.measures
+          }
+        }
+      }
+    })
   }
 
   prune() {

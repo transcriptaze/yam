@@ -1,14 +1,30 @@
 ---- MODULE StartStopButton ----
 EXTENDS YAM, TLC
 
-ClockInvariant ==
-    clockState \in ClockStates
+(* Action: single start/stop button click *)
+Click ==
+    /\ thread = << >>
+    /\ thread' = enqueue(thread,EVENT_CLICK)
+    /\ UNCHANGED << buttonLabel, buttonState >>
+    /\ UNCHANGED << clockState >>
 
-ToggleInvariant ==
-    buttonState \in ButtonStates
+(* Action: multipe start/stop button clicks *)
+Clicks ==
+    /\ Len(thread) < 2
+    /\ thread' = enqueue(thread,EVENT_CLICK)
+    /\ UNCHANGED << buttonLabel, buttonState >>
+    /\ UNCHANGED << clockState >>
 
-LabelInvariant ==
-       (buttonState = STOPPED /\ buttonLabel = "Start") 
-    \/ (buttonState = RUNNING /\ buttonLabel = "Stop")    
+SingleClick ==
+    \/ Click
+    \/ StartStop
+    \/ ClockEvent
+    \/ ButtonEvent
+
+DoubleClick ==
+    \/ Clicks
+    \/ StartStop
+    \/ ClockEvent
+    \/ ButtonEvent
 
 =============================================================================

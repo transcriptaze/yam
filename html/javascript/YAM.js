@@ -322,7 +322,7 @@ function rewire() {
   widgets.metronome.addEventListener('back', () => onBack())
   widgets.metronome.addEventListener('next', () => onNext())
 
-  state.addEventListener('change', (e) => onModified(e))
+  state.addEventListener('change', (e) => onStateModified(e))
 
   models.playlists.addEventListener('muted', (e) => onMuted(e, true))
   models.playlists.addEventListener('unmuted', (e) => onMuted(e, false))
@@ -436,25 +436,19 @@ function onNext() {
   }
 }
 
-function onModified() {
-  const knob = document.querySelector('yam-knob')
-  const wheel = document.querySelector('yam-wheel')
-  const timeSignature = document.querySelector('yam-time-signature')
-  const pads = document.querySelector('yam-pads')
-  const info = document.querySelector('yam-info')
-
+function onStateModified() {
   widgets.mm.BPM = state.BPM
   widgets.mm.pulse = state.pulse
   widgets.mm.timeSignature = state.timeSignature
 
-  knob.BPM = state.BPM
-  wheel.BPM = state.BPM
-  timeSignature.timeSignature = state.timeSignature
-  pads.pulse = state.pulse
-  pads.timeSignature = state.timeSignature
+  widgets.knob.BPM = state.BPM
+  widgets.wheel.BPM = state.BPM
+  widgets.timeSignature.timeSignature = state.timeSignature
+  widgets.pads.pulse = state.pulse
+  widgets.pads.timeSignature = state.timeSignature
 
-  info.title = state.title
-  info.modified = state.modified
+  widgets.info.title = state.title
+  widgets.info.modified = state.modified
 }
 
 function onSelect(event) {
@@ -634,6 +628,7 @@ function onEdited(event) {
         BPM: event.detail.BPM,
         loop: event.detail.loop,
         loops: event.detail.loops,
+        sections: event.detail.sections,
       })
 
       track.save()
@@ -721,13 +716,16 @@ function onPlaylistAdded(event) {
 function onPlaylistSelected(event) {
   const playlist = models.playlists.playlist(event.detail.playlist)
 
-  state.playlist = playlist?.UUID
+  if (playlist?.UUID !== state.playlist) {
+    playlist?.select(null)
 
-  widgets.metronome.bof = playlist?.BOF(null) ?? true
-  widgets.metronome.eof = playlist?.EOF(null) ?? true
+    widgets.metronome.bof = playlist?.BOF(null) ?? true
+    widgets.metronome.eof = playlist?.EOF(null) ?? true
+    widgets.editor.track = null
 
-  settings.playlist = playlist?.UUID
-  settings.save()
+    settings.playlist = playlist?.UUID
+    settings.save()
+  }
 }
 
 function onPlaylistShuffled(event) {

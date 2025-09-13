@@ -482,8 +482,7 @@
         <div class="sections">
           <details class="disabled">
             <summary>Sections</summary>
-            <ul>
-            </ul>
+            <ul></ul>
           </details>
         </div>
       </div>
@@ -493,9 +492,20 @@
       <div class="track-section">
         <div class="section">
           <input  id="name"     type="text"   autocomplete="off" />
-          <input  id="role"     type="text"   readonly />
-          <input  id="measures" type="number" readonly />
+          <input  id="role"     type="text"   list="roles" />
+          <input  id="measures" type="number" min="0" step="1" readonly />
         </div>
+        <datalist id="roles">
+          <option value="intro">intro</option>
+          <option value="verse">verse</option>
+          <option value="chorus">chorus</option>
+          <option value="outro">outro</option>
+          <option value="count-in">count-in</option>
+          <option value="anacrusis">anacrusis</option>
+          <option value="bridge">bridge</option>
+          <option value="turnaround">turnaround</option>
+          <option value="other">other</option>
+        </datalist>
       </div>
     </template>
 
@@ -510,7 +520,7 @@
 
   <!-- SCRIPTS -->
   <script type="module">
-    import "./javascript/components/components.js"
+    import "./javascript/widgets/components.js"
     import { initialise, reset, show, load, save, requestWakeLock, toggleWakeLock, debug } from './javascript/YAM.js'
 
     const toolbar = {

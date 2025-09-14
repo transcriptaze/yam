@@ -30,7 +30,7 @@ export class Playlist extends HTMLElement {
     const clone = content.cloneNode(true)
 
     stylesheet.setAttribute('rel', 'stylesheet')
-    stylesheet.setAttribute('href', '/css/web-components.css')
+    stylesheet.setAttribute('href', '/css/widgets.css')
 
     shadow.appendChild(stylesheet)
     shadow.appendChild(clone)
@@ -41,7 +41,7 @@ export class Playlist extends HTMLElement {
 
     const shadow = this.shadowRoot
     const container = shadow.querySelector('div.playlist')
-    const summary = container.querySelector('summary')
+    const summary = container.querySelector('div.summary')
     const title = summary.querySelector('div.title input')
     const menu = shadow.querySelector('button#menu')
     const popover = shadow.querySelector('[popover]')

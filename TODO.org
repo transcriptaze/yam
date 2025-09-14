@@ -24,6 +24,8 @@
 **** TODO editor: loop count font
 **** TODO set width/height for SVGs
 
+*** TODO use cloned track
+*** TODO use cloned playlist
 *** TODO connectedCallback: event handler duplication
 *** TODO reset UI if selected track is removed from playlist
 *** TODO fix dangling popover on track delete
@@ -33,6 +35,10 @@
       - the muted from the track above gets copied over
 
 ** Fixes
+*** TODO spacebar in editor starts/stops metronome
+*** TODO playlists '+'' floating button is visually confusing
+      - (maybe) hide unless everything is closed
+      - (rather) blur list underlying button 
 *** TODO metricals: jump around as pulse/BPM change
 *** TODO playlists loaded from file include deleted playlists
 *** TODO editor: metronome div vertical alignment
@@ -306,6 +312,15 @@
 9. Plugin architecture
 
 10. Import/render MIDI
+
+* Other
+      - (?) Processing
+            - https://processing.org/reference/libraries/sound/index.html
+            - https://code.compartmental.net/minim
+            - https://forum.processing.org/two/discussion/24743/how-to-create-a-traditional-metronome.html
+            - https://openprocessing.org/sketch/1514409
+            - https://github.com/vincentsijben/bpm-timings-for-processing
+      - (?) sox
 
 * Notes
   1.  https://music.stackexchange.com/questions/91171/bar-counting-metronome  

@@ -115,9 +115,10 @@
     div.sections {
       box-sizing: border-box;
 
-      background: #c0c0c040;
       width: 100%;
       height: 100%;
+      background: #c0c0c040;
+
       padding-top: 12px;
       padding-left: 8px;
       padding-right: 8px;
@@ -166,6 +167,26 @@
           border-bottom-left-radius: 8px;
           border-bottom-right-radius: 8px;
           overflow: hidden;
+        }
+      }
+
+      div.footer {
+        box-sizing: border-box;
+
+        display: flex;
+        justify-content: center;
+      }
+
+      #plus {
+        width: 90%;
+        margin-top: 8px;
+        margin-bottom: 8px;
+
+        border: 1px solid #222222;
+        border-radius: 8px;
+
+        img {
+          width: 32px;
         }
       }
     }

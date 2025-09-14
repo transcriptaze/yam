@@ -404,7 +404,7 @@
 
     <template id="template-playlist">
       <div class="playlist">
-        <summary tabindex="-1">
+        <div class="summary" tabindex="-1">
           <div class="placeholder"></div>
           <div class="title">
             <input type="text" disabled />
@@ -419,11 +419,13 @@
               <img id="trash" src="./images/trash.svg" />
             </div>
           </div>
-        </summary>
+        </div>
         <div class="tracks hidden">
           <div class="list">
             <ul></ul>
-            <button id="plus" disabled><img src="./images/plus.svg" draggable="false" /></button>
+            <div class="footer">
+              <button id="plus" disabled><img src="./images/plus.svg" draggable="false" /></button>
+            </div>
           </div>
         </div>
       </div>
@@ -483,6 +485,9 @@
           <details class="disabled">
             <summary>Sections</summary>
             <ul></ul>
+            <div class="footer">
+              <button id="plus" disabled><img src="./images/plus.svg" draggable="false" /></button>
+            </div>
           </details>
         </div>
       </div>

@@ -44,7 +44,7 @@ export class Playlists extends HTMLElement {
     const clone = content.cloneNode(true)
 
     stylesheet.setAttribute('rel', 'stylesheet')
-    stylesheet.setAttribute('href', '/css/web-components.css')
+    stylesheet.setAttribute('href', '/css/widgets.css')
 
     shadow.appendChild(stylesheet)
     shadow.appendChild(clone)

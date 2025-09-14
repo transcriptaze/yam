@@ -8,106 +8,6 @@ export class Editor extends HTMLElement {
 
   #track = null
 
-  constructor() {
-    super()
-
-    const template = document.querySelector('#template-editor')
-    const stylesheet = document.createElement('link')
-    const content = template.content
-    const shadow = this.attachShadow({ mode: 'open' })
-    const clone = content.cloneNode(true)
-
-    stylesheet.setAttribute('rel', 'stylesheet')
-    stylesheet.setAttribute('href', '/css/web-components.css')
-
-    shadow.appendChild(stylesheet)
-    shadow.appendChild(clone)
-  }
-
-  connectedCallback() {
-    this.classList.add('component-editor')
-
-    const shadow = this.shadowRoot
-    const container = shadow.querySelector('div.track-editor')
-    const save = container.querySelector('#save')
-    const mm = container.querySelector('yam-mm')
-
-    save.addEventListener('click', this.#handlers.save.click)
-    mm.addEventListener('change', this.#handlers.mm.change)
-  }
-
-  disconnectedCallback() {}
-
-  adoptedCallback() {}
-
-  attributeChangedCallback(_name, _from, _to) {}
-
-  set track(track) {
-    const shadow = this.shadowRoot
-    const container = shadow.querySelector('div.track-editor')
-    const title = container.querySelector('input#title')
-    const save = container.querySelector('#save')
-    const timeSignature = container.querySelector('yam-time-signature')
-    const mm = container.querySelector('yam-mm')
-    const loop = container.querySelector('yam-loop')
-    const loops = container.querySelector('#loops')
-    const BPM = container.querySelector('#BPM')
-    const sections = container.querySelector('div.sections details')
-    const ul = sections.querySelector('ul')
-
-    title.value = track?.title ?? ''
-    save.disabled = track == null
-
-    timeSignature.disabled = track == null
-    timeSignature.timeSignature = track?.timeSignature ?? '4:4'
-
-    mm.disabled = track == null
-    mm.pulse = track?.pulse ?? 'quarter'
-    mm.BPM = track?.tempo ?? 120
-
-    BPM.value = track?.BPM ?? track?.tempo ?? 120
-    BPM.disabled = track == null
-
-    loop.enabled = track?.loopable ?? false
-    loop.loop = track?.loop ?? false
-
-    loops.disabled = track == null
-    loops.value = [2, 3, 4, 5].includes(track?.loops) ? track.loops : -`1`
-
-    if (track == null) {
-      sections.classList.add('disabled')
-      sections.removeAttribute('open')
-      ul.replaceChildren()
-    } else {
-      sections.classList.remove('disabled')
-      sections.setAttribute('open', '')
-
-      const children = []
-
-      ;[...transmogrify(track)].forEach((v) => {
-        const li = document.createElement('li')
-        const section = document.createElement('yam-section')
-
-        section.section = v
-
-        li.setAttribute('draggable', false)
-        li.appendChild(section)
-
-        children.push(li)
-      })
-
-      ul.replaceChildren(...children)
-    }
-
-    this.#track = track
-  }
-
-  update(track) {
-    if (this.#track != null && this.#track.UUID === track?.UUID) {
-      this.track = track
-    }
-  }
-
   #handlers = {
     mm: {
       change: (e) => {
@@ -160,6 +60,117 @@ export class Editor extends HTMLElement {
         )
       },
     },
+
+    plus: {
+      click: (event) => {
+        console.log('>>> sections::add', event)
+      },
+    },
+  }
+
+  constructor() {
+    super()
+
+    const template = document.querySelector('#template-editor')
+    const stylesheet = document.createElement('link')
+    const content = template.content
+    const shadow = this.attachShadow({ mode: 'open' })
+    const clone = content.cloneNode(true)
+
+    stylesheet.setAttribute('rel', 'stylesheet')
+    stylesheet.setAttribute('href', '/css/widgets.css')
+
+    shadow.appendChild(stylesheet)
+    shadow.appendChild(clone)
+  }
+
+  connectedCallback() {
+    this.classList.add('component-editor')
+
+    const shadow = this.shadowRoot
+    const container = shadow.querySelector('div.track-editor')
+    const save = container.querySelector('#save')
+    const mm = container.querySelector('yam-mm')
+    const plus = container.querySelector('div.sections #plus')
+
+    save.addEventListener('click', this.#handlers.save.click)
+    mm.addEventListener('change', this.#handlers.mm.change)
+    plus.addEventListener('click', this.#handlers.plus.click)
+  }
+
+  disconnectedCallback() {}
+
+  adoptedCallback() {}
+
+  attributeChangedCallback(_name, _from, _to) {}
+
+  set track(track) {
+    const shadow = this.shadowRoot
+    const container = shadow.querySelector('div.track-editor')
+    const title = container.querySelector('input#title')
+    const save = container.querySelector('#save')
+    const timeSignature = container.querySelector('yam-time-signature')
+    const mm = container.querySelector('yam-mm')
+    const loop = container.querySelector('yam-loop')
+    const loops = container.querySelector('#loops')
+    const BPM = container.querySelector('#BPM')
+    const sections = container.querySelector('div.sections details')
+    const ul = sections.querySelector('ul')
+    const plus = container.querySelector('div.sections #plus')
+
+    title.value = track?.title ?? ''
+    save.disabled = track == null
+
+    timeSignature.disabled = track == null
+    timeSignature.timeSignature = track?.timeSignature ?? '4:4'
+
+    mm.disabled = track == null
+    mm.pulse = track?.pulse ?? 'quarter'
+    mm.BPM = track?.tempo ?? 120
+
+    BPM.value = track?.BPM ?? track?.tempo ?? 120
+    BPM.disabled = track == null
+
+    loop.enabled = track?.loopable ?? false
+    loop.loop = track?.loop ?? false
+
+    loops.disabled = track == null
+    loops.value = [2, 3, 4, 5].includes(track?.loops) ? track.loops : -`1`
+
+    plus.disabled = track == null
+
+    if (track == null) {
+      sections.classList.add('disabled')
+      sections.removeAttribute('open')
+      ul.replaceChildren()
+    } else {
+      sections.classList.remove('disabled')
+      sections.setAttribute('open', '')
+
+      const children = []
+
+      ;[...transmogrify(track)].forEach((v) => {
+        const li = document.createElement('li')
+        const section = document.createElement('yam-section')
+
+        section.section = v
+
+        li.setAttribute('draggable', false)
+        li.appendChild(section)
+
+        children.push(li)
+      })
+
+      ul.replaceChildren(...children)
+    }
+
+    this.#track = track
+  }
+
+  update(track) {
+    if (this.#track != null && this.#track.UUID === track?.UUID) {
+      this.track = track
+    }
   }
 }
 

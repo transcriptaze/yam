@@ -51,8 +51,13 @@ export class Section extends HTMLElement {
 
     const shadow = this.shadowRoot
     const role = shadow.querySelector('#role')
+    const measures = shadow.querySelector('#measures')
 
     role.addEventListener('input', this.#handlers.role.change)
+
+    measures.addEventListener('invalid', (event) => {
+      event.preventDefault()
+    })
   }
 
   disconnectedCallback() {}

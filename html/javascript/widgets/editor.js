@@ -10,60 +10,26 @@ export class Editor extends HTMLElement {
 
   #handlers = {
     mm: {
-      change: (e) => {
-        if (e.detail.pulse) {
-          e.target.pulse = e.detail.pulse
+      change: (event) => {
+        if (event.detail.pulse) {
+          event.target.pulse = event.detail.pulse
         }
 
-        if (e.detail.BPM) {
-          e.target.BPM = e.detail.BPM
+        if (event.detail.BPM) {
+          event.target.BPM = event.detail.BPM
         }
       },
     },
 
     save: {
       click: (_event) => {
-        const shadow = this.shadowRoot
-        const container = shadow.querySelector('div.track-editor')
-        const title = container.querySelector('input#title')
-        const timeSignature = container.querySelector('yam-time-signature')
-        const mm = container.querySelector('yam-mm')
-        const bpm = container.querySelector('#BPM')
-        const loop = container.querySelector('yam-loop')
-        const loops = container.querySelector('#loops')
-        const sections = Array.from(container.querySelector('div.sections ul').querySelectorAll('yam-section')).map((v) => {
-          return {
-            name: v.name,
-            role: v.role,
-            measures: v.measures,
-          }
-        })
-
-        const BPM = Number.parseInt(bpm.value)
-
-        this.dispatchEvent(
-          new CustomEvent(EVENTS.EDIT_SAVE, {
-            bubbles: true,
-            composed: true,
-            detail: {
-              track: this.#track?.UUID,
-              title: title.value,
-              timeSignature: timeSignature.timeSignature,
-              pulse: mm.pulse,
-              tempo: mm.BPM,
-              BPM: !Number.isNaN(BPM) && BPM >= 40 && BPM <= 200 ? BPM : null,
-              loop: loop.loop,
-              loops: ['2', '3', '4', '5'].includes(loops.value) ? Number.parseInt(loops.value) : INF,
-              sections: [...sections],
-            },
-          }),
-        )
+        this.#save()
       },
     },
 
     plus: {
-      click: (event) => {
-        console.log('>>> sections::add', event)
+      click: (_event) => {
+        this.#add()
       },
     },
   }
@@ -171,6 +137,64 @@ export class Editor extends HTMLElement {
     if (this.#track != null && this.#track.UUID === track?.UUID) {
       this.track = track
     }
+  }
+
+  #save() {
+    const shadow = this.shadowRoot
+    const container = shadow.querySelector('div.track-editor')
+    const title = container.querySelector('input#title')
+    const timeSignature = container.querySelector('yam-time-signature')
+    const mm = container.querySelector('yam-mm')
+    const bpm = container.querySelector('#BPM')
+    const loop = container.querySelector('yam-loop')
+    const loops = container.querySelector('#loops')
+    const sections = Array.from(container.querySelector('div.sections ul').querySelectorAll('yam-section')).map((v) => {
+      return {
+        name: v.name,
+        role: v.role,
+        measures: v.measures,
+      }
+    })
+
+    const BPM = Number.parseInt(bpm.value)
+
+    this.dispatchEvent(
+      new CustomEvent(EVENTS.EDIT_SAVE, {
+        bubbles: true,
+        composed: true,
+        detail: {
+          track: this.#track?.UUID,
+          title: title.value,
+          timeSignature: timeSignature.timeSignature,
+          pulse: mm.pulse,
+          tempo: mm.BPM,
+          BPM: !Number.isNaN(BPM) && BPM >= 40 && BPM <= 200 ? BPM : null,
+          loop: loop.loop,
+          loops: ['2', '3', '4', '5'].includes(loops.value) ? Number.parseInt(loops.value) : INF,
+          sections: [...sections],
+        },
+      }),
+    )
+  }
+
+  #add() {
+    const shadow = this.shadowRoot
+    const container = shadow.querySelector('div.track-editor')
+    const sections = container.querySelector('div.sections details')
+    const ul = sections.querySelector('ul')
+    const li = document.createElement('li')
+    const section = document.createElement('yam-section')
+
+    section.section = {
+      name: '',
+      role: '',
+      measures: INF,
+    }
+
+    li.setAttribute('draggable', false)
+    li.appendChild(section)
+
+    ul.appendChild(li)
   }
 }
 

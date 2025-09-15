@@ -674,6 +674,9 @@ function onEdited(event) {
         widgets.playlists.updated(playlist, track)
         playlist.save()
       }
+
+      // ... update editor
+      widgets.editor.update(track)
     }
   } catch (err) {
     onError(err)

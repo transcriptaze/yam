@@ -24,21 +24,25 @@
 **** TODO editor: loop count font
 **** TODO set width/height for SVGs
 
+*** TODO fix dangling popover on track delete
+      - move popover to parent Playlist
+      - or just close on delete
+
 *** TODO use cloned track
 *** TODO use cloned playlist
 *** TODO connectedCallback: event handler duplication
 *** TODO reset UI if selected track is removed from playlist
-*** TODO fix dangling popover on track delete
-      - move popover to parent Playlist
-      - or just close on delete
 *** TODO fix mute on track delete
       - the muted from the track above gets copied over
 
 ** Fixes
+*** TODO different grip icon
+*** TODO 'tack.wav' for e.g. 5:4
 *** TODO spacebar in editor starts/stops metronome
 *** TODO playlists '+'' floating button is visually confusing
       - (maybe) hide unless everything is closed
       - (rather) blur list underlying button 
+*** TODO onSave should only update editor title, BPM, etc
 *** TODO metricals: jump around as pulse/BPM change
 *** TODO playlists loaded from file include deleted playlists
 *** TODO editor: metronome div vertical alignment

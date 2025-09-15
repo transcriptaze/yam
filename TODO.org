@@ -9,10 +9,10 @@
   - https://daniel.do/article/making-noisy-svgs
   - https://github.com/liriliri/eruda
 
-*** TODO clear current track
+*** DONE clear current track
 **** DONE on selecting another playlist
-**** TODO on load from file
-**** TODO stop engine if playing
+**** DONE on load from file
+**** DONE stop engine if playing
 
 *** TODO Firefox
 **** DONE time-signature layout

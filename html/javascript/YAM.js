@@ -200,15 +200,28 @@ export function load() {
       models.playlists.load(object.playlists, object.tracks)
       models.tracks.load(object.tracks)
 
+      models.playlists.save()
+      models.tracks.save()
+
       widgets.playlists.initialise(object.playlists, object.tracks)
 
-      widgets.playlists.selected = {
-        playlist: '00000000-0000-0000-0000-000000000000',
+      state.selected = {
+        playlist: DEFAULT.UUID,
         track: null,
       }
 
-      models.playlists.save()
-      models.tracks.save()
+      settings.playlist = DEFAULT.UUID
+      settings.save()
+
+      widgets.playlists.selected = {
+        playlist: DEFAULT.UUID,
+        track: null,
+      }
+
+      widgets.editor.track = null
+
+      engine.stop()
+      engine.load(null)
     }
   }
 
@@ -437,6 +450,8 @@ function onNext() {
 }
 
 function onStateModified() {
+  const track = models.tracks.track(state.track)
+
   widgets.mm.BPM = state.BPM
   widgets.mm.pulse = state.pulse
   widgets.mm.timeSignature = state.timeSignature
@@ -448,6 +463,7 @@ function onStateModified() {
   widgets.pads.timeSignature = state.timeSignature
 
   widgets.info.title = state.title
+  widgets.info.track = track
   widgets.info.modified = state.modified
 }
 

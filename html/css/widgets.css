@@ -1026,7 +1026,7 @@ div.beat.on {
   margin-left: 32px;
   margin-top: 4px;
 }
-:host(.component-playlist) div.playlist.selected summary div.title input {
+:host(.component-playlist) div.playlist.selected div.title input {
   font-weight: bold;
 }
 :host(.component-playlist) div.playlist.editing div.title input {
@@ -1047,7 +1047,7 @@ div.beat.on {
 :host(.component-playlist) div.playlist.editing div.tracks yam-tracklist {
   display: block;
 }
-:host(.component-playlist) div.playlist.selected.editing summary {
+:host(.component-playlist) div.playlist.selected.editing div.summary {
   grid-template-columns: 16px 1fr auto;
 }
 :host(.component-playlist) details:not([open]) #edit {
@@ -1084,22 +1084,22 @@ div.beat.on {
   }
 }
 
-:host(.component-playlist#all) div.playlist summary {
+:host(.component-playlist#all) div.playlist div.summary {
   border-top-left-radius: 12px;
   border-top-right-radius: 12px;
 }
 
-:host-context(li:last-child) div.playlist summary {
+:host-context(li:last-child) div.playlist div.summary {
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
 
-:host-context(li:last-child) div.playlist[open] summary {
+:host-context(li:last-child) div.playlist[open] div.summary {
   border-bottom-left-radius: 0px;
   border-bottom-right-radius: 0px;
 }
 
-:host-context(.unsortable) div.playlist summary div.grip {
+:host-context(.unsortable) div.playlist div.summary div.grip {
   visibility: hidden;
 }
 :host-context(.unsortable) div.playlist.editing div.grip {

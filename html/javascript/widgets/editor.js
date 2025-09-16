@@ -153,6 +153,7 @@ export class Editor extends HTMLElement {
         name: v.name,
         role: v.role,
         measures: v.measures,
+        tempo: v.tempo,
       }
     })
 
@@ -211,7 +212,6 @@ function* transmogrify(track) {
   for (const section of sections) {
     const _subsections = section.subsections ?? []
 
-    tempo = section.tempo ?? tempo
     timeSignature = section.timeSignature ?? timeSignature
     pulse = section.pulse ?? pulse
 
@@ -240,7 +240,6 @@ function* transmogrify(track) {
 
         subsections.push({
           measures: subsection.measures ?? Number.POSITIVE_INFINITY,
-          tempo: tempo,
           timeSignature: timeSignature,
           pulse: pulse,
           clicks: subsection.clicks ?? clicks,
@@ -260,6 +259,8 @@ function* transmogrify(track) {
         track: section.name,
         generated: name,
       },
+
+      tempo: section.tempo,
       subsections: subsections,
       measures: bars,
     }

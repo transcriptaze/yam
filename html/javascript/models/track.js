@@ -287,6 +287,13 @@ export class Track extends EventTarget {
           section.measures = v.measures
         }
       }
+
+      // ... tempo
+      if (v.tempo == null || v.tempo === '') {
+        section.tempo = null
+      } else if (!Number.isNaN(v.tempo) && v.tempo >= 40 && v.tempo <= 200) {
+        section.tempo = v.tempo
+      }
     })
 
     added.forEach((v) => {

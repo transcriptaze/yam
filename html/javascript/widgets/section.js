@@ -71,15 +71,13 @@ export class Section extends HTMLElement {
     const name = shadow.querySelector('#name')
     const role = shadow.querySelector('#role')
     const measures = shadow.querySelector('#measures')
+    const tempo = shadow.querySelector('#tempo')
 
     name.value = v?.name?.track ?? ''
     name.placeholder = v?.name?.generated ?? ''
 
     role.value = v?.role?.track ?? ''
     role.placeholder = v?.role?.generated ?? ''
-
-    measures.value = v?.measures ?? 0
-    measures.placeholder = role.value === 'anacrusis' ? 1 : '∞'
 
     if (role.value === 'anacrusis') {
       measures.setAttribute('min', 1)
@@ -90,6 +88,12 @@ export class Section extends HTMLElement {
       measures.removeAttribute('max')
       measures.readOnly = (v.subsections?.length ?? 0) > 0
     }
+
+    measures.value = v?.measures ?? 0
+    measures.placeholder = role.value === 'anacrusis' ? 1 : '∞'
+
+    tempo.value = v?.tempo ?? ''
+    tempo.placeholder = '-'
 
     this.#section = v
   }
@@ -122,6 +126,17 @@ export class Section extends HTMLElement {
       } else {
         return N
       }
+    }
+  }
+
+  get tempo() {
+    const shadow = this.shadowRoot
+    const tempo = shadow.querySelector('#tempo')
+
+    if (tempo.value === '') {
+      return ''
+    } else {
+      return Number.parseInt(tempo.value)
     }
   }
 }

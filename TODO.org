@@ -6,13 +6,10 @@
   - https://meodai.github.io/rampensau
   - https://media.licdn.com/dms/image/v2/D562DAQGfvMUPSACz_w/profile-treasury-image-shrink_1280_1280/B56ZWG1lWtGsAY-/0/1741723950693?e=1754978400&v=beta&t=2tcCb8xsZ0Re296TPxb2j_SWUkJEik7x-nb-dh5Jhfs
   - https://jakub.kr/components/oklch-colors
-  - https://daniel.do/article/making-noisy-svgs
   - https://github.com/liriliri/eruda
 
+
 *** DONE clear current track
-**** DONE on selecting another playlist
-**** DONE on load from file
-**** DONE stop engine if playing
 
 *** TODO fix dangling popover on track delete
       - move popover to parent Playlist
@@ -36,12 +33,15 @@
       - the muted from the track above gets copied over
 
 ** Fixes
+*** TODO editor: enable/disable button iff there are changes
 *** TODO different grip icon
 *** TODO 'tack.wav' for e.g. 5:4
 *** TODO spacebar in editor starts/stops metronome
 *** TODO playlists '+'' floating button is visually confusing
       - (maybe) hide unless everything is closed
       - (rather) blur list underlying button 
+      - https://kube.io/blog/liquid-glass-css-svg/
+
 *** TODO onSave should only update editor title, BPM, etc
 *** TODO metricals: jump around as pulse/BPM change
 *** TODO playlists loaded from file include deleted playlists
@@ -201,6 +201,7 @@
 
 *** TODO textured buttons
       - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy
+      - https://kube.io/blog/liquid-glass-css-svg/
       - [ ] dotted quarter
       - [ ] Δt offset into buffer
       - [ ] 'fix' sounds (they don't sound great - EQ? reverb?)
@@ -261,6 +262,8 @@
       - 'hat' tiles
       - Navaho weaves
       - Ndebele patterns
+      - https://daniel.do/article/making-noisy-svgs
+      - https://kube.io/blog/liquid-glass-css-svg/
 
 ** Plugins
       - statistics

@@ -2,7 +2,7 @@ import { INF } from '../constants.js'
 
 export class Section extends HTMLElement {
   static get observedAttributes() {
-    return []
+    return ['expanded']
   }
 
   #section = {}
@@ -64,7 +64,18 @@ export class Section extends HTMLElement {
 
   adoptedCallback() {}
 
-  attributeChangedCallback(_name, _from, _to) {}
+  attributeChangedCallback(name, from, to) {
+    if (name === 'expanded') {
+      const shadow = this.shadowRoot
+      const div = shadow.querySelector('div.section')
+
+      if (to != null) {
+        div.classList.add('collapsed')
+      } else {
+        div.classList.remove('collapsed')
+      }
+    }
+  }
 
   set section(v) {
     const shadow = this.shadowRoot

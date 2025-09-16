@@ -1409,6 +1409,15 @@ div.playlist-track [popover]:popover-open::backdrop {
 :host(.component-editor) div.track-editor div.sections::-webkit-scrollbar {
   display: none;
 }
+:host(.component-editor) div.track-editor div.sections div.header {
+  display: flex;
+  flex-direction: horizontal;
+  align-items: center;
+}
+:host(.component-editor) div.track-editor div.sections div.header img {
+  width: 16px;
+  height: 16px;
+}
 :host(.component-editor) div.track-editor div.sections ul {
   box-sizing: border-box;
   margin-top: 8px;
@@ -1486,10 +1495,16 @@ div.playlist-track [popover]:popover-open::backdrop {
 :host(.component-editor) div.track-editor button:disabled img {
   filter: grayscale(100%) opacity(50%);
 }
-:host(.component-editor) div.track-editor details.disabled {
+:host(.component-editor) div.track-editor div.sections.disabled {
   color: gray;
   pointer-events: none;
   cursor: not-allowed;
+}
+:host(.component-editor) div.track-editor div.sections.disabled img {
+  filter: grayscale(100%) opacity(50%);
+}
+:host(.component-editor) div.track-editor div.sections.disabled div.footer {
+  display: none;
 }
 :host(.component-editor) div.track-editor yam-time-signature {
   height: 48px;
@@ -1518,7 +1533,6 @@ div.playlist-track [popover]:popover-open::backdrop {
   grid-template-columns: auto 1fr auto auto;
   grid-template-rows: auto auto;
   column-gap: 3px;
-  row-gap: 1px;
 }
 :host(.component-section) div.section #name {
   grid-column: 1/3;
@@ -1532,7 +1546,7 @@ div.playlist-track [popover]:popover-open::backdrop {
   grid-column: 4;
   grid-row: 1;
 }
-:host(.component-section) div.section #BPM {
+:host(.component-section) div.section #tempo {
   grid-column: 1;
   grid-row: 2;
 }
@@ -1580,6 +1594,12 @@ div.playlist-track [popover]:popover-open::backdrop {
 :host(.component-section) div.section #measures {
   width: 3em;
 }
-:host(.component-section) div.section #BPM {
+:host(.component-section) div.section #tempo {
   width: 3em;
+}
+:host(.component-section) div.section.collapsed {
+  row-gap: 0px;
+}
+:host(.component-section) div.section.collapsed #tempo {
+  display: none;
 }

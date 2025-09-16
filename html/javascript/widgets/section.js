@@ -40,7 +40,7 @@ export class Section extends HTMLElement {
     const clone = content.cloneNode(true)
 
     stylesheet.setAttribute('rel', 'stylesheet')
-    stylesheet.setAttribute('href', '/css/web-components.css')
+    stylesheet.setAttribute('href', '/css/widgets.css')
 
     shadow.appendChild(stylesheet)
     shadow.appendChild(clone)
@@ -51,8 +51,13 @@ export class Section extends HTMLElement {
 
     const shadow = this.shadowRoot
     const role = shadow.querySelector('#role')
+    const measures = shadow.querySelector('#measures')
 
     role.addEventListener('input', this.#handlers.role.change)
+
+    measures.addEventListener('invalid', (event) => {
+      event.preventDefault()
+    })
   }
 
   disconnectedCallback() {}

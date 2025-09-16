@@ -8,6 +8,32 @@ export class Editor extends HTMLElement {
 
   #track = null
 
+  #handlers = {
+    mm: {
+      change: (event) => {
+        if (event.detail.pulse) {
+          event.target.pulse = event.detail.pulse
+        }
+
+        if (event.detail.BPM) {
+          event.target.BPM = event.detail.BPM
+        }
+      },
+    },
+
+    save: {
+      click: (_event) => {
+        this.#save()
+      },
+    },
+
+    plus: {
+      click: (_event) => {
+        this.#add()
+      },
+    },
+  }
+
   constructor() {
     super()
 
@@ -18,7 +44,7 @@ export class Editor extends HTMLElement {
     const clone = content.cloneNode(true)
 
     stylesheet.setAttribute('rel', 'stylesheet')
-    stylesheet.setAttribute('href', '/css/web-components.css')
+    stylesheet.setAttribute('href', '/css/widgets.css')
 
     shadow.appendChild(stylesheet)
     shadow.appendChild(clone)
@@ -31,9 +57,11 @@ export class Editor extends HTMLElement {
     const container = shadow.querySelector('div.track-editor')
     const save = container.querySelector('#save')
     const mm = container.querySelector('yam-mm')
+    const plus = container.querySelector('div.sections #plus')
 
     save.addEventListener('click', this.#handlers.save.click)
     mm.addEventListener('change', this.#handlers.mm.change)
+    plus.addEventListener('click', this.#handlers.plus.click)
   }
 
   disconnectedCallback() {}
@@ -54,6 +82,7 @@ export class Editor extends HTMLElement {
     const BPM = container.querySelector('#BPM')
     const sections = container.querySelector('div.sections details')
     const ul = sections.querySelector('ul')
+    const plus = container.querySelector('div.sections #plus')
 
     title.value = track?.title ?? ''
     save.disabled = track == null
@@ -73,6 +102,8 @@ export class Editor extends HTMLElement {
 
     loops.disabled = track == null
     loops.value = [2, 3, 4, 5].includes(track?.loops) ? track.loops : -`1`
+
+    plus.disabled = track == null
 
     if (track == null) {
       sections.classList.add('disabled')
@@ -108,58 +139,62 @@ export class Editor extends HTMLElement {
     }
   }
 
-  #handlers = {
-    mm: {
-      change: (e) => {
-        if (e.detail.pulse) {
-          e.target.pulse = e.detail.pulse
-        }
+  #save() {
+    const shadow = this.shadowRoot
+    const container = shadow.querySelector('div.track-editor')
+    const title = container.querySelector('input#title')
+    const timeSignature = container.querySelector('yam-time-signature')
+    const mm = container.querySelector('yam-mm')
+    const bpm = container.querySelector('#BPM')
+    const loop = container.querySelector('yam-loop')
+    const loops = container.querySelector('#loops')
+    const sections = Array.from(container.querySelector('div.sections ul').querySelectorAll('yam-section')).map((v) => {
+      return {
+        name: v.name,
+        role: v.role,
+        measures: v.measures,
+      }
+    })
 
-        if (e.detail.BPM) {
-          e.target.BPM = e.detail.BPM
-        }
-      },
-    },
+    const BPM = Number.parseInt(bpm.value)
 
-    save: {
-      click: (_event) => {
-        const shadow = this.shadowRoot
-        const container = shadow.querySelector('div.track-editor')
-        const title = container.querySelector('input#title')
-        const timeSignature = container.querySelector('yam-time-signature')
-        const mm = container.querySelector('yam-mm')
-        const bpm = container.querySelector('#BPM')
-        const loop = container.querySelector('yam-loop')
-        const loops = container.querySelector('#loops')
-        const sections = Array.from(container.querySelector('div.sections ul').querySelectorAll('yam-section')).map((v) => {
-          return {
-            name: v.name,
-            role: v.role,
-            measures: v.measures,
-          }
-        })
+    this.dispatchEvent(
+      new CustomEvent(EVENTS.EDIT_SAVE, {
+        bubbles: true,
+        composed: true,
+        detail: {
+          track: this.#track?.UUID,
+          title: title.value,
+          timeSignature: timeSignature.timeSignature,
+          pulse: mm.pulse,
+          tempo: mm.BPM,
+          BPM: !Number.isNaN(BPM) && BPM >= 40 && BPM <= 200 ? BPM : null,
+          loop: loop.loop,
+          loops: ['2', '3', '4', '5'].includes(loops.value) ? Number.parseInt(loops.value) : INF,
+          sections: [...sections],
+        },
+      }),
+    )
+  }
 
-        const BPM = Number.parseInt(bpm.value)
+  #add() {
+    const shadow = this.shadowRoot
+    const container = shadow.querySelector('div.track-editor')
+    const sections = container.querySelector('div.sections details')
+    const ul = sections.querySelector('ul')
+    const li = document.createElement('li')
+    const section = document.createElement('yam-section')
 
-        this.dispatchEvent(
-          new CustomEvent(EVENTS.EDIT_SAVE, {
-            bubbles: true,
-            composed: true,
-            detail: {
-              track: this.#track?.UUID,
-              title: title.value,
-              timeSignature: timeSignature.timeSignature,
-              pulse: mm.pulse,
-              tempo: mm.BPM,
-              BPM: !Number.isNaN(BPM) && BPM >= 40 && BPM <= 200 ? BPM : null,
-              loop: loop.loop,
-              loops: ['2', '3', '4', '5'].includes(loops.value) ? Number.parseInt(loops.value) : INF,
-              sections: [...sections],
-            },
-          }),
-        )
-      },
-    },
+    section.section = {
+      name: '',
+      role: '',
+      measures: INF,
+    }
+
+    li.setAttribute('draggable', false)
+    li.appendChild(section)
+
+    ul.appendChild(li)
   }
 }
 

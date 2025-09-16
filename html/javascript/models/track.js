@@ -200,7 +200,7 @@ export class Track extends EventTarget {
   }
 
   set sections(v) {
-    this.sections = v ?? []
+    this.#sections = v ?? []
   }
 
   copy(track) {
@@ -257,36 +257,69 @@ export class Track extends EventTarget {
     this.#metronome.loops = object?.loops ?? this.#metronome.loops
 
     const sections = object?.sections ?? []
+    const updated = sections.filter((v, i) => i < this.#sections.length)
+    const added = sections.filter((v, i) => i >= this.#sections.length)
 
-    sections.forEach((v, i) => {
-      if (i < this.#sections.length) {
-        const section = this.sections[i]
+    updated.forEach((v, i) => {
+      const section = this.sections[i]
 
-        // ... section name
-        if (v.name != null && v.name !== '') {
-          section.name = v.name
-        } else if (v.name != null && v.name === '') {
-          delete section.name
-        }
+      // ... section name
+      if (v.name != null && v.name !== '') {
+        section.name = v.name
+      } else if (v.name != null && v.name === '') {
+        delete section.name
+      }
 
-        // ... section role
-        if (v.role != null && v.role !== '') {
-          section.role = v.role
-        } else if (v.role != null && v.role === '') {
-          delete section.role
-        }
+      // ... section role
+      if (v.role != null && v.role !== '') {
+        section.role = v.role
+      } else if (v.role != null && v.role === '') {
+        delete section.role
+      }
 
-        // ... measures
-        if (section.subsections == null || sections.subsections.length == 0) {
-          if (section.role === 'anacrusis') {
-            section.measures = 1
-          } else if (v.measures == INF) {
-            section.measures = INF
-          } else if (!Number.isNaN(v.measures)) {
-            section.measures = v.measures
-          }
+      // ... measures
+      if (section.subsections == null || sections.subsections.length == 0) {
+        if (section.role === 'anacrusis') {
+          section.measures = 1
+        } else if (v.measures == INF) {
+          section.measures = INF
+        } else if (!Number.isNaN(v.measures) && v.measures >= 0) {
+          section.measures = v.measures
         }
       }
+    })
+
+    added.forEach((v) => {
+      const name = (v.name ?? '').trim()
+      const role = (v.role ?? '').trim()
+      const measures = Number.parseInt(v.measures ?? '')
+
+      if (name !== '' || role !== '' || (!Number.isNaN(measures) && measures > 0)) {
+        this.#sections.push({
+          name: name,
+          role: role,
+          measures: Number.isNaN(measures) ? INF : measures,
+        })
+      }
+    })
+
+    const deleted = this.sections
+      .map((v, i) => {
+        const name = (v.name ?? '').trim()
+        const role = (v.role ?? '').trim()
+        const measures = Number.parseInt(v.measures ?? '')
+
+        return {
+          i: i,
+          deleted: name === '' && role === '' && measures < 1,
+        }
+      })
+      .filter((v) => v.deleted === true)
+      .map((v) => v.i)
+      .reverse()
+
+    deleted.forEach((ix) => {
+      this.sections.splice(ix, 1)
     })
   }
 

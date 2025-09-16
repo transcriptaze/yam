@@ -14,19 +14,19 @@
 **** DONE on load from file
 **** DONE stop engine if playing
 
+*** TODO fix dangling popover on track delete
+      - move popover to parent Playlist
+      - or just close on delete
+
 *** TODO Firefox
 **** DONE time-signature layout
-**** TODO pulse layout
+**** DONE pulse layout
 **** TODO MM/time signature popover
 **** TODO controls layout
 **** TODO editor section layout
 **** TODO editor time signature popover
 **** TODO editor: loop count font
-**** TODO set width/height for SVGs
-
-*** TODO fix dangling popover on track delete
-      - move popover to parent Playlist
-      - or just close on delete
+**** TODO set width/height for all SVGs
 
 *** TODO use cloned track
 *** TODO use cloned playlist

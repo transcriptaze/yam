@@ -34,7 +34,7 @@ It will be a pleasant surprise and/or minor miracle if it works at all on anythi
 |-------------|------------|----------------|------------------|-----------------------------------|
 | **MacOs**   | Chrome     | (recent'ish)   | Yes              |                                   |
 |             | Firefox    |                |                  | Do NOT ask about the layout hacks |
-|             | Safari     |                |                  |                                   |
+|             | Safari     |                | No               |                                   |
 |             | Opera      | (recent'ish)   | Yes              |                                   |
 |             | DuckDuckGo |                | **NO**           |                                   |
 |             |            |                |                  |                                   |

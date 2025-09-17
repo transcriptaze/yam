@@ -58,6 +58,7 @@ div.metronome {
   outline: none;
 }
 div.metronome button {
+  box-sizing: border-box;
   background: none;
   border: none;
   outline: none;
@@ -120,6 +121,11 @@ div.metronome.playing #play img.stop {
   transform: scale(1);
 }
 
+@-moz-document url-prefix() {
+  div.metronome #play {
+    min-width: 64px;
+  }
+}
 :host(.component-mm) div.MM {
   display: grid;
   grid-template-columns: auto auto;
@@ -536,7 +542,7 @@ div.beat.on {
   background-image: url("/images/loop-1.svg");
 }
 :host(.component-loop) div.loop input[type=checkbox][data-loops="2"]:checked + label {
-  background-image: url("/images/loop-2.svg");
+  background-image: url("/images/loop-2x.svg");
 }
 :host(.component-loop) div.loop input[type=checkbox][data-loops="3"]:checked + label {
   background-image: url("/images/loop-3.svg");

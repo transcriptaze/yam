@@ -128,8 +128,10 @@ export class Editor extends HTMLElement {
         const li = document.createElement('li')
         const section = document.createElement('yam-section')
 
-        section.section = v
-        // section.removeAttribute('expanded','')
+        section.section = {
+          track: track,
+          section: v,
+        }
 
         li.setAttribute('draggable', false)
         li.appendChild(section)
@@ -197,9 +199,12 @@ export class Editor extends HTMLElement {
     const section = document.createElement('yam-section')
 
     section.section = {
-      name: '',
-      role: '',
-      measures: INF,
+      track: this.#track,
+      section: {
+        name: '',
+        role: '',
+        measures: INF,
+      },
     }
 
     li.setAttribute('draggable', false)

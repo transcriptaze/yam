@@ -191,7 +191,7 @@ export class Editor extends HTMLElement {
   #add() {
     const shadow = this.shadowRoot
     const container = shadow.querySelector('div.track-editor')
-    const sections = container.querySelector('div.sections details')
+    const sections = container.querySelector('div.sections')
     const ul = sections.querySelector('ul')
     const li = document.createElement('li')
     const section = document.createElement('yam-section')

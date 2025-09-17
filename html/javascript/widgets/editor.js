@@ -7,6 +7,7 @@ export class Editor extends HTMLElement {
   }
 
   #track = null
+  #expanded = false
 
   #handlers = {
     mm: {
@@ -24,6 +25,12 @@ export class Editor extends HTMLElement {
     save: {
       click: (_event) => {
         this.#save()
+      },
+    },
+
+    sections: {
+      click: (_event) => {
+        this.#toggle()
       },
     },
 
@@ -57,10 +64,12 @@ export class Editor extends HTMLElement {
     const container = shadow.querySelector('div.track-editor')
     const save = container.querySelector('#save')
     const mm = container.querySelector('yam-mm')
+    const sections = shadow.querySelector('div.sections div.header')
     const plus = container.querySelector('div.sections #plus')
 
     save.addEventListener('click', this.#handlers.save.click)
     mm.addEventListener('change', this.#handlers.mm.change)
+    sections.addEventListener('click', this.#handlers.sections.click)
     plus.addEventListener('click', this.#handlers.plus.click)
   }
 
@@ -80,7 +89,7 @@ export class Editor extends HTMLElement {
     const loop = container.querySelector('yam-loop')
     const loops = container.querySelector('#loops')
     const BPM = container.querySelector('#BPM')
-    const sections = container.querySelector('div.sections details')
+    const sections = container.querySelector('div.sections')
     const ul = sections.querySelector('ul')
     const plus = container.querySelector('div.sections #plus')
 
@@ -120,6 +129,7 @@ export class Editor extends HTMLElement {
         const section = document.createElement('yam-section')
 
         section.section = v
+        // section.removeAttribute('expanded','')
 
         li.setAttribute('draggable', false)
         li.appendChild(section)
@@ -153,6 +163,7 @@ export class Editor extends HTMLElement {
         name: v.name,
         role: v.role,
         measures: v.measures,
+        tempo: v.tempo,
       }
     })
 
@@ -196,6 +207,20 @@ export class Editor extends HTMLElement {
 
     ul.appendChild(li)
   }
+
+  #toggle() {
+    const shadow = this.shadowRoot
+    const container = shadow.querySelector('div.track-editor')
+    const sections = Array.from(container.querySelector('div.sections ul').querySelectorAll('yam-section'))
+
+    this.#expanded = !this.#expanded
+
+    if (this.#expanded) {
+      sections.forEach((v) => v.setAttribute('expanded', ''))
+    } else {
+      sections.forEach((v) => v.removeAttribute('expanded'))
+    }
+  }
 }
 
 function* transmogrify(track) {
@@ -211,7 +236,6 @@ function* transmogrify(track) {
   for (const section of sections) {
     const _subsections = section.subsections ?? []
 
-    tempo = section.tempo ?? tempo
     timeSignature = section.timeSignature ?? timeSignature
     pulse = section.pulse ?? pulse
 
@@ -240,7 +264,6 @@ function* transmogrify(track) {
 
         subsections.push({
           measures: subsection.measures ?? Number.POSITIVE_INFINITY,
-          tempo: tempo,
           timeSignature: timeSignature,
           pulse: pulse,
           clicks: subsection.clicks ?? clicks,
@@ -260,6 +283,8 @@ function* transmogrify(track) {
         track: section.name,
         generated: name,
       },
+
+      tempo: section.tempo,
       subsections: subsections,
       measures: bars,
     }

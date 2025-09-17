@@ -2,7 +2,7 @@ import { INF } from '../constants.js'
 
 export class Section extends HTMLElement {
   static get observedAttributes() {
-    return []
+    return ['expanded']
   }
 
   #section = {}
@@ -64,22 +64,31 @@ export class Section extends HTMLElement {
 
   adoptedCallback() {}
 
-  attributeChangedCallback(_name, _from, _to) {}
+  attributeChangedCallback(name, from, to) {
+    if (name === 'expanded') {
+      const shadow = this.shadowRoot
+      const div = shadow.querySelector('div.section')
+
+      if (to != null) {
+        div.classList.add('collapsed')
+      } else {
+        div.classList.remove('collapsed')
+      }
+    }
+  }
 
   set section(v) {
     const shadow = this.shadowRoot
     const name = shadow.querySelector('#name')
     const role = shadow.querySelector('#role')
     const measures = shadow.querySelector('#measures')
+    const tempo = shadow.querySelector('#tempo')
 
     name.value = v?.name?.track ?? ''
     name.placeholder = v?.name?.generated ?? ''
 
     role.value = v?.role?.track ?? ''
     role.placeholder = v?.role?.generated ?? ''
-
-    measures.value = v?.measures ?? 0
-    measures.placeholder = role.value === 'anacrusis' ? 1 : '∞'
 
     if (role.value === 'anacrusis') {
       measures.setAttribute('min', 1)
@@ -90,6 +99,12 @@ export class Section extends HTMLElement {
       measures.removeAttribute('max')
       measures.readOnly = (v.subsections?.length ?? 0) > 0
     }
+
+    measures.value = v?.measures ?? 0
+    measures.placeholder = role.value === 'anacrusis' ? 1 : '∞'
+
+    tempo.value = v?.tempo ?? ''
+    tempo.placeholder = '-'
 
     this.#section = v
   }
@@ -122,6 +137,17 @@ export class Section extends HTMLElement {
       } else {
         return N
       }
+    }
+  }
+
+  get tempo() {
+    const shadow = this.shadowRoot
+    const tempo = shadow.querySelector('#tempo')
+
+    if (tempo.value === '') {
+      return ''
+    } else {
+      return Number.parseInt(tempo.value)
     }
   }
 }

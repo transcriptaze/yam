@@ -481,24 +481,23 @@
             <option value="5">5</option>
           </select>
         </div>
-        <div class="sections">
-          <details class="disabled">
-            <summary>Sections</summary>
-            <ul></ul>
-            <div class="footer">
-              <button id="plus" disabled><img src="./images/plus.svg" draggable="false" /></button>
-            </div>
-          </details>
+        <div class="sections disabled">
+          <div class="header"><img src="./images/expand.svg" />Sections</div>
+          <ul></ul>
+          <div class="footer">
+            <button id="plus" disabled><img src="./images/plus.svg" draggable="false" /></button>
+          </div>
         </div>
       </div>
     </template>
 
     <template id="template-section">
       <div class="track-section">
-        <div class="section">
+        <div class="section collapsed">
           <input  id="name"     type="text"   autocomplete="off" />
           <input  id="role"     type="text"   list="roles" />
-          <input  id="measures" type="number" min="0" step="1" readonly />
+          <input  id="measures" type="number" min="0"            step="1" readonly />
+          <input  id="tempo"    type="number" min="40" max="200" step="1" title="BPM" />
         </div>
         <datalist id="roles">
           <option value="intro">intro</option>

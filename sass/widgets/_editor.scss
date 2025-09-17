@@ -137,6 +137,17 @@
         display: none;
       }
 
+      div.header {
+        display: flex;
+        flex-direction: horizontal;
+        align-items: center;
+
+        img {
+           width: 16px;
+           height: 16px;
+        }
+      }
+
       ul {
         box-sizing: border-box;
 
@@ -238,10 +249,18 @@
       }
     }
 
-    details.disabled{
+    div.sections.disabled{
       color: gray;
       pointer-events: none;
       cursor: not-allowed;
+
+      img {
+        filter: grayscale(100%) opacity(50%);
+      }
+
+      div.footer {
+        display: none;
+      }
     }
 
     yam-time-signature {

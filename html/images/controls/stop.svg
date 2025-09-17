@@ -9,7 +9,10 @@
   </g>
 </svg>
 -->
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 10.72 33.84">
+<svg xmlns="http://www.w3.org/2000/svg" 
+     width="10.72"
+     height="33.84"
+     viewBox="0 0 10.72 33.84">
   <rect fill="#222222" stroke="#222222" stroke-width="0.741068" stroke-linejoin="round" stroke-miterlimit="2"
         width="9.2989321"
         height="9.338932"

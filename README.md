@@ -7,7 +7,7 @@
 Just one more _WebAudio_ metronome web app to add to the many, many other metronomes out there.
 
 YAM is pretty much designed exclusively for use by an _almost but not entirely ham-fisted_ acoustic fingerstyle
-guitarist without any appreciable musical ability who plays an _old but adored_ Taylor 310e and needs all the
+guitarist without any appreciable musical ability who plays an old (but adored!) Taylor 310e and needs all the
 help he can get. If that description is not you (it probably isn't 😄) then YMMV!
 
 It's available online if you want to try it out:
@@ -30,35 +30,35 @@ It will be a pleasant surprise and/or minor miracle if it works at all on anythi
 
 ## Supported browsers
 
-| Platform    | Browser    | Version        | Ok               | Notes                             |
-|-------------|------------|----------------|------------------|-----------------------------------|
-| **MacOs**   | Chrome     | (recent'ish)   | Yes              |                                   |
-|             | Firefox    |                |                  | Do NOT ask about the layout hacks |
-|             | Safari     |                | No               |                                   |
-|             | Opera      | (recent'ish)   | Yes              |                                   |
-|             | DuckDuckGo |                | **NO**           |                                   |
-|             |            |                |                  |                                   |
-| **Windows** | Chrome     |                |                  |                                   |
-|             | Firefox    |                |                  |                                   |
-|             | Edge       |                |                  |                                   |
-|             | Opera      |                |                  |                                   |
-|             | DuckDuckGo |                | **UNLIKELY**     |                                   |
-|             |            |                |                  |                                   |
-| **Linux**   | Chrome     |                |                  |                                   |
-|             | Firefox    |                |                  |                                   |
-|             | Opera      |                |                  |                                   |
-|             | DuckDuckGo |                | **PROBABLY NOT** |                                   |
-|             |            |                |                  |                                   |
-| **Android** | Chrome     | (latest ?)     | Yes              |                                   |
-|             | Firefox    |                |                  |                                   |
-|             | Opera      |                |                  |                                   |
-|             | Opera Mini |                | No               |                                   |
-|             | DuckDuckGo |                | **NO**           |                                   |
-|             |            |                |                  |                                   |
-| **iOS**     | Chrome     |                |                  |                                   |
-|             | Firefox    |                |                  |                                   |
-|             | Safari     |                |                  |                                   |
-|             | Opera      |                |                  |                                   |
+| Platform    | Browser    | Version        | Ok               | Notes                                      |
+|-------------|------------|----------------|------------------|--------------------------------------------|
+| **MacOs**   | Chrome     | (recent'ish)   | Yes              |                                            |
+|             | Firefox    | (recent'ish)   | Mostly           | Do NOT ask about the layout hacks          |
+|             | Safari     | (old)          | No               |                                            |
+|             | Opera      | (recent'ish)   | Yes              |                                            |
+|             | DuckDuckGo |                | **NO**           |                                            |
+|             |            |                |                  |                                            |
+| **Windows** | Chrome     |                |                  |                                            |
+|             | Firefox    |                |                  |                                            |
+|             | Edge       |                |                  |                                            |
+|             | Opera      |                |                  |                                            |
+|             | DuckDuckGo |                | **UNLIKELY**     |                                            |
+|             |            |                |                  |                                            |
+| **Linux**   | Chrome     |                |                  |                                            |
+|             | Firefox    |                |                  |                                            |
+|             | Opera      |                |                  |                                            |
+|             | DuckDuckGo |                | **PROBABLY NOT** |                                            |
+|             |            |                |                  |                                            |
+| **Android** | Chrome     | (latest ?)     | Yes              |                                            |
+|             | Firefox    | (latest ?)     | Mostly           | (with horrible Firefox specific CSS hacks) |
+|             | Opera      |                |                  |                                            |
+|             | Opera Mini |                | No               |                                            |
+|             | DuckDuckGo |                | **NO**           |                                            |
+|             |            |                |                  |                                            |
+| **iOS**     | Chrome     |                |                  |                                            |
+|             | Firefox    |                |                  |                                            |
+|             | Safari     |                |                  |                                            |
+|             | Opera      |                |                  |                                            |
 
 
 ## Installation

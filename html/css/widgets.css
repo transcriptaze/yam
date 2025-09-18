@@ -788,7 +788,9 @@ div.beat.on {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: none;
+  background: rgba(255, 255, 255, 0.1); /* semi-transparent */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(0.5px);
   margin: 8px;
   padding: 4px;
   border: none;

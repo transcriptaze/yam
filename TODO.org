@@ -38,8 +38,6 @@
 *** TODO 'tack.wav' for e.g. 5:4
 *** TODO spacebar in editor starts/stops metronome
 *** TODO playlists '+'' floating button is visually confusing
-      - (maybe) hide unless everything is closed
-      - (rather) blur list underlying button 
       - https://kube.io/blog/liquid-glass-css-svg/
 
 *** TODO onSave should only update editor title, BPM, etc

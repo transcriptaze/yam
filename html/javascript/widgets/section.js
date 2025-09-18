@@ -122,6 +122,8 @@ export class Section extends HTMLElement {
     this.#tempo.value = section?.tempo ?? ''
     this.#tempo.placeholder = '-'
     this.#BPM = section?.tempo
+
+    this.#timeSignature = section?.timeSignature ?? ''
   }
 
   get name() {
@@ -188,6 +190,16 @@ export class Section extends HTMLElement {
     } else {
       this.#fields.BPM.value = `(${Math.round((tempo * BPM) / TEMPO)} BPM)`
     }
+  }
+
+  set #timeSignature(v) {
+    void (async () => {
+      await customElements.whenDefined('yam-time-signature')
+      const el = this.shadowRoot?.querySelector('yam-time-signature')
+      if (el) {
+        el.timeSignature = v
+      }
+    })()
   }
 }
 

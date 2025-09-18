@@ -125,7 +125,11 @@ export class TimeSignature extends HTMLElement {
     const tactus = shadow.querySelector('input#tactus')
     const figura = shadow.querySelector('input#figura')
 
-    if (v == 'common') {
+    if (v === '') {
+      this.#timeSignature = ``
+      tactus.value = ''
+      figura.value = ''
+    } else if (v == 'common') {
       this.#timeSignature = `common`
       tactus.value = 4
       figura.value = 4
@@ -185,7 +189,12 @@ export class TimeSignature extends HTMLElement {
     const common = shadow.querySelector('button div img.common')
     const cut = shadow.querySelector('button div img.cut')
 
-    if (`${this.timeSignature}` === 'common') {
+    if (`${this.timeSignature}` === '') {
+      tactus.classList.add('hidden')
+      figura.classList.add('hidden')
+      common.classList.add('hidden')
+      cut.classList.add('hidden')
+    } else if (`${this.timeSignature}` === 'common') {
       tactus.classList.add('hidden')
       figura.classList.add('hidden')
       common.classList.remove('hidden')

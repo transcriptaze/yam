@@ -1424,6 +1424,9 @@ div.playlist-track [popover]:popover-open::backdrop {
   width: 16px;
   height: 16px;
 }
+:host(.component-editor) div.track-editor div.sections div.header img.expanded {
+  transform: rotate(90deg);
+}
 :host(.component-editor) div.track-editor div.sections ul {
   box-sizing: border-box;
   margin-top: 8px;
@@ -1531,6 +1534,13 @@ div.playlist-track [popover]:popover-open::backdrop {
 }
 :host(.component-editor) div.track-editor select, :host(.component-editor) div.track-editor select::picker(select) {
   appearance: base-select;
+}
+:host(.component-editor) div.track-editor #save {
+  box-sizing: border-box;
+  padding-left: 12px;
+  padding-right: 12px;
+  margin-left: -8px;
+  margin-right: -8px;
 }
 :host(.component-section) div.section {
   width: 100%;

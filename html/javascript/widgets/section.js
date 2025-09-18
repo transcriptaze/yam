@@ -5,6 +5,7 @@ export class Section extends HTMLElement {
     return ['expanded']
   }
 
+  // ... fields
   #fields = {}
 
   // ... state
@@ -65,7 +66,7 @@ export class Section extends HTMLElement {
     }
 
     if (Object.values(this.#fields).some((e) => e == null)) {
-      throw new Error('Template is missing required element(s)')
+      throw new Error('missing fields')
     }
   }
 
@@ -86,9 +87,9 @@ export class Section extends HTMLElement {
       const div = shadow.querySelector('div.section')
 
       if (to != null) {
-        div.classList.add('collapsed')
-      } else {
         div.classList.remove('collapsed')
+      } else {
+        div.classList.add('collapsed')
       }
     }
   }

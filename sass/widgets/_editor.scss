@@ -146,6 +146,10 @@
            width: 16px;
            height: 16px;
         }
+
+        img.expanded {
+          transform: rotate(90deg);
+        }
       }
 
       ul {
@@ -288,6 +292,16 @@
         appearance: base-select;    
       }
     }
+
+    #save {
+      box-sizing: border-box;
+      padding-left: 12px;
+      padding-right: 12px;
+
+      margin-left: -8px;
+      margin-right: -8px;
+    }
+
  }
 
   @media (max-width: 768px) and (orientation:portrait) {

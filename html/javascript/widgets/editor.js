@@ -6,9 +6,14 @@ export class Editor extends HTMLElement {
     return []
   }
 
+  // ... fields
+  #fields = {}
+
+  // ... state
   #track = null
   #expanded = false
 
+  // ... handlers
   #handlers = {
     mm: {
       change: (event) => {
@@ -55,6 +60,23 @@ export class Editor extends HTMLElement {
 
     shadow.appendChild(stylesheet)
     shadow.appendChild(clone)
+
+    const container = shadow.querySelector('div.track-editor')
+
+    this.#fields = {
+      title: container.querySelector('input#title'),
+      timeSignature: container.querySelector('yam-time-signature'),
+      mm: container.querySelector('yam-mm'),
+      BPM: container.querySelector('#BPM'),
+      loop: container.querySelector('yam-loop'),
+      loops: container.querySelector('#loops'),
+      sections: container.querySelector('div.sections'),
+      plus: container.querySelector('div.sections #plus'),
+    }
+
+    if (Object.values(this.#fields).some((e) => e == null)) {
+      throw new Error('missing fields')
+    }
   }
 
   connectedCallback() {
@@ -63,14 +85,13 @@ export class Editor extends HTMLElement {
     const shadow = this.shadowRoot
     const container = shadow.querySelector('div.track-editor')
     const save = container.querySelector('#save')
-    const mm = container.querySelector('yam-mm')
-    const sections = shadow.querySelector('div.sections div.header')
-    const plus = container.querySelector('div.sections #plus')
+    const toggle = this.#sections.querySelector('div.header')
 
     save.addEventListener('click', this.#handlers.save.click)
-    mm.addEventListener('change', this.#handlers.mm.change)
-    sections.addEventListener('click', this.#handlers.sections.click)
-    plus.addEventListener('click', this.#handlers.plus.click)
+    toggle.addEventListener('click', this.#handlers.sections.click)
+
+    this.#mm.addEventListener('change', this.#handlers.mm.change)
+    this.#plus.addEventListener('click', this.#handlers.plus.click)
   }
 
   disconnectedCallback() {}
@@ -82,45 +103,38 @@ export class Editor extends HTMLElement {
   set track(track) {
     const shadow = this.shadowRoot
     const container = shadow.querySelector('div.track-editor')
-    const title = container.querySelector('input#title')
     const save = container.querySelector('#save')
-    const timeSignature = container.querySelector('yam-time-signature')
-    const mm = container.querySelector('yam-mm')
-    const loop = container.querySelector('yam-loop')
-    const loops = container.querySelector('#loops')
-    const BPM = container.querySelector('#BPM')
-    const sections = container.querySelector('div.sections')
-    const ul = sections.querySelector('ul')
-    const plus = container.querySelector('div.sections #plus')
+    const ul = this.#sections.querySelector('ul')
 
-    title.value = track?.title ?? ''
     save.disabled = track == null
 
-    timeSignature.disabled = track == null
-    timeSignature.timeSignature = track?.timeSignature ?? '4:4'
+    this.#title.value = track?.title ?? ''
 
-    mm.disabled = track == null
-    mm.pulse = track?.pulse ?? 'quarter'
-    mm.BPM = track?.tempo ?? 120
+    this.#timeSignature.disabled = track == null
+    this.#timeSignature.timeSignature = track?.timeSignature ?? '4:4'
 
-    BPM.value = track?.BPM ?? track?.tempo ?? 120
-    BPM.disabled = track == null
+    this.#mm.disabled = track == null
+    this.#mm.pulse = track?.pulse ?? 'quarter'
+    this.#mm.BPM = track?.tempo ?? 120
 
-    loop.enabled = track?.loopable ?? false
-    loop.loop = track?.loop ?? false
+    this.#BPM.value = track?.BPM ?? track?.tempo ?? 120
+    this.#BPM.disabled = track == null
 
-    loops.disabled = track == null
-    loops.value = [2, 3, 4, 5].includes(track?.loops) ? track.loops : -`1`
+    this.#loop.enabled = track?.loopable ?? false
+    this.#loop.loop = track?.loop ?? false
 
-    plus.disabled = track == null
+    this.#loops.disabled = track == null
+    this.#loops.value = [2, 3, 4, 5].includes(track?.loops) ? track.loops : -`1`
+
+    this.#plus.disabled = track == null
 
     if (track == null) {
-      sections.classList.add('disabled')
-      sections.removeAttribute('open')
+      this.#sections.classList.add('disabled')
+      this.#sections.removeAttribute('open')
       ul.replaceChildren()
     } else {
-      sections.classList.remove('disabled')
-      sections.setAttribute('open', '')
+      this.#sections.classList.remove('disabled')
+      this.#sections.setAttribute('open', '')
 
       const children = []
 
@@ -128,8 +142,10 @@ export class Editor extends HTMLElement {
         const li = document.createElement('li')
         const section = document.createElement('yam-section')
 
-        section.section = v
-        // section.removeAttribute('expanded','')
+        section.section = {
+          track: track,
+          section: v,
+        }
 
         li.setAttribute('draggable', false)
         li.appendChild(section)
@@ -150,15 +166,16 @@ export class Editor extends HTMLElement {
   }
 
   #save() {
-    const shadow = this.shadowRoot
-    const container = shadow.querySelector('div.track-editor')
-    const title = container.querySelector('input#title')
-    const timeSignature = container.querySelector('yam-time-signature')
-    const mm = container.querySelector('yam-mm')
-    const bpm = container.querySelector('#BPM')
-    const loop = container.querySelector('yam-loop')
-    const loops = container.querySelector('#loops')
-    const sections = Array.from(container.querySelector('div.sections ul').querySelectorAll('yam-section')).map((v) => {
+    const title = this.#title.value
+    const timeSignature = this.#timeSignature.timeSignature
+    const pulse = this.#mm.pulse
+    const tempo = this.#mm.BPM
+    const BPM = Number.parseInt(this.#BPM.value)
+    const loop = this.#loop.loop
+    const loops = this.#loops.value
+    const ul = this.#sections.querySelector('ul')
+
+    const sections = Array.from(ul.querySelectorAll('yam-section')).map((v) => {
       return {
         name: v.name,
         role: v.role,
@@ -167,21 +184,19 @@ export class Editor extends HTMLElement {
       }
     })
 
-    const BPM = Number.parseInt(bpm.value)
-
     this.dispatchEvent(
       new CustomEvent(EVENTS.EDIT_SAVE, {
         bubbles: true,
         composed: true,
         detail: {
           track: this.#track?.UUID,
-          title: title.value,
-          timeSignature: timeSignature.timeSignature,
-          pulse: mm.pulse,
-          tempo: mm.BPM,
+          title: title,
+          timeSignature: timeSignature,
+          pulse: pulse,
+          tempo: tempo,
           BPM: !Number.isNaN(BPM) && BPM >= 40 && BPM <= 200 ? BPM : null,
-          loop: loop.loop,
-          loops: ['2', '3', '4', '5'].includes(loops.value) ? Number.parseInt(loops.value) : INF,
+          loop: loop,
+          loops: ['2', '3', '4', '5'].includes(loops) ? Number.parseInt(loops) : INF,
           sections: [...sections],
         },
       }),
@@ -189,17 +204,17 @@ export class Editor extends HTMLElement {
   }
 
   #add() {
-    const shadow = this.shadowRoot
-    const container = shadow.querySelector('div.track-editor')
-    const sections = container.querySelector('div.sections details')
-    const ul = sections.querySelector('ul')
+    const ul = this.#sections.querySelector('ul')
     const li = document.createElement('li')
     const section = document.createElement('yam-section')
 
     section.section = {
-      name: '',
-      role: '',
-      measures: INF,
+      track: this.#track,
+      section: {
+        name: '',
+        role: '',
+        measures: INF,
+      },
     }
 
     li.setAttribute('draggable', false)
@@ -209,17 +224,51 @@ export class Editor extends HTMLElement {
   }
 
   #toggle() {
-    const shadow = this.shadowRoot
-    const container = shadow.querySelector('div.track-editor')
-    const sections = Array.from(container.querySelector('div.sections ul').querySelectorAll('yam-section'))
+    const icon = this.#sections.querySelector('div.header img')
+    const ul = this.#sections.querySelector('ul')
+    const sections = Array.from(ul.querySelectorAll('yam-section'))
 
     this.#expanded = !this.#expanded
 
     if (this.#expanded) {
+      icon.classList.add('expanded')
       sections.forEach((v) => v.setAttribute('expanded', ''))
     } else {
+      icon.classList.remove('expanded')
       sections.forEach((v) => v.removeAttribute('expanded'))
     }
+  }
+
+  get #title() {
+    return this.#fields.title
+  }
+
+  get #timeSignature() {
+    return this.#fields.timeSignature
+  }
+
+  get #mm() {
+    return this.#fields.mm
+  }
+
+  get #BPM() {
+    return this.#fields.BPM
+  }
+
+  get #loop() {
+    return this.#fields.loop
+  }
+
+  get #loops() {
+    return this.#fields.loops
+  }
+
+  get #sections() {
+    return this.#fields.sections
+  }
+
+  get #plus() {
+    return this.#fields.plus
   }
 }
 

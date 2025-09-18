@@ -1424,6 +1424,9 @@ div.playlist-track [popover]:popover-open::backdrop {
   width: 16px;
   height: 16px;
 }
+:host(.component-editor) div.track-editor div.sections div.header img.expanded {
+  transform: rotate(90deg);
+}
 :host(.component-editor) div.track-editor div.sections ul {
   box-sizing: border-box;
   margin-top: 8px;
@@ -1532,12 +1535,35 @@ div.playlist-track [popover]:popover-open::backdrop {
 :host(.component-editor) div.track-editor select, :host(.component-editor) div.track-editor select::picker(select) {
   appearance: base-select;
 }
+:host(.component-editor) div.track-editor #save {
+  box-sizing: border-box;
+  padding-left: 12px;
+  padding-right: 12px;
+  margin-left: -8px;
+  margin-right: -8px;
+}
 :host(.component-section) div.section {
   width: 100%;
   height: fit-content;
   display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
+  row-gap: 1px;
+}
+:host(.component-section) div.section div.summary {
+  background: #ffffff;
+  width: 100%;
+  display: grid;
   grid-template-columns: auto 1fr auto auto;
   grid-template-rows: auto auto;
+  column-gap: 3px;
+}
+:host(.component-section) div.section div.metricals {
+  background: #fefefe;
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  grid-template-rows: auto;
   column-gap: 3px;
 }
 :host(.component-section) div.section #name {
@@ -1554,7 +1580,11 @@ div.playlist-track [popover]:popover-open::backdrop {
 }
 :host(.component-section) div.section #tempo {
   grid-column: 1;
-  grid-row: 2;
+  grid-row: 1;
+}
+:host(.component-section) div.section #BPM {
+  grid-column: 2;
+  grid-row: 1;
 }
 :host(.component-section) div.section input {
   box-sizing: border-box;
@@ -1603,9 +1633,14 @@ div.playlist-track [popover]:popover-open::backdrop {
 :host(.component-section) div.section #tempo {
   width: 3em;
 }
+:host(.component-section) div.section #BPM {
+  color: #a0a0a0;
+  font-size: 0.8em;
+  font-style: italic;
+}
 :host(.component-section) div.section.collapsed {
   row-gap: 0px;
 }
-:host(.component-section) div.section.collapsed #tempo {
+:host(.component-section) div.section.collapsed div.metricals {
   display: none;
 }

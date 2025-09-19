@@ -2,10 +2,7 @@ import { State, BUFFERSIZE } from '../shared/state.js'
 import * as PULSE from '../shared/constants.js'
 import { parseTimeSignature, durationToMS, clamp } from '../../util.js'
 import * as generators from '../../generators.js'
-
-const playing = new Event('playing')
-const paused = new Event('paused')
-const stopped = new Event('stopped')
+import { EVENTS } from '../../constants.js'
 
 const STATE = {
   START: 0,
@@ -66,15 +63,15 @@ export class MetronomeNode extends AudioWorkletNode {
   onMessage(event) {
     switch (event.data.message) {
       case 'playing':
-        this.subscribers.dispatchEvent(playing)
+        this.subscribers.dispatchEvent(new CustomEvent(EVENTS.PLAYING, { detail: {} }))
         break
 
       case 'paused':
-        this.subscribers.dispatchEvent(paused)
+        this.subscribers.dispatchEvent(new CustomEvent(EVENTS.PAUSED, { detail: {} }))
         break
 
       case 'stopped':
-        this.subscribers.dispatchEvent(stopped)
+        this.subscribers.dispatchEvent(new CustomEvent(EVENTS.STOPPED, { detail: {} }))
         break
 
       case 'flipped':

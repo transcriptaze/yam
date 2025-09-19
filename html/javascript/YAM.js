@@ -87,16 +87,22 @@ export function initialise() {
     .catch((err) => warnf(err))
 
   // ... setup audio engine
-  engine.subscribe({
-    onPlaying(_event) {
+  engine.addEventListener(
+    EVENTS.PLAYING,
+    (_) => {
       widgets.metronome.onPlaying()
       requestAnimationFrame(() => animate(++ID))
     },
+    false,
+  )
 
-    onStopped(_event) {
+  engine.addEventListener(
+    EVENTS.STOPPED,
+    (_) => {
       widgets.metronome.onStopped()
     },
-  })
+    false,
+  )
 
   widgets.metronome.enabled = true
 

@@ -33,6 +33,10 @@ export const COLOURS = new Map([
 ])
 
 export const EVENTS = {
+  PLAYING: 'playing',
+  PAUSED: 'paused',
+  STOPPED: 'stopped',
+
   SHUFFLE_PLAYLISTS: 'shuffle-playlists',
 
   TOGGLE_PLAYLIST: 'toggle-playlist',

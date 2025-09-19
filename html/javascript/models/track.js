@@ -294,6 +294,13 @@ export class Track extends EventTarget {
       } else if (!Number.isNaN(v.tempo) && v.tempo >= 40 && v.tempo <= 200) {
         section.tempo = v.tempo
       }
+
+      // ... time signature
+      if (v.timeSignature == null || v.timeSignature === '') {
+        section.timeSignature = null
+      } else {
+        section.timeSignature = v.timeSignature
+      }
     })
 
     added.forEach((v) => {

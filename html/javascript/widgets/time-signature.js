@@ -126,6 +126,7 @@ export class TimeSignature extends HTMLElement {
 
   set timeSignature(v) {
     const shadow = this.shadowRoot
+    const container = shadow.querySelector('div.time-signature')
     const tactus = shadow.querySelector('input#tactus')
     const figura = shadow.querySelector('input#figura')
 
@@ -150,6 +151,12 @@ export class TimeSignature extends HTMLElement {
         tactus.value = beats
         figura.value = divisions
       }
+    }
+
+    if (v === '') {
+      container.classList.add('none')
+    } else {
+      container.classList.remove('none')
     }
 
     this.#redraw()

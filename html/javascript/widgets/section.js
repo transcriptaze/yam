@@ -156,6 +156,12 @@ export class Section extends HTMLElement {
     }
   }
 
+  get timeSignature() {
+    const e = this.shadowRoot?.querySelector('yam-time-signature')
+
+    return e?.timeSignature ?? this.#section.timeSignature
+  }
+
   get #name() {
     return this.#fields.name
   }
@@ -195,9 +201,9 @@ export class Section extends HTMLElement {
   set #timeSignature(v) {
     void (async () => {
       await customElements.whenDefined('yam-time-signature')
-      const el = this.shadowRoot?.querySelector('yam-time-signature')
-      if (el) {
-        el.timeSignature = v
+      const e = this.shadowRoot?.querySelector('yam-time-signature')
+      if (e) {
+        e.timeSignature = v
       }
     })()
   }

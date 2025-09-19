@@ -290,22 +290,14 @@ function* transmogrify(track) {
 
     const role = _roles(section.role)
     const name = _names(null, role)
-    let bars = 0
+    let bars = section.measures ?? (['count-in', 'anacrusis'].includes(role) ? 1 : Number.POSITIVE_INFINITY)
 
     const clicks = section.clicks ?? null
     const subsections = []
 
-    if (_subsections.length == 0) {
-      // subsections.push({
-      //   measures:
-      //   tempo: tempo,
-      //   timeSignature: timeSignature,
-      //   pulse: pulse,
-      //   clicks: clicks,
-      // })
+    if (_subsections.length > 0) {
+      bars = 0
 
-      bars = section.measures ?? (['count-in', 'anacrusis'].includes(role) ? 1 : Number.POSITIVE_INFINITY)
-    } else {
       for (const subsection of _subsections) {
         tempo = subsection.tempo ?? tempo
         timeSignature = subsection.timeSignature ?? timeSignature
@@ -317,9 +309,9 @@ function* transmogrify(track) {
           pulse: pulse,
           clicks: subsection.clicks ?? clicks,
         })
-      }
 
-      bars = section.measures ?? (['count-in', 'anacrusis'].includes(role) ? 1 : Number.POSITIVE_INFINITY)
+        bars += subsection.measures ?? Number.POSITIVE_INFINITY
+      }
     }
 
     yield {

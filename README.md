@@ -30,32 +30,35 @@ It will be a pleasant surprise and/or minor miracle if it works at all on anythi
 
 ## Supported browsers
 
-| Platform    | Browser    | Version        | Ok               | Notes                                      |
+| **MacOs**   | Browser    | Version        | Ok               | Notes                                      |
 |-------------|------------|----------------|------------------|--------------------------------------------|
-| **MacOs**   | Chrome     | (recent'ish)   | Yes              |                                            |
+|             | Chrome     | (recent'ish)   | Yes              |                                            |
 |             | Firefox    | (recent'ish)   | Mostly           | Do NOT ask about the layout hacks          |
 |             | Safari     | (old)          | No               |                                            |
 |             | Opera      | (recent'ish)   | Yes              |                                            |
 |             | DuckDuckGo |                | **NO**           |                                            |
-|             |            |                |                  |                                            |
-| **Windows** | Chrome     |                |                  |                                            |
+
+| **Windows** | Browser    | Version        | Ok               | Notes                                      |
+|             | Chrome     |                |                  |                                            |
 |             | Firefox    |                |                  |                                            |
 |             | Edge       |                |                  |                                            |
 |             | Opera      |                |                  |                                            |
 |             | DuckDuckGo |                | **UNLIKELY**     |                                            |
-|             |            |                |                  |                                            |
-| **Linux**   | Chrome     |                |                  |                                            |
+
+| **Linux**   | Browser    | Version        | Ok               | Notes                                      |
+|             | Chrome     |                |                  |                                            |
 |             | Firefox    |                |                  |                                            |
 |             | Opera      |                |                  |                                            |
 |             | DuckDuckGo |                | **PROBABLY NOT** |                                            |
-|             |            |                |                  |                                            |
-| **Android** | Chrome     | (latest ?)     | Yes              |                                            |
+
+| **Android** | Browser    | Version        | Ok               | Notes                                      |
+|             | Chrome     | (latest ?)     | Yes              |                                            |
 |             | Firefox    | (latest ?)     | Mostly           | (with horrible Firefox specific CSS hacks) |
 |             | Opera      |                |                  |                                            |
 |             | Opera Mini |                | No               |                                            |
 |             | DuckDuckGo |                | **NO**           |                                            |
-|             |            |                |                  |                                            |
-| **iOS**     | Chrome     |                |                  |                                            |
+
+| **iOS**     | Browser    | Version        | Ok               | Notes                                      |
 |             | Firefox    |                |                  |                                            |
 |             | Safari     |                |                  |                                            |
 |             | Opera      |                |                  |                                            |

@@ -1,5 +1,6 @@
 :host(.component-time-signature) {
   div.time-signature {
+    position: relative;
     display: inline-block; 
     height: 100%;
 
@@ -65,12 +66,11 @@
       }
     }
 
-    button:disabled {
-      img {
-        filter: grayscale(100%) opacity(50%);
-
-      }
-    }
+    // button:disabled {
+    //   img {
+    //     filter: grayscale(100%) opacity(50%);
+    //   }
+    // }
 
     div#list {
       top: calc(anchor(bottom) + 8px);
@@ -164,6 +164,29 @@
         }
       }
     }
+
+    #lock {
+      position: absolute;
+      bottom: 6px;
+      right: -2px;
+
+      width: 16px;
+      visibility: hidden;
+    }
+  }
+ 
+  div.time-signature.disabled {
+    button{
+      img {
+        filter: grayscale(100%) opacity(50%);
+      }
+    }
+  }
+
+  div.time-signature.locked {
+    #lock {
+      visibility: visible;
+    }
   }
 
   @-moz-document url-prefix() {
@@ -176,3 +199,4 @@
     }
   }
 }
+

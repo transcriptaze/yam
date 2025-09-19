@@ -10,6 +10,7 @@
 
 
 *** DONE clear current track
+*** DONE lock time signature for tracks
 
 *** TODO fix dangling popover on track delete
       - move popover to parent Playlist

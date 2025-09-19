@@ -46,7 +46,7 @@ const FIGURA = new Map([
 
 export class TimeSignature extends HTMLElement {
   static get observedAttributes() {
-    return ['disabled']
+    return ['disabled', 'locked']
   }
 
   #timeSignature = '4:4'
@@ -112,7 +112,11 @@ export class TimeSignature extends HTMLElement {
 
   attributeChangedCallback(name, from, to) {
     if (name === 'disabled') {
-      this.disabled = to != null ? true : false
+      this.#disabled = to != null ? true : false
+    }
+
+    if (name === 'locked') {
+      this.#locked = to != null ? true : false
     }
   }
 
@@ -152,10 +156,55 @@ export class TimeSignature extends HTMLElement {
   }
 
   set disabled(v) {
+    if (v === true) {
+      this.setAttribute('disabled', '')
+    } else {
+      this.removeAttribute('disabled')
+    }
+  }
+
+  set locked(v) {
+    if (v === true) {
+      this.setAttribute('locked', '')
+    } else {
+      this.removeAttribute('locked')
+    }
+  }
+
+  get #disabled() {
+    return this.getAttribute('disabled') != null
+  }
+
+  set #disabled(v) {
     const shadow = this.shadowRoot
+    const container = shadow.querySelector('div.time-signature')
     const button = shadow.querySelector('button')
 
-    button.disabled = v === true
+    if (v === true) {
+      button.disabled = true
+      container.classList.add('disabled')
+    } else {
+      button.disabled = this.#locked
+      container.classList.remove('disabled')
+    }
+  }
+
+  get #locked() {
+    return this.getAttribute('locked') != null
+  }
+
+  set #locked(v) {
+    const shadow = this.shadowRoot
+    const container = shadow.querySelector('div.time-signature')
+    const button = shadow.querySelector('button')
+
+    if (v === true) {
+      button.disabled = true
+      container.classList.add('locked')
+    } else {
+      button.disabled = this.#disabled
+      container.classList.remove('locked')
+    }
   }
 
   redraw(timeSignature, { playing, stopped }) {

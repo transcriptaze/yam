@@ -1,3 +1,4 @@
+import * as generators from '../generators.js'
 import { parseTimeSignature as parse } from '../util.js'
 
 const TACTUS = new Map([
@@ -47,6 +48,10 @@ const FIGURA = new Map([
 export class TimeSignature extends HTMLElement {
   static get observedAttributes() {
     return ['disabled', 'locked']
+  }
+
+  #track = {
+    sections: new Map(),
   }
 
   #timeSignature = '4:4'
@@ -178,6 +183,14 @@ export class TimeSignature extends HTMLElement {
     }
   }
 
+  set track(track) {
+    const sections = transmogrify(track)
+
+    this.#track = {
+      sections: new Map(sections.map((v) => [v.ID, v])),
+    }
+  }
+
   get #disabled() {
     return this.getAttribute('disabled') != null
   }
@@ -214,8 +227,14 @@ export class TimeSignature extends HTMLElement {
     }
   }
 
-  redraw(timeSignature, { playing, stopped }) {
-    if ((playing || stopped) && timeSignature !== this.#timeSignature) {
+  redraw(timeSignature, { playing, stopped, section }) {
+    if (playing || stopped) {
+      const _section = this.#track.sections.get(section.ID) ?? this.#track.sections.get(1)
+
+      if (_section?.timeSignature !== this.#timeSignature) {
+        this.timeSignature = _section?.timeSignature ?? timeSignature
+      }
+    } else {
       this.timeSignature = timeSignature
     }
   }
@@ -278,6 +297,16 @@ export class TimeSignature extends HTMLElement {
       }
     }
   }
+}
+
+function transmogrify(track) {
+  return [...generators.transmogrify(track)].map((v) => {
+    return {
+      ID: v.ID,
+      start: v.start,
+      timeSignature: v.timeSignature,
+    }
+  })
 }
 
 customElements.define('yam-time-signature', TimeSignature)

@@ -235,6 +235,14 @@ export function loops() {
   return engine.loops
 }
 
+export function debug(dbg) {
+  Engine.DEBUG = dbg
+
+  if (engine.initialised) {
+    exec((e) => (e.debug = dbg))
+  }
+}
+
 export function load(track) {
   if (track != null) {
     setBPM(track.BPM)
@@ -243,14 +251,6 @@ export function load(track) {
   }
 
   setTrack(track)
-}
-
-export function debug(dbg) {
-  Engine.DEBUG = dbg
-
-  if (engine.initialised) {
-    exec((e) => (e.debug = dbg))
-  }
 }
 
 export function setBPM(v) {

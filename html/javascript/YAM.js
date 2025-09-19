@@ -465,10 +465,12 @@ function onStateModified() {
 
   widgets.knob.BPM = state.BPM
   widgets.wheel.BPM = state.BPM
-  widgets.timeSignature.timeSignature = state.timeSignature
-  widgets.timeSignature.locked = track != null && track.sections != null && track.sections.length > 0
   widgets.pads.pulse = state.pulse
   widgets.pads.timeSignature = state.timeSignature
+
+  widgets.timeSignature.timeSignature = state.timeSignature
+  widgets.timeSignature.locked = track != null && track.sections != null && track.sections.length > 0
+  widgets.timeSignature.track = track
 
   widgets.info.title = state.title
   widgets.info.track = track
@@ -527,7 +529,9 @@ function onSelected(event) {
   widgets.metronome.eof = playlist?.EOF(track) ?? true
 
   widgets.info.track = track
+  widgets.timeSignature.track = track
   widgets.editor.track = track
+
   engine.load(track)
 
   if (track == null) {
@@ -788,6 +792,7 @@ function onPlaylistDeleted(event) {
     widgets.metronome.eof = playlist?.EOF(track) ?? true
 
     widgets.info.track = track
+    widgets.timeSignature.track = track
     engine.load(track)
   }
 }
@@ -805,9 +810,10 @@ function animate(id) {
   const beats = engine.beats()
   const divisions = engine.divisions()
   const BPM = engine.BPM()
-  const timeSignature = engine.timeSignature()
   const pulse = engine.pulse()
   const loops = engine.loops()
+
+  const timeSignature = state.timeSignature
 
   const runstate = {
     playing: playing,

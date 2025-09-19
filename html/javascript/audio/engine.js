@@ -92,14 +92,6 @@ class Engine {
     this.metronome.BPM = bpm
   }
 
-  get timeSignature() {
-    if (this.initialised) {
-      return this.metronome?.timeSignature ?? '4:4'
-    }
-
-    return '4:4'
-  }
-
   set timeSignature(signature) {
     this.metronome.timeSignature = signature
   }
@@ -221,10 +213,6 @@ export function divisions() {
 
 export function BPM() {
   return engine.BPM
-}
-
-export function timeSignature() {
-  return engine.timeSignature
 }
 
 export function pulse() {

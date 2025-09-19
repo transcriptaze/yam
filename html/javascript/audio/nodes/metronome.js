@@ -28,7 +28,6 @@ export class MetronomeNode extends AudioWorkletNode {
     beats: 4,
     divisions: 4,
     BPM: 120,
-    timeSignature: '4:4',
     pulse: 'quarter',
     loops: 0,
   }
@@ -217,10 +216,6 @@ export class MetronomeNode extends AudioWorkletNode {
     return this.#cache.BPM
   }
 
-  get timeSignature() {
-    return this.#cache.timeSignature
-  }
-
   get pulse() {
     return this.#cache.pulse
   }
@@ -241,7 +236,6 @@ export class MetronomeNode extends AudioWorkletNode {
     this.#cache.beats = state.beats
     this.#cache.divisions = state.divisions
     this.#cache.BPM = state.BPM
-    this.#cache.timeSignature = state.timeSignature
     this.#cache.pulse = PULSE.get(state.pulse)?.name ?? ''
     this.#cache.loops = state.loops
   }

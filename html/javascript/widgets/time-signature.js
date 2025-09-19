@@ -1,3 +1,4 @@
+import * as generators from '../generators.js'
 import { parseTimeSignature as parse } from '../util.js'
 
 const TACTUS = new Map([
@@ -46,7 +47,11 @@ const FIGURA = new Map([
 
 export class TimeSignature extends HTMLElement {
   static get observedAttributes() {
-    return ['disabled']
+    return ['disabled', 'locked']
+  }
+
+  #track = {
+    sections: new Map(),
   }
 
   #timeSignature = '4:4'
@@ -112,7 +117,11 @@ export class TimeSignature extends HTMLElement {
 
   attributeChangedCallback(name, from, to) {
     if (name === 'disabled') {
-      this.disabled = to != null ? true : false
+      this.#disabled = to != null ? true : false
+    }
+
+    if (name === 'locked') {
+      this.#locked = to != null ? true : false
     }
   }
 
@@ -122,6 +131,7 @@ export class TimeSignature extends HTMLElement {
 
   set timeSignature(v) {
     const shadow = this.shadowRoot
+    const container = shadow.querySelector('div.time-signature')
     const tactus = shadow.querySelector('input#tactus')
     const figura = shadow.querySelector('input#figura')
 
@@ -148,18 +158,83 @@ export class TimeSignature extends HTMLElement {
       }
     }
 
+    if (v === '') {
+      container.classList.add('none')
+    } else {
+      container.classList.remove('none')
+    }
+
     this.#redraw()
   }
 
   set disabled(v) {
-    const shadow = this.shadowRoot
-    const button = shadow.querySelector('button')
-
-    button.disabled = v === true
+    if (v === true) {
+      this.setAttribute('disabled', '')
+    } else {
+      this.removeAttribute('disabled')
+    }
   }
 
-  redraw(timeSignature, { playing, stopped }) {
-    if ((playing || stopped) && timeSignature !== this.#timeSignature) {
+  set locked(v) {
+    if (v === true) {
+      this.setAttribute('locked', '')
+    } else {
+      this.removeAttribute('locked')
+    }
+  }
+
+  set track(track) {
+    const sections = transmogrify(track)
+
+    this.#track = {
+      sections: new Map(sections.map((v) => [v.ID, v])),
+    }
+  }
+
+  get #disabled() {
+    return this.getAttribute('disabled') != null
+  }
+
+  set #disabled(v) {
+    const shadow = this.shadowRoot
+    const container = shadow.querySelector('div.time-signature')
+    const button = shadow.querySelector('button')
+
+    if (v === true) {
+      button.disabled = true
+      container.classList.add('disabled')
+    } else {
+      button.disabled = this.#locked
+      container.classList.remove('disabled')
+    }
+  }
+
+  get #locked() {
+    return this.getAttribute('locked') != null
+  }
+
+  set #locked(v) {
+    const shadow = this.shadowRoot
+    const container = shadow.querySelector('div.time-signature')
+    const button = shadow.querySelector('button')
+
+    if (v === true) {
+      button.disabled = true
+      container.classList.add('locked')
+    } else {
+      button.disabled = this.#disabled
+      container.classList.remove('locked')
+    }
+  }
+
+  redraw(timeSignature, { playing, stopped, section }) {
+    if (playing || stopped) {
+      const _section = this.#track.sections.get(section.ID) ?? this.#track.sections.get(1)
+
+      if (_section?.timeSignature !== this.#timeSignature) {
+        this.timeSignature = _section?.timeSignature ?? timeSignature
+      }
+    } else {
       this.timeSignature = timeSignature
     }
   }
@@ -222,6 +297,16 @@ export class TimeSignature extends HTMLElement {
       }
     }
   }
+}
+
+function transmogrify(track) {
+  return [...generators.transmogrify(track)].map((v) => {
+    return {
+      ID: v.ID,
+      start: v.start,
+      timeSignature: v.timeSignature,
+    }
+  })
 }
 
 customElements.define('yam-time-signature', TimeSignature)

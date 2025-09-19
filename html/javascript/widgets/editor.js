@@ -181,6 +181,7 @@ export class Editor extends HTMLElement {
         role: v.role,
         measures: v.measures,
         tempo: v.tempo,
+        timeSignature: v.timeSignature,
       }
     })
 
@@ -277,10 +278,8 @@ function* transmogrify(track) {
   const _roles = generators.roles()
   const _names = generators.names()
 
-  let tempo = track?.BPM ?? 120
   let timeSignature = track?.timeSignature ?? '4:4'
   let pulse = track?.pulse ?? ''
-  // let measures = 0
 
   for (const section of sections) {
     const _subsections = section.subsections ?? []
@@ -290,24 +289,15 @@ function* transmogrify(track) {
 
     const role = _roles(section.role)
     const name = _names(null, role)
-    let bars = section.measures ?? (['count-in', 'anacrusis'].includes(role) ? 1 : Number.POSITIVE_INFINITY)
-
-    const clicks = section.clicks ?? null
     const subsections = []
+    let bars = section.measures ?? (['count-in', 'anacrusis'].includes(role) ? 1 : Number.POSITIVE_INFINITY)
 
     if (_subsections.length > 0) {
       bars = 0
 
       for (const subsection of _subsections) {
-        tempo = subsection.tempo ?? tempo
-        timeSignature = subsection.timeSignature ?? timeSignature
-        pulse = subsection.pulse ?? pulse
-
         subsections.push({
           measures: subsection.measures ?? Number.POSITIVE_INFINITY,
-          timeSignature: timeSignature,
-          pulse: pulse,
-          clicks: subsection.clicks ?? clicks,
         })
 
         bars += subsection.measures ?? Number.POSITIVE_INFINITY
@@ -326,6 +316,7 @@ function* transmogrify(track) {
       },
 
       tempo: section.tempo,
+      timeSignature: section.timeSignature,
       subsections: subsections,
       measures: bars,
     }

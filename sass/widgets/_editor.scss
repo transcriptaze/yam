@@ -138,6 +138,12 @@
       }
 
       div.header {
+        box-sizing: border-box;
+        width: fit-content;
+        padding-top: 2px;
+        padding-bottom: 2px;
+        padding-right: 48px;
+
         display: flex;
         flex-direction: horizontal;
         align-items: center;

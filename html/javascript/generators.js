@@ -137,6 +137,7 @@ export function* transmogrify(track) {
       role: role,
       name: name,
       colour: colour,
+      timeSignature: timeSignature,
       subsections: subsections,
       measures: bars,
       start: measures + 1,

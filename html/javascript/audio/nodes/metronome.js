@@ -2,10 +2,7 @@ import { State, BUFFERSIZE } from '../shared/state.js'
 import * as PULSE from '../shared/constants.js'
 import { parseTimeSignature, durationToMS, clamp } from '../../util.js'
 import * as generators from '../../generators.js'
-
-const playing = new Event('playing')
-const paused = new Event('paused')
-const stopped = new Event('stopped')
+import { EVENTS } from '../../constants.js'
 
 const STATE = {
   START: 0,
@@ -31,7 +28,6 @@ export class MetronomeNode extends AudioWorkletNode {
     beats: 4,
     divisions: 4,
     BPM: 120,
-    timeSignature: '4:4',
     pulse: 'quarter',
     loops: 0,
   }
@@ -66,15 +62,15 @@ export class MetronomeNode extends AudioWorkletNode {
   onMessage(event) {
     switch (event.data.message) {
       case 'playing':
-        this.subscribers.dispatchEvent(playing)
+        this.subscribers.dispatchEvent(new CustomEvent(EVENTS.PLAYING, { detail: {} }))
         break
 
       case 'paused':
-        this.subscribers.dispatchEvent(paused)
+        this.subscribers.dispatchEvent(new CustomEvent(EVENTS.PAUSED, { detail: {} }))
         break
 
       case 'stopped':
-        this.subscribers.dispatchEvent(stopped)
+        this.subscribers.dispatchEvent(new CustomEvent(EVENTS.STOPPED, { detail: {} }))
         break
 
       case 'flipped':
@@ -220,10 +216,6 @@ export class MetronomeNode extends AudioWorkletNode {
     return this.#cache.BPM
   }
 
-  get timeSignature() {
-    return this.#cache.timeSignature
-  }
-
   get pulse() {
     return this.#cache.pulse
   }
@@ -244,7 +236,6 @@ export class MetronomeNode extends AudioWorkletNode {
     this.#cache.beats = state.beats
     this.#cache.divisions = state.divisions
     this.#cache.BPM = state.BPM
-    this.#cache.timeSignature = state.timeSignature
     this.#cache.pulse = PULSE.get(state.pulse)?.name ?? ''
     this.#cache.loops = state.loops
   }

@@ -220,6 +220,7 @@ div.metronome.playing #play img.stop {
 }
 
 :host(.component-time-signature) div.time-signature {
+  position: relative;
   display: inline-block;
   height: 100%;
 }
@@ -271,9 +272,6 @@ div.metronome.playing #play img.stop {
   grid-column: 2;
   grid-row: 1;
   justify-self: center;
-}
-:host(.component-time-signature) div.time-signature button:disabled img {
-  filter: grayscale(100%) opacity(50%);
 }
 :host(.component-time-signature) div.time-signature div#list {
   top: calc(anchor(bottom) + 8px);
@@ -348,6 +346,22 @@ div.metronome.playing #play img.stop {
 }
 :host(.component-time-signature) div.time-signature div#list div.content div.custom input:invalid {
   color: red;
+}
+:host(.component-time-signature) div.time-signature #lock {
+  position: absolute;
+  bottom: 6px;
+  right: -2px;
+  width: 16px;
+  visibility: hidden;
+}
+:host(.component-time-signature) div.time-signature.none button img {
+  filter: grayscale(100%) opacity(25%);
+}
+:host(.component-time-signature) div.time-signature.disabled button img {
+  filter: grayscale(100%) opacity(50%);
+}
+:host(.component-time-signature) div.time-signature.locked #lock {
+  visibility: visible;
 }
 @-moz-document url-prefix() {
   :host(.component-time-signature) img.tactus {
@@ -1418,6 +1432,11 @@ div.playlist-track [popover]:popover-open::backdrop {
   display: none;
 }
 :host(.component-editor) div.track-editor div.sections div.header {
+  box-sizing: border-box;
+  width: fit-content;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-right: 48px;
   display: flex;
   flex-direction: horizontal;
   align-items: center;

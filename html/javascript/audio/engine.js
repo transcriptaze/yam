@@ -35,6 +35,27 @@ class Engine {
     return this
   }
 
+  #init(ctx) {
+    if (this.initialised) {
+      return Promise.resolve()
+    } else {
+      return sounds
+        .get(ctx, ...SOUNDS)
+        .then(([tick, tock, stick]) => metronome(ctx, tick, tock, stick))
+        .then((m) => this.init(ctx, m))
+    }
+  }
+
+  #exec(f) {
+    audioContext ??= new AudioContext()
+
+    return audioContext
+      .resume()
+      .then(() => this.#init(audioContext))
+      .then(() => f())
+      .catch((err) => console.error(err))
+  }
+
   get metronome() {
     return this.#metronome
   }
@@ -48,27 +69,27 @@ class Engine {
   }
 
   play() {
-    this.metronome.play()
+    this.#exec(() => this.metronome.play())
   }
 
   stop() {
-    this.metronome.stop()
+    this.#exec(() => this.metronome.stop())
   }
 
   toggle() {
-    this.metronome.toggle()
+    this.#exec(() => this.metronome.toggle())
   }
 
   get BPM() {
-    return this.metronome?.BPM ?? 120
+    if (this.initialised) {
+      return this.metronome?.BPM ?? 120
+    }
+
+    return 120
   }
 
   set BPM(bpm) {
     this.metronome.BPM = bpm
-  }
-
-  get timeSignature() {
-    return this.metronome?.timeSignature ?? '4:4'
   }
 
   set timeSignature(signature) {
@@ -76,7 +97,11 @@ class Engine {
   }
 
   get pulse() {
-    return this.metronome?.pulse ?? 'quarter'
+    if (this.initialised) {
+      return this.metronome?.pulse ?? 'quarter'
+    }
+
+    return 'quarter'
   }
 
   set pulse(pulse) {
@@ -92,82 +117,118 @@ class Engine {
   }
 
   get playing() {
-    return this.metronome.playing ?? false
+    if (this.initialised) {
+      return this.metronome.playing ?? false
+    }
+
+    return false
   }
 
   get stopped() {
-    return this.metronome.stopped ?? false
+    if (this.initialised) {
+      return this.metronome.stopped ?? false
+    }
+
+    return false
   }
 
   get section() {
-    return this.metronome.section ?? ''
+    if (this.initialised) {
+      return this.metronome.section ?? ''
+    }
+
+    return ''
   }
 
   get bar() {
-    return this.metronome.bar ?? 0
+    if (this.initialised) {
+      return this.metronome.bar ?? 0
+    }
+
+    return 0
   }
 
   get beat() {
-    return this.metronome.beat ?? 0
+    if (this.initialised) {
+      return this.metronome.beat ?? 0
+    }
+
+    return 0
   }
 
   get beats() {
-    return this.metronome.beats ?? 0
+    if (this.initialised) {
+      return this.metronome.beats ?? 0
+    }
+
+    return 0
   }
 
   get divisions() {
-    return this.metronome.divisions ?? 0
+    if (this.initialised) {
+      return this.metronome.divisions ?? 0
+    }
+
+    return 0
   }
 
   get loops() {
-    return this.metronome?.loops ?? 0
+    if (this.initialised) {
+      return this.metronome?.loops ?? 0
+    }
+
+    return 0
   }
 }
 
 const engine = new Engine()
 
 export function playing() {
-  return engine != null && engine.initialised ? engine.playing : false
+  return engine.playing
 }
 
 export function stopped() {
-  return engine != null && engine.initialised ? engine.stopped : false
+  return engine.stopped
 }
 
 export function section() {
-  return engine != null && engine.initialised ? engine.section : ''
+  return engine.section
 }
 
 export function bar() {
-  return engine != null && engine.initialised ? engine.bar : 0
+  return engine.bar
 }
 
 export function beat() {
-  return engine != null && engine.initialised ? engine.beat : 0
+  return engine.beat
 }
 
 export function beats() {
-  return engine != null && engine.initialised ? engine.beats : 0
+  return engine.beats
 }
 
 export function divisions() {
-  return engine != null && engine.initialised ? engine.divisions : 0
+  return engine.divisions
 }
 
 export function BPM() {
-  return engine != null && engine.initialised ? engine.BPM : 120
-}
-
-export function timeSignature() {
-  return engine != null && engine.initialised ? engine.timeSignature : '4:4'
+  return engine.BPM
 }
 
 export function pulse() {
-  return engine != null && engine.initialised ? engine.pulse : 'quarter'
+  return engine.pulse
 }
 
 export function loops() {
-  return engine != null && engine.initialised ? engine.loops : 0
+  return engine.loops
+}
+
+export function debug(dbg) {
+  Engine.DEBUG = dbg
+
+  if (engine.initialised) {
+    exec((e) => (e.debug = dbg))
+  }
 }
 
 export function load(track) {
@@ -180,19 +241,12 @@ export function load(track) {
   setTrack(track)
 }
 
-export function debug(dbg) {
-  Engine.DEBUG = dbg
-  if (engine != null && engine.initialised) {
-    exec((e) => (e.debug = dbg))
-  }
-}
-
 export function setBPM(v) {
   const bpm = parseInt(`${v}`, 10)
 
   if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
     Engine.BPM = bpm
-    if (engine != null && engine.initialised) {
+    if (engine.initialised) {
       exec((e) => (e.BPM = bpm))
     }
   }
@@ -207,7 +261,7 @@ export function setTimeSignature(v) {
       divisions: divisions,
     }
 
-    if (engine != null && engine.initialised) {
+    if (engine.initialised) {
       exec(
         (e) =>
           (e.timeSignature = {
@@ -224,7 +278,7 @@ export function setPulse(v) {
 
   if (pulse != null) {
     Engine.pulse = pulse
-    if (engine != null && engine.initialised) {
+    if (engine.initialised) {
       exec((e) => (e.pulse = pulse))
     }
   }
@@ -232,7 +286,7 @@ export function setPulse(v) {
 
 export function setTrack(track) {
   Engine.track = track
-  if (engine != null && engine.initialised) {
+  if (engine.initialised) {
     exec((e) => (e.track = track))
   }
 }
@@ -242,21 +296,21 @@ export function setTrack(track) {
 export function setLoop(v) {
   const loop = v === true
 
-  if (engine != null && engine.initialised) {
+  if (engine.initialised) {
     exec((e) => (e.loop = loop))
   }
 }
 
 export function play() {
-  exec((e) => e.play())
+  engine.play()
 }
 
 export function stop() {
-  exec((e) => e.stop())
+  engine.stop()
 }
 
 export function toggle() {
-  exec((e) => e.toggle())
+  engine.toggle()
 }
 
 function exec(f) {
@@ -284,9 +338,10 @@ function metronome(ctx, tick, tock, stick) {
     .then(() => new nodes.MetronomeNode(ctx, tick, tock, stick, subscribers))
 }
 
-export function subscribe(l) {
-  if (l != null) {
-    subscribers.addEventListener('playing', (e) => l.onPlaying(e), false)
-    subscribers.addEventListener('stopped', (e) => l.onStopped(e), false)
-  }
+export function addEventListener(event, f, options) {
+  subscribers.addEventListener(event, f, options)
+}
+
+export function removeEventListener(event, f, options) {
+  subscribers.removeEventListener(event, f, options)
 }

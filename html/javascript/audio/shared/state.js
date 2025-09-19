@@ -9,10 +9,9 @@ const BEAT = 12
 const BEATS = 16
 const DIVISIONS = 20
 const BPM = 24
-const TIMESIGNATURE = 28 // 16 bytes
-const PULSE = 44
-const LOOPS = 48
-const _SPARE = 52 // 12 bytes
+const PULSE = 28
+const LOOPS = 32
+const _SPARE = 36 // 28 bytes
 
 const HEADER = 8
 const DATA = 64
@@ -20,11 +19,9 @@ export const BUFFERSIZE = HEADER + 2 * DATA
 
 export class State {
   #buffer = null
-  #u8 = null
 
   constructor(buffer) {
     this.#buffer = new DataView(buffer)
-    this.#u8 = new Uint8Array(buffer)
 
     this.#head = 1
     this.#tail = 0
@@ -79,18 +76,6 @@ export class State {
     const base = HEADER + this.#head * DATA
 
     this.#buffer.setFloat32(base + offset, v)
-  }
-
-  #getBytes(offset) {
-    const base = HEADER + this.#tail * DATA
-
-    return this.#u8.subarray(base + offset, base + offset + 16)
-  }
-
-  #setBytes(offset, v) {
-    const base = HEADER + this.#head * DATA
-
-    this.#u8.set(v, base + offset)
   }
 
   flip() {
@@ -152,19 +137,6 @@ export class State {
 
   set BPM(v) {
     this.#setUint32(BPM, v ?? 120)
-  }
-
-  get timeSignature() {
-    const v = this.#getBytes(TIMESIGNATURE)
-    const timeSignature = String.fromCharCode(...v).trimEnd()
-
-    return timeSignature
-  }
-
-  set timeSignature(v) {
-    const timeSignature = [...(v ?? '').slice(0, 16).padEnd(16, ' ')].map((c) => c.charCodeAt(0))
-
-    this.#setBytes(TIMESIGNATURE, timeSignature)
   }
 
   get pulse() {

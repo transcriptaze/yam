@@ -17,6 +17,14 @@ Stop ==
     /\ buttonState = RUNNING 
     /\ buttonLabel = "Stop" 
 
+(* Action: stopped, start/stop button double click *)
+StartDoubleClick ==
+    /\ ui = << EVENT_CLICK, EVENT_CLICK >>
+    /\ bus = << >>
+    /\ clockState  = STOPPED 
+    /\ buttonState = STOPPED 
+    /\ buttonLabel = "Start" 
+
 ExecStart ==
     \/ StartStop
     \/ ClockEvent
@@ -27,6 +35,13 @@ ExecStop ==
     \/ StartStop
     \/ ClockEvent
     \/ ButtonEvent
+    \/ Stopped
+
+ExecStartStop ==
+    \/ StartStop
+    \/ ClockEvent
+    \/ ButtonEvent
+    \/ Running
     \/ Stopped
 
 StartSpec == Start /\ [][ExecStart]_<<ui, bus, clockState, buttonState, buttonLabel>>

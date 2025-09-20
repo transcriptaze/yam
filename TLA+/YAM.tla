@@ -15,7 +15,8 @@ CONSTANTS
     EVENT_STOPPED
 
 VARIABLES 
-    thread,
+    ui,
+    bus,
     clockState,
     buttonState, 
     buttonLabel
@@ -24,10 +25,12 @@ ClockStates == { STOPPED, RUNNING }
 ButtonStates == { STOPPED, RUNNING }
 
 Init ==
-    /\ thread = << >>
+    /\ ui = << >>
+    /\ bus = << >>
     /\ clockState  = STOPPED 
     /\ buttonState = STOPPED 
     /\ buttonLabel = "Start" 
+
 
 (* Append an event at the end of a sequence *)
 enqueue(seq, event) ==
@@ -40,49 +43,73 @@ dequeue(seq) ==
 
 (* Action: toggle on start/stop button click *)
 StartStop ==
-    /\ thread # << >>
-    /\ LET event == dequeue(thread) IN
+    /\ ui # << >>
+    /\ LET event == dequeue(ui) IN
            ( IF event.head = EVENT_CLICK /\ buttonState = STOPPED THEN
-                /\ thread' = enqueue(event.tail, EVENT_START)
+                /\ bus' = enqueue(bus, EVENT_START)
+                /\ ui' = event.tail
              ELSE IF event.head = EVENT_CLICK /\ buttonState = RUNNING  THEN
-                /\ thread' = enqueue(event.tail, EVENT_STOP)
+                /\ bus' = enqueue(bus, EVENT_STOP)
+                /\ ui' = event.tail
              ELSE
-                /\ UNCHANGED thread)
+                /\ UNCHANGED ui
+                /\ UNCHANGED bus)
     /\ UNCHANGED << buttonState, buttonLabel >>
     /\ UNCHANGED clockState
 
 (* Event: clock started/stopped *)
 ButtonEvent ==
-    /\ thread # << >>
-    /\ LET event == dequeue(thread) IN
+    /\ bus # << >>
+    /\ LET event == dequeue(bus) IN
            (IF event.head = EVENT_RUNNING THEN
                /\ buttonState' = RUNNING
                /\ buttonLabel' = "Stop"
-               /\ thread' = event.tail
+               /\ bus' = event.tail
             ELSE IF event.head = EVENT_STOPPED THEN
                /\ buttonState' = STOPPED
                /\ buttonLabel' = "Start"
-               /\ thread' = event.tail
+               /\ bus' = event.tail
             ELSE
                /\ UNCHANGED << buttonState, buttonLabel >>
-               /\ UNCHANGED thread)
+               /\ UNCHANGED bus)
+    /\ UNCHANGED ui
     /\ UNCHANGED << clockState >>
 
 
 (* Event: clock start/stop *)
 ClockEvent ==
-    /\ thread # <<>>
-    /\ LET event == dequeue(thread) IN
+    /\ bus # <<>>
+    /\ LET event == dequeue(bus) IN
            ( IF event.head = EVENT_START /\ clockState = STOPPED THEN
                 /\ clockState'  = RUNNING            
-                /\ thread' = enqueue(event.tail, EVENT_RUNNING)
+                /\ bus' = enqueue(event.tail, EVENT_RUNNING)
              ELSE IF event.head = EVENT_STOP /\ clockState # STOPPED  THEN
                 /\ clockState' = STOPPED
-                /\ thread' = enqueue(event.tail, EVENT_STOPPED)
+                /\ bus' = enqueue(event.tail, EVENT_STOPPED)
              ELSE
-                /\ UNCHANGED thread
+                /\ UNCHANGED bus
                 /\ UNCHANGED clockState)
+    /\ UNCHANGED ui
     /\ UNCHANGED << buttonState, buttonLabel >>
+
+
+(* State: running *)
+Running ==
+    /\ ui = << >>
+    /\ bus = << >>
+    /\ buttonState = RUNNING
+    /\ buttonLabel = "Stop"
+    /\ clockState = RUNNING
+    /\ UNCHANGED << ui, bus, clockState, buttonState, buttonLabel >>
+
+(* State: stopped *)
+Stopped ==
+    /\ ui = << >>
+    /\ bus = << >>
+    /\ buttonState = STOPPED
+    /\ buttonLabel = "Start"
+    /\ clockState = STOPPED
+    /\ UNCHANGED << ui, bus, clockState, buttonState, buttonLabel >>
 
 
 (* Invariants *)

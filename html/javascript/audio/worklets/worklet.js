@@ -113,6 +113,7 @@ export class Metronome extends AudioWorkletProcessor {
   initialise(event) {
     const tick = event.data.tick
     const tock = event.data.tock
+    const tack = event.data.tack
     const stick = event.data.stick
 
     this.state = new State(event.data.state)
@@ -122,6 +123,10 @@ export class Metronome extends AudioWorkletProcessor {
     this.clicks = new Map([
       ['default', tock],
       ['count-in', stick],
+      ['tick', tick],
+      ['tock', tock],
+      ['tack', tack],
+      ['stick', stick],
       [1, tick],
       [2, tock],
       [3, tock],

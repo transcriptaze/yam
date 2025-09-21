@@ -20,6 +20,11 @@ div.beat {
   );
 }
 
+:host(.small-block) div.beat{
+  border-radius: 4px;
+  clip-path: inset(0 round 6px); 
+}
+
 div.beat.on {
   background-color: red;
 }

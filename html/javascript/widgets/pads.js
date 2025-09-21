@@ -97,38 +97,11 @@ export class Pads extends HTMLElement {
     const beats = this.#beats
 
     if (this.#divisions === 4 && this.#pulse === 'eighth-doublet') {
-      const pads = []
-      for (let i = 0; i < beats; i++) {
-        const block = document.createElement('yam-beat')
-        const diamond = document.createElement('yam-beat')
-
-        block.classList.add('beat')
-        block.classList.add('block')
-        block.beat = `${i + 1}`
-
-        diamond.classList.add('beat')
-        diamond.classList.add('diamond')
-        diamond.beat = `${i + 1}.5`
-
-        pads.push(block)
-        pads.push(diamond)
-      }
-
-      div.replaceChildren(...pads)
+      this.#eightDoublets()
     } else if (this.#beats === 6 && this.#divisions === 8 && this.#pulse === 'dotted-quarter') {
-      const pads = []
-      for (let i = 0; i < beats; i++) {
-        const pad = document.createElement('yam-beat')
-        const clazz = [1, 2, 4, 5].includes(i) ? 'diamond' : 'block'
-
-        pad.classList.add('beat')
-        pad.classList.add(clazz)
-        pad.beat = `${i + 1}`
-
-        pads.push(pad)
-      }
-
-      div.replaceChildren(...pads)
+      this.#sixEighths()
+    } else if (this.#beats === 5 && this.#divisions === 4 && this.#pulse === 'quarter') {
+      this.#fiveFour()
     } else {
       const pads = [...Array(beats).keys()].map((v) => {
         const block = document.createElement('yam-beat')
@@ -142,6 +115,71 @@ export class Pads extends HTMLElement {
 
       div.replaceChildren(...pads)
     }
+  }
+
+  #eightDoublets() {
+    const shadow = this.shadowRoot
+    const div = shadow.querySelector('div.pads')
+    const beats = this.#beats
+    const pads = []
+
+    for (let i = 0; i < beats; i++) {
+      const block = document.createElement('yam-beat')
+      const diamond = document.createElement('yam-beat')
+
+      block.classList.add('beat')
+      block.classList.add('block')
+      block.beat = `${i + 1}`
+
+      diamond.classList.add('beat')
+      diamond.classList.add('diamond')
+      diamond.beat = `${i + 1}.5`
+
+      pads.push(block)
+      pads.push(diamond)
+    }
+
+    div.replaceChildren(...pads)
+  }
+
+  #sixEighths() {
+    const shadow = this.shadowRoot
+    const div = shadow.querySelector('div.pads')
+    const beats = this.#beats
+    const pads = []
+
+    for (let i = 0; i < beats; i++) {
+      const pad = document.createElement('yam-beat')
+      const clazz = [2, 3, 5, 6].includes(i + 1) ? 'diamond' : 'block'
+
+      pad.classList.add('beat')
+      pad.classList.add(clazz)
+      pad.beat = `${i + 1}`
+
+      pads.push(pad)
+    }
+
+    div.replaceChildren(...pads)
+  }
+
+  #fiveFour() {
+    const shadow = this.shadowRoot
+    const div = shadow.querySelector('div.pads')
+    const beats = this.#beats
+    const pads = []
+
+    for (let i = 0; i < beats; i++) {
+      const block = document.createElement('yam-beat')
+      const clazz = [2, 4, 5].includes(i + 1) ? 'small-block' : 'block'
+
+      block.classList.add('beat')
+      block.classList.add(clazz)
+      block.beat = `${i + 1}`
+
+      pads.push(block)
+    }
+
+    div.replaceChildren(...pads)
   }
 }
 

@@ -34,6 +34,7 @@
       - the muted from the track above gets copied over
 
 ** Fixes
+*** TODO automatically add clicks to new pickup and count-in sections
 *** TODO editor: enable/disable button iff there are changes
 *** TODO different grip icon
 *** TODO 'tack.wav' for e.g. 5:4

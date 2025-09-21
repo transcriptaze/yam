@@ -34,4 +34,13 @@ div.pads {
     height: 24px;
     max-width: 24px;   
   }
+
+  yam-beat.small-block {
+    box-sizing: border-box;
+
+    height: 24px;
+    max-width: 40px;   
+    padding-left: 8px;
+    padding-right: 8px;
+  }
 }

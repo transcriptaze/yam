@@ -324,7 +324,7 @@ function exec(f) {
       } else {
         return sounds
           .get(audioContext, ...SOUNDS)
-          .then(([tick, tock, stick]) => metronome(audioContext, tick, tock, tack, stick))
+          .then(([tick, tock, tack, stick]) => metronome(audioContext, tick, tock, tack, stick))
           .then((m) => engine.init(audioContext, m))
       }
     })

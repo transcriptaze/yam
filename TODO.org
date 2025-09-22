@@ -34,6 +34,8 @@
       - the muted from the track above gets copied over
 
 ** Fixes
+*** TODO (?) use microtasks for engine initialisation
+      - https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API/Microtask_guide
 *** TODO automatically add clicks to new pickup and count-in sections
 *** TODO editor: enable/disable button iff there are changes
 *** TODO different grip icon
@@ -128,6 +130,8 @@
 *** TODO get 
 *** TODO versioning (newer versions get downloaded)
 *** TODO soft/medium/loud sets
+*** TODO (?) use microtasks to load
+      - https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API/Microtask_guide
 
 ** Playlists
 *** TODO autoplay

@@ -170,7 +170,7 @@ export class Pads extends HTMLElement {
 
     for (let i = 0; i < beats; i++) {
       const block = document.createElement('yam-beat')
-      const clazz = [2, 4, 5].includes(i + 1) ? 'small-block' : 'block'
+      const clazz = [2, 3, 5].includes(i + 1) ? 'small-block' : 'block'
 
       block.classList.add('beat')
       block.classList.add(clazz)

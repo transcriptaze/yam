@@ -194,7 +194,10 @@
 
   div.time-signature.locked {
     button {
-        cursor: auto;    
+      cursor: auto;    
+      img {
+        filter: none;
+      }
     }
 
     #lock {

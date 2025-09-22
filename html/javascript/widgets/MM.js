@@ -153,6 +153,18 @@ export class MM extends HTMLElement {
     }
   }
 
+  set MM({ pulse, BPM }) {
+    if (pulse == null || pulse === '' || BPM == null || Number.isNaN(BPM) || BPM === '') {
+      this.#pulse = ''
+      this.#BPM = ''
+    } else {
+      this.#pulse = pulse
+      this.#BPM = BPM
+    }
+
+    this.#redraw()
+  }
+
   set disabled(v) {
     const shadow = this.shadowRoot
     const button = shadow.querySelector('button')
@@ -164,18 +176,32 @@ export class MM extends HTMLElement {
 
   redraw(BPM, pulse, { playing, stopped }) {
     if (((playing || stopped) && BPM !== this.#BPM) || pulse !== this.#pulse) {
-      const shadow = this.shadowRoot
-      const input = shadow.querySelector('input')
-      const img = shadow.querySelector('#pulse')
-
       this.#BPM = BPM
       this.#pulse = pulse
 
-      input.value = `${BPM}`
-      if (PULSES.has(`${pulse}`)) {
-        img.src = PULSES.get(`${pulse}`)
-      }
+      this.#redraw()
     }
+  }
+
+  #redraw() {
+    const shadow = this.shadowRoot
+    const div = shadow.querySelector('div.MM')
+    const pulse = shadow.querySelector('#pulse')
+    const BPM = shadow.querySelector('input')
+
+    if (`${this.#pulse}` === '' || `${this.#BPM}` === '') {
+      div.classList.add('none')
+    } else {
+      div.classList.remove('none')
+    }
+
+    if (PULSES.has(`${this.#pulse}`)) {
+      pulse.src = PULSES.get(`${pulse}`)
+    } else {
+      pulse.src = PULSES.get(`quarter`)
+    }
+
+    BPM.value = `${this.#BPM}`
   }
 }
 

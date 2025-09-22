@@ -9,7 +9,7 @@ export class Section extends HTMLElement {
   #fields = {}
 
   // ... state
-  #track = {}
+  // #track = {}
   #section = {}
 
   // ... handlers
@@ -61,8 +61,6 @@ export class Section extends HTMLElement {
       name: shadow.querySelector('#name'),
       role: shadow.querySelector('#role'),
       measures: shadow.querySelector('#measures'),
-      tempo: shadow.querySelector('#tempo'),
-      BPM: shadow.querySelector('#BPM'),
     }
 
     if (Object.values(this.#fields).some((e) => e == null)) {
@@ -96,7 +94,7 @@ export class Section extends HTMLElement {
 
   set section({ track, section }) {
     // ... stash state
-    this.#track = track
+    // this.#track = track
     this.#section = section
 
     // ... initialise fields
@@ -119,11 +117,17 @@ export class Section extends HTMLElement {
     this.#measures.value = section?.measures ?? 0
     this.#measures.placeholder = this.#role.value === 'anacrusis' ? 1 : '∞'
 
-    this.#tempo.value = section?.tempo ?? ''
-    this.#tempo.placeholder = '-'
-    this.#BPM = section?.tempo
+    // this.#tempo.value = section?.tempo ?? ''
+    // this.#tempo.placeholder = '-'
+    // this.#BPM = section?.tempo
 
     this.#timeSignature = section?.timeSignature ?? ''
+
+    this.#mm = {
+      pulse: section?.pulse ?? '',
+      BPM: section?.tempo ?? '',
+      timeSignature: section?.timeSignature ?? '',
+    }
   }
 
   get name() {
@@ -148,20 +152,6 @@ export class Section extends HTMLElement {
     }
   }
 
-  get tempo() {
-    if (this.#fields.tempo.value === '') {
-      return ''
-    } else {
-      return Number.parseInt(this.#fields.tempo.value)
-    }
-  }
-
-  get timeSignature() {
-    const e = this.shadowRoot?.querySelector('yam-time-signature')
-
-    return e?.timeSignature ?? this.#section.timeSignature
-  }
-
   get #name() {
     return this.#fields.name
   }
@@ -174,28 +164,26 @@ export class Section extends HTMLElement {
     return this.#fields.measures
   }
 
-  get #tempo() {
-    return this.#fields.tempo
-  }
+  // set #BPM(v) {
+  //   const TEMPO = this.#track?.tempo ?? null
+  //   const BPM = this.#track?.BPM ?? null
+  //   const tempo = Number.parseInt(this.#section?.tempo ?? '')
 
-  get #BPM() {
-    return this.#fields.BPM
-  }
+  //   if (Number.isNaN(tempo) || tempo < 40 || tempo > 200) {
+  //     this.#fields.BPM.value = ''
+  //   } else if (Number.isNaN(TEMPO) || TEMPO < 40 || TEMPO > 200) {
+  //     this.#fields.BPM.value = ''
+  //   } else if (Number.isNaN(BPM) || BPM < 40 || BPM > 200) {
+  //     this.#fields.BPM.value = ''
+  //   } else {
+  //     this.#fields.BPM.value = `(${Math.round((tempo * BPM) / TEMPO)} BPM)`
+  //   }
+  // }
 
-  set #BPM(v) {
-    const TEMPO = this.#track?.tempo ?? null
-    const BPM = this.#track?.BPM ?? null
-    const tempo = Number.parseInt(this.#section?.tempo ?? '')
+  get timeSignature() {
+    const e = this.shadowRoot?.querySelector('yam-time-signature')
 
-    if (Number.isNaN(tempo) || tempo < 40 || tempo > 200) {
-      this.#fields.BPM.value = ''
-    } else if (Number.isNaN(TEMPO) || TEMPO < 40 || TEMPO > 200) {
-      this.#fields.BPM.value = ''
-    } else if (Number.isNaN(BPM) || BPM < 40 || BPM > 200) {
-      this.#fields.BPM.value = ''
-    } else {
-      this.#fields.BPM.value = `(${Math.round((tempo * BPM) / TEMPO)} BPM)`
-    }
+    return e?.timeSignature ?? this.#section.timeSignature
   }
 
   set #timeSignature(v) {
@@ -204,6 +192,23 @@ export class Section extends HTMLElement {
       const e = this.shadowRoot?.querySelector('yam-time-signature')
       if (e) {
         e.timeSignature = v
+      }
+    })()
+  }
+
+  get mm() {
+    const e = this.shadowRoot?.querySelector('yam-mm')
+
+    return e?.mm ?? this.#section.mm
+  }
+
+  set #mm({ pulse, BPM, timeSignature }) {
+    void (async () => {
+      await customElements.whenDefined('yam-mm')
+      const e = this.shadowRoot?.querySelector('yam-mm')
+      if (e) {
+        e.MM = { pulse, BPM }
+        e.timeSignature = timeSignature
       }
     })()
   }

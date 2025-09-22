@@ -1,8 +1,13 @@
 :host(.component-mm) {
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+
   div.MM {
     display: grid;
     grid-template-columns: auto auto;
-    grid-template-rows: auto;
+    grid-template-rows: 1fr;
     align-items: center;
     column-gap: 8px;
 
@@ -21,7 +26,12 @@
       outline: none;
       cursor: pointer;
 
+      padding: 0;
+      margin: 0;
+      line-height: 0;
+
       img {
+        box-sizing: border-box;
         height: 100%;
       }
     }
@@ -108,10 +118,29 @@
   input:disabled {
     color: #a0a0a0;
   } 
+
+  div.MM.none {
+    button img {
+      filter: grayscale(100%) opacity(25%);
+    }
+
+    input {
+      color: #a0a0a00;
+    }
+  }
 }
 
 :host(.component-mm:not([figura="eighth"])) {
    #list > div > li[data-pulse="eighth"] {
      display: none;
+   }
+}
+
+:host(.component-mm.small) {
+   div.MM {
+     input {
+      font-size: 16px;
+      font-weight: normal;
+     }
    }
 }

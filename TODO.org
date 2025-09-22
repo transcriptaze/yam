@@ -34,6 +34,8 @@
       - the muted from the track above gets copied over
 
 ** Fixes
+*** TODO requestAnimationFrame is not always 60fps
+      - only update if changed
 *** TODO (?) use microtasks for engine initialisation
       - https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API/Microtask_guide
 *** TODO automatically add clicks to new pickup and count-in sections

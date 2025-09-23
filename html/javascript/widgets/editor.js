@@ -131,10 +131,13 @@ export class Editor extends HTMLElement {
     if (track == null) {
       this.#sections.classList.add('disabled')
       this.#sections.removeAttribute('open')
+      this.#expanded = false
+
       ul.replaceChildren()
     } else {
       this.#sections.classList.remove('disabled')
       this.#sections.setAttribute('open', '')
+      this.#expanded = false
 
       const children = []
 
@@ -178,6 +181,8 @@ export class Editor extends HTMLElement {
         role: v.role,
         measures: v.measures,
         timeSignature: v.timeSignature,
+        pulse: v.tempo.pulse,
+        tempo: v.tempo.BPM,
       }
     })
 

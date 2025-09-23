@@ -111,21 +111,6 @@ export class MM extends HTMLElement {
     }
   }
 
-  get BPM() {
-    return this.#BPM
-  }
-
-  set BPM(v) {
-    const shadow = this.shadowRoot
-    const input = shadow.querySelector('input')
-    const bpm = parseInt(`${v}`, 10)
-
-    if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
-      this.#BPM = bpm
-      input.value = `${bpm}`
-    }
-  }
-
   get pulse() {
     return this.#pulse
   }
@@ -143,6 +128,21 @@ export class MM extends HTMLElement {
     }
   }
 
+  get BPM() {
+    return this.#BPM
+  }
+
+  set BPM(v) {
+    const shadow = this.shadowRoot
+    const input = shadow.querySelector('input')
+    const bpm = parseInt(`${v}`, 10)
+
+    if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
+      this.#BPM = bpm
+      input.value = `${bpm}`
+    }
+  }
+
   set timeSignature(v) {
     const { divisions } = parseTimeSignature(v)
 
@@ -151,6 +151,23 @@ export class MM extends HTMLElement {
     } else {
       this.setAttribute('figura', '')
     }
+  }
+
+  get tempo() {
+    const tempo = {
+      pulse: this.pulse,
+      BPM: this.BPM,
+    }
+
+    const shadow = this.shadowRoot
+    const input = shadow.querySelector('input')
+    const bpm = parseInt(`${input.value}`, 10)
+
+    if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
+      tempo.BPM = bpm
+    }
+
+    return tempo
   }
 
   set tempo({ pulse, BPM, defaults }) {

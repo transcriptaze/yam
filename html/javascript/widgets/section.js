@@ -177,7 +177,7 @@ export class Section extends HTMLElement {
   get tempo() {
     const e = this.shadowRoot?.querySelector('yam-mm')
 
-    return e?.mm ?? this.#section.mm
+    return e?.tempo ?? this.#section.tempo
   }
 
   set #tempo({ tempo, timeSignature }) {

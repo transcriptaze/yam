@@ -170,7 +170,9 @@
             <li data-pulse="dotted-half"    ><img class="pulsus" src="./images/MM/pulsus/dotted-half.svg"    draggable="false" /></li>
           </div>
         </div>
-        <input part="BPM" type="text" pattern="[4-9][0-9]|1[0-9][0-9]|200" minlength="1" maxlength="3" value="120" inputmode="numeric" enterkeyhint="done" />
+        <input part="BPM" type="text"  inputmode="numeric" placeholder="---" value="120"
+               pattern="[4-9][0-9]|1[0-9][0-9]|200" minlength="1" maxlength="3" 
+               enterkeyhint="done" />
       </div>
     </template>
 
@@ -502,9 +504,8 @@
             <input  id="measures" type="number" min="0"            step="1" readonly />
           </div>
           <div class="metricals">
-            <input id="tempo" type="number" min="40" max="200" step="1"/>
-            <input id="BPM"   type="text" readonly />
             <yam-time-signature tabindex="-1" enterkeyhint="done"></yam-time-signature>
+            <yam-mm             tabindex="-1" enterkeyhint="done" class="small"></yam-mm>
           </div>
         </div>
         <datalist id="roles">

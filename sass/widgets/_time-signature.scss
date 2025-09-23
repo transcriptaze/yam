@@ -66,11 +66,12 @@
       }
     }
 
-    // button:disabled {
-    //   img {
-    //     filter: grayscale(100%) opacity(50%);
-    //   }
-    // }
+    button:disabled {
+      img {
+        filter: grayscale(100%) opacity(50%);
+        cursor: auto;
+      }
+    }
 
     div#list {
       top: calc(anchor(bottom) + 8px);
@@ -167,8 +168,8 @@
 
     #lock {
       position: absolute;
-      bottom: 6px;
-      right: -2px;
+      bottom: 15%;
+      right: -1.25%;
 
       width: 16px;
       visibility: hidden;
@@ -192,6 +193,13 @@
   }
 
   div.time-signature.locked {
+    button {
+      cursor: auto;    
+      img {
+        filter: none;
+      }
+    }
+
     #lock {
       visibility: visible;
     }

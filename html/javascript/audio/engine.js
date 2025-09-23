@@ -3,7 +3,7 @@ import * as sounds from './sounds.js'
 import { parseTimeSignature, parsePulse } from '../util.js'
 
 const AudioContext = window.AudioContext || window.webkitAudioContext
-const SOUNDS = ['default/tick', 'default/tock', 'default/stick']
+const SOUNDS = ['default/tick', 'default/tock', 'default/tack', 'default/stick']
 
 let audioContext
 let subscribers = new EventTarget()
@@ -41,7 +41,7 @@ class Engine {
     } else {
       return sounds
         .get(ctx, ...SOUNDS)
-        .then(([tick, tock, stick]) => metronome(ctx, tick, tock, stick))
+        .then(([tick, tock, tack, stick]) => metronome(ctx, tick, tock, tack, stick))
         .then((m) => this.init(ctx, m))
     }
   }
@@ -324,7 +324,7 @@ function exec(f) {
       } else {
         return sounds
           .get(audioContext, ...SOUNDS)
-          .then(([tick, tock, stick]) => metronome(audioContext, tick, tock, stick))
+          .then(([tick, tock, tack, stick]) => metronome(audioContext, tick, tock, tack, stick))
           .then((m) => engine.init(audioContext, m))
       }
     })
@@ -332,10 +332,10 @@ function exec(f) {
     .catch(console.error)
 }
 
-function metronome(ctx, tick, tock, stick) {
+function metronome(ctx, tick, tock, tack, stick) {
   return ctx.audioWorklet
     .addModule('./javascript/audio/worklets/worklet.js')
-    .then(() => new nodes.MetronomeNode(ctx, tick, tock, stick, subscribers))
+    .then(() => new nodes.MetronomeNode(ctx, tick, tock, tack, stick, subscribers))
 }
 
 export function addEventListener(event, f, options) {

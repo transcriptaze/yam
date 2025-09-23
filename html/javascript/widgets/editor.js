@@ -180,7 +180,6 @@ export class Editor extends HTMLElement {
         name: v.name,
         role: v.role,
         measures: v.measures,
-        tempo: v.tempo,
         timeSignature: v.timeSignature,
       }
     })

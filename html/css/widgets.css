@@ -126,10 +126,16 @@ div.metronome.playing #play img.stop {
     min-width: 64px;
   }
 }
+:host(.component-mm) {
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
 :host(.component-mm) div.MM {
   display: grid;
   grid-template-columns: auto auto;
-  grid-template-rows: auto;
+  grid-template-rows: 1fr;
   align-items: center;
   column-gap: 8px;
   background: none;
@@ -144,8 +150,12 @@ div.metronome.playing #play img.stop {
   border: none;
   outline: none;
   cursor: pointer;
+  padding: 0;
+  margin: 0;
+  line-height: 0;
 }
 :host(.component-mm) div.MM button.pulse img {
+  box-sizing: border-box;
   height: 100%;
 }
 :host(.component-mm) div.MM input {
@@ -214,9 +224,20 @@ div.metronome.playing #play img.stop {
 :host(.component-mm) input:disabled {
   color: #a0a0a0;
 }
+:host(.component-mm) div.MM.none button img {
+  filter: grayscale(100%) opacity(25%);
+}
+:host(.component-mm) div.MM.none input {
+  color: #a0a0a00;
+}
 
 :host(.component-mm:not([figura=eighth])) #list > div > li[data-pulse=eighth] {
   display: none;
+}
+
+:host(.component-mm.small) div.MM input {
+  font-size: 16px;
+  font-weight: normal;
 }
 
 :host(.component-time-signature) div.time-signature {
@@ -272,6 +293,10 @@ div.metronome.playing #play img.stop {
   grid-column: 2;
   grid-row: 1;
   justify-self: center;
+}
+:host(.component-time-signature) div.time-signature button:disabled img {
+  filter: grayscale(100%) opacity(50%);
+  cursor: auto;
 }
 :host(.component-time-signature) div.time-signature div#list {
   top: calc(anchor(bottom) + 8px);
@@ -349,8 +374,8 @@ div.metronome.playing #play img.stop {
 }
 :host(.component-time-signature) div.time-signature #lock {
   position: absolute;
-  bottom: 6px;
-  right: -2px;
+  bottom: 15%;
+  right: -1.25%;
   width: 16px;
   visibility: hidden;
 }
@@ -359,6 +384,12 @@ div.metronome.playing #play img.stop {
 }
 :host(.component-time-signature) div.time-signature.disabled button img {
   filter: grayscale(100%) opacity(50%);
+}
+:host(.component-time-signature) div.time-signature.locked button {
+  cursor: auto;
+}
+:host(.component-time-signature) div.time-signature.locked button img {
+  filter: none;
 }
 :host(.component-time-signature) div.time-signature.locked #lock {
   visibility: visible;
@@ -397,14 +428,24 @@ div.pads yam-beat {
   height: 48px;
   max-width: 48px;
   min-width: 12px;
+  display: grid;
+  justify-items: center;
+  align-items: center;
 }
 div.pads yam-beat.diamond {
   height: 24px;
   max-width: 24px;
 }
+div.pads yam-beat.small-block {
+  box-sizing: border-box;
+  height: 24px;
+  max-width: 40px;
+  padding-left: 8px;
+  padding-right: 8px;
+}
 
 div.beat {
-  height: 100%;
+  aspect-ratio: 1/1;
   width: 100%;
   background-color: black;
 }
@@ -417,6 +458,11 @@ div.beat {
 :host(.diamond) div.beat {
   border-radius: 0px;
   clip-path: polygon(50% 25%, 75% 50%, 50% 75%, 25% 50%);
+}
+
+:host(.small-block) div.beat {
+  border-radius: 4px;
+  clip-path: inset(0 round 6px);
 }
 
 div.beat.on {
@@ -1599,11 +1645,11 @@ div.playlist-track [popover]:popover-open::backdrop {
   grid-column: 4;
   grid-row: 1;
 }
-:host(.component-section) div.section #tempo {
+:host(.component-section) div.section yam-time-signature {
   grid-column: 1;
   grid-row: 1;
 }
-:host(.component-section) div.section #BPM {
+:host(.component-section) div.section yam-mm {
   grid-column: 2;
   grid-row: 1;
 }
@@ -1651,16 +1697,10 @@ div.playlist-track [popover]:popover-open::backdrop {
 :host(.component-section) div.section #measures {
   width: 3em;
 }
-:host(.component-section) div.section #tempo {
-  width: 3em;
-}
-:host(.component-section) div.section #BPM {
-  width: 6em;
-  color: #a0a0a0;
-  font-size: 0.8em;
-  font-style: italic;
-}
 :host(.component-section) div.section yam-time-signature {
+  height: 32px;
+}
+:host(.component-section) div.section yam-mm {
   height: 32px;
 }
 :host(.component-section) div.section.collapsed {

@@ -1,5 +1,5 @@
 div.beat {
-  height: 100%;
+  aspect-ratio: 1 / 1;
   width: 100%;
 
   background-color: black;
@@ -18,6 +18,11 @@ div.beat {
     50%  75%,   // bottom
     25%  50%    // left
   );
+}
+
+:host(.small-block) div.beat{
+  border-radius: 4px;
+  clip-path: inset(0 round 6px); 
 }
 
 div.beat.on {

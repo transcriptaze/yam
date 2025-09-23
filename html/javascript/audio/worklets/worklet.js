@@ -113,6 +113,7 @@ export class Metronome extends AudioWorkletProcessor {
   initialise(event) {
     const tick = event.data.tick
     const tock = event.data.tock
+    const tack = event.data.tack
     const stick = event.data.stick
 
     this.state = new State(event.data.state)
@@ -122,6 +123,10 @@ export class Metronome extends AudioWorkletProcessor {
     this.clicks = new Map([
       ['default', tock],
       ['count-in', stick],
+      ['tick', tick],
+      ['tock', tock],
+      ['tack', tack],
+      ['stick', stick],
       [1, tick],
       [2, tock],
       [3, tock],
@@ -295,6 +300,8 @@ export class Metronome extends AudioWorkletProcessor {
   }
 
   cue(beat, pulse) {
+    const timeSignature = this.section?.timeSignature ?? ''
+
     if ('count-in' === this.section?.role) {
       const clicks = this.section?.clicks ?? []
 
@@ -325,6 +332,20 @@ export class Metronome extends AudioWorkletProcessor {
         if (click != null) {
           this.#cued.push(sample(click))
         }
+      }
+    } else if (timeSignature === '5:4') {
+      let click = this.clicks.get(beat)
+
+      if ([4].includes(beat)) {
+        click = this.clicks.get('tack')
+      } else if ([2, 3, 5].includes(beat)) {
+        click = this.clicks.get('tock')
+      }
+
+      click = click ?? this.clicks.get('default')
+
+      if (click != null) {
+        this.#cued.push(sample(click))
       }
     } else {
       const click = this.clicks.get(beat) ?? this.clicks.get('default')

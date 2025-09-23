@@ -153,13 +153,33 @@ export class MM extends HTMLElement {
     }
   }
 
-  set MM({ pulse, BPM }) {
-    if (pulse == null || pulse === '' || BPM == null || Number.isNaN(BPM) || BPM === '') {
+  set tempo({ pulse, BPM, defaults }) {
+    const shadow = this.shadowRoot
+    const p = shadow.querySelector('#pulse')
+    const bpm = shadow.querySelector('input')
+
+    if (pulse == null || pulse === '') {
       this.#pulse = ''
-      this.#BPM = ''
     } else {
       this.#pulse = pulse
+    }
+
+    if (BPM == null || Number.isNaN(BPM) || BPM === '') {
+      this.#BPM = ''
+    } else {
       this.#BPM = BPM
+    }
+
+    if (defaults != null && defaults.pulse != null) {
+      p.dataset.defval = defaults.pulse
+    } else {
+      p.dataset.defval = 'quarter'
+    }
+
+    if (defaults != null && defaults.BPM != null && !Number.isNaN(defaults.BPM) && defaults.BPM >= 40 && defaults.BPM <= 200) {
+      bpm.dataset.defval = `${defaults.BPM}`
+    } else {
+      bpm.dataset.defval = `---`
     }
 
     this.#redraw()
@@ -189,19 +209,29 @@ export class MM extends HTMLElement {
     const pulse = shadow.querySelector('#pulse')
     const BPM = shadow.querySelector('input')
 
-    if (`${this.#pulse}` === '' || `${this.#BPM}` === '') {
+    if (`${this.#BPM}` === '') {
       div.classList.add('none')
     } else {
       div.classList.remove('none')
     }
 
-    if (PULSES.has(`${this.#pulse}`)) {
-      pulse.src = PULSES.get(`${pulse}`)
-    } else {
-      pulse.src = PULSES.get(`quarter`)
+    {
+      let k = 'quarter'
+      if (this.#pulse != null && this.#pulse !== '') {
+        k = `${this.#pulse}`
+      } else {
+        k = `${pulse.dataset.defval}`
+      }
+
+      if (PULSES.has(k)) {
+        pulse.src = PULSES.get(k)
+      } else {
+        pulse.src = PULSES.get(`quarter`)
+      }
     }
 
     BPM.value = `${this.#BPM}`
+    BPM.placeholder = BPM.dataset.defval
   }
 }
 

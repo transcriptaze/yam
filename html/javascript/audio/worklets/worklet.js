@@ -337,9 +337,9 @@ export class Metronome extends AudioWorkletProcessor {
       let click = this.clicks.get(beat)
 
       if ([4].includes(beat)) {
-        click = this.clicks.get('tack')
-      } else if ([2, 3, 5].includes(beat)) {
         click = this.clicks.get('tock')
+      } else if ([2, 3, 5].includes(beat)) {
+        click = this.clicks.get('tack')
       }
 
       click = click ?? this.clicks.get('default')

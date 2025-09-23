@@ -111,6 +111,11 @@
       text-align: left;
   }
 
+  input::placeholder {
+    font-style: italic;
+    color: #b0b0b0;
+  }
+
   input:invalid {
     color: red;
   }
@@ -122,10 +127,6 @@
   div.MM.none {
     button img {
       filter: grayscale(100%) opacity(25%);
-    }
-
-    input {
-      color: #a0a0a00;
     }
   }
 }
@@ -139,7 +140,7 @@
 :host(.component-mm.small) {
    div.MM {
      input {
-      font-size: 16px;
+      font-size: 14px;
       font-weight: normal;
      }
    }

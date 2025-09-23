@@ -92,9 +92,8 @@ export class Section extends HTMLElement {
     }
   }
 
-  set section({ track, section }) {
+  set section(section) {
     // ... stash state
-    // this.#track = track
     this.#section = section
 
     // ... initialise fields
@@ -117,15 +116,10 @@ export class Section extends HTMLElement {
     this.#measures.value = section?.measures ?? 0
     this.#measures.placeholder = this.#role.value === 'anacrusis' ? 1 : '∞'
 
-    // this.#tempo.value = section?.tempo ?? ''
-    // this.#tempo.placeholder = '-'
-    // this.#BPM = section?.tempo
-
     this.#timeSignature = section?.timeSignature ?? ''
 
-    this.#mm = {
-      pulse: section?.pulse ?? '',
-      BPM: section?.tempo ?? '',
+    this.#tempo = {
+      tempo: section?.tempo ?? {},
       timeSignature: section?.timeSignature ?? '',
     }
   }
@@ -164,22 +158,6 @@ export class Section extends HTMLElement {
     return this.#fields.measures
   }
 
-  // set #BPM(v) {
-  //   const TEMPO = this.#track?.tempo ?? null
-  //   const BPM = this.#track?.BPM ?? null
-  //   const tempo = Number.parseInt(this.#section?.tempo ?? '')
-
-  //   if (Number.isNaN(tempo) || tempo < 40 || tempo > 200) {
-  //     this.#fields.BPM.value = ''
-  //   } else if (Number.isNaN(TEMPO) || TEMPO < 40 || TEMPO > 200) {
-  //     this.#fields.BPM.value = ''
-  //   } else if (Number.isNaN(BPM) || BPM < 40 || BPM > 200) {
-  //     this.#fields.BPM.value = ''
-  //   } else {
-  //     this.#fields.BPM.value = `(${Math.round((tempo * BPM) / TEMPO)} BPM)`
-  //   }
-  // }
-
   get timeSignature() {
     const e = this.shadowRoot?.querySelector('yam-time-signature')
 
@@ -196,18 +174,18 @@ export class Section extends HTMLElement {
     })()
   }
 
-  get mm() {
+  get tempo() {
     const e = this.shadowRoot?.querySelector('yam-mm')
 
     return e?.mm ?? this.#section.mm
   }
 
-  set #mm({ pulse, BPM, timeSignature }) {
+  set #tempo({ tempo, timeSignature }) {
     void (async () => {
       await customElements.whenDefined('yam-mm')
       const e = this.shadowRoot?.querySelector('yam-mm')
       if (e) {
-        e.MM = { pulse, BPM }
+        e.tempo = tempo
         e.timeSignature = timeSignature
       }
     })()

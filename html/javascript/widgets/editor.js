@@ -142,10 +142,7 @@ export class Editor extends HTMLElement {
         const li = document.createElement('li')
         const section = document.createElement('yam-section')
 
-        section.section = {
-          track: track,
-          section: v,
-        }
+        section.section = v
 
         li.setAttribute('draggable', false)
         li.appendChild(section)
@@ -209,12 +206,9 @@ export class Editor extends HTMLElement {
     const section = document.createElement('yam-section')
 
     section.section = {
-      track: this.#track,
-      section: {
-        name: '',
-        role: '',
-        measures: INF,
-      },
+      name: '',
+      role: '',
+      measures: INF,
     }
 
     li.setAttribute('draggable', false)
@@ -279,12 +273,14 @@ function* transmogrify(track) {
 
   let timeSignature = track?.timeSignature ?? '4:4'
   let pulse = track?.pulse ?? ''
+  let tempo = track?.tempo ?? ''
 
   for (const section of sections) {
     const _subsections = section.subsections ?? []
 
     timeSignature = section.timeSignature ?? timeSignature
     pulse = section.pulse ?? pulse
+    tempo = section.tempo ?? tempo
 
     const role = _roles(section.role)
     const name = _names(null, role)
@@ -314,8 +310,18 @@ function* transmogrify(track) {
         generated: name,
       },
 
-      tempo: section.tempo,
       timeSignature: section.timeSignature,
+
+      tempo: {
+        pulse: section.pulse,
+        BPM: section.tempo,
+
+        defaults: {
+          pulse: pulse,
+          BPM: tempo,
+        },
+      },
+
       subsections: subsections,
       measures: bars,
     }

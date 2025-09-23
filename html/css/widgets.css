@@ -218,6 +218,10 @@ div.metronome.playing #play img.stop {
   font-weight: 600;
   text-align: left;
 }
+:host(.component-mm) input::placeholder {
+  font-style: italic;
+  color: #b0b0b0;
+}
 :host(.component-mm) input:invalid {
   color: red;
 }
@@ -227,16 +231,13 @@ div.metronome.playing #play img.stop {
 :host(.component-mm) div.MM.none button img {
   filter: grayscale(100%) opacity(25%);
 }
-:host(.component-mm) div.MM.none input {
-  color: #a0a0a00;
-}
 
 :host(.component-mm:not([figura=eighth])) #list > div > li[data-pulse=eighth] {
   display: none;
 }
 
 :host(.component-mm.small) div.MM input {
-  font-size: 16px;
+  font-size: 14px;
   font-weight: normal;
 }
 
@@ -1628,12 +1629,12 @@ div.playlist-track [popover]:popover-open::backdrop {
   column-gap: 3px;
 }
 :host(.component-section) div.section div.metricals {
-  background: #fefefe;
+  background: #fcfcfc;
   width: 100%;
   display: grid;
   grid-template-columns: auto auto 1fr;
   grid-template-rows: auto;
-  column-gap: 3px;
+  column-gap: 8px;
 }
 :host(.component-section) div.section #name {
   grid-column: 1/3;

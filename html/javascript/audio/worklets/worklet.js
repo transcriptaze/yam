@@ -300,7 +300,6 @@ export class Metronome extends AudioWorkletProcessor {
   }
 
   cue(beat, pulse) {
-    const timeSignature = this.section?.timeSignature ?? ''
     const pattern = this.#track?.clicks ?? null
 
     if (pattern != null && Array.isArray(pattern)) {
@@ -340,20 +339,6 @@ export class Metronome extends AudioWorkletProcessor {
         if (click != null) {
           this.#cued.push(sample(click))
         }
-      }
-    } else if (timeSignature === '5:4') {
-      let click = this.clicks.get(beat)
-
-      if ([4].includes(beat)) {
-        click = this.clicks.get('tock')
-      } else if ([2, 3, 5].includes(beat)) {
-        click = this.clicks.get('tack')
-      }
-
-      click = click ?? this.clicks.get('default')
-
-      if (click != null) {
-        this.#cued.push(sample(click))
       }
     } else {
       const click = this.clicks.get(beat) ?? this.clicks.get('default')

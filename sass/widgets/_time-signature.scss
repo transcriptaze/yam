@@ -1,9 +1,10 @@
 :host(.component-time-signature) {
   div.time-signature {
-    anchor-name: --container;
     position: relative;
     display: inline-block; 
     height: 100%;
+
+    anchor-name: --container;
 
     button {
       display: inline-block; 
@@ -169,9 +170,9 @@
 
     #lock {
       position: absolute;
-      position-anchor: --container;
-      bottom: 7.5px;
+      top: calc(100% * 2/3 + 1px);
       right: 0px;
+      transform: translateY(-50%);
 
       width: 16px;
       visibility: hidden;

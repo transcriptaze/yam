@@ -301,8 +301,16 @@ export class Metronome extends AudioWorkletProcessor {
 
   cue(beat, pulse) {
     const timeSignature = this.section?.timeSignature ?? ''
+    const pattern = this.#track?.clicks ?? null
 
-    if ('count-in' === this.section?.role) {
+    if (pattern != null && Array.isArray(pattern)) {
+      if (pattern.includes(beat)) {
+        const click = this.clicks.get(beat) ?? this.clicks.get('default')
+        if (click != null) {
+          this.#cued.push(sample(click))
+        }
+      }
+    } else if ('count-in' === this.section?.role) {
       const clicks = this.section?.clicks ?? []
 
       if (clicks.length === 0) {

@@ -44,6 +44,7 @@ export class Track extends EventTarget {
         BPM: track.BPM,
         loop: track.loop ?? false,
         loops: track.loops ?? INF,
+        clicks: track.clicks,
       },
     })
   }
@@ -64,11 +65,12 @@ export class Track extends EventTarget {
       BPM: object.metronome?.BPM ?? 120,
       loop: object.metronome?.loop ?? false,
       loops: object.metronome?.loops ?? INF,
+      clicks: object.metronome.clicks ?? null,
     }
   }
 
   get object() {
-    return {
+    const object = {
       UUID: this.UUID,
       version: this.#version,
       deleted: this.#deleted,
@@ -85,6 +87,12 @@ export class Track extends EventTarget {
         loops: this.loops,
       },
     }
+
+    if (this.clicks != null) {
+      object.metronome.clicks = this.clicks
+    }
+
+    return object
   }
 
   get modified() {
@@ -107,47 +115,6 @@ export class Track extends EventTarget {
 
   get tempo() {
     return this.#tempo
-  }
-
-  get BPM() {
-    return this.#metronome.BPM
-  }
-
-  set BPM(v) {
-    const bpm = parseInt(`${v}`, 10)
-
-    if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200 && bpm != this.BPM) {
-      this.#metronome.BPM = bpm
-      this.#modified = this.title != ''
-
-      if (this.UUID === '') {
-        this.#tempo = bpm
-      }
-
-      this.dispatchEvent(new Event('modified'))
-    }
-  }
-
-  get loopable() {
-    const sections = transmogrify(this)
-    const bars = sections.reduce((measures, section) => measures + section.measures, 0)
-
-    return bars > 0 && bars !== INF
-  }
-
-  get loop() {
-    return this.#metronome?.loop ?? false
-  }
-
-  set loop(v) {
-    this.#metronome.loop = v === true
-    this.dispatchEvent(new Event('modified'))
-  }
-
-  get loops() {
-    const loops = Number.parseInt(`${this.#metronome?.loops ?? INF}`)
-
-    return [2, 3, 4, 5].includes(loops) ? loops : INF
   }
 
   get timeSignature() {
@@ -193,6 +160,51 @@ export class Track extends EventTarget {
 
       this.dispatchEvent(new Event('modified'))
     }
+  }
+
+  get BPM() {
+    return this.#metronome.BPM
+  }
+
+  set BPM(v) {
+    const bpm = parseInt(`${v}`, 10)
+
+    if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200 && bpm != this.BPM) {
+      this.#metronome.BPM = bpm
+      this.#modified = this.title != ''
+
+      if (this.UUID === '') {
+        this.#tempo = bpm
+      }
+
+      this.dispatchEvent(new Event('modified'))
+    }
+  }
+
+  get loopable() {
+    const sections = transmogrify(this)
+    const bars = sections.reduce((measures, section) => measures + section.measures, 0)
+
+    return bars > 0 && bars !== INF
+  }
+
+  get loop() {
+    return this.#metronome?.loop ?? false
+  }
+
+  set loop(v) {
+    this.#metronome.loop = v === true
+    this.dispatchEvent(new Event('modified'))
+  }
+
+  get loops() {
+    const loops = Number.parseInt(`${this.#metronome?.loops ?? INF}`)
+
+    return [2, 3, 4, 5].includes(loops) ? loops : INF
+  }
+
+  get clicks() {
+    return this.#metronome?.clicks
   }
 
   get sections() {

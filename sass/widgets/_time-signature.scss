@@ -4,8 +4,6 @@
     display: inline-block; 
     height: 100%;
 
-    anchor-name: --container;
-
     button {
       display: inline-block; 
       width: fit-content;
@@ -170,12 +168,13 @@
 
     #lock {
       position: absolute;
-      top: calc(100% * 2/3 + 1px);
+      bottom: 0px;
       right: 0px;
       transform: translateY(-50%);
 
-      width: 16px;
+      width: 22.5%;
       visibility: hidden;
+      z-index: 2;
     }
   }
 

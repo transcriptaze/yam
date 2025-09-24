@@ -134,6 +134,7 @@ export class MetronomeNode extends AudioWorkletNode {
       pulse: v?.pulse,
       sections: v?.sections ?? [],
       loops: v?.loops ?? INF,
+      clicks: v?.clicks ?? null,
     })
 
     this.#loops = v?.loops ?? INF
@@ -286,6 +287,7 @@ function transmogrify(track) {
     pulse: PULSE.pulseToInt(track.pulse ?? ''),
     loop: track.loop,
     loops: track.loops ?? INF,
+    clicks: track.clicks ?? null,
     delay: clamp(durationToMS(delay), 0, 5000),
 
     bars: bars,

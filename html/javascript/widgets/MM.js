@@ -111,21 +111,6 @@ export class MM extends HTMLElement {
     }
   }
 
-  get BPM() {
-    return this.#BPM
-  }
-
-  set BPM(v) {
-    const shadow = this.shadowRoot
-    const input = shadow.querySelector('input')
-    const bpm = parseInt(`${v}`, 10)
-
-    if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
-      this.#BPM = bpm
-      input.value = `${bpm}`
-    }
-  }
-
   get pulse() {
     return this.#pulse
   }
@@ -143,6 +128,21 @@ export class MM extends HTMLElement {
     }
   }
 
+  get BPM() {
+    return this.#BPM
+  }
+
+  set BPM(v) {
+    const shadow = this.shadowRoot
+    const input = shadow.querySelector('input')
+    const bpm = parseInt(`${v}`, 10)
+
+    if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
+      this.#BPM = bpm
+      input.value = `${bpm}`
+    }
+  }
+
   set timeSignature(v) {
     const { divisions } = parseTimeSignature(v)
 
@@ -153,13 +153,50 @@ export class MM extends HTMLElement {
     }
   }
 
-  set MM({ pulse, BPM }) {
-    if (pulse == null || pulse === '' || BPM == null || Number.isNaN(BPM) || BPM === '') {
+  get tempo() {
+    const tempo = {
+      pulse: this.pulse,
+      BPM: this.BPM,
+    }
+
+    const shadow = this.shadowRoot
+    const input = shadow.querySelector('input')
+    const bpm = parseInt(`${input.value}`, 10)
+
+    if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
+      tempo.BPM = bpm
+    }
+
+    return tempo
+  }
+
+  set tempo({ pulse, BPM, defaults }) {
+    const shadow = this.shadowRoot
+    const p = shadow.querySelector('#pulse')
+    const bpm = shadow.querySelector('input')
+
+    if (pulse == null || pulse === '') {
       this.#pulse = ''
-      this.#BPM = ''
     } else {
       this.#pulse = pulse
+    }
+
+    if (BPM == null || Number.isNaN(BPM) || BPM === '') {
+      this.#BPM = ''
+    } else {
       this.#BPM = BPM
+    }
+
+    if (defaults != null && defaults.pulse != null) {
+      p.dataset.defval = defaults.pulse
+    } else {
+      p.dataset.defval = 'quarter'
+    }
+
+    if (defaults != null && defaults.BPM != null && !Number.isNaN(defaults.BPM) && defaults.BPM >= 40 && defaults.BPM <= 200) {
+      bpm.dataset.defval = `${defaults.BPM}`
+    } else {
+      bpm.dataset.defval = `---`
     }
 
     this.#redraw()
@@ -189,19 +226,29 @@ export class MM extends HTMLElement {
     const pulse = shadow.querySelector('#pulse')
     const BPM = shadow.querySelector('input')
 
-    if (`${this.#pulse}` === '' || `${this.#BPM}` === '') {
+    if (`${this.#BPM}` === '') {
       div.classList.add('none')
     } else {
       div.classList.remove('none')
     }
 
-    if (PULSES.has(`${this.#pulse}`)) {
-      pulse.src = PULSES.get(`${pulse}`)
-    } else {
-      pulse.src = PULSES.get(`quarter`)
+    {
+      let k = 'quarter'
+      if (this.#pulse != null && this.#pulse !== '') {
+        k = `${this.#pulse}`
+      } else {
+        k = `${pulse.dataset.defval}`
+      }
+
+      if (PULSES.has(k)) {
+        pulse.src = PULSES.get(k)
+      } else {
+        pulse.src = PULSES.get(`quarter`)
+      }
     }
 
     BPM.value = `${this.#BPM}`
+    BPM.placeholder = BPM.dataset.defval
   }
 }
 

@@ -19,13 +19,13 @@
     }
 
     div.metricals {
-      background: #fefefe;
+      background: #fcfcfc;
       width: 100%;
 
       display: grid;
       grid-template-columns: auto auto 1fr;
       grid-template-rows: auto;
-      column-gap: 3px;    
+      column-gap: 8px;    
     }
 
     #name {

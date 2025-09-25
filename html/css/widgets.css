@@ -236,6 +236,10 @@ div.metronome.playing #play img.stop {
   display: none;
 }
 
+:host(.component-mm:not([allow-none])) #list > div > li.none {
+  display: none;
+}
+
 :host(.component-mm.small) div.MM input {
   font-size: 14px;
   font-weight: normal;

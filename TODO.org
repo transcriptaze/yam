@@ -13,9 +13,15 @@
 *** DONE lock time signature for tracks
 
 *** TODO section pulse: need a way to revert to '' (default)
-      - add '' pulse to popup list
-      - don't fire change if pulse is ''
-      - display equals iff pulse and BPM are defined
+**** DONE add '' pulse to popup list
+**** TODO don't fire change if pulse is ''
+**** TODO display equals iff pulse and BPM are defined
+**** TODO fix MM popover div/ul/li thing
+
+*** TODO clicks
+**** TODO use section clicks in worklet
+**** TODO generate clicks for count-in
+**** TODO not cascading - revert to track clicks or default clicks for time-signature
 
 *** TODO fix dangling popover on track delete
       - move popover to parent Playlist

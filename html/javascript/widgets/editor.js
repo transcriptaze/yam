@@ -105,6 +105,7 @@ export class Editor extends HTMLElement {
     const container = shadow.querySelector('div.track-editor')
     const save = container.querySelector('#save')
     const ul = this.#sections.querySelector('ul')
+    const icon = this.#sections.querySelector('div.header img')
 
     save.disabled = track == null
 
@@ -133,6 +134,7 @@ export class Editor extends HTMLElement {
       this.#sections.removeAttribute('open')
       this.#expanded = false
 
+      icon.classList.remove('expanded')
       ul.replaceChildren()
     } else {
       this.#sections.classList.remove('disabled')
@@ -153,6 +155,7 @@ export class Editor extends HTMLElement {
         children.push(li)
       })
 
+      icon.classList.remove('expanded')
       ul.replaceChildren(...children)
     }
 

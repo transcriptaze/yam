@@ -40,6 +40,7 @@
 
 ** Fixes
 *** TODO expand single section
+      - hover >> arrow maybe (doesnt work on mobile)
 *** TODO requestAnimationFrame is not always 60fps
       - only update if changed
 *** TODO (?) use microtasks for engine initialisation

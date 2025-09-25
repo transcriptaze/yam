@@ -1,6 +1,5 @@
 :host(.component-time-signature) {
   div.time-signature {
-    anchor-name: --container;
     position: relative;
     display: inline-block; 
     height: 100%;
@@ -169,12 +168,13 @@
 
     #lock {
       position: absolute;
-      position-anchor: --container;
-      bottom: 7.5px;
+      bottom: 0px;
       right: 0px;
+      transform: translateY(-50%);
 
-      width: 16px;
+      width: 22.5%;
       visibility: hidden;
+      z-index: 2;
     }
   }
 

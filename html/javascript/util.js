@@ -1,5 +1,4 @@
-const DIVISIONS = [1, 2, 4, 8, 16, 32]
-const PULSES = ['eighth', 'eighth-doublet', 'quarter', 'dotted-quarter', 'half', 'dotted-half']
+import { DIVISIONS, PULSES } from './constants.js'
 
 export function parseTimeSignature(v) {
   if (`${v}` === 'common') {

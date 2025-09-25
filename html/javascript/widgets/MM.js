@@ -28,6 +28,8 @@ export class MM extends HTMLElement {
 
           popover.hidePopover()
 
+          this.pulse = pulse
+
           this.dispatchEvent(
             new CustomEvent('change', {
               bubbles: true,
@@ -58,7 +60,11 @@ export class MM extends HTMLElement {
         const input = shadow.querySelector('input')
         const bpm = parseInt(`${input.value}`, 10)
 
-        if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
+        if (input.value === '') {
+          this.#BPM = ''
+        } else if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
+          this.#BPM = bpm
+
           this.dispatchEvent(
             new CustomEvent('change', {
               bubbles: true,
@@ -120,7 +126,7 @@ export class MM extends HTMLElement {
     const img = shadow.querySelector('#pulse')
     const pulse = parsePulse(v)
 
-    if (pulse != null) {
+    if (pulse != null && pulse != this.#pulse) {
       this.#pulse = pulse
       if (PULSES.has(`${pulse}`)) {
         img.src = PULSES.get(`${pulse}`)
@@ -154,20 +160,10 @@ export class MM extends HTMLElement {
   }
 
   get tempo() {
-    const tempo = {
+    return {
       pulse: this.pulse,
       BPM: this.BPM,
     }
-
-    const shadow = this.shadowRoot
-    const input = shadow.querySelector('input')
-    const bpm = parseInt(`${input.value}`, 10)
-
-    if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
-      tempo.BPM = bpm
-    }
-
-    return tempo
   }
 
   set tempo({ pulse, BPM, defaults }) {

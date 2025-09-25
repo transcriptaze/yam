@@ -242,7 +242,6 @@ div.metronome.playing #play img.stop {
 }
 
 :host(.component-time-signature) div.time-signature {
-  anchor-name: --container;
   position: relative;
   display: inline-block;
   height: 100%;
@@ -376,11 +375,12 @@ div.metronome.playing #play img.stop {
 }
 :host(.component-time-signature) div.time-signature #lock {
   position: absolute;
-  position-anchor: --container;
-  bottom: 7.5px;
+  bottom: 0px;
   right: 0px;
-  width: 16px;
+  transform: translateY(-50%);
+  width: 22.5%;
   visibility: hidden;
+  z-index: 2;
 }
 :host(.component-time-signature) div.time-signature.none button img {
   filter: grayscale(100%) opacity(25%);

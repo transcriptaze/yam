@@ -114,7 +114,7 @@ export class Metronome extends AudioWorkletProcessor {
     const tick = event.data.tick
     const tock = event.data.tock
     const tack = event.data.tack
-    const stick = event.data.stick
+    const sticks = event.data.stick
 
     this.state = new State(event.data.state)
     this.fs = event.data.fs
@@ -122,11 +122,11 @@ export class Metronome extends AudioWorkletProcessor {
     this.level.sampleRate = event.data.fs
     this.clicks = new Map([
       ['default', tock],
-      ['count-in', stick],
+      ['count-in', sticks],
       ['tick', tick],
       ['tock', tock],
       ['tack', tack],
-      ['stick', stick],
+      ['sticks', sticks],
       [1, tick],
       [2, tock],
       [3, tock],
@@ -300,17 +300,10 @@ export class Metronome extends AudioWorkletProcessor {
   }
 
   cue(beat, pulse) {
-    const timeSignature = this.section?.timeSignature ?? ''
     const pattern = this.#track?.clicks ?? null
 
-    if (pattern != null && Array.isArray(pattern)) {
-      if (pattern.includes(beat)) {
-        const click = this.clicks.get(beat) ?? this.clicks.get('default')
-        if (click != null) {
-          this.#cued.push(sample(click))
-        }
-      }
-    } else if ('count-in' === this.section?.role) {
+    // ... count-in
+    if ('count-in' === this.section?.role) {
       const clicks = this.section?.clicks ?? []
 
       if (clicks.length === 0) {
@@ -326,7 +319,12 @@ export class Metronome extends AudioWorkletProcessor {
           this.#cued.push(sample(click))
         }
       }
-    } else if ('anacrusis' === this.section?.role) {
+
+      return
+    }
+
+    // ... anacrusis
+    if ('anacrusis' === this.section?.role) {
       const clicks = this.section?.clicks ?? []
       const key = clicks.includes(beat) ? 'default' : 'count-in'
       const click = this.clicks.get(key) ?? this.clicks.get('default')
@@ -334,32 +332,51 @@ export class Metronome extends AudioWorkletProcessor {
       if (click != null) {
         this.#cued.push(sample(click))
       }
-    } else if (pulse === DOTTED_QUARTER) {
+
+      return
+    }
+
+    // ... clicks = [1,2,...]
+    if (pattern != null && Array.isArray(pattern)) {
+      if (pattern.includes(beat)) {
+        const click = this.clicks.get(beat) ?? this.clicks.get('default')
+        if (click != null) {
+          this.#cued.push(sample(click))
+        }
+      }
+
+      return
+    }
+
+    // ... clicks = {1:'sticks', ...}
+    if (pattern != null && pattern instanceof Map) {
+      if (pattern.has(`${beat}`)) {
+        const k = pattern.get(`${beat}`)
+        const click = this.clicks.get(k) ?? this.clicks.get('default')
+        if (click != null) {
+          this.#cued.push(sample(click))
+        }
+      }
+
+      return
+    }
+
+    // ... 6:8, dotted-quarter
+    if (pulse === DOTTED_QUARTER) {
       if ([1, 4].includes(beat)) {
         const click = this.clicks.get(beat) ?? this.clicks.get('default')
         if (click != null) {
           this.#cued.push(sample(click))
         }
       }
-    } else if (timeSignature === '5:4') {
-      let click = this.clicks.get(beat)
 
-      if ([4].includes(beat)) {
-        click = this.clicks.get('tock')
-      } else if ([2, 3, 5].includes(beat)) {
-        click = this.clicks.get('tack')
-      }
+      return
+    }
 
-      click = click ?? this.clicks.get('default')
-
-      if (click != null) {
-        this.#cued.push(sample(click))
-      }
-    } else {
-      const click = this.clicks.get(beat) ?? this.clicks.get('default')
-      if (click != null) {
-        this.#cued.push(sample(click))
-      }
+    // ... default
+    const click = this.clicks.get(beat) ?? this.clicks.get('default')
+    if (click != null) {
+      this.#cued.push(sample(click))
     }
   }
 

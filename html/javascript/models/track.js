@@ -1,7 +1,7 @@
 import * as DB from '../db.js'
 import { warnf } from '../log.js'
 import * as generators from '../generators.js'
-import { INF } from '../constants.js'
+import { PULSES, INF } from '../constants.js'
 import { parseTimeSignature, parsePulse } from '../util.js'
 
 const LOGTAG = 'track'
@@ -298,6 +298,13 @@ export class Track extends EventTarget {
         } else if (!Number.isNaN(v.measures) && v.measures >= 0) {
           section.measures = v.measures
         }
+      }
+
+      // ... pulse
+      if (v.pulse == null || v.pulse === '') {
+        section.pulse = null
+      } else if (PULSES.includes(v.pulse)) {
+        section.pulse = v.pulse
       }
 
       // ... tempo

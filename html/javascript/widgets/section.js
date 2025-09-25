@@ -180,6 +180,14 @@ export class Section extends HTMLElement {
     return e?.tempo ?? this.#section.tempo
   }
 
+  get #tempo() {
+    return (async () => {
+      await customElements.whenDefined('yam-mm')
+
+      return this.shadowRoot?.querySelector('yam-mm')
+    })()
+  }
+
   set #tempo({ tempo, timeSignature }) {
     void (async () => {
       await customElements.whenDefined('yam-mm')

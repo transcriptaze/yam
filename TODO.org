@@ -12,6 +12,11 @@
 *** DONE clear current track
 *** DONE lock time signature for tracks
 
+*** TODO section pulse: need a way to revert to '' (default)
+      - add '' pulse to popup list
+      - don't fire change if pulse is ''
+      - display equals iff pulse and BPM are defined
+
 *** TODO fix dangling popover on track delete
       - move popover to parent Playlist
       - or just close on delete
@@ -34,6 +39,7 @@
       - the muted from the track above gets copied over
 
 ** Fixes
+*** TODO expand single section
 *** TODO requestAnimationFrame is not always 60fps
       - only update if changed
 *** TODO (?) use microtasks for engine initialisation

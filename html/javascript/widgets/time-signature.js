@@ -56,6 +56,65 @@ export class TimeSignature extends HTMLElement {
 
   #timeSignature = '4:4'
 
+  #handlers = {
+    ul: {
+      click: (event) => {
+        const list = this.shadowRoot.querySelector('#list')
+
+        if (event.target.dataset.timeSignature != null) {
+          this.timeSignature = event.target.dataset.timeSignature
+
+          list.hidePopover()
+          this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: event.target.dataset.timeSignature } }))
+        } else if (event.target.parentElement?.dataset.timeSignature != null) {
+          this.timeSignature = event.target.parentElement.dataset.timeSignature
+
+          list.hidePopover()
+          this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: event.target.parentElement.dataset.timeSignature } }))
+        }
+      },
+    },
+
+    tactus: {
+      input: () => {
+        const tactus = this.shadowRoot.querySelector('input#tactus')
+        if (tactus.checkValidity()) {
+          this.#beats = tactus.value
+
+          this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: this.timeSignature } }))
+        }
+      },
+    },
+
+    figura: {
+      input: () => {
+        const figura = this.shadowRoot.querySelector('input#figura')
+        if (figura.checkValidity()) {
+          this.#divisions = figura.value
+          this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: this.timeSignature } }))
+        }
+      },
+    },
+
+    overlay: {
+      click: () => {
+        const container = this.shadowRoot.querySelector('div.time-signature')
+
+        if (container.classList.contains('locked')) {
+          container.classList.add('tapped')
+        }
+      },
+    },
+
+    lock: {
+      animated: () => {
+        const container = this.shadowRoot.querySelector('div.time-signature')
+
+        container.classList.remove('tapped')
+      },
+    },
+  }
+
   constructor() {
     super()
 
@@ -76,39 +135,18 @@ export class TimeSignature extends HTMLElement {
     this.classList.add('component-time-signature')
 
     const shadow = this.shadowRoot
-    const list = shadow.querySelector('#list')
+    const overlay = shadow.querySelector('div.overlay')
     const ul = shadow.querySelector('div.content ul')
     const tactus = shadow.querySelector('input#tactus')
     const figura = shadow.querySelector('input#figura')
+    const lock = shadow.querySelector('#lock')
 
-    ul.addEventListener('click', (event) => {
-      if (event.target.dataset.timeSignature != null) {
-        this.timeSignature = event.target.dataset.timeSignature
+    ul.addEventListener('click', this.#handlers.ul.click)
+    tactus.addEventListener('input', this.#handlers.tactus.input)
+    figura.addEventListener('input', this.#handlers.figura.input)
 
-        list.hidePopover()
-        this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: event.target.dataset.timeSignature } }))
-      } else if (event.target.parentElement?.dataset.timeSignature != null) {
-        this.timeSignature = event.target.parentElement.dataset.timeSignature
-
-        list.hidePopover()
-        this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: event.target.parentElement.dataset.timeSignature } }))
-      }
-    })
-
-    tactus.addEventListener('input', () => {
-      if (tactus.checkValidity()) {
-        this.#beats = tactus.value
-
-        this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: this.timeSignature } }))
-      }
-    })
-
-    figura.addEventListener('input', () => {
-      if (figura.checkValidity()) {
-        this.#divisions = figura.value
-        this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: this.timeSignature } }))
-      }
-    })
+    overlay.addEventListener('click', this.#handlers.overlay.click)
+    lock.addEventListener('animationend', this.#handlers.lock.animated)
   }
 
   disconnectedCallback() {}

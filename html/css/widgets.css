@@ -243,10 +243,14 @@ div.metronome.playing #play img.stop {
 
 :host(.component-time-signature) div.time-signature {
   position: relative;
-  display: inline-block;
+  display: grid;
+  grid-template-rows: auto;
+  grid-template-columns: auto;
   height: 100%;
 }
 :host(.component-time-signature) div.time-signature button {
+  grid-row: 1;
+  grid-column: 1;
   display: inline-block;
   width: fit-content;
   height: 100%;
@@ -298,6 +302,21 @@ div.metronome.playing #play img.stop {
 :host(.component-time-signature) div.time-signature button:disabled img {
   filter: grayscale(100%) opacity(50%);
   cursor: auto;
+}
+:host(.component-time-signature) div.time-signature div.overlay {
+  grid-row: 1;
+  grid-column: 1;
+  pointer-events: none;
+  z-index: 3;
+}
+:host(.component-time-signature) div.time-signature #lock {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  transform: translateY(-50%);
+  width: 22.5%;
+  opacity: 0;
+  z-index: 2;
 }
 :host(.component-time-signature) div.time-signature div#list {
   top: calc(anchor(bottom) + 8px);
@@ -373,15 +392,6 @@ div.metronome.playing #play img.stop {
 :host(.component-time-signature) div.time-signature div#list div.content div.custom input:invalid {
   color: red;
 }
-:host(.component-time-signature) div.time-signature #lock {
-  position: absolute;
-  bottom: 0px;
-  right: 0px;
-  transform: translateY(-50%);
-  width: 22.5%;
-  visibility: hidden;
-  z-index: 2;
-}
 :host(.component-time-signature) div.time-signature.none button img {
   filter: grayscale(100%) opacity(25%);
 }
@@ -392,10 +402,13 @@ div.metronome.playing #play img.stop {
   cursor: auto;
 }
 :host(.component-time-signature) div.time-signature.locked button img {
-  filter: none;
+  filter: brightness(0) saturate(100%) invert(22%) sepia(45%) saturate(3580%) hue-rotate(357deg) brightness(101%) contrast(95%);
 }
-:host(.component-time-signature) div.time-signature.locked #lock {
-  visibility: visible;
+:host(.component-time-signature) div.time-signature.locked div.overlay {
+  pointer-events: auto;
+}
+:host(.component-time-signature) div.time-signature.locked.tapped #lock {
+  animation: tapped 3.5s ease-in-out forwards;
 }
 @-moz-document url-prefix() {
   :host(.component-time-signature) img.tactus {
@@ -403,6 +416,20 @@ div.metronome.playing #play img.stop {
   }
   :host(.component-time-signature) img.figura {
     margin-left: 8px;
+  }
+}
+@keyframes tapped {
+  0% {
+    opacity: 0;
+  }
+  5% {
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
   }
 }
 

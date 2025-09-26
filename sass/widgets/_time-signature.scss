@@ -1,10 +1,15 @@
 :host(.component-time-signature) {
   div.time-signature {
     position: relative;
-    display: inline-block; 
+    display: grid; 
+    grid-template-rows: auto;
+    grid-template-columns: auto;
     height: 100%;
 
     button {
+      grid-row: 1;
+      grid-column: 1;
+
       display: inline-block; 
       width: fit-content;
       height: 100%;
@@ -71,6 +76,25 @@
         filter: grayscale(100%) opacity(50%);
         cursor: auto;
       }
+    }
+
+    div.overlay {
+      grid-row: 1;
+      grid-column: 1;
+
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    #lock {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      transform: translateY(-50%);
+
+      width: 22.5%;
+      opacity: 0; 
+      z-index: 2;
     }
 
     div#list {
@@ -165,17 +189,6 @@
         }
       }
     }
-
-    #lock {
-      position: absolute;
-      bottom: 0px;
-      right: 0px;
-      transform: translateY(-50%);
-
-      width: 22.5%;
-      visibility: hidden;
-      z-index: 2;
-    }
   }
 
   div.time-signature.none {
@@ -198,12 +211,21 @@
     button {
       cursor: auto;    
       img {
-        filter: none;
+        filter: brightness(0) saturate(100%) invert(22%) sepia(45%) saturate(3580%) hue-rotate(357deg) brightness(101%) contrast(95%);
       }
     }
 
+    div.overlay {
+      pointer-events: auto;
+    }
+
     #lock {
-      visibility: visible;
+    }
+  }
+
+  div.time-signature.locked.tapped {
+    #lock {
+      animation: tapped 3.5s ease-in-out forwards;
     }
   }
 
@@ -215,6 +237,13 @@
     img.figura {
       margin-left: 8px;
     }
+  }
+
+  @keyframes tapped {
+    0%   { opacity: 0; }
+    5%   { opacity: 1; }
+    80%  { opacity: 1; }
+    100% { opacity: 0; }
   }
 }
 

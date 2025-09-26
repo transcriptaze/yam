@@ -272,6 +272,7 @@ function transmogrify(track) {
         pulse: PULSE.pulseToInt(v.pulse),
         beats: parseTimeSignature(v.timeSignature).beats,
         divisions: parseTimeSignature(v.timeSignature).divisions,
+        clicks: v.clicks,
       }
     })
 
@@ -287,7 +288,7 @@ function transmogrify(track) {
     pulse: PULSE.pulseToInt(track.pulse ?? ''),
     loop: track.loop,
     loops: track.loops ?? INF,
-    clicks: track.clicks ?? null,
+    clicks: generators.clicks(track.clicks),
     delay: clamp(durationToMS(delay), 0, 5000),
 
     bars: bars,

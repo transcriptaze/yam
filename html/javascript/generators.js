@@ -79,11 +79,24 @@ export function colours() {
   }
 }
 
+export function clicks(v) {
+  if (v != null && Array.isArray(v)) {
+    return v
+  }
+
+  if (v != null && v instanceof Object) {
+    return new Map(Object.entries(v))
+  }
+
+  return null
+}
+
 export function* transmogrify(track) {
   const sections = track?.sections ?? []
   const _roles = roles()
   const _names = names()
   const _colours = colours()
+  const _clicks = clicks
 
   let ID = 0
   let tempo = track?.BPM ?? 120
@@ -102,8 +115,7 @@ export function* transmogrify(track) {
     const role = _roles(section.role)
     const name = _names(section.name, role)
     const colour = _colours(section.colour, role)
-
-    const clicks = section.clicks ?? null
+    const clicks = ['count-in', 'anacrusis'].includes(role) ? _clicks(section.clicks) : (_clicks(section.clicks) ?? _clicks(track.clicks))
     const subsections = []
 
     if (_subsections.length == 0) {
@@ -125,7 +137,7 @@ export function* transmogrify(track) {
           tempo: tempo,
           timeSignature: timeSignature,
           pulse: pulse,
-          clicks: subsection.clicks ?? clicks,
+          clicks: _clicks(subsection.clicks) ?? clicks,
         })
       }
     }

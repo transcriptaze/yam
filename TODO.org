@@ -19,6 +19,7 @@
 **** TODO don't fire change if pulse is ''
 **** TODO display equals iff pulse and BPM are defined
 **** TODO fix MM popover div/ul/li thing
+**** TODO cascade update following sections after pick pulse
 
 *** TODO clicks
 **** DONE use section clicks in worklet

@@ -5,8 +5,8 @@ const PULSES = new Map([
   ['eighth',         { img: './images/MM/eighth-equals.svg',         li: './images/MM/pulse/eighth.svg'         }],
   ['eighth-doublet', { img: './images/MM/eighth-doublet-equals.svg', li: './images/MM/pulse/eighth-doublet.svg' }],
   ['quarter',        { img: './images/MM/quarter-equals.svg',        li: './images/MM/pulse/quarter.svg'        }],
-  ['dotted-quarter', { img: './images/MM/dotted-quarter-equals.svg', li: './images/MM/pulse/half.svg'           }],
-  ['half',           { img: './images/MM/half-equals.svg',           li: './images/MM/pulse/dotted-quarter.svg' }],
+  ['dotted-quarter', { img: './images/MM/dotted-quarter-equals.svg', li: './images/MM/pulse/dotted-quarter.svg' }],
+  ['half',           { img: './images/MM/half-equals.svg',           li: './images/MM/pulse/half.svg'           }],
   ['dotted-half',    { img: './images/MM/dotted-half-equals.svg',    li: './images/MM/pulse/dotted-half.svg'    }],
 ])
 
@@ -26,22 +26,21 @@ export class MM extends HTMLElement {
         const pulse = e.target.dataset.pulse ?? e.target.parentElement?.dataset.pulse
 
         if (pulse != null) {
-          const shadow = this.shadowRoot
-          const popover = shadow.querySelector('[popover]')
-
-          popover.hidePopover()
+          this.shadowRoot.querySelector('[popover]')?.hidePopover()
 
           this.pulse = pulse
 
-          this.dispatchEvent(
-            new CustomEvent('change', {
-              bubbles: true,
-              composed: true,
-              detail: {
-                pulse: pulse,
-              },
-            }),
-          )
+          if (pulse !== '') {
+            this.dispatchEvent(
+              new CustomEvent('change', {
+                bubbles: true,
+                composed: true,
+                detail: {
+                  pulse: pulse,
+                },
+              }),
+            )
+          }
         }
       },
     },
@@ -127,13 +126,19 @@ export class MM extends HTMLElement {
   set pulse(v) {
     const shadow = this.shadowRoot
     const img = shadow.querySelector('#pulse')
-    const pulse = parsePulse(v)
 
-    if (pulse != null && pulse != this.#pulse) {
-      this.#pulse = pulse
-      if (PULSES.has(`${pulse}`)) {
-        img.src = PULSES.get(`${pulse}`).img
-      }
+    if (v == null || v === '') {
+      this.#pulse = ''
+    } else {
+      this.#pulse = parsePulse(v)
+    }
+
+    if (PULSES.has(this.#pulse)) {
+      img.src = PULSES.get(this.#pulse).img
+    } else if (PULSES.has(img.dataset.defval)) {
+      img.src = PULSES.get(img.dataset.defval).img
+    } else {
+      img.src = NONE
     }
   }
 
@@ -175,28 +180,15 @@ export class MM extends HTMLElement {
     const bpm = shadow.querySelector('input')
     const none = shadow.querySelector('#list li.none img')
 
-    if (pulse == null || pulse === '') {
-      this.#pulse = ''
+    if (defaults != null && defaults.pulse != null) {
+      p.dataset.defval = defaults.pulse
     } else {
-      this.#pulse = pulse
-    }
-
-    if (BPM == null || Number.isNaN(BPM) || BPM === '') {
-      this.#BPM = ''
-    } else {
-      this.#BPM = BPM
+      p.dataset.defval = 'quarter'
     }
 
     if (defaults != null && defaults.pulse != null) {
-      p.dataset.defval = defaults.pulse
-
-      if (PULSES.has(defaults.pulse)) {
-        none.src = PULSES.get(defaults.pulse).li
-      } else {
-        none.src = NONE
-      }
+      none.src = PULSES.has(defaults.pulse) ? PULSES.get(defaults.pulse).li : NONE
     } else {
-      p.dataset.defval = 'quarter'
       none.src = NONE
     }
 
@@ -204,6 +196,14 @@ export class MM extends HTMLElement {
       bpm.dataset.defval = `${defaults.BPM}`
     } else {
       bpm.dataset.defval = `---`
+    }
+
+    this.pulse = pulse
+
+    if (BPM == null || Number.isNaN(BPM) || BPM === '') {
+      this.#BPM = ''
+    } else {
+      this.#BPM = BPM
     }
 
     this.#redraw()

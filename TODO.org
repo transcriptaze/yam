@@ -19,8 +19,9 @@
 **** TODO fix MM popover div/ul/li thing
 
 *** TODO clicks
-**** TODO use section clicks in worklet
+**** DONE use section clicks in worklet
 **** TODO generate clicks for count-in
+**** TODO generate clicks for anacrusis
 **** TODO not cascading - revert to track clicks or default clicks for time-signature
 
 *** TODO fix dangling popover on track delete
@@ -54,7 +55,7 @@
 *** TODO automatically add clicks to new pickup and count-in sections
 *** TODO editor: enable/disable button iff there are changes
 *** TODO different grip icon
-*** TODO 'tack.wav' for e.g. 5:4
+*** TODO 'tack.wav' for e.g. 5:4c
 *** TODO spacebar in editor starts/stops metronome
 *** TODO playlists '+'' floating button is visually confusing
       - https://kube.io/blog/liquid-glass-css-svg/

@@ -265,18 +265,6 @@ function sample(buffer) {
 }
 
 function transmogrify(track) {
-  const g = (clicks) => {
-    if (clicks != null && Array.isArray(clicks)) {
-      return clicks
-    }
-
-    if (clicks != null && clicks instanceof Object) {
-      return new Map(Object.entries(clicks))
-    }
-
-    return null
-  }
-
   const sections = [...generators.transmogrify(track)].map((u) => {
     const subsections = u.subsections.map((v) => {
       return {
@@ -284,7 +272,7 @@ function transmogrify(track) {
         pulse: PULSE.pulseToInt(v.pulse),
         beats: parseTimeSignature(v.timeSignature).beats,
         divisions: parseTimeSignature(v.timeSignature).divisions,
-        clicks: g(v.clicks),
+        clicks: v.clicks,
       }
     })
 
@@ -300,7 +288,7 @@ function transmogrify(track) {
     pulse: PULSE.pulseToInt(track.pulse ?? ''),
     loop: track.loop,
     loops: track.loops ?? INF,
-    clicks: g(track.clicks),
+    clicks: generators.clicks(track.clicks),
     delay: clamp(durationToMS(delay), 0, 5000),
 
     bars: bars,

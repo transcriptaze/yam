@@ -65,15 +65,7 @@ export class Track extends EventTarget {
       BPM: object.metronome?.BPM ?? 120,
       loop: object.metronome?.loop ?? false,
       loops: object.metronome?.loops ?? INF,
-      // clicks: object.metronome?.clicks ?? null,
-    }
-
-    const clicks = object?.metronome?.clicks
-
-    if (clicks != null && Array.isArray(clicks)) {
-      this.#metronome.clicks = clicks
-    } else if (clicks != null && clicks instanceof Object) {
-      this.#metronome.clicks = new Map(Object.entries(clicks))
+      clicks: object?.metronome?.clicks ?? null,
     }
   }
 

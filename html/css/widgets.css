@@ -134,16 +134,18 @@ div.metronome.playing #play img.stop {
 }
 :host(.component-mm) div.MM {
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
+  justify-items: center;
   align-items: center;
-  column-gap: 8px;
+  column-gap: 4px;
   background: none;
   height: 100%;
 }
 :host(.component-mm) div.MM button.pulse {
   grid-column: 1;
   grid-row: 1;
+  justify-self: end;
   width: fit-content;
   height: 100%;
   background: none;
@@ -161,8 +163,8 @@ div.metronome.playing #play img.stop {
 :host(.component-mm) div.MM input {
   grid-column: 2;
   grid-row: 1;
-  align-self: center;
-  justify-self: center;
+  justify-self: start;
+  background: none;
 }
 :host(.component-mm) div.MM [popover] {
   top: calc(anchor(bottom) - 12px);
@@ -199,11 +201,15 @@ div.metronome.playing #play img.stop {
   padding-left: 2px;
   padding-right: 2px;
 }
+:host(.component-mm) div.MM div.content li.none img {
+  filter: grayscale(100%) opacity(25%);
+  transform: scale(0.7);
+}
 :host(.component-mm) button:disabled img {
   filter: grayscale(100%) opacity(50%);
 }
 :host(.component-mm) input {
-  width: 48px;
+  width: 2em;
   height: fit-content;
   background: transparent;
   padding-left: 0px;
@@ -1131,6 +1137,9 @@ div.beat.on {
 :host(.component-playlist) div.playlist.selected div.title input {
   font-weight: bold;
 }
+:host(.component-playlist) div.playlist.editing div.title {
+  padding-right: 14px;
+}
 :host(.component-playlist) div.playlist.editing div.title input {
   background: rgba(252, 252, 252, 0.5019607843);
   text-align: left;
@@ -1201,6 +1210,9 @@ div.beat.on {
   border-bottom-right-radius: 0px;
 }
 
+:host-context(.unsortable) div.playlist div.summary {
+  grid-template-columns: 16px 1fr auto;
+}
 :host-context(.unsortable) div.playlist div.summary div.grip {
   visibility: hidden;
 }

@@ -20,6 +20,160 @@ export class Playlist extends HTMLElement {
     dropped: false,
   }
 
+  #handlers = {
+    summary: {
+      click: (event) => {
+        event.preventDefault()
+
+        const shadow = this.shadowRoot
+        const container = shadow.querySelector('div.playlist')
+        const open = container.hasAttribute('open')
+        const tracks = container.querySelector('div.tracks')
+
+        if (!open) {
+          container.setAttribute('open', '')
+          tracks.classList.remove('hidden')
+        } else {
+          container.removeAttribute('open')
+          tracks.classList.add('hidden')
+        }
+
+        this.dispatchEvent(
+          new CustomEvent(EVENTS.TOGGLE_PLAYLIST, {
+            bubbles: true,
+            composed: true,
+            detail: { playlist: this.UUID, open: !open },
+          }),
+        )
+      },
+    },
+
+    menu: {
+      click: (event) => {
+        event.stopPropagation()
+      },
+
+      toggle: (event) => {
+        event.stopPropagation()
+
+        const shadow = this.shadowRoot
+        const trash = shadow.querySelector('#trash')
+
+        if (event.newState === 'open') {
+          this.classList.remove('deleting')
+          trash.classList.remove('locked')
+        }
+
+        if (event.newState === 'closed') {
+          this.classList.remove('deleting')
+        }
+      },
+    },
+
+    ul: {
+      click: (event) => {
+        if (event.target.UUID != null) {
+          event.preventDefault()
+          this.dispatchEvent(
+            new CustomEvent(EVENTS.SELECT_TRACK, {
+              bubbles: true,
+              composed: true,
+              detail: { playlist: this.UUID, track: event.target.UUID },
+            }),
+          )
+        }
+      },
+    },
+
+    edit: {
+      click: (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        const shadow = this.shadowRoot
+        const menu = shadow.querySelector('[popover]')
+
+        menu.hidePopover()
+
+        this.dispatchEvent(
+          new CustomEvent(EVENTS.EDIT_PLAYLIST, {
+            bubbles: true,
+            composed: true,
+            detail: {},
+          }),
+        )
+      },
+    },
+
+    save: {
+      click: (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        this.#save()
+        this.#edited()
+      },
+    },
+
+    title: {
+      click: (event) => {
+        if (!event.currentTarget.disabled) {
+          event.stopPropagation()
+        }
+      },
+
+      keydown: (event) => {
+        const shadow = this.shadowRoot
+        const container = shadow.querySelector('div.playlist')
+        const title = container.querySelector('div.title input')
+
+        if (event.key === 'Enter') {
+          this.#save()
+          this.#edited()
+          return true
+        }
+
+        if (event.key === 'Escape') {
+          title.value = this.title
+          this.#edited()
+          return true
+        }
+      },
+    },
+
+    trash: {
+      click: (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        const shadow = this.shadowRoot
+        const trash = shadow.querySelector('#trash')
+
+        if (this.classList.contains('deleting') && !trash.classList.contains('locked')) {
+          this.dispatchEvent(
+            new CustomEvent(EVENTS.DELETE_PLAYLIST, {
+              bubbles: true,
+              composed: true,
+              detail: { playlist: this.UUID },
+            }),
+          )
+        } else {
+          this.classList.add('deleting')
+          trash.classList.add('locked')
+        }
+      },
+
+      transitionend: (event) => {
+        const shadow = this.shadowRoot
+        const trash = shadow.querySelector('#trash')
+
+        if (event.propertyName === 'filter') {
+          trash.classList.remove('locked')
+        }
+      },
+    },
+  }
+
   constructor() {
     super()
 
@@ -194,12 +348,21 @@ export class Playlist extends HTMLElement {
   }
 
   updated(track) {
-    const shadow = this.shadowRoot
-    const tracks = shadow.querySelectorAll('ul yam-playlist-item')
-    const match = tracks.values().find((v) => v.UUID === track.UUID)
+    // ... update stored title
+    {
+      const match = this.#tracks.find((v) => v.UUID === track.UUID)
+      if (match != null) {
+        match.title = track.title
+      }
+    }
 
-    if (match != null) {
-      match.title = track.title
+    // ... update displayed title
+    {
+      const tracks = this.shadowRoot.querySelectorAll('ul yam-playlist-item')
+      const match = tracks.values().find((v) => v.UUID === track.UUID)
+      if (match != null) {
+        match.title = track.title
+      }
     }
   }
 
@@ -550,160 +713,6 @@ export class Playlist extends HTMLElement {
     )
 
     this.#drag.dropped = true
-  }
-
-  #handlers = {
-    summary: {
-      click: (event) => {
-        event.preventDefault()
-
-        const shadow = this.shadowRoot
-        const container = shadow.querySelector('div.playlist')
-        const open = container.hasAttribute('open')
-        const tracks = container.querySelector('div.tracks')
-
-        if (!open) {
-          container.setAttribute('open', '')
-          tracks.classList.remove('hidden')
-        } else {
-          container.removeAttribute('open')
-          tracks.classList.add('hidden')
-        }
-
-        this.dispatchEvent(
-          new CustomEvent(EVENTS.TOGGLE_PLAYLIST, {
-            bubbles: true,
-            composed: true,
-            detail: { playlist: this.UUID, open: !open },
-          }),
-        )
-      },
-    },
-
-    menu: {
-      click: (event) => {
-        event.stopPropagation()
-      },
-
-      toggle: (event) => {
-        event.stopPropagation()
-
-        const shadow = this.shadowRoot
-        const trash = shadow.querySelector('#trash')
-
-        if (event.newState === 'open') {
-          this.classList.remove('deleting')
-          trash.classList.remove('locked')
-        }
-
-        if (event.newState === 'closed') {
-          this.classList.remove('deleting')
-        }
-      },
-    },
-
-    ul: {
-      click: (event) => {
-        if (event.target.UUID != null) {
-          event.preventDefault()
-          this.dispatchEvent(
-            new CustomEvent(EVENTS.SELECT_TRACK, {
-              bubbles: true,
-              composed: true,
-              detail: { playlist: this.UUID, track: event.target.UUID },
-            }),
-          )
-        }
-      },
-    },
-
-    edit: {
-      click: (event) => {
-        event.preventDefault()
-        event.stopPropagation()
-
-        const shadow = this.shadowRoot
-        const menu = shadow.querySelector('[popover]')
-
-        menu.hidePopover()
-
-        this.dispatchEvent(
-          new CustomEvent(EVENTS.EDIT_PLAYLIST, {
-            bubbles: true,
-            composed: true,
-            detail: {},
-          }),
-        )
-      },
-    },
-
-    save: {
-      click: (event) => {
-        event.preventDefault()
-        event.stopPropagation()
-
-        this.#save()
-        this.#edited()
-      },
-    },
-
-    title: {
-      click: (event) => {
-        if (!event.currentTarget.disabled) {
-          event.stopPropagation()
-        }
-      },
-
-      keydown: (event) => {
-        const shadow = this.shadowRoot
-        const container = shadow.querySelector('div.playlist')
-        const title = container.querySelector('div.title input')
-
-        if (event.key === 'Enter') {
-          this.#save()
-          this.#edited()
-          return true
-        }
-
-        if (event.key === 'Escape') {
-          title.value = this.title
-          this.#edited()
-          return true
-        }
-      },
-    },
-
-    trash: {
-      click: (event) => {
-        event.preventDefault()
-        event.stopPropagation()
-
-        const shadow = this.shadowRoot
-        const trash = shadow.querySelector('#trash')
-
-        if (this.classList.contains('deleting') && !trash.classList.contains('locked')) {
-          this.dispatchEvent(
-            new CustomEvent(EVENTS.DELETE_PLAYLIST, {
-              bubbles: true,
-              composed: true,
-              detail: { playlist: this.UUID },
-            }),
-          )
-        } else {
-          this.classList.add('deleting')
-          trash.classList.add('locked')
-        }
-      },
-
-      transitionend: (event) => {
-        const shadow = this.shadowRoot
-        const trash = shadow.querySelector('#trash')
-
-        if (event.propertyName === 'filter') {
-          trash.classList.remove('locked')
-        }
-      },
-    },
   }
 }
 

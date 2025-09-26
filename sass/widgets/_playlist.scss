@@ -279,6 +279,8 @@
 
   div.playlist.editing {
     div.title {      
+      padding-right: 14px;
+
       input {
         background: #fcfcfc80;
         text-align: left;
@@ -388,6 +390,8 @@
 :host-context(.unsortable) {
   div.playlist {
     div.summary {
+      grid-template-columns: 16px 1fr auto;
+
       div.grip {
         visibility: hidden;    
       }

@@ -89,7 +89,7 @@ export function initialise() {
   // ... setup audio engine
   engine.addEventListener(
     EVENTS.PLAYING,
-    (_) => {
+    () => {
       widgets.metronome.onPlaying()
       requestAnimationFrame(() => animate(++ID))
     },
@@ -98,7 +98,7 @@ export function initialise() {
 
   engine.addEventListener(
     EVENTS.STOPPED,
-    (_) => {
+    () => {
       widgets.metronome.onStopped()
     },
     false,
@@ -296,15 +296,15 @@ export async function toggleWakeLock() {
 }
 
 export function debug() {
-  const vh = window.visualViewport?.height || window.innerHeight
-  const standalone = window.matchMedia('(display-mode: standalone)').matches
-
-  alert(
-    `version: 2025-07-28 18:40\nscreen:${screen.height}\nwindow:${window.innerHeight}\nviewport:${window.visualViewport.height.toFixed(2)}\nstandalone:${standalone}`,
-  )
-
-  // HACK: force layout recalculation (Android + Chrome)
-  document.documentElement.style.setProperty('--vh', `${vh}px`)
+  // const vh = window.visualViewport?.height || window.innerHeight
+  // const standalone = window.matchMedia('(display-mode: standalone)').matches
+  //
+  // alert(
+  //   `version: 2025-07-28 18:40\nscreen:${screen.height}\nwindow:${window.innerHeight}\nviewport:${window.visualViewport.height.toFixed(2)}\nstandalone:${standalone}`,
+  // )
+  //
+  // // HACK: force layout recalculation (Android + Chrome)
+  // document.documentElement.style.setProperty('--vh', `${vh}px`)
 }
 
 // wire up event handlers
@@ -338,9 +338,10 @@ function rewire() {
   info.addEventListener('change', (e) => onTitle(e))
   info.addEventListener('save', (e) => onSave(e))
 
-  widgets.metronome.addEventListener('toggle', () => onToggle())
-  widgets.metronome.addEventListener('back', () => onBack())
-  widgets.metronome.addEventListener('next', () => onNext())
+  widgets.metronome.addEventListener(EVENTS.PLAY, () => onPlay())
+  widgets.metronome.addEventListener(EVENTS.STOP, () => onStop())
+  widgets.metronome.addEventListener(EVENTS.BACK, () => onBack())
+  widgets.metronome.addEventListener(EVENTS.NEXT, () => onNext())
 
   state.addEventListener('change', (e) => onStateModified(e))
 
@@ -434,8 +435,12 @@ function onTitle(event) {
   info.modified = state.modified
 }
 
-function onToggle(_event) {
-  engine.toggle()
+function onPlay() {
+  engine.play()
+}
+
+function onStop() {
+  engine.stop()
 }
 
 function onBack() {
@@ -604,9 +609,11 @@ function onSave() {
       const playlist = models.playlists.playlist(state.playlist)
       if (playlist != null) {
         playlist.add(track)
+        playlist.select(track)
         playlist.save()
       }
 
+      widgets.playlists.tracklist = models.tracks.tracks
       widgets.editor.track = track
     }
 
@@ -614,23 +621,15 @@ function onSave() {
     track.save()
 
     // ... update state, playlists, editor, audio engine, etc
-    const all = models.playlists.playlist(DEFAULT.UUID)
     const playlist = models.playlists.playlist(state.playlist)
 
-    if (all != null) {
-      widgets.playlists.updated(all, track)
-    }
-
-    if (playlist != null) {
-      widgets.playlists.updated(playlist, track)
-    }
+    widgets.playlists.updated(playlist, track)
 
     state.selected = {
       playlist: playlist,
       track: track,
     }
 
-    widgets.playlists.tracklist = models.tracks.tracks
     widgets.playlists.selected = {
       playlist: playlist?.UUID,
       track: track?.UUID,

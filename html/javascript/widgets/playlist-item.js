@@ -9,6 +9,77 @@ export class PlaylistItem extends HTMLElement {
   #title = ''
   #muted = false
 
+  #handlers = {
+    menu: {
+      click: (event) => {
+        event.stopPropagation()
+      },
+    },
+
+    popover: {
+      toggle: (event) => {
+        const trash = this.shadowRoot.getElementById('trash')
+
+        if (event.newState === 'open') {
+          this.classList.remove('deleting')
+          trash.classList.remove('locked')
+        }
+
+        if (event.newState === 'closed') {
+          this.classList.remove('deleting')
+        }
+      },
+    },
+
+    mute: {
+      click: (event) => {
+        const popover = this.shadowRoot.querySelector('div [popover]')
+
+        event.stopPropagation()
+        this.dispatchEvent(
+          new CustomEvent(EVENTS.MUTE_TRACK, {
+            bubbles: true,
+            composed: true,
+            detail: { UUID: this.UUID, mute: !this.muted },
+          }),
+        )
+        popover.hidePopover()
+      },
+    },
+
+    trash: {
+      click: (event) => {
+        const trash = this.shadowRoot.getElementById('trash')
+        const popover = this.shadowRoot.querySelector('div [popover]')
+
+        event.stopPropagation()
+
+        if (this.classList.contains('deleting') && !trash.classList.contains('locked')) {
+          popover.hidePopover()
+
+          this.dispatchEvent(
+            new CustomEvent(EVENTS.DELETE_TRACK, {
+              bubbles: true,
+              composed: true,
+              detail: { track: this.UUID },
+            }),
+          )
+        } else {
+          this.classList.add('deleting')
+          trash.classList.add('locked')
+        }
+      },
+
+      transitionend: (event) => {
+        const trash = this.shadowRoot.getElementById('trash')
+
+        if (event.propertyName === 'filter') {
+          trash.classList.remove('locked')
+        }
+      },
+    },
+  }
+
   constructor() {
     super()
 
@@ -35,55 +106,12 @@ export class PlaylistItem extends HTMLElement {
 
     title.innerHTML = this.#title
 
-    menu.addEventListener('click', (event) => {
-      event.stopPropagation()
-    })
+    menu.addEventListener('click', this.#handlers.menu.click)
+    popover.addEventListener('toggle', this.#handlers.popover.toggle)
+    mute.addEventListener('click', this.#handlers.mute.click)
 
-    popover.addEventListener('toggle', (event) => {
-      if (event.newState === 'open') {
-        this.classList.remove('deleting')
-        trash.classList.remove('locked')
-      }
-
-      if (event.newState === 'closed') {
-        this.classList.remove('deleting')
-      }
-    })
-
-    mute.addEventListener('click', (event) => {
-      event.stopPropagation()
-      this.dispatchEvent(
-        new CustomEvent(EVENTS.MUTE_TRACK, {
-          bubbles: true,
-          composed: true,
-          detail: { UUID: this.UUID, mute: !this.muted },
-        }),
-      )
-      popover.hidePopover()
-    })
-
-    trash.addEventListener('click', (event) => {
-      event.stopPropagation()
-
-      if (this.classList.contains('deleting') && !trash.classList.contains('locked')) {
-        this.dispatchEvent(
-          new CustomEvent(EVENTS.DELETE_TRACK, {
-            bubbles: true,
-            composed: true,
-            detail: { track: this.UUID },
-          }),
-        )
-      } else {
-        this.classList.add('deleting')
-        trash.classList.add('locked')
-      }
-    })
-
-    trash.addEventListener('transitionend', (event) => {
-      if (event.propertyName === 'filter') {
-        trash.classList.remove('locked')
-      }
-    })
+    trash.addEventListener('click', this.#handlers.trash.click)
+    trash.addEventListener('transitionend', this.#handlers.trash.transitionend)
   }
 
   disconnectedCallback() {}

@@ -1,6 +1,60 @@
+import { EVENTS } from '../constants.js'
+
+class FSM {
+  #playing = false
+  #stopped = true
+  #dispatch = () => {}
+
+  constructor(dispatch) {
+    this.#dispatch = dispatch
+  }
+
+  click() {
+    if (!this.#playing && this.#stopped) {
+      this.#dispatch(EVENTS.PLAY)
+    }
+
+    if (this.#playing && !this.#stopped) {
+      this.#dispatch(EVENTS.STOP)
+    }
+  }
+
+  onPlaying() {
+    this.#playing = true
+    this.#stopped = false
+  }
+
+  onStopped() {
+    this.#playing = false
+    this.#stopped = true
+  }
+}
+
 export class Metronome extends HTMLElement {
   static get observedAttributes() {
     return []
+  }
+
+  #FSM = new FSM()
+
+  #handlers = {
+    play: {
+      click: (_) => {
+        this.#FSM.click()
+      },
+    },
+
+    back: {
+      click: (_) => {
+        this.dispatchEvent(new CustomEvent(EVENTS.BACK))
+      },
+    },
+
+    next: {
+      click: (_) => {
+        this.dispatchEvent(new CustomEvent(EVENTS.NEXT))
+      },
+    },
   }
 
   constructor() {
@@ -17,6 +71,10 @@ export class Metronome extends HTMLElement {
 
     shadow.appendChild(stylesheet)
     shadow.appendChild(clone)
+
+    this.#FSM = new FSM((event) => {
+      this.dispatchEvent(new CustomEvent(event, { bubbles: true, composed: true, detail: {} }))
+    })
   }
 
   connectedCallback() {
@@ -66,6 +124,8 @@ export class Metronome extends HTMLElement {
     const div = shadow.querySelector('div.metronome')
 
     div.classList.add('playing')
+
+    this.#FSM.onPlaying()
   }
 
   onStopped() {
@@ -73,26 +133,8 @@ export class Metronome extends HTMLElement {
     const div = shadow.querySelector('div.metronome')
 
     div.classList.remove('playing')
-  }
 
-  #handlers = {
-    play: {
-      click: (_) => {
-        this.dispatchEvent(new CustomEvent('toggle'))
-      },
-    },
-
-    back: {
-      click: (_) => {
-        this.dispatchEvent(new CustomEvent('back'))
-      },
-    },
-
-    next: {
-      click: (_) => {
-        this.dispatchEvent(new CustomEvent('next'))
-      },
-    },
+    this.#FSM.onStopped()
   }
 }
 

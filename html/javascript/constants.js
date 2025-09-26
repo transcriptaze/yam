@@ -46,6 +46,11 @@ export const COLOURS = new Map([
 ])
 
 export const EVENTS = {
+  PLAY: 'play',
+  STOP: 'stop',
+  BACK: 'back',
+  NEXT: 'next',
+
   PLAYING: 'playing',
   PAUSED: 'paused',
   STOPPED: 'stopped',

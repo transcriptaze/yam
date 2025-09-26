@@ -13,8 +13,7 @@
 *** DONE title changes don't propagate to other playlists
 *** DONE metricals: jump around as pulse/BPM change
 *** DONE playlist title input extends past right edge
-
-*** TODO replace engine toggle with start/stop
+*** DONE replace metronome toggle with play/stop
 
 *** TODO section pulse: need a way to revert to '' (default)
 **** DONE add '' pulse to popup list

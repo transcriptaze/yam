@@ -10,6 +10,7 @@
 
 *** DONE fix dangling popover on track delete
 *** DONE new track => edit title => save => reset => edit title => save - changes the new track
+*** DONE title changes don't propagate to other playlists
 
 *** TODO metricals: jump around as pulse/BPM change
 *** TODO replace engine toggle with start/stop
@@ -48,6 +49,8 @@
       - the muted from the track above gets copied over
 
 ** Fixes
+*** TODO playlist title input extends past right edge
+*** TODO 'All Tracks' should not display tracklist
 *** TODO expand single section
       - hover >> arrow maybe (doesnt work on mobile)
 *** TODO requestAnimationFrame is not always 60fps

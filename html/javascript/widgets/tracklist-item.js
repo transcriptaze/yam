@@ -71,6 +71,10 @@ export class TrackListItem extends HTMLElement {
 
     checkbox.checked = v === true
   }
+
+  update(track) {
+    this.title = track.title
+  }
 }
 
 customElements.define('yam-tracklist-item', TrackListItem)

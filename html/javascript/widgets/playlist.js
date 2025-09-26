@@ -348,12 +348,21 @@ export class Playlist extends HTMLElement {
   }
 
   updated(track) {
-    const shadow = this.shadowRoot
-    const tracks = shadow.querySelectorAll('ul yam-playlist-item')
-    const match = tracks.values().find((v) => v.UUID === track.UUID)
+    // ... update stored title
+    {
+      const match = this.#tracks.find((v) => v.UUID === track.UUID)
+      if (match != null) {
+        match.title = track.title
+      }
+    }
 
-    if (match != null) {
-      match.title = track.title
+    // ... update displayed title
+    {
+      const tracks = this.shadowRoot.querySelectorAll('ul yam-playlist-item')
+      const match = tracks.values().find((v) => v.UUID === track.UUID)
+      if (match != null) {
+        match.title = track.title
+      }
     }
   }
 

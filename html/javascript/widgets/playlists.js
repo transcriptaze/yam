@@ -189,17 +189,9 @@ export class Playlists extends HTMLElement {
     const children = Array.from(ul.children).map((v) => v.querySelector('yam-playlist'))
     const list = [all, ...children]
 
-    this.#playlists
-      .filter((v) => v.UUID === playlist.UUID)
-      .forEach((v) => {
-        v.tracks
-          .filter((u) => u.UUID === track.UUID)
-          .forEach((u) => {
-            u.title = track.title
-          })
-      })
+    list.forEach((v) => v.updated(track))
 
-    list.find((v) => v.UUID === playlist.UUID)?.updated(track)
+    // this.#tracklist.updated(track)
   }
 
   deleted(playlist) {

@@ -608,6 +608,7 @@ function onSave() {
         playlist.save()
       }
 
+      widgets.playlists.tracklist = models.tracks.tracks
       widgets.editor.track = track
     }
 
@@ -615,23 +616,15 @@ function onSave() {
     track.save()
 
     // ... update state, playlists, editor, audio engine, etc
-    const all = models.playlists.playlist(DEFAULT.UUID)
     const playlist = models.playlists.playlist(state.playlist)
 
-    if (all != null) {
-      widgets.playlists.updated(all, track)
-    }
-
-    if (playlist != null) {
-      widgets.playlists.updated(playlist, track)
-    }
+    widgets.playlists.updated(playlist, track)
 
     state.selected = {
       playlist: playlist,
       track: track,
     }
 
-    widgets.playlists.tracklist = models.tracks.tracks
     widgets.playlists.selected = {
       playlist: playlist?.UUID,
       track: track?.UUID,

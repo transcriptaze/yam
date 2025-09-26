@@ -90,6 +90,18 @@ export class TrackList extends HTMLElement {
       v.selected = set.has(v.getAttribute('uuid'))
     })
   }
+
+  updated(track) {
+    // ... update internal list
+    if (this.#tracks != null && this.#tracks.has(track?.UUID)) {
+      this.#tracks.set(track.UUID, track)
+    }
+
+    // ... updated displayed tracks
+    const items = this.shadowRoot.querySelectorAll('yam-tracklist-item').values()
+
+    items.filter((v) => v.getAttribute('uuid') === track.UUID).forEach((v) => v.update(track))
+  }
 }
 
 customElements.define('yam-tracklist', TrackList)

@@ -9,11 +9,9 @@
   - https://github.com/liriliri/eruda
 
 *** DONE fix dangling popover on track delete
+*** DONE new track => edit title => save => reset => edit title => save - changes the new track
 
-*** TODO new track => edit title => save => reset => edit title => save - changes the new track
-      - should create another new track
-      - reset doesn't deselect the new track
-
+*** TODO metricals: jump around as pulse/BPM change
 *** TODO replace engine toggle with start/stop
 
 *** TODO section pulse: need a way to revert to '' (default)
@@ -50,7 +48,6 @@
       - the muted from the track above gets copied over
 
 ** Fixes
-*** TODO metricals: jump around as pulse/BPM change
 *** TODO expand single section
       - hover >> arrow maybe (doesnt work on mobile)
 *** TODO requestAnimationFrame is not always 60fps

@@ -604,6 +604,7 @@ function onSave() {
       const playlist = models.playlists.playlist(state.playlist)
       if (playlist != null) {
         playlist.add(track)
+        playlist.select(track)
         playlist.save()
       }
 

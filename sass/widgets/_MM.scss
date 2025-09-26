@@ -82,6 +82,13 @@
           padding-right: 2px;
         }
       }
+
+      li.none {
+        img {        
+          filter: grayscale(100%) opacity(25%);   
+          transform: scale(0.7);   
+        }
+      }
     }
   }
 

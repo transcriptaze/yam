@@ -8,12 +8,14 @@
   - https://jakub.kr/components/oklch-colors
   - https://github.com/liriliri/eruda
 
-
-*** DONE clear current track
-*** DONE lock time signature for tracks
+*** TODO fix dangling popover on track delete
+      - move popover to parent Playlist
+      - or just close on delete
 
 *** TODO section pulse: need a way to revert to '' (default)
 **** DONE add '' pulse to popup list
+**** DONE defval for 'none' img
+**** TODO fix defval - should inherit from previous section
 **** TODO don't fire change if pulse is ''
 **** TODO display equals iff pulse and BPM are defined
 **** TODO fix MM popover div/ul/li thing
@@ -24,10 +26,6 @@
 **** TODO generate clicks for anacrusis
 **** TODO not cascading - revert to track clicks or default clicks for time-signature
 
-*** TODO fix dangling popover on track delete
-      - move popover to parent Playlist
-      - or just close on delete
-
 *** TODO Firefox
 **** DONE time-signature layout
 **** DONE pulse layout
@@ -37,6 +35,7 @@
 **** TODO editor time signature popover
 **** TODO editor: loop count font
 **** TODO set width/height for all SVGs
+**** TODO save doesn't update playlist
 
 *** TODO use cloned track
 *** TODO use cloned playlist
@@ -46,6 +45,7 @@
       - the muted from the track above gets copied over
 
 ** Fixes
+*** TODO metricals: jump around as pulse/BPM change
 *** TODO expand single section
       - hover >> arrow maybe (doesnt work on mobile)
 *** TODO requestAnimationFrame is not always 60fps
@@ -61,7 +61,6 @@
       - https://kube.io/blog/liquid-glass-css-svg/
 
 *** TODO onSave should only update editor title, BPM, etc
-*** TODO metricals: jump around as pulse/BPM change
 *** TODO playlists loaded from file include deleted playlists
 *** TODO editor: metronome div vertical alignment
 *** TODO editor: role drop down list
@@ -105,7 +104,6 @@
 *** TODO use different font/colour for track that is in playlist (so that you know you are editing a playlist item)
 *** TODO consistently pass the whole track as a parameter (and not just the UUID)
       - OR at least stop mixing up track UUID and track
-*** TODO Firefox save doesn't update playlist
 *** TODO resize knob/fix SVG overflow
 *** TODO move engine.set to onModified
 *** TODO Rethink '=' from MM
@@ -349,6 +347,8 @@
             - https://openprocessing.org/sketch/1514409
             - https://github.com/vincentsijben/bpm-timings-for-processing
       - (?) sox
+      - (?) cue sheets
+            - https://wiki.hydrogenaudio.org/index.php?title=Cue_sheet
 
 * Notes
   1.  https://music.stackexchange.com/questions/91171/bar-counting-metronome  

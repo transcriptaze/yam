@@ -1,13 +1,16 @@
 import { parseTimeSignature, parsePulse } from '../util.js'
 
+// prettier-ignore
 const PULSES = new Map([
-  ['eighth', './images/MM/eighth-equals.svg'],
-  ['eighth-doublet', './images/MM/eighth-doublet-equals.svg'],
-  ['quarter', './images/MM/quarter-equals.svg'],
-  ['dotted-quarter', './images/MM/dotted-quarter-equals.svg'],
-  ['half', './images/MM/half-equals.svg'],
-  ['dotted-half', './images/MM/dotted-half-equals.svg'],
+  ['eighth',         { img: './images/MM/eighth-equals.svg',         li: './images/MM/pulse/eighth.svg'         }],
+  ['eighth-doublet', { img: './images/MM/eighth-doublet-equals.svg', li: './images/MM/pulse/eighth-doublet.svg' }],
+  ['quarter',        { img: './images/MM/quarter-equals.svg',        li: './images/MM/pulse/quarter.svg'        }],
+  ['dotted-quarter', { img: './images/MM/dotted-quarter-equals.svg', li: './images/MM/pulse/half.svg'           }],
+  ['half',           { img: './images/MM/half-equals.svg',           li: './images/MM/pulse/dotted-quarter.svg' }],
+  ['dotted-half',    { img: './images/MM/dotted-half-equals.svg',    li: './images/MM/pulse/dotted-half.svg'    }],
 ])
+
+const NONE = './images/MM/pulse/none.svg'
 
 export class MM extends HTMLElement {
   static get observedAttributes() {
@@ -129,7 +132,7 @@ export class MM extends HTMLElement {
     if (pulse != null && pulse != this.#pulse) {
       this.#pulse = pulse
       if (PULSES.has(`${pulse}`)) {
-        img.src = PULSES.get(`${pulse}`)
+        img.src = PULSES.get(`${pulse}`).img
       }
     }
   }
@@ -170,6 +173,7 @@ export class MM extends HTMLElement {
     const shadow = this.shadowRoot
     const p = shadow.querySelector('#pulse')
     const bpm = shadow.querySelector('input')
+    const none = shadow.querySelector('#list li.none img')
 
     if (pulse == null || pulse === '') {
       this.#pulse = ''
@@ -185,8 +189,15 @@ export class MM extends HTMLElement {
 
     if (defaults != null && defaults.pulse != null) {
       p.dataset.defval = defaults.pulse
+
+      if (PULSES.has(defaults.pulse)) {
+        none.src = PULSES.get(defaults.pulse).li
+      } else {
+        none.src = NONE
+      }
     } else {
       p.dataset.defval = 'quarter'
+      none.src = NONE
     }
 
     if (defaults != null && defaults.BPM != null && !Number.isNaN(defaults.BPM) && defaults.BPM >= 40 && defaults.BPM <= 200) {
@@ -237,9 +248,9 @@ export class MM extends HTMLElement {
       }
 
       if (PULSES.has(k)) {
-        pulse.src = PULSES.get(k)
+        pulse.src = PULSES.get(k).img
       } else {
-        pulse.src = PULSES.get(`quarter`)
+        pulse.src = PULSES.get(`quarter`).img
       }
     }
 

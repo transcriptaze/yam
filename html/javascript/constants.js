@@ -8,16 +8,26 @@ export const DEFAULT = {
 export const DIVISIONS = [1, 2, 4, 8, 16, 32]
 export const PULSES = ['eighth', 'eighth-doublet', 'quarter', 'dotted-quarter', 'half', 'dotted-half']
 
+// ... roles
+export const COUNT_IN = 'count-in'
+export const ANACRUSIS = 'anacrusis'
+export const INTRO = 'intro'
+export const VERSE = 'verse'
+export const CHORUS = 'chorus'
+export const BRIDGE = 'bridge'
+export const TURNAROUND = 'turnaround'
+export const OUTRO = 'outro'
+
 // prettier-ignore
 export const ROLES = new Map([
-  ['count-in',   { name:'Count In',   colour: [ '#d69574' ] ,            contrast: '#1d4b63' }],  // warm apricot
-  ['anacrusis',  { name:'Pickup',     colour: [ '#cbb469' ] ,            contrast: '#21305f' }],  // golden olive
-  ['intro',      { name:'Intro',      colour: [ '#df8880' ] ,            contrast: '#1a5f66' }],  // coral blush
-  ['verse',      { name:'Verse',      colour: [ '#b3bc69', '#64aa6f' ] , contrast: '#2c2758' }],  // moss green
-  ['chorus',     { name:'Chorus',     colour: [ '#84b5d2', '#3e7eb3' ] , contrast: '#5d3822' }],  // sky steel blue
-  ['bridge',     { name:'Bridge',     colour: [ '#a7a8cb' ] ,            contrast: '#504f2f' }],  // lavender gray
-  ['turnaround', { name:'Turnaround', colour: [ '#da8aaa' ] ,            contrast: '#1e6147' }],  // rose plum
-  ['outro',      { name:'Outro',      colour: [ '#86c0b5' ] ,            contrast: '#542c33' }],  // mint teal
+  [COUNT_IN,   { name:'Count In',   colour: [ '#d69574' ] ,            contrast: '#1d4b63' }],  // warm apricot
+  [ANACRUSIS,  { name:'Pickup',     colour: [ '#cbb469' ] ,            contrast: '#21305f' }],  // golden olive
+  [INTRO,      { name:'Intro',      colour: [ '#df8880' ] ,            contrast: '#1a5f66' }],  // coral blush
+  [VERSE,      { name:'Verse',      colour: [ '#b3bc69', '#64aa6f' ] , contrast: '#2c2758' }],  // moss green
+  [CHORUS,     { name:'Chorus',     colour: [ '#84b5d2', '#3e7eb3' ] , contrast: '#5d3822' }],  // sky steel blue
+  [BRIDGE,     { name:'Bridge',     colour: [ '#a7a8cb' ] ,            contrast: '#504f2f' }],  // lavender gray
+  [TURNAROUND, { name:'Turnaround', colour: [ '#da8aaa' ] ,            contrast: '#1e6147' }],  // rose plum
+  [OUTRO,      { name:'Outro',      colour: [ '#86c0b5' ] ,            contrast: '#542c33' }],  // mint teal
 ])
 
 // prettier-ignore

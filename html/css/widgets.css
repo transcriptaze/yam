@@ -1137,6 +1137,9 @@ div.beat.on {
 :host(.component-playlist) div.playlist.selected div.title input {
   font-weight: bold;
 }
+:host(.component-playlist) div.playlist.editing div.title {
+  padding-right: 14px;
+}
 :host(.component-playlist) div.playlist.editing div.title input {
   background: rgba(252, 252, 252, 0.5019607843);
   text-align: left;
@@ -1207,6 +1210,9 @@ div.beat.on {
   border-bottom-right-radius: 0px;
 }
 
+:host-context(.unsortable) div.playlist div.summary {
+  grid-template-columns: 16px 1fr auto;
+}
 :host-context(.unsortable) div.playlist div.summary div.grip {
   visibility: hidden;
 }

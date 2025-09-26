@@ -1,4 +1,6 @@
 div.metronome {
+  box-sizing: border-box;
+
   display: grid;
   grid-template-columns: 1fr auto auto 1fr;
   grid-template-rows: auto auto auto auto 1fr;
@@ -28,31 +30,40 @@ div.metronome {
   }
 
   div.metrics {
+    box-sizing: border-box;
+    
     grid-area: metrics;
 
     display: grid;
     grid-template-columns: 1fr auto auto auto 1fr;
     grid-template-rows: auto;
     align-items: center;
-    column-gap: 12px;
+    column-gap: 4px;
 
     height: 48px;
+    width: 100%;
     margin-top: 8px;
     margin-bottom: 8px;
 
     yam-time-signature {
+      box-sizing: border-box;
+
       grid-column: 2;
       grid-row: 1;
       justify-self: end;
     }
 
     yam-mm {
+      box-sizing: border-box;
+
       grid-column: 3;
       grid-row: 1;
       justify-self: center;
     }
 
     yam-loop {
+      box-sizing: border-box;
+
       grid-column: 4;
       grid-row: 1;
       justify-self: start;

@@ -11,8 +11,8 @@
 *** DONE fix dangling popover on track delete
 *** DONE new track => edit title => save => reset => edit title => save - changes the new track
 *** DONE title changes don't propagate to other playlists
+*** DONE metricals: jump around as pulse/BPM change
 
-*** TODO metricals: jump around as pulse/BPM change
 *** TODO replace engine toggle with start/stop
 
 *** TODO section pulse: need a way to revert to '' (default)

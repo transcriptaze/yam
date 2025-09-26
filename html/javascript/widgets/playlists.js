@@ -191,7 +191,7 @@ export class Playlists extends HTMLElement {
 
     list.forEach((v) => v.updated(track))
 
-    // this.#tracklist.updated(track)
+    this.#tracklist.updated(track)
   }
 
   deleted(playlist) {

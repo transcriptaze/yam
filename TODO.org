@@ -8,9 +8,13 @@
   - https://jakub.kr/components/oklch-colors
   - https://github.com/liriliri/eruda
 
-*** TODO fix dangling popover on track delete
-      - move popover to parent Playlist
-      - or just close on delete
+*** DONE fix dangling popover on track delete
+
+*** TODO new track => edit title => save => reset => edit title => save - changes the new track
+      - should create another new track
+      - reset doesn't deselect the new track
+
+*** TODO replace engine toggle with start/stop
 
 *** TODO section pulse: need a way to revert to '' (default)
 **** DONE add '' pulse to popup list

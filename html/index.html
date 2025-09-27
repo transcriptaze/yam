@@ -163,13 +163,12 @@
         </button>
         <div id="list" popover>
           <div class="content">
-            <li data-pulse="" class="none"  ><img class="pulsus" src="./images/MM/pulse/none.svg"           draggable="false" /></li>
-            <li data-pulse="eighth"         ><img class="pulsus" src="./images/MM/pulse/eighth.svg"         draggable="false" /></li>
-            <li data-pulse="eighth-doublet" ><img class="pulsus" src="./images/MM/pulse/eighth-doublet.svg" draggable="false" /></li>
-            <li data-pulse="quarter"        ><img class="pulsus" src="./images/MM/pulse/quarter.svg"        draggable="false" /></li>
-            <li data-pulse="dotted-quarter" ><img class="pulsus" src="./images/MM/pulse/dotted-quarter.svg" draggable="false" /></li>
-            <li data-pulse="half"           ><img class="pulsus" src="./images/MM/pulse/half.svg"           draggable="false" /></li>
-            <li data-pulse="dotted-half"    ><img class="pulsus" src="./images/MM/pulse/dotted-half.svg"    draggable="false" /></li>
+            <li data-pulse="eighth"         ><img class="pulsus" src="./images/MM/popover/eighth.svg"         draggable="false" /></li>
+            <li data-pulse="eighth-doublet" ><img class="pulsus" src="./images/MM/popover/eighth-doublet.svg" draggable="false" /></li>
+            <li data-pulse="quarter"        ><img class="pulsus" src="./images/MM/popover/quarter.svg"        draggable="false" /></li>
+            <li data-pulse="dotted-quarter" ><img class="pulsus" src="./images/MM/popover/dotted-quarter.svg" draggable="false" /></li>
+            <li data-pulse="half"           ><img class="pulsus" src="./images/MM/popover/half.svg"           draggable="false" /></li>
+            <li data-pulse="dotted-half"    ><img class="pulsus" src="./images/MM/popover/dotted-half.svg"    draggable="false" /></li>
           </div>
         </div>
         <input part="BPM" type="text"  inputmode="numeric" placeholder="---" value="120"
@@ -507,7 +506,7 @@
           </div>
           <div class="metricals">
             <yam-time-signature tabindex="-1" enterkeyhint="done"></yam-time-signature>
-            <yam-mm             tabindex="-1" enterkeyhint="done" class="small" allow-none></yam-mm>
+            <yam-section-mm     tabindex="-1" enterkeyhint="done"></yam-section-mm>
           </div>
         </div>
         <datalist id="roles">
@@ -523,6 +522,29 @@
         </datalist>
       </div>
     </template>
+
+    <template id="template-section-mm">
+      <div class="MM">
+        <button class="pulse" popovertarget="list">
+          <img id="pulse" src="./images/MM/quarter-equals.svg"/>
+        </button>
+        <div id="list" popover>
+          <div class="content">
+            <li data-pulse="" class="none"  ><img class="pulsus" src="./images/MM/popover/none.svg"           draggable="false" /></li>
+            <li data-pulse="eighth"         ><img class="pulsus" src="./images/MM/popover/eighth.svg"         draggable="false" /></li>
+            <li data-pulse="eighth-doublet" ><img class="pulsus" src="./images/MM/popover/eighth-doublet.svg" draggable="false" /></li>
+            <li data-pulse="quarter"        ><img class="pulsus" src="./images/MM/popover/quarter.svg"        draggable="false" /></li>
+            <li data-pulse="dotted-quarter" ><img class="pulsus" src="./images/MM/popover/dotted-quarter.svg" draggable="false" /></li>
+            <li data-pulse="half"           ><img class="pulsus" src="./images/MM/popover/half.svg"           draggable="false" /></li>
+            <li data-pulse="dotted-half"    ><img class="pulsus" src="./images/MM/popover/dotted-half.svg"    draggable="false" /></li>
+          </div>
+        </div>
+        <input part="BPM" type="text"  inputmode="numeric" placeholder="---" value="120"
+               pattern="[4-9][0-9]|1[0-9][0-9]|200" minlength="1" maxlength="3" 
+               enterkeyhint="done" />
+      </div>
+    </template>
+
 
     <template id="template-loop">
       <div class="loop">

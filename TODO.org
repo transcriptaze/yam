@@ -14,15 +14,21 @@
 *** DONE metricals: jump around as pulse/BPM change
 *** DONE playlist title input extends past right edge
 *** DONE replace metronome toggle with play/stop
+*** DONE fix mute on track delete
+
+*** TODO reset UI if selected track is removed from playlist
+      - UI is reset but saving after delete only adds the new track to 'All Tracks'
 
 *** TODO section pulse: need a way to revert to '' (default)
 **** DONE add '' pulse to popup list
 **** DONE defval for 'none' img
+**** TODO separate MM web comoponent for sections
 **** TODO fix defval - should inherit from previous section
 **** TODO don't fire change if pulse is ''
 **** TODO display equals iff pulse and BPM are defined
 **** TODO fix MM popover div/ul/li thing
 **** TODO cascade update following sections after pick pulse
+
 
 *** TODO clicks
 **** DONE use section clicks in worklet
@@ -44,12 +50,10 @@
 *** TODO use cloned track
 *** TODO use cloned playlist
 *** TODO connectedCallback: event handler duplication
-*** TODO reset UI if selected track is removed from playlist
-*** TODO fix mute on track delete
-      - the muted from the track above gets copied over
 
 ** Fixes
 *** TODO 'All Tracks' should not display tracklist
+*** TODO move spacebar toggle into metronome widget
 *** TODO expand single section
       - hover >> arrow maybe (doesnt work on mobile)
 *** TODO requestAnimationFrame is not always 60fps

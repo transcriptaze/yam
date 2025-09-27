@@ -12,7 +12,7 @@ const PULSES = new Map([
 
 const NONE = './images/MM/pulse/none.svg'
 
-export class MM extends HTMLElement {
+export class SectionMM extends HTMLElement {
   static get observedAttributes() {
     return ['disabled']
   }
@@ -84,7 +84,7 @@ export class MM extends HTMLElement {
   constructor() {
     super()
 
-    const template = document.querySelector('#template-mm')
+    const template = document.querySelector('#template-section-mm')
     const stylesheet = document.createElement('link')
     const content = template.content
     const shadow = this.attachShadow({ mode: 'open' })
@@ -98,7 +98,7 @@ export class MM extends HTMLElement {
   }
 
   connectedCallback() {
-    this.classList.add('component-mm')
+    this.classList.add('component-section-mm')
 
     const shadow = this.shadowRoot
     const list = shadow.querySelector('div.content')
@@ -259,4 +259,4 @@ export class MM extends HTMLElement {
   }
 }
 
-customElements.define('yam-mm', MM)
+customElements.define('yam-section-mm', SectionMM)

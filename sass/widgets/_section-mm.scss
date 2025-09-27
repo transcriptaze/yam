@@ -1,4 +1,4 @@
-:host(.component-mm) {
+:host(.component-section-mm) {
   box-sizing: border-box;
   display: inline-block;
   margin: 0;
@@ -84,6 +84,13 @@
           padding-right: 2px;
         }
       }
+
+      li.none {
+        img {        
+          filter: grayscale(100%) opacity(25%);   
+          transform: scale(0.7);   
+        }
+      }
     }
   }
 
@@ -108,8 +115,8 @@
       outline: none;
 
       color: #444444;
-      font-size: 20px;
-      font-weight: 600;
+      font-size: 14px;
+      font-weight: normal;
       text-align: left;
   }
 
@@ -125,9 +132,15 @@
   input:disabled {
     color: #a0a0a0;
   } 
+
+  div.MM.none {
+    button img {
+      filter: grayscale(100%) opacity(25%);
+    }
+  }
 }
 
-:host(.component-mm:not([figura="eighth"])) {
+:host(.component-section-mm:not([figura="eighth"])) {
    #list > div > li[data-pulse="eighth"] {
      display: none;
    }

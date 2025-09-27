@@ -29,7 +29,7 @@ ExecStart ==
     \/ StartStop
     \/ ClockEvent
     \/ ButtonEvent
-    \/ Running
+    \/ Run
 
 ExecStop ==
     \/ StartStop
@@ -41,10 +41,9 @@ ExecStartStop ==
     \/ StartStop
     \/ ClockEvent
     \/ ButtonEvent
-    \/ Running
     \/ Stopped
 
-StartSpec == Start /\ [][ExecStart]_<<ui, bus, clockState, buttonState, buttonLabel>>
+StartSpec == Start /\ [][ExecStart]_<<ui, bus, clockState, buttonState, buttonLabel>> /\ <>Running
 StopSpec  == Stop  /\ [][ExecStop]_<<ui, bus, clockState, buttonState, buttonLabel>>
 
 =============================================================================

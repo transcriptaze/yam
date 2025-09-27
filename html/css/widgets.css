@@ -187,7 +187,7 @@ div.metronome.playing #play img.stop {
   grid-template-rows: auto;
   column-gap: 2px;
 }
-:host(.component-mm) div.MM div.content li {
+:host(.component-mm) div.MM div.content div.li {
   display: flex;
   justify-content: center;
   width: 100%;
@@ -196,7 +196,7 @@ div.metronome.playing #play img.stop {
   padding-bottom: 4px;
   border-radius: 4px;
 }
-:host(.component-mm) div.MM div.content li img {
+:host(.component-mm) div.MM div.content div.li img {
   height: 24px;
   padding-left: 2px;
   padding-right: 2px;
@@ -231,7 +231,7 @@ div.metronome.playing #play img.stop {
   color: #a0a0a0;
 }
 
-:host(.component-mm:not([figura=eighth])) #list > div > li[data-pulse=eighth] {
+:host(.component-mm:not([figura=eighth])) #list > div > div.li[data-pulse=eighth] {
   display: none;
 }
 

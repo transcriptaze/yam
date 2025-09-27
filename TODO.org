@@ -15,7 +15,9 @@
 *** DONE playlist title input extends past right edge
 *** DONE replace metronome toggle with play/stop
 *** DONE fix mute on track delete
+*** DONE fix MM popover div/ul/li thing
 
+*** TODO reset :hover style
 *** TODO reset UI if selected track is removed from playlist
       - UI is reset but saving after delete only adds the new track to 'All Tracks'
 
@@ -23,10 +25,10 @@
 **** DONE add '' pulse to popup list
 **** DONE defval for 'none' img
 **** TODO separate MM web comoponent for sections
+**** TODO fix MM popover div/ul/li thing
 **** TODO fix defval - should inherit from previous section
 **** TODO don't fire change if pulse is ''
 **** TODO display equals iff pulse and BPM are defined
-**** TODO fix MM popover div/ul/li thing
 **** TODO cascade update following sections after pick pulse
 
 
@@ -52,6 +54,8 @@
 *** TODO connectedCallback: event handler duplication
 
 ** Fixes
+*** TODO URL - use ?UUID= or ?title= 
+*** TODO URL match on track if playlist not found
 *** TODO 'All Tracks' should not display tracklist
 *** TODO move spacebar toggle into metronome widget
 *** TODO expand single section
@@ -124,7 +128,6 @@
 *** TODO landscape+mobile
 
 ** Reset
-*** TODO :hover style
 *** TODO red if next tap will reset to defaults
 *** TODO (?) double tap to reset everything
 

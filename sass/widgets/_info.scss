@@ -159,10 +159,14 @@
       padding-top: 2px;
       padding-bottom: 2px;
 
+      font-family: "YAM", "Lato", sans;
       font-size: 0.8em;
       font-style: italic;
       font-weight: normal;
       color: #222222;
+      
+      line-height: 16px;
+      vertical-align: middle;
 
       z-index: 2;
     }
@@ -171,13 +175,6 @@
       font-style: normal;
       font-weight: bold;
       color: var(--text-color);
-    }
-
-    span.infinity {
-      font-size: 1.25em;
-      font-weight: 500;
-      overflow: visible;
-      line-height: 15px;
     }
   }
 

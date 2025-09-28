@@ -160,7 +160,7 @@ export class Info extends HTMLElement {
 
   set #bars(v) {
     if (v === INF) {
-      this.#bars.innerHTML = '<span class="infinity">&infin;</span>'
+      this.#bars.innerHTML = '&infin;'
     } else if (v > 0) {
       this.#bars.innerHTML = `${v}`
     } else {

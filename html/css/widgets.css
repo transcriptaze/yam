@@ -22,6 +22,36 @@
   font-weight: normal;
   src: url("../fonts/Lato/Lato-Regular.woff2");
 }
+@font-face {
+  font-family: "Lato";
+  font-style: italic;
+  font-weight: normal;
+  src: url("../fonts/Lato/Lato-Italic.woff2");
+}
+@font-face {
+  font-family: "YAM";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/Lato/Lato-Medium.woff2") format("woff2");
+  unicode-range: U+0221E; /* &infin; */
+  size-adjust: 175%;
+}
+@font-face {
+  font-family: "YAM";
+  font-style: italic;
+  font-weight: normal;
+  src: url("../fonts/Lato/Lato-Italic.woff2") format("woff2");
+  unicode-range: U+0221E; /* &infin; */
+  size-adjust: 175%;
+}
+@font-face {
+  font-family: "YAM-small";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/Lato/Lato-Regular.woff2") format("woff2");
+  unicode-range: U+0221E; /* &infin; */
+  size-adjust: 120%;
+}
 :root {
   --background: #ffffff url("../images/textures/ricepaper_v3.png");
   --track-colour-muted: #a0a0a0;
@@ -772,22 +802,19 @@ div.beat.on {
   padding-right: 8px;
   padding-top: 2px;
   padding-bottom: 2px;
+  font-family: "YAM", "Lato", sans;
   font-size: 0.8em;
   font-style: italic;
   font-weight: normal;
   color: #222222;
+  line-height: 16px;
+  vertical-align: middle;
   z-index: 2;
 }
 :host(.component-info) div.detail div.text.playing {
   font-style: normal;
   font-weight: bold;
   color: var(--text-color);
-}
-:host(.component-info) div.detail span.infinity {
-  font-size: 1.25em;
-  font-weight: 500;
-  overflow: visible;
-  line-height: 15px;
 }
 :host(.component-info) div.container.details div.title {
   border-radius: 4px 4px 0 0;
@@ -1626,6 +1653,7 @@ div.playlist-track [popover]:popover-open::backdrop {
   height: 48px;
 }
 :host(.component-editor) div.track-editor select {
+  font-family: "YAM-small", "Lato", sans;
   font-size: 1em;
   font-weight: bold;
 }

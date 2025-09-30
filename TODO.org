@@ -18,8 +18,8 @@
 *** DONE fix MM popover div/ul/li thing
 *** DONE large infinity char
 *** DONE info: 1+1+47
+*** DONE reset :hover style
 
-*** TODO reset :hover style
 *** TODO reset UI if selected track is removed from playlist
       - UI is reset but saving after delete only adds the new track to 'All Tracks'
 

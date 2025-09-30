@@ -175,23 +175,23 @@ export class Section extends HTMLElement {
   }
 
   get tempo() {
-    const e = this.shadowRoot?.querySelector('yam-mm')
+    const e = this.shadowRoot?.querySelector('yam-section-mm')
 
     return e?.tempo ?? this.#section.tempo
   }
 
   get #tempo() {
     return (async () => {
-      await customElements.whenDefined('yam-mm')
+      await customElements.whenDefined('yam-section-mm')
 
-      return this.shadowRoot?.querySelector('yam-mm')
+      return this.shadowRoot?.querySelector('yam-section-mm')
     })()
   }
 
   set #tempo({ tempo, timeSignature }) {
     void (async () => {
-      await customElements.whenDefined('yam-mm')
-      const e = this.shadowRoot?.querySelector('yam-mm')
+      await customElements.whenDefined('yam-section-mm')
+      const e = this.shadowRoot?.querySelector('yam-section-mm')
       if (e) {
         e.tempo = tempo
         e.timeSignature = timeSignature

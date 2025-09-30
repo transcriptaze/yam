@@ -2,17 +2,17 @@ import { parseTimeSignature, parsePulse } from '../util.js'
 
 // prettier-ignore
 const PULSES = new Map([
-  ['eighth',         './images/MM/eighth-equals.svg'         ],
-  ['eighth-doublet', './images/MM/eighth-doublet-equals.svg' ],
-  ['quarter',        './images/MM/quarter-equals.svg'        ],
-  ['dotted-quarter', './images/MM/dotted-quarter-equals.svg' ],
-  ['half',           './images/MM/half-equals.svg'           ],
-  ['dotted-half',    './images/MM/dotted-half-equals.svg'    ],
+  ['eighth',         { img: './images/MM/eighth-equals.svg',         imx: './images/MM/eighth-no-equals.svg',         li: './images/MM/popover/eighth.svg'         }],
+  ['eighth-doublet', { img: './images/MM/eighth-doublet-equals.svg', imx: './images/MM/eighth-doublet-no-equals.svg', li: './images/MM/popover/eighth-doublet.svg' }],
+  ['quarter',        { img: './images/MM/quarter-equals.svg',        imx: './images/MM/quarter-no-equals.svg',        li: './images/MM/popover/quarter.svg'        }],
+  ['dotted-quarter', { img: './images/MM/dotted-quarter-equals.svg', imx: './images/MM/dotted-quarter-no-equals.svg', li: './images/MM/popover/dotted-quarter.svg' }],
+  ['half',           { img: './images/MM/half-equals.svg',           imx: './images/MM/half-no-equals.svg',           li: './images/MM/popover/half.svg'           }],
+  ['dotted-half',    { img: './images/MM/dotted-half-equals.svg',    imx: './images/MM/dotted-half-no-equals.svg',    li: './images/MM/popover/dotted-half.svg'    }],
 ])
 
 const NONE = './images/MM/pulse/none.svg'
 
-export class MM extends HTMLElement {
+export class SectionMM extends HTMLElement {
   static get observedAttributes() {
     return ['disabled']
   }
@@ -27,8 +27,20 @@ export class MM extends HTMLElement {
 
         if (pulse != null) {
           this.shadowRoot.querySelector('[popover]')?.hidePopover()
+
           this.pulse = pulse
-          this.dispatchEvent(new CustomEvent('change', { bubbles: true, composed: true, detail: { pulse: pulse } }))
+
+          if (pulse !== '') {
+            this.dispatchEvent(
+              new CustomEvent('change', {
+                bubbles: true,
+                composed: true,
+                detail: {
+                  pulse: pulse,
+                },
+              }),
+            )
+          }
         }
       },
     },
@@ -50,9 +62,20 @@ export class MM extends HTMLElement {
         const input = shadow.querySelector('input')
         const bpm = parseInt(`${input.value}`, 10)
 
-        if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
+        if (input.value === '') {
+          this.#BPM = ''
+        } else if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
           this.#BPM = bpm
-          this.dispatchEvent(new CustomEvent('change', { bubbles: true, composed: true, detail: { BPM: bpm } }))
+
+          this.dispatchEvent(
+            new CustomEvent('change', {
+              bubbles: true,
+              composed: true,
+              detail: {
+                BPM: bpm,
+              },
+            }),
+          )
         }
       },
     },
@@ -61,7 +84,7 @@ export class MM extends HTMLElement {
   constructor() {
     super()
 
-    const template = document.querySelector('#template-mm')
+    const template = document.querySelector('#template-section-mm')
     const stylesheet = document.createElement('link')
     const content = template.content
     const shadow = this.attachShadow({ mode: 'open' })
@@ -75,7 +98,7 @@ export class MM extends HTMLElement {
   }
 
   connectedCallback() {
-    this.classList.add('component-mm')
+    this.classList.add('component-section-mm')
 
     const shadow = this.shadowRoot
     const list = shadow.querySelector('div.content')
@@ -105,13 +128,15 @@ export class MM extends HTMLElement {
     const img = shadow.querySelector('#pulse')
 
     if (v == null || v === '') {
-      this.#pulse = 'quarter'
+      this.#pulse = ''
     } else {
       this.#pulse = parsePulse(v)
     }
 
     if (PULSES.has(this.#pulse)) {
-      img.src = PULSES.get(this.#pulse)
+      img.src = PULSES.get(this.#pulse).img
+    } else if (PULSES.has(img.dataset.defval)) {
+      img.src = PULSES.get(img.dataset.defval).img
     } else {
       img.src = NONE
     }
@@ -149,9 +174,37 @@ export class MM extends HTMLElement {
     }
   }
 
-  set tempo({ pulse, BPM }) {
+  set tempo({ pulse, BPM, defaults }) {
+    const shadow = this.shadowRoot
+    const p = shadow.querySelector('#pulse')
+    const bpm = shadow.querySelector('input')
+    const none = shadow.querySelector('#list div.li[data-pulse=""] img')
+
+    if (defaults != null && defaults.pulse != null) {
+      p.dataset.defval = defaults.pulse
+    } else {
+      p.dataset.defval = 'quarter'
+    }
+
+    if (defaults != null && defaults.pulse != null) {
+      none.src = PULSES.has(defaults.pulse) ? PULSES.get(defaults.pulse).li : NONE
+    } else {
+      none.src = NONE
+    }
+
+    if (defaults != null && defaults.BPM != null && !Number.isNaN(defaults.BPM) && defaults.BPM >= 40 && defaults.BPM <= 200) {
+      bpm.dataset.defval = `${defaults.BPM}`
+    } else {
+      bpm.dataset.defval = `---`
+    }
+
     this.pulse = pulse
-    this.BPM = BPM
+
+    if (BPM == null || Number.isNaN(BPM) || BPM === '') {
+      this.#BPM = ''
+    } else {
+      this.#BPM = BPM
+    }
 
     this.#redraw()
   }
@@ -176,17 +229,28 @@ export class MM extends HTMLElement {
 
   #redraw() {
     const shadow = this.shadowRoot
+    const button = shadow.querySelector('div.MM button')
     const pulse = shadow.querySelector('#pulse')
     const BPM = shadow.querySelector('input')
 
-    if (PULSES.has(this.#pulse)) {
-      pulse.src = PULSES.get(this.#pulse)
+    if (this.#pulse != null && this.#pulse !== '') {
+      button.classList.remove('none')
     } else {
-      pulse.src = PULSES.get(`quarter`)
+      button.classList.add('none')
+    }
+
+    const p = this.#pulse != null && this.#pulse !== '' ? `${this.#pulse}` : `${pulse.dataset.defval}`
+    const k = PULSES.has(p) ? p : 'quarter'
+
+    if (this.#BPM != null && this.#BPM !== '') {
+      pulse.src = PULSES.get(k).img
+    } else {
+      pulse.src = PULSES.get(k).imx
     }
 
     BPM.value = `${this.#BPM}`
+    BPM.placeholder = BPM.dataset.defval
   }
 }
 
-customElements.define('yam-mm', MM)
+customElements.define('yam-section-mm', SectionMM)

@@ -22,6 +22,36 @@
   font-weight: normal;
   src: url("../fonts/Lato/Lato-Regular.woff2");
 }
+@font-face {
+  font-family: "Lato";
+  font-style: italic;
+  font-weight: normal;
+  src: url("../fonts/Lato/Lato-Italic.woff2");
+}
+@font-face {
+  font-family: "YAM";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/Lato/Lato-Medium.woff2") format("woff2");
+  unicode-range: U+0221E; /* &infin; */
+  size-adjust: 175%;
+}
+@font-face {
+  font-family: "YAM";
+  font-style: italic;
+  font-weight: normal;
+  src: url("../fonts/Lato/Lato-Italic.woff2") format("woff2");
+  unicode-range: U+0221E; /* &infin; */
+  size-adjust: 175%;
+}
+@font-face {
+  font-family: "YAM-small";
+  font-style: normal;
+  font-weight: normal;
+  src: url("../fonts/Lato/Lato-Regular.woff2") format("woff2");
+  unicode-range: U+0221E; /* &infin; */
+  size-adjust: 120%;
+}
 :root {
   --background: #ffffff url("../images/textures/ricepaper_v3.png");
   --track-colour-muted: #a0a0a0;
@@ -187,7 +217,7 @@ div.metronome.playing #play img.stop {
   grid-template-rows: auto;
   column-gap: 2px;
 }
-:host(.component-mm) div.MM div.content li {
+:host(.component-mm) div.MM div.content div.li {
   display: flex;
   justify-content: center;
   width: 100%;
@@ -196,14 +226,10 @@ div.metronome.playing #play img.stop {
   padding-bottom: 4px;
   border-radius: 4px;
 }
-:host(.component-mm) div.MM div.content li img {
+:host(.component-mm) div.MM div.content div.li img {
   height: 24px;
   padding-left: 2px;
   padding-right: 2px;
-}
-:host(.component-mm) div.MM div.content li.none img {
-  filter: grayscale(100%) opacity(25%);
-  transform: scale(0.7);
 }
 :host(.component-mm) button:disabled img {
   filter: grayscale(100%) opacity(50%);
@@ -234,21 +260,9 @@ div.metronome.playing #play img.stop {
 :host(.component-mm) input:disabled {
   color: #a0a0a0;
 }
-:host(.component-mm) div.MM.none button img {
-  filter: grayscale(100%) opacity(25%);
-}
 
-:host(.component-mm:not([figura=eighth])) #list > div > li[data-pulse=eighth] {
+:host(.component-mm:not([figura=eighth])) #list > div > div.li[data-pulse=eighth] {
   display: none;
-}
-
-:host(.component-mm:not([allow-none])) #list > div > li.none {
-  display: none;
-}
-
-:host(.component-mm.small) div.MM input {
-  font-size: 14px;
-  font-weight: normal;
 }
 
 :host(.component-time-signature) div.time-signature {
@@ -788,22 +802,19 @@ div.beat.on {
   padding-right: 8px;
   padding-top: 2px;
   padding-bottom: 2px;
+  font-family: "YAM", "Lato", sans;
   font-size: 0.8em;
   font-style: italic;
   font-weight: normal;
   color: #222222;
+  line-height: 16px;
+  vertical-align: middle;
   z-index: 2;
 }
 :host(.component-info) div.detail div.text.playing {
   font-style: normal;
   font-weight: bold;
   color: var(--text-color);
-}
-:host(.component-info) div.detail span.infinity {
-  font-size: 1.25em;
-  font-weight: 500;
-  overflow: visible;
-  line-height: 15px;
 }
 :host(.component-info) div.container.details div.title {
   border-radius: 4px 4px 0 0;
@@ -1642,6 +1653,7 @@ div.playlist-track [popover]:popover-open::backdrop {
   height: 48px;
 }
 :host(.component-editor) div.track-editor select {
+  font-family: "YAM-small", "Lato", sans;
   font-size: 1em;
   font-weight: bold;
 }
@@ -1742,6 +1754,7 @@ div.playlist-track [popover]:popover-open::backdrop {
 }
 :host(.component-section) div.section #measures {
   width: 3em;
+  font-family: "YAM-small", "Lato", sans;
 }
 :host(.component-section) div.section yam-time-signature {
   height: 32px;
@@ -1753,5 +1766,121 @@ div.playlist-track [popover]:popover-open::backdrop {
   row-gap: 0px;
 }
 :host(.component-section) div.section.collapsed div.metricals {
+  display: none;
+}
+
+:host(.component-section-mm) {
+  box-sizing: border-box;
+  display: inline-block;
+  margin: 0;
+  padding: 0;
+}
+:host(.component-section-mm) div.MM {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
+  justify-items: center;
+  align-items: center;
+  column-gap: 4px;
+  background: none;
+  height: 100%;
+}
+:host(.component-section-mm) div.MM button.pulse {
+  grid-column: 1;
+  grid-row: 1;
+  justify-self: end;
+  width: fit-content;
+  height: 100%;
+  background: none;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 0;
+  margin: 0;
+  line-height: 0;
+}
+:host(.component-section-mm) div.MM button.pulse img {
+  box-sizing: border-box;
+  height: 100%;
+}
+:host(.component-section-mm) div.MM input {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: start;
+  background: none;
+}
+:host(.component-section-mm) div.MM [popover] {
+  top: calc(anchor(bottom) - 12px);
+  left: calc(anchor(left) + 12px);
+  margin: 0px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+  background: #ffffff;
+  outline: none;
+  border: none;
+  border-radius: 4px;
+  width: fit-content;
+}
+:host(.component-section-mm) div.MM div.content {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(1px, 1fr);
+  grid-template-rows: auto;
+  column-gap: 2px;
+}
+:host(.component-section-mm) div.MM div.content div.li {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  background: #f0f0f0;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border-radius: 4px;
+}
+:host(.component-section-mm) div.MM div.content div.li img {
+  height: 24px;
+  padding-left: 2px;
+  padding-right: 2px;
+}
+:host(.component-section-mm) div.MM div.content div.li[data-pulse=""] img {
+  filter: grayscale(100%) opacity(25%);
+  transform: scale(0.7);
+}
+:host(.component-section-mm) button.none img {
+  filter: grayscale(100%) opacity(25%);
+}
+:host(.component-section-mm) button:disabled img {
+  filter: grayscale(100%) opacity(50%);
+}
+:host(.component-section-mm) input {
+  width: 2em;
+  height: fit-content;
+  background: transparent;
+  padding-left: 0px;
+  padding-right: 16px;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  color: #444444;
+  font-size: 14px;
+  font-weight: normal;
+  text-align: left;
+}
+:host(.component-section-mm) input::placeholder {
+  font-style: italic;
+  color: #b0b0b0;
+}
+:host(.component-section-mm) input:invalid {
+  color: red;
+}
+:host(.component-section-mm) input:disabled {
+  color: #a0a0a0;
+}
+
+:host(.component-section-mm:not([figura=eighth])) #list > div > li[data-pulse=eighth] {
   display: none;
 }

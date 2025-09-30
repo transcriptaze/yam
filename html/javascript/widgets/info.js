@@ -8,6 +8,8 @@ export class Info extends HTMLElement {
 
   #track = {
     bars: 0,
+    countIn: 0,
+    pickup: 0,
     sections: new Map(),
   }
 
@@ -51,6 +53,17 @@ export class Info extends HTMLElement {
 
     this.#track.sections = new Map(sections.map((v) => [v.ID, v]))
     this.#track.bars = sections.reduce((measures, section) => measures + section.measures, 0)
+    this.#track.countIn = 0
+    this.#track.pickup = 0
+
+    if (sections.length > 0 && sections[0].role == 'count-in') {
+      this.#track.countIn = sections[0].measures
+      if (sections.length > 1 && sections[1].role == 'anacrusis') {
+        this.#track.pickup = sections[1].measures
+      }
+    } else if (sections.length > 0 && sections[0].role == 'anacrusis') {
+      this.#track.pickup = sections[0].measures
+    }
 
     if (this.#track.sections.size > 0) {
       const section = this.#track.sections.get(1)
@@ -58,7 +71,11 @@ export class Info extends HTMLElement {
       this.#container.classList.add('details')
       this.#text.classList.remove('playing')
       this.#section.innerHTML = section?.name ?? ''
-      this.#bars = this.#track.bars
+      this.#bars = {
+        bars: this.#track.bars,
+        countIn: this.#track.countIn,
+        pickup: this.#track.pickup,
+      }
 
       this.style.setProperty('--text-color', '#222222')
       this.style.setProperty('--accent-color', `#00000000`)
@@ -117,7 +134,12 @@ export class Info extends HTMLElement {
     }
 
     if (!playing && this.#track.sections.size > 0) {
-      this.#bars = this.#track.bars
+      this.#bars = {
+        bars: this.#track.bars,
+        countIn: this.#track.countIn,
+        pickup: this.#track.pickup,
+      }
+
       this.#progress.value = 0
       this.#progress.max = this.#track.bars
     } else if (bar != this.#cache.bar) {
@@ -128,10 +150,14 @@ export class Info extends HTMLElement {
 
       if (measures > 0 && measures !== INF && bar >= start) {
         this.#bars.innerHTML = `${bar - start + 1}/${measures}`
+
         this.#progress.value = bar - start + 1
         this.#progress.max = measures
       } else {
-        this.#bars = measures
+        this.#bars = {
+          bars: measures,
+        }
+
         this.#progress.value = 0
         this.#progress.max = measures
       }
@@ -158,11 +184,23 @@ export class Info extends HTMLElement {
     return this.shadowRoot.querySelector('div[data-ref="bars"]')
   }
 
-  set #bars(v) {
-    if (v === INF) {
+  set #bars({ bars, countIn, pickup }) {
+    if (bars === INF) {
       this.#bars.innerHTML = '&infin;'
-    } else if (v > 0) {
-      this.#bars.innerHTML = `${v}`
+    } else if (bars > 0) {
+      const c = countIn != null && !Number.isNaN(countIn) && countIn > 0 ? countIn : 0
+      const p = pickup != null && !Number.isNaN(pickup) && pickup > 0 ? pickup : 0
+      const b = bars - c - p
+
+      if (c > 0 && p > 0) {
+        this.#bars.innerHTML = `${c}+${p}+${b}`
+      } else if (c > 0) {
+        this.#bars.innerHTML = `${c}+${b}`
+      } else if (p > 0) {
+        this.#bars.innerHTML = `${p}+${b}`
+      } else {
+        this.#bars.innerHTML = `${b}`
+      }
     } else {
       this.#bars.innerHTML = ''
     }

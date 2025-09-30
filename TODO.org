@@ -16,16 +16,12 @@
 *** DONE replace metronome toggle with play/stop
 *** DONE fix mute on track delete
 *** DONE fix MM popover div/ul/li thing
+*** DONE large infinity char
+*** DONE info: 1+1+47
 
 *** TODO reset :hover style
 *** TODO reset UI if selected track is removed from playlist
       - UI is reset but saving after delete only adds the new track to 'All Tracks'
-
-*** TODO large infinity char
-      - https://shkspr.mobi/blog/2025/09/targetting-specific-characters-with-css-rules/
-      - https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/size-adjust
-      - U+0221E
-      - &#8734; (decimal), &#x221E;
 
 *** TODO section pulse: need a way to revert to '' (default)
 **** DONE add '' pulse to popup list
@@ -54,7 +50,6 @@
 **** TODO set width/height for all SVGs
 **** TODO save doesn't update playlist
 
-*** TODO info: 1+1+47
 *** TODO use cloned track
 *** TODO use cloned playlist
 *** TODO connectedCallback: event handler duplication

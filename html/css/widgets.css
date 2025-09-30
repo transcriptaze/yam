@@ -1754,6 +1754,7 @@ div.playlist-track [popover]:popover-open::backdrop {
 }
 :host(.component-section) div.section #measures {
   width: 3em;
+  font-family: "YAM-small", "Lato", sans;
 }
 :host(.component-section) div.section yam-time-signature {
   height: 32px;

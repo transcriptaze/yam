@@ -2,12 +2,12 @@ import { parseTimeSignature, parsePulse } from '../util.js'
 
 // prettier-ignore
 const PULSES = new Map([
-  ['eighth',         { img: './images/MM/eighth-equals.svg',         li: './images/MM/popover/eighth.svg'         }],
-  ['eighth-doublet', { img: './images/MM/eighth-doublet-equals.svg', li: './images/MM/popover/eighth-doublet.svg' }],
-  ['quarter',        { img: './images/MM/quarter-equals.svg',        li: './images/MM/popover/quarter.svg'        }],
-  ['dotted-quarter', { img: './images/MM/dotted-quarter-equals.svg', li: './images/MM/popover/dotted-quarter.svg' }],
-  ['half',           { img: './images/MM/half-equals.svg',           li: './images/MM/popover/half.svg'           }],
-  ['dotted-half',    { img: './images/MM/dotted-half-equals.svg',    li: './images/MM/popover/dotted-half.svg'    }],
+  ['eighth',         { img: './images/MM/eighth-equals.svg',         imx: './images/MM/eighth-no-equals.svg',         li: './images/MM/popover/eighth.svg'         }],
+  ['eighth-doublet', { img: './images/MM/eighth-doublet-equals.svg', imx: './images/MM/eighth-doublet-no-equals.svg', li: './images/MM/popover/eighth-doublet.svg' }],
+  ['quarter',        { img: './images/MM/quarter-equals.svg',        imx: './images/MM/quarter-no-equals.svg',        li: './images/MM/popover/quarter.svg'        }],
+  ['dotted-quarter', { img: './images/MM/dotted-quarter-equals.svg', imx: './images/MM/dotted-quarter-no-equals.svg', li: './images/MM/popover/dotted-quarter.svg' }],
+  ['half',           { img: './images/MM/half-equals.svg',           imx: './images/MM/half-no-equals.svg',           li: './images/MM/popover/half.svg'           }],
+  ['dotted-half',    { img: './images/MM/dotted-half-equals.svg',    imx: './images/MM/dotted-half-no-equals.svg',    li: './images/MM/popover/dotted-half.svg'    }],
 ])
 
 const NONE = './images/MM/pulse/none.svg'
@@ -178,7 +178,7 @@ export class SectionMM extends HTMLElement {
     const shadow = this.shadowRoot
     const p = shadow.querySelector('#pulse')
     const bpm = shadow.querySelector('input')
-    const none = shadow.querySelector('#list li.none img')
+    const none = shadow.querySelector('#list div.li[data-pulse=""] img')
 
     if (defaults != null && defaults.pulse != null) {
       p.dataset.defval = defaults.pulse
@@ -229,29 +229,23 @@ export class SectionMM extends HTMLElement {
 
   #redraw() {
     const shadow = this.shadowRoot
-    const div = shadow.querySelector('div.MM')
+    const button = shadow.querySelector('div.MM button')
     const pulse = shadow.querySelector('#pulse')
     const BPM = shadow.querySelector('input')
 
-    if (`${this.#BPM}` === '') {
-      div.classList.add('none')
+    if (this.#pulse != null && this.#pulse !== '') {
+      button.classList.remove('none')
     } else {
-      div.classList.remove('none')
+      button.classList.add('none')
     }
 
-    {
-      let k = 'quarter'
-      if (this.#pulse != null && this.#pulse !== '') {
-        k = `${this.#pulse}`
-      } else {
-        k = `${pulse.dataset.defval}`
-      }
+    const p = this.#pulse != null && this.#pulse !== '' ? `${this.#pulse}` : `${pulse.dataset.defval}`
+    const k = PULSES.has(p) ? p : 'quarter'
 
-      if (PULSES.has(k)) {
-        pulse.src = PULSES.get(k).img
-      } else {
-        pulse.src = PULSES.get(`quarter`).img
-      }
+    if (this.#BPM != null && this.#BPM !== '') {
+      pulse.src = PULSES.get(k).img
+    } else {
+      pulse.src = PULSES.get(k).imx
     }
 
     BPM.value = `${this.#BPM}`

@@ -26,10 +26,10 @@
 *** TODO section pulse: need a way to revert to '' (default)
 **** DONE add '' pulse to popup list
 **** DONE defval for 'none' img
-**** TODO separate MM web comoponent for sections
-**** TODO fix MM popover div/ul/li thing
+**** DONE display equals iff pulse and BPM are defined
+**** DONE separate MM web comoponent for sections
+**** DONE fix MM popover div/ul/li thing
 **** TODO fix defval - should inherit from previous section
-**** TODO display equals iff pulse and BPM are defined
 **** TODO cascade update following sections after pick pulse
 
 

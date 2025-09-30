@@ -1830,7 +1830,7 @@ div.playlist-track [popover]:popover-open::backdrop {
   grid-template-rows: auto;
   column-gap: 2px;
 }
-:host(.component-section-mm) div.MM div.content li {
+:host(.component-section-mm) div.MM div.content div.li {
   display: flex;
   justify-content: center;
   width: 100%;
@@ -1839,14 +1839,17 @@ div.playlist-track [popover]:popover-open::backdrop {
   padding-bottom: 4px;
   border-radius: 4px;
 }
-:host(.component-section-mm) div.MM div.content li img {
+:host(.component-section-mm) div.MM div.content div.li img {
   height: 24px;
   padding-left: 2px;
   padding-right: 2px;
 }
-:host(.component-section-mm) div.MM div.content li.none img {
+:host(.component-section-mm) div.MM div.content div.li[data-pulse=""] img {
   filter: grayscale(100%) opacity(25%);
   transform: scale(0.7);
+}
+:host(.component-section-mm) button.none img {
+  filter: grayscale(100%) opacity(25%);
 }
 :host(.component-section-mm) button:disabled img {
   filter: grayscale(100%) opacity(50%);
@@ -1876,9 +1879,6 @@ div.playlist-track [popover]:popover-open::backdrop {
 }
 :host(.component-section-mm) input:disabled {
   color: #a0a0a0;
-}
-:host(.component-section-mm) div.MM.none button img {
-  filter: grayscale(100%) opacity(25%);
 }
 
 :host(.component-section-mm:not([figura=eighth])) #list > div > li[data-pulse=eighth] {

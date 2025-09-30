@@ -23,7 +23,10 @@
 *** DONE reset UI if selected track is removed from playlist
 
 *** TODO can't edit new track
+      - toolbar edit icon is not visible
       - also: track is added to end of playlist but BOF/EOF aren't updated
+      - toolbar edit icon is visible after track deleted
+
 *** TODO spacebar in editor starts/stops metronome
 
 *** TODO section pulse: need a way to revert to '' (default)
@@ -32,8 +35,9 @@
 **** DONE display equals iff pulse and BPM are defined
 **** DONE separate MM web comoponent for sections
 **** DONE fix MM popover div/ul/li thing
-**** TODO fix defval - should inherit from previous section
+**** DONE fix defval - should inherit from previous section
 **** TODO cascade update following sections after pick pulse
+**** TODO fix BPM defval - should inherit from previous section
 
 *** TODO clicks
 **** DONE use section clicks in worklet

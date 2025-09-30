@@ -286,6 +286,10 @@ function* transmogrify(track) {
   for (const section of sections) {
     const _subsections = section.subsections ?? []
 
+    const defaults = {
+      pulse: pulse,
+    }
+
     timeSignature = section.timeSignature ?? timeSignature
     pulse = section.pulse ?? pulse
     tempo = section.tempo ?? tempo
@@ -325,7 +329,7 @@ function* transmogrify(track) {
         BPM: section.tempo,
 
         defaults: {
-          pulse: pulse,
+          pulse: defaults.pulse,
           BPM: tempo,
         },
       },
@@ -333,8 +337,6 @@ function* transmogrify(track) {
       subsections: subsections,
       measures: bars,
     }
-
-    // measures += bars
   }
 }
 

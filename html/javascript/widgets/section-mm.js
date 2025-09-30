@@ -30,17 +30,7 @@ export class SectionMM extends HTMLElement {
 
           this.pulse = pulse
 
-          if (pulse !== '') {
-            this.dispatchEvent(
-              new CustomEvent('change', {
-                bubbles: true,
-                composed: true,
-                detail: {
-                  pulse: pulse,
-                },
-              }),
-            )
-          }
+          this.dispatchEvent(new CustomEvent('change', { bubbles: true, composed: true, detail: { pulse: pulse } }))
         }
       },
     },
@@ -124,22 +114,13 @@ export class SectionMM extends HTMLElement {
   }
 
   set pulse(v) {
-    const shadow = this.shadowRoot
-    const img = shadow.querySelector('#pulse')
-
     if (v == null || v === '') {
       this.#pulse = ''
     } else {
       this.#pulse = parsePulse(v)
     }
 
-    if (PULSES.has(this.#pulse)) {
-      img.src = PULSES.get(this.#pulse).img
-    } else if (PULSES.has(img.dataset.defval)) {
-      img.src = PULSES.get(img.dataset.defval).img
-    } else {
-      img.src = NONE
-    }
+    this.#redraw()
   }
 
   get BPM() {

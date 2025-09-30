@@ -221,7 +221,7 @@ export class Playlist extends EventTarget {
       g()
     } else if (ix.find((v) => v === this.selected) != null) {
       g()
-    } else {      
+    } else {
       g()
     }
   }

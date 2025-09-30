@@ -123,7 +123,7 @@ export class Playlist extends EventTarget {
   }
 
   has(track) {
-    return this.#tracks.some((v) => v.UUID === track)
+    return this.#tracks.some((v) => v === track)
   }
 
   select(track) {
@@ -142,6 +142,10 @@ export class Playlist extends EventTarget {
     const ix = this.#tracks.findIndex((e) => `${e}` === `${track}`)
     if (ix !== -1) {
       this.#tracks.splice(ix, 1)
+
+      if (this.#selected === track) {
+        this.#selected = null
+      }
 
       this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: this.UUID } }))
     }
@@ -216,6 +220,8 @@ export class Playlist extends EventTarget {
     if (this.selected == null) {
       g()
     } else if (ix.find((v) => v === this.selected) != null) {
+      g()
+    } else {      
       g()
     }
   }

@@ -19,9 +19,12 @@
 *** DONE large infinity char
 *** DONE info: 1+1+47
 *** DONE reset :hover style
+*** DONE change toggle to start/stop
+*** DONE reset UI if selected track is removed from playlist
 
-*** TODO reset UI if selected track is removed from playlist
-      - UI is reset but saving after delete only adds the new track to 'All Tracks'
+*** TODO can't edit new track
+      - also: track is added to end of playlist but BOF/EOF aren't updated
+*** TODO spacebar in editor starts/stops metronome
 
 *** TODO section pulse: need a way to revert to '' (default)
 **** DONE add '' pulse to popup list
@@ -31,7 +34,6 @@
 **** DONE fix MM popover div/ul/li thing
 **** TODO fix defval - should inherit from previous section
 **** TODO cascade update following sections after pick pulse
-
 
 *** TODO clicks
 **** DONE use section clicks in worklet
@@ -56,6 +58,7 @@
 *** TODO connectedCallback: event handler duplication
 
 ** Fixes
+*** TODO allow BPM changes while playing a track
 *** TODO URL - use ?UUID= or ?title= 
 *** TODO URL match on track if playlist not found
 *** TODO 'All Tracks' should not display tracklist
@@ -64,13 +67,8 @@
       - hover >> arrow maybe (doesnt work on mobile)
 *** TODO requestAnimationFrame is not always 60fps
       - only update if changed
-*** TODO (?) use microtasks for engine initialisation
-      - https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API/Microtask_guide
-*** TODO automatically add clicks to new pickup and count-in sections
 *** TODO editor: enable/disable button iff there are changes
 *** TODO different grip icon
-*** TODO 'tack.wav' for e.g. 5:4c
-*** TODO spacebar in editor starts/stops metronome
 *** TODO playlists '+'' floating button is visually confusing
       - https://kube.io/blog/liquid-glass-css-svg/
 
@@ -79,10 +77,8 @@
 *** TODO editor: metronome div vertical alignment
 *** TODO editor: role drop down list
 *** TODO portrait/fullscreen: put something (title?) in the 'safe area' at the top
-*** TODO allow BPM changes while playing a track
 *** TODO move start/stop/delay to clock
 *** TODO wait for metronome to start before enabling 'stop' (confusing double click)
-*** TODO change toggle to start/stop
 
 *** TODO make track UUID private
 *** TODO automatically open editor on new playlist

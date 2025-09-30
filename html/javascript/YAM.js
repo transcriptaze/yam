@@ -328,10 +328,10 @@ function rewire() {
   widgets.playlists.addEventListener(EVENTS.SHUFFLE_PLAYLISTS, (e) => onPlaylistsShuffled(e))
   widgets.playlists.addEventListener(EVENTS.SELECT_PLAYLIST, (e) => onPlaylistSelected(e))
   widgets.playlists.addEventListener(EVENTS.SHUFFLE_PLAYLIST, (e) => onPlaylistShuffled(e))
-  widgets.playlists.addEventListener(EVENTS.DELETE_PLAYLIST, (e) => onDelete(e))
+  widgets.playlists.addEventListener(EVENTS.DELETE_PLAYLIST, (e) => onPlaylistDelete(e))
   widgets.playlists.addEventListener(EVENTS.SELECT_TRACK, (e) => onSelect(e))
   widgets.playlists.addEventListener(EVENTS.MUTE_TRACK, (e) => onMute(e))
-  widgets.playlists.addEventListener(EVENTS.DELETE_TRACK, (e) => onDelete(e))
+  widgets.playlists.addEventListener(EVENTS.DELETE_TRACK, (e) => onTrackDelete(e))
 
   widgets.editor.addEventListener(EVENTS.EDIT_SAVE, (e) => onEdited(e))
 
@@ -518,7 +518,10 @@ function onSelected(event) {
   const track = models.tracks.track(event.detail.track)
   const toolbar = document.querySelector('toolbar')
 
-  state.selected = { playlist, track }
+  state.selected = {
+    playlist: playlist?.UUID,
+    track: track,
+  }
 
   widgets.playlists.selected = {
     playlist: playlist?.UUID,
@@ -546,33 +549,10 @@ function onSelected(event) {
   }
 }
 
-function onDelete(event) {
-  if (event.type === EVENTS.DELETE_PLAYLIST) {
-    const playlist = event.detail.playlist
+function onPlaylistDelete(event) {
+  const playlist = event.detail.playlist
 
-    models.playlists.delete(playlist)
-  }
-
-  if (event.type === EVENTS.DELETE_TRACK) {
-    const playlist = event.detail.playlist
-    const track = event.detail.track
-
-    models.playlists.playlist(playlist)?.remove(track)
-    models.playlists.playlist(playlist)?.save()
-
-    if (!models.playlists.has(track)) {
-      models.tracks.remove(track)
-    }
-
-    if (state.playlist === playlist && state.track === track) {
-      state.selected = {
-        playlist: playlist,
-        track: null,
-      }
-
-      widgets.editor.track = null
-    }
-  }
+  models.playlists.delete(playlist)
 }
 
 function onPlaylist(e) {
@@ -581,6 +561,27 @@ function onPlaylist(e) {
 
   if (list != null) {
     widgets.playlists.update(list, tracks)
+  }
+}
+
+function onTrackDelete(event) {
+  const playlist = event.detail.playlist
+  const track = event.detail.track
+
+  models.playlists.playlist(playlist)?.remove(track)
+  models.playlists.playlist(playlist)?.save()
+
+  if (!models.playlists.has(track)) {
+    models.tracks.remove(track)
+  }
+
+  if (state.playlist === playlist && state.track === track) {
+    state.selected = {
+      playlist: playlist,
+      track: null,
+    }
+
+    widgets.editor.track = null
   }
 }
 
@@ -626,7 +627,7 @@ function onSave() {
     widgets.playlists.updated(playlist, track)
 
     state.selected = {
-      playlist: playlist,
+      playlist: playlist?.UUID,
       track: track,
     }
 

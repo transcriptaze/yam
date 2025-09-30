@@ -172,7 +172,7 @@ class State extends EventTarget {
   }
 
   set selected({ playlist, track }) {
-    this.#playlist = playlist?.UUID ?? '00000000-0000-0000-0000-000000000000'
+    this.#playlist = playlist ?? '00000000-0000-0000-0000-000000000000'
 
     this.#track = track
     this.#title = track?.title ?? ''

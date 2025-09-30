@@ -43,7 +43,8 @@
 **** DONE time-signature layout
 **** DONE pulse layout
 **** DONE controls layout
-**** TODO MM/time signature popover
+**** DONE time signature popover
+**** TODO MM signature popover
 **** TODO editor section layout
 **** TODO editor time signature popover
 **** TODO editor: loop count font

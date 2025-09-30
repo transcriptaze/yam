@@ -113,6 +113,19 @@ export class TimeSignature extends HTMLElement {
         container.classList.remove('tapped')
       },
     },
+
+    button: {
+      click: () => {
+        const button = this.shadowRoot.querySelector('[popovertarget]')
+        const target = button.getAttribute('popovertarget')
+        const popover = this.shadowRoot.getElementById(target)
+        const rect = button.getBoundingClientRect()
+
+        popover.style.position = 'fixed'
+        popover.style.top = `${rect.bottom + 8}px`
+        popover.style.left = `${rect.left + 12}px`
+      },
+    },
   }
 
   constructor() {
@@ -140,6 +153,7 @@ export class TimeSignature extends HTMLElement {
     const tactus = shadow.querySelector('input#tactus')
     const figura = shadow.querySelector('input#figura')
     const lock = shadow.querySelector('#lock')
+    const button = shadow.querySelector('[popovertarget]')
 
     ul.addEventListener('click', this.#handlers.ul.click)
     tactus.addEventListener('input', this.#handlers.tactus.input)
@@ -147,6 +161,11 @@ export class TimeSignature extends HTMLElement {
 
     overlay.addEventListener('click', this.#handlers.overlay.click)
     lock.addEventListener('animationend', this.#handlers.lock.animated)
+
+    // FireFox doesn't support CSS anchor positioning
+    if (!CSS.supports('top: anchor(bottom)')) {
+      button.addEventListener('click', this.#handlers.button.click)
+    }
   }
 
   disconnectedCallback() {}

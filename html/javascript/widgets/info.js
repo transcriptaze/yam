@@ -56,6 +56,9 @@ export class Info extends HTMLElement {
     this.#track.countIn = 0
     this.#track.pickup = 0
 
+    this.#cache.section = -1
+    this.#cache.bar = -1
+
     if (sections.length > 0 && sections[0].role == 'count-in') {
       this.#track.countIn = sections[0].measures
       if (sections.length > 1 && sections[1].role == 'anacrusis') {
@@ -72,9 +75,7 @@ export class Info extends HTMLElement {
       this.#text.classList.remove('playing')
       this.#section.innerHTML = section?.name ?? ''
       this.#bars = {
-        bars: this.#track.bars,
-        countIn: this.#track.countIn,
-        pickup: this.#track.pickup,
+        playing: false,
       }
 
       this.style.setProperty('--text-color', '#222222')
@@ -133,13 +134,14 @@ export class Info extends HTMLElement {
       }
     }
 
-    if (!playing && this.#track.sections.size > 0) {
+    if (!playing) {
       this.#bars = {
-        bars: this.#track.bars,
-        countIn: this.#track.countIn,
-        pickup: this.#track.pickup,
+        playing: playing,
+        section: null,
+        bar: null,
       }
 
+      this.#cache.bar = null
       this.#progress.value = 0
       this.#progress.max = this.#track.bars
     } else if (bar != this.#cache.bar) {
@@ -148,16 +150,16 @@ export class Info extends HTMLElement {
       const measures = section?.measures ?? 0
       const start = section?.start ?? INF
 
-      if (measures > 0 && measures !== INF && bar >= start) {
-        this.#bars.innerHTML = `${bar - start + 1}/${measures}`
+      this.#bars = {
+        playing: playing,
+        section: section,
+        bar: bar,
+      }
 
+      if (measures > 0 && measures !== INF && bar >= start) {
         this.#progress.value = bar - start + 1
         this.#progress.max = measures
       } else {
-        this.#bars = {
-          bars: measures,
-        }
-
         this.#progress.value = 0
         this.#progress.max = measures
       }
@@ -165,7 +167,7 @@ export class Info extends HTMLElement {
   }
 
   get #container() {
-    return this.shadowRoot.querySelector('div.container')
+    return this.shadowRoot.querySelector('div.info')
   }
 
   get #title() {
@@ -184,25 +186,55 @@ export class Info extends HTMLElement {
     return this.shadowRoot.querySelector('div[data-ref="bars"]')
   }
 
-  set #bars({ bars, countIn, pickup }) {
-    if (bars === INF) {
-      this.#bars.innerHTML = '&infin;'
-    } else if (bars > 0) {
-      const c = countIn != null && !Number.isNaN(countIn) && countIn > 0 ? countIn : 0
-      const p = pickup != null && !Number.isNaN(pickup) && pickup > 0 ? pickup : 0
-      const b = bars - c - p
+  set #bars({ playing, section, bar }) {
+    const bars = this.#track.bars
+    const countIn = this.#track.countIn
+    const pickup = this.#track.pickup
 
-      if (c > 0 && p > 0) {
-        this.#bars.innerHTML = `${c}+${p}+${b}`
-      } else if (c > 0) {
-        this.#bars.innerHTML = `${c}+${b}`
-      } else if (p > 0) {
-        this.#bars.innerHTML = `${p}+${b}`
-      } else {
-        this.#bars.innerHTML = `${b}`
-      }
-    } else {
-      this.#bars.innerHTML = ''
+    const measures = section?.measures ?? 0
+    const start = section?.start ?? INF
+
+    switch (true) {
+      case !playing && bars === INF:
+        this.#bars.innerHTML = '<span class="infinity">&infin;</span>'
+        break
+
+      case !playing && bars <= 0:
+        this.#bars.innerHTML = ''
+        break
+
+      case !playing:
+        {
+          const c = countIn != null && !Number.isNaN(countIn) && countIn > 0 ? countIn : 0
+          const p = pickup != null && !Number.isNaN(pickup) && pickup > 0 ? pickup : 0
+          const b = bars - c - p
+
+          if (c > 0 && p > 0) {
+            this.#bars.innerHTML = `${c}+${p}+${b}`
+          } else if (c > 0) {
+            this.#bars.innerHTML = `${c}+${b}`
+          } else if (p > 0) {
+            this.#bars.innerHTML = `${p}+${b}`
+          } else {
+            this.#bars.innerHTML = `${b}`
+          }
+        }
+        break
+
+      case playing && measures === INF:
+        this.#bars.innerHTML = '<span class="infinity">&infin;</span>'
+        break
+
+      case playing && measures > 0 && bar != null && bar >= start:
+        this.#bars.innerHTML = `${bar - start + 1}/${measures}`
+        break
+
+      case playing && measures > 0:
+        this.#bars.innerHTML = `${measures}`
+        break
+
+      default:
+        this.#bars.innerHTML = ''
     }
   }
 

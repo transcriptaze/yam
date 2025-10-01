@@ -295,6 +295,8 @@
       font-size: 1em;
       font-weight: bold;
 
+      outline: none;
+
       &, &::picker(select) {
         appearance: base-select;    
       }

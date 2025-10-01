@@ -329,7 +329,7 @@ function rewire() {
   widgets.playlists.addEventListener(EVENTS.SELECT_PLAYLIST, (e) => onPlaylistSelected(e))
   widgets.playlists.addEventListener(EVENTS.SHUFFLE_PLAYLIST, (e) => onPlaylistShuffled(e))
   widgets.playlists.addEventListener(EVENTS.DELETE_PLAYLIST, (e) => onPlaylistDelete(e))
-  widgets.playlists.addEventListener(EVENTS.SELECT_TRACK, (e) => onSelect(e))
+  widgets.playlists.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
   widgets.playlists.addEventListener(EVENTS.MUTE_TRACK, (e) => onMute(e))
   widgets.playlists.addEventListener(EVENTS.DELETE_TRACK, (e) => onTrackDelete(e))
 
@@ -360,7 +360,7 @@ function onKeyDown(event) {
     const f = (el) => (el?.shadowRoot?.activeElement ? f(el.shadowRoot.activeElement) : el)
     const active = f(document.activeElement)
     const tag = `${active?.tagName}.${active?.type}`.toLowerCase()
-    const ignore = ['input.text', 'input.checkbox']
+    const ignore = ['input.text', 'input.checkbox', 'input.number']
 
     if (!ignore.includes(tag)) {
       event.preventDefault()
@@ -482,7 +482,7 @@ function onStateModified() {
   widgets.info.modified = state.modified
 }
 
-function onSelect(event) {
+function onTrackSelect(event) {
   const playlist = models.playlists.playlist(event.detail.playlist)
   const track = event.detail.track
 

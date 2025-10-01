@@ -1643,6 +1643,7 @@ div.playlist-track [popover]:popover-open::backdrop {
   font-family: "YAM", "Lato", sans;
   font-size: 1em;
   font-weight: bold;
+  outline: none;
 }
 :host(.component-editor) div.track-editor select, :host(.component-editor) div.track-editor select::picker(select) {
   appearance: base-select;

@@ -22,11 +22,10 @@
 *** DONE change toggle to start/stop
 *** DONE reset UI if selected track is removed from playlist
 *** DONE spacebar in editor starts/stops metronome
+*** DONE can't edit new track
+*** DONE toolbar edit icon is visible after track deleted
 
-*** TODO can't edit new track
-      - toolbar edit icon is not visible
-      - also: track is added to end of playlist but BOF/EOF aren't updated
-      - toolbar edit icon is visible after track deleted
+*** TODO fix about box layout
 
 *** TODO section pulse: need a way to revert to '' (default)
 **** DONE add '' pulse to popup list

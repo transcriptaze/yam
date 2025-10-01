@@ -56,6 +56,19 @@ export class MM extends HTMLElement {
         }
       },
     },
+
+    button: {
+      click: () => {
+        const button = this.shadowRoot.querySelector('[popovertarget]')
+        const target = button.getAttribute('popovertarget')
+        const popover = this.shadowRoot.getElementById(target)
+        const rect = button.getBoundingClientRect()
+
+        popover.style.position = 'fixed'
+        popover.style.top = `${rect.bottom + 4}px`
+        popover.style.left = `${rect.left + 12}px`
+      },
+    },
   }
 
   constructor() {
@@ -80,10 +93,16 @@ export class MM extends HTMLElement {
     const shadow = this.shadowRoot
     const list = shadow.querySelector('div.content')
     const input = shadow.querySelector('input')
+    const button = shadow.querySelector('[popovertarget]')
 
     list.addEventListener('click', this.#handlers.list.click)
     input.addEventListener('keypress', this.#handlers.input.keypress)
     input.addEventListener('input', this.#handlers.input.change)
+
+    // FireFox doesn't support CSS anchor positioning
+    if (!CSS.supports('top: anchor(bottom)')) {
+      button.addEventListener('click', this.#handlers.button.click)
+    }
   }
 
   disconnectedCallback() {}

@@ -48,9 +48,10 @@
 **** DONE time-signature layout
 **** DONE pulse layout
 **** DONE controls layout
+**** DONE editor section layout
 **** DONE time signature popover
-**** TODO MM signature popover
-**** TODO editor section layout
+**** DONE MM signature popover
+**** DONE section MM signature popover
 **** TODO editor time signature popover
 **** TODO editor: loop count font
 **** TODO set width/height for all SVGs

@@ -9,7 +9,6 @@ let audioContext
 let subscribers = new EventTarget()
 
 class Engine {
-  static DEBUG = false
   static BPM = 120
   static pulse = 'quarter'
   static timeSignature = { beats: 4, divisions: 4 }
@@ -21,7 +20,6 @@ class Engine {
   constructor() {}
 
   init(ctx, metronome) {
-    metronome.debug = Engine.DEBUG
     metronome.BPM = Engine.BPM
     metronome.timeSignature = Engine.timeSignature
     metronome.pulse = Engine.pulse
@@ -65,7 +63,7 @@ class Engine {
   }
 
   set debug(dbg) {
-    this.metronome.debug = dbg
+    this.#exec(() => (this.metronome.debug = dbg))
   }
 
   play() {
@@ -109,11 +107,13 @@ class Engine {
   }
 
   set track(track) {
-    this.metronome.track = track
+    this.#exec(() => (this.metronome.track = track))
   }
 
   set loop(loop) {
-    this.metronome.loop = loop
+    if (this.initialised) {
+      this.metronome.loop = loop
+    }
   }
 
   get playing() {
@@ -223,12 +223,8 @@ export function loops() {
   return engine.loops
 }
 
-export function debug(dbg) {
-  Engine.DEBUG = dbg
-
-  if (engine.initialised) {
-    exec((e) => (e.debug = dbg))
-  }
+export function debug(debug) {
+  engine.debug = debug
 }
 
 export function load(track) {
@@ -285,20 +281,13 @@ export function setPulse(v) {
 }
 
 export function setTrack(track) {
-  Engine.track = track
-  if (engine.initialised) {
-    exec((e) => (e.track = track))
-  }
+  engine.track = track
 }
 
 // NTS: loop set for a track and can only be enabled/disabled after the track has been loaded
 //      i.e. no point adding to the metronome initialisation
 export function setLoop(v) {
-  const loop = v === true
-
-  if (engine.initialised) {
-    exec((e) => (e.loop = loop))
-  }
+  engine.loop = v === true
 }
 
 export function play() {

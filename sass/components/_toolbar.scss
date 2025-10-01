@@ -55,6 +55,10 @@ toolbar {
     }  
   }
 
+  #reset:hover {
+    filter: invert(10%) sepia(99%) saturate(5774%) hue-rotate(14deg) brightness(90%) contrast(121%);
+  }
+
   #settings {
     display: none;
   }

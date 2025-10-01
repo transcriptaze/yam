@@ -1,5 +1,7 @@
 <svg xmlns="http://www.w3.org/2000/svg" 
      version="1.1"
+     width="120"
+     height="120"
      viewBox="0 0 120 120">
   <g fill="#000000" transform="translate(3.25,5.25)">
     <path d="M10,55.5 c-1,-31 2,-35 13,-35 7,0  41,0  41,0 v-18 l23,24  -22,22  v-17  h-45 v25  c0,0 -4,0 -10,0 z" />

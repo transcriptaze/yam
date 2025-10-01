@@ -62,6 +62,7 @@
 *** TODO connectedCallback: event handler duplication
 
 ** Fixes
+*** TODO editor: enable/disable button iff there are changes
 *** TODO allow BPM changes while playing a track
 *** TODO URL - use ?UUID= or ?title= 
 *** TODO URL match on track if playlist not found
@@ -71,7 +72,6 @@
       - hover >> arrow maybe (doesnt work on mobile)
 *** TODO requestAnimationFrame is not always 60fps
       - only update if changed
-*** TODO editor: enable/disable button iff there are changes
 *** TODO different grip icon
 *** TODO playlists '+'' floating button is visually confusing
       - https://kube.io/blog/liquid-glass-css-svg/
@@ -116,7 +116,7 @@
 *** TODO Safari layout
 *** TODO trim height of 'play' icon
 *** TODO use different font/colour for track that is in playlist (so that you know you are editing a playlist item)
-*** TODO consistently pass the whole track as a parameter (and not just the UUID)
+*** TODO consistently pass the either whole track or the UUID
       - OR at least stop mixing up track UUID and track
 *** TODO resize knob/fix SVG overflow
 *** TODO move engine.set to onModified

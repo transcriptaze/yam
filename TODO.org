@@ -35,7 +35,7 @@
 **** DONE separate MM web comoponent for sections
 **** DONE fix MM popover div/ul/li thing
 **** DONE fix defval - should inherit from previous section
-**** TODO cascade update following sections after pick pulse
+**** DONE cascade update following sections after pick pulse
 **** TODO fix BPM defval - should inherit from previous section
 **** TODO disable/hide section time signature and tempo if subsections
 **** TODO slide in on initialisation

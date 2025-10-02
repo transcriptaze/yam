@@ -15,10 +15,9 @@ const NONE = './images/MM/pulse/none.svg'
 
 export class SectionMM extends HTMLElement {
   static get observedAttributes() {
-    return ['uuid', 'disabled']
+    return ['disabled']
   }
 
-  #UUID = ''
   #BPM = 120
   #pulse = 'quarter'
 
@@ -42,7 +41,6 @@ export class SectionMM extends HTMLElement {
               bubbles: true,
               composed: true,
               detail: {
-                UUID: this.#UUID,
                 pulse: pulse,
                 defaultValue: this.#defaults.pulse,
               },
@@ -140,10 +138,6 @@ export class SectionMM extends HTMLElement {
   adoptedCallback() {}
 
   attributeChangedCallback(name, from, to) {
-    if (name === 'uuid') {
-      this.#UUID = to
-    }
-
     if (name === 'disabled') {
       this.disabled = to != null ? true : false
     }
@@ -163,7 +157,17 @@ export class SectionMM extends HTMLElement {
     this.#redraw()
   }
 
-  set defaults({ pulse }) {}
+  set defaults(object) {
+    const none = this.shadowRoot.querySelector('#list div.li[data-pulse=""] img')
+    const pulse = object?.pulse ?? ''
+
+    if (pulse !== '') {
+      this.#defaults.pulse = pulse
+      none.src = PULSES.has(pulse) ? PULSES.get(pulse).li : NONE
+    }
+
+    this.#redraw()
+  }
 
   get BPM() {
     return this.#BPM

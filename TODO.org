@@ -24,19 +24,7 @@
 *** DONE spacebar in editor starts/stops metronome
 *** DONE can't edit new track
 *** DONE toolbar edit icon is visible after track deleted
-
 *** DONE Firefox
-**** DONE set width/height for all SVGs
-**** DONE time-signature layout
-**** DONE pulse layout
-**** DONE controls layout
-**** DONE editor section layout
-**** DONE time signature popover
-**** DONE MM signature popover
-**** DONE section MM signature popover
-**** DONE editor time signature popover
-**** DONE remove up/down arrows in editor BPM
-**** DONE editor: loop count font
 
 *** TODO fix about box layout
 
@@ -50,6 +38,7 @@
 **** TODO cascade update following sections after pick pulse
 **** TODO fix BPM defval - should inherit from previous section
 **** TODO disable/hide section time signature and tempo if subsections
+**** TODO slide in on initialisation
 
 *** TODO clicks
 **** DONE use section clicks in worklet

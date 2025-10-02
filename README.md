@@ -131,3 +131,4 @@ Everything in this repository is licensed under [GPL-3.0](https://github.com/tra
 7. Lato font
    - [Lato Fonts](https://www.latofonts.com)
    - [SIL Open Font License 1.1](https://openfontlicense.org)
+

@@ -49,6 +49,7 @@ export function initialise() {
   widgets.timeSignature.locked = false
   widgets.mm.pulse = state.pulse
   widgets.mm.BPM = state.BPM
+  widgets.mm.locked = false
   widgets.loop.loop = state.loop
   widgets.loop.loops = INF
   widgets.knob.BPM = state.BPM
@@ -467,6 +468,7 @@ function onStateModified() {
   widgets.mm.BPM = state.BPM
   widgets.mm.pulse = state.pulse
   widgets.mm.timeSignature = state.timeSignature
+  widgets.mm.locked = track != null && track.sections != null && track.sections.length > 0
 
   widgets.knob.BPM = state.BPM
   widgets.wheel.BPM = state.BPM

@@ -194,9 +194,20 @@ export class Info extends HTMLElement {
     const measures = section?.measures ?? 0
     const start = section?.start ?? INF
 
+    const c = countIn != null && !Number.isNaN(countIn) && countIn > 0 ? countIn : 0
+    const p = pickup != null && !Number.isNaN(pickup) && pickup > 0 ? pickup : 0
+
     switch (true) {
       case !playing && bars === INF:
-        this.#bars.innerHTML = '<span class="infinity">&infin;</span>'
+        if (c > 0 && p > 0) {
+          this.#bars.innerHTML = `${c}+${p} +<span class="infinity">&infin;</span>`
+        } else if (c > 0) {
+          this.#bars.innerHTML = `${c} +<span class="infinity">&infin;</span>`
+        } else if (p > 0) {
+          this.#bars.innerHTML = `${p} +<span class="infinity">&infin;</span>`
+        } else {
+          this.#bars.innerHTML = '<span class="infinity">&infin;</span>'
+        }
         break
 
       case !playing && bars <= 0:
@@ -204,20 +215,14 @@ export class Info extends HTMLElement {
         break
 
       case !playing:
-        {
-          const c = countIn != null && !Number.isNaN(countIn) && countIn > 0 ? countIn : 0
-          const p = pickup != null && !Number.isNaN(pickup) && pickup > 0 ? pickup : 0
-          const b = bars - c - p
-
-          if (c > 0 && p > 0) {
-            this.#bars.innerHTML = `${c}+${p}+${b}`
-          } else if (c > 0) {
-            this.#bars.innerHTML = `${c}+${b}`
-          } else if (p > 0) {
-            this.#bars.innerHTML = `${p}+${b}`
-          } else {
-            this.#bars.innerHTML = `${b}`
-          }
+        if (c > 0 && p > 0) {
+          this.#bars.innerHTML = `${c}+${p}+${bars - c - p}`
+        } else if (c > 0) {
+          this.#bars.innerHTML = `${c}+${bars - c - p}`
+        } else if (p > 0) {
+          this.#bars.innerHTML = `${p}+${bars - c - p}`
+        } else {
+          this.#bars.innerHTML = `${bars - c - p}`
         }
         break
 

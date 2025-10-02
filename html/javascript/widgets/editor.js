@@ -1,5 +1,4 @@
 import { EVENTS, INF } from '../constants.js'
-import { UUIDv4 } from '../uuid.js'
 import * as generators from '../generators.js'
 
 export class Editor extends HTMLElement {
@@ -20,6 +19,10 @@ export class Editor extends HTMLElement {
       change: (event) => {
         if (event.detail.pulse) {
           event.target.pulse = event.detail.pulse
+
+          this.#defaults = {
+            pulse: event.detail.pulse,
+          }
         }
 
         if (event.detail.BPM) {
@@ -29,19 +32,29 @@ export class Editor extends HTMLElement {
     },
 
     save: {
-      click: (_event) => {
+      click: () => {
         this.#save()
       },
     },
 
     sections: {
-      click: (_event) => {
+      click: () => {
         this.#toggle()
+      },
+
+      change: (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        // FIXME this.#fields.mm needs to be async getter
+        this.#defaults = {
+          pulse: this.#fields.mm?.pulse ?? 'quarter',
+        }
       },
     },
 
     plus: {
-      click: (_event) => {
+      click: () => {
         this.#add()
       },
     },
@@ -93,31 +106,28 @@ export class Editor extends HTMLElement {
 
     this.#mm.addEventListener('change', this.#handlers.mm.change)
     this.#plus.addEventListener('click', this.#handlers.plus.click)
+    this.#sections.addEventListener(EVENTS.SECTION_PULSE_CHANGE, this.#handlers.sections.change)
 
-    this.#sections.addEventListener(EVENTS.SECTION_PULSE_CHANGE, (e) => {
-      e.preventDefault()
-      e.stopPropagation()
+    // this.#sections.addEventListener(EVENTS.SECTION_PULSE_CHANGE, (e) => {
+    //   e.preventDefault()
+    //   e.stopPropagation()
 
-      const UUID = e.detail?.UUID ?? ''
+    //   const sections = Array.from(this.#sections?.querySelectorAll('yam-section'))
+    //   const it = sections.values()
 
-      if (UUID !== '') {
-        // const pulse = e.detail?.pulse ?? ''
-        // const defaultValue = e.detail?.defaultValue ?? 'quarter'
-        const sections = Array.from(this.#sections?.querySelectorAll('yam-section'))
+    //   let pulse = this.#fields.mm?.pulse ?? 'quarter'
+    //   for (const section of it) {
+    //     const tempo = section.tempo
 
-        const it = sections.values()
-        for (const section of it) {
-          console.log({ section })
-          if (section.getAttribute('uuid') === UUID) {
-            break
-          }
-        }
+    //     section.defaults = {
+    //       pulse: pulse,
+    //     }
 
-        for (const section of it) {
-          console.log('---', section.tempo)
-        }
-      }
-    })
+    //     if (tempo.pulse != null && tempo.pulse !== '') {
+    //       pulse = tempo.pulse
+    //     }
+    //   }
+    // })
   }
 
   disconnectedCallback() {}
@@ -173,7 +183,6 @@ export class Editor extends HTMLElement {
         const li = document.createElement('li')
         const section = document.createElement('yam-section')
 
-        section.setAttribute('uuid', v.UUID)
         section.section = v
 
         li.setAttribute('draggable', false)
@@ -299,11 +308,30 @@ export class Editor extends HTMLElement {
   get #plus() {
     return this.#fields.plus
   }
+
+  // ... "cascade" updates section defaults values
+  set #defaults(object) {
+    const sections = Array.from(this.#sections?.querySelectorAll('yam-section'))
+    const it = sections.values()
+    let pulse = object?.pulse ?? ''
+
+    if (pulse !== '') {
+      for (const section of it) {
+        const tempo = section.tempo
+
+        section.defaults = {
+          pulse: pulse,
+        }
+
+        if (tempo.pulse != null && tempo.pulse !== '') {
+          pulse = tempo.pulse
+        }
+      }
+    }
+  }
 }
 
 function* transmogrify(track) {
-  const set = new Set()
-
   const sections = track?.sections ?? []
   const _roles = generators.roles()
   const _names = generators.names()
@@ -313,7 +341,6 @@ function* transmogrify(track) {
   let tempo = track?.tempo ?? ''
 
   for (const section of sections) {
-    const uuid = UUIDv4(set).next().value
     const _subsections = section.subsections ?? []
 
     const defaults = {
@@ -342,8 +369,6 @@ function* transmogrify(track) {
     }
 
     yield {
-      UUID: uuid,
-
       role: {
         track: section.role,
         generated: role,

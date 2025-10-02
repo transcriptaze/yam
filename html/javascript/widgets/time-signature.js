@@ -96,6 +96,19 @@ export class TimeSignature extends HTMLElement {
       },
     },
 
+    button: {
+      click: () => {
+        const button = this.shadowRoot.querySelector('[popovertarget]')
+        const target = button.getAttribute('popovertarget')
+        const popover = this.shadowRoot.getElementById(target)
+        const rect = button.getBoundingClientRect()
+
+        popover.style.position = 'fixed'
+        popover.style.top = `${rect.bottom + 4}px`
+        popover.style.left = `${rect.left + 12}px`
+      },
+    },
+
     overlay: {
       click: () => {
         const container = this.shadowRoot.querySelector('div.time-signature')
@@ -111,19 +124,6 @@ export class TimeSignature extends HTMLElement {
         const container = this.shadowRoot.querySelector('div.time-signature')
 
         container.classList.remove('tapped')
-      },
-    },
-
-    button: {
-      click: () => {
-        const button = this.shadowRoot.querySelector('[popovertarget]')
-        const target = button.getAttribute('popovertarget')
-        const popover = this.shadowRoot.getElementById(target)
-        const rect = button.getBoundingClientRect()
-
-        popover.style.position = 'fixed'
-        popover.style.top = `${rect.bottom + 4}px`
-        popover.style.left = `${rect.left + 12}px`
       },
     },
   }
@@ -148,12 +148,12 @@ export class TimeSignature extends HTMLElement {
     this.classList.add('component-time-signature')
 
     const shadow = this.shadowRoot
-    const overlay = shadow.querySelector('div.overlay')
     const ul = shadow.querySelector('div.content ul')
     const tactus = shadow.querySelector('input#tactus')
     const figura = shadow.querySelector('input#figura')
-    const lock = shadow.querySelector('#lock')
     const button = shadow.querySelector('[popovertarget]')
+    const overlay = shadow.querySelector('div.overlay')
+    const lock = shadow.querySelector('#lock')
 
     ul.addEventListener('click', this.#handlers.ul.click)
     tactus.addEventListener('input', this.#handlers.tactus.input)

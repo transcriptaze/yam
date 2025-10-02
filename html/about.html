@@ -14,9 +14,18 @@
 
         <h2>User guide</h2>
           <ul class="guide">
-            <li><img src="./images/settings.svg"   draggable="false"/>Opens the settings page</li>
-            <li><img src="./images/fullscreen.svg" draggable="false"/>Toggles fullscreen mode</li>
-            <li><img src="./images/wakelock.svg"   draggable="false"/>Wake lock state indicator</li>
+            <li><img src="./images/metronome.svg"  draggable="false" />Displays the metronome</li>
+            <li><img src="./images/playlist.svg"   draggable="false" />Displays the playlists</li>
+            <li><img src="./images/edit.svg"       draggable="false" />Displays the track editor</li>
+          </ul>
+          <ul class="guide">
+            <li><img src="./images/import.svg"  draggable="false" />Imports the playlists from a file</li>
+            <li><img src="./images/export.svg"  draggable="false" />Exports the playlists to a file</li>
+          </ul>
+          <ul class="guide">
+            <li><img src="./images/reset.svg"      draggable="false" />Resets changes</li>
+            <li><img src="./images/fullscreen.svg" draggable="false" />Toggles fullscreen mode</li>
+            <li><img src="./images/wakelock.svg"   draggable="false" />Wake lock state indicator</li>
           </ul>
 
         <h2>Source code</h2>
@@ -75,8 +84,19 @@
     const playlist = document.querySelector('toolbar img#playlist')
     const settings = document.querySelector('toolbar #settings')
 
-    // metronome.addEventListener('click', () => show('metronome'))
-    // playlist.addEventListener('click', () => show('playlist'))
+    // Android Chrome: set viewport height in CSS variable because the viewport height for a
+    //                 PWA app loaded from the home page is incorrect
+    window.addEventListener('load', () => {
+      console.log('-------------- load')
+      setTimeout(() => {
+        const vh = window.visualViewport?.height || window.innerHeight
+
+      console.log('-------------- load',{vh})
+
+        document.documentElement.style.setProperty('--vh', `${vh}px`)
+      }, 100)
+    })
+
   </script>
 
 </html>

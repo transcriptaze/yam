@@ -32,7 +32,7 @@
   font-family: "YAM";
   font-style: normal;
   font-weight: normal;
-  src: url("../fonts/Lato/Lato-Regular.woff2") format("woff2");
+  src: url("../fonts/Lato/Lato-Light.woff2") format("woff2");
   unicode-range: U+0221E; /* &infin; */
   size-adjust: 120%;
 }

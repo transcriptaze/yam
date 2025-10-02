@@ -32,7 +32,7 @@
   font-family: "YAM";
   font-style: normal;
   font-weight: normal;
-  src: url("../fonts/Lato/Lato-Regular.woff2") format("woff2");
+  src: url("../fonts/Lato/Lato-Light.woff2") format("woff2");
   unicode-range: U+0221E; /* &infin; */
   size-adjust: 120%;
 }
@@ -802,6 +802,7 @@ div.beat.on {
 :host(.component-info) div.info span.infinity {
   font-family: "YAM", "Lato", sans;
   font-size: 1.4em;
+  vertical-align: -0.08em;
 }
 :host(.component-info) div.info.details div.title {
   border-radius: 4px 4px 0 0;

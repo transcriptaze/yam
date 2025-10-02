@@ -68,4 +68,5 @@ export const EVENTS = {
   DELETE_TRACK: 'delete-track',
 
   EDIT_SAVE: 'edit-save',
+  SECTION_PULSE_CHANGE: 'section-pulse-change',
 }

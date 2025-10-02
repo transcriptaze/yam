@@ -2,8 +2,10 @@ import { INF } from '../constants.js'
 
 export class Section extends HTMLElement {
   static get observedAttributes() {
-    return ['expanded']
+    return ['uuid', 'expanded']
   }
+
+  #UUID = ''
 
   // ... fields
   #fields = {}
@@ -80,6 +82,10 @@ export class Section extends HTMLElement {
   adoptedCallback() {}
 
   attributeChangedCallback(name, from, to) {
+    if (name === 'uuid') {
+      this.#UUID = to
+    }
+
     if (name === 'expanded') {
       const shadow = this.shadowRoot
       const div = shadow.querySelector('div.section')
@@ -193,6 +199,7 @@ export class Section extends HTMLElement {
       await customElements.whenDefined('yam-section-mm')
       const e = this.shadowRoot?.querySelector('yam-section-mm')
       if (e) {
+        e.setAttribute('uuid', this.#UUID)
         e.tempo = tempo
         e.timeSignature = timeSignature
       }

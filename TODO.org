@@ -36,6 +36,7 @@
 **** DONE fix defval - should inherit from previous section
 **** TODO cascade update following sections after pick pulse
 **** TODO fix BPM defval - should inherit from previous section
+**** TODO disable section time signature and tempo if subsections
 
 *** TODO clicks
 **** DONE use section clicks in worklet

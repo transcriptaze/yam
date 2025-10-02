@@ -567,6 +567,7 @@ function onPlaylist(e) {
 function onTrackDelete(event) {
   const playlist = event.detail.playlist
   const track = event.detail.track
+  const toolbar = document.querySelector('toolbar')
 
   models.playlists.playlist(playlist)?.remove(track)
   models.playlists.playlist(playlist)?.save()
@@ -582,6 +583,8 @@ function onTrackDelete(event) {
     }
 
     widgets.editor.track = null
+
+    toolbar.classList.remove('editable')
   }
 }
 
@@ -610,7 +613,7 @@ function onSave() {
       const playlist = models.playlists.playlist(state.playlist)
       if (playlist != null) {
         playlist.add(track)
-        playlist.select(track)
+        playlist.select(track.UUID)
         playlist.save()
       }
 

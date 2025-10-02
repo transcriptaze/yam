@@ -1,3 +1,4 @@
+import { EVENTS } from '../constants.js'
 import { parseTimeSignature, parsePulse } from '../util.js'
 
 // prettier-ignore
@@ -14,11 +15,17 @@ const NONE = './images/MM/pulse/none.svg'
 
 export class SectionMM extends HTMLElement {
   static get observedAttributes() {
-    return ['disabled']
+    return ['uuid', 'disabled']
   }
 
+  #UUID = ''
   #BPM = 120
   #pulse = 'quarter'
+
+  #defaults = {
+    pulse: 'quarter',
+    BPM: 120,
+  }
 
   #handlers = {
     list: {
@@ -30,7 +37,17 @@ export class SectionMM extends HTMLElement {
 
           this.pulse = pulse
 
-          this.dispatchEvent(new CustomEvent('change', { bubbles: true, composed: true, detail: { pulse: pulse } }))
+          this.dispatchEvent(
+            new CustomEvent(EVENTS.SECTION_PULSE_CHANGE, {
+              bubbles: true,
+              composed: true,
+              detail: {
+                UUID: this.#UUID,
+                pulse: pulse,
+                defaultValue: this.#defaults.pulse,
+              },
+            }),
+          )
         }
       },
     },
@@ -69,6 +86,19 @@ export class SectionMM extends HTMLElement {
         }
       },
     },
+
+    button: {
+      click: () => {
+        const button = this.shadowRoot.querySelector('[popovertarget]')
+        const target = button.getAttribute('popovertarget')
+        const popover = this.shadowRoot.getElementById(target)
+        const rect = button.getBoundingClientRect()
+
+        popover.style.position = 'fixed'
+        popover.style.top = `${rect.bottom + 4}px`
+        popover.style.left = `${rect.left + 12}px`
+      },
+    },
   }
 
   constructor() {
@@ -93,10 +123,16 @@ export class SectionMM extends HTMLElement {
     const shadow = this.shadowRoot
     const list = shadow.querySelector('div.content')
     const input = shadow.querySelector('input')
+    const button = shadow.querySelector('[popovertarget]')
 
     list.addEventListener('click', this.#handlers.list.click)
     input.addEventListener('keypress', this.#handlers.input.keypress)
     input.addEventListener('input', this.#handlers.input.change)
+
+    // FireFox doesn't support CSS anchor positioning
+    if (!CSS.supports('top: anchor(bottom)')) {
+      button.addEventListener('click', this.#handlers.button.click)
+    }
   }
 
   disconnectedCallback() {}
@@ -104,6 +140,10 @@ export class SectionMM extends HTMLElement {
   adoptedCallback() {}
 
   attributeChangedCallback(name, from, to) {
+    if (name === 'uuid') {
+      this.#UUID = to
+    }
+
     if (name === 'disabled') {
       this.disabled = to != null ? true : false
     }
@@ -122,6 +162,8 @@ export class SectionMM extends HTMLElement {
 
     this.#redraw()
   }
+
+  set defaults({ pulse }) {}
 
   get BPM() {
     return this.#BPM
@@ -157,15 +199,9 @@ export class SectionMM extends HTMLElement {
 
   set tempo({ pulse, BPM, defaults }) {
     const shadow = this.shadowRoot
-    const p = shadow.querySelector('#pulse')
-    const bpm = shadow.querySelector('input')
     const none = shadow.querySelector('#list div.li[data-pulse=""] img')
 
-    if (defaults != null && defaults.pulse != null) {
-      p.dataset.defval = defaults.pulse
-    } else {
-      p.dataset.defval = 'quarter'
-    }
+    this.#defaults.pulse = defaults?.pulse ?? 'quarter'
 
     if (defaults != null && defaults.pulse != null) {
       none.src = PULSES.has(defaults.pulse) ? PULSES.get(defaults.pulse).li : NONE
@@ -174,9 +210,9 @@ export class SectionMM extends HTMLElement {
     }
 
     if (defaults != null && defaults.BPM != null && !Number.isNaN(defaults.BPM) && defaults.BPM >= 40 && defaults.BPM <= 200) {
-      bpm.dataset.defval = `${defaults.BPM}`
+      this.#defaults.BPM = `${defaults.BPM}`
     } else {
-      bpm.dataset.defval = `---`
+      this.#defaults.BPM = `---`
     }
 
     this.pulse = pulse
@@ -220,7 +256,7 @@ export class SectionMM extends HTMLElement {
       button.classList.add('none')
     }
 
-    const p = this.#pulse != null && this.#pulse !== '' ? `${this.#pulse}` : `${pulse.dataset.defval}`
+    const p = this.#pulse != null && this.#pulse !== '' ? `${this.#pulse}` : `${this.#defaults.pulse}`
     const k = PULSES.has(p) ? p : 'quarter'
 
     if (this.#BPM != null && this.#BPM !== '') {
@@ -230,7 +266,7 @@ export class SectionMM extends HTMLElement {
     }
 
     BPM.value = `${this.#BPM}`
-    BPM.placeholder = BPM.dataset.defval
+    BPM.placeholder = this.#defaults.BPM
   }
 }
 

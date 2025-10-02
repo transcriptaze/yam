@@ -122,7 +122,7 @@ export class TimeSignature extends HTMLElement {
         const rect = button.getBoundingClientRect()
 
         popover.style.position = 'fixed'
-        popover.style.top = `${rect.bottom + 8}px`
+        popover.style.top = `${rect.bottom + 4}px`
         popover.style.left = `${rect.left + 12}px`
       },
     },

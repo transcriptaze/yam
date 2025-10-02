@@ -1,4 +1,5 @@
 import { EVENTS, INF } from '../constants.js'
+import { UUIDv4 } from '../uuid.js'
 import * as generators from '../generators.js'
 
 export class Editor extends HTMLElement {
@@ -92,6 +93,31 @@ export class Editor extends HTMLElement {
 
     this.#mm.addEventListener('change', this.#handlers.mm.change)
     this.#plus.addEventListener('click', this.#handlers.plus.click)
+
+    this.#sections.addEventListener(EVENTS.SECTION_PULSE_CHANGE, (e) => {
+      e.preventDefault()
+      e.stopPropagation()
+
+      const UUID = e.detail?.UUID ?? ''
+
+      if (UUID !== '') {
+        // const pulse = e.detail?.pulse ?? ''
+        // const defaultValue = e.detail?.defaultValue ?? 'quarter'
+        const sections = Array.from(this.#sections?.querySelectorAll('yam-section'))
+
+        const it = sections.values()
+        for (const section of it) {
+          console.log({ section })
+          if (section.getAttribute('uuid') === UUID) {
+            break
+          }
+        }
+
+        for (const section of it) {
+          console.log('---', section.tempo)
+        }
+      }
+    })
   }
 
   disconnectedCallback() {}
@@ -147,6 +173,7 @@ export class Editor extends HTMLElement {
         const li = document.createElement('li')
         const section = document.createElement('yam-section')
 
+        section.setAttribute('uuid', v.UUID)
         section.section = v
 
         li.setAttribute('draggable', false)
@@ -275,6 +302,8 @@ export class Editor extends HTMLElement {
 }
 
 function* transmogrify(track) {
+  const set = new Set()
+
   const sections = track?.sections ?? []
   const _roles = generators.roles()
   const _names = generators.names()
@@ -284,6 +313,7 @@ function* transmogrify(track) {
   let tempo = track?.tempo ?? ''
 
   for (const section of sections) {
+    const uuid = UUIDv4(set).next().value
     const _subsections = section.subsections ?? []
 
     const defaults = {
@@ -312,6 +342,8 @@ function* transmogrify(track) {
     }
 
     yield {
+      UUID: uuid,
+
       role: {
         track: section.role,
         generated: role,

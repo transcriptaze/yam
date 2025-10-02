@@ -128,6 +128,7 @@ export class Playlist extends EventTarget {
 
   select(track) {
     this.#selected = track
+
     this.dispatchEvent(new CustomEvent('selected', { detail: { playlist: this.UUID, track: track } }))
   }
 

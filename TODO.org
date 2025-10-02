@@ -25,6 +25,19 @@
 *** DONE can't edit new track
 *** DONE toolbar edit icon is visible after track deleted
 
+*** DONE Firefox
+**** DONE set width/height for all SVGs
+**** DONE time-signature layout
+**** DONE pulse layout
+**** DONE controls layout
+**** DONE editor section layout
+**** DONE time signature popover
+**** DONE MM signature popover
+**** DONE section MM signature popover
+**** DONE editor time signature popover
+**** DONE remove up/down arrows in editor BPM
+**** DONE editor: loop count font
+
 *** TODO fix about box layout
 
 *** TODO section pulse: need a way to revert to '' (default)
@@ -36,26 +49,13 @@
 **** DONE fix defval - should inherit from previous section
 **** TODO cascade update following sections after pick pulse
 **** TODO fix BPM defval - should inherit from previous section
-**** TODO disable section time signature and tempo if subsections
+**** TODO disable/hide section time signature and tempo if subsections
 
 *** TODO clicks
 **** DONE use section clicks in worklet
 **** TODO generate clicks for count-in
 **** TODO generate clicks for anacrusis
 **** TODO not cascading - revert to track clicks or default clicks for time-signature
-
-*** TODO Firefox
-**** DONE set width/height for all SVGs
-**** DONE time-signature layout
-**** DONE pulse layout
-**** DONE controls layout
-**** DONE editor section layout
-**** DONE time signature popover
-**** DONE MM signature popover
-**** DONE section MM signature popover
-**** DONE editor time signature popover
-**** TODO editor: loop count font
-**** TODO remove up/down arrows in editor BPM
 
 *** TODO use cloned track
 *** TODO use cloned playlist

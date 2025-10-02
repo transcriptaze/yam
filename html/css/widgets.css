@@ -1490,6 +1490,7 @@ div.playlist-track [popover]:popover-open::backdrop {
   grid-columns: 2;
   grid-row: 1;
   min-width: 2em;
+  -moz-appearance: textfield;
 }
 :host(.component-editor) div.track-editor div.metronome #BPM::-webkit-inner-spin-button {
   -webkit-appearance: none;
@@ -1647,6 +1648,9 @@ div.playlist-track [popover]:popover-open::backdrop {
 }
 :host(.component-editor) div.track-editor select, :host(.component-editor) div.track-editor select::picker(select) {
   appearance: base-select;
+}
+:host(.component-editor) div.track-editor select option {
+  font-size: 0.85em;
 }
 :host(.component-editor) div.track-editor #save {
   box-sizing: border-box;

@@ -14,7 +14,7 @@ It's available online if you want to try it out:
 
 https://yam-8sz.pages.dev
 
-(or follow the installation instructions [below](#installation) to run your own local version).
+(or follow the installation instructions [below](#installation) to run your own version).
 
 
 ## Disclaimer
@@ -33,30 +33,26 @@ It will be a pleasant surprise and/or minor miracle if it works at all on anythi
 | **MacOs**   | Browser    | Version        | Ok               | Notes                                      |
 |-------------|------------|----------------|------------------|--------------------------------------------|
 |             | Chrome     | (recent'ish)   | Yes              |                                            |
-|             | Firefox    | (recent'ish)   | Mostly           | Do NOT ask about the layout hacks          |
+|             | Firefox    | (latest)       | Yes              | Do NOT ask about the layout hacks          |
 |             | Safari     | (old)          | No               |                                            |
-|             | Opera      | (recent'ish)   | Yes              |                                            |
-|             | DuckDuckGo |                | **NO**           |                                            |
+|             | Opera      | (latest)       | Yes              |                                            |
 
 | **Windows** | Browser    | Version        | Ok               | Notes                                      |
 |             | Chrome     |                |                  |                                            |
 |             | Firefox    |                |                  |                                            |
 |             | Edge       |                |                  |                                            |
 |             | Opera      |                |                  |                                            |
-|             | DuckDuckGo |                | **UNLIKELY**     |                                            |
 
 | **Linux**   | Browser    | Version        | Ok               | Notes                                      |
 |             | Chrome     |                |                  |                                            |
 |             | Firefox    |                |                  |                                            |
 |             | Opera      |                |                  |                                            |
-|             | DuckDuckGo |                | **PROBABLY NOT** |                                            |
 
 | **Android** | Browser    | Version        | Ok               | Notes                                      |
-|             | Chrome     | (latest ?)     | Yes              |                                            |
-|             | Firefox    | (latest ?)     | Mostly           | (with horrible Firefox specific CSS hacks) |
+|             | Chrome     | (latest)       | Yes              |                                            |
+|             | Firefox    | (latest)       | Mostly           | (as above)                                 |
 |             | Opera      |                |                  |                                            |
 |             | Opera Mini |                | No               |                                            |
-|             | DuckDuckGo |                | **NO**           |                                            |
 
 | **iOS**     | Browser    | Version        | Ok               | Notes                                      |
 |             | Firefox    |                |                  |                                            |

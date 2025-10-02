@@ -14,7 +14,7 @@ const NONE = './images/MM/pulse/none.svg'
 
 export class MM extends HTMLElement {
   static get observedAttributes() {
-    return ['disabled']
+    return ['disabled', 'locked']
   }
 
   #BPM = 120
@@ -69,6 +69,24 @@ export class MM extends HTMLElement {
         popover.style.left = `${rect.left + 12}px`
       },
     },
+
+    overlay: {
+      click: () => {
+        const container = this.shadowRoot.querySelector('div.MM')
+
+        if (container.classList.contains('locked')) {
+          container.classList.add('tapped')
+        }
+      },
+    },
+
+    lock: {
+      animated: () => {
+        const container = this.shadowRoot.querySelector('div.MM')
+
+        container.classList.remove('tapped')
+      },
+    },
   }
 
   constructor() {
@@ -94,10 +112,15 @@ export class MM extends HTMLElement {
     const list = shadow.querySelector('div.content')
     const input = shadow.querySelector('input')
     const button = shadow.querySelector('[popovertarget]')
+    const overlay = shadow.querySelector('div.overlay')
+    const lock = shadow.querySelector('#lock')
 
     list.addEventListener('click', this.#handlers.list.click)
     input.addEventListener('keypress', this.#handlers.input.keypress)
     input.addEventListener('input', this.#handlers.input.change)
+
+    overlay.addEventListener('click', this.#handlers.overlay.click)
+    lock.addEventListener('animationend', this.#handlers.lock.animated)
 
     // FireFox doesn't support CSS anchor positioning
     if (!CSS.supports('top: anchor(bottom)')) {
@@ -111,7 +134,27 @@ export class MM extends HTMLElement {
 
   attributeChangedCallback(name, from, to) {
     if (name === 'disabled') {
-      this.disabled = to != null ? true : false
+      this.#disabled = to != null ? true : false
+    }
+
+    if (name === 'locked') {
+      this.#locked = to != null ? true : false
+    }
+  }
+
+  set disabled(v) {
+    if (v === true) {
+      this.setAttribute('disabled', '')
+    } else {
+      this.removeAttribute('disabled')
+    }
+  }
+
+  set locked(v) {
+    if (v === true) {
+      this.setAttribute('locked', '')
+    } else {
+      this.removeAttribute('locked')
     }
   }
 
@@ -175,21 +218,54 @@ export class MM extends HTMLElement {
     this.#redraw()
   }
 
-  set disabled(v) {
-    const shadow = this.shadowRoot
-    const button = shadow.querySelector('button')
-    const input = shadow.querySelector('input')
-
-    button.disabled = v === true
-    input.disabled = v === true
-  }
-
   redraw(BPM, pulse, { playing, stopped }) {
     if (((playing || stopped) && BPM !== this.#BPM) || pulse !== this.#pulse) {
       this.#BPM = BPM
       this.#pulse = pulse
 
       this.#redraw()
+    }
+  }
+
+  get #disabled() {
+    return this.getAttribute('disabled') != null
+  }
+
+  set #disabled(v) {
+    const shadow = this.shadowRoot
+    const container = shadow.querySelector('div.MM')
+    const button = shadow.querySelector('button')
+    const input = shadow.querySelector('input')
+
+    if (v === true) {
+      button.disabled = true
+      input.disabled = true
+      container.classList.add('disabled')
+    } else {
+      button.disabled = this.#locked
+      input.disabled = this.#locked
+      container.classList.remove('disabled')
+    }
+  }
+
+  get #locked() {
+    return this.getAttribute('locked') != null
+  }
+
+  set #locked(v) {
+    const shadow = this.shadowRoot
+    const container = shadow.querySelector('div.MM')
+    const input = shadow.querySelector('input')
+    const button = shadow.querySelector('button')
+
+    if (v === true) {
+      button.disabled = true
+      input.disabled = true
+      container.classList.add('locked')
+    } else {
+      button.disabled = this.#disabled
+      input.disabled = this.#locked
+      container.classList.remove('locked')
     }
   }
 

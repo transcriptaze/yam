@@ -26,7 +26,10 @@
 *** DONE toolbar edit icon is visible after track deleted
 *** DONE Firefox
 
-*** TODO fix about box layout
+*** TODO fix About page layout
+*** TODO lock tempo
+      - attach lock to right/bottom of text
+      - field-sizing
 
 *** TODO section pulse: need a way to revert to '' (default)
 **** DONE add '' pulse to popup list
@@ -51,6 +54,8 @@
 *** TODO connectedCallback: event handler duplication
 
 ** Fixes
+*** TODO edit from playlist
+*** TODO use async getters for nested web components
 *** TODO editor: enable/disable button iff there are changes
 *** TODO allow BPM changes while playing a track
 *** TODO URL - use ?UUID= or ?title= 
@@ -76,12 +81,8 @@
 *** TODO make track UUID private
 *** TODO automatically open editor on new playlist
 *** TODO playlists: replace playlist.index with an ordered list
-*** TODO rework UI
-      - add '+' button to tracklist to create new track
-      - '+' button in All Tracks creates new track in track editor
-      - delete track in 'All Tracks' deletes track from all playlists and DB
+*** TODO delete track in 'All Tracks' deletes track from all playlists and DB
 
-*** TODO editor: toolbar play/stop
 *** TODO 'change' events should all be CustomEvents
 *** TODO web components: bubble events
 *** TODO remove Track.addEventListener
@@ -92,8 +93,7 @@
       - disable time-signature while playing + sections
       - disable pulse while playing + sections
       - BPM changes scaled by track BPM
-*** TODO import/export via share
-      - https://web.dev/articles/web-share
+
 *** TODO 6:8, dotted quarter: intermediate clicks @60BPM
 *** TODO 6:8, quarter notes
 *** TODO 6:8, eighth notes
@@ -102,7 +102,6 @@
 *** TODO minimum click subinterval 125ms
 *** TODO scale up SVG images (too small -> precision issues)
 *** TODO clock: circular time
-*** TODO Safari layout
 *** TODO trim height of 'play' icon
 *** TODO use different font/colour for track that is in playlist (so that you know you are editing a playlist item)
 *** TODO consistently pass the either whole track or the UUID
@@ -139,15 +138,6 @@
 *** TODO progress bar      
 *** TODO velocity sensitive
 *** TODO animate when BPM changed by input
-
-** Sound sets
-*** TODO store sounds in IndexedDB
-*** TODO has
-*** TODO get 
-*** TODO versioning (newer versions get downloaded)
-*** TODO soft/medium/loud sets
-*** TODO (?) use microtasks to load
-      - https://developer.mozilla.org/en-US/docs/Web/API/HTML_DOM_API/Microtask_guide
 
 ** Playlists
 *** TODO autoplay
@@ -203,9 +193,6 @@
 *** TODO desktop mockup
 
 ** Misc
-*** TODO rollup
-      - https://github.com/hughrawlinson/rollup-audio-worklet-demo
-
 *** TODO themes
       - [ ] setttings
       - [ ] setup on initial load

@@ -5,6 +5,8 @@
   padding: 0;
 
   div.MM {
+    position: relative;
+
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
@@ -85,6 +87,28 @@
         }
       }
     }
+
+    div.overlay {
+      grid-column: 1 / 3;
+      grid-row: 1;
+
+      width: 100%;
+      height: 100%;
+
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    #lock {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      transform: translateX(-20%) translateY(-50%);
+
+      height: 30%;
+      opacity: 0; 
+      z-index: 2;
+    }
   }
 
   button:disabled {
@@ -94,7 +118,9 @@
   } 
 
   input {
-      width: 2em;
+      box-sizing: border-box;
+
+      width: 2.5em;
       height: fit-content;
       background: transparent;
 
@@ -125,6 +151,36 @@
   input:disabled {
     color: #a0a0a0;
   } 
+
+  div.MM.locked {
+    button {
+      cursor: auto;    
+      img {
+        filter: brightness(0) saturate(100%) invert(22%) sepia(45%) saturate(3580%) hue-rotate(357deg) brightness(101%) contrast(95%);
+      }
+    }
+
+    input {
+      color: #dc322f;
+    }
+
+    div.overlay {
+      pointer-events: auto;
+    }
+  }
+
+  div.MM.locked.tapped {
+    #lock {
+      animation: tapped 3.5s ease-in-out forwards;
+    }
+  }
+
+  @keyframes tapped {
+    0%   { opacity: 0; }
+    5%   { opacity: 1; }
+    80%  { opacity: 1; }
+    100% { opacity: 0; }
+  }
 }
 
 :host(.component-mm:not([figura="eighth"])) {

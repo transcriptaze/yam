@@ -115,14 +115,7 @@ export class Wheel extends HTMLElement {
     return this.#max
   }
 
-  redraw(BPM, { playing, stopped }) {
-    if ((playing || stopped) && BPM !== this.#BPM) {
-      this.#value = BPM
-      this.#BPM = BPM
-
-      this.#redraw()
-    }
-  }
+  redraw({ _playing, _stopped }) {}
 
   #onPointerDown(event) {
     const overlay = event.currentTarget

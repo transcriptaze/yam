@@ -129,12 +129,13 @@ export class MetronomeNode extends AudioWorkletNode {
 
   set track(v) {
     const track = transmogrify({
-      BPM: v?.BPM,
+      tempo: v?.tempo,
       timeSignature: v?.timeSignature,
       pulse: v?.pulse,
-      sections: v?.sections ?? [],
+      BPM: v?.BPM,
       loops: v?.loops ?? INF,
       clicks: v?.clicks ?? null,
+      sections: v?.sections ?? [],
     })
 
     this.#loops = v?.loops ?? INF
@@ -283,9 +284,10 @@ function transmogrify(track) {
   const bars = sections.length === 0 ? INF : sections.reduce((measures, v) => measures + v.measures, 0)
 
   return {
-    BPM: track.BPM,
+    tempo: track.tempo ?? 120,
     timeSignature: track.timeSignature ?? '',
     pulse: PULSE.pulseToInt(track.pulse ?? ''),
+    BPM: track.BPM,
     loop: track.loop,
     loops: track.loops ?? INF,
     clicks: generators.clicks(track.clicks),

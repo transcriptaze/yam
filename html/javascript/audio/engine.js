@@ -78,12 +78,14 @@ class Engine {
     this.#exec(() => this.metronome.toggle())
   }
 
+  // FIXME remove
   get BPM() {
-    if (this.initialised) {
-      return this.metronome?.BPM ?? 120
-    }
-
-    return 120
+    throw new Error('engine.BPM not supported')
+    // if (this.initialised) {
+    //   return this.metronome?.BPM ?? 120
+    // }
+    //
+    // return 120
   }
 
   set BPM(bpm) {
@@ -211,8 +213,10 @@ export function divisions() {
   return engine.divisions
 }
 
+// FIXME remove
 export function BPM() {
-  return engine.BPM
+  throw new Error('engine.BPM not supported')
+  // return engine.BPM
 }
 
 export function pulse() {

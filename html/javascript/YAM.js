@@ -826,7 +826,6 @@ function animate(id) {
   const beat = engine.beat()
   const beats = engine.beats()
   const divisions = engine.divisions()
-  const BPM = engine.BPM()
   const pulse = engine.pulse()
   const loops = engine.loops()
 
@@ -839,7 +838,7 @@ function animate(id) {
     section: section,
     beats: beats,
     divisions: divisions,
-    pulse: pulse,
+    pulse: pulse, // NTS: used in pads
     loops: loops,
   }
 
@@ -847,8 +846,8 @@ function animate(id) {
   widgets.info.redraw(bar, runstate)
   widgets.timeSignature.redraw(timeSignature, runstate)
   widgets.mm.redraw(runstate)
-  widgets.knob.redraw(BPM, runstate)
-  widgets.wheel.redraw(BPM, runstate)
+  widgets.knob.redraw(runstate)
+  widgets.wheel.redraw(runstate)
   widgets.loop.redraw(runstate)
 
   if (!stopped) {

@@ -199,9 +199,20 @@ export class Metronome extends AudioWorkletProcessor {
     }
   }
 
+  #bpm(BPM) {
+    const tempo = this.#track?.tempo ?? null
+    const bpm = this.section?.BPM ?? null
+
+    if (tempo != null && bpm != null) {
+      return (bpm * BPM) / tempo
+    }
+
+    return this.section?.BPM ?? BPM
+  }
+
   process(_inputs, outputs, parameters) {
     const N = outputs?.[0]?.[0]?.length ?? -3
-    const BPM = this.section?.BPM ?? clamp(parameters.BPM[0], 40, 200)
+    const BPM = this.#bpm(clamp(parameters.BPM[0], 40, 200))
     const tactus = this.section?.beats ?? clamp(parameters.beats[0], 1, 32)
     const figura = this.section?.divisions ?? clamp(parameters.divisions[0], 1, 32)
     const pulse = this.section?.pulse ?? parameters.pulse[0]

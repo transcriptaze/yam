@@ -9,9 +9,18 @@
   - https://github.com/liriliri/eruda
 
 *** DONE fix About page layout
+*** DONE refactor MM to use track for redraw
+*** DONE fix worklet tempo/BPM thing
+
+*** TODO update worklet track on editor::save
+*** TODO refactor time signature to use datastore
+
 *** TODO lock tempo
       - attach lock to right/bottom of text
       - field-sizing
+
+*** TODO make errors visible
+      - icon + title text
 
 *** TODO section pulse: need a way to revert to '' (default)
 **** DONE add '' pulse to popup list

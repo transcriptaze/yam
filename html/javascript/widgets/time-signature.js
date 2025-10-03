@@ -248,6 +248,18 @@ export class TimeSignature extends HTMLElement {
     }
   }
 
+  redraw(timeSignature, { playing, stopped, section }) {
+    if (playing || stopped) {
+      const _section = this.#track.sections.get(section.ID) ?? this.#track.sections.get(1)
+
+      if (_section?.timeSignature !== this.#timeSignature) {
+        this.timeSignature = _section?.timeSignature ?? timeSignature
+      }
+    } else {
+      this.timeSignature = timeSignature
+    }
+  }
+
   get #disabled() {
     return this.getAttribute('disabled') != null
   }
@@ -281,18 +293,6 @@ export class TimeSignature extends HTMLElement {
     } else {
       button.disabled = this.#disabled
       container.classList.remove('locked')
-    }
-  }
-
-  redraw(timeSignature, { playing, stopped, section }) {
-    if (playing || stopped) {
-      const _section = this.#track.sections.get(section.ID) ?? this.#track.sections.get(1)
-
-      if (_section?.timeSignature !== this.#timeSignature) {
-        this.timeSignature = _section?.timeSignature ?? timeSignature
-      }
-    } else {
-      this.timeSignature = timeSignature
     }
   }
 

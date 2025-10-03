@@ -1,3 +1,4 @@
+import * as datastore from '../datastore/datastore.js'
 import { parseTimeSignature, parsePulse } from '../util.js'
 
 // prettier-ignore
@@ -19,6 +20,8 @@ export class MM extends HTMLElement {
 
   #BPM = 120
   #pulse = 'quarter'
+  #track = null
+  #bar = -1
 
   #handlers = {
     list: {
@@ -204,26 +207,63 @@ export class MM extends HTMLElement {
     }
   }
 
+  // FIXME remove
   get tempo() {
-    return {
-      pulse: this.pulse,
-      BPM: this.BPM,
+    throw new Error('MM.get not supported')
+    // return {
+    //   pulse: this.pulse,
+    //   BPM: this.BPM,
+    // }
+  }
+
+  // FIXME remove
+  set tempo({ pulse, BPM }) {
+    throw new Error('MM.set not supported')
+    // this.pulse = pulse
+    // this.BPM = BPM
+    //
+    // this.#redraw()
+  }
+
+  set track(v) {
+    const track = datastore.tracks.get(v)
+
+    this.#track = track
+    this.#bar = -1
+    this.locked = track != null && track.sections != null && track.sections.length > 0
+
+    if (track != null) {
+      this.pulse = track.pulse
+      this.BPM = track.BPM
+      this.timeSignature = track.timeSignature
     }
   }
 
-  set tempo({ pulse, BPM }) {
-    this.pulse = pulse
-    this.BPM = BPM
+  redraw({ playing, stopped, bar }) {
+    const track = this.#track
 
-    this.#redraw()
-  }
+    if (track != null && bar != this.#bar) {
+      this.#bar = bar
 
-  redraw(BPM, pulse, { playing, stopped }) {
-    if (((playing || stopped) && BPM !== this.#BPM) || pulse !== this.#pulse) {
-      this.#BPM = BPM
-      this.#pulse = pulse
+      if (!playing && stopped) {
+        this.#redraw(track.pulse, track.BPM)
+      }
 
-      this.#redraw()
+      if (playing && !stopped) {
+        const sections = track.sections ?? []
+        const section = sections.findLast((v) => v.start <= bar)
+        const subsections = section?.subsections ?? []
+        const subsection = subsections.find((v) => v.start <= bar)
+        const bpm = (v) => Math.round((track.BPM * v) / track.tempo)
+
+        if (subsection != null) {
+          this.#redraw(subsection.pulse, bpm(subsection.tempo))
+        } else if (section != null) {
+          this.#redraw(section.pulse, bpm(section.tempo))
+        } else {
+          this.#redraw(track.pulse, track.BPM)
+        }
+      }
     }
   }
 
@@ -269,18 +309,19 @@ export class MM extends HTMLElement {
     }
   }
 
-  #redraw() {
-    const shadow = this.shadowRoot
-    const pulse = shadow.querySelector('#pulse')
-    const BPM = shadow.querySelector('input')
-
-    if (PULSES.has(this.#pulse)) {
-      pulse.src = PULSES.get(this.#pulse)
-    } else {
-      pulse.src = PULSES.get(`quarter`)
+  #redraw(pulse, BPM) {
+    const widgets = {
+      pulse: this.shadowRoot.querySelector('#pulse'),
+      BPM: this.shadowRoot.querySelector('input'),
     }
 
-    BPM.value = `${this.#BPM}`
+    if (PULSES.has(pulse)) {
+      widgets.pulse.src = PULSES.get(pulse)
+    } else {
+      widgets.pulse.src = PULSES.get(`quarter`)
+    }
+
+    widgets.BPM.value = `${BPM}`
   }
 }
 

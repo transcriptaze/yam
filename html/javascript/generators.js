@@ -99,16 +99,19 @@ export function* transmogrify(track) {
   const _clicks = clicks
 
   let ID = 0
-  let tempo = track?.BPM ?? 120
+  let tempo = track?.tempo ?? 120
+  let BPM = track?.BPM ?? 120
   let timeSignature = track?.timeSignature ?? '4:4'
   let pulse = track?.pulse ?? ''
-  let measures = 0
+  // let measures = 0
+  let start = 1
 
   for (const section of sections) {
     const _subsections = section.subsections ?? []
 
     ID++
     tempo = section.tempo ?? tempo
+    BPM = section.BPM ?? tempo
     timeSignature = section.timeSignature ?? timeSignature
     pulse = section.pulse ?? pulse
 
@@ -120,23 +123,28 @@ export function* transmogrify(track) {
 
     if (_subsections.length == 0) {
       subsections.push({
+        start: start,
         measures: section.measures ?? (['count-in', 'anacrusis'].includes(role) ? 1 : Number.POSITIVE_INFINITY),
-        tempo: tempo,
         timeSignature: timeSignature,
         pulse: pulse,
+        tempo: tempo,
+        BPM: BPM,
         clicks: clicks,
       })
     } else {
       for (const subsection of _subsections) {
         tempo = subsection.tempo ?? tempo
+        BPM = subsection.BPM ?? tempo
         timeSignature = subsection.timeSignature ?? timeSignature
         pulse = subsection.pulse ?? pulse
 
         subsections.push({
+          start: start,
           measures: subsection.measures ?? Number.POSITIVE_INFINITY,
-          tempo: tempo,
           timeSignature: timeSignature,
           pulse: pulse,
+          tempo: tempo,
+          BPM: BPM,
           clicks: _clicks(subsection.clicks) ?? clicks,
         })
       }
@@ -144,6 +152,7 @@ export function* transmogrify(track) {
 
     const bars = subsections.reduce((measures, v) => measures + v.measures, 0)
 
+    // FIXME using subsection time signature instead of section time signature (ditto pulse/tempo)
     yield {
       ID: ID,
       role: role,
@@ -152,9 +161,10 @@ export function* transmogrify(track) {
       timeSignature: timeSignature,
       subsections: subsections,
       measures: bars,
-      start: measures + 1,
+      start: start,
     }
 
-    measures += bars
+    // measures += bars
+    start += bars
   }
 }

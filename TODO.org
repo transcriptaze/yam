@@ -8,25 +8,7 @@
   - https://jakub.kr/components/oklch-colors
   - https://github.com/liriliri/eruda
 
-*** DONE fix dangling popover on track delete
-*** DONE new track => edit title => save => reset => edit title => save - changes the new track
-*** DONE title changes don't propagate to other playlists
-*** DONE metricals: jump around as pulse/BPM change
-*** DONE playlist title input extends past right edge
-*** DONE replace metronome toggle with play/stop
-*** DONE fix mute on track delete
-*** DONE fix MM popover div/ul/li thing
-*** DONE large infinity char
-*** DONE info: 1+1+47
-*** DONE reset :hover style
-*** DONE change toggle to start/stop
-*** DONE reset UI if selected track is removed from playlist
-*** DONE spacebar in editor starts/stops metronome
-*** DONE can't edit new track
-*** DONE toolbar edit icon is visible after track deleted
-*** DONE Firefox
-
-*** TODO fix About page layout
+*** DONE fix About page layout
 *** TODO lock tempo
       - attach lock to right/bottom of text
       - field-sizing

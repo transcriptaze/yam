@@ -10,10 +10,10 @@
 
 *** DONE fix About page layout
 *** DONE refactor MM to use track for redraw
+*** DONE refactor time signature to use datastore
 *** DONE fix worklet tempo/BPM thing
 
 *** TODO update worklet track on editor::save
-*** TODO refactor time signature to use datastore
 
 *** TODO lock tempo
       - attach lock to right/bottom of text
@@ -33,6 +33,7 @@
 **** TODO fix BPM defval - should inherit from previous section
 **** TODO disable/hide section time signature and tempo if subsections
 **** TODO slide in on initialisation
+**** TODO increase padding at bottom of section (clef tail is too close to edge)
 
 *** TODO clicks
 **** DONE use section clicks in worklet

@@ -46,7 +46,7 @@ export function initialise() {
   state.initialise(settings)
 
   widgets.timeSignature.timeSignature = state.timeSignature
-  widgets.timeSignature.locked = false
+  widgets.timeSignature.track = null
 
   widgets.mm.pulse = state.pulse
   widgets.mm.BPM = state.BPM
@@ -476,12 +476,11 @@ function onStateModified() {
 
   // FIXME figure out state/track conflict
   widgets.timeSignature.timeSignature = state.timeSignature
-  widgets.timeSignature.locked = track != null && track.sections != null && track.sections.length > 0
   widgets.timeSignature.track = track
 
   // FIXME figure out state/track conflict
-  widgets.mm.BPM = state.BPM
   widgets.mm.pulse = state.pulse
+  widgets.mm.BPM = state.BPM
   widgets.mm.timeSignature = state.timeSignature
   widgets.mm.track = track
 
@@ -829,8 +828,6 @@ function animate(id) {
   const pulse = engine.pulse()
   const loops = engine.loops()
 
-  const timeSignature = state.timeSignature
-
   const runstate = {
     playing: playing,
     stopped: stopped,
@@ -844,7 +841,7 @@ function animate(id) {
 
   widgets.pads.redraw(beat, runstate)
   widgets.info.redraw(bar, runstate)
-  widgets.timeSignature.redraw(timeSignature, runstate)
+  widgets.timeSignature.redraw(runstate)
   widgets.mm.redraw(runstate)
   widgets.knob.redraw(runstate)
   widgets.wheel.redraw(runstate)

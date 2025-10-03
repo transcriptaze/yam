@@ -1,4 +1,4 @@
-import * as generators from '../generators.js'
+import * as datastore from '../datastore/datastore.js'
 import { parseTimeSignature as parse } from '../util.js'
 
 const TACTUS = new Map([
@@ -50,11 +50,9 @@ export class TimeSignature extends HTMLElement {
     return ['disabled', 'locked']
   }
 
-  #track = {
-    sections: new Map(),
-  }
-
   #timeSignature = '4:4'
+  #track = null
+  #bar = -1
 
   #handlers = {
     ul: {
@@ -221,7 +219,7 @@ export class TimeSignature extends HTMLElement {
       container.classList.remove('none')
     }
 
-    this.#redraw()
+    this.#redraw(this.timeSignature)
   }
 
   set disabled(v) {
@@ -240,23 +238,42 @@ export class TimeSignature extends HTMLElement {
     }
   }
 
-  set track(track) {
-    const sections = transmogrify(track)
+  set track(v) {
+    const track = datastore.tracks.get(v)
 
-    this.#track = {
-      sections: new Map(sections.map((v) => [v.ID, v])),
+    this.#track = track
+    this.#bar = -1
+    this.locked = track != null && track.sections != null && track.sections.length > 0
+
+    if (track != null) {
+      this.timeSignature = track.timeSignature
     }
   }
 
-  redraw(timeSignature, { playing, stopped, section }) {
-    if (playing || stopped) {
-      const _section = this.#track.sections.get(section.ID) ?? this.#track.sections.get(1)
+  redraw({ playing, stopped, bar }) {
+    const track = this.#track
 
-      if (_section?.timeSignature !== this.#timeSignature) {
-        this.timeSignature = _section?.timeSignature ?? timeSignature
+    if (track != null && bar != this.#bar) {
+      this.#bar = bar
+
+      if (!playing && stopped) {
+        this.#redraw(track.timeSignature)
       }
-    } else {
-      this.timeSignature = timeSignature
+
+      if (playing && !stopped) {
+        const sections = track.sections ?? []
+        const section = sections.findLast((v) => v.start <= bar)
+        const subsections = section?.subsections ?? []
+        const subsection = subsections.find((v) => v.start <= bar)
+
+        if (subsection != null) {
+          this.#redraw(subsection.timeSignature)
+        } else if (section != null) {
+          this.#redraw(section.timeSignature)
+        } else {
+          this.#redraw(track.timeSignature)
+        }
+      }
     }
   }
 
@@ -314,24 +331,23 @@ export class TimeSignature extends HTMLElement {
     }
   }
 
-  #redraw() {
-    const shadow = this.shadowRoot
-    const tactus = shadow.querySelector('button div img.tactus')
-    const figura = shadow.querySelector('button div img.figura')
-    const common = shadow.querySelector('button div img.common')
-    const cut = shadow.querySelector('button div img.cut')
+  #redraw(timeSignature) {
+    const tactus = this.shadowRoot.querySelector('button div img.tactus')
+    const figura = this.shadowRoot.querySelector('button div img.figura')
+    const common = this.shadowRoot.querySelector('button div img.common')
+    const cut = this.shadowRoot.querySelector('button div img.cut')
 
-    if (`${this.timeSignature}` === '') {
+    if (timeSignature === '') {
       tactus.classList.add('hidden')
       figura.classList.add('hidden')
       common.classList.add('hidden')
       cut.classList.add('hidden')
-    } else if (`${this.timeSignature}` === 'common') {
+    } else if (timeSignature === 'common') {
       tactus.classList.add('hidden')
       figura.classList.add('hidden')
       common.classList.remove('hidden')
       cut.classList.add('hidden')
-    } else if (`${this.timeSignature}` === 'cut') {
+    } else if (timeSignature === 'cut') {
       tactus.classList.add('hidden')
       figura.classList.add('hidden')
       common.classList.add('hidden')
@@ -342,7 +358,7 @@ export class TimeSignature extends HTMLElement {
       common.classList.add('hidden')
       cut.classList.add('hidden')
 
-      const { beats, divisions } = parse(this.timeSignature)
+      const { beats, divisions } = parse(timeSignature)
       if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
         if (TACTUS.has(`${beats}`)) {
           tactus.src = TACTUS.get(`${beats}`)
@@ -354,16 +370,6 @@ export class TimeSignature extends HTMLElement {
       }
     }
   }
-}
-
-function transmogrify(track) {
-  return [...generators.transmogrify(track)].map((v) => {
-    return {
-      ID: v.ID,
-      start: v.start,
-      timeSignature: v.timeSignature,
-    }
-  })
 }
 
 customElements.define('yam-time-signature', TimeSignature)

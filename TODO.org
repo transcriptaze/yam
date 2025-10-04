@@ -17,6 +17,7 @@
       - not doing the 160 BPM thing for (debug)
 
 *** TODO update worklet track on editor::save
+*** TODO pads initialisation (doesn't display actual last pads)
 
 *** TODO lock tempo
       - attach lock to right/bottom of text

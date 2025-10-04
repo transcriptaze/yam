@@ -1,31 +1,63 @@
 div.beat {
-  aspect-ratio: 1 / 1;
+  box-sizing: border-box;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-  background-color: black;
+  div.shape {
+    box-sizing: border-box;
+
+    aspect-ratio: 1 / 1;
+    background-color: black;
+
+    width: 100%;
+    margin-left: 10%;
+    margin-right: 10%;
+  }
 }
 
 :host(.block) div.beat{
-  border-radius: 8px;
-  clip-path: inset(0 round 8px); 
+  // container-type: inline-size;
+  // container-name: beat;     
+
+  div.shape {
+    border-radius: 16%;
+    clip-path: inset(0 round 16%); 
+  }
 }
 
 :host(.diamond) div.beat{
-  border-radius: 0px;
-  clip-path: polygon(
-    50%  25%,   // top
-    75%  50%,   // right
-    50%  75%,   // bottom
-    25%  50%    // left
-  );
+  div.shape {
+    border-radius: 0px;
+    clip-path: polygon(
+      50%  25%,   // top
+      75%  50%,   // right
+      50%  75%,   // bottom
+      25%  50%    // left
+    );
+
+    margin-left: 2.5%;
+    margin-right: 2.5%;
+  }
 }
 
 :host(.small-block) div.beat{
-  border-radius: 4px;
-  clip-path: inset(0 round 6px); 
+  div.shape {
+    border-radius: 12.5%;
+    clip-path: inset(0 round 12.5); 
+  }
 }
 
 div.beat.on {
-  background-color: red;
+  div.shape {
+    background-color: red;  
+  }
 }
 
+// @container beat (max-width: 32px) {
+//   :host(.block) div.beat div.shape {
+//     border-radius: 12.5%;
+//     clip-path: inset(0 round 12.5%); 
+//   }
+// }

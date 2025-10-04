@@ -494,68 +494,76 @@ div.metronome.playing #play img.stop {
 }
 
 div.pads {
+  box-sizing: border-box;
   background: transparent;
   border: none;
   width: 100%;
   height: 48px;
-  overflow: visible;
   margin-top: 12px;
-  display: flex;
-  flex-direction: row;
-  column-gap: 8px;
-  justify-content: center;
-  align-items: center;
   margin-left: 0px;
   margin-right: 0px;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 0px;
+  padding-bottom: 0px;
   padding-left: 0px;
   padding-right: 0px;
+  display: flex;
+  flex-direction: row;
+  column-gap: 0px;
+  justify-content: center;
+  align-items: center;
+  overflow: visible;
 }
 div.pads yam-beat {
+  box-sizing: border-box;
   flex-grow: 1;
   flex-shrink: 1;
-  height: 48px;
-  max-width: 48px;
+  max-width: 60px;
   min-width: 12px;
   display: grid;
   justify-items: center;
   align-items: center;
 }
 div.pads yam-beat.diamond {
-  height: 24px;
   max-width: 24px;
 }
 div.pads yam-beat.small-block {
-  box-sizing: border-box;
-  height: 24px;
-  max-width: 40px;
-  padding-left: 8px;
-  padding-right: 8px;
+  max-width: 32px;
 }
 
 div.beat {
-  aspect-ratio: 1/1;
+  box-sizing: border-box;
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+div.beat div.shape {
+  box-sizing: border-box;
+  aspect-ratio: 1/1;
   background-color: black;
+  width: 100%;
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
-:host(.block) div.beat {
-  border-radius: 8px;
-  clip-path: inset(0 round 8px);
+:host(.block) div.beat div.shape {
+  border-radius: 16%;
+  clip-path: inset(0 round 16%);
 }
 
-:host(.diamond) div.beat {
+:host(.diamond) div.beat div.shape {
   border-radius: 0px;
   clip-path: polygon(50% 25%, 75% 50%, 50% 75%, 25% 50%);
+  margin-left: 2.5%;
+  margin-right: 2.5%;
 }
 
-:host(.small-block) div.beat {
-  border-radius: 4px;
-  clip-path: inset(0 round 6px);
+:host(.small-block) div.beat div.shape {
+  border-radius: 12.5%;
+  clip-path: inset(0 round 12.5);
 }
 
-div.beat.on {
+div.beat.on div.shape {
   background-color: red;
 }
 

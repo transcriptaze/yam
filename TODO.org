@@ -11,7 +11,11 @@
 *** DONE fix About page layout
 *** DONE refactor MM to use track for redraw
 *** DONE refactor time signature to use datastore
-*** DONE fix worklet tempo/BPM thing
+
+*** TODO Fix MM/time signature subsections
+
+*** TODO fix worklet tempo/BPM thing
+      - not doing the 160 BPM thing for (debug)
 
 *** TODO update worklet track on editor::save
 
@@ -21,6 +25,7 @@
 
 *** TODO make errors visible
       - icon + title text
+      - (?) replace 'about' icon
 
 *** TODO section pulse: need a way to revert to '' (default)
 **** DONE add '' pulse to popup list
@@ -34,6 +39,7 @@
 **** TODO disable/hide section time signature and tempo if subsections
 **** TODO slide in on initialisation
 **** TODO increase padding at bottom of section (clef tail is too close to edge)
+**** TODO lowlight empty section fields (name, role)
 
 *** TODO clicks
 **** DONE use section clicks in worklet

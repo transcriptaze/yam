@@ -216,12 +216,12 @@ describe('tests track sections transmogrify', function () {
 
     // prettier-ignore
     const expected = [
-      { ID: 1, role: 'intro',   name: 'Intro',      colour: '#df8880', measures: 4,   start: 1,   timeSignature: '4:4', subsections: [ { measures: 4,   start:1,   tempo:120, BPM:120, timeSignature:'4:4', pulse:'quarter', clicks:null    }] },
-      { ID: 2, role: 'verse',   name: 'Verse 1',    colour: '#b3bc69', measures: 8,   start: 5,   timeSignature: '4:4', subsections: [ { measures: 8,   start:5,   tempo:90,  BPM:90,  timeSignature:'4:4', pulse:'quarter', clicks:null    }] },
-      { ID: 3, role: 'chorus',  name: 'Chorus 1',   colour: '#84b5d2', measures: 12,  start: 13,  timeSignature: '4:4', subsections: [ { measures: 12,  start:13,  tempo:90,  BPM:90,  timeSignature:'4:4', pulse:'quarter', clicks:[ 1,3 ] }] },
-      { ID: 4, role: 'role #1', name: 'Section #4', colour: '#cb96b2', measures: 1,   start: 25,  timeSignature: '6:8', subsections: [ { measures: 1,   start:25,  tempo:60,  BPM:60,  timeSignature:'6:8', pulse:'quarter', clicks:[ 1,4 ] }] },
-      { ID: 5, role: 'role #2', name: 'Section #5', colour: '#71a9a0', measures: INF, start: 26,  timeSignature: '3:4', subsections: [ { measures: INF, start:26,  tempo:80,  BPM:80,  timeSignature:'3:4', pulse:'eighth',  clicks:null    }] },
-      { ID: 6, role: 'outro',   name: 'Outro',      colour: '#ff0000', measures: INF, start: INF, timeSignature: '3:4', subsections: [ { measures: INF, start:INF, tempo:80,  BPM:80,  timeSignature:'3:4', pulse:'eighth',  clicks:null    }] },
+      { ID: 1, role: 'intro',   name: 'Intro',      colour: '#df8880', measures: 4,   start: 1,   timeSignature: '4:4', subsections: [ { measures: 4,   start:1,   tempo:120, timeSignature:'4:4', pulse:'quarter', clicks:null    }] },
+      { ID: 2, role: 'verse',   name: 'Verse 1',    colour: '#b3bc69', measures: 8,   start: 5,   timeSignature: '4:4', subsections: [ { measures: 8,   start:5,   tempo:90,  timeSignature:'4:4', pulse:'quarter', clicks:null    }] },
+      { ID: 3, role: 'chorus',  name: 'Chorus 1',   colour: '#84b5d2', measures: 12,  start: 13,  timeSignature: '4:4', subsections: [ { measures: 12,  start:13,  tempo:90,  timeSignature:'4:4', pulse:'quarter', clicks:[ 1,3 ] }] },
+      { ID: 4, role: 'role #1', name: 'Section #4', colour: '#cb96b2', measures: 1,   start: 25,  timeSignature: '6:8', subsections: [ { measures: 1,   start:25,  tempo:60,  timeSignature:'6:8', pulse:'quarter', clicks:[ 1,4 ] }] },
+      { ID: 5, role: 'role #2', name: 'Section #5', colour: '#71a9a0', measures: INF, start: 26,  timeSignature: '3:4', subsections: [ { measures: INF, start:26,  tempo:80,  timeSignature:'3:4', pulse:'eighth',  clicks:null    }] },
+      { ID: 6, role: 'outro',   name: 'Outro',      colour: '#ff0000', measures: INF, start: INF, timeSignature: '3:4', subsections: [ { measures: INF, start:INF, tempo:80,  timeSignature:'3:4', pulse:'eighth',  clicks:null    }] },
     ]
 
     const sections = [...generators.transmogrify(track)]

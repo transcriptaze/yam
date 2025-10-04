@@ -100,10 +100,8 @@ export function* transmogrify(track) {
 
   let ID = 0
   let tempo = track?.tempo ?? 120
-  let BPM = track?.BPM ?? 120
   let timeSignature = track?.timeSignature ?? '4:4'
   let pulse = track?.pulse ?? ''
-  // let measures = 0
   let start = 1
 
   for (const section of sections) {
@@ -111,7 +109,6 @@ export function* transmogrify(track) {
 
     ID++
     tempo = section.tempo ?? tempo
-    BPM = section.BPM ?? tempo
     timeSignature = section.timeSignature ?? timeSignature
     pulse = section.pulse ?? pulse
 
@@ -128,15 +125,13 @@ export function* transmogrify(track) {
         timeSignature: timeSignature,
         pulse: pulse,
         tempo: tempo,
-        BPM: BPM,
         clicks: clicks,
       })
     } else {
       for (const subsection of _subsections) {
-        tempo = subsection.tempo ?? tempo
-        BPM = subsection.BPM ?? tempo
         timeSignature = subsection.timeSignature ?? timeSignature
         pulse = subsection.pulse ?? pulse
+        tempo = subsection.tempo ?? tempo
 
         subsections.push({
           start: start,
@@ -144,7 +139,6 @@ export function* transmogrify(track) {
           timeSignature: timeSignature,
           pulse: pulse,
           tempo: tempo,
-          BPM: BPM,
           clicks: _clicks(subsection.clicks) ?? clicks,
         })
       }
@@ -152,19 +146,17 @@ export function* transmogrify(track) {
 
     const bars = subsections.reduce((measures, v) => measures + v.measures, 0)
 
-    // FIXME using subsection time signature instead of section time signature (ditto pulse/tempo)
     yield {
       ID: ID,
       role: role,
       name: name,
       colour: colour,
-      timeSignature: timeSignature,
+      timeSignature: subsections[0].timeSignature,
       subsections: subsections,
       measures: bars,
       start: start,
     }
 
-    // measures += bars
     start += bars
   }
 }

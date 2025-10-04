@@ -99,10 +99,10 @@ export function* transmogrify(track) {
   const _clicks = clicks
 
   let ID = 0
-  let tempo = track?.BPM ?? 120
+  let tempo = track?.tempo ?? 120
   let timeSignature = track?.timeSignature ?? '4:4'
   let pulse = track?.pulse ?? ''
-  let measures = 0
+  let start = 1
 
   for (const section of sections) {
     const _subsections = section.subsections ?? []
@@ -119,26 +119,36 @@ export function* transmogrify(track) {
     const subsections = []
 
     if (_subsections.length == 0) {
+      const bars = section.measures ?? (['count-in', 'anacrusis'].includes(role) ? 1 : Number.POSITIVE_INFINITY)
+
       subsections.push({
-        measures: section.measures ?? (['count-in', 'anacrusis'].includes(role) ? 1 : Number.POSITIVE_INFINITY),
-        tempo: tempo,
+        start: start,
+        measures: bars,
         timeSignature: timeSignature,
         pulse: pulse,
+        tempo: tempo,
         clicks: clicks,
       })
+
+      start += bars
     } else {
       for (const subsection of _subsections) {
-        tempo = subsection.tempo ?? tempo
+        const bars = subsection.measures ?? Number.POSITIVE_INFINITY
+
         timeSignature = subsection.timeSignature ?? timeSignature
         pulse = subsection.pulse ?? pulse
+        tempo = subsection.tempo ?? tempo
 
         subsections.push({
-          measures: subsection.measures ?? Number.POSITIVE_INFINITY,
-          tempo: tempo,
+          start: start,
+          measures: bars,
           timeSignature: timeSignature,
           pulse: pulse,
+          tempo: tempo,
           clicks: _clicks(subsection.clicks) ?? clicks,
         })
+
+        start += bars
       }
     }
 
@@ -149,12 +159,10 @@ export function* transmogrify(track) {
       role: role,
       name: name,
       colour: colour,
-      timeSignature: timeSignature,
+      timeSignature: subsections[0].timeSignature,
       subsections: subsections,
       measures: bars,
-      start: measures + 1,
+      start: subsections[0].start,
     }
-
-    measures += bars
   }
 }

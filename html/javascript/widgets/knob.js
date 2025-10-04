@@ -111,14 +111,7 @@ export class Knob extends HTMLElement {
     this.#redraw(true)
   }
 
-  redraw(BPM, { playing, stopped }) {
-    if ((playing || stopped) && BPM !== this.#BPM) {
-      this.#value = BPM
-      this.#BPM = BPM
-
-      this.#redraw(false)
-    }
-  }
+  redraw({ _playing, _stopped }) {}
 
   #onPointerDown(event, drag) {
     const overlay = event.currentTarget

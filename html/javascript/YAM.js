@@ -46,10 +46,12 @@ export function initialise() {
   state.initialise(settings)
 
   widgets.timeSignature.timeSignature = state.timeSignature
-  widgets.timeSignature.locked = false
+  widgets.timeSignature.track = null
+
   widgets.mm.pulse = state.pulse
   widgets.mm.BPM = state.BPM
-  widgets.mm.locked = false
+  widgets.mm.track = null
+
   widgets.loop.loop = state.loop
   widgets.loop.loops = INF
   widgets.knob.BPM = state.BPM
@@ -465,23 +467,25 @@ function onNext() {
 function onStateModified() {
   const track = models.tracks.track(state.track)
 
-  widgets.mm.BPM = state.BPM
-  widgets.mm.pulse = state.pulse
-  widgets.mm.timeSignature = state.timeSignature
-  widgets.mm.locked = track != null && track.sections != null && track.sections.length > 0
-
-  widgets.knob.BPM = state.BPM
-  widgets.wheel.BPM = state.BPM
   widgets.pads.pulse = state.pulse
   widgets.pads.timeSignature = state.timeSignature
-
-  widgets.timeSignature.timeSignature = state.timeSignature
-  widgets.timeSignature.locked = track != null && track.sections != null && track.sections.length > 0
-  widgets.timeSignature.track = track
 
   widgets.info.title = state.title
   widgets.info.track = track
   widgets.info.modified = state.modified
+
+  // FIXME figure out state/track conflict
+  widgets.timeSignature.timeSignature = state.timeSignature
+  widgets.timeSignature.track = track
+
+  // FIXME figure out state/track conflict
+  widgets.mm.pulse = state.pulse
+  widgets.mm.BPM = state.BPM
+  widgets.mm.timeSignature = state.timeSignature
+  widgets.mm.track = track
+
+  widgets.knob.BPM = state.BPM
+  widgets.wheel.BPM = state.BPM
 }
 
 function onTrackSelect(event) {
@@ -530,16 +534,21 @@ function onSelected(event) {
     track: track?.UUID,
   }
 
-  widgets.knob.tempo = track?.tempo
-  widgets.knob.BPM = track?.BPM
+  widgets.info.track = track
+
+  widgets.timeSignature.track = track
+  widgets.mm.track = track
+
   widgets.loop.enabled = track?.loopable ?? false
   widgets.loop.loop = track?.loop ?? false
   widgets.loop.loops = track?.loops ?? INF
+
+  widgets.knob.tempo = track?.tempo
+  widgets.knob.BPM = track?.BPM
+
   widgets.metronome.bof = playlist?.BOF(track) ?? true
   widgets.metronome.eof = playlist?.EOF(track) ?? true
 
-  widgets.info.track = track
-  widgets.timeSignature.track = track
   widgets.editor.track = track
 
   engine.load(track)
@@ -793,11 +802,13 @@ function onPlaylistDeleted(event) {
       track: track?.UUID,
     }
 
+    widgets.info.track = track
+    widgets.timeSignature.track = track
+    widgets.mm.track = track
+
     widgets.metronome.bof = playlist?.BOF(track) ?? true
     widgets.metronome.eof = playlist?.EOF(track) ?? true
 
-    widgets.info.track = track
-    widgets.timeSignature.track = track
     engine.load(track)
   }
 }
@@ -814,28 +825,26 @@ function animate(id) {
   const beat = engine.beat()
   const beats = engine.beats()
   const divisions = engine.divisions()
-  const BPM = engine.BPM()
   const pulse = engine.pulse()
   const loops = engine.loops()
-
-  const timeSignature = state.timeSignature
 
   const runstate = {
     playing: playing,
     stopped: stopped,
+    bar: bar,
     section: section,
     beats: beats,
     divisions: divisions,
-    pulse: pulse,
+    pulse: pulse, // NTS: used in pads
     loops: loops,
   }
 
   widgets.pads.redraw(beat, runstate)
   widgets.info.redraw(bar, runstate)
-  widgets.timeSignature.redraw(timeSignature, runstate)
-  widgets.mm.redraw(BPM, pulse, runstate)
-  widgets.knob.redraw(BPM, runstate)
-  widgets.wheel.redraw(BPM, runstate)
+  widgets.timeSignature.redraw(runstate)
+  widgets.mm.redraw(runstate)
+  widgets.knob.redraw(runstate)
+  widgets.wheel.redraw(runstate)
   widgets.loop.redraw(runstate)
 
   if (!stopped) {

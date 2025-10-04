@@ -241,6 +241,8 @@ export class TimeSignature extends HTMLElement {
   set track(v) {
     const track = datastore.tracks.get(v)
 
+    console.log(track)
+
     this.#track = track
     this.#bar = -1
     this.locked = track != null && track.sections != null && track.sections.length > 0
@@ -264,7 +266,7 @@ export class TimeSignature extends HTMLElement {
         const sections = track.sections ?? []
         const section = sections.findLast((v) => v.start <= bar)
         const subsections = section?.subsections ?? []
-        const subsection = subsections.find((v) => v.start <= bar)
+        const subsection = subsections.findLast((v) => v.start <= bar)
 
         if (subsection != null) {
           this.#redraw(subsection.timeSignature)

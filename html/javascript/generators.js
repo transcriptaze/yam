@@ -119,28 +119,36 @@ export function* transmogrify(track) {
     const subsections = []
 
     if (_subsections.length == 0) {
+      const bars = section.measures ?? (['count-in', 'anacrusis'].includes(role) ? 1 : Number.POSITIVE_INFINITY)
+
       subsections.push({
         start: start,
-        measures: section.measures ?? (['count-in', 'anacrusis'].includes(role) ? 1 : Number.POSITIVE_INFINITY),
+        measures: bars,
         timeSignature: timeSignature,
         pulse: pulse,
         tempo: tempo,
         clicks: clicks,
       })
+
+      start += bars
     } else {
       for (const subsection of _subsections) {
+        const bars = subsection.measures ?? Number.POSITIVE_INFINITY
+
         timeSignature = subsection.timeSignature ?? timeSignature
         pulse = subsection.pulse ?? pulse
         tempo = subsection.tempo ?? tempo
 
         subsections.push({
           start: start,
-          measures: subsection.measures ?? Number.POSITIVE_INFINITY,
+          measures: bars,
           timeSignature: timeSignature,
           pulse: pulse,
           tempo: tempo,
           clicks: _clicks(subsection.clicks) ?? clicks,
         })
+
+        start += bars
       }
     }
 
@@ -154,9 +162,7 @@ export function* transmogrify(track) {
       timeSignature: subsections[0].timeSignature,
       subsections: subsections,
       measures: bars,
-      start: start,
+      start: subsections[0].start,
     }
-
-    start += bars
   }
 }

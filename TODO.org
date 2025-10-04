@@ -11,8 +11,7 @@
 *** DONE fix About page layout
 *** DONE refactor MM to use track for redraw
 *** DONE refactor time signature to use datastore
-
-*** TODO Fix MM/time signature subsections
+*** DONE Fix MM/time signature subsections
 
 *** TODO fix worklet tempo/BPM thing
       - not doing the 160 BPM thing for (debug)
@@ -35,10 +34,10 @@
 **** DONE fix MM popover div/ul/li thing
 **** DONE fix defval - should inherit from previous section
 **** DONE cascade update following sections after pick pulse
+**** TODO increase padding at bottom of section (clef tail is too close to edge)
 **** TODO fix BPM defval - should inherit from previous section
 **** TODO disable/hide section time signature and tempo if subsections
 **** TODO slide in on initialisation
-**** TODO increase padding at bottom of section (clef tail is too close to edge)
 **** TODO lowlight empty section fields (name, role)
 
 *** TODO clicks

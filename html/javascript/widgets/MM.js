@@ -207,24 +207,6 @@ export class MM extends HTMLElement {
     }
   }
 
-  // FIXME remove
-  get tempo() {
-    throw new Error('MM.get not supported')
-    // return {
-    //   pulse: this.pulse,
-    //   BPM: this.BPM,
-    // }
-  }
-
-  // FIXME remove
-  set tempo({ pulse, BPM }) {
-    throw new Error('MM.set not supported')
-    // this.pulse = pulse
-    // this.BPM = BPM
-    //
-    // this.#redraw()
-  }
-
   set track(v) {
     const track = datastore.tracks.get(v)
 
@@ -253,7 +235,7 @@ export class MM extends HTMLElement {
         const sections = track.sections ?? []
         const section = sections.findLast((v) => v.start <= bar)
         const subsections = section?.subsections ?? []
-        const subsection = subsections.find((v) => v.start <= bar)
+        const subsection = subsections.findLast((v) => v.start <= bar)
         const bpm = (v) => Math.round((track.BPM * v) / track.tempo)
 
         if (subsection != null) {

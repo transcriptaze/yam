@@ -34,7 +34,7 @@
 **** DONE fix MM popover div/ul/li thing
 **** DONE fix defval - should inherit from previous section
 **** DONE cascade update following sections after pick pulse
-**** TODO increase padding at bottom of section (clef tail is too close to edge)
+**** DONE increase padding at bottom of section (clef tail is too close to edge)
 **** TODO fix BPM defval - should inherit from previous section
 **** TODO disable/hide section time signature and tempo if subsections
 **** TODO slide in on initialisation

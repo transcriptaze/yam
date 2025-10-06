@@ -7,27 +7,25 @@
   - https://media.licdn.com/dms/image/v2/D562DAQGfvMUPSACz_w/profile-treasury-image-shrink_1280_1280/B56ZWG1lWtGsAY-/0/1741723950693?e=1754978400&v=beta&t=2tcCb8xsZ0Re296TPxb2j_SWUkJEik7x-nb-dh5Jhfs
   - https://jakub.kr/components/oklch-colors
   - https://github.com/liriliri/eruda
+  - https://docs.openvino.ai/2024/notebooks/stable-audio-with-output.html
+  - https://docs.openvino.ai/2024/notebooks/music-generation-with-output.html
 
 *** DONE fix About page layout
 *** DONE refactor MM to use track for redraw
 *** DONE refactor time signature to use datastore
 *** DONE Fix MM/time signature subsections
+*** DONE pads initialisation (doesn't display actual last pads)
 
 *** TODO fix worklet tempo/BPM thing
       - not doing the 160 BPM thing for (debug)
 
 *** TODO update worklet track on editor::save
-*** TODO pads initialisation (doesn't display actual last pads)
 
 *** TODO lock tempo
       - attach lock to right/bottom of text
       - field-sizing
 
-*** TODO make errors visible
-      - icon + title text
-      - (?) replace 'about' icon
-
-*** TODO section pulse: need a way to revert to '' (default)
+*** TODO track editor
 **** DONE add '' pulse to popup list
 **** DONE defval for 'none' img
 **** DONE display equals iff pulse and BPM are defined
@@ -45,6 +43,7 @@
 **** DONE use section clicks in worklet
 **** TODO generate clicks for count-in
 **** TODO generate clicks for anacrusis
+**** TODO generate clicks for 5:4
 **** TODO not cascading - revert to track clicks or default clicks for time-signature
 
 *** TODO use cloned track
@@ -52,6 +51,9 @@
 *** TODO connectedCallback: event handler duplication
 
 ** Fixes
+*** TODO make errors visible
+      - icon + title text
+      - (?) replace 'about' icon
 *** TODO edit from playlist
 *** TODO use async getters for nested web components
 *** TODO editor: enable/disable button iff there are changes

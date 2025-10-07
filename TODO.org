@@ -34,10 +34,13 @@
 **** DONE fix defval - should inherit from previous section
 **** DONE cascade update following sections after pick pulse
 **** DONE increase padding at bottom of section (clef tail is too close to edge)
-**** TODO fix BPM defval - should inherit from previous section
-**** TODO disable/hide section time signature and tempo if subsections
+**** DONE fix BPM defval - should inherit from previous section
+**** TODO fix time signature defval - should inherit from previous section
 **** TODO slide in on initialisation
 **** TODO lowlight empty section fields (name, role)
+      - placeholder ?
+**** TODO disable/hide section time signature and tempo if subsections
+      - rather just list subsections
 
 *** TODO clicks
 **** DONE use section clicks in worklet

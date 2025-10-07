@@ -17,17 +17,19 @@ export class Editor extends HTMLElement {
   #handlers = {
     mm: {
       change: (event) => {
+        const defaults = {}
+
         if (event.detail.pulse) {
           event.target.pulse = event.detail.pulse
-
-          this.#defaults = {
-            pulse: event.detail.pulse,
-          }
+          defaults.pulse = event.detail.pulse
         }
 
         if (event.detail.BPM) {
           event.target.BPM = event.detail.BPM
+          defaults.BPM = event.detail.BPM
         }
+
+        this.#defaults = defaults
       },
     },
 
@@ -46,10 +48,17 @@ export class Editor extends HTMLElement {
         event.preventDefault()
         event.stopPropagation()
 
-        // FIXME this.#fields.mm needs to be async getter
-        this.#defaults = {
-          pulse: this.#fields.mm?.pulse ?? 'quarter',
+        // FIXME mm should be an async getter
+        const defaults = {}
+        if (event.detail.pulse != null) {
+          defaults.pulse = this.#fields.mm?.pulse
         }
+
+        if (event.detail.BPM != null) {
+          defaults.BPM = this.#fields.mm?.BPM
+        }
+
+        this.#defaults = defaults
       },
     },
 
@@ -106,28 +115,9 @@ export class Editor extends HTMLElement {
 
     this.#mm.addEventListener('change', this.#handlers.mm.change)
     this.#plus.addEventListener('click', this.#handlers.plus.click)
+
     this.#sections.addEventListener(EVENTS.SECTION_PULSE_CHANGE, this.#handlers.sections.change)
-
-    // this.#sections.addEventListener(EVENTS.SECTION_PULSE_CHANGE, (e) => {
-    //   e.preventDefault()
-    //   e.stopPropagation()
-
-    //   const sections = Array.from(this.#sections?.querySelectorAll('yam-section'))
-    //   const it = sections.values()
-
-    //   let pulse = this.#fields.mm?.pulse ?? 'quarter'
-    //   for (const section of it) {
-    //     const tempo = section.tempo
-
-    //     section.defaults = {
-    //       pulse: pulse,
-    //     }
-
-    //     if (tempo.pulse != null && tempo.pulse !== '') {
-    //       pulse = tempo.pulse
-    //     }
-    //   }
-    // })
+    this.#sections.addEventListener(EVENTS.SECTION_BPM_CHANGE, this.#handlers.sections.change)
   }
 
   disconnectedCallback() {}
@@ -313,18 +303,33 @@ export class Editor extends HTMLElement {
   set #defaults(object) {
     const sections = Array.from(this.#sections?.querySelectorAll('yam-section'))
     const it = sections.values()
-    let pulse = object?.pulse ?? ''
+    let pulse = object?.pulse
+    let BPM = object?.BPM
 
-    if (pulse !== '') {
+    if (pulse != null && pulse != '') {
       for (const section of it) {
-        const tempo = section.tempo
-
         section.defaults = {
           pulse: pulse,
         }
 
+        const tempo = section.tempo
+
         if (tempo.pulse != null && tempo.pulse !== '') {
           pulse = tempo.pulse
+        }
+      }
+    }
+
+    if (BPM != null && BPM >= 40 && BPM <= 200) {
+      for (const section of it) {
+        section.defaults = {
+          BPM: BPM,
+        }
+
+        const tempo = section.tempo
+
+        if (tempo.BPM != null && tempo.BPM >= 40 && tempo.BPM < 200) {
+          BPM = tempo.BPM
         }
       }
     }

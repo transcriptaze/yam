@@ -45,6 +45,9 @@ export function initialise() {
 
   state.initialise(settings)
 
+  widgets.pads.timeSignature = state.timeSignature
+  widgets.pads.pulse = state.pulse
+
   widgets.timeSignature.timeSignature = state.timeSignature
   widgets.timeSignature.track = null
 

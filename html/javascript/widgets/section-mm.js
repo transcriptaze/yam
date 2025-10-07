@@ -42,7 +42,6 @@ export class SectionMM extends HTMLElement {
               composed: true,
               detail: {
                 pulse: pulse,
-                defaultValue: this.#defaults.pulse,
               },
             }),
           )
@@ -67,17 +66,15 @@ export class SectionMM extends HTMLElement {
         const input = shadow.querySelector('input')
         const bpm = parseInt(`${input.value}`, 10)
 
-        if (input.value === '') {
-          this.#BPM = ''
-        } else if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
-          this.#BPM = bpm
+        if (input.value === '' || (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200)) {
+          this.#BPM = Number.isNaN(bpm) ? '' : bpm
 
           this.dispatchEvent(
-            new CustomEvent('change', {
+            new CustomEvent(EVENTS.SECTION_BPM_CHANGE, {
               bubbles: true,
               composed: true,
               detail: {
-                BPM: bpm,
+                BPM: Number.isNaN(bpm) ? '' : bpm,
               },
             }),
           )
@@ -160,10 +157,15 @@ export class SectionMM extends HTMLElement {
   set defaults(object) {
     const none = this.shadowRoot.querySelector('#list div.li[data-pulse=""] img')
     const pulse = object?.pulse ?? ''
+    const BPM = object?.BPM ?? ''
 
     if (pulse !== '') {
       this.#defaults.pulse = pulse
       none.src = PULSES.has(pulse) ? PULSES.get(pulse).li : NONE
+    }
+
+    if (BPM !== '' && BPM >= 40 && BPM <= 200) {
+      this.#defaults.BPM = BPM
     }
 
     this.#redraw()

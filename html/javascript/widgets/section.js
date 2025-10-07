@@ -125,12 +125,21 @@ export class Section extends HTMLElement {
   }
 
   set defaults(object) {
-    const pulse = object?.pulse ?? ''
+    const pulse = object?.pulse
+    const BPM = object?.BPM
 
-    if (pulse !== '') {
+    if (pulse != null && pulse !== '') {
       this.#tempo.then((v) => {
         v.defaults = {
           pulse: pulse,
+        }
+      })
+    }
+
+    if (BPM != null && BPM >= 40 && BPM <= 200) {
+      this.#tempo.then((v) => {
+        v.defaults = {
+          BPM: BPM,
         }
       })
     }

@@ -51,7 +51,10 @@ export class MM extends HTMLElement {
       change: (_) => {
         const shadow = this.shadowRoot
         const input = shadow.querySelector('input')
+        const mirror = shadow.querySelector('#mirror span')
         const bpm = parseInt(`${input.value}`, 10)
+
+        mirror.innerHTML = input.value
 
         if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
           this.#BPM = bpm
@@ -85,9 +88,7 @@ export class MM extends HTMLElement {
 
     lock: {
       animated: () => {
-        const container = this.shadowRoot.querySelector('div.MM')
-
-        container.classList.remove('tapped')
+        this.shadowRoot.querySelector('div.MM')?.remove('tapped')
       },
     },
   }
@@ -189,11 +190,14 @@ export class MM extends HTMLElement {
   set BPM(v) {
     const shadow = this.shadowRoot
     const input = shadow.querySelector('input')
+    const mirror = shadow.querySelector('#mirror span')
+
     const bpm = parseInt(`${v}`, 10)
 
     if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
       this.#BPM = bpm
       input.value = `${bpm}`
+      mirror.innerHTML = input.value
     }
   }
 
@@ -219,6 +223,8 @@ export class MM extends HTMLElement {
       this.BPM = track.BPM
       this.timeSignature = track.timeSignature
     }
+
+    this.shadowRoot.querySelector('div.MM')?.classList.remove('tapped')
   }
 
   redraw({ playing, stopped, bar }) {

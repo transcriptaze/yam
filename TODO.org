@@ -7,9 +7,7 @@
 *** DONE pads initialisation (doesn't display actual last pads)
 *** DONE playlists '+'' floating button is visually confusing
 *** DONE (temporarily) remove eight note pulse
-
-*** TODO lock tempo
-      - mirror field hack
+*** DONE lock tempo
 
 *** TODO update worklet track on editor::save
 

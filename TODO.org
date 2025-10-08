@@ -1,26 +1,15 @@
 * -- TODO --
 
-  - https://webgpufundamentals.org/webgpu/lessons/webgpu-resizing-the-canvas.html
-  - https://graphicdesign.stackexchange.com/questions/115225/where-to-find-more-to-4-combo-colors-generator
-  - https://css-tricks.com/thinking-deeply-about-theming-and-color-naming
-  - https://meodai.github.io/rampensau
-  - https://media.licdn.com/dms/image/v2/D562DAQGfvMUPSACz_w/profile-treasury-image-shrink_1280_1280/B56ZWG1lWtGsAY-/0/1741723950693?e=1754978400&v=beta&t=2tcCb8xsZ0Re296TPxb2j_SWUkJEik7x-nb-dh5Jhfs
-  - https://jakub.kr/components/oklch-colors
-  - https://github.com/liriliri/eruda
-  - https://docs.openvino.ai/2024/notebooks/stable-audio-with-output.html
-  - https://docs.openvino.ai/2024/notebooks/music-generation-with-output.html
-
 *** DONE fix About page layout
 *** DONE refactor MM to use track for redraw
 *** DONE refactor time signature to use datastore
 *** DONE Fix MM/time signature subsections
 *** DONE pads initialisation (doesn't display actual last pads)
+*** DONE playlists '+'' floating button is visually confusing
+*** DONE (temporarily) remove eight note pulse
 
 *** TODO lock tempo
       - mirror field hack
-
-*** TODO fix worklet tempo/BPM thing
-      - not doing the 160 BPM thing for (debug)
 
 *** TODO update worklet track on editor::save
 
@@ -37,9 +26,10 @@
 **** TODO fix time signature defval - should inherit from previous section
 **** TODO lowlight empty section fields (name, role)
       - placeholder ?
+**** TODO display subsections
+**** TODO toggle measures input between header and subsections
 **** TODO slide in on initialisation
-**** TODO disable/hide section time signature and tempo if subsections
-      - rather just list subsections
+**** TODO enable editor save iff changed
 
 *** TODO clicks
 **** DONE use section clicks in worklet
@@ -58,20 +48,16 @@
       - (?) replace 'about' icon
 *** TODO edit from playlist
 *** TODO use async getters for nested web components
-*** TODO editor: enable/disable button iff there are changes
 *** TODO allow BPM changes while playing a track
 *** TODO URL - use ?UUID= or ?title= 
 *** TODO URL match on track if playlist not found
 *** TODO 'All Tracks' should not display tracklist
 *** TODO move spacebar toggle into metronome widget
 *** TODO expand single section
-      - hover >> arrow maybe (doesnt work on mobile)
+      - hover >> arrow maybe (doesn't work on mobile)
 *** TODO requestAnimationFrame is not always 60fps
       - only update if changed
 *** TODO different grip icon
-*** TODO playlists '+'' floating button is visually confusing
-      - https://kube.io/blog/liquid-glass-css-svg/
-
 *** TODO onSave should only update editor title, BPM, etc
 *** TODO playlists loaded from file include deleted playlists
 *** TODO editor: metronome div vertical alignment
@@ -92,8 +78,6 @@
 *** TODO playlist: fade-out top and bottom of scrollable list
 *** TODO models.playlist CRUD interface
 *** TODO changing pulse/time-signature etc 'waits' for click
-      - disable time-signature while playing + sections
-      - disable pulse while playing + sections
       - BPM changes scaled by track BPM
 
 *** TODO 6:8, dotted quarter: intermediate clicks @60BPM
@@ -121,7 +105,6 @@
 
 ** Reset
 *** TODO red if next tap will reset to defaults
-*** TODO (?) double tap to reset everything
 
 ** Toolbar
 *** TODO move page logic to CSS
@@ -165,7 +148,7 @@
 *** TODO hover styles
 *** TODO lock
 *** TODO clone
-*** TODO coloured sections
+*** TODO coloured subsections
 
 ** Pads
 *** TODO fix janky pads change
@@ -187,6 +170,7 @@
 *** TODO device e.g. Pixel4a (for per device CSS) 
 *** TODO track retention time
 *** TODO volume
+*** TODO sound set
 *** https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Customizable_select
 
 ** Figma
@@ -293,10 +277,10 @@
 * Features
 
 1. Statistics
-   - seldom played songs percolate to the top
-   - new songs mostly at top
+   - export to TSV
+   - prioritize least often played for _random track_
 
-2. Songs
+2. Tracks
    - export as click track
      - audio 
      - midi
@@ -356,6 +340,16 @@
   12. https://developer.chrome.com/blog/a-customizable-select
   13. https://tauri.app
 
+  - https://webgpufundamentals.org/webgpu/lessons/webgpu-resizing-the-canvas.html
+  - https://graphicdesign.stackexchange.com/questions/115225/where-to-find-more-to-4-combo-colors-generator
+  - https://css-tricks.com/thinking-deeply-about-theming-and-color-naming
+  - https://meodai.github.io/rampensau
+  - https://media.licdn.com/dms/image/v2/D562DAQGfvMUPSACz_w/profile-treasury-image-shrink_1280_1280/B56ZWG1lWtGsAY-/0/1741723950693?e=1754978400&v=beta&t=2tcCb8xsZ0Re296TPxb2j_SWUkJEik7x-nb-dh5Jhfs
+  - https://jakub.kr/components/oklch-colors
+  - https://github.com/liriliri/eruda
+  - https://docs.openvino.ai/2024/notebooks/stable-audio-with-output.html
+  - https://docs.openvino.ai/2024/notebooks/music-generation-with-output.html
+  - https://kube.io/blog/liquid-glass-css-svg
 
 ** Flutter
    1. https://medium.com/@utkuaydogdu01/playing-audio-by-processing-raw-pcm-audio-data-in-flutter-practical-guide-and-best-audio-packages-455dedcd129e

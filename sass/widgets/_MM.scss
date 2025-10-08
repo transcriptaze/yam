@@ -196,6 +196,11 @@
     }
   }
 
+  // NTS: temporarily remove eighth notes from list
+  #list > div > div.li[data-pulse="eighth"] {
+     display: none;
+   }
+
   @keyframes tapped {
     0%   { opacity: 0; }
     5%   { opacity: 1; }

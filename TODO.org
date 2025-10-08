@@ -16,14 +16,13 @@
 *** DONE Fix MM/time signature subsections
 *** DONE pads initialisation (doesn't display actual last pads)
 
+*** TODO lock tempo
+      - mirror field hack
+
 *** TODO fix worklet tempo/BPM thing
       - not doing the 160 BPM thing for (debug)
 
 *** TODO update worklet track on editor::save
-
-*** TODO lock tempo
-      - attach lock to right/bottom of text
-      - field-sizing
 
 *** TODO track editor
 **** DONE add '' pulse to popup list
@@ -36,9 +35,9 @@
 **** DONE increase padding at bottom of section (clef tail is too close to edge)
 **** DONE fix BPM defval - should inherit from previous section
 **** TODO fix time signature defval - should inherit from previous section
-**** TODO slide in on initialisation
 **** TODO lowlight empty section fields (name, role)
       - placeholder ?
+**** TODO slide in on initialisation
 **** TODO disable/hide section time signature and tempo if subsections
       - rather just list subsections
 

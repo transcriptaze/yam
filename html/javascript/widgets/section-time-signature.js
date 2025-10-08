@@ -1,0 +1,316 @@
+import { parseTimeSignature as parse } from '../util.js'
+
+const TACTUS = new Map([
+  ['1', './images/time-signatures/tactus/1.svg'],
+  ['2', './images/time-signatures/tactus/2.svg'],
+  ['3', './images/time-signatures/tactus/3.svg'],
+  ['4', './images/time-signatures/tactus/4.svg'],
+  ['5', './images/time-signatures/tactus/5.svg'],
+  ['6', './images/time-signatures/tactus/6.svg'],
+  ['7', './images/time-signatures/tactus/7.svg'],
+  ['8', './images/time-signatures/tactus/8.svg'],
+  ['9', './images/time-signatures/tactus/9.svg'],
+  ['10', './images/time-signatures/tactus/10.svg'],
+  ['11', './images/time-signatures/tactus/11.svg'],
+  ['12', './images/time-signatures/tactus/12.svg'],
+  ['13', './images/time-signatures/tactus/13.svg'],
+  ['14', './images/time-signatures/tactus/14.svg'],
+  ['15', './images/time-signatures/tactus/15.svg'],
+  ['16', './images/time-signatures/tactus/16.svg'],
+  ['17', './images/time-signatures/tactus/17.svg'],
+  ['18', './images/time-signatures/tactus/18.svg'],
+  ['19', './images/time-signatures/tactus/19.svg'],
+  ['20', './images/time-signatures/tactus/20.svg'],
+  ['21', './images/time-signatures/tactus/21.svg'],
+  ['22', './images/time-signatures/tactus/22.svg'],
+  ['23', './images/time-signatures/tactus/23.svg'],
+  ['24', './images/time-signatures/tactus/24.svg'],
+  ['25', './images/time-signatures/tactus/25.svg'],
+  ['26', './images/time-signatures/tactus/26.svg'],
+  ['27', './images/time-signatures/tactus/27.svg'],
+  ['28', './images/time-signatures/tactus/28.svg'],
+  ['29', './images/time-signatures/tactus/29.svg'],
+  ['30', './images/time-signatures/tactus/30.svg'],
+  ['31', './images/time-signatures/tactus/31.svg'],
+  ['32', './images/time-signatures/tactus/32.svg'],
+])
+
+const FIGURA = new Map([
+  ['1', './images/time-signatures/figura/1.svg'],
+  ['2', './images/time-signatures/figura/2.svg'],
+  ['4', './images/time-signatures/figura/4.svg'],
+  ['8', './images/time-signatures/figura/8.svg'],
+  ['16', './images/time-signatures/figura/16.svg'],
+  ['32', './images/time-signatures/figura/32.svg'],
+])
+
+export class SectionTimeSignature extends HTMLElement {
+  static get observedAttributes() {
+    return ['disabled']
+  }
+
+  #timeSignature = '4:4'
+
+  #handlers = {
+    ul: {
+      click: (event) => {
+        const list = this.shadowRoot.querySelector('#list')
+
+        if (event.target.dataset.timeSignature != null) {
+          this.timeSignature = event.target.dataset.timeSignature
+
+          list.hidePopover()
+          this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: event.target.dataset.timeSignature } }))
+        } else if (event.target.parentElement?.dataset.timeSignature != null) {
+          this.timeSignature = event.target.parentElement.dataset.timeSignature
+
+          list.hidePopover()
+          this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: event.target.parentElement.dataset.timeSignature } }))
+        }
+      },
+    },
+
+    tactus: {
+      input: () => {
+        const tactus = this.shadowRoot.querySelector('input#tactus')
+        if (tactus.checkValidity()) {
+          this.#beats = tactus.value
+
+          this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: this.timeSignature } }))
+        }
+      },
+    },
+
+    figura: {
+      input: () => {
+        const figura = this.shadowRoot.querySelector('input#figura')
+        if (figura.checkValidity()) {
+          this.#divisions = figura.value
+          this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: this.timeSignature } }))
+        }
+      },
+    },
+
+    button: {
+      click: () => {
+        const button = this.shadowRoot.querySelector('[popovertarget]')
+        const target = button.getAttribute('popovertarget')
+        const popover = this.shadowRoot.getElementById(target)
+        const rect = button.getBoundingClientRect()
+
+        popover.style.position = 'fixed'
+        popover.style.top = `${rect.bottom + 4}px`
+        popover.style.left = `${rect.left + 12}px`
+      },
+    },
+  }
+
+  constructor() {
+    super()
+
+    const template = document.querySelector('#template-section-time-signature')
+    const stylesheet = document.createElement('link')
+    const content = template.content
+    const shadow = this.attachShadow({ mode: 'open' })
+    const clone = content.cloneNode(true)
+
+    stylesheet.setAttribute('rel', 'stylesheet')
+    stylesheet.setAttribute('href', '/css/widgets.css')
+
+    shadow.appendChild(stylesheet)
+    shadow.appendChild(clone)
+  }
+
+  connectedCallback() {
+    this.classList.add('component-section-time-signature')
+
+    const shadow = this.shadowRoot
+    const ul = shadow.querySelector('div.content ul')
+    const tactus = shadow.querySelector('input#tactus')
+    const figura = shadow.querySelector('input#figura')
+    const button = shadow.querySelector('[popovertarget]')
+
+    ul.addEventListener('click', this.#handlers.ul.click)
+    tactus.addEventListener('input', this.#handlers.tactus.input)
+    figura.addEventListener('input', this.#handlers.figura.input)
+
+    // FireFox doesn't support CSS anchor positioning
+    if (!CSS.supports('top: anchor(bottom)')) {
+      button.addEventListener('click', this.#handlers.button.click)
+    }
+  }
+
+  disconnectedCallback() {}
+
+  adoptedCallback() {}
+
+  attributeChangedCallback(name, from, to) {
+    if (name === 'disabled') {
+      this.#disabled = to != null ? true : false
+    }
+  }
+
+  get timeSignature() {
+    return this.#timeSignature
+  }
+
+  set timeSignature({ timeSignature, defaults }) {
+    const shadow = this.shadowRoot
+    const container = shadow.querySelector('div.time-signature')
+    const tactus = shadow.querySelector('input#tactus')
+    const figura = shadow.querySelector('input#figura')
+
+    if (timeSignature === '') {
+      this.#timeSignature = ``
+      tactus.value = ''
+      figura.value = ''
+    } else if (timeSignature == 'common') {
+      this.#timeSignature = `common`
+      tactus.value = 4
+      figura.value = 4
+    } else if (timeSignature == 'cut') {
+      this.#timeSignature = `cut`
+      tactus.value = 2
+      figura.value = 2
+    } else {
+      const { beats, divisions } = parse(`${timeSignature}`)
+
+      if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
+        this.#timeSignature = `${beats}:${divisions}`
+
+        tactus.value = beats
+        figura.value = divisions
+      }
+    }
+
+    if (timeSignature === '') {
+      container.classList.add('none')
+    } else {
+      container.classList.remove('none')
+    }
+
+    this.#redraw(this.timeSignature, defaults?.timeSignature ?? '')
+  }
+
+  set disabled(v) {
+    if (v === true) {
+      this.setAttribute('disabled', '')
+    } else {
+      this.removeAttribute('disabled')
+    }
+  }
+
+  get #disabled() {
+    return this.getAttribute('disabled') != null
+  }
+
+  set #disabled(v) {
+    const shadow = this.shadowRoot
+    const container = shadow.querySelector('div.time-signature')
+    const button = shadow.querySelector('button')
+
+    if (v === true) {
+      button.disabled = true
+      container.classList.add('disabled')
+    } else {
+      button.disabled = false
+      container.classList.remove('disabled')
+    }
+  }
+
+  set #beats(v) {
+    const beats = parseInt(`${v}`)
+    const { divisions } = parse(`${this.#timeSignature}`)
+
+    if (!Number.isNaN(beats) && TACTUS.has(`${beats}`)) {
+      this.timeSignature = `${beats}:${divisions}`
+    }
+  }
+
+  set #divisions(v) {
+    const { beats } = parse(`${this.#timeSignature}`)
+    const divisions = parseInt(`${v}`)
+
+    if (!Number.isNaN(divisions) && FIGURA.has(`${divisions}`)) {
+      this.timeSignature = `${beats}:${divisions}`
+    }
+  }
+
+  #redraw(timeSignature, defval) {
+    const tactus = this.shadowRoot.querySelector('button div img.tactus')
+    const figura = this.shadowRoot.querySelector('button div img.figura')
+    const common = this.shadowRoot.querySelector('button div img.common')
+    const cut = this.shadowRoot.querySelector('button div img.cut')
+
+    if (timeSignature === '') {
+      tactus.classList.add('hidden')
+      figura.classList.add('hidden')
+      common.classList.add('hidden')
+      cut.classList.add('hidden')
+
+      if (defval === 'common') {
+        tactus.classList.remove('placeholder')
+        figura.classList.remove('placeholder')
+        common.classList.add('placeholder')
+        cut.classList.remove('placeholder')
+      } else if (defval === 'cut') {
+        tactus.classList.remove('placeholder')
+        figura.classList.remove('placeholder')
+        common.classList.remove('placeholder')
+        cut.classList.add('placeholder')
+      } else if (defval !== '') {
+        tactus.classList.add('placeholder')
+        figura.classList.add('placeholder')
+        common.classList.remove('placeholder')
+        cut.classList.remove('placeholder')
+
+        const { beats, divisions } = parse(defval)
+        if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
+          if (TACTUS.has(`${beats}`)) {
+            tactus.src = TACTUS.get(`${beats}`)
+          }
+
+          if (FIGURA.has(`${divisions}`)) {
+            figura.src = FIGURA.get(`${divisions}`)
+          }
+        }
+      }
+    } else {
+      tactus.classList.remove('placeholder')
+      figura.classList.remove('placeholder')
+      common.classList.remove('placeholder')
+      cut.classList.remove('placeholder')
+    }
+
+    if (timeSignature === 'common') {
+      tactus.classList.add('hidden')
+      figura.classList.add('hidden')
+      common.classList.remove('hidden')
+      cut.classList.add('hidden')
+    }
+    if (timeSignature === 'cut') {
+      tactus.classList.add('hidden')
+      figura.classList.add('hidden')
+      common.classList.add('hidden')
+      cut.classList.remove('hidden')
+    } else if (timeSignature !== '') {
+      tactus.classList.remove('hidden')
+      figura.classList.remove('hidden')
+      common.classList.add('hidden')
+      cut.classList.add('hidden')
+
+      const { beats, divisions } = parse(timeSignature)
+      if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
+        if (TACTUS.has(`${beats}`)) {
+          tactus.src = TACTUS.get(`${beats}`)
+        }
+
+        if (FIGURA.has(`${divisions}`)) {
+          figura.src = FIGURA.get(`${divisions}`)
+        }
+      }
+    }
+  }
+}
+
+customElements.define('yam-section-time-signature', SectionTimeSignature)

@@ -116,11 +116,15 @@ export class Section extends HTMLElement {
     this.#measures.value = section?.measures ?? 0
     this.#measures.placeholder = this.#role.value === 'anacrusis' ? 1 : '∞'
 
-    this.#timeSignature = section?.timeSignature ?? ''
+    this.#timeSignature = {
+      timeSignature: section?.timeSignature ?? '',
+      defaults: section?.defaults ?? {},
+    }
 
     this.#tempo = {
       tempo: section?.tempo ?? {},
       timeSignature: section?.timeSignature ?? '',
+      defaults: section?.defaults ?? {},
     }
   }
 
@@ -180,17 +184,20 @@ export class Section extends HTMLElement {
   }
 
   get timeSignature() {
-    const e = this.shadowRoot?.querySelector('yam-time-signature')
+    const e = this.shadowRoot?.querySelector('yam-section-time-signature')
 
     return e?.timeSignature ?? this.#section.timeSignature
   }
 
-  set #timeSignature(v) {
+  set #timeSignature({ timeSignature, defaults }) {
     void (async () => {
-      await customElements.whenDefined('yam-time-signature')
-      const e = this.shadowRoot?.querySelector('yam-time-signature')
+      await customElements.whenDefined('yam-section-time-signature')
+      const e = this.shadowRoot?.querySelector('yam-section-time-signature')
       if (e) {
-        e.timeSignature = v
+        e.timeSignature = {
+          timeSignature: timeSignature,
+          defaults: defaults,
+        }
       }
     })()
   }
@@ -209,12 +216,17 @@ export class Section extends HTMLElement {
     })()
   }
 
-  set #tempo({ tempo, timeSignature }) {
+  set #tempo({ tempo, timeSignature, defaults }) {
     void (async () => {
       await customElements.whenDefined('yam-section-mm')
       const e = this.shadowRoot?.querySelector('yam-section-mm')
       if (e) {
-        e.tempo = tempo
+        e.tempo = {
+          pulse: tempo.pulse,
+          BPM: tempo.BPM,
+          defaults: defaults,
+        }
+
         e.timeSignature = timeSignature
       }
     })()

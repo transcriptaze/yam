@@ -156,6 +156,7 @@ div.metronome.playing #play img.stop {
   column-gap: 4px;
   background: none;
   height: 100%;
+  width: 104px;
 }
 :host(.component-mm) div.MM button.pulse {
   grid-column: 1;
@@ -179,7 +180,7 @@ div.metronome.playing #play img.stop {
   grid-column: 2;
   grid-row: 1;
   justify-self: start;
-  background: none;
+  anchor-name: --text;
 }
 :host(.component-mm) div.MM [popover] {
   top: calc(anchor(bottom) - 12px);
@@ -225,24 +226,35 @@ div.metronome.playing #play img.stop {
   z-index: 3;
 }
 :host(.component-mm) div.MM #lock {
+  position-anchor: --text;
   position: absolute;
-  bottom: 0px;
-  right: 0px;
-  transform: translateX(-20%) translateY(-50%);
+  top: anchor(--text bottom);
+  left: anchor(--text right);
+  bottom: anchor(--text bottom);
+  right: anchor(--text right);
+  transform: translateX(-30%) translateY(-90%);
   height: 30%;
   opacity: 0;
   z-index: 2;
+}
+@supports not ((field-sizing: content) and (anchor-name: --text)) {
+  :host(.component-mm) div.MM #lock {
+    position: absolute;
+    bottom: 0px;
+    right: 0px;
+    transform: translateX(-10%) translateY(-60%);
+  }
 }
 :host(.component-mm) button:disabled img {
   filter: grayscale(100%) opacity(50%);
 }
 :host(.component-mm) input {
   box-sizing: border-box;
-  width: 2.5em;
   height: fit-content;
   background: transparent;
+  field-sizing: content;
   padding-left: 0px;
-  padding-right: 16px;
+  padding-right: 4px;
   padding-top: 4px;
   padding-bottom: 4px;
   border: none;
@@ -252,6 +264,11 @@ div.metronome.playing #play img.stop {
   font-size: 20px;
   font-weight: 600;
   text-align: left;
+}
+@supports not ((field-sizing: content) and (anchor-name: --text)) {
+  :host(.component-mm) input {
+    width: 2.5em;
+  }
 }
 :host(.component-mm) input::placeholder {
   font-style: italic;
@@ -330,6 +347,9 @@ div.metronome.playing #play img.stop {
 }
 :host(.component-time-signature) div.time-signature button div img.hidden {
   display: none;
+}
+:host(.component-time-signature) div.time-signature button div img.placeholder {
+  display: block;
 }
 :host(.component-time-signature) div.time-signature button div img.stave {
   grid-column: 1/4;

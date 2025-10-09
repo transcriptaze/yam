@@ -88,7 +88,7 @@ export class MM extends HTMLElement {
 
     lock: {
       animated: () => {
-        this.shadowRoot.querySelector('div.MM')?.remove('tapped')
+        this.shadowRoot.querySelector('div.MM')?.classList.remove('tapped')
       },
     },
   }

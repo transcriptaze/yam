@@ -8,6 +8,7 @@
 *** DONE playlists '+'' floating button is visually confusing
 *** DONE (temporarily) remove eighth note pulse
 *** DONE lock tempo
+*** DONE MM disappears after tap + locked
 
 *** TODO update worklet track on editor::save
 

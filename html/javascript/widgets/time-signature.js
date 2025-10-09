@@ -119,9 +119,7 @@ export class TimeSignature extends HTMLElement {
 
     lock: {
       animated: () => {
-        const container = this.shadowRoot.querySelector('div.time-signature')
-
-        container.classList.remove('tapped')
+        this.shadowRoot.querySelector('div.time-signature')?.classList.remove('tapped')
       },
     },
   }

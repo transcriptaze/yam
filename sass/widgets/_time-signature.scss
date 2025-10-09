@@ -39,11 +39,6 @@
           display: none;
         }
 
-        // NB: MUST come after img.hidden for the default time signature logic
-        img.placeholder {
-          display: block;
-        }
-
         img.stave {
           grid-column: 1 / 4;
           grid-row: 1;

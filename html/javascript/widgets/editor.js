@@ -1,4 +1,5 @@
 import { EVENTS, INF } from '../constants.js'
+import { parseTimeSignature } from '../util.js'
 import * as generators from '../generators.js'
 
 export class Editor extends HTMLElement {
@@ -15,6 +16,18 @@ export class Editor extends HTMLElement {
 
   // ... handlers
   #handlers = {
+    timeSignature: {
+      change: (event) => {
+        const defaults = {}
+
+        if (event.detail.timeSignature) {
+          defaults.timeSignature = event.detail.timeSignature
+        }
+
+        this.#defaults = defaults
+      },
+    },
+
     mm: {
       change: (event) => {
         const defaults = {}
@@ -48,8 +61,13 @@ export class Editor extends HTMLElement {
         event.preventDefault()
         event.stopPropagation()
 
-        // FIXME mm should be an async getter
+        // FIXME time-signature && mm should be an async getters
         const defaults = {}
+
+        if (event.detail.timeSignature != null) {
+          defaults.timeSignature = this.#fields.timeSignature?.timeSignature
+        }
+
         if (event.detail.pulse != null) {
           defaults.pulse = this.#fields.mm?.pulse
         }
@@ -113,9 +131,11 @@ export class Editor extends HTMLElement {
     save.addEventListener('click', this.#handlers.save.click)
     toggle.addEventListener('click', this.#handlers.sections.click)
 
+    this.#timeSignature.addEventListener('change', this.#handlers.timeSignature.change)
     this.#mm.addEventListener('change', this.#handlers.mm.change)
     this.#plus.addEventListener('click', this.#handlers.plus.click)
 
+    this.#sections.addEventListener(EVENTS.SECTION_TIME_SIGNATURE_CHANGE, this.#handlers.sections.change)
     this.#sections.addEventListener(EVENTS.SECTION_PULSE_CHANGE, this.#handlers.sections.change)
     this.#sections.addEventListener(EVENTS.SECTION_BPM_CHANGE, this.#handlers.sections.change)
   }
@@ -305,6 +325,7 @@ export class Editor extends HTMLElement {
     const it = sections.values()
     let pulse = object?.pulse
     let BPM = object?.BPM
+    let timeSignature = object?.timeSignature
 
     if (pulse != null && pulse != '') {
       for (const section of it) {
@@ -330,6 +351,19 @@ export class Editor extends HTMLElement {
 
         if (tempo.BPM != null && tempo.BPM >= 40 && tempo.BPM < 200) {
           BPM = tempo.BPM
+        }
+      }
+    }
+
+    if (timeSignature != null) {
+      for (const section of it) {
+        section.defaults = {
+          timeSignature: timeSignature,
+        }
+
+        const { beats, divisions } = parseTimeSignature(`${section.timeSignature}`)
+        if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
+          timeSignature = section.timeSignature
         }
       }
     }

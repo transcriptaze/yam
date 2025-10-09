@@ -129,8 +129,17 @@ export class Section extends HTMLElement {
   }
 
   set defaults(object) {
+    const timeSignature = object?.timeSignature
     const pulse = object?.pulse
     const BPM = object?.BPM
+
+    if (timeSignature != null && timeSignature !== '') {
+      this.#timeSignature.then((v) => {
+        v.defaults = {
+          timeSignature: timeSignature,
+        }
+      })
+    }
 
     if (pulse != null && pulse !== '') {
       this.#tempo.then((v) => {
@@ -171,6 +180,12 @@ export class Section extends HTMLElement {
     }
   }
 
+  get timeSignature() {
+    const e = this.shadowRoot?.querySelector('yam-section-time-signature')
+
+    return e?.timeSignature ?? this.#section.timeSignature
+  }
+
   get #name() {
     return this.#fields.name
   }
@@ -183,10 +198,12 @@ export class Section extends HTMLElement {
     return this.#fields.measures
   }
 
-  get timeSignature() {
-    const e = this.shadowRoot?.querySelector('yam-section-time-signature')
+  get #timeSignature() {
+    return (async () => {
+      await customElements.whenDefined('yam-section-time-signature')
 
-    return e?.timeSignature ?? this.#section.timeSignature
+      return this.shadowRoot?.querySelector('yam-section-time-signature')
+    })()
   }
 
   set #timeSignature({ timeSignature, defaults }) {

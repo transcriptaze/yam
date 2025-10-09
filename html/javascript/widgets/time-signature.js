@@ -54,10 +54,6 @@ export class TimeSignature extends HTMLElement {
   #track = null
   #bar = -1
 
-  #defaults = {
-    timeSignature: '',
-  }
-
   #handlers = {
     ul: {
       click: (event) => {
@@ -346,39 +342,6 @@ export class TimeSignature extends HTMLElement {
       figura.classList.add('hidden')
       common.classList.add('hidden')
       cut.classList.add('hidden')
-
-      if (this.#defaults.timeSignature === 'common') {
-        tactus.classList.remove('placeholder')
-        figura.classList.remove('placeholder')
-        common.classList.add('placeholder')
-        cut.classList.remove('placeholder')
-      } else if (this.#defaults.timeSignature === 'cut') {
-        tactus.classList.remove('placeholder')
-        figura.classList.remove('placeholder')
-        common.classList.remove('placeholder')
-        cut.classList.add('placeholder')
-      } else if (this.#defaults.timeSignature !== '') {
-        tactus.classList.add('placeholder')
-        figura.classList.add('placeholder')
-        common.classList.remove('placeholder')
-        cut.classList.remove('placeholder')
-
-        const { beats, divisions } = parse(this.#defaults.timeSignature)
-        if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
-          if (TACTUS.has(`${beats}`)) {
-            tactus.src = TACTUS.get(`${beats}`)
-          }
-
-          if (FIGURA.has(`${divisions}`)) {
-            figura.src = FIGURA.get(`${divisions}`)
-          }
-        }
-      }
-    } else {
-      tactus.classList.remove('placeholder')
-      figura.classList.remove('placeholder')
-      common.classList.remove('placeholder')
-      cut.classList.remove('placeholder')
     }
 
     if (timeSignature === 'common') {

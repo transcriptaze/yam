@@ -370,9 +370,6 @@ div.metronome.playing #play img.stop {
 :host(.component-time-signature) div.time-signature button div img.hidden {
   display: none;
 }
-:host(.component-time-signature) div.time-signature button div img.placeholder {
-  display: block;
-}
 :host(.component-time-signature) div.time-signature button div img.stave {
   grid-column: 1/4;
   grid-row: 1;

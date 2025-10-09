@@ -21,7 +21,9 @@
 **** DONE cascade update following sections after pick pulse
 **** DONE increase padding at bottom of section (clef tail is too close to edge)
 **** DONE fix BPM defval - should inherit from previous section
-**** TODO fix time signature defval - should inherit from previous section
+**** DONE fix time signature defval
+**** TODO time signature none
+**** TODO time signature common time is being picked as 4:4
 **** TODO lowlight empty section fields (name, role)
       - placeholder ?
 **** TODO display subsections

@@ -1,4 +1,4 @@
-:host(.component-time-signature) {
+:host(.component-section-time-signature) {
   div.time-signature {
     position: relative;
     box-sizing: border-box;
@@ -39,6 +39,11 @@
           display: none;
         }
 
+        // NB: MUST come after img.hidden for the default time signature logic
+        img.placeholder {
+          display: block;
+        }
+
         img.stave {
           grid-column: 1 / 4;
           grid-row: 1;
@@ -72,7 +77,6 @@
           grid-row: 1;
           justify-self: center;
         }
-
       }
     }
 
@@ -81,25 +85,6 @@
         filter: grayscale(100%) opacity(50%);
         cursor: auto;
       }
-    }
-
-    div.overlay {
-      grid-row: 1;
-      grid-column: 1;
-
-      pointer-events: none;
-      z-index: 3;
-    }
-
-    #lock {
-      position: absolute;
-      bottom: 0px;
-      right: 0px;
-      transform: translateY(-50%);
-
-      height: 30%;
-      opacity: 0; 
-      z-index: 2;
     }
 
     div#list {
@@ -212,25 +197,6 @@
     }
   }
 
-  div.time-signature.locked {
-    button {
-      cursor: auto;    
-      img {
-        filter: brightness(0) saturate(100%) invert(22%) sepia(45%) saturate(3580%) hue-rotate(357deg) brightness(101%) contrast(95%);
-      }
-    }
-
-    div.overlay {
-      pointer-events: auto;
-    }
-  }
-
-  div.time-signature.locked.tapped {
-    #lock {
-      animation: tapped 3.5s ease-in-out forwards;
-    }
-  }
-
   @-moz-document url-prefix() {
     img.tactus {
       margin-left: 8px;
@@ -240,12 +206,4 @@
       margin-left: 8px;
     }
   }
-
-  @keyframes tapped {
-    0%   { opacity: 0; }
-    5%   { opacity: 1; }
-    80%  { opacity: 1; }
-    100% { opacity: 0; }
-  }
 }
-

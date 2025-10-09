@@ -49,6 +49,57 @@
       anchor-name: --text;
     }
 
+    #mirror {
+      grid-column: 2;
+      grid-row: 1;
+      justify-self: start;
+
+      height: 100%;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: start;
+      align-items: center;
+
+      span {
+        z-index: -1;
+        opacity: 0;
+      }
+    }
+
+    div.overlay {
+      grid-column: 1 / 3;
+      grid-row: 1;
+
+      width: 100%;
+      height: 100%;
+
+      pointer-events: none;
+      z-index: 3;
+    }
+
+    #lock {
+      height: 30%;
+      opacity: 0; 
+      z-index: 2;
+    }
+
+    @supports ((field-sizing: content) and (anchor-name: --text)) {
+      #lock {
+        position-anchor: --text;
+        position: absolute;
+        top: anchor(--text bottom);
+        left: anchor(--text right);
+        transform: translateX(-30%) translateY(-90%);
+      }
+    }
+  
+    @supports not ((field-sizing: content) and (anchor-name: --text)) {
+      #lock {
+        transform: translateX(-0%) translateY(40%);
+      }
+    }
+
     [popover] {
       top: calc(anchor(bottom) - 12px);
       left: calc(anchor(left) + 12px);
@@ -89,41 +140,6 @@
         }
       }
     }
-
-    div.overlay {
-      grid-column: 1 / 3;
-      grid-row: 1;
-
-      width: 100%;
-      height: 100%;
-
-      pointer-events: none;
-      z-index: 3;
-    }
-
-    #lock {
-      position-anchor: --text;
-      position: absolute;
-      top: anchor(--text bottom);
-      left: anchor(--text right);
-      bottom: anchor(--text bottom);
-      right: anchor(--text right);
-
-      transform: translateX(-30%) translateY(-90%);
-
-      height: 30%;
-      opacity: 0; 
-      z-index: 2;
-    }
-  
-    @supports not ((field-sizing: content) and (anchor-name: --text)) {
-      #lock {
-        position: absolute;
-        bottom: 0px;
-        right: 0px;
-        transform: translateX(-10%) translateY(-60%);
-      }
-    }
   }
 
   button:disabled {
@@ -149,8 +165,9 @@
       outline: none;
 
       color: #444444;
+      font-family: Lato;
       font-size: 20px;
-      font-weight: 600;
+      font-weight: 800;
       text-align: left;
   }
 
@@ -172,6 +189,14 @@
   input:disabled {
     color: #a0a0a0;
   } 
+
+  #mirror {
+    span {
+      font-family: Lato;
+      font-size: 20px;
+      font-weight: 800;
+    }
+  }
 
   div.MM.locked {
     button {
@@ -195,6 +220,11 @@
       animation: tapped 3.5s ease-in-out forwards;
     }
   }
+
+  // NTS: temporarily remove eighth notes from list
+  #list > div > div.li[data-pulse="eighth"] {
+     display: none;
+   }
 
   @keyframes tapped {
     0%   { opacity: 0; }

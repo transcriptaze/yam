@@ -1,4 +1,4 @@
-import * as datastore from '../datastore/datastore.js'
+import { EVENTS } from '../constants.js'
 import { parseTimeSignature as parse } from '../util.js'
 
 const TACTUS = new Map([
@@ -45,14 +45,15 @@ const FIGURA = new Map([
   ['32', './images/time-signatures/figura/32.svg'],
 ])
 
-export class TimeSignature extends HTMLElement {
+export class SectionTimeSignature extends HTMLElement {
   static get observedAttributes() {
-    return ['disabled', 'locked']
+    return ['disabled']
   }
 
   #timeSignature = '4:4'
-  #track = null
-  #bar = -1
+  #defaults = {
+    timeSignature: '4:4',
+  }
 
   #handlers = {
     ul: {
@@ -60,15 +61,37 @@ export class TimeSignature extends HTMLElement {
         const list = this.shadowRoot.querySelector('#list')
 
         if (event.target.dataset.timeSignature != null) {
-          this.timeSignature = event.target.dataset.timeSignature
+          this.timeSignature = {
+            timeSignature: event.target.dataset.timeSignature,
+          }
 
           list.hidePopover()
-          this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: event.target.dataset.timeSignature } }))
+
+          this.dispatchEvent(
+            new CustomEvent(EVENTS.SECTION_TIME_SIGNATURE_CHANGE, {
+              bubbles: true,
+              composed: true,
+              detail: {
+                timeSignature: this.timeSignature,
+              },
+            }),
+          )
         } else if (event.target.parentElement?.dataset.timeSignature != null) {
-          this.timeSignature = event.target.parentElement.dataset.timeSignature
+          this.timeSignature = {
+            timeSignature: event.target.parentElement.dataset.timeSignature,
+          }
 
           list.hidePopover()
-          this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: event.target.parentElement.dataset.timeSignature } }))
+
+          this.dispatchEvent(
+            new CustomEvent(EVENTS.SECTION_TIME_SIGNATURE_CHANGE, {
+              bubbles: true,
+              composed: true,
+              detail: {
+                timeSignature: this.timeSignature,
+              },
+            }),
+          )
         }
       },
     },
@@ -79,7 +102,15 @@ export class TimeSignature extends HTMLElement {
         if (tactus.checkValidity()) {
           this.#beats = tactus.value
 
-          this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: this.timeSignature } }))
+          this.dispatchEvent(
+            new CustomEvent(EVENTS.SECTION_TIME_SIGNATURE_CHANGE, {
+              bubbles: true,
+              composed: true,
+              detail: {
+                timeSignature: this.timeSignature,
+              },
+            }),
+          )
         }
       },
     },
@@ -89,7 +120,16 @@ export class TimeSignature extends HTMLElement {
         const figura = this.shadowRoot.querySelector('input#figura')
         if (figura.checkValidity()) {
           this.#divisions = figura.value
-          this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: this.timeSignature } }))
+
+          this.dispatchEvent(
+            new CustomEvent(EVENTS.SECTION_TIME_SIGNATURE_CHANGE, {
+              bubbles: true,
+              composed: true,
+              detail: {
+                timeSignature: this.timeSignature,
+              },
+            }),
+          )
         }
       },
     },
@@ -106,30 +146,12 @@ export class TimeSignature extends HTMLElement {
         popover.style.left = `${rect.left + 12}px`
       },
     },
-
-    overlay: {
-      click: () => {
-        const container = this.shadowRoot.querySelector('div.time-signature')
-
-        if (container.classList.contains('locked')) {
-          container.classList.add('tapped')
-        }
-      },
-    },
-
-    lock: {
-      animated: () => {
-        const container = this.shadowRoot.querySelector('div.time-signature')
-
-        container.classList.remove('tapped')
-      },
-    },
   }
 
   constructor() {
     super()
 
-    const template = document.querySelector('#template-time-signature')
+    const template = document.querySelector('#template-section-time-signature')
     const stylesheet = document.createElement('link')
     const content = template.content
     const shadow = this.attachShadow({ mode: 'open' })
@@ -143,22 +165,17 @@ export class TimeSignature extends HTMLElement {
   }
 
   connectedCallback() {
-    this.classList.add('component-time-signature')
+    this.classList.add('component-section-time-signature')
 
     const shadow = this.shadowRoot
     const ul = shadow.querySelector('div.content ul')
     const tactus = shadow.querySelector('input#tactus')
     const figura = shadow.querySelector('input#figura')
     const button = shadow.querySelector('[popovertarget]')
-    const overlay = shadow.querySelector('div.overlay')
-    const lock = shadow.querySelector('#lock')
 
     ul.addEventListener('click', this.#handlers.ul.click)
     tactus.addEventListener('input', this.#handlers.tactus.input)
     figura.addEventListener('input', this.#handlers.figura.input)
-
-    overlay.addEventListener('click', this.#handlers.overlay.click)
-    lock.addEventListener('animationend', this.#handlers.lock.animated)
 
     // FireFox doesn't support CSS anchor positioning
     if (!CSS.supports('top: anchor(bottom)')) {
@@ -174,36 +191,36 @@ export class TimeSignature extends HTMLElement {
     if (name === 'disabled') {
       this.#disabled = to != null ? true : false
     }
-
-    if (name === 'locked') {
-      this.#locked = to != null ? true : false
-    }
   }
 
   get timeSignature() {
     return this.#timeSignature
   }
 
-  set timeSignature(v) {
+  set timeSignature({ timeSignature, defaults }) {
     const shadow = this.shadowRoot
     const container = shadow.querySelector('div.time-signature')
     const tactus = shadow.querySelector('input#tactus')
     const figura = shadow.querySelector('input#figura')
 
-    if (v === '') {
+    if (defaults != null && defaults.timeSignature != null) {
+      this.#defaults.timeSignature = defaults.timeSignature
+    }
+
+    if (timeSignature === '') {
       this.#timeSignature = ``
       tactus.value = ''
       figura.value = ''
-    } else if (v == 'common') {
+    } else if (timeSignature == 'common') {
       this.#timeSignature = `common`
       tactus.value = 4
       figura.value = 4
-    } else if (v == 'cut') {
+    } else if (timeSignature == 'cut') {
       this.#timeSignature = `cut`
       tactus.value = 2
       figura.value = 2
     } else {
-      const { beats, divisions } = parse(`${v}`)
+      const { beats, divisions } = parse(`${timeSignature}`)
 
       if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
         this.#timeSignature = `${beats}:${divisions}`
@@ -213,13 +230,23 @@ export class TimeSignature extends HTMLElement {
       }
     }
 
-    if (v === '') {
+    if (timeSignature === '') {
       container.classList.add('none')
     } else {
       container.classList.remove('none')
     }
 
-    this.#redraw(this.timeSignature)
+    this.#redraw()
+  }
+
+  set defaults(object) {
+    const timeSignature = object?.timeSignature ?? ''
+
+    if (timeSignature !== '') {
+      this.#defaults.timeSignature = timeSignature
+    }
+
+    this.#redraw()
   }
 
   set disabled(v) {
@@ -227,53 +254,6 @@ export class TimeSignature extends HTMLElement {
       this.setAttribute('disabled', '')
     } else {
       this.removeAttribute('disabled')
-    }
-  }
-
-  set locked(v) {
-    if (v === true) {
-      this.setAttribute('locked', '')
-    } else {
-      this.removeAttribute('locked')
-    }
-  }
-
-  set track(v) {
-    const track = datastore.tracks.get(v)
-
-    this.#track = track
-    this.#bar = -1
-    this.locked = track != null && track.sections != null && track.sections.length > 0
-
-    if (track != null) {
-      this.timeSignature = track.timeSignature
-    }
-  }
-
-  redraw({ playing, stopped, bar }) {
-    const track = this.#track
-
-    if (track != null && bar != this.#bar) {
-      this.#bar = bar
-
-      if (!playing && stopped) {
-        this.#redraw(track.timeSignature)
-      }
-
-      if (playing && !stopped) {
-        const sections = track.sections ?? []
-        const section = sections.findLast((v) => v.start <= bar)
-        const subsections = section?.subsections ?? []
-        const subsection = subsections.findLast((v) => v.start <= bar)
-
-        if (subsection != null) {
-          this.#redraw(subsection.timeSignature)
-        } else if (section != null) {
-          this.#redraw(section.timeSignature)
-        } else {
-          this.#redraw(track.timeSignature)
-        }
-      }
     }
   }
 
@@ -290,26 +270,8 @@ export class TimeSignature extends HTMLElement {
       button.disabled = true
       container.classList.add('disabled')
     } else {
-      button.disabled = this.#locked
+      button.disabled = false
       container.classList.remove('disabled')
-    }
-  }
-
-  get #locked() {
-    return this.getAttribute('locked') != null
-  }
-
-  set #locked(v) {
-    const shadow = this.shadowRoot
-    const container = shadow.querySelector('div.time-signature')
-    const button = shadow.querySelector('button')
-
-    if (v === true) {
-      button.disabled = true
-      container.classList.add('locked')
-    } else {
-      button.disabled = this.#disabled
-      container.classList.remove('locked')
     }
   }
 
@@ -318,7 +280,9 @@ export class TimeSignature extends HTMLElement {
     const { divisions } = parse(`${this.#timeSignature}`)
 
     if (!Number.isNaN(beats) && TACTUS.has(`${beats}`)) {
-      this.timeSignature = `${beats}:${divisions}`
+      this.timeSignature = {
+        timeSignature: `${beats}:${divisions}`,
+      }
     }
   }
 
@@ -327,21 +291,59 @@ export class TimeSignature extends HTMLElement {
     const divisions = parseInt(`${v}`)
 
     if (!Number.isNaN(divisions) && FIGURA.has(`${divisions}`)) {
-      this.timeSignature = `${beats}:${divisions}`
+      this.timeSignature = {
+        timeSignature: `${beats}:${divisions}`,
+      }
     }
   }
 
-  #redraw(timeSignature) {
+  #redraw() {
     const tactus = this.shadowRoot.querySelector('button div img.tactus')
     const figura = this.shadowRoot.querySelector('button div img.figura')
     const common = this.shadowRoot.querySelector('button div img.common')
     const cut = this.shadowRoot.querySelector('button div img.cut')
+
+    const timeSignature = this.#timeSignature
+    const defval = this.#defaults.timeSignature
 
     if (timeSignature === '') {
       tactus.classList.add('hidden')
       figura.classList.add('hidden')
       common.classList.add('hidden')
       cut.classList.add('hidden')
+
+      if (defval === 'common') {
+        tactus.classList.remove('placeholder')
+        figura.classList.remove('placeholder')
+        common.classList.add('placeholder')
+        cut.classList.remove('placeholder')
+      } else if (defval === 'cut') {
+        tactus.classList.remove('placeholder')
+        figura.classList.remove('placeholder')
+        common.classList.remove('placeholder')
+        cut.classList.add('placeholder')
+      } else if (defval !== '') {
+        tactus.classList.add('placeholder')
+        figura.classList.add('placeholder')
+        common.classList.remove('placeholder')
+        cut.classList.remove('placeholder')
+
+        const { beats, divisions } = parse(defval)
+        if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
+          if (TACTUS.has(`${beats}`)) {
+            tactus.src = TACTUS.get(`${beats}`)
+          }
+
+          if (FIGURA.has(`${divisions}`)) {
+            figura.src = FIGURA.get(`${divisions}`)
+          }
+        }
+      }
+    } else {
+      tactus.classList.remove('placeholder')
+      figura.classList.remove('placeholder')
+      common.classList.remove('placeholder')
+      cut.classList.remove('placeholder')
     }
 
     if (timeSignature === 'common') {
@@ -375,4 +377,4 @@ export class TimeSignature extends HTMLElement {
   }
 }
 
-customElements.define('yam-time-signature', TimeSignature)
+customElements.define('yam-section-time-signature', SectionTimeSignature)

@@ -173,12 +173,14 @@
             <div class="li" data-pulse="dotted-half"    ><img class="pulsus" src="./images/MM/popover/dotted-half.svg"    draggable="false" /></div>
           </div>
         </div>
+        <div id="mirror">
+          <span></span>
+          <img id="lock" src="./images/lock.svg" />
+        </div>
         <input part="BPM" type="text"  inputmode="numeric" value="120"
                pattern="[4-9][0-9]|1[0-9][0-9]|200" minlength="1" maxlength="3" 
                enterkeyhint="done" />
-
         <div class="overlay"></div>
-        <img id="lock" src="./images/lock.svg" />
       </div>
     </template>
 
@@ -510,8 +512,8 @@
             <input  id="measures" type="number" min="0"            step="1" readonly />
           </div>
           <div class="metricals">
-            <yam-time-signature tabindex="-1" enterkeyhint="done"></yam-time-signature>
-            <yam-section-mm     tabindex="-1" enterkeyhint="done"></yam-section-mm>
+            <yam-section-time-signature tabindex="-1" enterkeyhint="done"></yam-section-time-signature>
+            <yam-section-mm             tabindex="-1" enterkeyhint="done"></yam-section-mm>
           </div>
         </div>
         <datalist id="roles">
@@ -527,6 +529,62 @@
         </datalist>
       </div>
     </template>
+
+    <template id="template-section-time-signature">
+      <div class="time-signature">
+        <button popovertarget="list">
+          <div>
+            <img class="stave"         src="./images/time-signatures/stave.svg" />
+            <img class="clef"          src="./images/time-signatures/clef.svg" />
+            <img class="tactus"        src="./images/time-signatures/tactus/4.svg" />
+            <img class="figura"        src="./images/time-signatures/figura/4.svg" />
+            <img class="common hidden" src="./images/time-signatures/common.svg" />
+            <img class="cut    hidden" src="./images/time-signatures/cut.svg" />
+          </div>
+        </button>
+
+        <div id="list" popover>
+          <div class="content">
+            <ul>
+              <li data-time-signature="common"><img src="./images/time-signatures/presets/common.svg" /></li>
+              <li data-time-signature="cut"><img src="./images/time-signatures/presets/cut.svg" /></li>
+              <li data-time-signature="2:2"><img src="./images/time-signatures/presets/2-2.svg" /></li>
+              <li data-time-signature="2:4"><img src="./images/time-signatures/presets/2-4.svg" /></li>
+              <li data-time-signature="3:4"><img src="./images/time-signatures/presets/3-4.svg" /></li>
+              <li data-time-signature="4:4"><img src="./images/time-signatures/presets/4-4.svg" /></li>
+              <li data-time-signature="6:8"><img src="./images/time-signatures/presets/6-8.svg" /></li>
+              <li data-time-signature="12:8"><img src="./images/time-signatures/presets/12-8.svg" /></li>
+            </ul>
+            <div class="custom">
+              <input id="tactus" type="number" min="1" max="12" step="1" list="beats-list"     enterkeyhint="done" required />
+              <input id="figura" type="number" min="1" max="8"  step="1" list="divisions-list" enterkeyhint="done" required />
+            </div>
+          </div>
+        </div>
+
+        <datalist id="beats-list">
+          <option value="1"></option>
+          <option value="2"></option>
+          <option value="3"></option>
+          <option value="4"></option>
+          <option value="5"></option>
+          <option value="6"></option>
+          <option value="7"></option>
+          <option value="8"></option>
+          <option value="9"></option>
+          <option value="10"></option>
+          <option value="11"></option>
+          <option value="12"></option>
+        </datalist>
+
+        <datalist id="divisions-list">
+          <option value="2"></option>
+          <option value="4"></option>
+          <option value="8"></option>
+        </datalist>
+      </div>
+    </template>
+
 
     <template id="template-section-mm">
       <div class="MM">

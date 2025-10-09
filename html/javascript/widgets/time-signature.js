@@ -334,41 +334,46 @@ export class TimeSignature extends HTMLElement {
     const figura = this.shadowRoot.querySelector('button div img.figura')
     const common = this.shadowRoot.querySelector('button div img.common')
     const cut = this.shadowRoot.querySelector('button div img.cut')
+  
+    const { beats, divisions } = parse(timeSignature)
 
-    if (timeSignature === '') {
-      tactus.classList.add('hidden')
-      figura.classList.add('hidden')
-      common.classList.add('hidden')
-      cut.classList.add('hidden')
-    }
+    switch (true) {
+      case timeSignature === '':
+        tactus.classList.add('hidden')
+        figura.classList.add('hidden')
+        common.classList.add('hidden')
+        cut.classList.add('hidden')
+        break
 
-    if (timeSignature === 'common') {
-      tactus.classList.add('hidden')
-      figura.classList.add('hidden')
-      common.classList.remove('hidden')
-      cut.classList.add('hidden')
-    }
-    if (timeSignature === 'cut') {
-      tactus.classList.add('hidden')
-      figura.classList.add('hidden')
-      common.classList.add('hidden')
-      cut.classList.remove('hidden')
-    } else if (timeSignature !== '') {
-      tactus.classList.remove('hidden')
-      figura.classList.remove('hidden')
-      common.classList.add('hidden')
-      cut.classList.add('hidden')
+      case timeSignature === 'common':
+        tactus.classList.add('hidden')
+        figura.classList.add('hidden')
+        common.classList.remove('hidden')
+        cut.classList.add('hidden')
+        break
 
-      const { beats, divisions } = parse(timeSignature)
-      if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
-        if (TACTUS.has(`${beats}`)) {
-          tactus.src = TACTUS.get(`${beats}`)
+      case timeSignature === 'cut':
+        tactus.classList.add('hidden')
+        figura.classList.add('hidden')
+        common.classList.add('hidden')
+        cut.classList.remove('hidden')
+        break
+
+      default:
+        tactus.classList.remove('hidden')
+        figura.classList.remove('hidden')
+        common.classList.add('hidden')
+        cut.classList.add('hidden')
+
+        if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
+          if (TACTUS.has(`${beats}`)) {
+            tactus.src = TACTUS.get(`${beats}`)
+          }
+
+          if (FIGURA.has(`${divisions}`)) {
+            figura.src = FIGURA.get(`${divisions}`)
+          }
         }
-
-        if (FIGURA.has(`${divisions}`)) {
-          figura.src = FIGURA.get(`${divisions}`)
-        }
-      }
     }
   }
 }

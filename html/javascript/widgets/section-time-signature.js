@@ -351,8 +351,7 @@ export class SectionTimeSignature extends HTMLElement {
       figura.classList.add('hidden')
       common.classList.remove('hidden')
       cut.classList.add('hidden')
-    }
-    if (timeSignature === 'cut') {
+    } else if (timeSignature === 'cut') {
       tactus.classList.add('hidden')
       figura.classList.add('hidden')
       common.classList.add('hidden')

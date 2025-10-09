@@ -9,6 +9,7 @@
 *** DONE (temporarily) remove eighth note pulse
 *** DONE lock tempo
 *** DONE MM disappears after tap + locked
+*** DONE time signature common time is being picked as 4:4
 
 *** TODO update worklet track on editor::save
 
@@ -24,7 +25,6 @@
 **** DONE fix BPM defval - should inherit from previous section
 **** DONE fix time signature defval
 **** TODO time signature none
-**** TODO time signature common time is being picked as 4:4
 **** TODO lowlight empty section fields (name, role)
       - placeholder ?
 **** TODO display subsections

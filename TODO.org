@@ -8,6 +8,7 @@
 
 *** TODO track editor
 **** DONE lowlight empty section fields (name, role)
+**** TODO don't lowlight = if both pulse and BPM are default
 **** TODO toggle measures input between header and subsections
 **** TODO display subsections
 **** TODO slide in on initialisation

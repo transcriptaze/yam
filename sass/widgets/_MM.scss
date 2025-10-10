@@ -50,6 +50,8 @@
     }
 
     #mirror {
+      box-sizing: border-box;
+
       grid-column: 2;
       grid-row: 1;
       justify-self: start;
@@ -62,8 +64,10 @@
       align-items: center;
 
       span {
-        z-index: -1;
+        box-sizing: border-box;
         opacity: 0;
+        z-index: -1;
+        margin-right: 4px;
       }
     }
 
@@ -96,7 +100,7 @@
   
     @supports not ((field-sizing: content) and (anchor-name: --text)) {
       #lock {
-        transform: translateX(10%) translateY(40%);
+        transform: translateX(-20%) translateY(40%);
       }
     }
 

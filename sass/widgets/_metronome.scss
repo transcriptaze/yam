@@ -100,10 +100,10 @@ div.metronome.playing {
   }
 }
 
-@-moz-document url-prefix() {
-  div.metronome {
-    #play {
-      min-width: 64px;
-    }
-  }
-}
+// @-moz-document url-prefix() {
+//   div.metronome {
+//     #play {
+//       min-width: 64px;
+//     }
+//   }
+// }

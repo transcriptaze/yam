@@ -231,15 +231,15 @@
     }
   }
 
-  @-moz-document url-prefix() {
-    img.tactus {
-      margin-left: 8px;
-    }
-    
-    img.figura {
-      margin-left: 8px;
-    }
-  }
+//  @-moz-document url-prefix() {
+//    img.tactus {
+//      margin-left: 0px;
+//    }
+//    
+//    img.figura {
+//      margin-left: 0px;
+//    }
+//  }
 
   @keyframes tapped {
     0%   { opacity: 0; }

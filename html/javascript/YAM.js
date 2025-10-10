@@ -48,6 +48,7 @@ export function initialise() {
 
   widgets.pads.timeSignature = state.timeSignature
   widgets.pads.pulse = state.pulse
+  widgets.pads.track = null
 
   widgets.timeSignature.timeSignature = state.timeSignature
   widgets.timeSignature.track = null
@@ -133,15 +134,32 @@ export function reset() {
   const selected = playlist?.selected
   const track = models.tracks.track(selected)
 
+  const f = () => {
+    widgets.pads.pulse = state.pulse
+    widgets.pads.timeSignature = state.timeSignature
+    widgets.info.title = state.title
+    widgets.timeSignature.timeSignature = state.timeSignature
+    widgets.mm.pulse = state.pulse
+    widgets.mm.BPM = state.BPM
+    widgets.knob.BPM = state.BPM
+    widgets.wheel.BPM = state.BPM
+
+    engine.setTimeSignature(state.timeSignature)
+    engine.setPulse(state.pulse)
+    engine.setBPM(state.BPM)
+  }
+
   // ... revert selected track changes
   if (selected != null && track != null && state.modified) {
     state.reset({ title: track.title, BPM: track.BPM, timeSignature: track.timeSignature, pulse: track.pulse })
+    f()
     return
   }
 
   // ... clear selected track
   if (selected != null) {
     playlist?.select(null)
+    f()
     return
   }
 
@@ -149,11 +167,14 @@ export function reset() {
   const saved = { title: '', BPM: settings.BPM, timeSignature: settings.timeSignature, pulse: settings.pulse }
   if (!state.equals(saved)) {
     state.reset(saved)
+    f()
     return
   }
 
   // ... revert to defaults
   state.reset({ title: '', BPM: 120, timeSignature: '4:4', pulse: 'quarter' })
+
+  f()
 
   settings.BPM = state.BPM
   settings.timeSignature = state.timeSignature
@@ -217,8 +238,6 @@ export function load() {
       models.playlists.save()
       models.tracks.save()
 
-      widgets.playlists.initialise(object.playlists, object.tracks)
-
       state.selected = {
         playlist: DEFAULT.UUID,
         track: null,
@@ -226,6 +245,12 @@ export function load() {
 
       settings.playlist = DEFAULT.UUID
       settings.save()
+
+      widgets.playlists.initialise(object.playlists, object.tracks)
+      widgets.pads.track = null
+      widgets.info.track = null
+      widgets.timeSignature.track = null
+      widgets.mm.track = null
 
       widgets.playlists.selected = {
         playlist: DEFAULT.UUID,
@@ -374,6 +399,7 @@ function onTimeSignature() {
   const timeSignature = widgets.timeSignature.timeSignature
 
   state.timeSignature = timeSignature
+  widgets.pads.timeSignature = timeSignature
   widgets.mm.timeSignature = timeSignature
   engine.setTimeSignature(timeSignature)
 
@@ -390,6 +416,7 @@ function onMM() {
 
   state.MM = { BPM, pulse }
 
+  widgets.pads.pulse = pulse
   widgets.knob.BPM = BPM
   widgets.wheel.BPM = BPM
 
@@ -468,30 +495,10 @@ function onNext() {
   }
 }
 
-// FIXME can't do it this way - need to explicitly list the value changed
+// NTS: state/track conflict => either need to update only changed fields here
+//      or in the original event handlers
 function onStateModified() {
-  const track = models.tracks.track(state.track)
-
-  widgets.pads.pulse = state.pulse
-  widgets.pads.timeSignature = state.timeSignature
-
-  widgets.info.title = state.title
-  widgets.info.track = track
   widgets.info.modified = state.modified
-
-  // FIXME figure out state/track conflict
-  widgets.timeSignature.timeSignature = state.timeSignature
-  widgets.timeSignature.track = track
-
-  // NTS: removed (state/track conflict)
-  // widgets.mm.pulse = state.pulse
-  // widgets.mm.BPM = state.BPM
-  // widgets.mm.timeSignature = state.timeSignature
-  // widgets.mm.track = track
-
-  // NTS: removed (state/track conflict)
-  // widgets.knob.BPM = state.BPM
-  // widgets.wheel.BPM = state.BPM
 }
 
 function onTrackSelect(event) {
@@ -540,8 +547,8 @@ function onSelected(event) {
     track: track?.UUID,
   }
 
+  widgets.pads.track = track
   widgets.info.track = track
-
   widgets.timeSignature.track = track
   widgets.mm.track = track
 

@@ -1,8 +1,9 @@
 * -- TODO --
 
-*** TODO allow BPM changes while playing a track
-      - reset doesn't update engine
-      - fix info jankiness
+*** DONE allow BPM changes while playing a track
+*** DONE changing pulse/time-signature etc 'waits' for click
+*** DONE BPM changes scaled by track BPM
+*** DONE wait for metronome to start before enabling 'stop' (confusing double click)
 
 *** TODO update worklet track on editor::save
 
@@ -12,6 +13,8 @@
 **** TODO display subsections
 **** TODO slide in on initialisation
 **** TODO enable editor save iff changed
+**** TODO expand single section
+      - hover >> arrow maybe (doesn't work on mobile)
 
 *** TODO clicks
 **** TODO 'ding'
@@ -21,6 +24,7 @@
 **** TODO generate clicks for anacrusis
 **** TODO generate clicks for 5:4
 **** TODO not cascading - revert to track clicks or default clicks for time-signature
+
 
 *** TODO use cloned track
 *** TODO use cloned playlist
@@ -35,9 +39,7 @@
 *** TODO URL - use ?UUID= or ?title= 
 *** TODO URL match on track if playlist not found
 *** TODO 'All Tracks' should not display tracklist
-*** TODO move spacebar toggle into metronome widget
-*** TODO expand single section
-      - hover >> arrow maybe (doesn't work on mobile)
+*** TODO (?) move spacebar toggle into metronome widget
 *** TODO requestAnimationFrame is not always 60fps
       - only update if changed
 *** TODO different grip icon
@@ -45,9 +47,8 @@
 *** TODO playlists loaded from file include deleted playlists
 *** TODO editor: metronome div vertical alignment
 *** TODO editor: role drop down list
-*** TODO portrait/fullscreen: put something (title?) in the 'safe area' at the top
+*** TODO portrait/fullscreen: put something (title? logo? yams?) in the 'safe area' at the top
 *** TODO move start/stop/delay to clock
-*** TODO wait for metronome to start before enabling 'stop' (confusing double click)
 
 *** TODO make track UUID private
 *** TODO automatically open editor on new playlist
@@ -60,8 +61,6 @@
 *** TODO web-component box-sizing fixes
 *** TODO playlist: fade-out top and bottom of scrollable list
 *** TODO models.playlist CRUD interface
-*** TODO changing pulse/time-signature etc 'waits' for click
-      - BPM changes scaled by track BPM
 
 *** TODO 6:8, dotted quarter: intermediate clicks @60BPM
 *** TODO 6:8, quarter notes
@@ -93,7 +92,7 @@
 *** TODO move page logic to CSS
 
 ** Control knob
-*** TODO integrate along path
+*** TODO integrate along path (fit curve to points ? low pass filter points ?)
 *** TODO rework rotation with matrix
 *** TODO slide-x
 *** TODO animate when BPM changed by input
@@ -111,7 +110,7 @@
 *** TODO autoplay
 *** TODO save URL as bookmark
 *** TODO flag modified tracks
-*** TODO playlist indicator for back/next (e.g. dots)
+*** TODO playlist indicator for back/next (e.g. dots below play controls)
 *** TODO lock
 *** TODO save/load zipped (.yamz)
 *** TODO slots for <random> tracks
@@ -127,7 +126,7 @@
   - https://stackoverflow.com/questions/9367279/can-i-do-a-swipe-left-or-right-in-chrome-pc-with-a-mouse
 
 ** Track
-*** TODO tags
+*** TODO (?) tags
 *** TODO hover styles
 *** TODO lock
 *** TODO clone
@@ -172,9 +171,6 @@
       - https://dribbble.com/shots/21007853-Metronome-App-Device-Experiment
       
 ** Metronome
-*** TODO 'dings'
-      - 'bell' sound on selected beats (e.g. 13.4)
-
 *** TODO textured buttons
       - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy
       - https://kube.io/blog/liquid-glass-css-svg/

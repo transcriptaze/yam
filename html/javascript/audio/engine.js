@@ -228,7 +228,7 @@ export function load(track) {
     setPulse(track.pulse)
   }
 
-  setTrack(track)
+  engine.track = track
 }
 
 export function setBPM(BPM) {
@@ -265,10 +265,6 @@ export function setPulse(v) {
       exec((e) => (e.pulse = pulse))
     }
   }
-}
-
-export function setTrack(track) {
-  engine.track = track
 }
 
 // NTS: loop set for a track and can only be enabled/disabled after the track has been loaded

@@ -664,7 +664,7 @@ function onSave() {
     }
 
     widgets.editor.update(track)
-    engine.setTrack(track)
+    engine.load(track)
   } catch (err) {
     onError(err)
   }
@@ -699,11 +699,16 @@ function onEdited(event) {
         state.commit()
 
         // ... update widgets
-        widgets.info.title = track.title
+        widgets.info.track = track
+        widgets.timeSignature.track = track
+        widgets.mm.track = track
+
         widgets.info.modified = state.modified
-        widgets.timeSignature.timeSignature = track.timeSignature
-        widgets.mm.pulse = track.pulse
-        widgets.mm.BPM = track.BPM
+        // widgets.info.title = track.title
+        // widgets.timeSignature.timeSignature = track.timeSignature
+        // widgets.mm.pulse = track.pulse
+        // widgets.mm.BPM = track.BPM
+        // widgets.mm.timeSignature = track.timeSignature
         widgets.loop.loop = track.loop
         widgets.knob.BPM = track.BPM
         widgets.knob.tempo = track.tempo
@@ -711,7 +716,7 @@ function onEdited(event) {
         widgets.loop.loops = track.loops
 
         // ... update engine
-        engine.setTrack(track)
+        engine.load(track)
         engine.setLoop(track.loop)
       }
 

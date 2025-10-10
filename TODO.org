@@ -4,8 +4,7 @@
 *** DONE changing pulse/time-signature etc 'waits' for click
 *** DONE BPM changes scaled by track BPM
 *** DONE wait for metronome to start before enabling 'stop' (confusing double click)
-
-*** TODO update worklet track on editor::save
+*** DONE update worklet track on editor::save
 
 *** TODO track editor
 **** DONE lowlight empty section fields (name, role)
@@ -16,10 +15,11 @@
 **** TODO expand single section
       - hover >> arrow maybe (doesn't work on mobile)
 
-*** TODO clicks
-**** TODO 'ding'
+*** TODO 'dings'
       - https://github.com/transcriptaze/yam/issues/9
       - use sample map for metronome constructor
+
+*** TODO clicks
 **** TODO generate clicks for count-in
 **** TODO generate clicks for anacrusis
 **** TODO generate clicks for 5:4

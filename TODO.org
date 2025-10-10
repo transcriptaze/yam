@@ -25,8 +25,7 @@
 **** DONE fix BPM defval - should inherit from previous section
 **** DONE fix time signature defval
 **** DONE time signature none
-**** TODO lowlight empty section fields (name, role)
-      - placeholder ?
+**** DONE lowlight empty section fields (name, role)
 **** TODO display subsections
 **** TODO toggle measures input between header and subsections
 **** TODO slide in on initialisation

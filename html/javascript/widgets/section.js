@@ -98,10 +98,10 @@ export class Section extends HTMLElement {
 
     // ... initialise fields
     this.#name.value = section?.name?.track ?? ''
-    this.#name.placeholder = section?.name?.generated ?? ''
+    this.#name.placeholder = section?.name?.generated ?? '-- section --'
 
     this.#role.value = section?.role?.track ?? ''
-    this.#role.placeholder = section?.role?.generated ?? ''
+    this.#role.placeholder = section?.role?.generated ?? '-- role --'
 
     if (this.#role.value === 'anacrusis') {
       this.#measures.setAttribute('min', 1)

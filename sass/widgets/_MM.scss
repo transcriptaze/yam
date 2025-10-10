@@ -96,7 +96,7 @@
   
     @supports not ((field-sizing: content) and (anchor-name: --text)) {
       #lock {
-        transform: translateX(-0%) translateY(40%);
+        transform: translateX(10%) translateY(40%);
       }
     }
 

@@ -220,7 +220,7 @@ div.metronome.playing #play img.stop {
 }
 @supports not ((field-sizing: content) and (anchor-name: --text)) {
   :host(.component-mm) div.MM #lock {
-    transform: translateX(0%) translateY(40%);
+    transform: translateX(10%) translateY(40%);
   }
 }
 :host(.component-mm) div.MM [popover] {
@@ -1838,7 +1838,7 @@ div.playlist-track [popover]:popover-open::backdrop {
   -webkit-appearance: none;
 }
 :host(.component-section) div.section #role {
-  width: 6em;
+  width: 8em;
   color: gray;
   text-align: left;
   font-style: italic;

@@ -11,7 +11,7 @@ const PULSES = new Map([
   ['dotted-half',    { img: './images/MM/dotted-half-equals.svg',    imx: './images/MM/dotted-half-no-equals.svg',    li: './images/MM/popover/dotted-half.svg'    }],
 ])
 
-const NONE = './images/MM/pulse/none.svg'
+const NONE = './images/MM/none.svg'
 
 export class SectionMM extends HTMLElement {
   static get observedAttributes() {

@@ -334,7 +334,7 @@ export class TimeSignature extends HTMLElement {
     const figura = this.shadowRoot.querySelector('button div img.figura')
     const common = this.shadowRoot.querySelector('button div img.common')
     const cut = this.shadowRoot.querySelector('button div img.cut')
-  
+
     const { beats, divisions } = parse(timeSignature)
 
     switch (true) {

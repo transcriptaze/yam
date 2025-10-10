@@ -26,13 +26,16 @@
 **** DONE fix time signature defval
 **** DONE time signature none
 **** DONE lowlight empty section fields (name, role)
-**** TODO display subsections
 **** TODO toggle measures input between header and subsections
+**** TODO display subsections
 **** TODO slide in on initialisation
 **** TODO enable editor save iff changed
 
 *** TODO clicks
 **** DONE use section clicks in worklet
+**** TODO 'ding'
+      - https://github.com/transcriptaze/yam/issues/9
+      - use sample map for metronome constructor
 **** TODO generate clicks for count-in
 **** TODO generate clicks for anacrusis
 **** TODO generate clicks for 5:4

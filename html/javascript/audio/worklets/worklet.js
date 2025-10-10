@@ -403,12 +403,10 @@ export class Metronome extends AudioWorkletProcessor {
     if (section != null) {
       this.state.beats = section?.beats ?? clamp(parameters.beats[0], 1, 32)
       this.state.divisions = section?.divisions ?? clamp(parameters.divisions[0], 0.125, 0.75)
-      this.state.BPM = section?.tempo ?? clamp(parameters.BPM[0], 40, 200)
       this.state.pulse = section?.pulse ?? this.track?.pulse
     } else {
       this.state.beats = this.track?.beats ?? clamp(parameters.beats[0], 1, 32)
       this.state.divisions = this.track?.divisions ?? clamp(parameters.divisions[0], 0.125, 0.75)
-      this.state.BPM = this.track?.BPM ?? clamp(parameters.BPM[0], 40, 200)
       this.state.pulse = parameters.pulse[0]
     }
 

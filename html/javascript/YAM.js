@@ -8,6 +8,7 @@ import { DEFAULT, INF } from './constants.js'
 import { EVENTS } from './constants.js'
 
 const LOGTAG = 'YAM'
+let DEBUG = false
 
 const widgets = {
   pads: document.querySelector('yam-pads'),
@@ -302,15 +303,9 @@ export async function toggleWakeLock() {
 }
 
 export function debug() {
-  // const vh = window.visualViewport?.height || window.innerHeight
-  // const standalone = window.matchMedia('(display-mode: standalone)').matches
-  //
-  // alert(
-  //   `version: 2025-07-28 18:40\nscreen:${screen.height}\nwindow:${window.innerHeight}\nviewport:${window.visualViewport.height.toFixed(2)}\nstandalone:${standalone}`,
-  // )
-  //
-  // // HACK: force layout recalculation (Android + Chrome)
-  // document.documentElement.style.setProperty('--vh', `${vh}px`)
+  DEBUG = !DEBUG
+
+  engine.debug(DEBUG)
 }
 
 // wire up event handlers
@@ -375,11 +370,12 @@ function onKeyDown(event) {
   }
 }
 
-function onTimeSignature(event) {
-  const timeSignature = event.detail.timeSignature
+function onTimeSignature() {
+  const timeSignature = widgets.timeSignature.timeSignature
 
   state.timeSignature = timeSignature
-  engine.setTimeSignature(state.timeSignature)
+  widgets.mm.timeSignature = timeSignature
+  engine.setTimeSignature(timeSignature)
 
   if (state.track === '') {
     settings.timeSignature = timeSignature
@@ -387,11 +383,15 @@ function onTimeSignature(event) {
   }
 }
 
-function onMM(event) {
-  const pulse = event.detail?.pulse
-  const BPM = event.detail?.BPM
+// FIXME only update changed field
+function onMM() {
+  const pulse = widgets.mm.pulse
+  const BPM = widgets.mm.BPM
 
   state.MM = { BPM, pulse }
+
+  widgets.knob.BPM = BPM
+  widgets.wheel.BPM = BPM
 
   engine.setBPM(state.BPM)
   engine.setPulse(state.pulse)
@@ -410,10 +410,11 @@ function onLoop(event) {
 }
 
 function onKnob(save) {
-  const BPM = document.querySelector('yam-knob').BPM
+  const BPM = widgets.knob.BPM
 
   state.BPM = BPM
-  engine.setBPM(state.BPM)
+  widgets.mm.BPM = BPM
+  engine.setBPM(BPM)
 
   if (state.track === '' && save) {
     settings.BPM = state.BPM
@@ -467,6 +468,7 @@ function onNext() {
   }
 }
 
+// FIXME can't do it this way - need to explicitly list the value changed
 function onStateModified() {
   const track = models.tracks.track(state.track)
 
@@ -481,14 +483,15 @@ function onStateModified() {
   widgets.timeSignature.timeSignature = state.timeSignature
   widgets.timeSignature.track = track
 
-  // FIXME figure out state/track conflict
-  widgets.mm.pulse = state.pulse
-  widgets.mm.BPM = state.BPM
-  widgets.mm.timeSignature = state.timeSignature
-  widgets.mm.track = track
+  // NTS: removed (state/track conflict)
+  // widgets.mm.pulse = state.pulse
+  // widgets.mm.BPM = state.BPM
+  // widgets.mm.timeSignature = state.timeSignature
+  // widgets.mm.track = track
 
-  widgets.knob.BPM = state.BPM
-  widgets.wheel.BPM = state.BPM
+  // NTS: removed (state/track conflict)
+  // widgets.knob.BPM = state.BPM
+  // widgets.wheel.BPM = state.BPM
 }
 
 function onTrackSelect(event) {

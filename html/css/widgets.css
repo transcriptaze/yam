@@ -2101,6 +2101,9 @@ div.playlist-track [popover]:popover-open::backdrop {
   filter: grayscale(100%) opacity(25%);
   transform: scale(0.7);
 }
+:host(.component-section-mm) div.MM div.content div.li[data-pulse=eighth] {
+  display: none;
+}
 :host(.component-section-mm) button.none img {
   filter: grayscale(100%) opacity(25%);
 }

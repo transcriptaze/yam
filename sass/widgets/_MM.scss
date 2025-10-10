@@ -221,7 +221,7 @@
     }
   }
 
-  // NTS: temporarily remove eighth notes from list
+  // NTS: (temporarily removed until worklet updated)
   #list > div > div.li[data-pulse="eighth"] {
      display: none;
    }

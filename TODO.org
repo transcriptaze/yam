@@ -1,30 +1,12 @@
 * -- TODO --
 
-*** DONE fix About page layout
-*** DONE refactor MM to use track for redraw
-*** DONE refactor time signature to use datastore
-*** DONE Fix MM/time signature subsections
-*** DONE pads initialisation (doesn't display actual last pads)
-*** DONE playlists '+'' floating button is visually confusing
-*** DONE (temporarily) remove eighth note pulse
-*** DONE lock tempo
-*** DONE MM disappears after tap + locked
-*** DONE time signature common time is being picked as 4:4
+*** TODO allow BPM changes while playing a track
+      - reset doesn't update engine
+      - fix info jankiness
 
 *** TODO update worklet track on editor::save
 
 *** TODO track editor
-**** DONE add '' pulse to popup list
-**** DONE defval for 'none' img
-**** DONE display equals iff pulse and BPM are defined
-**** DONE separate MM web comoponent for sections
-**** DONE fix MM popover div/ul/li thing
-**** DONE fix defval - should inherit from previous section
-**** DONE cascade update following sections after pick pulse
-**** DONE increase padding at bottom of section (clef tail is too close to edge)
-**** DONE fix BPM defval - should inherit from previous section
-**** DONE fix time signature defval
-**** DONE time signature none
 **** DONE lowlight empty section fields (name, role)
 **** TODO toggle measures input between header and subsections
 **** TODO display subsections
@@ -32,7 +14,6 @@
 **** TODO enable editor save iff changed
 
 *** TODO clicks
-**** DONE use section clicks in worklet
 **** TODO 'ding'
       - https://github.com/transcriptaze/yam/issues/9
       - use sample map for metronome constructor
@@ -51,7 +32,6 @@
       - (?) replace 'about' icon
 *** TODO edit from playlist
 *** TODO use async getters for nested web components
-*** TODO allow BPM changes while playing a track
 *** TODO URL - use ?UUID= or ?title= 
 *** TODO URL match on track if playlist not found
 *** TODO 'All Tracks' should not display tracklist

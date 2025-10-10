@@ -8,10 +8,9 @@ const BAR = 8
 const BEAT = 12
 const BEATS = 16
 const DIVISIONS = 20
-const BPM = 24
-const PULSE = 28
-const LOOPS = 32
-const _SPARE = 36 // 28 bytes
+const PULSE = 24
+const LOOPS = 28
+const _SPARE = 32 // 32 bytes
 
 const HEADER = 8
 const DATA = 64
@@ -32,7 +31,6 @@ export class State {
     this.beat = null
     this.beats = null
     this.divisions = null
-    this.BPM = null
     this.timeSignature = null
     this.pulse = null
     this.loops = null
@@ -129,14 +127,6 @@ export class State {
 
   set divisions(v) {
     this.#setUint32(DIVISIONS, v ?? 0)
-  }
-
-  get BPM() {
-    return this.#getUint32(BPM)
-  }
-
-  set BPM(v) {
-    this.#setUint32(BPM, v ?? 120)
   }
 
   get pulse() {

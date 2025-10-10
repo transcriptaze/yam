@@ -91,6 +91,11 @@
           transform: scale(0.7);   
         }
       }
+
+      // NTS: (temporarily removed until worklet updated)
+      div.li[data-pulse="eighth"] {
+        display: none;
+      }
     }
   }
 

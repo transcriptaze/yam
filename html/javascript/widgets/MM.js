@@ -11,7 +11,7 @@ const PULSES = new Map([
   ['dotted-half',    './images/MM/dotted-half-equals.svg'    ],
 ])
 
-const NONE = './images/MM/pulse/none.svg'
+const NONE = './images/MM/none.svg'
 
 export class MM extends HTMLElement {
   static get observedAttributes() {
@@ -88,7 +88,7 @@ export class MM extends HTMLElement {
 
     lock: {
       animated: () => {
-        this.shadowRoot.querySelector('div.MM')?.remove('tapped')
+        this.shadowRoot.querySelector('div.MM')?.classList.remove('tapped')
       },
     },
   }

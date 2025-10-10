@@ -220,7 +220,7 @@ div.metronome.playing #play img.stop {
 }
 @supports not ((field-sizing: content) and (anchor-name: --text)) {
   :host(.component-mm) div.MM #lock {
-    transform: translateX(0%) translateY(40%);
+    transform: translateX(10%) translateY(40%);
   }
 }
 :host(.component-mm) div.MM [popover] {
@@ -1838,7 +1838,7 @@ div.playlist-track [popover]:popover-open::backdrop {
   -webkit-appearance: none;
 }
 :host(.component-section) div.section #role {
-  width: 6em;
+  width: 8em;
   color: gray;
   text-align: left;
   font-style: italic;
@@ -1972,6 +1972,9 @@ div.playlist-track [popover]:popover-open::backdrop {
 }
 :host(.component-section-time-signature) div.time-signature div#list div.content ul li img {
   height: 32px;
+}
+:host(.component-section-time-signature) div.time-signature div#list div.content ul li[data-time-signature=""] img {
+  filter: grayscale(100%) opacity(40%);
 }
 :host(.component-section-time-signature) div.time-signature div#list div.content div.custom {
   grid-column: 1;

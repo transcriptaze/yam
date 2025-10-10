@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg"
+     version="1.1"
+     width="256"
+     height="256"
+     viewBox="0 0 256 256"
+     preserveAspectRatio="xMidYMid">
+  <defs>
+    <path id="staff" d="M50,0 l-50,0 l0,3.2 l50,0 l0,-3.2z m0,25 l-50,0 l0,3.2 l50,0 l0,-3.2z m0,50 l-50,0 l0,3.2 l50,0 l0,-3.2z m0,25 l-50,0 l0,3.2 l50,0 l0,-3.2z m0,-50 l-50,0 l0,3.2 l50,0 l0,-3.2z" />
+  </defs>
+  <g transform="scale(2)">
+    <use href="#staff" fill="#808080" transform="translate(12,12)" />
+    <use href="#staff" fill="#808080" transform="translate(62,12)" />
+  </g>
+</svg>

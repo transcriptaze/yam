@@ -136,6 +136,12 @@
               height: 32px;
             }
           }
+
+          li[data-time-signature=""] {
+            img {        
+              filter: grayscale(100%) opacity(40%);   
+            }
+          }
         }
 
         div.custom {

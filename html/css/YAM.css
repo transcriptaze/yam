@@ -76,7 +76,7 @@ main {
 }
 
 div.panel {
-  width: 320px;
+  width: 353px;
   border: 1px solid red;
   border-radius: 16px;
 }
@@ -677,7 +677,7 @@ div.metronome div.metrics {
   box-sizing: border-box;
   grid-area: metrics;
   display: grid;
-  grid-template-columns: 1fr auto auto auto 1fr;
+  grid-template-columns: 4fr auto 1fr auto 2fr auto 1fr;
   grid-template-rows: auto;
   align-items: center;
   column-gap: 4px;
@@ -694,13 +694,13 @@ div.metronome div.metrics yam-time-signature {
 }
 div.metronome div.metrics yam-mm {
   box-sizing: border-box;
-  grid-column: 3;
+  grid-column: 4;
   grid-row: 1;
   justify-self: center;
 }
 div.metronome div.metrics yam-loop {
   box-sizing: border-box;
-  grid-column: 4;
+  grid-column: 6;
   grid-row: 1;
   justify-self: start;
   height: 100%;

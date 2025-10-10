@@ -1973,6 +1973,9 @@ div.playlist-track [popover]:popover-open::backdrop {
 :host(.component-section-time-signature) div.time-signature div#list div.content ul li img {
   height: 32px;
 }
+:host(.component-section-time-signature) div.time-signature div#list div.content ul li[data-time-signature=""] img {
+  filter: grayscale(100%) opacity(40%);
+}
 :host(.component-section-time-signature) div.time-signature div#list div.content div.custom {
   grid-column: 1;
   grid-row: 2;

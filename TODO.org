@@ -24,7 +24,7 @@
 **** DONE increase padding at bottom of section (clef tail is too close to edge)
 **** DONE fix BPM defval - should inherit from previous section
 **** DONE fix time signature defval
-**** TODO time signature none
+**** DONE time signature none
 **** TODO lowlight empty section fields (name, role)
       - placeholder ?
 **** TODO display subsections

@@ -278,6 +278,17 @@ export class Metronome extends AudioWorkletProcessor {
             })
           }
         } else {
+          const playhead = `${cluck.bar}.${cluck.beat}`
+          const dings = this.#track?.dings ?? []
+
+          // console.log('>>>', dings, playhead, dings.includes(playhead))
+          if (dings.includes(playhead)) {
+            const ding = this.clicks.get('ding')
+            if (ding != null) {
+              this.#cued.push(sample(ding))
+            }
+          }
+
           this.cue(cluck.beat, pulse)
           this.flip(FSM.STATE.PLAYING, this.section, cluck.bar, cluck.beat, this.#loops, parameters)
           log('PLAY', clock.t, clock.time, BPM, cluck.bar, cluck.beat, tactus, figura, pulse)

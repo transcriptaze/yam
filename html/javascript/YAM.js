@@ -247,9 +247,20 @@ export function load() {
       settings.save()
 
       widgets.playlists.initialise(object.playlists, object.tracks)
+
+      widgets.pads.timeSignature = state.timeSignature
+      widgets.pads.pulse = state.pulse
       widgets.pads.track = null
+
+      widgets.info.title = state.title
       widgets.info.track = null
+
+      widgets.timeSignature.timeSignature = state.timeSignature
       widgets.timeSignature.track = null
+
+      widgets.mm.pulse = state.pulse
+      widgets.mm.BPM = state.BPM
+      widgets.mm.timeSignature = state.timeSignature
       widgets.mm.track = null
 
       widgets.playlists.selected = {

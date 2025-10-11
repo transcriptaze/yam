@@ -33,7 +33,7 @@ It will be a pleasant surprise and/or minor miracle if it works at all on anythi
 | Platform    | Browser    | Version        | Ok               | Notes                                      |
 |-------------|------------|----------------|------------------|--------------------------------------------|
 | **MacOs**   | Chrome     | (recent'ish)   | Yes              |                                            |
-|             | Firefox    | (latest)       | Yes              | Do NOT ask about the layout hacks          |
+|             | Firefox    | (latest)       | Yes              | _Do NOT ask about the layout hacks_        |
 |             | Safari     | (old)          | No               |                                            |
 |             | Opera      | (latest)       | Yes              |                                            |
 |             |            |                |                  |                                            |
@@ -47,15 +47,15 @@ It will be a pleasant surprise and/or minor miracle if it works at all on anythi
 |             | Opera      |                |                  |                                            |
 |             |            |                |                  |                                            |
 | **Android** | Chrome     | (latest)       | Yes              |                                            |
-|             | Firefox    | (latest)       | Mostly           | (as above)                                 |
+|             | Firefox    | (latest)       | Mostly           | _(as above)_                               |
 |             | Edge       | (latest)       | Yes              |                                            |
 |             | Opera      |                |                  |                                            |
-|             | Opera Mini |                | No               | No WebAudio                                |
+|             | Opera Mini |                | No               | _No WebAudio support_                      |
 |             |            |                |                  |                                            |
 | **iOS**     | Firefox    |                |                  |                                            |
 |             | Safari     |                |                  |                                            |
 |             | Opera      |                |                  |                                            |
-|             | Opera Mini |                | No               | No WebAudio                                |
+|             | Opera Mini |                | No               | _No WebAudio support_                      |
 
 
 ## Installation

@@ -30,37 +30,29 @@ It will be a pleasant surprise and/or minor miracle if it works at all on anythi
 
 ## Supported browsers
 
-| **MacOs**   | Browser    | Version        | Ok               | Notes                                      |
+| Platform    | Browser    | Version        | Ok               | Notes                                      |
 |-------------|------------|----------------|------------------|--------------------------------------------|
-|             | Chrome     | (recent'ish)   | Yes              |                                            |
+| **MacOs**   | Chrome     | (recent'ish)   | Yes              |                                            |
 |             | Firefox    | (latest)       | Yes              | Do NOT ask about the layout hacks          |
 |             | Safari     | (old)          | No               |                                            |
 |             | Opera      | (latest)       | Yes              |                                            |
-|-------------|------------|----------------|------------------|--------------------------------------------|
-| **Windows** | Browser    | Version        | Ok               | Notes                                      |
-|-------------|------------|----------------|------------------|--------------------------------------------|
-|             | Chrome     |                |                  |                                            |
+|             |            |                |                  |                                            |
+| **Windows** | Chrome     |                |                  |                                            |
 |             | Firefox    |                |                  |                                            |
 |             | Edge       |                |                  |                                            |
 |             | Opera      |                |                  |                                            |
-|-------------|------------|----------------|------------------|--------------------------------------------|
-| **Linux**   | Browser    | Version        | Ok               | Notes                                      |
-|-------------|------------|----------------|------------------|--------------------------------------------|
-|             | Chrome     |                |                  |                                            |
+|             |            |                |                  |                                            |
+| **Linux**   | Chrome     |                |                  |                                            |
 |             | Firefox    |                |                  |                                            |
 |             | Opera      |                |                  |                                            |
-|-------------|------------|----------------|------------------|--------------------------------------------|
-| **Android** | Browser    | Version        | Ok               | Notes                                      |
-|-------------|------------|----------------|------------------|--------------------------------------------|
-|             | Chrome     | (latest)       | Yes              |                                            |
+|             |            |                |                  |                                            |
+| **Android** | Chrome     | (latest)       | Yes              |                                            |
 |             | Firefox    | (latest)       | Mostly           | (as above)                                 |
 |             | Edge       | (latest)       | Yes              |                                            |
 |             | Opera      |                |                  |                                            |
 |             | Opera Mini |                | No               | No WebAudio                                |
-|-------------|------------|----------------|------------------|--------------------------------------------|
-| **iOS**     | Browser    | Version        | Ok               | Notes                                      |
-|-------------|------------|----------------|------------------|--------------------------------------------|
-|             | Firefox    |                |                  |                                            |
+|             |            |                |                  |                                            |
+| **iOS**     | Firefox    |                |                  |                                            |
 |             | Safari     |                |                  |                                            |
 |             | Opera      |                |                  |                                            |
 |             | Opera Mini |                | No               | No WebAudio                                |

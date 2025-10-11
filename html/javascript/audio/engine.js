@@ -84,8 +84,6 @@ class Engine {
     if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
       this.#exec(() => (this.metronome.BPM = bpm))
     }
-
-    // this.metronome.BPM = bpm
   }
 
   set timeSignature(signature) {

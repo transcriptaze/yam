@@ -117,3 +117,7 @@
 - https://www.reddit.com/r/musictheory/comments/d1mqjo/help_me_understand_68_time_signature
 - https://music.stackexchange.com/questions/61139/how-to-count-6-8
 - https://tinachristieflute.com/music-theory-for-flutists/counting-rhythms/counting-with-a-system-6-8-time
+
+### Packaging
+- https://www.npmjs.com/package/rollup-plugin-web-worker-loader
+- https://github.com/hughrawlinson/rollup-audio-worklet-demo

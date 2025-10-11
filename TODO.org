@@ -6,6 +6,9 @@
 *** DONE wait for metronome to start before enabling 'stop' (confusing double click)
 *** DONE update worklet track on editor::save
 
+*** TODO cache engine initialisation
+      - can't set BPM, pulse, time-signature, etc during initialisation (i.e. before first play)
+
 *** TODO track editor
 **** DONE lowlight empty section fields (name, role)
 **** DONE  don't lowlight = if both pulse and BPM are default
@@ -16,11 +19,11 @@
 **** TODO expand single section
       - hover >> arrow maybe (doesn't work on mobile)
 
-*** TODO 'dings'
-      - (cf. https://github.com/transcriptaze/yam/issues/9)
-      - optimize: schedule dings on load/start and remove from list when played
-      - optimize: sort scheduled dings by measure/beat
-      - use sample map for metronome constructor
+*** TODO 'dings' (cf. https://github.com/transcriptaze/yam/issues/9)
+**** TODO better ding sample
+**** TODO use sample map for metronome constructor
+**** TODO optimize: schedule dings on load/start and remove from list when played
+**** TODO optimize: sort scheduled dings by measure/beat
 
 *** TODO clicks
 **** TODO generate clicks for count-in
@@ -33,10 +36,7 @@
 *** TODO connectedCallback: event handler duplication
 
 ** Fixes
-*** TODO Cloudflare
-      - (cf. https://github.com/transcriptaze/yam/issues/6)
-      - https://github.com/hughrawlinson/rollup-audio-worklet-demo
-      - https://www.npmjs.com/package/rollup-plugin-web-worker-loader
+*** TODO Cloudflare (cf. https://github.com/transcriptaze/yam/issues/6)
 
 *** TODO make errors visible
       - icon + title text

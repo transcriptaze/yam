@@ -234,7 +234,7 @@ export class MM extends HTMLElement {
       this.#bar = bar
 
       if (!playing && stopped) {
-        this.#redraw(track.pulse, track.BPM)
+        this.#redraw(this.pulse, this.BPM)
       }
 
       if (playing && !stopped) {

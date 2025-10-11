@@ -30,6 +30,9 @@ lint:
 
 build-all: test vet lint
 
+rollup:
+	npm run package
+
 release: build-all
 	rm -rf dist/yam
 	mkdir -p dist/yam
@@ -54,3 +57,6 @@ sass:
 
 run: build
 	python3 httpd.py
+
+run-rollup: build
+	python3 rollup.py

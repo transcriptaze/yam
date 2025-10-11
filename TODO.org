@@ -8,7 +8,7 @@
 
 *** TODO track editor
 **** DONE lowlight empty section fields (name, role)
-**** DONE don't lowlight = if both pulse and BPM are default
+**** DONE  don't lowlight = if both pulse and BPM are default
 **** TODO toggle measures input between header and subsections
 **** TODO display subsections
 **** TODO slide in on initialisation
@@ -17,7 +17,7 @@
       - hover >> arrow maybe (doesn't work on mobile)
 
 *** TODO 'dings'
-      - https://github.com/transcriptaze/yam/issues/9
+      - (cf. https://github.com/transcriptaze/yam/issues/9)
       - optimize: schedule dings on load/start and remove from list when played
       - optimize: sort scheduled dings by measure/beat
       - use sample map for metronome constructor
@@ -28,12 +28,16 @@
 **** TODO generate clicks for 5:4
 **** TODO not cascading - revert to track clicks or default clicks for time-signature
 
-
 *** TODO use cloned track
 *** TODO use cloned playlist
 *** TODO connectedCallback: event handler duplication
 
 ** Fixes
+*** TODO Cloudflare
+      - (cf. https://github.com/transcriptaze/yam/issues/6)
+      - https://github.com/hughrawlinson/rollup-audio-worklet-demo
+      - https://www.npmjs.com/package/rollup-plugin-web-worker-loader
+
 *** TODO make errors visible
       - icon + title text
       - (?) replace 'about' icon

@@ -53,6 +53,13 @@ export class Pads extends HTMLElement {
     }
   }
 
+  set track(track) {
+    if (track != null) {
+      this.pulse = track.pulse
+      this.timeSignature = track.timeSignature
+    }
+  }
+
   redraw(beat, { playing, stopped, beats, divisions, pulse }) {
     const _beat = Number.parseFloat(beat, 10)
 

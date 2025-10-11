@@ -278,6 +278,17 @@ export class Metronome extends AudioWorkletProcessor {
             })
           }
         } else {
+          const playhead = `${cluck.bar}.${cluck.beat}`
+          const dings = this.#track?.dings ?? []
+
+          // console.log('>>>', dings, playhead, dings.includes(playhead))
+          if (dings.includes(playhead)) {
+            const ding = this.clicks.get('ding')
+            if (ding != null) {
+              this.#cued.push(sample(ding))
+            }
+          }
+
           this.cue(cluck.beat, pulse)
           this.flip(FSM.STATE.PLAYING, this.section, cluck.bar, cluck.beat, this.#loops, parameters)
           log('PLAY', clock.t, clock.time, BPM, cluck.bar, cluck.beat, tactus, figura, pulse)
@@ -403,12 +414,10 @@ export class Metronome extends AudioWorkletProcessor {
     if (section != null) {
       this.state.beats = section?.beats ?? clamp(parameters.beats[0], 1, 32)
       this.state.divisions = section?.divisions ?? clamp(parameters.divisions[0], 0.125, 0.75)
-      this.state.BPM = section?.tempo ?? clamp(parameters.BPM[0], 40, 200)
       this.state.pulse = section?.pulse ?? this.track?.pulse
     } else {
       this.state.beats = this.track?.beats ?? clamp(parameters.beats[0], 1, 32)
       this.state.divisions = this.track?.divisions ?? clamp(parameters.divisions[0], 0.125, 0.75)
-      this.state.BPM = this.track?.BPM ?? clamp(parameters.BPM[0], 40, 200)
       this.state.pulse = parameters.pulse[0]
     }
 

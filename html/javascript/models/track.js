@@ -45,6 +45,7 @@ export class Track extends EventTarget {
         loop: track.loop ?? false,
         loops: track.loops ?? INF,
         clicks: track.clicks,
+        dings: track.dings,
       },
     })
   }
@@ -66,6 +67,7 @@ export class Track extends EventTarget {
       loop: object.metronome?.loop ?? false,
       loops: object.metronome?.loops ?? INF,
       clicks: object?.metronome?.clicks ?? null,
+      dings: object?.metronome?.dings ?? null,
     }
   }
 
@@ -90,6 +92,10 @@ export class Track extends EventTarget {
 
     if (this.clicks != null) {
       object.metronome.clicks = this.clicks
+    }
+
+    if (this.dings != null) {
+      object.metronome.dings = this.dings
     }
 
     return object
@@ -207,6 +213,10 @@ export class Track extends EventTarget {
     return this.#metronome?.clicks
   }
 
+  get dings() {
+    return this.#metronome?.dings
+  }
+
   get sections() {
     return this.#sections ?? []
   }
@@ -228,6 +238,7 @@ export class Track extends EventTarget {
       loop: track.#metronome.loop,
       loops: track.#metronome.loops,
       clicks: track.#metronome.clicks,
+      dings: track.#metronome.dings,
     }
   }
 

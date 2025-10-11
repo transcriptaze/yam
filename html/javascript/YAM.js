@@ -8,6 +8,7 @@ import { DEFAULT, INF } from './constants.js'
 import { EVENTS } from './constants.js'
 
 const LOGTAG = 'YAM'
+let DEBUG = false
 
 const widgets = {
   pads: document.querySelector('yam-pads'),
@@ -47,6 +48,7 @@ export function initialise() {
 
   widgets.pads.timeSignature = state.timeSignature
   widgets.pads.pulse = state.pulse
+  widgets.pads.track = null
 
   widgets.timeSignature.timeSignature = state.timeSignature
   widgets.timeSignature.track = null
@@ -132,15 +134,32 @@ export function reset() {
   const selected = playlist?.selected
   const track = models.tracks.track(selected)
 
+  const f = () => {
+    widgets.pads.pulse = state.pulse
+    widgets.pads.timeSignature = state.timeSignature
+    widgets.info.title = state.title
+    widgets.timeSignature.timeSignature = state.timeSignature
+    widgets.mm.pulse = state.pulse
+    widgets.mm.BPM = state.BPM
+    widgets.knob.BPM = state.BPM
+    widgets.wheel.BPM = state.BPM
+
+    engine.setTimeSignature(state.timeSignature)
+    engine.setPulse(state.pulse)
+    engine.setBPM(state.BPM)
+  }
+
   // ... revert selected track changes
   if (selected != null && track != null && state.modified) {
     state.reset({ title: track.title, BPM: track.BPM, timeSignature: track.timeSignature, pulse: track.pulse })
+    f()
     return
   }
 
   // ... clear selected track
   if (selected != null) {
     playlist?.select(null)
+    f()
     return
   }
 
@@ -148,11 +167,14 @@ export function reset() {
   const saved = { title: '', BPM: settings.BPM, timeSignature: settings.timeSignature, pulse: settings.pulse }
   if (!state.equals(saved)) {
     state.reset(saved)
+    f()
     return
   }
 
   // ... revert to defaults
   state.reset({ title: '', BPM: 120, timeSignature: '4:4', pulse: 'quarter' })
+
+  f()
 
   settings.BPM = state.BPM
   settings.timeSignature = state.timeSignature
@@ -216,8 +238,6 @@ export function load() {
       models.playlists.save()
       models.tracks.save()
 
-      widgets.playlists.initialise(object.playlists, object.tracks)
-
       state.selected = {
         playlist: DEFAULT.UUID,
         track: null,
@@ -225,6 +245,23 @@ export function load() {
 
       settings.playlist = DEFAULT.UUID
       settings.save()
+
+      widgets.playlists.initialise(object.playlists, object.tracks)
+
+      widgets.pads.timeSignature = state.timeSignature
+      widgets.pads.pulse = state.pulse
+      widgets.pads.track = null
+
+      widgets.info.title = state.title
+      widgets.info.track = null
+
+      widgets.timeSignature.timeSignature = state.timeSignature
+      widgets.timeSignature.track = null
+
+      widgets.mm.pulse = state.pulse
+      widgets.mm.BPM = state.BPM
+      widgets.mm.timeSignature = state.timeSignature
+      widgets.mm.track = null
 
       widgets.playlists.selected = {
         playlist: DEFAULT.UUID,
@@ -302,15 +339,9 @@ export async function toggleWakeLock() {
 }
 
 export function debug() {
-  // const vh = window.visualViewport?.height || window.innerHeight
-  // const standalone = window.matchMedia('(display-mode: standalone)').matches
-  //
-  // alert(
-  //   `version: 2025-07-28 18:40\nscreen:${screen.height}\nwindow:${window.innerHeight}\nviewport:${window.visualViewport.height.toFixed(2)}\nstandalone:${standalone}`,
-  // )
-  //
-  // // HACK: force layout recalculation (Android + Chrome)
-  // document.documentElement.style.setProperty('--vh', `${vh}px`)
+  DEBUG = !DEBUG
+
+  engine.debug(DEBUG)
 }
 
 // wire up event handlers
@@ -375,11 +406,13 @@ function onKeyDown(event) {
   }
 }
 
-function onTimeSignature(event) {
-  const timeSignature = event.detail.timeSignature
+function onTimeSignature() {
+  const timeSignature = widgets.timeSignature.timeSignature
 
   state.timeSignature = timeSignature
-  engine.setTimeSignature(state.timeSignature)
+  widgets.pads.timeSignature = timeSignature
+  widgets.mm.timeSignature = timeSignature
+  engine.setTimeSignature(timeSignature)
 
   if (state.track === '') {
     settings.timeSignature = timeSignature
@@ -387,11 +420,16 @@ function onTimeSignature(event) {
   }
 }
 
-function onMM(event) {
-  const pulse = event.detail?.pulse
-  const BPM = event.detail?.BPM
+// FIXME only update changed field
+function onMM() {
+  const pulse = widgets.mm.pulse
+  const BPM = widgets.mm.BPM
 
   state.MM = { BPM, pulse }
+
+  widgets.pads.pulse = pulse
+  widgets.knob.BPM = BPM
+  widgets.wheel.BPM = BPM
 
   engine.setBPM(state.BPM)
   engine.setPulse(state.pulse)
@@ -410,10 +448,11 @@ function onLoop(event) {
 }
 
 function onKnob(save) {
-  const BPM = document.querySelector('yam-knob').BPM
+  const BPM = widgets.knob.BPM
 
   state.BPM = BPM
-  engine.setBPM(state.BPM)
+  widgets.mm.BPM = BPM
+  engine.setBPM(BPM)
 
   if (state.track === '' && save) {
     settings.BPM = state.BPM
@@ -467,28 +506,10 @@ function onNext() {
   }
 }
 
+// NTS: state/track conflict => either need to update only changed fields here
+//      or in the original event handlers
 function onStateModified() {
-  const track = models.tracks.track(state.track)
-
-  widgets.pads.pulse = state.pulse
-  widgets.pads.timeSignature = state.timeSignature
-
-  widgets.info.title = state.title
-  widgets.info.track = track
   widgets.info.modified = state.modified
-
-  // FIXME figure out state/track conflict
-  widgets.timeSignature.timeSignature = state.timeSignature
-  widgets.timeSignature.track = track
-
-  // FIXME figure out state/track conflict
-  widgets.mm.pulse = state.pulse
-  widgets.mm.BPM = state.BPM
-  widgets.mm.timeSignature = state.timeSignature
-  widgets.mm.track = track
-
-  widgets.knob.BPM = state.BPM
-  widgets.wheel.BPM = state.BPM
 }
 
 function onTrackSelect(event) {
@@ -537,8 +558,8 @@ function onSelected(event) {
     track: track?.UUID,
   }
 
+  widgets.pads.track = track
   widgets.info.track = track
-
   widgets.timeSignature.track = track
   widgets.mm.track = track
 
@@ -654,7 +675,7 @@ function onSave() {
     }
 
     widgets.editor.update(track)
-    engine.setTrack(track)
+    engine.load(track)
   } catch (err) {
     onError(err)
   }
@@ -689,11 +710,16 @@ function onEdited(event) {
         state.commit()
 
         // ... update widgets
-        widgets.info.title = track.title
+        widgets.info.track = track
+        widgets.timeSignature.track = track
+        widgets.mm.track = track
+
         widgets.info.modified = state.modified
-        widgets.timeSignature.timeSignature = track.timeSignature
-        widgets.mm.pulse = track.pulse
-        widgets.mm.BPM = track.BPM
+        // widgets.info.title = track.title
+        // widgets.timeSignature.timeSignature = track.timeSignature
+        // widgets.mm.pulse = track.pulse
+        // widgets.mm.BPM = track.BPM
+        // widgets.mm.timeSignature = track.timeSignature
         widgets.loop.loop = track.loop
         widgets.knob.BPM = track.BPM
         widgets.knob.tempo = track.tempo
@@ -701,7 +727,7 @@ function onEdited(event) {
         widgets.loop.loops = track.loops
 
         // ... update engine
-        engine.setTrack(track)
+        engine.load(track)
         engine.setLoop(track.loop)
       }
 

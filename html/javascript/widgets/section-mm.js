@@ -267,6 +267,8 @@ export class SectionMM extends HTMLElement {
 
     if (this.#BPM != null && this.#BPM !== '') {
       pulse.src = PULSES.get(k).img
+    } else if ((this.#BPM == null || this.#BPM === '') && (this.#pulse == null || this.#pulse === '')) {
+      pulse.src = PULSES.get(k).img
     } else {
       pulse.src = PULSES.get(k).imx
     }

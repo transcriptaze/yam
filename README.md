@@ -51,13 +51,15 @@ It will be a pleasant surprise and/or minor miracle if it works at all on anythi
 | **Android** | Browser    | Version        | Ok               | Notes                                      |
 |             | Chrome     | (latest)       | Yes              |                                            |
 |             | Firefox    | (latest)       | Mostly           | (as above)                                 |
+|             | Edge       | (latest)       | Yes              |                                            |
 |             | Opera      |                |                  |                                            |
-|             | Opera Mini |                | No               |                                            |
+|             | Opera Mini |                | No               | No WebAudio                                |
 
 | **iOS**     | Browser    | Version        | Ok               | Notes                                      |
 |             | Firefox    |                |                  |                                            |
 |             | Safari     |                |                  |                                            |
 |             | Opera      |                |                  |                                            |
+|             | Opera Mini |                | No               | No WebAudio                                |
 
 
 ## Installation

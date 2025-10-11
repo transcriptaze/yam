@@ -27,7 +27,6 @@ export class MetronomeNode extends AudioWorkletNode {
     beat: 0,
     beats: 4,
     divisions: 4,
-    BPM: 120,
     pulse: 'quarter',
     loops: 0,
   }
@@ -136,6 +135,7 @@ export class MetronomeNode extends AudioWorkletNode {
       BPM: v?.BPM,
       loops: v?.loops ?? INF,
       clicks: v?.clicks ?? null,
+      dings: v?.dings ?? [],
       sections: v?.sections ?? [],
     })
 
@@ -216,10 +216,6 @@ export class MetronomeNode extends AudioWorkletNode {
     return this.#cache.divisions
   }
 
-  get BPM() {
-    return this.#cache.BPM
-  }
-
   get pulse() {
     return this.#cache.pulse
   }
@@ -239,7 +235,6 @@ export class MetronomeNode extends AudioWorkletNode {
     this.#cache.beat = state.beat
     this.#cache.beats = state.beats
     this.#cache.divisions = state.divisions
-    this.#cache.BPM = state.BPM
     this.#cache.pulse = PULSE.get(state.pulse)?.name ?? ''
     this.#cache.loops = state.loops
   }
@@ -292,6 +287,7 @@ function transmogrify(track) {
     loop: track.loop,
     loops: track.loops ?? INF,
     clicks: generators.clicks(track.clicks),
+    dings: track.dings.map((v) => `${v}`),
     delay: clamp(durationToMS(delay), 0, 5000),
 
     bars: bars,

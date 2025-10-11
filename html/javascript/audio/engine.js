@@ -78,18 +78,14 @@ class Engine {
     this.#exec(() => this.metronome.toggle())
   }
 
-  // FIXME remove
-  get BPM() {
-    throw new Error('engine.BPM not supported')
-    // if (this.initialised) {
-    //   return this.metronome?.BPM ?? 120
-    // }
-    //
-    // return 120
-  }
+  set BPM(v) {
+    const bpm = parseInt(`${v}`, 10)
 
-  set BPM(bpm) {
-    this.metronome.BPM = bpm
+    if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
+      this.#exec(() => (this.metronome.BPM = bpm))
+    }
+
+    // this.metronome.BPM = bpm
   }
 
   set timeSignature(signature) {
@@ -213,12 +209,6 @@ export function divisions() {
   return engine.divisions
 }
 
-// FIXME remove
-export function BPM() {
-  throw new Error('engine.BPM not supported')
-  // return engine.BPM
-}
-
 export function pulse() {
   return engine.pulse
 }
@@ -238,18 +228,11 @@ export function load(track) {
     setPulse(track.pulse)
   }
 
-  setTrack(track)
+  engine.track = track
 }
 
-export function setBPM(v) {
-  const bpm = parseInt(`${v}`, 10)
-
-  if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
-    Engine.BPM = bpm
-    if (engine.initialised) {
-      exec((e) => (e.BPM = bpm))
-    }
-  }
+export function setBPM(BPM) {
+  engine.BPM = BPM
 }
 
 export function setTimeSignature(v) {
@@ -282,10 +265,6 @@ export function setPulse(v) {
       exec((e) => (e.pulse = pulse))
     }
   }
-}
-
-export function setTrack(track) {
-  engine.track = track
 }
 
 // NTS: loop set for a track and can only be enabled/disabled after the track has been loaded

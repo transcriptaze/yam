@@ -242,14 +242,14 @@ export class MM extends HTMLElement {
         const section = sections.findLast((v) => v.start <= bar)
         const subsections = section?.subsections ?? []
         const subsection = subsections.findLast((v) => v.start <= bar)
-        const bpm = (v) => Math.round((track.BPM * v) / track.tempo)
+        const bpm = (v) => Math.round((this.BPM * v) / track.tempo)
 
         if (subsection != null) {
           this.#redraw(subsection.pulse, bpm(subsection.tempo))
         } else if (section != null) {
           this.#redraw(section.pulse, bpm(section.tempo))
         } else {
-          this.#redraw(track.pulse, track.BPM)
+          this.#redraw(track.pulse, this.BPM)
         }
       }
     }

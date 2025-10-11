@@ -49,6 +49,12 @@ export class Info extends HTMLElement {
   attributeChangedCallback(_name, _from, _to) {}
 
   set track(track) {
+    // ... set title
+    if (track != null) {
+      this.title = track.title
+    }
+
+    // ... stash sections
     const sections = transmogrify(track)
 
     this.#track.sections = new Map(sections.map((v) => [v.ID, v]))

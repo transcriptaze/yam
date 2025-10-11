@@ -1,20 +1,21 @@
 # Compatibility
 
-At minimum, the browser must support _WebAudio_ and  
+At minimum, the browser must support _WebAudio_ and a reasonably recent implementation of ES6.
 
 ## MacOS
 
-| Browser    | Version        | Ok               | Notes                                      |
+| Browser    | Version        | Status           | Notes                                      |
 |------------|----------------|------------------|--------------------------------------------|
-| Chrome     | (recent'ish)   | Yes              |                                            |
-| Firefox    | (latest)       | Mostly           | Do NOT ask about the layout hacks          |
-| Safari     | (old)          | No               |                                            |
-| Opera      | (latest)       | Yes              |                                            |
+| Chrome     | (recent'ish)   | **Ok**           |                                            |
+| Firefox    | (latest)       | **Mostly ok**    | _Do NOT ask about the layout hacks_        |
+| Safari     | (old)          | **Broken**       | _sigh_                                     |
+| Opera      | (latest)       | **Ok**           |                                            |
 
 
 ## Windows
 
-| Browser    | Version        | Ok               | Notes                                      |
+| Browser    | Version        | Status           | Notes                                      |
+|------------|----------------|------------------|--------------------------------------------|
 | Chrome     |                |                  |                                            |
 | Firefox    |                |                  |                                            |
 | Edge       |                |                  |                                            |
@@ -23,7 +24,8 @@ At minimum, the browser must support _WebAudio_ and
 
 ## Linux
 
-| Browser    | Version        | Ok               | Notes                                      |
+| Browser    | Version        | Status           | Notes                                      |
+|------------|----------------|------------------|--------------------------------------------|
 | Chrome     |                |                  |                                            |
 | Firefox    |                |                  |                                            |
 | Opera      |                |                  |                                            |
@@ -31,17 +33,19 @@ At minimum, the browser must support _WebAudio_ and
 
 ## Android
 
-| Browser    | Version        | Ok               | Notes                                      |
-| Chrome     | (latest)       | Yes              |                                            |
-| Firefox    | (latest)       | Mostly           | Even more layout hacks :-(                 |
-| Edge       | (latest)       | Seems ok         |                                            |
-| Opera      | (latest)       | Yes              |                                            |
-| Opera Mini |                | No               | Does not support WebAudio                  |
+| Browser    | Version        | Status           | Notes                                      |
+|------------|----------------|------------------|--------------------------------------------|
+| Chrome     | (latest)       | **Ok**           |                                            |
+| Firefox    | (latest)       | **Mostly ok**    | Even more layout hacks :-(                 |
+| Edge       | (latest)       | **Seems ok**     |                                            |
+| Opera      | (latest)       | **Ok**           |                                            |
+| Opera Mini |                | **NO**           | Does not support WebAudio                  |
 
 
 ## iOS
 
-| Browser    | Version        | Ok               | Notes                                      |
+| Browser    | Version        | Status           | Notes                                      |
+|------------|----------------|------------------|--------------------------------------------|
 | Firefox    |                |                  |                                            |
 | Safari     |                |                  |                                            |
 | Opera      |                |                  |                                            |

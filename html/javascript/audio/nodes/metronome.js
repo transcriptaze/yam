@@ -279,6 +279,17 @@ function transmogrify(track) {
   const delay = track.sections?.length ? (track.sections[0].delay ?? 0) : 0
   const bars = sections.length === 0 ? INF : sections.reduce((measures, v) => measures + v.measures, 0)
 
+  let offset = 0
+  for (const section of sections) {
+    if (section.role === 'count-in') {
+      offset += section.measures
+    } else if (section.role === 'anacrusis') {
+      offset += section.measures
+    } else {
+      break
+    }
+  }
+
   return {
     tempo: track.tempo ?? 120,
     timeSignature: track.timeSignature ?? '',
@@ -287,7 +298,7 @@ function transmogrify(track) {
     loop: track.loop,
     loops: track.loops ?? INF,
     clicks: generators.clicks(track.clicks),
-    dings: track.dings.map((v) => `${v}`),
+    dings: track.dings.map((v) => `${v + offset}`),
     delay: clamp(durationToMS(delay), 0, 5000),
 
     bars: bars,

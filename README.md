@@ -38,17 +38,20 @@ It will be a pleasant surprise and/or minor miracle if it works at all on anythi
 |             | Opera      | (latest)       | Yes              |                                            |
 
 | **Windows** | Browser    | Version        | Ok               | Notes                                      |
+|-------------|------------|----------------|------------------|--------------------------------------------|
 |             | Chrome     |                |                  |                                            |
 |             | Firefox    |                |                  |                                            |
 |             | Edge       |                |                  |                                            |
 |             | Opera      |                |                  |                                            |
 
 | **Linux**   | Browser    | Version        | Ok               | Notes                                      |
+|-------------|------------|----------------|------------------|--------------------------------------------|
 |             | Chrome     |                |                  |                                            |
 |             | Firefox    |                |                  |                                            |
 |             | Opera      |                |                  |                                            |
 
 | **Android** | Browser    | Version        | Ok               | Notes                                      |
+|-------------|------------|----------------|------------------|--------------------------------------------|
 |             | Chrome     | (latest)       | Yes              |                                            |
 |             | Firefox    | (latest)       | Mostly           | (as above)                                 |
 |             | Edge       | (latest)       | Yes              |                                            |
@@ -56,6 +59,7 @@ It will be a pleasant surprise and/or minor miracle if it works at all on anythi
 |             | Opera Mini |                | No               | No WebAudio                                |
 
 | **iOS**     | Browser    | Version        | Ok               | Notes                                      |
+|-------------|------------|----------------|------------------|--------------------------------------------|
 |             | Firefox    |                |                  |                                            |
 |             | Safari     |                |                  |                                            |
 |             | Opera      |                |                  |                                            |

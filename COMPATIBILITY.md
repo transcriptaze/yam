@@ -15,6 +15,7 @@ At minimum, the browser must support _WebAudio_ and
 ## Windows
 
 | Browser    | Version        | Ok               | Notes                                      |
+|------------|----------------|------------------|--------------------------------------------|
 | Chrome     |                |                  |                                            |
 | Firefox    |                |                  |                                            |
 | Edge       |                |                  |                                            |
@@ -24,6 +25,7 @@ At minimum, the browser must support _WebAudio_ and
 ## Linux
 
 | Browser    | Version        | Ok               | Notes                                      |
+|------------|----------------|------------------|--------------------------------------------|
 | Chrome     |                |                  |                                            |
 | Firefox    |                |                  |                                            |
 | Opera      |                |                  |                                            |
@@ -32,6 +34,7 @@ At minimum, the browser must support _WebAudio_ and
 ## Android
 
 | Browser    | Version        | Ok               | Notes                                      |
+|------------|----------------|------------------|--------------------------------------------|
 | Chrome     | (latest)       | Yes              |                                            |
 | Firefox    | (latest)       | Mostly           | Even more layout hacks :-(                 |
 | Edge       | (latest)       | Seems ok         |                                            |
@@ -42,6 +45,7 @@ At minimum, the browser must support _WebAudio_ and
 ## iOS
 
 | Browser    | Version        | Ok               | Notes                                      |
+|------------|----------------|------------------|--------------------------------------------|
 | Firefox    |                |                  |                                            |
 | Safari     |                |                  |                                            |
 | Opera      |                |                  |                                            |

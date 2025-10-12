@@ -270,6 +270,7 @@ function transmogrify(track) {
         beats: parseTimeSignature(v.timeSignature).beats,
         divisions: parseTimeSignature(v.timeSignature).divisions,
         clicks: v.clicks,
+        dings: v.dings ?? [],
       }
     })
 
@@ -290,6 +291,16 @@ function transmogrify(track) {
     }
   }
 
+  const dings = track.dings.map((v) => v + offset)
+
+  sections.forEach((v) => {
+    const list = v.dings?.map((x) => x + v.start - 1)
+
+    dings.push(...list)
+  })
+
+  dings.sort()
+
   return {
     tempo: track.tempo ?? 120,
     timeSignature: track.timeSignature ?? '',
@@ -298,7 +309,7 @@ function transmogrify(track) {
     loop: track.loop,
     loops: track.loops ?? INF,
     clicks: generators.clicks(track.clicks),
-    dings: track.dings.map((v) => `${v + offset}`),
+    dings: dings.map((v) => `${v}`),
     delay: clamp(durationToMS(delay), 0, 5000),
 
     bars: bars,

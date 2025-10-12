@@ -22,6 +22,8 @@
 *** TODO 'dings' (cf. https://github.com/transcriptaze/yam/issues/9)
 **** TODO better ding sample
 **** TODO use sample map for metronome constructor
+**** TODO ding enable/disable icon
+**** TODO (?) replace click with ding rather than play simultaneously
 **** TODO optimize: schedule dings on load/start and remove from list when played
 **** TODO optimize: sort scheduled dings by measure/beat
 

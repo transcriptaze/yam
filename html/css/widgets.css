@@ -590,6 +590,8 @@ div.beat div.shape {
 :host(.small-block) div.beat div.shape {
   border-radius: 12.5%;
   clip-path: inset(0 round 12.5);
+  margin-left: 10%;
+  margin-right: 10%;
 }
 
 div.beat.on div.shape {

@@ -1,658 +1,671 @@
 {
-  "playlists": [
-    {
-      "UUID": "fbadae70-a1a1-4093-be74-bb255ca5c7b2",
-      "version": 0,
-      "index": 0,
-      "title": "Songs to play when I'm drunk and high and thinking about my ex",
-      "tracks": [
-        "b8acedd3-58bc-4084-8beb-37c93f4c0e3b",
-        "4b6d4905-e18b-4568-b48d-367c79674381",
-        "5304dd6e-32ac-4e53-8a3b-7f246cb77820",
-        "d76f150d-8461-4fd9-a934-da7bf2699132"
-      ],
-      "muted": []
-    },
-    {
-      "UUID": "fd7f480b-6e51-46cb-ab5e-5726ab383944",
-      "version": 0,
-      "index": 1,
-      "title": "Playlist #13",
-      "tracks": [],
-      "muted": []
-    },
-    {
-      "UUID": "aaf295c4-d50a-4e3c-8a8e-80b26e62805b",
-      "version": 0,
-      "index": 2,
-      "title": "Playlist #X11Y",
-      "tracks": [
-        "4b6d4905-e18b-4568-b48d-367c79674381",
-        "f9534f96-0893-4d7a-ac2a-bbd774734d1b",
-        "657cc85b-4dc7-4779-afde-fcb9681ee5d5",
-        "c9b989e1-b13b-4beb-96c1-0b19adfaf9c7",
-        "a141f3ac-6e8e-47ac-b9c8-c9c27d521305",
-        "e7ff88da-a9ad-4c2c-a5f7-0459eab10f02"
-      ],
-      "muted": [
-        "c9b989e1-b13b-4beb-96c1-0b19adfaf9c7"
-      ]
-    },
-    {
-      "UUID": "cf05ac9f-8f85-4afc-b48f-5eb980afd46b",
-      "version": 0,
-      "index": 3,
-      "title": "Playlist #15",
-      "tracks": [
-        "e7ff88da-a9ad-4c2c-a5f7-0459eab10f02",
-        "f9534f96-0893-4d7a-ac2a-bbd774734d1b"
-      ],
-      "muted": []
-    },
-    {
-      "UUID": "26d78140-3bf4-4885-abf1-eee40de793b2",
-      "version": 0,
-      "index": 4,
-      "title": "Playlist #16",
-      "tracks": [],
-      "muted": []
-    },
-    {
-      "UUID": "00000000-0000-0000-0000-000000000000",
-      "version": 0,
-      "index": 9007199254740991,
-      "title": "All Tracks",
-      "tracks": [
-        "e7ff88da-a9ad-4c2c-a5f7-0459eab10f02",
-        "5304dd6e-32ac-4e53-8a3b-7f246cb77820",
-        "f9534f96-0893-4d7a-ac2a-bbd774734d1b",
-        "4b6d4905-e18b-4568-b48d-367c79674381",
-        "c9b989e1-b13b-4beb-96c1-0b19adfaf9c7",
-        "a141f3ac-6e8e-47ac-b9c8-c9c27d521305",
-        "32e544f0-1c67-431f-9198-85cd67d7a410",
-        "afa1d592-ce5c-498f-9a32-b35780cfb74e",
-        "b8acedd3-58bc-4084-8beb-37c93f4c0e3b",
-        "b12df497-3299-4933-9ba9-44f386510da4",
-        "c1e52680-8911-488e-8c6d-888a2bddd1b4",
-        "a5865ad8-f82b-42bb-9460-06af8d416e8f",
-        "6b215525-03a9-4694-a104-36f23b3dcf23",
-        "d76f150d-8461-4fd9-a934-da7bf2699132",
-        "657cc85b-4dc7-4779-afde-fcb9681ee5d5"
-      ],
-      "muted": []
-    }
-  ],
-  "tracks": [
-    {
-      "UUID": "32e544f0-1c67-431f-9198-85cd67d7a410",
-      "version": 0,
-      "title": "(debug)",
-      "tempo": 60,
-      "timeSignature": "4:4",
-      "pulse": "eighth-doublet",
-      "sections": [
+    "playlists": [
         {
-          "role": "count-in",
-          "delay": "2500 ms",
-          "measures": 1
+            "UUID": "fbadae70-a1a1-4093-be74-bb255ca5c7b2",
+            "version": 0,
+            "index": 0,
+            "title": "Songs to play when I'm drunk and high and thinking about my ex",
+            "tracks": [
+                "b8acedd3-58bc-4084-8beb-37c93f4c0e3b",
+                "4b6d4905-e18b-4568-b48d-367c79674381",
+                "5304dd6e-32ac-4e53-8a3b-7f246cb77820",
+                "d76f150d-8461-4fd9-a934-da7bf2699132"
+            ],
+            "muted": []
         },
         {
-          "role": "anacrusis",
-          "clicks": [
-            3,
-            3.5
-          ],
-          "measures": 1,
-          "timeSignature": "3:4"
+            "UUID": "fd7f480b-6e51-46cb-ab5e-5726ab383944",
+            "version": 0,
+            "index": 1,
+            "title": "Playlist #13",
+            "tracks": [],
+            "muted": []
         },
         {
-          "role": "intro",
-          "measures": 4,
-          "pulse": "quarter",
-          "tempo": 125
+            "UUID": "aaf295c4-d50a-4e3c-8a8e-80b26e62805b",
+            "version": 0,
+            "index": 2,
+            "title": "Playlist #X11Y",
+            "tracks": [
+                "4b6d4905-e18b-4568-b48d-367c79674381",
+                "f9534f96-0893-4d7a-ac2a-bbd774734d1b",
+                "657cc85b-4dc7-4779-afde-fcb9681ee5d5",
+                "c9b989e1-b13b-4beb-96c1-0b19adfaf9c7",
+                "a141f3ac-6e8e-47ac-b9c8-c9c27d521305",
+                "e7ff88da-a9ad-4c2c-a5f7-0459eab10f02"
+            ],
+            "muted": [
+                "c9b989e1-b13b-4beb-96c1-0b19adfaf9c7"
+            ]
         },
         {
-          "role": "verse",
-          "measures": 4,
-          "timeSignature": "6:8",
-          "pulse": "eighth",
-          "name": "Verse 1"
+            "UUID": "cf05ac9f-8f85-4afc-b48f-5eb980afd46b",
+            "version": 0,
+            "index": 3,
+            "title": "Playlist #15",
+            "tracks": [
+                "e7ff88da-a9ad-4c2c-a5f7-0459eab10f02",
+                "f9534f96-0893-4d7a-ac2a-bbd774734d1b"
+            ],
+            "muted": []
         },
         {
-          "role": "verse",
-          "measures": 4,
-          "tempo": 80
+            "UUID": "26d78140-3bf4-4885-abf1-eee40de793b2",
+            "version": 0,
+            "index": 4,
+            "title": "Playlist #16",
+            "tracks": [],
+            "muted": []
         },
         {
-          "role": "chorus",
-          "measures": 4,
-          "tempo": 160,
-          "timeSignature": "5:4",
-          "pulse": "quarter"
-        },
-        {
-          "role": "chorus",
-          "measures": 4,
-          "tempo": 140
-        },
-        {
-          "measures": 4,
-          "tempo": 60,
-          "pulse": "eighth"
-        },
-        {
-          "measures": 4,
-          "pulse": "quarter",
-          "name": "Ending"
+            "UUID": "00000000-0000-0000-0000-000000000000",
+            "version": 0,
+            "index": 9007199254740991,
+            "title": "All Tracks",
+            "tracks": [
+                "e7ff88da-a9ad-4c2c-a5f7-0459eab10f02",
+                "5304dd6e-32ac-4e53-8a3b-7f246cb77820",
+                "f9534f96-0893-4d7a-ac2a-bbd774734d1b",
+                "4b6d4905-e18b-4568-b48d-367c79674381",
+                "c9b989e1-b13b-4beb-96c1-0b19adfaf9c7",
+                "a141f3ac-6e8e-47ac-b9c8-c9c27d521305",
+                "32e544f0-1c67-431f-9198-85cd67d7a410",
+                "afa1d592-ce5c-498f-9a32-b35780cfb74e",
+                "b8acedd3-58bc-4084-8beb-37c93f4c0e3b",
+                "b12df497-3299-4933-9ba9-44f386510da4",
+                "c1e52680-8911-488e-8c6d-888a2bddd1b4",
+                "a5865ad8-f82b-42bb-9460-06af8d416e8f",
+                "6b215525-03a9-4694-a104-36f23b3dcf23",
+                "d76f150d-8461-4fd9-a934-da7bf2699132",
+                "657cc85b-4dc7-4779-afde-fcb9681ee5d5"
+            ],
+            "muted": []
         }
-      ],
-      "metronome": {
-        "BPM": 60,
-        "loop": false
-      }
-    },
-    {
-      "UUID": "4b6d4905-e18b-4568-b48d-367c79674381",
-      "version": 0,
-      "title": "Baby Elephant Walk",
-      "tempo": 120,
-      "timeSignature": "4:4",
-      "pulse": "eighth-doublet",
-      "sections": [
+    ],
+    "tracks": [
         {
-          "role": "anacrusis",
-          "clicks": [
-            4.5
-          ]
-        },
-        {
-          "role": "intro",
-          "name": "Intro",
-          "measures": 4
-        },
-        {
-          "role": "verse",
-          "name": "Verse 1",
-          "subsections": [
-            {
-              "measures": 4
-            },
-            {
-              "measures": 12
+            "UUID": "32e544f0-1c67-431f-9198-85cd67d7a410",
+            "version": 0,
+            "title": "(debug)",
+            "tempo": 60,
+            "timeSignature": "4:4",
+            "pulse": "eighth-doublet",
+            "sections": [
+                {
+                    "role": "count-in",
+                    "delay": "2500 ms",
+                    "measures": 1
+                },
+                {
+                    "role": "anacrusis",
+                    "clicks": [
+                        3,
+                        3.5
+                    ],
+                    "measures": 1,
+                    "timeSignature": "3:4"
+                },
+                {
+                    "role": "intro",
+                    "measures": 4,
+                    "pulse": "quarter",
+                    "tempo": 125
+                },
+                {
+                    "role": "verse",
+                    "measures": 4,
+                    "timeSignature": "6:8",
+                    "pulse": "eighth",
+                    "name": "Verse 1"
+                },
+                {
+                    "role": "verse",
+                    "measures": 4,
+                    "tempo": 80
+                },
+                {
+                    "role": "chorus",
+                    "measures": 4,
+                    "tempo": 160,
+                    "timeSignature": "5:4",
+                    "pulse": "quarter"
+                },
+                {
+                    "role": "chorus",
+                    "measures": 4,
+                    "tempo": 140
+                },
+                {
+                    "measures": 4,
+                    "tempo": 60,
+                    "pulse": "eighth"
+                },
+                {
+                    "measures": 4,
+                    "pulse": "quarter",
+                    "name": "Ending"
+                }
+            ],
+            "metronome": {
+                "BPM": 60,
+                "loop": false
             }
-          ]
         },
         {
-          "role": "verse",
-          "name": "Verse 2",
-          "subsections": [
-            {
-              "measures": 4
-            },
-            {
-              "measures": 12
+            "UUID": "4b6d4905-e18b-4568-b48d-367c79674381",
+            "version": 0,
+            "title": "Baby Elephant Walk",
+            "tempo": 120,
+            "timeSignature": "4:4",
+            "pulse": "eighth-doublet",
+            "sections": [
+                {
+                    "role": "anacrusis",
+                    "clicks": [
+                        4.5
+                    ]
+                },
+                {
+                    "role": "intro",
+                    "name": "Intro",
+                    "measures": 4
+                },
+                {
+                    "role": "verse",
+                    "name": "Verse 1",
+                    "subsections": [
+                        {
+                            "measures": 4
+                        },
+                        {
+                            "measures": 12
+                        }
+                    ]
+                },
+                {
+                    "role": "verse",
+                    "name": "Verse 2",
+                    "subsections": [
+                        {
+                            "measures": 4
+                        },
+                        {
+                            "measures": 12
+                        }
+                    ]
+                },
+                {
+                    "role": "bridge",
+                    "name": "Bridge 1",
+                    "subsections": [
+                        {
+                            "measures": 3,
+                            "timeSignature": "4:4"
+                        },
+                        {
+                            "measures": 1,
+                            "timeSignature": "5:4"
+                        },
+                        {
+                            "measures": 4,
+                            "timeSignature": "4:4"
+                        }
+                    ]
+                },
+                {
+                    "role": "bridge",
+                    "name": "Bridge 2",
+                    "subsections": [
+                        {
+                            "measures": 3,
+                            "timeSignature": "4:4"
+                        },
+                        {
+                            "measures": 1,
+                            "timeSignature": "5:4"
+                        },
+                        {
+                            "measures": 4,
+                            "timeSignature": "4:4"
+                        }
+                    ]
+                },
+                {
+                    "role": "verse",
+                    "name": "Verse 3",
+                    "subsections": [
+                        {
+                            "measures": 4
+                        },
+                        {
+                            "measures": 12
+                        }
+                    ]
+                },
+                {
+                    "name": "Outro",
+                    "role": "outro",
+                    "measures": 2
+                }
+            ],
+            "metronome": {
+                "BPM": 66,
+                "loop": false
             }
-          ]
         },
         {
-          "role": "bridge",
-          "name": "Bridge 1",
-          "subsections": [
-            {
-              "measures": 3,
-              "timeSignature": "4:4"
-            },
-            {
-              "measures": 1,
-              "timeSignature": "5:4"
-            },
-            {
-              "measures": 4,
-              "timeSignature": "4:4"
+            "UUID": "5304dd6e-32ac-4e53-8a3b-7f246cb77820",
+            "version": 0,
+            "title": "Jukskei",
+            "tempo": 160,
+            "timeSignature": "4:4",
+            "pulse": "quarter",
+            "sections": [
+                {
+                    "role": "count-in",
+                    "delay": "500ms",
+                    "subsections": [
+                        {
+                            "measures": 1,
+                            "clicks": [
+                                1,
+                                3
+                            ]
+                        },
+                        {
+                            "measures": 1,
+                            "clicks": [
+                                1,
+                                2,
+                                3,
+                                4
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "name": "Verse",
+                    "role": "verse"
+                }
+            ],
+            "metronome": {
+                "BPM": 149,
+                "loop": false
             }
-          ]
         },
         {
-          "role": "bridge",
-          "name": "Bridge 2",
-          "subsections": [
-            {
-              "measures": 3,
-              "timeSignature": "4:4"
-            },
-            {
-              "measures": 1,
-              "timeSignature": "5:4"
-            },
-            {
-              "measures": 4,
-              "timeSignature": "4:4"
+            "UUID": "657cc85b-4dc7-4779-afde-fcb9681ee5d5",
+            "version": 0,
+            "title": "A Very Very Long And Complicated Name For A Track That Will Never Be Played",
+            "tempo": 120,
+            "timeSignature": "3:4",
+            "pulse": "eighth-doublet",
+            "sections": [],
+            "metronome": {
+                "BPM": 120,
+                "loop": false
             }
-          ]
         },
         {
-          "role": "verse",
-          "name": "Verse 3",
-          "subsections": [
-            {
-              "measures": 4
-            },
-            {
-              "measures": 12
+            "UUID": "a141f3ac-6e8e-47ac-b9c8-c9c27d521305",
+            "version": 0,
+            "title": "Jesu Joy of Man's Desiring",
+            "tempo": 96,
+            "timeSignature": "4:4",
+            "pulse": "eighth-doublet",
+            "sections": [
+                {
+                    "role": "count-in",
+                    "delay": "500ms"
+                },
+                {
+                    "name": "Intro",
+                    "role": "intro",
+                    "measures": 8
+                },
+                {
+                    "name": "Verse 1",
+                    "role": "verse",
+                    "measures": 14,
+                    "timeSignature": "3:4"
+                },
+                {
+                    "name": "Verse 2",
+                    "measures": 4
+                }
+            ],
+            "metronome": {
+                "BPM": 60,
+                "loop": true
             }
-          ]
         },
         {
-          "name": "Outro",
-          "role": "outro",
-          "measures": 2
-        }
-      ],
-      "metronome": {
-        "BPM": 66,
-        "loop": false
-      }
-    },
-    {
-      "UUID": "5304dd6e-32ac-4e53-8a3b-7f246cb77820",
-      "version": 0,
-      "title": "Jukskei",
-      "tempo": 160,
-      "timeSignature": "4:4",
-      "pulse": "quarter",
-      "sections": [
-        {
-          "role": "count-in",
-          "delay": "500ms",
-          "subsections": [
-            {
-              "measures": 1,
-              "clicks": [
-                1,
-                3
-              ]
-            },
-            {
-              "measures": 1,
-              "clicks": [
-                1,
-                2,
-                3,
-                4
-              ]
+            "UUID": "a5865ad8-f82b-42bb-9460-06af8d416e8f",
+            "version": 0,
+            "title": "(debug - click map)",
+            "tempo": 120,
+            "timeSignature": "4:4",
+            "pulse": "quarter",
+            "sections": [],
+            "metronome": {
+                "BPM": 120,
+                "loop": false,
+                "clicks": {
+                    "1": "sticks",
+                    "4": "tack"
+                }
             }
-          ]
         },
         {
-          "name": "Verse",
-          "role": "verse"
-        }
-      ],
-      "metronome": {
-        "BPM": 149,
-        "loop": false
-      }
-    },
-    {
-      "UUID": "657cc85b-4dc7-4779-afde-fcb9681ee5d5",
-      "version": 0,
-      "title": "A Very Very Long And Complicated Name For A Track That Will Never Be Played",
-      "tempo": 120,
-      "timeSignature": "3:4",
-      "pulse": "eighth-doublet",
-      "sections": [],
-      "metronome": {
-        "BPM": 120,
-        "loop": false
-      }
-    },
-    {
-      "UUID": "a141f3ac-6e8e-47ac-b9c8-c9c27d521305",
-      "version": 0,
-      "title": "Jesu Joy of Man's Desiring",
-      "tempo": 96,
-      "timeSignature": "4:4",
-      "pulse": "eighth-doublet",
-      "sections": [
-        {
-          "role": "count-in",
-          "delay": "500ms"
-        },
-        {
-          "name": "Intro",
-          "role": "intro",
-          "measures": 8
-        },
-        {
-          "name": "Verse 1",
-          "role": "verse",
-          "measures": 14,
-          "timeSignature": "3:4"
-        },
-        {
-          "name": "Verse 2",
-          "measures": 4
-        }
-      ],
-      "metronome": {
-        "BPM": 60,
-        "loop": true
-      }
-    },
-    {
-      "UUID": "a5865ad8-f82b-42bb-9460-06af8d416e8f",
-      "version": 0,
-      "title": "(debug - click map)",
-      "tempo": 120,
-      "timeSignature": "4:4",
-      "pulse": "quarter",
-      "sections": [],
-      "metronome": {
-        "BPM": 120,
-        "loop": false,
-        "clicks": {
-          "1": "sticks",
-          "4": "tack"
-        }
-      }
-    },
-    {
-      "UUID": "afa1d592-ce5c-498f-9a32-b35780cfb74e",
-      "version": 0,
-      "title": "(debug - loop)",
-      "tempo": 120,
-      "timeSignature": "4:4",
-      "pulse": "quarter",
-      "sections": [
-        {
-          "name": "CountIn",
-          "role": "count-in",
-          "delay": "500 ms"
-        },
-        {
-          "name": "Verse",
-          "measures": 4
-        }
-      ],
-      "metronome": {
-        "BPM": 120,
-        "loop": true,
-        "loops": 5
-      }
-    },
-    {
-      "UUID": "b12df497-3299-4933-9ba9-44f386510da4",
-      "version": 0,
-      "title": "(debug - subsections)",
-      "tempo": 120,
-      "timeSignature": "4:4",
-      "pulse": "quarter",
-      "sections": [
-        {
-          "name": "CountIn",
-          "role": "count-in",
-          "delay": "500 ms"
-        },
-        {
-          "name": "Verse",
-          "subsections": [
-            {
-              "measures": 4,
-              "tempo": 80
-            },
-            {
-              "measures": 4,
-              "tempo": 120,
-              "timeSignature": "5:4"
-            },
-            {
-              "measures": 4,
-              "tempo": 160,
-              "pulse": "dotted-quarter"
+            "UUID": "afa1d592-ce5c-498f-9a32-b35780cfb74e",
+            "version": 0,
+            "title": "(debug - loop)",
+            "tempo": 120,
+            "timeSignature": "4:4",
+            "pulse": "quarter",
+            "sections": [
+                {
+                    "name": "CountIn",
+                    "role": "count-in",
+                    "delay": "500 ms"
+                },
+                {
+                    "name": "Verse",
+                    "measures": 4
+                }
+            ],
+            "metronome": {
+                "BPM": 120,
+                "loop": true,
+                "loops": 5
             }
-          ]
+        },
+        {
+            "UUID": "b12df497-3299-4933-9ba9-44f386510da4",
+            "version": 0,
+            "title": "(debug - subsections)",
+            "tempo": 120,
+            "timeSignature": "4:4",
+            "pulse": "quarter",
+            "sections": [
+                {
+                    "name": "CountIn",
+                    "role": "count-in",
+                    "delay": "500 ms"
+                },
+                {
+                    "name": "Verse",
+                    "subsections": [
+                        {
+                            "measures": 4,
+                            "tempo": 80
+                        },
+                        {
+                            "measures": 4,
+                            "tempo": 120,
+                            "timeSignature": "5:4"
+                        },
+                        {
+                            "measures": 4,
+                            "tempo": 160,
+                            "pulse": "dotted-quarter"
+                        }
+                    ]
+                }
+            ],
+            "metronome": {
+                "BPM": 120,
+                "loop": false
+            }
+        },
+        {
+            "UUID": "b8acedd3-58bc-4084-8beb-37c93f4c0e3b",
+            "version": 0,
+            "title": "(debug - no loop)",
+            "tempo": 120,
+            "timeSignature": "4:4",
+            "pulse": "quarter",
+            "sections": [
+                {
+                    "name": "CountIn",
+                    "role": "count-in",
+                    "delay": "500 ms"
+                },
+                {
+                    "name": "Verse",
+                    "measures": 4
+                }
+            ],
+            "metronome": {
+                "BPM": 120,
+                "loop": false
+            }
+        },
+        {
+            "UUID": "c1e52680-8911-488e-8c6d-888a2bddd1b4",
+            "version": 0,
+            "title": "(debug - clicks)",
+            "tempo": 120,
+            "timeSignature": "4:4",
+            "pulse": "quarter",
+            "sections": [
+                {
+                    "name": "",
+                    "role": "count-in",
+                    "measures": 1
+                },
+                {
+                    "name": "Intro",
+                    "role": "intro",
+                    "measures": 4
+                },
+                {
+                    "name": "TicTacToc",
+                    "role": "verse",
+                    "measures": 4,
+                    "clicks": {
+                        "2": "sticks",
+                        "3": "tack",
+                        "4": "ding"
+                    }
+                }
+            ],
+            "metronome": {
+                "BPM": 120,
+                "loop": false,
+                "clicks": [
+                    1,
+                    4
+                ]
+            }
+        },
+        {
+            "UUID": "c9b989e1-b13b-4beb-96c1-0b19adfaf9c7",
+            "version": 0,
+            "title": "Red Right Hand",
+            "tempo": 120,
+            "timeSignature": "4:4",
+            "pulse": "quarter",
+            "sections": [
+                {
+                    "role": "count-in",
+                    "delay": "500ms"
+                },
+                {
+                    "role": "intro",
+                    "measures": 4
+                },
+                {
+                    "name": "Verse 1",
+                    "role": "verse",
+                    "measures": 16
+                },
+                {
+                    "name": "Chorus 1",
+                    "role": "chorus",
+                    "measures": 4
+                },
+                {
+                    "role": "turnaround",
+                    "measures": 4
+                },
+                {
+                    "name": "Verse 2",
+                    "role": "verse",
+                    "measures": 16
+                },
+                {
+                    "name": "Chorus 2",
+                    "role": "chorus",
+                    "measures": 8
+                },
+                {
+                    "name": "Bridge 1",
+                    "role": "bridge",
+                    "measures": 16
+                },
+                {
+                    "name": "Chorus 3",
+                    "role": "chorus",
+                    "measures": 4
+                },
+                {
+                    "role": "turnaround",
+                    "measures": 4
+                },
+                {
+                    "name": "Mid Eight",
+                    "role": "bridge",
+                    "measures": 8
+                },
+                {
+                    "role": "turnaround",
+                    "measures": 4
+                },
+                {
+                    "name": "Verse 3",
+                    "role": "verse",
+                    "measures": 16
+                },
+                {
+                    "name": "Chorus 4",
+                    "role": "chorus",
+                    "measures": 4
+                },
+                {
+                    "role": "turnaround",
+                    "measures": 4
+                },
+                {
+                    "name": "Last Verse",
+                    "role": "verse",
+                    "measures": 16
+                },
+                {
+                    "name": "Chorus 5",
+                    "role": "chorus",
+                    "measures": 8
+                },
+                {
+                    "role": "outro",
+                    "measures": 12
+                }
+            ],
+            "metronome": {
+                "BPM": 116,
+                "loop": false
+            }
+        },
+        {
+            "UUID": "d76f150d-8461-4fd9-a934-da7bf2699132",
+            "version": 0,
+            "title": "Keurboom",
+            "tempo": 123,
+            "timeSignature": "6:8",
+            "pulse": "dotted-quarter",
+            "sections": [
+                {
+                    "role": "count-in",
+                    "delay": "500ms",
+                    "measures": 2
+                },
+                {
+                    "role": "intro",
+                    "measures": 8
+                },
+                {
+                    "name": "Verse 1",
+                    "role": "verse",
+                    "measures": 24
+                }
+            ],
+            "metronome": {
+                "BPM": 90,
+                "loop": true
+            }
+        },
+        {
+            "UUID": "e7ff88da-a9ad-4c2c-a5f7-0459eab10f02",
+            "version": 0,
+            "title": "Jukskei (bridge)",
+            "tempo": 160,
+            "timeSignature": "4:4",
+            "pulse": "quarter",
+            "sections": [],
+            "metronome": {
+                "BPM": 125,
+                "loop": false
+            }
+        },
+        {
+            "UUID": "f9534f96-0893-4d7a-ac2a-bbd774734d1b",
+            "version": 0,
+            "title": "Greensleeves",
+            "tempo": 60,
+            "timeSignature": "3:4",
+            "pulse": "eighth-doublet",
+            "sections": [],
+            "metronome": {
+                "BPM": 45,
+                "loop": false
+            }
+        },
+        {
+            "UUID": "6b215525-03a9-4694-a104-36f23b3dcf23",
+            "version": 0,
+            "title": "(debug - dings)",
+            "tempo": 120,
+            "timeSignature": "4:4",
+            "pulse": "quarter",
+            "sections": [
+                {
+                    "role": "count-in"
+                },
+                {
+                    "role": "anacrusis"
+                },
+                {
+                    "name": "Track Ding (2.3)",
+                    "role": "other",
+                    "measures": 4
+                },
+                {
+                    "name": "Section Ding (2.4)",
+                    "role": "other",
+                    "measures": 4,
+                    "timeSignature": "5:4",
+                    "dings": [
+                        2.4
+                    ]
+                }
+            ],
+            "metronome": {
+                "BPM": 80,
+                "loop": false,
+                "dings": [
+                    2.3
+                ]
+            }
         }
-      ],
-      "metronome": {
-        "BPM": 120,
-        "loop": false
-      }
-    },
-    {
-      "UUID": "b8acedd3-58bc-4084-8beb-37c93f4c0e3b",
-      "version": 0,
-      "title": "(debug - no loop)",
-      "tempo": 120,
-      "timeSignature": "4:4",
-      "pulse": "quarter",
-      "sections": [
-        {
-          "name": "CountIn",
-          "role": "count-in",
-          "delay": "500 ms"
-        },
-        {
-          "name": "Verse",
-          "measures": 4
-        }
-      ],
-      "metronome": {
-        "BPM": 120,
-        "loop": false
-      }
-    },
-    {
-      "UUID": "c1e52680-8911-488e-8c6d-888a2bddd1b4",
-      "version": 0,
-      "title": "(debug - clicks)",
-      "tempo": 120,
-      "timeSignature": "4:4",
-      "pulse": "quarter",
-      "sections": [
-        {
-          "name": "",
-          "role": "count-in",
-          "measures": 1
-        },
-        {
-          "name": "Intro",
-          "role": "intro",
-          "measures": 4
-        },
-        {
-          "name": "TicTacToc",
-          "role": "verse",
-          "measures": 4,
-          "clicks": {
-            "2": "sticks",
-            "3": "tack",
-            "4": "ding"
-          }
-        }
-      ],
-      "metronome": {
-        "BPM": 120,
-        "loop": false,
-        "clicks": [
-          1,
-          4
-        ]
-      }
-    },
-    {
-      "UUID": "c9b989e1-b13b-4beb-96c1-0b19adfaf9c7",
-      "version": 0,
-      "title": "Red Right Hand",
-      "tempo": 120,
-      "timeSignature": "4:4",
-      "pulse": "quarter",
-      "sections": [
-        {
-          "role": "count-in",
-          "delay": "500ms"
-        },
-        {
-          "role": "intro",
-          "measures": 4
-        },
-        {
-          "name": "Verse 1",
-          "role": "verse",
-          "measures": 16
-        },
-        {
-          "name": "Chorus 1",
-          "role": "chorus",
-          "measures": 4
-        },
-        {
-          "role": "turnaround",
-          "measures": 4
-        },
-        {
-          "name": "Verse 2",
-          "role": "verse",
-          "measures": 16
-        },
-        {
-          "name": "Chorus 2",
-          "role": "chorus",
-          "measures": 8
-        },
-        {
-          "name": "Bridge 1",
-          "role": "bridge",
-          "measures": 16
-        },
-        {
-          "name": "Chorus 3",
-          "role": "chorus",
-          "measures": 4
-        },
-        {
-          "role": "turnaround",
-          "measures": 4
-        },
-        {
-          "name": "Mid Eight",
-          "role": "bridge",
-          "measures": 8
-        },
-        {
-          "role": "turnaround",
-          "measures": 4
-        },
-        {
-          "name": "Verse 3",
-          "role": "verse",
-          "measures": 16
-        },
-        {
-          "name": "Chorus 4",
-          "role": "chorus",
-          "measures": 4
-        },
-        {
-          "role": "turnaround",
-          "measures": 4
-        },
-        {
-          "name": "Last Verse",
-          "role": "verse",
-          "measures": 16
-        },
-        {
-          "name": "Chorus 5",
-          "role": "chorus",
-          "measures": 8
-        },
-        {
-          "role": "outro",
-          "measures": 12
-        }
-      ],
-      "metronome": {
-        "BPM": 116,
-        "loop": false
-      }
-    },
-    {
-      "UUID": "d76f150d-8461-4fd9-a934-da7bf2699132",
-      "version": 0,
-      "title": "Keurboom",
-      "tempo": 123,
-      "timeSignature": "6:8",
-      "pulse": "dotted-quarter",
-      "sections": [
-        {
-          "role": "count-in",
-          "delay": "500ms",
-          "measures": 2
-        },
-        {
-          "role": "intro",
-          "measures": 8
-        },
-        {
-          "name": "Verse 1",
-          "role": "verse",
-          "measures": 24
-        }
-      ],
-      "metronome": {
-        "BPM": 90,
-        "loop": true
-      }
-    },
-    {
-      "UUID": "e7ff88da-a9ad-4c2c-a5f7-0459eab10f02",
-      "version": 0,
-      "title": "Jukskei (bridge)",
-      "tempo": 160,
-      "timeSignature": "4:4",
-      "pulse": "quarter",
-      "sections": [],
-      "metronome": {
-        "BPM": 125,
-        "loop": false
-      }
-    },
-    {
-      "UUID": "f9534f96-0893-4d7a-ac2a-bbd774734d1b",
-      "version": 0,
-      "title": "Greensleeves",
-      "tempo": 60,
-      "timeSignature": "3:4",
-      "pulse": "eighth-doublet",
-      "sections": [],
-      "metronome": {
-        "BPM": 45,
-        "loop": false
-      }
-    },
-    {
-      "UUID": "6b215525-03a9-4694-a104-36f23b3dcf23",
-      "version": 0,
-      "title": "(debug - dings)",
-      "tempo": 120,
-      "timeSignature": "4:4",
-      "pulse": "quarter",
-      "sections": [
-        {
-          "role": "count-in"
-        },
-        {
-          "role": "anacrusis"
-        },
-        {
-          "role": "other"
-        }
-      ],
-      "metronome": {
-        "BPM": 80,
-        "loop": false,
-        "dings": [ 2.3 ]
-      }
-    }
-  ]
+    ]
 }

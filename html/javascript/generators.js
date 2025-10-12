@@ -163,6 +163,7 @@ export function* transmogrify(track) {
       subsections: subsections,
       measures: bars,
       start: subsections[0].start,
+      dings: section.dings ?? [],
     }
   }
 }

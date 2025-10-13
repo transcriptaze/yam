@@ -31,7 +31,7 @@ export class MetronomeNode extends AudioWorkletNode {
     loops: 0,
   }
 
-  constructor(context, tick, tock, tack, stick, ding, subscribers) {
+  constructor(context, { tick, tock, tack, stick, ding }, subscribers) {
     super(context, 'metronome', {
       numberOfInputs: 0,
       numberOfOutputs: 1,

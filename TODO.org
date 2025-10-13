@@ -5,6 +5,7 @@
 *** DONE BPM changes scaled by track BPM
 *** DONE wait for metronome to start before enabling 'stop' (confusing double click)
 *** DONE update worklet track on editor::save
+*** DONE use sample map for metronome constructor
 
 *** TODO cache engine initialisation
       - can't set BPM, pulse, time-signature, etc during initialisation (i.e. before first play)
@@ -21,7 +22,6 @@
 
 *** TODO 'dings' (cf. https://github.com/transcriptaze/yam/issues/9)
 **** TODO better ding sample
-**** TODO use sample map for metronome constructor
 **** TODO ding enable/disable icon
 **** TODO (?) replace click with ding rather than play simultaneously
 **** TODO optimize: schedule dings on load/start and remove from list when played

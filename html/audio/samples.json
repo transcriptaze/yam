@@ -1,0 +1,22 @@
+{
+    "tick": {
+        "file": "default/tick.wav",
+        "version": 0
+    },
+    "tock": {
+        "file": "default/tock.wav",
+        "version": 0
+    },
+    "tack": {
+        "file": "default/tack.wav",
+        "version": 0
+    },
+    "stick": {
+        "file": "default/stick.wav",
+        "version": 0
+    },
+    "ding": {
+        "file": "default/ding.wav",
+        "version": 0
+    }
+}

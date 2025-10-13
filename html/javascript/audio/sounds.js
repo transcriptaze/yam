@@ -1,5 +1,13 @@
 import * as DB from '../db.js'
 
+const SOUNDS = [
+  'audio/default/tick.wav',
+  'audio/default/tock.wav',
+  'audio/default/tack.wav',
+  'audio/default/stick.wav',
+  'audio/default/ding.wav',
+]
+
 const GET = {
   method: 'GET',
   mode: 'cors',
@@ -12,8 +20,16 @@ const GET = {
   },
 }
 
-export function get(ctx, ...sounds) {
-  return Promise.all(sounds.map((sound) => _get(ctx, sound)))
+export function get(ctx) {
+  const promise = Promise.all(SOUNDS.map((sound) => _get(ctx, sound)))
+
+  promise.then(() => {
+    _update(ctx).catch((err) => {
+      console.warn(`background update error ${err}`)
+    })
+  })
+
+  return promise
 }
 
 function _get(ctx, sound) {
@@ -21,7 +37,7 @@ function _get(ctx, sound) {
     return DB.click(ctx, sound)
   } else {
     return new Promise((resolve, reject) => {
-      fetch(`../audio/${sound}.wav`, GET)
+      fetch(`../${sound}`, GET)
         .then((response) => {
           if (response.ok) {
             return response.blob()
@@ -35,4 +51,20 @@ function _get(ctx, sound) {
         .catch(reject)
     })
   }
+}
+
+function _update(_ctx) {
+  return new Promise(() => {
+    fetch(`../audio/samples.json`, GET)
+      .then((response) => {
+        if (response.ok) {
+          return response.json()
+        } else {
+          throw new Error(response.statusText)
+        }
+      })
+      .then((json) => {
+        console.log(json)
+      })
+  })
 }

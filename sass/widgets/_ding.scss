@@ -1,5 +1,5 @@
-:host(.component-loop) {
-  div.loop {
+:host(.component-ding) {
+  div.ding {
     box-sizing: border-box;
     height: 100%;
 
@@ -14,9 +14,10 @@
       grid-column: 1;
       grid-row: 1;
 
-      width: 64px;
+      width: 48px;
       height: 40px;
-      background: url('/images/loop.svg') no-repeat right center / contain;
+      background: url('/images/ding.svg') no-repeat center / contain;
+      background-size: 70% 70%;
       filter: invert(25%) sepia(25%) saturate(8%) hue-rotate(3deg) brightness(99%) contrast(99%);
     }
 
@@ -30,33 +31,13 @@
       height: 0;
     }
 
-    input[type="checkbox"][data-loops="1"]:checked + label {
-       background-image: url('/images/loop-1.svg');
-    }
-
-    input[type="checkbox"][data-loops="2"]:checked + label {
-       background-image: url('/images/loop-2x.svg');
-    }
-
-    input[type="checkbox"][data-loops="3"]:checked + label {
-       background-image: url('/images/loop-3.svg');
-    }
-
-    input[type="checkbox"][data-loops="4"]:checked + label {
-       background-image: url('/images/loop-4.svg');
-    }
-
-    input[type="checkbox"][data-loops="5"]:checked + label {
-       background-image: url('/images/loop-5.svg');
-    }
-
     input[type="checkbox"]:checked + label {
       filter: invert(22%) sepia(45%) saturate(3580%) hue-rotate(357deg) brightness(101%) contrast(95%);
     }
 
     input[type="checkbox"]:disabled + label {
       filter: grayscale(40%) opacity(40%);
-      background-iamge: url('/images/loop.svg');
+      background-image: url('/images/ding.svg');
     }
 
     input[type="checkbox"] {

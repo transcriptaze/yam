@@ -699,6 +699,14 @@ div.metronome div.metrics yam-loop {
   box-sizing: border-box;
   grid-column: 6;
   grid-row: 1;
+  justify-self: end;
+  height: 100%;
+  outline: none;
+}
+div.metronome div.metrics yam-ding {
+  box-sizing: border-box;
+  grid-column: 7;
+  grid-row: 1;
   justify-self: start;
   height: 100%;
   outline: none;

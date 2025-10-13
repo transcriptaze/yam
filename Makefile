@@ -33,11 +33,11 @@ build-all: test vet lint
 rollup:
 	npm run package
 
-release: build-all
+release: build-all rollup
 	rm -rf dist/yam
 	mkdir -p dist/yam
-	rsync -av --exclude='**/.DS_Store' ./httpd.* dist/yam
-	rsync -av --exclude='**/.DS_Store' ./html/   dist/yam/html
+	rsync -av --exclude='**/.DS_Store' ./httpd.*      dist/yam
+	rsync -av --exclude='**/.DS_Store' ./dist/rollup  dist/yam/html
 	tar --directory=dist/yam -cvzf dist/yam.tar.gz .
 	cd dist/yam && zip --recurse-paths ../yam.zip .
 
@@ -59,4 +59,5 @@ run: build
 	python3 httpd.py
 
 run-rollup: build
-	python3 rollup.py
+	python3 httpd.py --host='0.0.0.0' --port=8080 --dir='dist/rollup'
+

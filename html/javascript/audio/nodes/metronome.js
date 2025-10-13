@@ -291,16 +291,24 @@ function transmogrify(track) {
     }
   }
 
-  const dings = track.dings.map((v) => v + offset)
+  // ... consolidate dings
+  const dings = track.dings?.map((v) => v + offset) ?? []
 
   sections.forEach((v) => {
-    const list = v.dings?.map((x) => x + v.start - 1)
+    const list = v.dings?.map((x) => x + v.start - 1) ?? []
 
     dings.push(...list)
+
+    v.subsections.forEach((ss) => {
+      const list = ss.dings?.map((x) => x + ss.start - 1) ?? []
+
+      dings.push(...list)
+    })
   })
 
-  dings.sort()
+  dings.sort((p, q) => p - q)
 
+  // ... playable section
   return {
     tempo: track.tempo ?? 120,
     timeSignature: track.timeSignature ?? '',

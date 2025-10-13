@@ -146,6 +146,7 @@ export function* transmogrify(track) {
           pulse: pulse,
           tempo: tempo,
           clicks: _clicks(subsection.clicks) ?? clicks,
+          dings: subsection.dings ?? [],
         })
 
         start += bars

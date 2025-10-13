@@ -645,19 +645,31 @@
                     "role": "anacrusis"
                 },
                 {
-                    "name": "Track Ding (2.3)",
+                    "name": "track dings (2.3)",
                     "role": "other",
                     "measures": 4
                 },
                 {
-                    "name": "Section Ding (2.4)",
+                    "name": "section dings (2.4)",
                     "role": "other",
                     "measures": 4,
                     "timeSignature": "5:4",
-                    "dings": [
-                        2.4
+                    "dings": [ 2.4 ]
+                },
+                {
+                    "name": "sub-section dings (6.2 - 6.4)",
+                    "role": "other",
+                    "timeSignature": "4:4",
+                     "subsections": [
+                        {
+                            "measures": 4
+                        },
+                        {
+                            "measures": 4,
+                            "dings": [ 2.2, 2.3, 2.4 ]
+                        }
                     ]
-                }
+               }
             ],
             "metronome": {
                 "BPM": 80,

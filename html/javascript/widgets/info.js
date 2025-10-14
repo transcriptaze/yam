@@ -50,9 +50,7 @@ export class Info extends HTMLElement {
 
   set track(track) {
     // ... set title
-    if (track != null) {
-      this.title = track.title
-    }
+    this.title = track?.title ?? ''
 
     // ... stash sections
     const sections = transmogrify(track)

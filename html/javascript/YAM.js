@@ -608,22 +608,33 @@ function onPlaylist(e) {
 }
 
 function onTrackDelete(event) {
-  const playlist = event.detail.playlist
+  const playlist = models.playlists.playlist(event.detail.playlist)
   const track = event.detail.track
   const toolbar = document.querySelector('toolbar')
 
-  models.playlists.playlist(playlist)?.remove(track)
-  models.playlists.playlist(playlist)?.save()
+  playlist?.remove(track)
+  playlist?.save()
 
   if (!models.playlists.has(track)) {
     models.tracks.remove(track)
   }
 
-  if (state.playlist === playlist && state.track === track) {
+  if (state.playlist === event.detail.playlist && state.track === track) {
     state.selected = {
-      playlist: playlist,
+      playlist: playlist.UUID,
       track: null,
     }
+
+    widgets.pads.track = null
+    widgets.info.track = null
+    widgets.timeSignature.track = null
+    widgets.mm.track = null
+    widgets.loop.enabled = false
+    widgets.loop.loop = false
+    widgets.loop.loops = INF
+    widgets.ding.track = null
+    widgets.metronome.bof = playlist?.BOF(null) ?? true
+    widgets.metronome.eof = playlist?.EOF(null) ?? true
 
     widgets.editor.track = null
 
@@ -662,6 +673,8 @@ function onSave() {
 
       widgets.playlists.tracklist = models.tracks.tracks
       widgets.editor.track = track
+
+      document.querySelector('toolbar').classList.add('editable')
     }
 
     track.update(object)
@@ -681,6 +694,19 @@ function onSave() {
       playlist: playlist?.UUID,
       track: track?.UUID,
     }
+
+    widgets.pads.track = track
+    widgets.info.track = track
+    widgets.timeSignature.track = track
+    widgets.mm.track = track
+    widgets.loop.enabled = track?.loopable ?? false
+    widgets.loop.loop = track?.loop ?? false
+    widgets.loop.loops = track?.loops ?? INF
+    widgets.ding.track = track
+    widgets.knob.tempo = track?.tempo
+    widgets.knob.BPM = track?.BPM
+    widgets.metronome.bof = playlist?.BOF(track) ?? true
+    widgets.metronome.eof = playlist?.EOF(track) ?? true
 
     widgets.editor.update(track)
     engine.load(track)

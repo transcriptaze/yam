@@ -7,11 +7,10 @@
 *** DONE update worklet track on editor::save
 *** DONE use sample map for metronome constructor
 *** DONE remove Track.addEventListener
+*** DONE updated widgets on new/save track
 
 *** TODO cache engine initialisation
       - can't set BPM, pulse, time-signature, etc during initialisation (i.e. before first play)
-
-*** TODO add new track after select+reset doesn't work
 
 *** TODO track editor
 **** DONE lowlight empty section fields (name, role)

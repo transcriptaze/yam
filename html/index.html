@@ -19,7 +19,7 @@
             <yam-time-signature tabindex="-1" enterkeyhint="done"></yam-time-signature>
             <yam-mm             tabindex="-1" enterkeyhint="done" exportparts="BPM"></yam-mm>
             <yam-loop           tabindex="-1"></yam-loop>
-            <yam-ding           tabindex="-1"></yam-ding>
+            <yam-ding           tabindex="-1" hidden></yam-ding>
           </div>
           <div class="bpm">
             <yam-knob  tabindex="-1"></yam-knob>
@@ -619,7 +619,7 @@
 
     <template id="template-ding">
       <div class="ding">
-        <input id="ding" type="checkbox" disabled />
+        <input id="ding" type="checkbox" />
         <label for="ding"></label>
       </div>
     </template>

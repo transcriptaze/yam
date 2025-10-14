@@ -107,8 +107,12 @@ class Engine {
     return 'quarter'
   }
 
-  set pulse(pulse) {
-    this.metronome.pulse = pulse
+  set pulse(v) {
+    const pulse = parsePulse(`${v}`)
+
+    if (pulse != null) {
+      this.#exec(() => (this.metronome.pulse = pulse))
+    }
   }
 
   set track(track) {
@@ -263,15 +267,16 @@ export function setTimeSignature(v) {
   }
 }
 
-export function setPulse(v) {
-  const pulse = parsePulse(`${v}`)
-
-  if (pulse != null) {
-    Engine.pulse = pulse
-    if (engine.initialised) {
-      exec((e) => (e.pulse = pulse))
-    }
-  }
+export function setPulse(pulse) {
+  engine.pulse = pulse
+  // const pulse = parsePulse(`${v}`)
+  //
+  // if (pulse != null) {
+  //   Engine.pulse = pulse
+  //   if (engine.initialised) {
+  //     exec((e) => (e.pulse = pulse))
+  //   }
+  // }
 }
 
 // NTS: loop set for a track and can only be enabled/disabled after the track has been loaded

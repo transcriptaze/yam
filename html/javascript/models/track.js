@@ -16,7 +16,7 @@ export function create(UUID) {
   return track
 }
 
-export class Track extends EventTarget {
+export class Track {
   #version = VERSION
   #deleted = null
   #modified = false
@@ -30,6 +30,8 @@ export class Track extends EventTarget {
     BPM: 120,
     loop: false,
     loops: INF,
+    ding: false,
+    dings: [],
   }
 
   static clone(track) {
@@ -45,14 +47,13 @@ export class Track extends EventTarget {
         loop: track.loop ?? false,
         loops: track.loops ?? INF,
         clicks: track.clicks,
+        ding: track.ding ?? false,
         dings: track.dings,
       },
     })
   }
 
   constructor(object) {
-    super()
-
     this.UUID = object.UUID ?? ''
     this.#version = VERSION
     this.#deleted = object.deleted ?? null
@@ -67,8 +68,13 @@ export class Track extends EventTarget {
       loop: object.metronome?.loop ?? false,
       loops: object.metronome?.loops ?? INF,
       clicks: object?.metronome?.clicks ?? null,
+      ding: object?.metronome?.ding ?? false,
       dings: object?.metronome?.dings ?? null,
     }
+  }
+
+  addEventListener() {
+    throw new Error('no longer supported')
   }
 
   get object() {
@@ -87,15 +93,13 @@ export class Track extends EventTarget {
         BPM: this.BPM,
         loop: this.loop,
         loops: this.loops,
+        ding: this.ding,
+        dings: this.dings,
       },
     }
 
     if (this.clicks != null) {
       object.metronome.clicks = this.clicks
-    }
-
-    if (this.dings != null) {
-      object.metronome.dings = this.dings
     }
 
     return object
@@ -130,7 +134,7 @@ export class Track extends EventTarget {
   set timeSignature(v) {
     const notify = () => {
       this.#modified = this.title != ''
-      this.dispatchEvent(new Event('modified'))
+      // this.dispatchEvent(new Event('modified'))
     }
 
     if (`${v}` === 'common') {
@@ -163,8 +167,6 @@ export class Track extends EventTarget {
     if (pulse != null) {
       this.#pulse = pulse
       this.#modified = this.title != ''
-
-      this.dispatchEvent(new Event('modified'))
     }
   }
 
@@ -182,8 +184,6 @@ export class Track extends EventTarget {
       if (this.UUID === '') {
         this.#tempo = bpm
       }
-
-      this.dispatchEvent(new Event('modified'))
     }
   }
 
@@ -200,7 +200,6 @@ export class Track extends EventTarget {
 
   set loop(v) {
     this.#metronome.loop = v === true
-    this.dispatchEvent(new Event('modified'))
   }
 
   get loops() {
@@ -211,6 +210,14 @@ export class Track extends EventTarget {
 
   get clicks() {
     return this.#metronome?.clicks
+  }
+
+  get ding() {
+    return this.#metronome?.ding ?? false
+  }
+
+  set ding(v) {
+    this.#metronome.ding = v === true
   }
 
   get dings() {

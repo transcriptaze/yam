@@ -872,7 +872,7 @@ div.beat.on div.shape {
   grid-row: 1;
   width: 64px;
   height: 40px;
-  background: url("/images/loop.svg") no-repeat right center/contain;
+  background: url("/images/loop.svg") no-repeat center center/contain;
   filter: invert(25%) sepia(25%) saturate(8%) hue-rotate(3deg) brightness(99%) contrast(99%);
 }
 :host(.component-loop) div.loop input[type=checkbox] {
@@ -949,6 +949,10 @@ div.beat.on div.shape {
   opacity: 0;
   width: 0;
   height: 0;
+}
+
+:host(.component-ding[hidden]) {
+  display: none;
 }
 
 :host(.component-playlists) div.playlists {

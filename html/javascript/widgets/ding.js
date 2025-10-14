@@ -1,6 +1,8 @@
+import * as datastore from '../datastore/datastore.js'
+
 export class Ding extends HTMLElement {
   static get observedAttributes() {
-    return []
+    return ['hidden']
   }
 
   #handlers = {
@@ -48,15 +50,7 @@ export class Ding extends HTMLElement {
 
   adoptedCallback() {}
 
-  attributeChangedCallback(name, from, to) {
-    if (name === 'disabled') {
-      this.disabled = to != null ? true : false
-    }
-  }
-
-  set enabled(v) {
-    this.shadowRoot.querySelector('input').disabled = v !== true
-  }
+  attributeChangedCallback(_name, _from, _to) {}
 
   get ding() {
     return this.shadowRoot.querySelector('input').checked
@@ -64,6 +58,19 @@ export class Ding extends HTMLElement {
 
   set ding(v) {
     this.shadowRoot.querySelector('input').checked = v === true
+  }
+
+  set track(v) {
+    const track = datastore.tracks.get(v)
+    const dings = track?.dings ?? []
+
+    if (dings.length > 0) {
+      this.removeAttribute('hidden')
+    } else {
+      this.setAttribute('hidden', '')
+    }
+
+    this.ding = track?.ding ?? false
   }
 }
 

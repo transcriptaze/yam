@@ -16,6 +16,7 @@ const widgets = {
   timeSignature: document.querySelector('div.metrics yam-time-signature'),
   mm: document.querySelector('div.metrics yam-mm'),
   loop: document.querySelector('div.metrics yam-loop'),
+  ding: document.querySelector('div.metrics yam-ding'),
   knob: document.querySelector('yam-knob'),
   wheel: document.querySelector('yam-wheel'),
   metronome: document.querySelector('yam-metronome'),
@@ -59,6 +60,9 @@ export function initialise() {
 
   widgets.loop.loop = state.loop
   widgets.loop.loops = INF
+
+  widgets.ding.track = null
+
   widgets.knob.BPM = state.BPM
   widgets.knob.tempo = null
 
@@ -262,6 +266,8 @@ export function load() {
       widgets.mm.BPM = state.BPM
       widgets.mm.timeSignature = state.timeSignature
       widgets.mm.track = null
+
+      widgets.ding.track = null
 
       widgets.playlists.selected = {
         playlist: DEFAULT.UUID,
@@ -566,6 +572,8 @@ function onSelected(event) {
   widgets.loop.enabled = track?.loopable ?? false
   widgets.loop.loop = track?.loop ?? false
   widgets.loop.loops = track?.loops ?? INF
+
+  widgets.ding.track = track
 
   widgets.knob.tempo = track?.tempo
   widgets.knob.BPM = track?.BPM

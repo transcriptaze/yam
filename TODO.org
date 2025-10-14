@@ -6,9 +6,12 @@
 *** DONE wait for metronome to start before enabling 'stop' (confusing double click)
 *** DONE update worklet track on editor::save
 *** DONE use sample map for metronome constructor
+*** DONE remove Track.addEventListener
 
 *** TODO cache engine initialisation
       - can't set BPM, pulse, time-signature, etc during initialisation (i.e. before first play)
+
+*** TODO add new track after select+reset doesn't work
 
 *** TODO track editor
 **** DONE lowlight empty section fields (name, role)
@@ -66,7 +69,6 @@
 
 *** TODO 'change' events should all be CustomEvents
 *** TODO web components: bubble events
-*** TODO remove Track.addEventListener
 *** TODO web-component box-sizing fixes
 *** TODO playlist: fade-out top and bottom of scrollable list
 *** TODO models.playlist CRUD interface
@@ -368,6 +370,7 @@
       - wind up clock spring before you can use it
       - 3D printed with layer lines + dimensionally inaccurate controls
       - left-handed day (everything reversed including ticks i.e. tock-tock-tock-tick)
+      - https://www.youtube.com/watch?v=-OG87X6XSWU
 
 *** Pi day
       - 3.1418:4 time

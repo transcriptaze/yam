@@ -48,3 +48,6 @@
   }
 }
 
+:host(.component-ding[hidden]) {
+   display: none;
+}

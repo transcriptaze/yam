@@ -135,6 +135,12 @@ class Engine {
     }
   }
 
+  set ding(ding) {
+    if (this.initialised) {
+      this.metronome.ding = ding
+    }
+  }
+
   get playing() {
     if (this.initialised) {
       return this.metronome.playing ?? false
@@ -282,10 +288,16 @@ export function setPulse(pulse) {
   engine.pulse = pulse
 }
 
-// NTS: loop set for a track and can only be enabled/disabled after the track has been loaded
+// NTS: 'loop' for a track and can only be enabled/disabled after the track has been loaded
 //      i.e. no point adding to the metronome initialisation
 export function setLoop(v) {
   engine.loop = v === true
+}
+
+// NTS: 'ding' for a track and can only be enabled/disabled after the track has been loaded
+//      i.e. no point adding to the metronome initialisation
+export function setDing(v) {
+  engine.ding = v === true
 }
 
 export function play() {

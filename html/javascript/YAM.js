@@ -360,6 +360,7 @@ function rewire() {
   timeSignature.addEventListener('change', (e) => onTimeSignature(e))
   widgets.mm.addEventListener('change', (e) => onMM(e))
   widgets.loop.addEventListener('change', (e) => onLoop(e))
+  widgets.ding.addEventListener('change', (e) => onDing(e))
 
   knob.addEventListener('change', () => onKnob(false))
   knob.addEventListener('changed', () => onKnob(true))
@@ -451,6 +452,12 @@ function onLoop(event) {
   state.loop = event.detail.loop
 
   engine.setLoop(state.loop)
+}
+
+function onDing(event) {
+  state.ding = event.detail.ding
+
+  engine.setDing(state.ding)
 }
 
 function onKnob(save) {

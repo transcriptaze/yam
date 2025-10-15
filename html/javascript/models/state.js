@@ -9,6 +9,7 @@ class State extends EventTarget {
   #timeSignature = '4:4'
   #pulse = 'quarter'
   #loop = false
+  #ding = false
   #modified = false
 
   #wakelock = {
@@ -27,6 +28,7 @@ class State extends EventTarget {
     this.#timeSignature = settings.timeSignature ?? '4:4'
     this.#pulse = settings.pulse ?? 'quarter'
     this.#loop = false
+    this.#ding = false
   }
 
   get modified() {
@@ -90,6 +92,21 @@ class State extends EventTarget {
 
   set loop(v) {
     this.#loop = v === true
+
+    // NTS: DO NOT reset to false
+    if (this.track !== '') {
+      this.#modified = true
+    }
+
+    this.dispatchEvent(new CustomEvent('change', { detail: {} }))
+  }
+
+  get ding() {
+    return this.#ding
+  }
+
+  set ding(v) {
+    this.#ding = v === true
 
     // NTS: DO NOT reset to false
     if (this.track !== '') {

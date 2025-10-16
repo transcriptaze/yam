@@ -61,6 +61,7 @@ export function initialise() {
   widgets.loop.loop = state.loop
   widgets.loop.loops = INF
 
+  widgets.ding.ding = state.ding
   widgets.ding.track = null
 
   widgets.knob.BPM = state.BPM
@@ -657,6 +658,7 @@ function onSave() {
       timeSignature: state.timeSignature,
       pulse: state.pulse,
       loop: state.loop,
+      ding: state.ding,
     }
 
     let track = models.tracks.track(state.track)

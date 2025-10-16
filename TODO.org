@@ -12,6 +12,7 @@
 
 *** TODO cache engine initialisation
       - can't set BPM, pulse, time-signature, etc during initialisation (i.e. before first play)
+      - check node/worklet initialisation for 'null' track 
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** TODO expand single section

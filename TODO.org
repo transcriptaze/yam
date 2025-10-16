@@ -16,7 +16,6 @@
 *** TODO track editor
 **** DONE lowlight empty section fields (name, role)
 **** DONE don't lowlight = if both pulse and BPM are default
-**** TODO toggle measures input between header and subsections
 **** TODO display subsections
 **** TODO slide in on initialisation
 **** TODO enable editor save iff changed
@@ -28,7 +27,6 @@
 **** DONE ding enable/disable icon
 **** DONE sort dings by measure/beat
 **** TODO (?) replace click with ding rather than play simultaneously
-**** TODO (?) remove ding from list when played
 
 *** TODO clicks
 **** TODO generate clicks for count-in

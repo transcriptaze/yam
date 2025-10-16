@@ -121,12 +121,17 @@ Everything in this repository is licensed under [GPL-3.0](https://github.com/tra
    - Stylish Tiny Intertface Icons
    - Robin Kylander
 
-6. Bravura SMUFL font
+6. Warning icon
+   - [SVGRepo](https://www.svgrepo.com/svg/327593/warning)
+   - [MIT](https://www.svgrepo.com/page/licensing)
+   - Ionicons
+
+7. Bravura SMUFL font
    - [Bravura](https://github.com/steinbergmedia/bravura)
    - [SIL Open Font License 1.1](https://openfontlicense.org)
    - [Steinberg](https://www.steinberg.net)
 
-7. Lato font
+8. Lato font
    - [Lato Fonts](https://www.latofonts.com)
    - [SIL Open Font License 1.1](https://openfontlicense.org)
 

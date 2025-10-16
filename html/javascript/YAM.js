@@ -718,7 +718,9 @@ function onSave() {
     widgets.metronome.eof = playlist?.EOF(track) ?? true
 
     widgets.editor.update(track)
-    engine.load(track)
+
+    // NTS: don't reload engine - presumably the widgets have already updated it
+    // engine.load(track)
   } catch (err) {
     onError(err)
   }

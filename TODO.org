@@ -8,11 +8,10 @@
 *** DONE use sample map for metronome constructor
 *** DONE remove Track.addEventListener
 *** DONE updated widgets on new/save track
+*** DONE save while playing resets track
 
 *** TODO cache engine initialisation
       - can't set BPM, pulse, time-signature, etc during initialisation (i.e. before first play)
-
-*** TODO save while playing resets track
 
 *** TODO track editor
 **** DONE lowlight empty section fields (name, role)
@@ -27,9 +26,9 @@
 *** TODO 'dings' (cf. https://github.com/transcriptaze/yam/issues/9)
 **** TODO better ding sample
 **** DONE ding enable/disable icon
+**** DONE sort dings by measure/beat
 **** TODO (?) replace click with ding rather than play simultaneously
-**** TODO optimize: schedule dings on load/start and remove from list when played
-**** TODO optimize: sort scheduled dings by measure/beat
+**** TODO (?) remove ding from list when played
 
 *** TODO clicks
 **** TODO generate clicks for count-in

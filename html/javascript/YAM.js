@@ -61,6 +61,7 @@ export function initialise() {
   widgets.loop.loop = state.loop
   widgets.loop.loops = INF
 
+  widgets.ding.ding = state.ding
   widgets.ding.track = null
 
   widgets.knob.BPM = state.BPM
@@ -360,6 +361,7 @@ function rewire() {
   timeSignature.addEventListener('change', (e) => onTimeSignature(e))
   widgets.mm.addEventListener('change', (e) => onMM(e))
   widgets.loop.addEventListener('change', (e) => onLoop(e))
+  widgets.ding.addEventListener('change', (e) => onDing(e))
 
   knob.addEventListener('change', () => onKnob(false))
   knob.addEventListener('changed', () => onKnob(true))
@@ -451,6 +453,12 @@ function onLoop(event) {
   state.loop = event.detail.loop
 
   engine.setLoop(state.loop)
+}
+
+function onDing(event) {
+  state.ding = event.detail.ding
+
+  engine.setDing(state.ding)
 }
 
 function onKnob(save) {
@@ -650,6 +658,7 @@ function onSave() {
       timeSignature: state.timeSignature,
       pulse: state.pulse,
       loop: state.loop,
+      ding: state.ding,
     }
 
     let track = models.tracks.track(state.track)
@@ -709,7 +718,9 @@ function onSave() {
     widgets.metronome.eof = playlist?.EOF(track) ?? true
 
     widgets.editor.update(track)
-    engine.load(track)
+
+    // NTS: don't reload engine - presumably the widgets have already updated it
+    // engine.load(track)
   } catch (err) {
     onError(err)
   }

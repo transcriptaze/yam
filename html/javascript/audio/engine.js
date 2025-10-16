@@ -95,8 +95,18 @@ class Engine {
     }
   }
 
-  set timeSignature(signature) {
-    this.metronome.timeSignature = signature
+  set timeSignature(v) {
+    const { beats, divisions } = parseTimeSignature(`${v}`)
+
+    if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
+      this.#exec(
+        () =>
+          (this.metronome.timeSignature = {
+            beats: beats,
+            divisions: divisions,
+          }),
+      )
+    }
   }
 
   get pulse() {
@@ -122,6 +132,12 @@ class Engine {
   set loop(loop) {
     if (this.initialised) {
       this.metronome.loop = loop
+    }
+  }
+
+  set ding(ding) {
+    if (this.initialised) {
+      this.metronome.ding = ding
     }
   }
 
@@ -246,43 +262,42 @@ export function setBPM(BPM) {
   engine.BPM = BPM
 }
 
-export function setTimeSignature(v) {
-  const { beats, divisions } = parseTimeSignature(`${v}`)
-
-  if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
-    Engine.timeSignature = {
-      beats: beats,
-      divisions: divisions,
-    }
-
-    if (engine.initialised) {
-      exec(
-        (e) =>
-          (e.timeSignature = {
-            beats: beats,
-            divisions: divisions,
-          }),
-      )
-    }
-  }
-}
-
-export function setPulse(pulse) {
-  engine.pulse = pulse
-  // const pulse = parsePulse(`${v}`)
+export function setTimeSignature(timeSignature) {
+  engine.timeSignature = timeSignature
+  // const { beats, divisions } = parseTimeSignature(`${v}`)
   //
-  // if (pulse != null) {
-  //   Engine.pulse = pulse
+  // if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
+  //   Engine.timeSignature = {
+  //     beats: beats,
+  //     divisions: divisions,
+  //   }
+  //
   //   if (engine.initialised) {
-  //     exec((e) => (e.pulse = pulse))
+  //     exec(
+  //       (e) =>
+  //         (e.timeSignature = {
+  //           beats: beats,
+  //           divisions: divisions,
+  //         }),
+  //     )
   //   }
   // }
 }
 
-// NTS: loop set for a track and can only be enabled/disabled after the track has been loaded
+export function setPulse(pulse) {
+  engine.pulse = pulse
+}
+
+// NTS: 'loop' for a track and can only be enabled/disabled after the track has been loaded
 //      i.e. no point adding to the metronome initialisation
 export function setLoop(v) {
   engine.loop = v === true
+}
+
+// NTS: 'ding' for a track and can only be enabled/disabled after the track has been loaded
+//      i.e. no point adding to the metronome initialisation
+export function setDing(v) {
+  engine.ding = v === true
 }
 
 export function play() {
@@ -297,26 +312,26 @@ export function toggle() {
   engine.toggle()
 }
 
-function exec(f) {
-  audioContext ??= new AudioContext()
-
-  return audioContext
-    .resume()
-    .then(() => {
-      if (engine.initialised) {
-        return engine
-      } else {
-        return sounds
-          .get(audioContext)
-          .then(([tick, tock, tack, stick]) => {
-            return metronome(audioContext, { tick, tock, tack, stick })
-          })
-          .then((m) => engine.init(audioContext, m))
-      }
-    })
-    .then((engine) => f(engine))
-    .catch(console.error)
-}
+// function exec(f) {
+//   audioContext ??= new AudioContext()
+//
+//   return audioContext
+//     .resume()
+//     .then(() => {
+//       if (engine.initialised) {
+//         return engine
+//       } else {
+//         return sounds
+//           .get(audioContext)
+//           .then(([tick, tock, tack, stick]) => {
+//             return metronome(audioContext, { tick, tock, tack, stick })
+//           })
+//           .then((m) => engine.init(audioContext, m))
+//       }
+//     })
+//     .then((engine) => f(engine))
+//     .catch(console.error)
+// }
 
 function metronome(ctx, sounds) {
   return ctx.audioWorklet.addModule('./javascript/audio/worklets/worklet.js').then(() => new nodes.MetronomeNode(ctx, sounds, subscribers))

@@ -8,16 +8,7 @@ export class Ding extends HTMLElement {
   #handlers = {
     checkbox: {
       change: (e) => {
-        console.log(e)
-        // this.dispatchEvent(
-        //   new CustomEvent('change', {
-        //     bubbles: true,
-        //     composed: true,
-        //     detail: {
-        //       loop: e.target.checked,
-        //     },
-        //   }),
-        // )
+        this.dispatchEvent(new CustomEvent('change', { bubbles: true, composed: true, detail: { ding: e.target.checked } }))
       },
     },
   }

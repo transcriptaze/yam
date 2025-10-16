@@ -73,6 +73,13 @@ export class Metronome extends AudioWorkletProcessor {
         maxValue: 1,
         automationRate: 'k-rate',
       },
+      {
+        name: 'ding',
+        defaultValue: 0,
+        minValue: 0,
+        maxValue: 1,
+        automationRate: 'k-rate',
+      },
     ]
   }
 
@@ -218,7 +225,8 @@ export class Metronome extends AudioWorkletProcessor {
     const tactus = this.section?.beats ?? clamp(parameters.beats[0], 1, 32)
     const figura = this.section?.divisions ?? clamp(parameters.divisions[0], 1, 32)
     const pulse = this.section?.pulse ?? parameters.pulse[0]
-    const loop = parameters.loop[0]
+    const loop = parameters.loop[0] === 1.0
+    const ding = parameters.ding[0] === 1.0
     const gain = this.playing ? this.level.fadeIn() : this.level.fadeOut()
     let clock = this.clock
 
@@ -282,10 +290,10 @@ export class Metronome extends AudioWorkletProcessor {
           const dings = this.#track?.dings ?? []
 
           // console.log('>>>', dings, playhead, dings.includes(playhead))
-          if (dings.includes(playhead)) {
-            const ding = this.clicks.get('ding')
-            if (ding != null) {
-              this.#cued.push(sample(ding))
+          if (ding && dings.includes(playhead)) {
+            const ting = this.clicks.get('ding')
+            if (ting != null) {
+              this.#cued.push(sample(ting))
             }
           }
 

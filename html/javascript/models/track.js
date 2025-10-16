@@ -286,6 +286,7 @@ export class Track {
     this.#metronome.BPM = object?.BPM ?? this.#metronome.BPM
     this.#metronome.loop = object?.loop ?? this.#metronome.loop
     this.#metronome.loops = object?.loops ?? this.#metronome.loops
+    this.#metronome.ding = object?.ding ?? this.#metronome.ding
 
     const sections = object?.sections ?? []
     const updated = sections.filter((v, i) => i < this.#sections.length)

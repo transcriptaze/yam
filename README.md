@@ -126,12 +126,22 @@ Everything in this repository is licensed under [GPL-3.0](https://github.com/tra
    - [MIT](https://www.svgrepo.com/page/licensing)
    - Ionicons
 
-7. Bravura SMUFL font
+7. Section expand icon
+   - [SVGRepo](https://www.svgrepo.com/svg/458664/expand-right)
+   - [CC Attribution License](https://www.svgrepo.com/page/licensing)
+   - Leonid Tsvetkov
+
+8. Section collapse icon
+   - [SVGRepo](https://www.svgrepo.com/svg/458657/expand-down)
+   - [CC Attribution License](https://www.svgrepo.com/page/licensing)
+   - Leonid Tsvetkov
+
+9. Bravura SMUFL font
    - [Bravura](https://github.com/steinbergmedia/bravura)
    - [SIL Open Font License 1.1](https://openfontlicense.org)
    - [Steinberg](https://www.steinberg.net)
 
-8. Lato font
+10. Lato font
    - [Lato Fonts](https://www.latofonts.com)
    - [SIL Open Font License 1.1](https://openfontlicense.org)
 

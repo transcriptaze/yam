@@ -14,6 +14,15 @@
       - can't set BPM, pulse, time-signature, etc during initialisation (i.e. before first play)
       - check node/worklet initialisation for 'null' track 
 
+*** TODO fix
+```
+playlist.js:674 Uncaught (in promise) TypeError: Cannot read properties of null (reading 'findIndex')
+    at playlist.js:674:38
+(anonymous) @     playlist.js:674
+Promise.then            
+#dragover   @     playlist.js:670
+```
+
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** TODO expand single section
       - hover >> arrow maybe (doesn't work on mobile)

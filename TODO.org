@@ -13,14 +13,12 @@
 *** TODO cache engine initialisation
       - can't set BPM, pulse, time-signature, etc during initialisation (i.e. before first play)
 
-*** TODO track editor
-**** DONE lowlight empty section fields (name, role)
-**** DONE don't lowlight = if both pulse and BPM are default
-**** TODO display subsections
-**** TODO slide in on initialisation
-**** TODO enable editor save iff changed
+*** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** TODO expand single section
       - hover >> arrow maybe (doesn't work on mobile)
+**** TODO slide in on initialisation
+**** TODO enable editor save iff changed
+**** TODO display subsections
 
 *** TODO 'dings' (cf. https://github.com/transcriptaze/yam/issues/9)
 **** TODO better ding sample

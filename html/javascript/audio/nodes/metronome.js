@@ -326,6 +326,7 @@ function transmogrify(track) {
     loop: track.loop,
     loops: track.loops ?? INF,
     clicks: generators.clicks(track.clicks),
+    ding: track.ding ?? false,
     dings: dings.map((v) => `${v}`),
     delay: clamp(durationToMS(delay), 0, 5000),
 

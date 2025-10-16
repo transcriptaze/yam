@@ -1,6 +1,6 @@
 import * as nodes from './nodes/nodes.js'
 import * as sounds from './sounds.js'
-import { parseTimeSignature, parsePulse } from '../util.js'
+import { parsePulse } from '../util.js'
 
 const AudioContext = window.AudioContext || window.webkitAudioContext
 
@@ -95,17 +95,9 @@ class Engine {
     }
   }
 
-  set timeSignature(v) {
-    const { beats, divisions } = parseTimeSignature(`${v}`)
-
-    if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
-      this.#exec(
-        () =>
-          (this.metronome.timeSignature = {
-            beats: beats,
-            divisions: divisions,
-          }),
-      )
+  set timeSignature(timeSignature) {
+    if (timeSignature != null) {
+      this.#exec(() => (this.metronome.timeSignature = timeSignature))
     }
   }
 
@@ -249,12 +241,6 @@ export function debug(debug) {
 }
 
 export function load(track) {
-  if (track != null) {
-    setBPM(track.BPM)
-    setTimeSignature(track.timeSignature)
-    setPulse(track.pulse)
-  }
-
   engine.track = track
 }
 
@@ -264,24 +250,6 @@ export function setBPM(BPM) {
 
 export function setTimeSignature(timeSignature) {
   engine.timeSignature = timeSignature
-  // const { beats, divisions } = parseTimeSignature(`${v}`)
-  //
-  // if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
-  //   Engine.timeSignature = {
-  //     beats: beats,
-  //     divisions: divisions,
-  //   }
-  //
-  //   if (engine.initialised) {
-  //     exec(
-  //       (e) =>
-  //         (e.timeSignature = {
-  //           beats: beats,
-  //           divisions: divisions,
-  //         }),
-  //     )
-  //   }
-  // }
 }
 
 export function setPulse(pulse) {
@@ -311,27 +279,6 @@ export function stop() {
 export function toggle() {
   engine.toggle()
 }
-
-// function exec(f) {
-//   audioContext ??= new AudioContext()
-//
-//   return audioContext
-//     .resume()
-//     .then(() => {
-//       if (engine.initialised) {
-//         return engine
-//       } else {
-//         return sounds
-//           .get(audioContext)
-//           .then(([tick, tock, tack, stick]) => {
-//             return metronome(audioContext, { tick, tock, tack, stick })
-//           })
-//           .then((m) => engine.init(audioContext, m))
-//       }
-//     })
-//     .then((engine) => f(engine))
-//     .catch(console.error)
-// }
 
 function metronome(ctx, sounds) {
   return ctx.audioWorklet.addModule('./javascript/audio/worklets/worklet.js').then(() => new nodes.MetronomeNode(ctx, sounds, subscribers))

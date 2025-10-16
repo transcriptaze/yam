@@ -106,25 +106,30 @@ export class MetronomeNode extends AudioWorkletNode {
   }
 
   set BPM(bpm) {
-    const ctx = this.context
-
-    this.parameters.get('BPM').linearRampToValueAtTime(bpm, ctx.currentTime + 0.5)
-  }
-
-  set pulse(pulse) {
-    const ctx = this.context
-    const k = PULSE.pulseToInt(pulse)
-
-    if (!Number.isNaN(k)) {
-      this.parameters.get('pulse').setValueAtTime(k, ctx.currentTime)
+    if (bpm != null) {
+      this.parameters.get('BPM').linearRampToValueAtTime(bpm, this.context.currentTime + 0.5)
     }
   }
 
-  set timeSignature({ beats, divisions }) {
-    const ctx = this.context
+  set pulse(pulse) {
+    if (pulse != null) {
+      const k = PULSE.pulseToInt(pulse)
 
-    this.parameters.get('beats').setValueAtTime(beats, ctx.currentTime)
-    this.parameters.get('divisions').setValueAtTime(divisions, ctx.currentTime)
+      if (!Number.isNaN(k)) {
+        this.parameters.get('pulse').setValueAtTime(k, this.context.currentTime)
+      }
+    }
+  }
+
+  set timeSignature(timeSignature) {
+    if (timeSignature != null) {
+      const { beats, divisions } = parseTimeSignature(timeSignature)
+
+      if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
+        this.parameters.get('beats').setValueAtTime(beats, this.context.currentTime)
+        this.parameters.get('divisions').setValueAtTime(divisions, this.context.currentTime)
+      }
+    }
   }
 
   set track(v) {
@@ -135,6 +140,7 @@ export class MetronomeNode extends AudioWorkletNode {
       BPM: v?.BPM,
       loops: v?.loops ?? INF,
       clicks: v?.clicks ?? null,
+      ding: v?.ding ?? false,
       dings: v?.dings ?? [],
       sections: v?.sections ?? [],
     })
@@ -164,6 +170,10 @@ export class MetronomeNode extends AudioWorkletNode {
     const loop = v?.loop ?? false
     const dings = v?.dings ?? []
     const ding = v?.ding ?? false
+
+    this.timeSignature = track.timeSignature
+    this.pulse = track.pulse
+    this.BPM = track.BPM
 
     this.parameters.get('loop').setValueAtTime(loopable && loop ? 1 : 0, ctx.currentTime)
     this.parameters.get('ding').setValueAtTime(dings.length > 0 && ding ? 1 : 0, ctx.currentTime)

@@ -1,7 +1,6 @@
 import * as FSM from './FSM.js'
 import * as level from './level.js'
 import { Clock } from './clock.js'
-import { State, BUFFERSIZE } from '../shared/state.js'
 import { DOTTED_QUARTER } from '../shared/constants.js'
 
 const INF = Number.POSITIVE_INFINITY
@@ -27,7 +26,6 @@ export class Metronome extends AudioWorkletProcessor {
   constructor() {
     super()
 
-    this.state = new State(new ArrayBuffer(BUFFERSIZE))
     this.FSM = new FSM.FSM()
     this.level = new level.Level()
     this.clicks = new Map()
@@ -124,7 +122,6 @@ export class Metronome extends AudioWorkletProcessor {
     const sticks = event.data.stick
     const ding = event.data.ding
 
-    this.state = new State(event.data.state)
     this.fs = event.data.fs
     this.clock.fs = event.data.fs
     this.level.sampleRate = event.data.fs
@@ -142,7 +139,6 @@ export class Metronome extends AudioWorkletProcessor {
       [4, tock],
     ])
 
-    this.state.reset()
     this.FSM.onStart()
   }
 
@@ -210,13 +206,13 @@ export class Metronome extends AudioWorkletProcessor {
 
   #bpm(BPM) {
     const tempo = this.#track?.tempo ?? null
-    const bpm = this.section?.BPM ?? null
+    const bpm = this.section?.tempo ?? null
 
     if (tempo != null && bpm != null) {
       return (bpm * BPM) / tempo
     }
 
-    return this.section?.BPM ?? BPM
+    return this.section?.tempo ?? BPM
   }
 
   process(_inputs, outputs, parameters) {
@@ -235,7 +231,7 @@ export class Metronome extends AudioWorkletProcessor {
       if (clock.time >= 250) {
         if (this.FSM.on250ms()) {
           clock.reset()
-          this.flip(FSM.STATE.PLAYING, null, 0, 0, this.#loops, parameters)
+          this.flip(FSM.STATE.PLAYING, null, 0, 0, this.#loops)
           this.port.postMessage({
             message: 'playing',
           })
@@ -413,26 +409,15 @@ export class Metronome extends AudioWorkletProcessor {
     }
   }
 
-  flip(state, section, bar, beat, loops, parameters) {
-    this.state.state = state
-    this.state.section = section?.ID ?? 0
-    this.state.bar = bar
-    this.state.beat = beat
-    this.state.loops = loops
-
-    if (section != null) {
-      this.state.beats = section?.beats ?? clamp(parameters.beats[0], 1, 32)
-      this.state.divisions = section?.divisions ?? clamp(parameters.divisions[0], 0.125, 0.75)
-      this.state.pulse = section?.pulse ?? this.track?.pulse
-    } else {
-      this.state.beats = this.track?.beats ?? clamp(parameters.beats[0], 1, 32)
-      this.state.divisions = this.track?.divisions ?? clamp(parameters.divisions[0], 0.125, 0.75)
-      this.state.pulse = parameters.pulse[0]
-    }
-
-    this.state.flip()
+  flip(state, section, bar, beat, loops) {
     this.port.postMessage({
       message: 'flipped',
+
+      state: state,
+      section: section?.ID ?? 0,
+      bar: bar,
+      beat: beat,
+      loops: loops,
     })
   }
 }

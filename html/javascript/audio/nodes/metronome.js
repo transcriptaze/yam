@@ -1,4 +1,3 @@
-import { State, BUFFERSIZE } from '../shared/state.js'
 import * as PULSE from '../shared/constants.js'
 import { parseTimeSignature, durationToMS, clamp } from '../../util.js'
 import * as generators from '../../generators.js'
@@ -15,7 +14,6 @@ const STATE = {
 const INF = Number.POSITIVE_INFINITY
 
 export class MetronomeNode extends AudioWorkletNode {
-  #state = null
   #loops = INF
   #sections = new Map()
 
@@ -25,9 +23,6 @@ export class MetronomeNode extends AudioWorkletNode {
     section: 0,
     bar: 0,
     beat: 0,
-    beats: 4,
-    divisions: 4,
-    pulse: 'quarter',
     loops: 0,
   }
 
@@ -41,17 +36,11 @@ export class MetronomeNode extends AudioWorkletNode {
     this.subscribers = subscribers
     this.port.onmessage = this.onMessage.bind(this)
 
-    // ... initialise shared state
-    const buffer = new SharedArrayBuffer(BUFFERSIZE)
-
-    this.#state = new State(buffer)
-
     // ... initialise worklet
     this.port.postMessage({
       message: 'initialise',
 
       fs: context.sampleRate,
-      state: buffer,
       tick: sample(tick),
       tock: sample(tock),
       tack: sample(tack),
@@ -75,7 +64,7 @@ export class MetronomeNode extends AudioWorkletNode {
         break
 
       case 'flipped':
-        this.#flipped(this.#state)
+        this.#flipped(event.data)
         break
     }
   }
@@ -190,7 +179,6 @@ export class MetronomeNode extends AudioWorkletNode {
   }
 
   set ding(ding) {
-    console.log('>>>>>>>>> set::ding', ding)
     const ctx = this.context
 
     this.parameters.get('ding').setValueAtTime(ding ? 1 : 0, ctx.currentTime)
@@ -232,18 +220,6 @@ export class MetronomeNode extends AudioWorkletNode {
     return this.#cache.beat
   }
 
-  get beats() {
-    return this.#cache.beats
-  }
-
-  get divisions() {
-    return this.#cache.divisions
-  }
-
-  get pulse() {
-    return this.#cache.pulse
-  }
-
   get loops() {
     return {
       loops: this.#loops,
@@ -251,16 +227,13 @@ export class MetronomeNode extends AudioWorkletNode {
     }
   }
 
-  #flipped(state) {
-    this.#cache.playing = state.state === STATE.PLAYING
-    this.#cache.stopped = state.state === STATE.STOPPED
-    this.#cache.section = state.section
-    this.#cache.bar = state.bar
-    this.#cache.beat = state.beat
-    this.#cache.beats = state.beats
-    this.#cache.divisions = state.divisions
-    this.#cache.pulse = PULSE.get(state.pulse)?.name ?? ''
-    this.#cache.loops = state.loops
+  #flipped(msg) {
+    this.#cache.playing = msg.state === STATE.PLAYING
+    this.#cache.stopped = msg.state === STATE.STOPPED
+    this.#cache.section = msg.section
+    this.#cache.bar = msg.bar
+    this.#cache.beat = msg.beat
+    this.#cache.loops = msg.loops
   }
 }
 

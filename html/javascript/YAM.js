@@ -1,7 +1,7 @@
-import * as engine from './audio/engine.js'
+import { engine } from './audio/engine.js'
 import * as models from './models/models.js'
 import * as fs from './fs.js'
-import { state } from './models/state.js'
+import { state } from './state.js'
 import { settings } from './settings.js'
 import * as log from './log.js'
 import { DEFAULT, INF } from './constants.js'
@@ -41,9 +41,9 @@ export function initialise() {
   // ... restore session
   settings.restore()
 
-  engine.setBPM(settings.BPM)
-  engine.setTimeSignature(settings.timeSignature)
-  engine.setPulse(settings.pulse)
+  engine.BPM = settings.BPM
+  engine.timeSignature = settings.timeSignature
+  engine.pulse = settings.pulse
 
   state.initialise(settings)
 
@@ -149,9 +149,9 @@ export function reset() {
     widgets.knob.BPM = state.BPM
     widgets.wheel.BPM = state.BPM
 
-    engine.setTimeSignature(state.timeSignature)
-    engine.setPulse(state.pulse)
-    engine.setBPM(state.BPM)
+    engine.timeSignature = state.timeSignature
+    engine.pulse = state.pulse
+    engine.BPM = state.BPM
   }
 
   // ... revert selected track changes
@@ -275,10 +275,9 @@ export function load() {
         track: null,
       }
 
-      widgets.editor.track = null
-
       engine.stop()
-      engine.load(null)
+      engine.track = null
+      widgets.editor.track = null
     }
   }
 
@@ -348,7 +347,7 @@ export async function toggleWakeLock() {
 export function debug() {
   DEBUG = !DEBUG
 
-  engine.debug(DEBUG)
+  engine.debug = DEBUG
 }
 
 // wire up event handlers
@@ -420,7 +419,7 @@ function onTimeSignature() {
   state.timeSignature = timeSignature
   widgets.pads.timeSignature = timeSignature
   widgets.mm.timeSignature = timeSignature
-  engine.setTimeSignature(timeSignature)
+  engine.timeSignature = timeSignature
 
   if (state.track === '') {
     settings.timeSignature = timeSignature
@@ -439,8 +438,8 @@ function onMM() {
   widgets.knob.BPM = BPM
   widgets.wheel.BPM = BPM
 
-  engine.setBPM(state.BPM)
-  engine.setPulse(state.pulse)
+  engine.BPM = state.BPM
+  engine.pulse = state.pulse
 
   if (state.track === '') {
     settings.BPM = state.BPM
@@ -451,14 +450,12 @@ function onMM() {
 
 function onLoop(event) {
   state.loop = event.detail.loop
-
-  engine.setLoop(state.loop)
+  engine.loop = state.loop
 }
 
 function onDing(event) {
   state.ding = event.detail.ding
-
-  engine.setDing(state.ding)
+  engine.ding = state.ding
 }
 
 function onKnob(save) {
@@ -466,7 +463,7 @@ function onKnob(save) {
 
   state.BPM = BPM
   widgets.mm.BPM = BPM
-  engine.setBPM(BPM)
+  engine.BPM = BPM
 
   if (state.track === '' && save) {
     settings.BPM = state.BPM
@@ -478,7 +475,7 @@ function onWheel(save) {
   const BPM = document.querySelector('yam-wheel').BPM
 
   state.BPM = BPM
-  engine.setBPM(state.BPM)
+  engine.BPM = state.BPM
 
   if (state.track === '' && save) {
     settings.BPM = state.BPM
@@ -590,8 +587,7 @@ function onSelected(event) {
   widgets.metronome.eof = playlist?.EOF(track) ?? true
 
   widgets.editor.track = track
-
-  engine.load(track)
+  engine.track = track
 
   if (track == null) {
     toolbar.classList.remove('editable')
@@ -720,7 +716,7 @@ function onSave() {
     widgets.editor.update(track)
 
     // NTS: don't reload engine - presumably the widgets have already updated it
-    // engine.load(track)
+    // engine.track = track
   } catch (err) {
     onError(err)
   }
@@ -772,8 +768,8 @@ function onEdited(event) {
         widgets.loop.loops = track.loops
 
         // ... update engine
-        engine.load(track)
-        engine.setLoop(track.loop)
+        engine.track = track
+        engine.loop = track.loop // FIXME (shouldn't be necessary any more)
       }
 
       // ... update 'All Tracks' playlist
@@ -883,7 +879,7 @@ function onPlaylistDeleted(event) {
     widgets.metronome.bof = playlist?.BOF(track) ?? true
     widgets.metronome.eof = playlist?.EOF(track) ?? true
 
-    engine.load(track)
+    engine.track = track
   }
 }
 
@@ -892,34 +888,28 @@ function onError(err) {
 }
 
 function animate(id) {
-  const playing = engine.playing()
-  const stopped = engine.stopped()
-  const bar = engine.bar()
-  const section = engine.section()
-  const beat = engine.beat()
-  const beats = engine.beats()
-  const divisions = engine.divisions()
-  const pulse = engine.pulse()
-  const loops = engine.loops()
+  const playing = engine.playing
+  const stopped = engine.stopped
+  const bar = engine.bar
+  const section = engine.section // FIXME used by info
+  const beat = engine.beat
+  const loops = engine.loops
 
-  const runstate = {
-    playing: playing,
-    stopped: stopped,
-    bar: bar,
-    section: section,
-    beats: beats,
-    divisions: divisions,
-    pulse: pulse, // NTS: used in pads
-    loops: loops,
-  }
+  // const runstate = {
+  //   playing: playing,
+  //   stopped: stopped,
+  //   bar: bar,
+  //   section: section,
+  //   loops: loops,
+  // }
 
-  widgets.pads.redraw(beat, runstate)
-  widgets.info.redraw(bar, runstate)
-  widgets.timeSignature.redraw(runstate)
-  widgets.mm.redraw(runstate)
-  widgets.knob.redraw(runstate)
-  widgets.wheel.redraw(runstate)
-  widgets.loop.redraw(runstate)
+  widgets.pads.redraw(beat, { playing, stopped, bar })
+  widgets.info.redraw(bar, { playing, section })
+  widgets.timeSignature.redraw({ playing, stopped, bar })
+  widgets.mm.redraw({ playing, stopped, bar })
+  widgets.knob.redraw({ playing, stopped })
+  widgets.wheel.redraw({ playing, stopped })
+  widgets.loop.redraw({ loops })
 
   if (!stopped) {
     requestAnimationFrame(() => animate(id))

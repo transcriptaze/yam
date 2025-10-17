@@ -5,24 +5,27 @@ import { parsePulse } from '../util.js'
 const AudioContext = window.AudioContext || window.webkitAudioContext
 
 let audioContext
-let subscribers = new EventTarget()
-
 class Engine {
-  static BPM = 120
-  static pulse = 'quarter'
-  static timeSignature = { beats: 4, divisions: 4 }
-  static track = null
-
   #metronome = null
   #initialised = false
+
+  #BPM = 120
+  #timeSignature = '4:4'
+  #pulse = 'quarter'
+  #track = null
+  #loop = false
+  #ding = false
+  #subscribers = new EventTarget()
 
   constructor() {}
 
   init(ctx, metronome) {
-    metronome.BPM = Engine.BPM
-    metronome.timeSignature = Engine.timeSignature
-    metronome.pulse = Engine.pulse
-    metronome.track = Engine.track
+    metronome.BPM = this.#BPM
+    metronome.timeSignature = this.#timeSignature
+    metronome.pulse = this.#pulse
+    metronome.loop = this.#loop
+    metronome.ding = this.#ding
+    metronome.track = this.#track // NB: MUST come after the standalone parameters, otherwise it gets overriden
 
     metronome.connect(ctx.destination)
 
@@ -47,9 +50,11 @@ class Engine {
             ding: ding,
           }
 
-          return metronome(ctx, sounds)
+          return metronome(ctx, sounds, this.#subscribers)
         })
-        .then((m) => this.init(ctx, m))
+        .then((m) => {
+          this.init(ctx, m)
+        })
     }
   }
 
@@ -61,6 +66,14 @@ class Engine {
       .then(() => this.#init(audioContext))
       .then(() => f())
       .catch((err) => console.error(err))
+  }
+
+  addEventListener(event, f, options) {
+    this.#subscribers.addEventListener(event, f, options)
+  }
+
+  removeEventListener(event, f, options) {
+    this.#subscribers.removeEventListener(event, f, options)
   }
 
   get metronome() {
@@ -91,43 +104,55 @@ class Engine {
     const bpm = parseInt(`${v}`, 10)
 
     if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
-      this.#exec(() => (this.metronome.BPM = bpm))
+      this.#BPM = bpm
+
+      if (this.initialised) {
+        this.metronome.BPM = bpm
+      }
     }
   }
 
   set timeSignature(timeSignature) {
     if (timeSignature != null) {
-      this.#exec(() => (this.metronome.timeSignature = timeSignature))
-    }
-  }
+      this.#timeSignature = timeSignature
 
-  get pulse() {
-    if (this.initialised) {
-      return this.metronome?.pulse ?? 'quarter'
+      if (this.initialised) {
+        this.metronome.timeSignature = timeSignature
+      }
     }
-
-    return 'quarter'
   }
 
   set pulse(v) {
     const pulse = parsePulse(`${v}`)
 
     if (pulse != null) {
-      this.#exec(() => (this.metronome.pulse = pulse))
+      this.#pulse = pulse
+
+      if (this.initialised) {
+        this.metronome.pulse = pulse
+      }
     }
   }
 
   set track(track) {
-    this.#exec(() => (this.metronome.track = track))
+    this.#track = track
+
+    if (this.initialised) {
+      this.metronome.track = track
+    }
   }
 
   set loop(loop) {
+    this.#loop = loop
+
     if (this.initialised) {
       this.metronome.loop = loop
     }
   }
 
   set ding(ding) {
+    this.#ding = ding
+
     if (this.initialised) {
       this.metronome.ding = ding
     }
@@ -173,22 +198,6 @@ class Engine {
     return 0
   }
 
-  get beats() {
-    if (this.initialised) {
-      return this.metronome.beats ?? 0
-    }
-
-    return 0
-  }
-
-  get divisions() {
-    if (this.initialised) {
-      return this.metronome.divisions ?? 0
-    }
-
-    return 0
-  }
-
   get loops() {
     if (this.initialised) {
       return this.metronome?.loops ?? 0
@@ -198,96 +207,84 @@ class Engine {
   }
 }
 
-const engine = new Engine()
+export const engine = new Engine()
 
-export function playing() {
-  return engine.playing
-}
+// export function playing() {
+//   return engine.playing
+// }
 
-export function stopped() {
-  return engine.stopped
-}
+// export function stopped() {
+//   return engine.stopped
+// }
 
-export function section() {
-  return engine.section
-}
+// export function section() {
+//   return engine.section
+// }
 
-export function bar() {
-  return engine.bar
-}
+// export function bar() {
+//   return engine.bar
+// }
 
-export function beat() {
-  return engine.beat
-}
+// export function beat() {
+//   return engine.beat
+// }
 
-export function beats() {
-  return engine.beats
-}
+// export function loops() {
+//   return engine.loops
+// }
 
-export function divisions() {
-  return engine.divisions
-}
+// export function debug(debug) {
+//   engine.debug = debug
+// }
 
-export function pulse() {
-  return engine.pulse
-}
+// export function load(track) {
+//   engine.track = track
+// }
 
-export function loops() {
-  return engine.loops
-}
+// export function setBPM(BPM) {
+//   engine.BPM = BPM
+// }
 
-export function debug(debug) {
-  engine.debug = debug
-}
+// export function setTimeSignature(timeSignature) {
+//   engine.timeSignature = timeSignature
+// }
 
-export function load(track) {
-  engine.track = track
-}
+// export function setPulse(pulse) {
+//   engine.pulse = pulse
+// }
 
-export function setBPM(BPM) {
-  engine.BPM = BPM
-}
+// // NTS: 'loop' for a track and can only be enabled/disabled after the track has been loaded
+// //      i.e. no point adding to the metronome initialisation
+// export function setLoop(v) {
+//   engine.loop = v === true
+// }
 
-export function setTimeSignature(timeSignature) {
-  engine.timeSignature = timeSignature
-}
+// // NTS: 'ding' for a track and can only be enabled/disabled after the track has been loaded
+// //      i.e. no point adding to the metronome initialisation
+// export function setDing(v) {
+//   engine.ding = v === true
+// }
 
-export function setPulse(pulse) {
-  engine.pulse = pulse
-}
+// export function play() {
+//   engine.play()
+// }
 
-// NTS: 'loop' for a track and can only be enabled/disabled after the track has been loaded
-//      i.e. no point adding to the metronome initialisation
-export function setLoop(v) {
-  engine.loop = v === true
-}
+// export function stop() {
+//   engine.stop()
+// }
 
-// NTS: 'ding' for a track and can only be enabled/disabled after the track has been loaded
-//      i.e. no point adding to the metronome initialisation
-export function setDing(v) {
-  engine.ding = v === true
-}
+// export function toggle() {
+//   engine.toggle()
+// }
 
-export function play() {
-  engine.play()
-}
+// export function addEventListener(event, f, options) {
+//   engine.addEventListener(event, f, options)
+// }
 
-export function stop() {
-  engine.stop()
-}
+// export function removeEventListener(event, f, options) {
+//   engine.removeEventListener(event, f, options)
+// }
 
-export function toggle() {
-  engine.toggle()
-}
-
-function metronome(ctx, sounds) {
+function metronome(ctx, sounds, subscribers) {
   return ctx.audioWorklet.addModule('./javascript/audio/worklets/worklet.js').then(() => new nodes.MetronomeNode(ctx, sounds, subscribers))
-}
-
-export function addEventListener(event, f, options) {
-  subscribers.addEventListener(event, f, options)
-}
-
-export function removeEventListener(event, f, options) {
-  subscribers.removeEventListener(event, f, options)
 }

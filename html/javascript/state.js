@@ -1,4 +1,4 @@
-import { parseTimeSignature, parsePulse } from '../util.js'
+import { parseTimeSignature, parsePulse } from './util.js'
 
 class State extends EventTarget {
   #playlist = '00000000-0000-0000-0000-000000000000'

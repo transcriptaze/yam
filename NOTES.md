@@ -100,6 +100,7 @@
 4. https://guitarapp.com/metronome.html
 5. https://openprocessing.org/sketch/1514409
 6. https://github.com/vincentsijben/bpm-timings-for-processing
+7. https://github.com/cwilso/metronome
 
 
 ## References

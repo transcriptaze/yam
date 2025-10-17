@@ -13,7 +13,6 @@
 *** TODO cache engine initialisation
       - can't set BPM, pulse, time-signature, etc during initialisation (i.e. before first play)
       - check node/worklet initialisation for 'null' track 
-      - replace shared state with 'flip' message data
 
 *** TODO worklet not using section BPM
 

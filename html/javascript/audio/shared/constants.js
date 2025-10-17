@@ -21,6 +21,6 @@ export function pulseToInt(pulse) {
   return PULSE.entries().find(([_, v]) => v.name === pulse)?.[0] ?? Number.NaN
 }
 
-export function get(int) {
+export function pulseFromInt(int) {
   return PULSE.get(int)
 }

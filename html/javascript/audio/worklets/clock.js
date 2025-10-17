@@ -128,7 +128,7 @@ export class Clock {
   }
 
   interval(BPM, figura, pulse) {
-    const subdivisions = PULSE.get(pulse)?.interval ?? 0.25
+    const subdivisions = PULSE.pulseFromInt(pulse)?.interval ?? 0.25
     const clicksPerBeat = min(1 / subdivisions / figura, 1)
     const interval = (60 * 1000) / BPM
     const subinterval = interval / clicksPerBeat

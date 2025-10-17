@@ -1,4 +1,3 @@
-// import { State, BUFFERSIZE } from '../shared/state.js'
 import * as PULSE from '../shared/constants.js'
 import { parseTimeSignature, durationToMS, clamp } from '../../util.js'
 import * as generators from '../../generators.js'
@@ -15,7 +14,6 @@ const STATE = {
 const INF = Number.POSITIVE_INFINITY
 
 export class MetronomeNode extends AudioWorkletNode {
-  // #state = null
   #loops = INF
   #sections = new Map()
 
@@ -38,17 +36,11 @@ export class MetronomeNode extends AudioWorkletNode {
     this.subscribers = subscribers
     this.port.onmessage = this.onMessage.bind(this)
 
-    // ... initialise shared state
-    // const buffer = new SharedArrayBuffer(BUFFERSIZE)
-
-    // this.#state = new State(buffer)
-
     // ... initialise worklet
     this.port.postMessage({
       message: 'initialise',
 
       fs: context.sampleRate,
-      // state: buffer,
       tick: sample(tick),
       tock: sample(tock),
       tack: sample(tack),

@@ -164,10 +164,6 @@ export class MetronomeNode extends AudioWorkletNode {
     this.pulse = track.pulse
     this.BPM = track.BPM
 
-    this.timeSignature = track.timeSignature
-    this.pulse = track.pulse
-    this.BPM = track.BPM
-
     this.parameters.get('loop').setValueAtTime(loopable && loop ? 1 : 0, ctx.currentTime)
     this.parameters.get('ding').setValueAtTime(dings.length > 0 && ding ? 1 : 0, ctx.currentTime)
   }

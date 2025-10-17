@@ -25,7 +25,6 @@ Promise.then
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** TODO expand single section
-      - hover >> arrow maybe (doesn't work on mobile)
 **** TODO slide in on initialisation
 **** TODO enable editor save iff changed
 **** TODO display subsections
@@ -34,7 +33,6 @@ Promise.then
 **** TODO better ding sample
 **** DONE ding enable/disable icon
 **** DONE sort dings by measure/beat
-**** TODO (?) replace click with ding rather than play simultaneously
 
 *** TODO clicks
 **** TODO generate clicks for count-in

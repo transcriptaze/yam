@@ -168,8 +168,8 @@ export class MetronomeNode extends AudioWorkletNode {
     const ctx = this.context
     const loopable = v?.loopable ?? false
     const loop = v?.loop ?? false
-    const dings = v?.dings ?? []
-    const ding = v?.ding ?? false
+    const dings = track.dings ?? []
+    const ding = track.ding ?? false
 
     this.timeSignature = track.timeSignature
     this.pulse = track.pulse
@@ -186,6 +186,7 @@ export class MetronomeNode extends AudioWorkletNode {
   }
 
   set ding(ding) {
+    console.log('>>>>>>>>> set::ding', ding)
     const ctx = this.context
 
     this.parameters.get('ding').setValueAtTime(ding ? 1 : 0, ctx.currentTime)

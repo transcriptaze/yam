@@ -22,7 +22,7 @@ Promise.then
 ```
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
-**** TODO expand single section
+**** DONE expand single section
 **** TODO slide in on initialisation
 **** TODO enable editor save iff changed
 **** TODO display subsections

@@ -10,11 +10,7 @@
 *** DONE updated widgets on new/save track
 *** DONE save while playing resets track
 *** DONE worklet not using section BPM
-
-*** TODO cache engine initialisation
-      - can't set BPM, pulse, time-signature, etc during initialisation (i.e. before first play)
-      - check node/worklet initialisation for 'null' track 
-
+*** DONE cache engine initialisation
 
 *** TODO fix
 ```

@@ -5,24 +5,27 @@ import { parsePulse } from '../util.js'
 const AudioContext = window.AudioContext || window.webkitAudioContext
 
 let audioContext
-let subscribers = new EventTarget()
-
 class Engine {
-  static BPM = 120
-  static pulse = 'quarter'
-  static timeSignature = { beats: 4, divisions: 4 }
-  static track = null
-
   #metronome = null
   #initialised = false
+
+  #BPM = 120
+  #timeSignature = '4:4'
+  #pulse = 'quarter'
+  #track = null
+  #loop = false
+  #ding = false
+  #subscribers = new EventTarget()
 
   constructor() {}
 
   init(ctx, metronome) {
-    metronome.BPM = Engine.BPM
-    metronome.timeSignature = Engine.timeSignature
-    metronome.pulse = Engine.pulse
-    metronome.track = Engine.track
+    metronome.BPM = this.#BPM
+    metronome.timeSignature = this.#timeSignature
+    metronome.pulse = this.#pulse
+    metronome.track = this.#track
+    metronome.loop = this.#loop
+    metronome.ding = this.#ding
 
     metronome.connect(ctx.destination)
 
@@ -47,9 +50,11 @@ class Engine {
             ding: ding,
           }
 
-          return metronome(ctx, sounds)
+          return metronome(ctx, sounds, this.#subscribers)
         })
-        .then((m) => this.init(ctx, m))
+        .then((m) => {
+          this.init(ctx, m)
+        })
     }
   }
 
@@ -61,6 +66,14 @@ class Engine {
       .then(() => this.#init(audioContext))
       .then(() => f())
       .catch((err) => console.error(err))
+  }
+
+  addEventListener(event, f, options) {
+    this.#subscribers.addEventListener(event, f, options)
+  }
+
+  removeEventListener(event, f, options) {
+    this.#subscribers.removeEventListener(event, f, options)
   }
 
   get metronome() {
@@ -91,13 +104,21 @@ class Engine {
     const bpm = parseInt(`${v}`, 10)
 
     if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
-      this.#exec(() => (this.metronome.BPM = bpm))
+      this.#BPM = bpm
+
+      if (this.initialised) {
+        this.metronome.BPM = bpm
+      }
     }
   }
 
   set timeSignature(timeSignature) {
     if (timeSignature != null) {
-      this.#exec(() => (this.metronome.timeSignature = timeSignature))
+      this.#timeSignature = timeSignature
+
+      if (this.initialised) {
+        this.metronome.timeSignature = timeSignature
+      }
     }
   }
 
@@ -105,21 +126,33 @@ class Engine {
     const pulse = parsePulse(`${v}`)
 
     if (pulse != null) {
-      this.#exec(() => (this.metronome.pulse = pulse))
+      this.#pulse = pulse
+
+      if (this.initialised) {
+        this.metronome.pulse = pulse
+      }
     }
   }
 
   set track(track) {
-    this.#exec(() => (this.metronome.track = track))
+    this.#track = track
+
+    if (this.initialised) {
+      this.metronome.track = track
+    }
   }
 
   set loop(loop) {
+    this.#loop = loop
+
     if (this.initialised) {
       this.metronome.loop = loop
     }
   }
 
   set ding(ding) {
+    this.#ding = ding
+
     if (this.initialised) {
       this.metronome.ding = ding
     }
@@ -244,14 +277,14 @@ export function toggle() {
   engine.toggle()
 }
 
-function metronome(ctx, sounds) {
-  return ctx.audioWorklet.addModule('./javascript/audio/worklets/worklet.js').then(() => new nodes.MetronomeNode(ctx, sounds, subscribers))
-}
-
 export function addEventListener(event, f, options) {
-  subscribers.addEventListener(event, f, options)
+  engine.addEventListener(event, f, options)
 }
 
 export function removeEventListener(event, f, options) {
-  subscribers.removeEventListener(event, f, options)
+  engine.removeEventListener(event, f, options)
+}
+
+function metronome(ctx, sounds, subscribers) {
+  return ctx.audioWorklet.addModule('./javascript/audio/worklets/worklet.js').then(() => new nodes.MetronomeNode(ctx, sounds, subscribers))
 }

@@ -101,14 +101,6 @@ class Engine {
     }
   }
 
-  get pulse() {
-    if (this.initialised) {
-      return this.metronome?.pulse ?? 'quarter'
-    }
-
-    return 'quarter'
-  }
-
   set pulse(v) {
     const pulse = parsePulse(`${v}`)
 
@@ -226,10 +218,6 @@ export function beats() {
 
 export function divisions() {
   return engine.divisions
-}
-
-export function pulse() {
-  return engine.pulse
 }
 
 export function loops() {

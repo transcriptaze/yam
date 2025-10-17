@@ -1,7 +1,7 @@
 import * as engine from './audio/engine.js'
 import * as models from './models/models.js'
 import * as fs from './fs.js'
-import { state } from './models/state.js'
+import { state } from './state.js'
 import { settings } from './settings.js'
 import * as log from './log.js'
 import { DEFAULT, INF } from './constants.js'
@@ -899,7 +899,6 @@ function animate(id) {
   const beat = engine.beat()
   const beats = engine.beats()
   const divisions = engine.divisions()
-  const pulse = engine.pulse()
   const loops = engine.loops()
 
   const runstate = {
@@ -909,7 +908,6 @@ function animate(id) {
     section: section,
     beats: beats,
     divisions: divisions,
-    pulse: pulse, // NTS: used in pads
     loops: loops,
   }
 

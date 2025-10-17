@@ -1,14 +1,19 @@
-import { parseTimeSignature as parse } from '../util.js'
+import * as datastore from '../datastore/datastore.js'
+import { parseTimeSignature } from '../util.js'
 
 export class Pads extends HTMLElement {
   static get observedAttributes() {
     return []
   }
 
-  #beats = 4
-  #divisions = 4
+  #timeSignature = '4:4'
   #pulse = 'quarter'
-  #last = Math.NaN
+  #track = null
+  #last = {
+    beat: Math.NaN,
+    beats: -1,
+    divisions: -1,
+  }
 
   constructor() {
     super()
@@ -35,80 +40,110 @@ export class Pads extends HTMLElement {
   attributeChangedCallback(_name, _from, _to) {}
 
   set timeSignature(v) {
-    const { beats, divisions } = parse(`${v}`)
+    const { beats, divisions } = parseTimeSignature(`${v}`)
 
-    if (!Number.isNaN(beats) && !Number.isNaN(divisions) && (beats !== this.#beats || divisions !== this.#divisions)) {
-      this.#beats = beats
-      this.#divisions = divisions
-      this.#layout()
+    if (!Number.isNaN(beats) && !Number.isNaN(divisions) && `${beats}:${divisions}` !== this.#timeSignature) {
+      this.#timeSignature = `${beats}:${divisions}`
+      this.#layout(beats, divisions, this.#pulse)
     }
   }
 
   set pulse(v) {
+    const { beats, divisions } = parseTimeSignature(this.#timeSignature)
     const pulse = `${v}`
 
     if (this.#pulse !== pulse) {
       this.#pulse = pulse
-      this.#layout()
+
+      this.#layout(beats, divisions, pulse)
     }
   }
 
-  set track(track) {
+  set track(v) {
+    const track = datastore.tracks.get(v)
+
+    this.#track = track
+
     if (track != null) {
       this.pulse = track.pulse
       this.timeSignature = track.timeSignature
     }
   }
 
-  redraw(beat, { playing, stopped, beats, divisions, pulse }) {
-    const _beat = Number.parseFloat(beat, 10)
+  redraw(beat, { playing, stopped, bar }) {
+    const track = this.#track
 
-    if (playing || stopped) {
-      const _beats = Number.parseInt(beats, 10)
-      const _divisions = Number.parseInt(divisions, 10)
-      let invalidate = false
-
-      if (!Number.isNaN(_beats) && _beats !== this.#beats && _beats > 0 && _beats <= 32) {
-        this.#beats = _beats
-        invalidate = true
-      }
-
-      if (!Number.isNaN(_divisions) && _divisions !== this.#divisions && _divisions > 0 && _divisions <= 32) {
-        this.#divisions = _divisions
-        invalidate = true
-      }
-
-      if (pulse != null && pulse !== this.#pulse) {
-        this.#pulse = pulse
-        invalidate = true
-      }
-
-      if (invalidate) {
-        this.#layout()
-      }
+    if (track == null) {
+      this.#redraw(beat, this.#timeSignature, this.#pulse)
+      return
     }
 
-    if (!Number.isNaN(_beat) && _beat !== this.#last) {
-      const shadow = this.shadowRoot
-      const pads = shadow.querySelectorAll('.beat')
+    if (!playing && stopped) {
+      this.#redraw(0, this.#timeSignature, this.#pulse)
+      return
+    }
 
-      pads.forEach((e) => e.redraw(_beat))
+    if (playing && !stopped) {
+      const sections = track.sections ?? []
+      const section = sections.findLast((v) => v.start <= bar)
+      const subsections = section?.subsections ?? []
+      const subsection = subsections.findLast((v) => v.start <= bar)
+      const _beat = Number.parseFloat(beat, 10)
 
-      this.#last = _beat
+      if (subsection != null) {
+        this.#redraw(beat, subsection.timeSignature, subsection.pulse)
+      } else if (section != null) {
+        this.#redraw(beat, section.timeSignature, section.pulse)
+      } else {
+        this.#redraw(beat, track.timeSignature, track.pulse)
+      }
+      return
     }
   }
 
-  #layout() {
+  #redraw(beat, timeSignature, pulse) {
+    const { beats, divisions } = parseTimeSignature(timeSignature)
+    let invalidate = false
+
+    if (!Number.isNaN(beats) && beats !== this.#last.beats && beats > 0 && beats <= 32) {
+      this.#last.beats = beats
+      invalidate = true
+    }
+
+    if (!Number.isNaN(divisions) && divisions !== this.#last.divisions && divisions > 0 && divisions <= 32) {
+      this.#last.divisions = divisions
+      invalidate = true
+    }
+
+    if (pulse != null && pulse !== this.#last.pulse) {
+      this.#last.pulse = pulse
+      invalidate = true
+    }
+
+    if (invalidate) {
+      this.#layout(beats, divisions, pulse)
+    }
+
+    if (!Number.isNaN(beat) && beat !== this.#last.beat) {
+      const shadow = this.shadowRoot
+      const pads = shadow.querySelectorAll('.beat')
+
+      pads.forEach((e) => e.redraw(beat))
+
+      this.#last.beat = beat
+    }
+  }
+
+  #layout(beats, divisions, pulse) {
     const shadow = this.shadowRoot
     const div = shadow.querySelector('div.pads')
-    const beats = this.#beats
 
-    if (this.#divisions === 4 && this.#pulse === 'eighth-doublet') {
-      this.#eightDoublets()
-    } else if (this.#beats === 6 && this.#divisions === 8 && this.#pulse === 'dotted-quarter') {
-      this.#sixEighths()
-    } else if (this.#beats === 5 && this.#divisions === 4 && this.#pulse === 'quarter') {
-      this.#fiveFour()
+    if (divisions === 4 && pulse === 'eighth-doublet') {
+      this.#eightDoublets(beats)
+    } else if (beats === 6 && divisions === 8 && pulse === 'dotted-quarter') {
+      this.#sixEighths(beats)
+    } else if (beats === 5 && divisions === 4 && pulse === 'quarter') {
+      this.#fiveFour(beats)
     } else {
       const pads = [...Array(beats).keys()].map((v) => {
         const block = document.createElement('yam-beat')
@@ -124,10 +159,9 @@ export class Pads extends HTMLElement {
     }
   }
 
-  #eightDoublets() {
+  #eightDoublets(beats) {
     const shadow = this.shadowRoot
     const div = shadow.querySelector('div.pads')
-    const beats = this.#beats
     const pads = []
 
     for (let i = 0; i < beats; i++) {
@@ -152,10 +186,9 @@ export class Pads extends HTMLElement {
   #sixEighths() {
     const shadow = this.shadowRoot
     const div = shadow.querySelector('div.pads')
-    const beats = this.#beats
     const pads = []
 
-    for (let i = 0; i < beats; i++) {
+    for (let i = 0; i < 6; i++) {
       const pad = document.createElement('yam-beat')
       const clazz = [2, 3, 5, 6].includes(i + 1) ? 'diamond' : 'block'
 
@@ -172,10 +205,9 @@ export class Pads extends HTMLElement {
   #fiveFour() {
     const shadow = this.shadowRoot
     const div = shadow.querySelector('div.pads')
-    const beats = this.#beats
     const pads = []
 
-    for (let i = 0; i < beats; i++) {
+    for (let i = 0; i < 5; i++) {
       const block = document.createElement('yam-beat')
       const clazz = [2, 4, 5].includes(i + 1) ? 'small-block' : 'block'
 

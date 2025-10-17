@@ -40,8 +40,12 @@ Promise.then
 **** TODO generate clicks for 5:4
 **** TODO not cascading - revert to track clicks or default clicks for time-signature
 
-*** TODO use cloned track
-*** TODO use cloned playlist
+*** TODO use realized track
+**** TODO store in state
+**** TODO rework YAM to use state.track.UUID
+**** TODO reuse state track for widgets
+
+*** TODO use realized playlist
 *** TODO connectedCallback: event handler duplication
 
 ** Fixes

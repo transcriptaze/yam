@@ -25,9 +25,6 @@ export class MetronomeNode extends AudioWorkletNode {
     section: 0,
     bar: 0,
     beat: 0,
-    beats: 4,
-    divisions: 4,
-    pulse: 'quarter',
     loops: 0,
   }
 
@@ -227,14 +224,6 @@ export class MetronomeNode extends AudioWorkletNode {
     return this.#cache.beat
   }
 
-  get beats() {
-    return this.#cache.beats
-  }
-
-  get divisions() {
-    return this.#cache.divisions
-  }
-
   get loops() {
     return {
       loops: this.#loops,
@@ -248,9 +237,6 @@ export class MetronomeNode extends AudioWorkletNode {
     this.#cache.section = state.section
     this.#cache.bar = state.bar
     this.#cache.beat = state.beat
-    this.#cache.beats = state.beats
-    this.#cache.divisions = state.divisions
-    this.#cache.pulse = PULSE.get(state.pulse)?.name ?? ''
     this.#cache.loops = state.loops
   }
 }

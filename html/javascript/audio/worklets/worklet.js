@@ -235,7 +235,7 @@ export class Metronome extends AudioWorkletProcessor {
       if (clock.time >= 250) {
         if (this.FSM.on250ms()) {
           clock.reset()
-          this.flip(FSM.STATE.PLAYING, null, 0, 0, this.#loops, parameters)
+          this.flip(FSM.STATE.PLAYING, null, 0, 0, this.#loops)
           this.port.postMessage({
             message: 'playing',
           })
@@ -413,22 +413,12 @@ export class Metronome extends AudioWorkletProcessor {
     }
   }
 
-  flip(state, section, bar, beat, loops, parameters) {
+  flip(state, section, bar, beat, loops) {
     this.state.state = state
     this.state.section = section?.ID ?? 0
     this.state.bar = bar
     this.state.beat = beat
     this.state.loops = loops
-
-    if (section != null) {
-      this.state.beats = section?.beats ?? clamp(parameters.beats[0], 1, 32)
-      this.state.divisions = section?.divisions ?? clamp(parameters.divisions[0], 0.125, 0.75)
-      this.state.pulse = section?.pulse ?? this.track?.pulse
-    } else {
-      this.state.beats = this.track?.beats ?? clamp(parameters.beats[0], 1, 32)
-      this.state.divisions = this.track?.divisions ?? clamp(parameters.divisions[0], 0.125, 0.75)
-      this.state.pulse = parameters.pulse[0]
-    }
 
     this.state.flip()
     this.port.postMessage({

@@ -6,11 +6,8 @@ const STATE = 0
 const SECTION = 4
 const BAR = 8
 const BEAT = 12
-const BEATS = 16
-const DIVISIONS = 20
-const PULSE = 24
-const LOOPS = 28
-const _SPARE = 32 // 32 bytes
+const LOOPS = 16
+const _SPARE = 44 // 44 bytes
 
 const HEADER = 8
 const DATA = 64
@@ -29,10 +26,6 @@ export class State {
     this.section = null
     this.bar = null
     this.beat = null
-    this.beats = null
-    this.divisions = null
-    this.timeSignature = null
-    this.pulse = null
     this.loops = null
   }
 
@@ -111,30 +104,6 @@ export class State {
 
   set beat(v) {
     this.#setFloat32(BEAT, v ?? 0)
-  }
-
-  get beats() {
-    return this.#getUint32(BEATS)
-  }
-
-  set beats(v) {
-    this.#setUint32(BEATS, v ?? 0)
-  }
-
-  get divisions() {
-    return this.#getUint32(DIVISIONS)
-  }
-
-  set divisions(v) {
-    this.#setUint32(DIVISIONS, v ?? 0)
-  }
-
-  get pulse() {
-    return this.#getFloat32(PULSE)
-  }
-
-  set pulse(v) {
-    this.#setFloat32(PULSE, v ?? 0.0)
   }
 
   get loops() {

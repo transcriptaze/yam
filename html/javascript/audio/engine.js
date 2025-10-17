@@ -165,22 +165,6 @@ class Engine {
     return 0
   }
 
-  get beats() {
-    if (this.initialised) {
-      return this.metronome.beats ?? 0
-    }
-
-    return 0
-  }
-
-  get divisions() {
-    if (this.initialised) {
-      return this.metronome.divisions ?? 0
-    }
-
-    return 0
-  }
-
   get loops() {
     if (this.initialised) {
       return this.metronome?.loops ?? 0
@@ -210,14 +194,6 @@ export function bar() {
 
 export function beat() {
   return engine.beat
-}
-
-export function beats() {
-  return engine.beats
-}
-
-export function divisions() {
-  return engine.divisions
 }
 
 export function loops() {

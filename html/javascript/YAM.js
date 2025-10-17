@@ -897,27 +897,23 @@ function animate(id) {
   const bar = engine.bar()
   const section = engine.section()
   const beat = engine.beat()
-  const beats = engine.beats()
-  const divisions = engine.divisions()
   const loops = engine.loops()
 
-  const runstate = {
-    playing: playing,
-    stopped: stopped,
-    bar: bar,
-    section: section,
-    beats: beats,
-    divisions: divisions,
-    loops: loops,
-  }
+  // const runstate = {
+  //   playing: playing,
+  //   stopped: stopped,
+  //   bar: bar,
+  //   section: section,
+  //   loops: loops,
+  // }
 
-  widgets.pads.redraw(beat, runstate)
-  widgets.info.redraw(bar, runstate)
-  widgets.timeSignature.redraw(runstate)
-  widgets.mm.redraw(runstate)
-  widgets.knob.redraw(runstate)
-  widgets.wheel.redraw(runstate)
-  widgets.loop.redraw(runstate)
+  widgets.pads.redraw(beat, { playing, stopped, bar })
+  widgets.info.redraw(bar, { playing, section })
+  widgets.timeSignature.redraw({ playing, stopped, bar })
+  widgets.mm.redraw({ playing, stopped, bar })
+  widgets.knob.redraw({ playing, stopped })
+  widgets.wheel.redraw({ playing, stopped })
+  widgets.loop.redraw({ loops })
 
   if (!stopped) {
     requestAnimationFrame(() => animate(id))

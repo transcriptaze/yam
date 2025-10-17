@@ -1,4 +1,4 @@
-import { State, BUFFERSIZE } from '../shared/state.js'
+// import { State, BUFFERSIZE } from '../shared/state.js'
 import * as PULSE from '../shared/constants.js'
 import { parseTimeSignature, durationToMS, clamp } from '../../util.js'
 import * as generators from '../../generators.js'
@@ -15,7 +15,7 @@ const STATE = {
 const INF = Number.POSITIVE_INFINITY
 
 export class MetronomeNode extends AudioWorkletNode {
-  #state = null
+  // #state = null
   #loops = INF
   #sections = new Map()
 
@@ -39,16 +39,16 @@ export class MetronomeNode extends AudioWorkletNode {
     this.port.onmessage = this.onMessage.bind(this)
 
     // ... initialise shared state
-    const buffer = new SharedArrayBuffer(BUFFERSIZE)
+    // const buffer = new SharedArrayBuffer(BUFFERSIZE)
 
-    this.#state = new State(buffer)
+    // this.#state = new State(buffer)
 
     // ... initialise worklet
     this.port.postMessage({
       message: 'initialise',
 
       fs: context.sampleRate,
-      state: buffer,
+      // state: buffer,
       tick: sample(tick),
       tock: sample(tock),
       tack: sample(tack),
@@ -72,7 +72,7 @@ export class MetronomeNode extends AudioWorkletNode {
         break
 
       case 'flipped':
-        this.#flipped(this.#state)
+        this.#flipped(event.data)
         break
     }
   }
@@ -231,13 +231,13 @@ export class MetronomeNode extends AudioWorkletNode {
     }
   }
 
-  #flipped(state) {
-    this.#cache.playing = state.state === STATE.PLAYING
-    this.#cache.stopped = state.state === STATE.STOPPED
-    this.#cache.section = state.section
-    this.#cache.bar = state.bar
-    this.#cache.beat = state.beat
-    this.#cache.loops = state.loops
+  #flipped(msg) {
+    this.#cache.playing = msg.state === STATE.PLAYING
+    this.#cache.stopped = msg.state === STATE.STOPPED
+    this.#cache.section = msg.section
+    this.#cache.bar = msg.bar
+    this.#cache.beat = msg.beat
+    this.#cache.loops = msg.loops
   }
 }
 

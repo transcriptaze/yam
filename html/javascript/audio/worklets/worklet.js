@@ -206,13 +206,13 @@ export class Metronome extends AudioWorkletProcessor {
 
   #bpm(BPM) {
     const tempo = this.#track?.tempo ?? null
-    const bpm = this.section?.BPM ?? null
+    const bpm = this.section?.tempo ?? null
 
     if (tempo != null && bpm != null) {
       return (bpm * BPM) / tempo
     }
 
-    return this.section?.BPM ?? BPM
+    return this.section?.tempo ?? BPM
   }
 
   process(_inputs, outputs, parameters) {

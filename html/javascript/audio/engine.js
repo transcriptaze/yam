@@ -207,84 +207,8 @@ class Engine {
   }
 }
 
-export const engine = new Engine()
-
-// export function playing() {
-//   return engine.playing
-// }
-
-// export function stopped() {
-//   return engine.stopped
-// }
-
-// export function section() {
-//   return engine.section
-// }
-
-// export function bar() {
-//   return engine.bar
-// }
-
-// export function beat() {
-//   return engine.beat
-// }
-
-// export function loops() {
-//   return engine.loops
-// }
-
-// export function debug(debug) {
-//   engine.debug = debug
-// }
-
-// export function load(track) {
-//   engine.track = track
-// }
-
-// export function setBPM(BPM) {
-//   engine.BPM = BPM
-// }
-
-// export function setTimeSignature(timeSignature) {
-//   engine.timeSignature = timeSignature
-// }
-
-// export function setPulse(pulse) {
-//   engine.pulse = pulse
-// }
-
-// // NTS: 'loop' for a track and can only be enabled/disabled after the track has been loaded
-// //      i.e. no point adding to the metronome initialisation
-// export function setLoop(v) {
-//   engine.loop = v === true
-// }
-
-// // NTS: 'ding' for a track and can only be enabled/disabled after the track has been loaded
-// //      i.e. no point adding to the metronome initialisation
-// export function setDing(v) {
-//   engine.ding = v === true
-// }
-
-// export function play() {
-//   engine.play()
-// }
-
-// export function stop() {
-//   engine.stop()
-// }
-
-// export function toggle() {
-//   engine.toggle()
-// }
-
-// export function addEventListener(event, f, options) {
-//   engine.addEventListener(event, f, options)
-// }
-
-// export function removeEventListener(event, f, options) {
-//   engine.removeEventListener(event, f, options)
-// }
-
 function metronome(ctx, sounds, subscribers) {
   return ctx.audioWorklet.addModule('./javascript/audio/worklets/worklet.js').then(() => new nodes.MetronomeNode(ctx, sounds, subscribers))
 }
+
+export const engine = new Engine()

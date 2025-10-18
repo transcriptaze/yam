@@ -1,4 +1,4 @@
-import { INF } from '../constants.js'
+import { EVENTS, INF } from '../constants.js'
 
 export class Section extends HTMLElement {
   static get observedAttributes() {
@@ -40,6 +40,21 @@ export class Section extends HTMLElement {
         e.preventDefault()
       },
     },
+
+    expand: {
+      click: (e) => {
+        e.preventDefault()
+
+        const attr = this.getAttribute('expanded')
+        if (attr == null) {
+          this.setAttribute('expanded', '')
+        } else {
+          this.removeAttribute('expanded')
+        }
+
+        this.dispatchEvent(new CustomEvent(EVENTS.SECTION_EXPAND, { bubbles: true, composed: true, detail: {} }))
+      },
+    },
   }
 
   constructor() {
@@ -61,6 +76,7 @@ export class Section extends HTMLElement {
       name: shadow.querySelector('#name'),
       role: shadow.querySelector('#role'),
       measures: shadow.querySelector('#measures'),
+      expand: shadow.querySelector('#arrow'),
     }
 
     if (Object.values(this.#fields).some((e) => e == null)) {
@@ -71,8 +87,9 @@ export class Section extends HTMLElement {
   connectedCallback() {
     this.classList.add('component-section')
 
-    this.#fields.role.addEventListener('input', this.#handlers.role.change)
-    this.#fields.measures.addEventListener('invalid', this.#handlers.measures.invalid)
+    this.#role.addEventListener('input', this.#handlers.role.change)
+    this.#measures.addEventListener('invalid', this.#handlers.measures.invalid)
+    this.#expand.addEventListener('click', this.#handlers.expand.click)
   }
 
   disconnectedCallback() {}
@@ -184,6 +201,10 @@ export class Section extends HTMLElement {
     const e = this.shadowRoot?.querySelector('yam-section-time-signature')
 
     return e?.timeSignature ?? this.#section.timeSignature
+  }
+
+  get #expand() {
+    return this.#fields.expand
   }
 
   get #name() {

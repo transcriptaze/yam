@@ -57,6 +57,19 @@ export class Editor extends HTMLElement {
         this.#toggle()
       },
 
+      expand: () => {
+        const ul = this.#sections.querySelector('ul')
+        const sections = Array.from(ul.querySelectorAll('yam-section'))
+        const expanded = sections.every((v) => v.getAttribute('expanded') != null)
+        const collapsed = sections.every((v) => v.getAttribute('expanded') == null)
+
+        if (this.#expanded && collapsed) {
+          this.#toggle()
+        } else if (!this.#expanded && expanded) {
+          this.#toggle()
+        }
+      },
+
       change: (event) => {
         event.preventDefault()
         event.stopPropagation()
@@ -138,6 +151,7 @@ export class Editor extends HTMLElement {
     this.#sections.addEventListener(EVENTS.SECTION_TIME_SIGNATURE_CHANGE, this.#handlers.sections.change)
     this.#sections.addEventListener(EVENTS.SECTION_PULSE_CHANGE, this.#handlers.sections.change)
     this.#sections.addEventListener(EVENTS.SECTION_BPM_CHANGE, this.#handlers.sections.change)
+    this.#sections.addEventListener(EVENTS.SECTION_EXPAND, this.#handlers.sections.expand)
   }
 
   disconnectedCallback() {}
@@ -202,7 +216,14 @@ export class Editor extends HTMLElement {
       })
 
       icon.classList.remove('expanded')
+
+      ul.style.opacity = 0
       ul.replaceChildren(...children)
+      ul.style.opacity = 1
+
+      requestAnimationFrame(() => {
+        children.forEach((li) => li.classList.add('show'))
+      })
     }
 
     this.#track = track

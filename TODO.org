@@ -23,9 +23,9 @@ Promise.then
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** DONE expand single section
-**** TODO slide in on initialisation
-**** TODO enable editor save iff changed
+**** DONE slide in on initialisation
 **** TODO display subsections
+**** TODO enable editor save iff changed
 
 *** TODO 'dings' (cf. https://github.com/transcriptaze/yam/issues/9)
 **** TODO better ding sample

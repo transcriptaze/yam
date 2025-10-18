@@ -1695,6 +1695,7 @@ div.playlist-track [popover]:popover-open::backdrop {
   padding-left: 4px;
   padding-right: 4px;
   list-style: none;
+  overflow: hidden;
 }
 :host(.component-editor) div.track-editor div.sections ul li {
   height: auto;
@@ -1709,6 +1710,18 @@ div.playlist-track [popover]:popover-open::backdrop {
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
   overflow: hidden;
+}
+:host(.component-editor) div.track-editor div.sections ul {
+  transition: opacity 0.5s ease;
+}
+:host(.component-editor) div.track-editor div.sections ul li {
+  opacity: 0;
+  transform: translateY(-14px);
+  transition: all 0.25s ease-in;
+}
+:host(.component-editor) div.track-editor div.sections ul li.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 :host(.component-editor) div.track-editor div.sections div.footer {
   box-sizing: border-box;

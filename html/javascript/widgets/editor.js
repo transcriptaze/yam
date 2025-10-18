@@ -216,7 +216,14 @@ export class Editor extends HTMLElement {
       })
 
       icon.classList.remove('expanded')
+
+      ul.style.opacity = 0
       ul.replaceChildren(...children)
+      ul.style.opacity = 1
+
+      requestAnimationFrame(() => {
+        children.forEach((li) => li.classList.add('show'))
+      })
     }
 
     this.#track = track

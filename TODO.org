@@ -21,16 +21,16 @@ Promise.then
 #dragover   @     playlist.js:670
 ```
 
+*** TODO 'dings' (cf. https://github.com/transcriptaze/yam/issues/9)
+**** TODO better ding sample
+**** DONE ding enable/disable icon
+**** DONE sort dings by measure/beat
+
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** DONE expand single section
 **** DONE slide in on initialisation
 **** TODO display subsections
 **** TODO enable editor save iff changed
-
-*** TODO 'dings' (cf. https://github.com/transcriptaze/yam/issues/9)
-**** TODO better ding sample
-**** DONE ding enable/disable icon
-**** DONE sort dings by measure/beat
 
 *** TODO clicks
 **** TODO generate clicks for count-in

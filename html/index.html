@@ -516,6 +516,7 @@
           <div class="metricals">
             <yam-section-time-signature tabindex="-1" enterkeyhint="done"></yam-section-time-signature>
             <yam-section-mm             tabindex="-1" enterkeyhint="done"></yam-section-mm>
+            <yam-subsection></yam-subsection>
           </div>
         </div>
         <datalist id="roles">
@@ -529,6 +530,13 @@
           <option value="turnaround">turnaround</option>
           <option value="other">other</option>
         </datalist>
+      </div>
+    </template>
+
+    <template id="template-subsection">
+      <div class="subsection">
+        <yam-section-time-signature tabindex="-1" enterkeyhint="done"></yam-section-time-signature>
+        <yam-section-mm             tabindex="-1" enterkeyhint="done"></yam-section-mm>
       </div>
     </template>
 

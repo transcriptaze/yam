@@ -344,6 +344,10 @@ export async function toggleWakeLock() {
   state.toggleWakeLock(button)
 }
 
+export function onError(err) {
+  console.error('ERROR', err)
+}
+
 export function debug() {
   DEBUG = !DEBUG
 
@@ -881,10 +885,6 @@ function onPlaylistDeleted(event) {
 
     engine.track = track
   }
-}
-
-function onError(err) {
-  console.error(err)
 }
 
 function animate(id) {

@@ -25,17 +25,17 @@ export function names() {
     if (['count-in', 'anacrusis'].includes(role)) {
       const n = g?.next().value ?? ''
 
-      return name ?? n
+      return name != null && name !== '' ? name : n
     }
 
     const section = f.next().value
 
     if (role === 'section') {
-      return name ?? section
+      return name != null && name !== '' ? name : section
     } else {
       const n = g?.next().value ?? section
 
-      return name ?? n
+      return name != null && name !== '' ? name : n
     }
   }
 }

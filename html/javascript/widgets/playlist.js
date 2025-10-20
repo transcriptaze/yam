@@ -16,7 +16,7 @@ export class Playlist extends HTMLElement {
     li: null,
     over: null,
     UUID: '',
-    list: null,
+    list: [],
     dropped: false,
   }
 
@@ -616,7 +616,7 @@ export class Playlist extends HTMLElement {
     this.#drag.li = event.target
     this.#drag.over = null
     this.#drag.UUID = track.UUID
-    this.#drag.list = this.#tracks.slice(0)
+    this.#drag.list = this.#tracks?.slice(0) ?? []
     this.#drag.dropped = false
   }
 
@@ -649,7 +649,7 @@ export class Playlist extends HTMLElement {
     this.#drag.li = null
     this.#drag.over = null
     this.#drag.UUID = ''
-    this.#drag.list = null
+    this.#drag.list = []
     this.#drag.dropped = false
   }
 

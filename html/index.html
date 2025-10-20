@@ -516,6 +516,7 @@
           <div class="metricals">
             <yam-section-time-signature tabindex="-1" enterkeyhint="done"></yam-section-time-signature>
             <yam-section-mm             tabindex="-1" enterkeyhint="done"></yam-section-mm>
+            <yam-subsection></yam-subsection>
           </div>
         </div>
         <datalist id="roles">
@@ -529,6 +530,13 @@
           <option value="turnaround">turnaround</option>
           <option value="other">other</option>
         </datalist>
+      </div>
+    </template>
+
+    <template id="template-subsection">
+      <div class="subsection">
+        <yam-section-time-signature tabindex="-1" enterkeyhint="done"></yam-section-time-signature>
+        <yam-section-mm             tabindex="-1" enterkeyhint="done"></yam-section-mm>
       </div>
     </template>
 
@@ -630,7 +638,7 @@
   <!-- SCRIPTS -->
   <script type="module">
     import "./javascript/widgets/widgets.js"
-    import { initialise, reset, show, load, save, requestWakeLock, toggleWakeLock, debug } from './javascript/YAM.js'
+    import { initialise, reset, show, load, save, requestWakeLock, toggleWakeLock, onError, debug } from './javascript/YAM.js'
 
     const toolbar = {
       reset: document.querySelector('toolbar #reset'),
@@ -688,6 +696,16 @@
 
         document.documentElement.style.setProperty('--vh', `${vh}px`)
       }, 100)
+    })
+
+    window.onerror = (message, source, lineno, colno, error) => {
+      onError({ message, source, lineno, colno, error })
+      return true
+    }
+
+    window.addEventListener("unhandledrejection", (event) => {
+      onError(event.reason)
+      event.preventDefault()
     })
 
     // ... start!

@@ -17,7 +17,7 @@ https://yam-8sz.pages.dev
 (or follow the installation instructions [below](#installation) to run your own version).
 
 
-## Disclaimer
+## Waivers and Demurrers
 
 This is very much a personal project and (currently at least) developed and tested exclusively with Google Chrome on a Pixel 5a.
 It will be a pleasant surprise and/or minor miracle if it works at all on anything else but you never know.

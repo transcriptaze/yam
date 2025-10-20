@@ -5,7 +5,7 @@ const SOUNDS = [
   'audio/default/tock.wav',
   'audio/default/tack.wav',
   'audio/default/stick.wav',
-  'audio/default/ding3.wav',
+  'audio/default/ding4.wav',
 ]
 
 const GET = {

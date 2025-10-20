@@ -1,0 +1,31 @@
+:host(.component-subsection) {
+  div.subsection {
+    background: #fcfcfc;
+    width: 100%;
+    height: fit-content;
+
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    grid-template-rows: auto;
+    column-gap: 8px;    
+
+    yam-time-signature {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    yam-mm {
+      grid-column: 2;
+      grid-row: 1
+    }
+
+    yam-time-signature {
+      height: 32px;
+    }
+
+    yam-mm {
+      height: 32px;
+    }
+  }
+}
+

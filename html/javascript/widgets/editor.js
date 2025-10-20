@@ -287,6 +287,7 @@ export class Editor extends HTMLElement {
     }
 
     li.setAttribute('draggable', false)
+    li.classList.add('show')
     li.appendChild(section)
 
     ul.appendChild(li)

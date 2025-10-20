@@ -11,8 +11,7 @@
 *** DONE save while playing resets track
 *** DONE worklet not using section BPM
 *** DONE cache engine initialisation
-
-*** TODO default section name not displayed in info
+*** DONE default section name not displayed in info
 
 *** TODO fix
 ```

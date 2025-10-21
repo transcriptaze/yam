@@ -14,14 +14,16 @@
 *** DONE default section name not displayed in info
 *** DONE playlist.js:674:38 Uncaught (in promise) TypeError: Cannot read properties of null (reading 'findIndex')
 
-*** TODO 'dings' (cf. https://github.com/transcriptaze/yam/issues/9)
-**** TODO better ding sample
+*** DONE 'dings' (cf. https://github.com/transcriptaze/yam/issues/9)
+**** DONE better ding sample
 **** DONE ding enable/disable icon
 **** DONE sort dings by measure/beat
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** DONE expand single section
 **** DONE slide in on initialisation
+**** TODO section time signature popup at bottom of list is unusable
+**** TODO section time signature not saving tactus/figura
 **** TODO display subsections
 **** TODO enable editor save iff changed
 

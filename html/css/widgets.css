@@ -1656,7 +1656,7 @@ div.playlist-track [popover]:popover-open::backdrop {
   padding-top: 12px;
   padding-left: 8px;
   padding-right: 8px;
-  padding-bottom: 4px;
+  padding-bottom: 128px;
   border-bottom-left-radius: 16px;
   border-bottom-right-radius: 16px;
   font-size: 0.9em;

@@ -23,10 +23,7 @@
       background: #fcfcfc;
       width: 100%;
 
-      display: grid;
-      grid-template-columns: auto auto 1fr;
-      grid-template-rows: auto auto;
-      column-gap: 8px;    
+      display: inline-block;
     }
 
     #arrow {
@@ -51,23 +48,7 @@
       grid-row: 1;
     }
 
-    yam-section-time-signature {
-      grid-column: 1;
-      grid-row: 1;
-
-      display: none;
-    }
-
-    yam-section-mm {
-      grid-column: 2;
-      grid-row: 1;
-
-      display: none;
-    }
-
     yam-subsection {
-      grid-column: 1 / 4;
-      grid-row: 2;
     }
 
     #arrow {
@@ -131,14 +112,6 @@
     #measures {
       width: 3em;
       font-family: "YAM", "Lato", sans;
-    }
-
-    yam-time-signature {
-      height: 32px;
-    }
-
-    yam-mm {
-      height: 32px;
     }
   }
 

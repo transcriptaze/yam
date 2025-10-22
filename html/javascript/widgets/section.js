@@ -9,7 +9,6 @@ export class Section extends HTMLElement {
   #fields = {}
 
   // ... state
-  // #track = {}
   #section = {}
 
   // ... handlers
@@ -133,17 +132,6 @@ export class Section extends HTMLElement {
     this.#measures.value = section?.measures ?? 0
     this.#measures.placeholder = this.#role.value === 'anacrusis' ? 1 : '∞'
 
-    // this.#timeSignature = {
-    //   timeSignature: section?.timeSignature ?? '',
-    //   defaults: section?.defaults ?? {},
-    // }
-
-    // this.#tempo = {
-    //   tempo: section?.tempo ?? {},
-    //   timeSignature: section?.timeSignature ?? '',
-    //   defaults: section?.defaults ?? {},
-    // }
-
     this.#subsection = {
       timeSignature: section?.timeSignature ?? '',
       tempo: section?.tempo ?? {},
@@ -152,34 +140,6 @@ export class Section extends HTMLElement {
   }
 
   set defaults(object) {
-    // const timeSignature = object?.timeSignature
-    // const pulse = object?.pulse
-    // const BPM = object?.BPM
-
-    // if (timeSignature != null && timeSignature !== '') {
-    //   this.#timeSignature.then((v) => {
-    //     v.defaults = {
-    //       timeSignature: timeSignature,
-    //     }
-    //   })
-    // }
-
-    // if (pulse != null && pulse !== '') {
-    //   this.#tempo.then((v) => {
-    //     v.defaults = {
-    //       pulse: pulse,
-    //     }
-    //   })
-    // }
-
-    // if (BPM != null && BPM >= 40 && BPM <= 200) {
-    //   this.#tempo.then((v) => {
-    //     v.defaults = {
-    //       BPM: BPM,
-    //     }
-    //   })
-    // }
-
     this.#subsection.then((e) => {
       e.defaults = object
     })
@@ -208,20 +168,12 @@ export class Section extends HTMLElement {
   }
 
   get timeSignature() {
-    // const e = this.shadowRoot?.querySelector('yam-section-time-signature')
-    //
-    // return e?.timeSignature ?? this.#section.timeSignature
-
     const e = this.shadowRoot?.querySelector('yam-subsection')
 
     return e?.timeSignature ?? this.#section.timeSignature
   }
 
   get tempo() {
-    // const e = this.shadowRoot?.querySelector('yam-section-mm')
-    //
-    // return e?.tempo ?? this.#section.tempo
-
     const e = this.shadowRoot?.querySelector('yam-subsection')
 
     return e?.tempo ?? this.#section.tempo
@@ -242,51 +194,6 @@ export class Section extends HTMLElement {
   get #measures() {
     return this.#fields.measures
   }
-
-  // get #timeSignature() {
-  //   return (async () => {
-  //     await customElements.whenDefined('yam-section-time-signature')
-  //
-  //     return this.shadowRoot?.querySelector('yam-section-time-signature')
-  //   })()
-  // }
-
-  // set #timeSignature({ timeSignature, defaults }) {
-  //   void (async () => {
-  //     await customElements.whenDefined('yam-section-time-signature')
-  //     const e = this.shadowRoot?.querySelector('yam-section-time-signature')
-  //     if (e) {
-  //       e.timeSignature = {
-  //         timeSignature: timeSignature,
-  //         defaults: defaults,
-  //       }
-  //     }
-  //   })()
-  // }
-
-  // get #tempo() {
-  //   return (async () => {
-  //     await customElements.whenDefined('yam-section-mm')
-  //
-  //     return this.shadowRoot?.querySelector('yam-section-mm')
-  //   })()
-  // }
-
-  // set #tempo({ tempo, timeSignature, defaults }) {
-  //   void (async () => {
-  //     await customElements.whenDefined('yam-section-mm')
-  //     const e = this.shadowRoot?.querySelector('yam-section-mm')
-  //     if (e) {
-  //       e.tempo = {
-  //         pulse: tempo.pulse,
-  //         BPM: tempo.BPM,
-  //         defaults: defaults,
-  //       }
-  //
-  //       e.timeSignature = timeSignature
-  //     }
-  //   })()
-  // }
 
   get #subsection() {
     return (async () => {

@@ -1837,10 +1837,7 @@ div.playlist-track [popover]:popover-open::backdrop {
 :host(.component-section) div.section div.metricals {
   background: #fcfcfc;
   width: 100%;
-  display: grid;
-  grid-template-columns: auto auto 1fr;
-  grid-template-rows: auto auto;
-  column-gap: 8px;
+  display: inline-block;
 }
 :host(.component-section) div.section #arrow {
   grid-column: 1;
@@ -1858,20 +1855,6 @@ div.playlist-track [popover]:popover-open::backdrop {
 :host(.component-section) div.section #measures {
   grid-column: 5;
   grid-row: 1;
-}
-:host(.component-section) div.section yam-section-time-signature {
-  grid-column: 1;
-  grid-row: 1;
-  display: none;
-}
-:host(.component-section) div.section yam-section-mm {
-  grid-column: 2;
-  grid-row: 1;
-  display: none;
-}
-:host(.component-section) div.section yam-subsection {
-  grid-column: 1/4;
-  grid-row: 2;
 }
 :host(.component-section) div.section #arrow {
   width: 16px;
@@ -1920,12 +1903,6 @@ div.playlist-track [popover]:popover-open::backdrop {
 :host(.component-section) div.section #measures {
   width: 3em;
   font-family: "YAM", "Lato", sans;
-}
-:host(.component-section) div.section yam-time-signature {
-  height: 32px;
-}
-:host(.component-section) div.section yam-mm {
-  height: 32px;
 }
 :host(.component-section) div.section.collapsed {
   row-gap: 0px;

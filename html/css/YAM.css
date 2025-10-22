@@ -436,6 +436,9 @@ toolbar div.menu div.right-menu {
   flex-direction: column;
   justify-content: flex-end;
 }
+toolbar img {
+  width: 36px;
+}
 toolbar button {
   background: transparent;
   border: none;
@@ -444,9 +447,6 @@ toolbar button {
   padding-bottom: 6px;
   padding-left: 6px;
   padding-right: 6px;
-}
-toolbar button img {
-  width: 36px;
 }
 toolbar button:disabled {
   display: none;
@@ -460,9 +460,6 @@ toolbar a {
   padding-left: 6px;
   padding-right: 6px;
 }
-toolbar a img {
-  width: 36px;
-}
 toolbar #reset:hover {
   filter: invert(10%) sepia(99%) saturate(5774%) hue-rotate(14deg) brightness(90%) contrast(121%);
 }
@@ -474,6 +471,28 @@ toolbar #bug {
 }
 toolbar #wakelock.active img {
   filter: invert(10%) sepia(99%) saturate(5774%) hue-rotate(14deg) brightness(90%) contrast(121%);
+}
+toolbar #about {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  justify-items: center;
+  align-items: center;
+}
+toolbar #about a {
+  grid-column: 1;
+  grid-row: 1;
+}
+toolbar #about img.warning {
+  grid-column: 1;
+  grid-row: 1;
+  display: none;
+}
+toolbar #about.error a {
+  display: none;
+}
+toolbar #about.error img.warning {
+  display: block;
 }
 
 toolbar.metronome #metronome {

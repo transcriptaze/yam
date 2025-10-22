@@ -346,6 +346,8 @@ export async function toggleWakeLock() {
 
 export function onError(err) {
   console.error('ERROR', err)
+
+  document.querySelector('#about')?.classList.add('error')
 }
 
 export function debug() {

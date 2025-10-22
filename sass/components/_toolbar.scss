@@ -22,6 +22,10 @@ toolbar {
     }
   }
 
+  img {
+    width: 36px;
+  }
+
   button {
     background: transparent;
     border: none;
@@ -31,10 +35,6 @@ toolbar {
     padding-bottom: 6px;
     padding-left: 6px;
     padding-right: 6px;
-
-    img {
-      width: 36px;
-    }
   }
 
   button:disabled {
@@ -49,10 +49,6 @@ toolbar {
     padding-bottom: 6px;
     padding-left: 6px;
     padding-right: 6px;
-
-    img {
-      width: 36px;
-    }  
   }
 
   #reset:hover {
@@ -70,6 +66,35 @@ toolbar {
   #wakelock.active {
     img {
       filter: invert(10%) sepia(99%) saturate(5774%) hue-rotate(14deg) brightness(90%) contrast(121%);
+    }
+  }
+
+  #about {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto;
+    justify-items: center;
+    align-items: center;
+
+    a {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    img.warning {
+      grid-column: 1;
+      grid-row: 1;
+      display: none;
+    }
+  }
+
+  #about.error {
+    a {
+      display: none;
+    }
+
+    img.warning {
+      display: block;
     }
   }
 }

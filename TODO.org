@@ -42,7 +42,6 @@
 *** TODO (maybe) keep selected playlist on import
 *** TODO make errors visible
       - icon + title text
-      - (?) replace 'about' icon
 *** TODO edit from playlist
 *** TODO use async getters for nested web components
 *** TODO URL - use ?UUID= or ?title= 

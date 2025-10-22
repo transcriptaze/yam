@@ -1,5 +1,4 @@
-import { EVENTS } from '../constants.js'
-import { parseTimeSignature as parse } from '../util.js'
+import { DIVISIONS, EVENTS } from '../constants.js'
 
 const TACTUS = new Map([
   ['1', './images/time-signatures/tactus/1.svg'],
@@ -102,15 +101,17 @@ export class SectionTimeSignature extends HTMLElement {
         if (tactus.checkValidity()) {
           this.#beats = tactus.value
 
-          this.dispatchEvent(
-            new CustomEvent(EVENTS.SECTION_TIME_SIGNATURE_CHANGE, {
-              bubbles: true,
-              composed: true,
-              detail: {
-                timeSignature: this.timeSignature,
-              },
-            }),
-          )
+          const { beats, divisions } = parseTimeSignature(this.timeSignature)
+
+          if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
+            this.dispatchEvent(
+              new CustomEvent(EVENTS.SECTION_TIME_SIGNATURE_CHANGE, {
+                bubbles: true,
+                composed: true,
+                detail: { timeSignature: this.timeSignature },
+              }),
+            )
+          }
         }
       },
     },
@@ -121,15 +122,17 @@ export class SectionTimeSignature extends HTMLElement {
         if (figura.checkValidity()) {
           this.#divisions = figura.value
 
-          this.dispatchEvent(
-            new CustomEvent(EVENTS.SECTION_TIME_SIGNATURE_CHANGE, {
-              bubbles: true,
-              composed: true,
-              detail: {
-                timeSignature: this.timeSignature,
-              },
-            }),
-          )
+          const { beats, divisions } = parseTimeSignature(this.timeSignature)
+
+          if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
+            this.dispatchEvent(
+              new CustomEvent(EVENTS.SECTION_TIME_SIGNATURE_CHANGE, {
+                bubbles: true,
+                composed: true,
+                detail: { timeSignature: this.timeSignature },
+              }),
+            )
+          }
         }
       },
     },
@@ -202,38 +205,53 @@ export class SectionTimeSignature extends HTMLElement {
     const container = shadow.querySelector('div.time-signature')
     const tactus = shadow.querySelector('input#tactus')
     const figura = shadow.querySelector('input#figura')
+    const { beats, divisions } = parseTimeSignature(`${timeSignature}`)
 
     if (defaults != null && defaults.timeSignature != null) {
       this.#defaults.timeSignature = defaults.timeSignature
     }
 
-    if (timeSignature === '') {
-      this.#timeSignature = ``
-      tactus.value = ''
-      figura.value = ''
-    } else if (timeSignature == 'common') {
-      this.#timeSignature = `common`
-      tactus.value = 4
-      figura.value = 4
-    } else if (timeSignature == 'cut') {
-      this.#timeSignature = `cut`
-      tactus.value = 2
-      figura.value = 2
-    } else {
-      const { beats, divisions } = parse(`${timeSignature}`)
+    switch (true) {
+      case timeSignature === '':
+        this.#timeSignature = ``
+        tactus.value = ''
+        figura.value = ''
+        container.classList.add('none')
+        break
 
-      if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
-        this.#timeSignature = `${beats}:${divisions}`
+      case timeSignature == 'common':
+        this.#timeSignature = `common`
+        tactus.value = 4
+        figura.value = 4
+        container.classList.remove('none')
+        break
 
-        tactus.value = beats
-        figura.value = divisions
-      }
-    }
+      case timeSignature == 'cut':
+        this.#timeSignature = `cut`
+        tactus.value = 2
+        figura.value = 2
+        container.classList.remove('none')
+        break
 
-    if (timeSignature === '') {
-      container.classList.add('none')
-    } else {
-      container.classList.remove('none')
+      default:
+        if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
+          this.#timeSignature = `${beats}:${divisions}`
+          tactus.value = beats
+          figura.value = divisions
+          container.classList.remove('none')
+        } else if (!Number.isNaN(beats)) {
+          this.#timeSignature = `${beats}:`
+          tactus.value = beats
+          figura.value = ''
+          container.classList.add('none')
+        } else if (!Number.isNaN(divisions)) {
+          this.#timeSignature = `:${divisions}`
+          tactus.value = ''
+          figura.value = divisions
+          container.classList.add('none')
+        } else {
+          container.classList.add('none')
+        }
     }
 
     this.#redraw()
@@ -277,17 +295,23 @@ export class SectionTimeSignature extends HTMLElement {
 
   set #beats(v) {
     const beats = parseInt(`${v}`)
-    const { divisions } = parse(`${this.#timeSignature}`)
+    const { divisions } = parseTimeSignature(`${this.#timeSignature}`)
 
     if (!Number.isNaN(beats) && TACTUS.has(`${beats}`)) {
-      this.timeSignature = {
-        timeSignature: `${beats}:${divisions}`,
+      if (DIVISIONS.includes(divisions)) {
+        this.timeSignature = {
+          timeSignature: `${beats}:${divisions}`,
+        }
+      } else {
+        this.timeSignature = {
+          timeSignature: `${beats}:`,
+        }
       }
     }
   }
 
   set #divisions(v) {
-    const { beats } = parse(`${this.#timeSignature}`)
+    const { beats } = parseTimeSignature(`${this.#timeSignature}`)
     const divisions = parseInt(`${v}`)
 
     if (!Number.isNaN(divisions) && FIGURA.has(`${divisions}`)) {
@@ -328,7 +352,7 @@ export class SectionTimeSignature extends HTMLElement {
         common.classList.remove('placeholder')
         cut.classList.remove('placeholder')
 
-        const { beats, divisions } = parse(defval)
+        const { beats, divisions } = parseTimeSignature(defval)
         if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
           if (TACTUS.has(`${beats}`)) {
             tactus.src = TACTUS.get(`${beats}`)
@@ -362,7 +386,7 @@ export class SectionTimeSignature extends HTMLElement {
       common.classList.add('hidden')
       cut.classList.add('hidden')
 
-      const { beats, divisions } = parse(timeSignature)
+      const { beats, divisions } = parseTimeSignature(timeSignature)
       if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
         if (TACTUS.has(`${beats}`)) {
           tactus.src = TACTUS.get(`${beats}`)
@@ -374,6 +398,39 @@ export class SectionTimeSignature extends HTMLElement {
       }
     }
   }
+}
+
+// NTS: handles partial time signatures, unlike util::parseTimesignature
+function parseTimeSignature(v) {
+  if (`${v}` === 'common') {
+    return { beats: 4, divisions: 4 }
+  }
+
+  if (`${v}` === 'cut') {
+    return { beats: 2, divisions: 2 }
+  }
+
+  const timeSignature = {
+    beats: Number.NaN,
+    divisions: Number.NaN,
+  }
+
+  const matches = `${v}`.match(/([0-9]+):([0-9]+)?/)
+
+  if (matches != null) {
+    const beats = parseInt(matches[1])
+    const divisions = parseInt(matches[2])
+
+    if (!Number.isNaN(beats) && beats >= 1 && beats <= 32) {
+      timeSignature.beats = beats
+    }
+
+    if (!Number.isNaN(divisions) && DIVISIONS.includes(divisions)) {
+      timeSignature.divisions = divisions
+    }
+  }
+
+  return timeSignature
 }
 
 customElements.define('yam-section-time-signature', SectionTimeSignature)

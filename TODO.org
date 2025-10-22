@@ -19,7 +19,7 @@
 **** DONE expand single section
 **** DONE slide in on initialisation
 **** DONE section time signature popup at bottom of list is unusable
-**** TODO section time signature not saving tactus/figura
+**** DONE section time signature not saving tactus/figura
 **** TODO display subsections
 **** TODO enable editor save iff changed
 

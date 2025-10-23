@@ -85,12 +85,22 @@ export class TimeSignature extends HTMLElement {
     },
 
     figura: {
-      input: () => {
-        const figura = this.shadowRoot.querySelector('input#figura')
-        if (figura.checkValidity()) {
-          this.#divisions = figura.value
-          this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: this.timeSignature } }))
-        }
+      // input: () => {
+      //   const figura = this.shadowRoot.querySelector('input#figura')
+      //   if (figura.checkValidity()) {
+      //     this.#divisions = figura.value
+      //     this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: this.timeSignature } }))
+      //   }
+      // },
+
+      change: (event) => {
+        this.#divisions = event.detail.divisions
+        this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: this.timeSignature } }))
+      },
+
+      changed: (event) => {
+        this.#divisions = event.detail.divisions
+        this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: this.timeSignature } }))
       },
     },
 
@@ -146,14 +156,17 @@ export class TimeSignature extends HTMLElement {
     const shadow = this.shadowRoot
     const ul = shadow.querySelector('div.content ul')
     const tactus = shadow.querySelector('input#tactus')
-    const figura = shadow.querySelector('input#figura')
+    // const figura = shadow.querySelector('input#figura')
+    const wheel = shadow.querySelector('yam-figura')
     const button = shadow.querySelector('[popovertarget]')
     const overlay = shadow.querySelector('div.overlay')
     const lock = shadow.querySelector('#lock')
 
     ul.addEventListener('click', this.#handlers.ul.click)
     tactus.addEventListener('input', this.#handlers.tactus.input)
-    figura.addEventListener('input', this.#handlers.figura.input)
+    // figura.addEventListener('input', this.#handlers.figura.input)
+    wheel.addEventListener('change', this.#handlers.figura.change)
+    wheel.addEventListener('changed', this.#handlers.figura.changed)
 
     overlay.addEventListener('click', this.#handlers.overlay.click)
     lock.addEventListener('animationend', this.#handlers.lock.animated)
@@ -186,20 +199,24 @@ export class TimeSignature extends HTMLElement {
     const shadow = this.shadowRoot
     const container = shadow.querySelector('div.time-signature')
     const tactus = shadow.querySelector('input#tactus')
-    const figura = shadow.querySelector('input#figura')
+    // const figura = shadow.querySelector('input#figura')
+    const wheel = shadow.querySelector('yam-figura')
 
     if (v === '') {
       this.#timeSignature = ``
       tactus.value = ''
-      figura.value = ''
+      // figura.value = ''
+      wheel.divisions = 4
     } else if (v == 'common') {
       this.#timeSignature = `common`
       tactus.value = 4
-      figura.value = 4
+      // figura.value = 4
+      wheel.divisions = 4
     } else if (v == 'cut') {
       this.#timeSignature = `cut`
       tactus.value = 2
-      figura.value = 2
+      // figura.value = 2
+      wheel.divisions = 2
     } else {
       const { beats, divisions } = parse(`${v}`)
 
@@ -207,7 +224,8 @@ export class TimeSignature extends HTMLElement {
         this.#timeSignature = `${beats}:${divisions}`
 
         tactus.value = beats
-        figura.value = divisions
+        // figura.value = divisions
+        wheel.divisions = divisions
       }
     }
 

@@ -140,8 +140,8 @@ export class Pads extends HTMLElement {
 
     if (divisions === 4 && pulse === 'eighth-doublet') {
       this.#eightDoublets(beats)
-    } else if (beats === 6 && divisions === 8 && pulse === 'dotted-quarter') {
-      this.#sixEighths(beats)
+    } else if ([3, 6, 9, 12].includes(beats) && divisions === 8 && pulse === 'dotted-quarter') {
+      this.#dottedQuarter(beats)
     } else if (beats === 5 && divisions === 4 && pulse === 'quarter') {
       this.#fiveFour(beats)
     } else {
@@ -183,14 +183,14 @@ export class Pads extends HTMLElement {
     div.replaceChildren(...pads)
   }
 
-  #sixEighths() {
+  #dottedQuarter(beats) {
     const shadow = this.shadowRoot
     const div = shadow.querySelector('div.pads')
     const pads = []
 
-    for (let i = 0; i < 6; i++) {
+    for (let i = 0; i < beats; i++) {
       const pad = document.createElement('yam-beat')
-      const clazz = [2, 3, 5, 6].includes(i + 1) ? 'diamond' : 'block'
+      const clazz = [2, 3, 5, 6, 8, 9, 11, 12].includes(i + 1) ? 'diamond' : 'block'
 
       pad.classList.add('beat')
       pad.classList.add(clazz)

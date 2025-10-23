@@ -15,6 +15,8 @@ const INF = Number.POSITIVE_INFINITY
 
 export class MetronomeNode extends AudioWorkletNode {
   #loops = INF
+  #timeSignature = ''
+  #pulse = ''
   #sections = new Map()
 
   #cache = {
@@ -101,6 +103,8 @@ export class MetronomeNode extends AudioWorkletNode {
   }
 
   set pulse(pulse) {
+    this.#pulse = pulse
+
     if (pulse != null) {
       const k = PULSE.pulseToInt(pulse)
 
@@ -111,6 +115,8 @@ export class MetronomeNode extends AudioWorkletNode {
   }
 
   set timeSignature(timeSignature) {
+    this.#timeSignature = timeSignature
+
     if (timeSignature != null) {
       const { beats, divisions } = parseTimeSignature(timeSignature)
 
@@ -122,10 +128,22 @@ export class MetronomeNode extends AudioWorkletNode {
   }
 
   set track(v) {
+    if (v?.timeSignature != null) {
+      this.timeSignature = v.timeSignature
+    }
+
+    if (v?.pulse != null) {
+      this.pulse = v.pulse
+    }
+
+    if (v?.BPM != null) {
+      this.BPM = v.BPM
+    }
+
     const track = transmogrify({
       tempo: v?.tempo,
-      timeSignature: v?.timeSignature,
-      pulse: v?.pulse,
+      timeSignature: v?.timeSignature ?? this.#timeSignature,
+      pulse: v?.pulse ?? this.#pulse,
       BPM: v?.BPM,
       loops: v?.loops ?? INF,
       clicks: v?.clicks ?? null,
@@ -159,10 +177,6 @@ export class MetronomeNode extends AudioWorkletNode {
     const loop = v?.loop ?? false
     const dings = track.dings ?? []
     const ding = track.ding ?? false
-
-    this.timeSignature = track.timeSignature
-    this.pulse = track.pulse
-    this.BPM = track.BPM
 
     this.parameters.get('loop').setValueAtTime(loopable && loop ? 1 : 0, ctx.currentTime)
     this.parameters.get('ding').setValueAtTime(dings.length > 0 && ding ? 1 : 0, ctx.currentTime)

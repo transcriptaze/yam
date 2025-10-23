@@ -354,6 +354,18 @@ export class Metronome extends AudioWorkletProcessor {
 
     // ... anacrusis
     if ('anacrusis' === this.section?.role) {
+      if (this.section?.clicks == null && pulse === DOTTED_QUARTER) {
+        if ([1, 4, 7, 10].includes(beat)) {
+          const click = this.clicks.get('sticks') ?? this.clicks.get('default')
+
+          if (click != null) {
+            this.#cued.push(sample(click))
+          }
+        }
+
+        return
+      }
+
       const clicks = this.section?.clicks ?? []
       const key = clicks.includes(beat) ? 'default' : 'count-in'
       const click = this.clicks.get(key) ?? this.clicks.get('default')
@@ -390,9 +402,9 @@ export class Metronome extends AudioWorkletProcessor {
       return
     }
 
-    // ... 6:8, dotted-quarter
+    // ... [3:8, 6:8, 9:8, 12:8], dotted-quarter
     if (pulse === DOTTED_QUARTER) {
-      if ([1, 4].includes(beat)) {
+      if ([1, 4, 7, 10].includes(beat)) {
         const click = this.clicks.get(beat) ?? this.clicks.get('default')
         if (click != null) {
           this.#cued.push(sample(click))

@@ -464,26 +464,29 @@ function onDing(event) {
   engine.ding = state.ding
 }
 
-function onKnob(save) {
+// 'changed' is true on mouse-up
+function onKnob(changed) {
   const BPM = widgets.knob.BPM
 
   state.BPM = BPM
   widgets.mm.BPM = BPM
   engine.BPM = BPM
 
-  if (state.track === '' && save) {
+  if (state.track === '' && changed) {
     settings.BPM = state.BPM
     settings.save()
   }
 }
 
-function onWheel(save) {
-  const BPM = document.querySelector('yam-wheel').BPM
+// 'changed' is true on mouse-up
+function onWheel(changed) {
+  const BPM = widgets.wheel.BPM
 
   state.BPM = BPM
+  widgets.mm.BPM = BPM
   engine.BPM = state.BPM
 
-  if (state.track === '' && save) {
+  if (state.track === '' && changed) {
     settings.BPM = state.BPM
     settings.save()
   }

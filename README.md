@@ -12,15 +12,17 @@ help he can get. If that description is not you (it probably isn't 😄) then YM
 
 It's available online if you want to try it out:
 
-https://yam-8sz.pages.dev
+https://yam-alpha.pages.dev
 
 (or follow the installation instructions [below](#installation) to run your own version).
 
 
 ## Waivers and Demurrers
 
-This is very much a personal project and (currently at least) developed and tested exclusively with Google Chrome on a Pixel 5a.
+This is very much a personal project and (currently at least) developed and tested almost exclusively with Google Chrome on a Pixel 5a.
 It will be a pleasant surprise and/or minor miracle if it works at all on anything else but you never know.
+
+It's also _pre-alpha_ i.e. expect the code, architecture, everything to change **often** ..
 
 
 ## Screenshots

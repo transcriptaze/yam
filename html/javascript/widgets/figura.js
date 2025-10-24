@@ -286,6 +286,7 @@ export class Figura extends HTMLElement {
       }
     }
 
+    // ... don't need to redraw every frame
     const f1 = Math.round(this.#value * 50) / 50
 
     if (this.old !== f1) {

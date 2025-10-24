@@ -15,12 +15,16 @@
 *** DONE playlist.js:674:38 Uncaught (in promise) TypeError: Cannot read properties of null (reading 'findIndex')
 *** DONE 'dings' (cf. https://github.com/transcriptaze/yam/issues/9)
 *** DONE pads for 3:8, 6:8, 9:8 and 12:8, dotted-quarter
+*** DONE BPM wheel (landscape) not updating MM
 
 *** TODO figura wheel (cf. https://github.com/transcriptaze/yam/issues/13)
 **** DONE svg
 **** DONE fix jump to next up value
 **** DONE index is inverted
 **** DONE replace figura input
+**** DONE yam-time-signature
+**** TODO yam-section-time-signature
+**** TODO Bravura font
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** DONE expand single section

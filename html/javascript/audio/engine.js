@@ -174,14 +174,6 @@ class Engine {
     return false
   }
 
-  get section() {
-    if (this.initialised) {
-      return this.metronome.section ?? ''
-    }
-
-    return ''
-  }
-
   get bar() {
     if (this.initialised) {
       return this.metronome.bar ?? 0

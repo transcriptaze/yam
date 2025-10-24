@@ -231,7 +231,7 @@ export class Metronome extends AudioWorkletProcessor {
       if (clock.time >= 250) {
         if (this.FSM.on250ms()) {
           clock.reset()
-          this.flip(FSM.STATE.PLAYING, null, 0, 0, this.#loops)
+          this.flip({ state: FSM.STATE.PLAYING, bar: 0, beat: 0, loops: this.#loops })
           this.port.postMessage({
             message: 'playing',
           })
@@ -272,11 +272,11 @@ export class Metronome extends AudioWorkletProcessor {
           const loops = this.track?.loops ?? INF
 
           if (loop && (loops == INF || this.#loops < loops) && this.FSM.onPlay()) {
-            this.flip(FSM.STATE.STOPPED, null, 0, 0, this.#loops, parameters)
+            this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
             this.section = null
             this.clock.reset()
           } else {
-            this.flip(FSM.STATE.STOPPED, null, 0, 0, 0, parameters)
+            this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
             this.port.postMessage({
               message: 'stopped',
             })
@@ -295,13 +295,13 @@ export class Metronome extends AudioWorkletProcessor {
           }
 
           this.cue(cluck.beat, pulse)
-          this.flip(FSM.STATE.PLAYING, this.section, cluck.bar, cluck.beat, this.#loops, parameters)
+          this.flip({ state: FSM.STATE.PLAYING, bar: cluck.bar, beat: cluck.beat, loops: this.#loops })
           log('PLAY', clock.t, clock.time, BPM, cluck.bar, cluck.beat, tactus, figura, pulse)
         }
       }
     } else if (this.stopping) {
       this.FSM.onStopped()
-      this.flip(FSM.STATE.STOPPED, null, 0, 0, 0, parameters)
+      this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
       log('STOP', clock.t, clock.time, BPM, Number.NaN, Number.NaN, gain, tactus, figura)
     }
 
@@ -421,12 +421,11 @@ export class Metronome extends AudioWorkletProcessor {
     }
   }
 
-  flip(state, section, bar, beat, loops) {
+  flip({ state, bar, beat, loops }) {
     this.port.postMessage({
       message: 'flipped',
 
       state: state,
-      section: section?.ID ?? 0,
       bar: bar,
       beat: beat,
       loops: loops,

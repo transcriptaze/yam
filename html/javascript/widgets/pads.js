@@ -70,7 +70,7 @@ export class Pads extends HTMLElement {
     }
   }
 
-  redraw(beat, { playing, stopped, bar }) {
+  redraw({ playing, stopped, bar, beat }) {
     const track = this.#track
 
     if (track == null) {

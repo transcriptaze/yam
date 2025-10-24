@@ -1,21 +1,37 @@
 import { COLOURS, INF } from '../constants.js'
-import * as generators from '../generators.js'
+import * as datastore from '../datastore/datastore.js'
 
 export class Info extends HTMLElement {
   static get observedAttributes() {
     return []
   }
 
-  #track = {
-    bars: 0,
-    countIn: 0,
-    pickup: 0,
-    sections: new Map(),
-  }
+  #track = null
 
   #cache = {
     section: -1,
     bar: -1,
+  }
+
+  #handlers = {
+    title: {
+      keypress: (e) => {
+        if (e.key === 'Enter') {
+          this.#title.blur()
+          this.dispatchEvent(new CustomEvent('save', { detail: {} }))
+        }
+      },
+
+      input: (_) => {
+        this.dispatchEvent(new CustomEvent('change', { detail: { title: this.title } }))
+      },
+    },
+
+    save: {
+      click: (_) => {
+        this.dispatchEvent(new CustomEvent('save', { detail: {} }))
+      },
+    },
   }
 
   constructor() {
@@ -48,32 +64,21 @@ export class Info extends HTMLElement {
 
   attributeChangedCallback(_name, _from, _to) {}
 
-  set track(track) {
-    // ... set title
-    this.title = track?.title ?? ''
+  set track(v) {
+    const track = datastore.tracks.get(v)
 
-    // ... stash sections
-    const sections = transmogrify(track)
-
-    this.#track.sections = new Map(sections.map((v) => [v.ID, v]))
-    this.#track.bars = sections.reduce((measures, section) => measures + section.measures, 0)
-    this.#track.countIn = 0
-    this.#track.pickup = 0
-
+    this.#track = track
     this.#cache.section = -1
     this.#cache.bar = -1
 
-    if (sections.length > 0 && sections[0].role == 'count-in') {
-      this.#track.countIn = sections[0].measures
-      if (sections.length > 1 && sections[1].role == 'anacrusis') {
-        this.#track.pickup = sections[1].measures
-      }
-    } else if (sections.length > 0 && sections[0].role == 'anacrusis') {
-      this.#track.pickup = sections[0].measures
-    }
+    // ... set title
+    this.title = track?.title ?? ''
 
-    if (this.#track.sections.size > 0) {
-      const section = this.#track.sections.get(1)
+    // ... set detail
+    const sections = track.sections
+
+    if (sections.length > 0) {
+      const section = sections[0]
 
       this.#container.classList.add('details')
       this.#text.classList.remove('playing')
@@ -101,64 +106,59 @@ export class Info extends HTMLElement {
     this.#save.disabled = v === true ? false : true
   }
 
-  redraw(bar, { playing, section }) {
-    const v = section ?? {
-      ID: -1,
-      name: '',
-      measures: 0,
-      start: 1,
-      colour: '#ffffff00',
-    }
+  redraw({ playing, stopped, bar }) {
+    const track = this.#track
+    const sections = track?.sections ?? []
+    const section = sections.findLast((v) => v.start <= bar)
 
-    this.#redraw(bar, playing, v)
+    if (section != null) {
+      this.#redraw(bar, playing, stopped, section)
+    }
   }
 
-  #redraw(bar, playing, _section) {
-    const section = this.#track.sections.get(_section.ID) ?? this.#track.sections.get(1)
-
-    if (_section.ID !== this.#cache.section) {
-      this.#cache.section = _section.ID
+  #redraw(bar, playing, stopped, section) {
+    if (section?.ID !== this.#cache.section) {
+      this.#cache.section = section?.ID
 
       const name = section?.name ?? ''
       const colour = section?.colour ?? '#00000000'
       const text = COLOURS.get(section?.colour ?? '') ?? '#222222'
 
       // NB set the colour before setting the progress bar value/max
-      if (!playing && this.#track.sections.size > 0) {
+      if (!playing) {
         this.style.setProperty('--accent-color', `#c0c0c040`)
-
         this.#text.classList.remove('playing')
         this.#section.innerHTML = name
       } else if (playing) {
         this.style.setProperty('--text-color', text)
         this.style.setProperty('--accent-color', colour)
-
         this.#text.classList.add('playing')
         this.#section.innerHTML = name
       }
     }
 
-    if (!playing) {
+    if (!playing && stopped) {
+      this.#cache.bar = null
+
       this.#bars = {
         playing: playing,
         section: null,
         bar: null,
       }
 
-      this.#cache.bar = null
       this.#progress.value = 0
       this.#progress.max = this.#track.bars
-    } else if (bar != this.#cache.bar) {
+    } else if (playing && !stopped && bar != this.#cache.bar) {
       this.#cache.bar = bar
-
-      const measures = section?.measures ?? 0
-      const start = section?.start ?? INF
 
       this.#bars = {
         playing: playing,
         section: section,
         bar: bar,
       }
+
+      const measures = section?.measures ?? 0
+      const start = section?.start ?? INF
 
       if (measures > 0 && measures !== INF && bar >= start) {
         this.#progress.value = bar - start + 1
@@ -198,17 +198,14 @@ export class Info extends HTMLElement {
     const measures = section?.measures ?? 0
     const start = section?.start ?? INF
 
-    const c = countIn != null && !Number.isNaN(countIn) && countIn > 0 ? countIn : 0
-    const p = pickup != null && !Number.isNaN(pickup) && pickup > 0 ? pickup : 0
-
     switch (true) {
       case !playing && bars === INF:
-        if (c > 0 && p > 0) {
-          this.#bars.innerHTML = `${c}+${p} +<span class="infinity">&infin;</span>`
-        } else if (c > 0) {
-          this.#bars.innerHTML = `${c} +<span class="infinity">&infin;</span>`
-        } else if (p > 0) {
-          this.#bars.innerHTML = `${p} +<span class="infinity">&infin;</span>`
+        if (countIn > 0 && pickup > 0) {
+          this.#bars.innerHTML = `${countIn}+${pickup} +<span class="infinity">&infin;</span>`
+        } else if (countIn > 0) {
+          this.#bars.innerHTML = `${countIn} +<span class="infinity">&infin;</span>`
+        } else if (pickup > 0) {
+          this.#bars.innerHTML = `${pickup} +<span class="infinity">&infin;</span>`
         } else {
           this.#bars.innerHTML = '<span class="infinity">&infin;</span>'
         }
@@ -219,14 +216,14 @@ export class Info extends HTMLElement {
         break
 
       case !playing:
-        if (c > 0 && p > 0) {
-          this.#bars.innerHTML = `${c}+${p}+${bars - c - p}`
-        } else if (c > 0) {
-          this.#bars.innerHTML = `${c}+${bars - c - p}`
-        } else if (p > 0) {
-          this.#bars.innerHTML = `${p}+${bars - c - p}`
+        if (countIn > 0 && pickup > 0) {
+          this.#bars.innerHTML = `${countIn}+${pickup}+${bars - countIn - pickup}`
+        } else if (countIn > 0) {
+          this.#bars.innerHTML = `${countIn}+${bars - countIn - pickup}`
+        } else if (pickup > 0) {
+          this.#bars.innerHTML = `${pickup}+${bars - countIn - pickup}`
         } else {
-          this.#bars.innerHTML = `${bars - c - p}`
+          this.#bars.innerHTML = `${bars - countIn - pickup}`
         }
         break
 
@@ -257,40 +254,6 @@ export class Info extends HTMLElement {
   get #text() {
     return this.shadowRoot.querySelector('div.text')
   }
-
-  #handlers = {
-    title: {
-      keypress: (e) => {
-        if (e.key === 'Enter') {
-          this.#title.blur()
-          this.dispatchEvent(new CustomEvent('save', { detail: {} }))
-        }
-      },
-
-      input: (_) => {
-        this.dispatchEvent(new CustomEvent('change', { detail: { title: this.title } }))
-      },
-    },
-
-    save: {
-      click: (_) => {
-        this.dispatchEvent(new CustomEvent('save', { detail: {} }))
-      },
-    },
-  }
-}
-
-function transmogrify(track) {
-  return [...generators.transmogrify(track)].map((v) => {
-    return {
-      ID: v.ID,
-      role: v.role,
-      name: v.name,
-      measures: v.measures,
-      colour: v.colour,
-      start: v.start,
-    }
-  })
 }
 
 customElements.define('yam-info', Info)

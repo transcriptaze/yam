@@ -893,30 +893,23 @@ function onPlaylistDeleted(event) {
 }
 
 function animate(id) {
-  const playing = engine.playing
-  const stopped = engine.stopped
-  const bar = engine.bar
-  const section = engine.section // FIXME used by info
-  const beat = engine.beat
-  const loops = engine.loops
+  const runstate = {
+    playing: engine.playing,
+    stopped: engine.stopped,
+    bar: engine.bar,
+    beat: engine.beat,
+    loops: engine.loops,
+  }
 
-  // const runstate = {
-  //   playing: playing,
-  //   stopped: stopped,
-  //   bar: bar,
-  //   section: section,
-  //   loops: loops,
-  // }
+  widgets.pads.redraw(runstate)
+  widgets.info.redraw(runstate)
+  widgets.timeSignature.redraw(runstate)
+  widgets.mm.redraw(runstate)
+  widgets.knob.redraw(runstate)
+  widgets.wheel.redraw(runstate)
+  widgets.loop.redraw(runstate)
 
-  widgets.pads.redraw(beat, { playing, stopped, bar })
-  widgets.info.redraw(bar, { playing, section })
-  widgets.timeSignature.redraw({ playing, stopped, bar })
-  widgets.mm.redraw({ playing, stopped, bar })
-  widgets.knob.redraw({ playing, stopped })
-  widgets.wheel.redraw({ playing, stopped })
-  widgets.loop.redraw({ loops })
-
-  if (!stopped) {
+  if (!runstate.stopped) {
     requestAnimationFrame(() => animate(id))
   }
 }

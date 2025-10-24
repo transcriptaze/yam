@@ -2122,6 +2122,9 @@ div.playlist-track [popover]:popover-open::backdrop {
 :host(.component-section-time-signature) div.time-signature div#list div.content div.custom input:invalid {
   color: red;
 }
+:host(.component-section-time-signature) div.time-signature div#list div.content div.custom yam-figura {
+  width: 172px;
+}
 :host(.component-section-time-signature) div.time-signature.none button img {
   filter: grayscale(100%) opacity(25%);
 }

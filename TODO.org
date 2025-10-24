@@ -23,7 +23,7 @@
 **** DONE index is inverted
 **** DONE replace figura input
 **** DONE yam-time-signature
-**** TODO yam-section-time-signature
+**** DONE yam-section-time-signature
 **** TODO Bravura font
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
@@ -51,6 +51,7 @@
 *** TODO connectedCallback: event handler duplication
 
 ** Fixes
+*** TODO finish loop icon numbers
 *** TODO Cloudflare (cf. https://github.com/transcriptaze/yam/issues/6)
 *** TODO (maybe) keep selected playlist on import
 *** TODO make errors visible

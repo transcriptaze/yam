@@ -10,6 +10,7 @@ const DIVISIONS = new Map([
   [2, 8],
   [3, 4],
   [4, 2],
+  [6, ''],
 ])
 
 export class Figura extends HTMLElement {
@@ -109,13 +110,16 @@ export class Figura extends HTMLElement {
   set divisions(v) {
     if (!this.#drag.dragging) {
       const divisions = parseInt(`${v}`, 10)
+      const kv = Array.from(DIVISIONS.entries()).find(([_, v]) => v === divisions)
+      const none = Array.from(DIVISIONS.entries()).find(([_, v]) => v === '')
 
-      DIVISIONS.forEach((v, k) => {
-        if (v === divisions) {
-          this.#value = k
-          this.#divisions = v
-        }
-      })
+      if (kv != null) {
+        this.#value = kv[0]
+        this.#divisions = kv[1]
+      } else if (none != null) {
+        this.#value = none[0]
+        this.#divisions = none[1]
+      }
 
       this.#redraw()
     }

@@ -18,8 +18,7 @@
 *** DONE BPM wheel (landscape) not updating MM
 *** DONE figura wheel (cf. https://github.com/transcriptaze/yam/issues/13)
 *** DONE progress bar not being reset on stopped
-
-*** TODO reset not clearing track
+*** DONE reset not clearing track
 
 *** TODO tactus wheel (cf. https://github.com/transcriptaze/yam/issues/12)
 **** TODO svg

@@ -75,7 +75,7 @@ export class Info extends HTMLElement {
     this.title = track?.title ?? ''
 
     // ... set detail
-    const sections = track.sections
+    const sections = track?.sections ?? []
 
     if (sections.length > 0) {
       const section = sections[0]

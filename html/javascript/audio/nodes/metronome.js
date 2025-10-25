@@ -17,12 +17,10 @@ export class MetronomeNode extends AudioWorkletNode {
   #loops = INF
   #timeSignature = ''
   #pulse = ''
-  #sections = new Map()
 
   #cache = {
     playing: false,
     stopped: false,
-    section: 0,
     bar: 0,
     beat: 0,
     loops: 0,
@@ -154,18 +152,6 @@ export class MetronomeNode extends AudioWorkletNode {
 
     this.#loops = v?.loops ?? INF
 
-    this.#sections = new Map(
-      track.sections.map((u) => [
-        u.ID,
-        {
-          ID: u.ID,
-          name: u.name,
-          measures: u.measures,
-          start: u.start,
-        },
-      ]),
-    )
-
     this.port.postMessage({
       message: 'track',
       track: track,
@@ -202,26 +188,6 @@ export class MetronomeNode extends AudioWorkletNode {
     return this.#cache.stopped
   }
 
-  get section() {
-    const section = this.#sections.get(this.#cache.section)
-
-    if (section != null) {
-      return {
-        ID: section.ID,
-        name: section.name,
-        measures: section.measures,
-        start: section.start,
-      }
-    }
-
-    return {
-      ID: -1,
-      name: '',
-      measures: Number.NaN,
-      start: INF,
-    }
-  }
-
   get bar() {
     return this.#cache.bar
   }
@@ -240,7 +206,6 @@ export class MetronomeNode extends AudioWorkletNode {
   #flipped(msg) {
     this.#cache.playing = msg.state === STATE.PLAYING
     this.#cache.stopped = msg.state === STATE.STOPPED
-    this.#cache.section = msg.section
     this.#cache.bar = msg.bar
     this.#cache.beat = msg.beat
     this.#cache.loops = msg.loops

@@ -489,6 +489,9 @@ div.metronome.playing #play img.stop {
 :host(.component-time-signature) div.time-signature div#list div.content div.custom input:invalid {
   color: red;
 }
+:host(.component-time-signature) div.time-signature div#list div.content div.custom yam-figura {
+  width: 172px;
+}
 :host(.component-time-signature) div.time-signature.none button img {
   filter: grayscale(100%) opacity(25%);
 }
@@ -683,6 +686,40 @@ div.beat.on div.shape {
   touch-action: none;
 }
 .wheel div.overlay.dragging {
+  cursor: grab;
+}
+
+:host(.component-figura) .figura {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  overflow: visible;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  touch-action: none;
+}
+:host(.component-figura) .figura input[type=range] {
+  display: none;
+}
+:host(.component-figura) .figura svg {
+  grid-column: 1;
+  grid-row: 1;
+  background: transparent;
+  width: 100%;
+  overflow: visible;
+  z-index: 2;
+}
+:host(.component-figura) .figura div.overlay {
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  touch-action: none;
+}
+:host(.component-figura) .figura div.overlay.dragging {
   cursor: grab;
 }
 
@@ -2084,6 +2121,9 @@ div.playlist-track [popover]:popover-open::backdrop {
 }
 :host(.component-section-time-signature) div.time-signature div#list div.content div.custom input:invalid {
   color: red;
+}
+:host(.component-section-time-signature) div.time-signature div#list div.content div.custom yam-figura {
+  width: 172px;
 }
 :host(.component-section-time-signature) div.time-signature.none button img {
   filter: grayscale(100%) opacity(25%);

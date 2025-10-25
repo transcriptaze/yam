@@ -5,6 +5,13 @@
     <link rel="icon"       href="/favicon.png" type="image/png" />
     <link rel="stylesheet" href="./css/YAM.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <style>
+      @font-face {
+        font-family: "BravuraText";
+        src: url("./fonts/Bravura/BravuraText.woff2") format("woff2");
+        font-display: swap;
+      }
+    </style>
   </head>
 
   <body>
@@ -387,8 +394,16 @@
         <svg version="1.1" viewBox="-50 -10 100 20" overflow="visible">
           <style>
             .small {
-              font: 8px sans-serif;
+              font-family: sans-serif;
+              font-size: 8px;
               font-weight: 500;
+              font-display: swap;
+            }
+
+            .bravura {
+              font-family: "BravuraText";
+              font-size: 12px;
+              font-weight: normal;
             }
           </style>
 
@@ -425,7 +440,7 @@
               <circle class="label" cx="0" cy="-2.7" r="2" transform="translate( -39.560748906, 0) scale(0.7518398075,1)" data-angle="-61.875" stroke="#ff0000" fill="#ff0000"></circle>
               <text class="label" x="0" y="0" transform="translate( -39.560748906, 0) scale(0.7518398075,1)" data-angle="-41.25"  stroke="#777777" fill="#888888">1</text>
               <text class="label" x="0" y="0" transform="translate( -21.1350028753,0) scale(0.9359059268,1)" data-angle="-20.625">2</text>
-              <text class="label" x="0" y="0" transform="translate(0,0)               scale(1,           1)" data-angle="0">4</text>
+              <text class="label" x="0" y="0" transform="translate(0,0)               scale(1,           1)" data-angle="0">3</text>
               <text class="label" x="0" y="0" transform="translate( 21.1350028753,0)  scale(0.9359059268,1)" data-angle="20.625">8</text>
               <text class="label" x="0" y="0" transform="translate( 39.560748906, 0)  scale(0.7518398075,1)" data-angle="41.25" stroke="#777777" fill="#888888" >16</text>
               <text class="label" x="0" y="0" transform="translate( 52.9152758609,0)  scale(0.4713967368,1)" data-angle="61.875" stroke="#777777" fill="#888888" >32</text>

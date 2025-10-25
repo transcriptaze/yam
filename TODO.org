@@ -16,15 +16,17 @@
 *** DONE 'dings' (cf. https://github.com/transcriptaze/yam/issues/9)
 *** DONE pads for 3:8, 6:8, 9:8 and 12:8, dotted-quarter
 *** DONE BPM wheel (landscape) not updating MM
-
 *** DONE figura wheel (cf. https://github.com/transcriptaze/yam/issues/13)
-**** DONE svg
-**** DONE fix jump to next up value
-**** DONE index is inverted
-**** DONE replace figura input
-**** DONE yam-time-signature
-**** DONE yam-section-time-signature
-**** DONE Bravura font
+*** DONE progress bar not being reset on stopped
+
+*** TODO reset not clearing track
+
+*** TODO tactus wheel (cf. https://github.com/transcriptaze/yam/issues/12)
+**** TODO svg
+**** TODO replace tactus input
+**** TODO yam-time-signature
+**** TODO yam-section-time-signature
+**** TODO Bravura font
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** DONE expand single section
@@ -46,6 +48,7 @@
 **** TODO store in state
 **** TODO rework YAM to use state.track.UUID
 **** TODO reuse state track for widgets
+**** TODO make track UUID private
 
 *** TODO use realized playlist
 *** TODO connectedCallback: event handler duplication
@@ -72,7 +75,6 @@
 *** TODO portrait/fullscreen: put something (title? logo? yams?) in the 'safe area' at the top
 *** TODO move start/stop/delay to clock
 
-*** TODO make track UUID private
 *** TODO automatically open editor on new playlist
 *** TODO playlists: replace playlist.index with an ordered list
 *** TODO delete track in 'All Tracks' deletes track from all playlists and DB

@@ -22,7 +22,7 @@ https://yam-alpha.pages.dev
 This is very much a personal project and (currently at least) developed and tested almost exclusively with Google Chrome on a Pixel 5a.
 It will be a pleasant surprise and/or minor miracle if it works at all on anything else but you never know.
 
-It's also _pre-alpha_ i.e. expect the code, architecture, everything to change **often** ..
+It's also _pre-alpha_ i.e. expect the code, design, architecture, everything to change **often**.
 
 
 ## Screenshots
@@ -62,10 +62,12 @@ It's also _pre-alpha_ i.e. expect the code, architecture, everything to change *
 
 ## Installation
 
-Download and unpack the _yam-nightly.zip_ file from the most recent [nightly](https://github.com/transcriptaze/yam/actions/workflows/nightly.yml)
-build - and host the _html_ folder on a web server of your choice.
+The web app is packaged as a zip file that includes the HTML, images, audio and rollup'd Javascript that can be served by almost any basic
+HTTP server that includes Cross Origin Resources Sharing support. Simply download and unpack the _yam_alpha.zip_ file from the most from
+the most recent [Alpha release](https://github.com/transcriptaze/yam/actions/workflows/nightly.yml) build - and host the _html_ folder on
+a web server of your choice.
 
-The repo includes scripts for the _Python_ and _NodeJS_ built-in HTTP servers, but the web app is entirely static so whatever
+The zip file includes scripts for the _Python_ and _NodeJS_ built-in HTTP servers, but the web app is entirely static so whatever
 you have will probably work as long as CORS is enabled and has the following headers:
 ```
   Access-Control-Allow-Origin: *

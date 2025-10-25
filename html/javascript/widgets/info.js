@@ -75,7 +75,7 @@ export class Info extends HTMLElement {
     this.title = track?.title ?? ''
 
     // ... set detail
-    const sections = track.sections
+    const sections = track?.sections ?? []
 
     if (sections.length > 0) {
       const section = sections[0]
@@ -109,11 +109,18 @@ export class Info extends HTMLElement {
   redraw({ playing, stopped, bar }) {
     const track = this.#track
     const sections = track?.sections ?? []
-    const section = sections.findLast((v) => v.start <= bar)
 
-    if (section != null) {
-      this.#redraw(bar, playing, stopped, section)
+    const section = () => {
+      if (sections.length > 0 && bar > 0) {
+        return sections.findLast((v) => v.start <= bar)
+      } else if (sections.length > 0) {
+        return sections[0]
+      } else {
+        return null
+      }
     }
+
+    this.#redraw(bar, playing, stopped, section())
   }
 
   #redraw(bar, playing, stopped, section) {

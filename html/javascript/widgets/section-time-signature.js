@@ -352,7 +352,7 @@ export class SectionTimeSignature extends HTMLElement {
     const timeSignature = this.#timeSignature
     const defval = this.#defaults.timeSignature
 
-    if (timeSignature === '') {
+    if (timeSignature === '' || /^[0-9]+:$/.test(timeSignature) || /^:[0-9]+$/.test(timeSignature)) {
       container.classList.add('none')
       tactus.classList.add('hidden')
       figura.classList.add('hidden')

@@ -138,6 +138,7 @@
             </ul>
             <div class="custom">
               <input id="tactus" type="number" min="1" max="12" step="1" list="beats-list"     enterkeyhint="done" required />
+              <yam-tactus></yam-tactus>
               <yam-figura></yam-figura>
             </div>
           </div>
@@ -387,6 +388,114 @@
       </div>
     </template>
 
+    <template id="template-tactus">
+      <div class="tactus">
+        <input type="range" min="1" max="12" step="1" value="4" />
+        <svg version="1.1" viewBox="-50 -10 100 20" overflow="visible">
+          <style>
+            .small {
+              font-family: sans-serif;
+              font-size: 8px;
+              font-weight: 500;
+              font-display: swap;
+            }
+
+            .bravura {
+              font-family: "BravuraText";
+              font-size: 12px;
+              font-weight: normal;
+            }
+          </style>
+
+          <defs>
+            <linearGradient id="wheel">
+              <stop offset="0"   stop-color="#000000" />
+              <stop offset="0.4" stop-color="#808080" />
+              <stop offset="0.45"stop-color="#ffffff" />
+              <stop offset="0.5" stop-color="#ffffff" />
+              <stop offset="0.55"stop-color="#ffffff" />
+              <stop offset="0.6" stop-color="#808080" />
+              <stop offset="1"   stop-color="#000000" />
+            </linearGradient>
+
+            <clipPath id="clip-region">
+              <rect x="-50" y="-10" width="100%" height="100%"/>
+            </clipPath>
+
+            <mask id="clip-mask">
+              <rect x="-50" y="-10" width="100%" height="100%" fill="url(#wheel)" />
+            </mask>
+
+            <rect id="knurl" x="-2" y="-8.5" width="3" height="10" rx="2" stroke="none" fill="#808080" />
+          </defs>
+
+          <g id="frame">
+            <rect x="-50" y="-10" width="100%" height="100%" stroke="#22222220" fill="#22222220" />
+          </g>
+
+          <g id="wheel" transform="translate(0,0)">
+            <rect x="-50" y="-10" width="100%" height="20" rx="1" stroke="#222222" stroke-width="0.75" fill="#222222" />
+
+            <g id="labels" class="small" text-anchor="middle" stroke-width="0.1" transform="translate(0,7)" stroke="#fcfcfc" fill="#fefefe" clip-path="url(#clip-region)">
+              <circle class="label" cx="0" cy="-2.7" r="2" transform="translate( -59.4866916824,0) scale(0.227076263,1)" data-angle="-82.5" stroke="#ff0000" fill="#ff0000"></circle>
+              <text   class="label" x="0" y="0"            transform="translate( -52.9152758609,0) scale(0.1305261922,1)" data-angle="-61.875">1</text>
+              <text   class="label" x="0" y="0"            transform="translate( -39.560748906, 0) scale(0.7518398075,1)" data-angle="-41.25">2</text>
+              <text   class="label" x="0" y="0"            transform="translate( -21.1350028753,0) scale(0.9359059268,1)" data-angle="-20.625">3</text>
+              <text   class="label" x="0" y="0"            transform="translate(0,0)               scale(1,           1)" data-angle="0">4</text>
+              <text   class="label" x="0" y="0"            transform="translate( 21.1350028753,0)  scale(0.9359059268,1)" data-angle="20.625">5</text>
+              <text   class="label" x="0" y="0"            transform="translate( 39.560748906, 0)  scale(0.7518398075,1)" data-angle="41.25">6</text>
+              <text   class="label" x="0" y="0"            transform="translate( 52.9152758609,0)  scale(0.4713967368,1)" data-angle="61.875">7</text>
+              <text   class="label" x="0" y="0"            transform="translate( 59.4866916824,0)  scale(0.1305261922,1)" data-angle="82.5">8</text>
+              <text   class="label" x="0" y="0"            transform="translate( 61.5673812434,0)  scale(0.227076263, 1)" data-angle="103.125">9</text>
+              <text   class="label" x="0" y="0"            transform="translate( 70.1118232618,0)  scale(0.555570233, 1)" data-angle="123.75">10</text>
+              <text   class="label" x="0" y="0"            transform="translate( 85.0513381879,0)  scale(0.8128466846,1)" data-angle="144.375">11</text>
+              <text   class="label" x="0" y="0"            transform="translate(104.4708572938,0)  scale(0.9659258263,1)" data-angle="165">12</text>
+            </g>
+
+            <g id="knurls" clip-path="url(#clip-region)" transform="translate(0,-2) scale(1,0.9)">
+              <use href="#knurl" class="knurl" transform="translate(-60,           0) scale(0.1,1)"          data-angle="-90" />
+              <use href="#knurl" class="knurl" transform="translate(-59.6713137221,0) scale(0.1045284633,1)" data-angle="-84" />
+              <use href="#knurl" class="knurl" transform="translate(-58.6888560440,0) scale(0.2079116908,1)" data-angle="-78" />
+              <use href="#knurl" class="knurl" transform="translate(-57.0633909777,0) scale(0.3090169944,1)" data-angle="-72" />
+              <use href="#knurl" class="knurl" transform="translate(-54.8127274586,0) scale(0.4067366431,1)" data-angle="-66" />
+              <use href="#knurl" class="knurl" transform="translate(-51.9615242271,0) scale(0.5,         1)" data-angle="-60" />
+              <use href="#knurl" class="knurl" transform="translate(-48.5410196625,0) scale(0.5877852523,1)" data-angle="-54" />
+              <use href="#knurl" class="knurl" transform="translate(-44.5886895286,0) scale(0.6691306064,1)" data-angle="-48" />
+              <use href="#knurl" class="knurl" transform="translate(-40.1478363815,0) scale(0.6691306064,1)" data-angle="-42" />
+              <use href="#knurl" class="knurl" transform="translate(-35.2671151375,0) scale(0.6691306064,1)" data-angle="-36" />
+              <use href="#knurl" class="knurl" transform="translate(-30,           0) scale(0.8660254038,1)" data-angle="-30" />
+              <use href="#knurl" class="knurl" transform="translate(-24.4041985845,0) scale(0.9135454576,1)" data-angle="-24" />
+              <use href="#knurl" class="knurl" transform="translate(-18.5410196625,0) scale(0.9510565163,1)" data-angle="-18" />
+              <use href="#knurl" class="knurl" transform="translate(-12.4747014491,0) scale(0.9781476007,1)" data-angle="-12" />
+              <use href="#knurl" class="knurl" transform="translate( -6.2717077961,0) scale(0.9945218954,1)" data-angle="-6"  />
+
+              <use href="#knurl" class="knurl" transform="translate(0,0) scale(1,1)" data-angle="0" />
+
+              <use href="#knurl" class="knurl" transform="translate( 6.2717077961,0) scale(0.9945218954,1)" data-angle="6" />
+              <use href="#knurl" class="knurl" transform="translate(12.4747014491,0) scale(0.9781476007,1)" data-angle="12" />
+              <use href="#knurl" class="knurl" transform="translate(18.5410196625,0) scale(0.9781476007,1)" data-angle="18" />
+              <use href="#knurl" class="knurl" transform="translate(24.4041985845,0) scale(0.9135454576,1)" data-angle="24" />
+              <use href="#knurl" class="knurl" transform="translate(30,           0) scale(0.8660254038,1)" data-angle="30" />
+              <use href="#knurl" class="knurl" transform="translate(35.2671151375,0) scale(0.6691306064,1)" data-angle="36" />
+              <use href="#knurl" class="knurl" transform="translate(40.1478363815,0) scale(0.6691306064,1)" data-angle="42" />
+              <use href="#knurl" class="knurl" transform="translate(44.5886895286,0) scale(0.6691306064,1)" data-angle="48" />
+              <use href="#knurl" class="knurl" transform="translate(48.5410196625,0) scale(0.5877852523,1)" data-angle="54" />
+              <use href="#knurl" class="knurl" transform="translate(51.9615242271,0) scale(0.5,         1)" data-angle="60" />
+              <use href="#knurl" class="knurl" transform="translate(54.8127274586,0) scale(0.4067366431,1)" data-angle="66" />
+              <use href="#knurl" class="knurl" transform="translate(57.0633909777,0) scale(0.3090169944,1)" data-angle="72" />
+              <use href="#knurl" class="knurl" transform="translate(58.6888560440,0) scale(0.2079116908,1)" data-angle="78" />
+              <use href="#knurl" class="knurl" transform="translate(59.6713137221,0) scale(0.1045284633,1)" data-angle="84" />
+              <use href="#knurl" class="knurl" transform="translate(60,           0) scale(0.1,1)"          data-angle="90" />
+            </g>
+
+            <g id="arrow" transform="translate(0,10) scale(0.2)">
+              <polygon points="-10,0 10,0 0,-10" stroke="#ffffff" stroke-width="0.75" fill="#ffffff" />
+            </g>
+          </g>
+        </svg>
+        <div class="overlay"></div>
+      </div>
+    </template>
 
     <template id="template-figura">
       <div class="figura">

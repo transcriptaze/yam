@@ -86,7 +86,7 @@ export class Tactus extends HTMLElement {
           const beats = BEATS.get(index)
           if (beats != this.#beats) {
             this.#beats = beats
-            // this.dispatchEvent(new CustomEvent('change', { detail: { beats: this.beats } }))
+            this.dispatchEvent(new CustomEvent('change', { detail: { beats: this.beats } }))
           }
         }
 
@@ -192,7 +192,7 @@ export class Tactus extends HTMLElement {
           this.#value = indexʼ
           this.#beats = BEATS.get(indexʼ)
 
-          // this.dispatchEvent(new CustomEvent('change', { detail: { divisions: this.divisions } }))
+          this.dispatchEvent(new CustomEvent('change', { detail: { beats: this.beats } }))
         }
       } else {
         const value = parseFloat(`${this.#value}`)
@@ -205,7 +205,7 @@ export class Tactus extends HTMLElement {
       }
 
       this.#redraw()
-      // this.dispatchEvent(new CustomEvent('changed', { detail: { divisions: this.divisions } }))
+      this.dispatchEvent(new CustomEvent('changed', { detail: { beats: this.beats } }))
 
       return true
     }

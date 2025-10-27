@@ -1,9 +1,11 @@
 * -- TODO --
 
 *** TODO tactus wheel (cf. https://github.com/transcriptaze/yam/issues/12)
-**** TODO web-component
-**** TODO yam-time-signature
-**** TODO yam-section-time-signature
+**** DONE web-component
+**** DONE yam-time-signature
+**** DONE yam-section-time-signature
+**** TODO yam-section-time-signature jumps to 4:4 on first click
+      - probably just the incorrect style
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** DONE expand single section

@@ -74,13 +74,14 @@ export class TimeSignature extends HTMLElement {
     },
 
     tactus: {
-      input: () => {
-        const tactus = this.shadowRoot.querySelector('input#tactus')
-        if (tactus.checkValidity()) {
-          this.#beats = tactus.value
+      change: (event) => {
+        this.#beats = event.detail.beats
+        this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: this.timeSignature } }))
+      },
 
-          this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: this.timeSignature } }))
-        }
+      changed: (event) => {
+        this.#beats = event.detail.beats
+        this.dispatchEvent(new CustomEvent('change', { detail: { timeSignature: this.timeSignature } }))
       },
     },
 
@@ -147,14 +148,15 @@ export class TimeSignature extends HTMLElement {
 
     const shadow = this.shadowRoot
     const ul = shadow.querySelector('div.content ul')
-    const tactus = shadow.querySelector('input#tactus')
+    const tactus = shadow.querySelector('yam-tactus')
     const figura = shadow.querySelector('yam-figura')
     const button = shadow.querySelector('[popovertarget]')
     const overlay = shadow.querySelector('div.overlay')
     const lock = shadow.querySelector('#lock')
 
     ul.addEventListener('click', this.#handlers.ul.click)
-    tactus.addEventListener('input', this.#handlers.tactus.input)
+    tactus.addEventListener('change', this.#handlers.tactus.change)
+    tactus.addEventListener('changed', this.#handlers.tactus.changed)
     figura.addEventListener('change', this.#handlers.figura.change)
     figura.addEventListener('changed', this.#handlers.figura.changed)
 
@@ -188,20 +190,20 @@ export class TimeSignature extends HTMLElement {
   set timeSignature(v) {
     const shadow = this.shadowRoot
     const container = shadow.querySelector('div.time-signature')
-    const tactus = shadow.querySelector('input#tactus')
+    const tactus = shadow.querySelector('yam-tactus')
     const figura = shadow.querySelector('yam-figura')
 
     if (v === '') {
       this.#timeSignature = ``
-      tactus.value = ''
+      tactus.beats = 4
       figura.divisions = 4
     } else if (v == 'common') {
       this.#timeSignature = `common`
-      tactus.value = 4
+      tactus.beats = 4
       figura.divisions = 4
     } else if (v == 'cut') {
       this.#timeSignature = `cut`
-      tactus.value = 2
+      tactus.beats = 2
       figura.divisions = 2
     } else {
       const { beats, divisions } = parse(`${v}`)
@@ -209,7 +211,7 @@ export class TimeSignature extends HTMLElement {
       if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
         this.#timeSignature = `${beats}:${divisions}`
 
-        tactus.value = beats
+        tactus.beats = beats
         figura.divisions = divisions
       }
     }

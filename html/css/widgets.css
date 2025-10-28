@@ -489,6 +489,9 @@ div.metronome.playing #play img.stop {
 :host(.component-time-signature) div.time-signature div#list div.content div.custom input:invalid {
   color: red;
 }
+:host(.component-time-signature) div.time-signature div#list div.content div.custom yam-tactus {
+  width: 172px;
+}
 :host(.component-time-signature) div.time-signature div#list div.content div.custom yam-figura {
   width: 172px;
 }
@@ -686,6 +689,40 @@ div.beat.on div.shape {
   touch-action: none;
 }
 .wheel div.overlay.dragging {
+  cursor: grab;
+}
+
+:host(.component-tactus) .tactus {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  overflow: visible;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
+  touch-action: none;
+}
+:host(.component-tactus) .tactus input[type=range] {
+  display: none;
+}
+:host(.component-tactus) .tactus svg {
+  grid-column: 1;
+  grid-row: 1;
+  background: transparent;
+  width: 100%;
+  overflow: visible;
+  z-index: 2;
+}
+:host(.component-tactus) .tactus div.overlay {
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  height: 100%;
+  z-index: 3;
+  touch-action: none;
+}
+:host(.component-tactus) .tactus div.overlay.dragging {
   cursor: grab;
 }
 
@@ -924,7 +961,7 @@ div.beat.on div.shape {
   background-image: url("/images/loop-1.svg");
 }
 :host(.component-loop) div.loop input[type=checkbox][data-loops="2"]:checked + label {
-  background-image: url("/images/loop-2x.svg");
+  background-image: url("/images/loop-2.svg");
 }
 :host(.component-loop) div.loop input[type=checkbox][data-loops="3"]:checked + label {
   background-image: url("/images/loop-3.svg");
@@ -933,7 +970,7 @@ div.beat.on div.shape {
   background-image: url("/images/loop-4.svg");
 }
 :host(.component-loop) div.loop input[type=checkbox][data-loops="5"]:checked + label {
-  background-image: url("/images/loop-5.svg");
+  background-image: url("/images/loop-5x.svg");
 }
 :host(.component-loop) div.loop input[type=checkbox]:checked + label {
   filter: invert(22%) sepia(45%) saturate(3580%) hue-rotate(357deg) brightness(101%) contrast(95%);
@@ -2121,6 +2158,9 @@ div.playlist-track [popover]:popover-open::backdrop {
 }
 :host(.component-section-time-signature) div.time-signature div#list div.content div.custom input:invalid {
   color: red;
+}
+:host(.component-section-time-signature) div.time-signature div#list div.content div.custom yam-tactus {
+  width: 172px;
 }
 :host(.component-section-time-signature) div.time-signature div#list div.content div.custom yam-figura {
   width: 172px;

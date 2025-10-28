@@ -96,46 +96,40 @@ export class SectionTimeSignature extends HTMLElement {
     },
 
     tactus: {
-      input: () => {
-        const tactus = this.shadowRoot.querySelector('input#tactus')
-        if (tactus.checkValidity()) {
-          this.#beats = tactus.value
+      change: (event) => {
+        this.#beats = event.detail.beats
 
-          const { beats, divisions } = parseTimeSignature(this.timeSignature)
+        const { beats, divisions } = parseTimeSignature(this.timeSignature)
 
-          if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
-            this.dispatchEvent(
-              new CustomEvent(EVENTS.SECTION_TIME_SIGNATURE_CHANGE, {
-                bubbles: true,
-                composed: true,
-                detail: { timeSignature: this.timeSignature },
-              }),
-            )
-          }
+        if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
+          this.dispatchEvent(
+            new CustomEvent(EVENTS.SECTION_TIME_SIGNATURE_CHANGE, {
+              bubbles: true,
+              composed: true,
+              detail: { timeSignature: this.timeSignature },
+            }),
+          )
+        }
+      },
+
+      changed: (event) => {
+        this.#beats = event.detail.beats
+
+        const { beats, divisions } = parseTimeSignature(this.timeSignature)
+
+        if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
+          this.dispatchEvent(
+            new CustomEvent(EVENTS.SECTION_TIME_SIGNATURE_CHANGE, {
+              bubbles: true,
+              composed: true,
+              detail: { timeSignature: this.timeSignature },
+            }),
+          )
         }
       },
     },
 
     figura: {
-      // input: () => {
-      //   const figura = this.shadowRoot.querySelector('input#figura')
-      //   if (figura.checkValidity()) {
-      //     this.#divisions = figura.value
-      //
-      //     const { beats, divisions } = parseTimeSignature(this.timeSignature)
-      //
-      //     if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
-      //       this.dispatchEvent(
-      //         new CustomEvent(EVENTS.SECTION_TIME_SIGNATURE_CHANGE, {
-      //           bubbles: true,
-      //           composed: true,
-      //           detail: { timeSignature: this.timeSignature },
-      //         }),
-      //       )
-      //     }
-      //   }
-      // },
-
       change: (event) => {
         this.#divisions = event.detail.divisions
 
@@ -204,17 +198,15 @@ export class SectionTimeSignature extends HTMLElement {
 
     const shadow = this.shadowRoot
     const ul = shadow.querySelector('div.content ul')
-    const tactus = shadow.querySelector('input#tactus')
-    // const figura = shadow.querySelector('input#figura')
-    const wheel = shadow.querySelector('yam-figura')
+    const tactus = shadow.querySelector('yam-tactus')
+    const figura = shadow.querySelector('yam-figura')
     const button = shadow.querySelector('[popovertarget]')
 
     ul.addEventListener('click', this.#handlers.ul.click)
-    tactus.addEventListener('input', this.#handlers.tactus.input)
-    // figura.addEventListener('input', this.#handlers.figura.input)
-
-    wheel.addEventListener('change', this.#handlers.figura.change)
-    wheel.addEventListener('changed', this.#handlers.figura.changed)
+    tactus.addEventListener('change', this.#handlers.tactus.change)
+    tactus.addEventListener('changed', this.#handlers.tactus.changed)
+    figura.addEventListener('change', this.#handlers.figura.change)
+    figura.addEventListener('changed', this.#handlers.figura.changed)
 
     // FireFox doesn't support CSS anchor positioning
     if (!CSS.supports('top: anchor(bottom)')) {
@@ -238,9 +230,8 @@ export class SectionTimeSignature extends HTMLElement {
 
   set timeSignature({ timeSignature, defaults }) {
     const shadow = this.shadowRoot
-    const tactus = shadow.querySelector('input#tactus')
-    // const figura = shadow.querySelector('input#figura')
-    const wheel = shadow.querySelector('yam-figura')
+    const tactus = shadow.querySelector('yam-tactus')
+    const figura = shadow.querySelector('yam-figura')
     const { beats, divisions } = parseTimeSignature(`${timeSignature}`)
 
     if (defaults != null && defaults.timeSignature != null) {
@@ -250,41 +241,35 @@ export class SectionTimeSignature extends HTMLElement {
     switch (true) {
       case timeSignature === '':
         this.#timeSignature = ``
-        tactus.value = ''
-        // figura.value = ''
-        wheel.divisions = ''
+        tactus.beats = ''
+        figura.divisions = ''
         break
 
       case timeSignature == 'common':
         this.#timeSignature = `common`
-        tactus.value = 4
-        // figura.value = 4
-        wheel.divisions = 4
+        tactus.beats = 4
+        figura.divisions = 4
         break
 
       case timeSignature == 'cut':
         this.#timeSignature = `cut`
-        tactus.value = 2
-        // figura.value = 2
-        wheel.divisions = 2
+        tactus.beats = 2
+        figura.divisions = 2
         break
 
       default:
         if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
           this.#timeSignature = `${beats}:${divisions}`
-          tactus.value = beats
-          // figura.value = divisions
-          wheel.divisions = divisions
+          tactus.beats = beats
+          figura.divisions = divisions
         } else if (!Number.isNaN(beats)) {
           this.#timeSignature = `${beats}:`
-          tactus.value = beats
-          // figura.value = ''
-          wheel.divisions = ''
+          tactus.beats = beats
+          figura.divisions = ''
         } else if (!Number.isNaN(divisions)) {
           this.#timeSignature = `:${divisions}`
-          tactus.value = ''
-          // figura.value = divisions
-          wheel.divisions = divisions
+          tactus.beats = ''
+          figura.divisions = divisions
         }
     }
 
@@ -367,7 +352,7 @@ export class SectionTimeSignature extends HTMLElement {
     const timeSignature = this.#timeSignature
     const defval = this.#defaults.timeSignature
 
-    if (timeSignature === '') {
+    if (timeSignature === '' || /^[0-9]+:$/.test(timeSignature) || /^:[0-9]+$/.test(timeSignature)) {
       container.classList.add('none')
       tactus.classList.add('hidden')
       figura.classList.add('hidden')
@@ -426,6 +411,7 @@ export class SectionTimeSignature extends HTMLElement {
       cut.classList.add('hidden')
 
       const { beats, divisions } = parseTimeSignature(timeSignature)
+
       if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
         if (TACTUS.has(`${beats}`)) {
           tactus.src = TACTUS.get(`${beats}`)
@@ -460,7 +446,7 @@ function parseTimeSignature(v) {
     const beats = parseInt(matches[1])
     const divisions = parseInt(matches[2])
 
-    if (!Number.isNaN(beats) && beats >= 1 && beats <= 32) {
+    if (!Number.isNaN(beats) && beats >= 1 && beats <= 12) {
       timeSignature.beats = beats
     }
 

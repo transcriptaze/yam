@@ -2,26 +2,35 @@ import { clamp, sin, cos, abs } from './util.js'
 
 const R = 60
 const D = 2 * R
-const MIN = 2
-const MAX = 4
+const MIN = 1
+const MAX = 12
 const DELTA = 20.625 // degrees
 
-const DIVISIONS = new Map([
-  [2, 8],
-  [3, 4],
-  [4, 2],
-  [6, ''],
+const BEATS = new Map([
+  [1, 12],
+  [2, 11],
+  [3, 10],
+  [4, 9],
+  [5, 8],
+  [6, 7],
+  [7, 6],
+  [8, 5],
+  [9, 4],
+  [10, 3],
+  [11, 2],
+  [12, 1],
+  [13, ''],
 ])
 
-const ZINDEX = 3
+const ZINDEX = 9
 
-export class Figura extends HTMLElement {
+export class Tactus extends HTMLElement {
   static get observedAttributes() {
     return []
   }
 
-  #divisions = 4
-  #value = 3
+  #beats = 4
+  #value = 9
   #drag = {
     dragging: false,
     coarse: false,
@@ -47,7 +56,7 @@ export class Figura extends HTMLElement {
   constructor() {
     super()
 
-    const template = document.querySelector('#template-figura')
+    const template = document.querySelector('#template-tactus')
     const stylesheet = document.createElement('link')
     const content = template.content
     const shadow = this.attachShadow({ mode: 'open' })
@@ -61,7 +70,7 @@ export class Figura extends HTMLElement {
   }
 
   connectedCallback() {
-    this.classList.add('component-figura')
+    this.classList.add('component-tactus')
 
     const shadow = this.shadowRoot
     const overlay = shadow.querySelector('div.overlay')
@@ -73,11 +82,11 @@ export class Figura extends HTMLElement {
 
         const index = parseInt(`${this.#value}`, 10)
 
-        if (DIVISIONS.has(index)) {
-          const divisions = DIVISIONS.get(index)
-          if (divisions != this.#divisions) {
-            this.#divisions = divisions
-            this.dispatchEvent(new CustomEvent('change', { detail: { divisions: this.divisions } }))
+        if (BEATS.has(index)) {
+          const beats = BEATS.get(index)
+          if (beats != this.#beats) {
+            this.#beats = beats
+            this.dispatchEvent(new CustomEvent('change', { detail: { beats: this.beats } }))
           }
         }
 
@@ -105,22 +114,22 @@ export class Figura extends HTMLElement {
 
   attributeChangedCallback(_name, _from, _to) {}
 
-  get divisions() {
-    return this.#divisions
+  get beats() {
+    return this.#beats
   }
 
-  set divisions(v) {
+  set beats(v) {
     if (!this.#drag.dragging) {
-      const divisions = parseInt(`${v}`, 10)
-      const kv = Array.from(DIVISIONS.entries()).find(([_, v]) => v === divisions)
-      const none = Array.from(DIVISIONS.entries()).find(([_, v]) => v === '')
+      const beats = parseInt(`${v}`, 10)
+      const kv = Array.from(BEATS.entries()).find(([_, v]) => v === beats)
+      const none = Array.from(BEATS.entries()).find(([_, v]) => v === '')
 
       if (kv != null) {
         this.#value = kv[0]
-        this.#divisions = kv[1]
+        this.#beats = kv[1]
       } else if (none != null) {
         this.#value = none[0]
-        this.#divisions = none[1]
+        this.#beats = none[1]
       }
 
       this.#redraw()
@@ -179,24 +188,24 @@ export class Figura extends HTMLElement {
         const index = parseInt(`${drag.start.value}`, 10)
         const indexʼ = clamp(index + increment, MIN, MAX)
 
-        if (DIVISIONS.has(indexʼ)) {
+        if (BEATS.has(indexʼ)) {
           this.#value = indexʼ
-          this.#divisions = DIVISIONS.get(indexʼ)
+          this.#beats = BEATS.get(indexʼ)
 
-          this.dispatchEvent(new CustomEvent('change', { detail: { divisions: this.divisions } }))
+          this.dispatchEvent(new CustomEvent('change', { detail: { beats: this.beats } }))
         }
       } else {
         const value = parseFloat(`${this.#value}`)
         const index = Math.round(value)
 
-        if (DIVISIONS.has(index)) {
+        if (BEATS.has(index)) {
           this.#value = index
-          this.#divisions = DIVISIONS.get(index)
+          this.#beats = BEATS.get(index)
         }
       }
 
       this.#redraw()
-      this.dispatchEvent(new CustomEvent('changed', { detail: { divisions: this.divisions } }))
+      this.dispatchEvent(new CustomEvent('changed', { detail: { beats: this.beats } }))
 
       return true
     }
@@ -302,4 +311,4 @@ export class Figura extends HTMLElement {
   }
 }
 
-customElements.define('yam-figura', Figura)
+customElements.define('yam-tactus', Tactus)

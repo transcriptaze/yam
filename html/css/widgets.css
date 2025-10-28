@@ -961,7 +961,7 @@ div.beat.on div.shape {
   background-image: url("/images/loop-1.svg");
 }
 :host(.component-loop) div.loop input[type=checkbox][data-loops="2"]:checked + label {
-  background-image: url("/images/loop-2x.svg");
+  background-image: url("/images/loop-2.svg");
 }
 :host(.component-loop) div.loop input[type=checkbox][data-loops="3"]:checked + label {
   background-image: url("/images/loop-3.svg");
@@ -970,7 +970,7 @@ div.beat.on div.shape {
   background-image: url("/images/loop-4.svg");
 }
 :host(.component-loop) div.loop input[type=checkbox][data-loops="5"]:checked + label {
-  background-image: url("/images/loop-5.svg");
+  background-image: url("/images/loop-5x.svg");
 }
 :host(.component-loop) div.loop input[type=checkbox]:checked + label {
   filter: invert(22%) sepia(45%) saturate(3580%) hue-rotate(357deg) brightness(101%) contrast(95%);

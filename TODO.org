@@ -6,6 +6,15 @@
 **** DONE yam-section-time-signature
 **** DONE yam-section-time-signature jumps to 4:4 on first click
 
+*** TODO loop icon numbers
+**** TODO 1
+**** DONE 2
+**** TODO 3
+**** TODO 4
+**** TODO 5
+
+*** TODO soundsets (cf. https://github.com/transcriptaze/yam/issues/20)
+
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** DONE expand single section
 **** DONE slide in on initialisation
@@ -32,7 +41,6 @@
 *** TODO connectedCallback: event handler duplication
 
 ** Fixes
-*** TODO finish loop icon numbers
 *** TODO Cloudflare (cf. https://github.com/transcriptaze/yam/issues/6)
 *** TODO (maybe) keep selected playlist on import
 *** TODO make errors visible

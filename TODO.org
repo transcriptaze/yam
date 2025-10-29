@@ -1,10 +1,6 @@
 * -- TODO --
 
 *** DONE tactus wheel (cf. https://github.com/transcriptaze/yam/issues/12)
-**** DONE web-component
-**** DONE yam-time-signature
-**** DONE yam-section-time-signature
-**** DONE yam-section-time-signature jumps to 4:4 on first click
 
 *** TODO loop icon numbers
 **** TODO 1

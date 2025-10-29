@@ -37,8 +37,9 @@ html.settings main {
     min-width: 200px;
     display: grid;
     grid-template-columns: auto 1fr;
-    grid-template-rows: auto;
+    grid-template-rows: auto auto;
     column-gap: 12px;
+    row-gap: 32px;
 
     label {
       width: fit-content;
@@ -73,6 +74,11 @@ html.settings main {
         padding-right: 8px;
         transition: 0.4s;
       }
+    }
+
+    input[type="range"] {
+      width: 200px;
+      margin: 0;
     }
   }
 }

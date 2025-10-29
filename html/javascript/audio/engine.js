@@ -6,7 +6,9 @@ const AudioContext = window.AudioContext || window.webkitAudioContext
 
 let audioContext
 class Engine {
+  #ctx = null
   #metronome = null
+  #gain = null
   #initialised = false
 
   #BPM = 120
@@ -15,25 +17,10 @@ class Engine {
   #track = null
   #loop = false
   #ding = false
+  #volume = 1.5
   #subscribers = new EventTarget()
 
   constructor() {}
-
-  init(ctx, metronome) {
-    metronome.BPM = this.#BPM
-    metronome.timeSignature = this.#timeSignature
-    metronome.pulse = this.#pulse
-    metronome.loop = this.#loop
-    metronome.ding = this.#ding
-    metronome.track = this.#track // NB: MUST come after the standalone parameters, otherwise it gets overriden
-
-    metronome.connect(ctx.destination)
-
-    this.#metronome = metronome
-    this.#initialised = true
-
-    return this
-  }
 
   #init(ctx) {
     if (this.initialised) {
@@ -52,8 +39,25 @@ class Engine {
 
           return metronome(ctx, sounds, this.#subscribers)
         })
-        .then((m) => {
-          this.init(ctx, m)
+        .then((metronome) => {
+          metronome.BPM = this.#BPM
+          metronome.timeSignature = this.#timeSignature
+          metronome.pulse = this.#pulse
+          metronome.loop = this.#loop
+          metronome.ding = this.#ding
+          metronome.track = this.#track // NB: MUST come after the standalone parameters, otherwise it gets overriden
+
+          const gain = audioContext.createGain()
+
+          gain.gain.value = this.#volume
+
+          metronome.connect(gain)
+          gain.connect(ctx.destination)
+
+          this.#ctx = ctx
+          this.#metronome = metronome
+          this.#gain = gain
+          this.#initialised = true
         })
     }
   }
@@ -76,28 +80,24 @@ class Engine {
     this.#subscribers.removeEventListener(event, f, options)
   }
 
-  get metronome() {
-    return this.#metronome
-  }
-
   get initialised() {
     return this.#initialised
   }
 
   set debug(dbg) {
-    this.#exec(() => (this.metronome.debug = dbg))
+    this.#exec(() => (this.#metronome.debug = dbg))
   }
 
   play() {
-    this.#exec(() => this.metronome.play())
+    this.#exec(() => this.#metronome.play())
   }
 
   stop() {
-    this.#exec(() => this.metronome.stop())
+    this.#exec(() => this.#metronome.stop())
   }
 
   toggle() {
-    this.#exec(() => this.metronome.toggle())
+    this.#exec(() => this.#metronome.toggle())
   }
 
   set BPM(v) {
@@ -107,7 +107,7 @@ class Engine {
       this.#BPM = bpm
 
       if (this.initialised) {
-        this.metronome.BPM = bpm
+        this.#metronome.BPM = bpm
       }
     }
   }
@@ -117,7 +117,7 @@ class Engine {
       this.#timeSignature = timeSignature
 
       if (this.initialised) {
-        this.metronome.timeSignature = timeSignature
+        this.#metronome.timeSignature = timeSignature
       }
     }
   }
@@ -129,7 +129,7 @@ class Engine {
       this.#pulse = pulse
 
       if (this.initialised) {
-        this.metronome.pulse = pulse
+        this.#metronome.pulse = pulse
       }
     }
   }
@@ -138,7 +138,7 @@ class Engine {
     this.#track = track
 
     if (this.initialised) {
-      this.metronome.track = track
+      this.#metronome.track = track
     }
   }
 
@@ -146,7 +146,7 @@ class Engine {
     this.#loop = loop
 
     if (this.initialised) {
-      this.metronome.loop = loop
+      this.#metronome.loop = loop
     }
   }
 
@@ -154,13 +154,23 @@ class Engine {
     this.#ding = ding
 
     if (this.initialised) {
-      this.metronome.ding = ding
+      this.#metronome.ding = ding
+    }
+  }
+
+  set volume(v) {
+    if (!Number.isNaN(v) && v >= 0.0 && v <= 2.5) {
+      this.#volume = v
+
+      if (this.initialised) {
+        this.#gain.gain.linearRampToValueAtTime(v, this.#ctx.currentTime + 0.5)
+      }
     }
   }
 
   get playing() {
     if (this.initialised) {
-      return this.metronome.playing ?? false
+      return this.#metronome.playing ?? false
     }
 
     return false
@@ -168,7 +178,7 @@ class Engine {
 
   get stopped() {
     if (this.initialised) {
-      return this.metronome.stopped ?? false
+      return this.#metronome.stopped ?? false
     }
 
     return false
@@ -176,7 +186,7 @@ class Engine {
 
   get bar() {
     if (this.initialised) {
-      return this.metronome.bar ?? 0
+      return this.#metronome.bar ?? 0
     }
 
     return 0
@@ -184,7 +194,7 @@ class Engine {
 
   get beat() {
     if (this.initialised) {
-      return this.metronome.beat ?? 0
+      return this.#metronome.beat ?? 0
     }
 
     return 0
@@ -192,7 +202,7 @@ class Engine {
 
   get loops() {
     if (this.initialised) {
-      return this.metronome?.loops ?? 0
+      return this.#metronome?.loops ?? 0
     }
 
     return 0

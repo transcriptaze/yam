@@ -1,6 +1,7 @@
 * -- TODO --
 
 *** DONE tactus wheel (cf. https://github.com/transcriptaze/yam/issues/12)
+*** DONE replace animationFrame with 'click' event
 
 *** TODO loop icon numbers
 **** TODO 1
@@ -41,6 +42,7 @@
 *** TODO (maybe) keep selected playlist on import
 *** TODO make errors visible
       - icon + title text
+
 *** TODO edit from playlist
 *** TODO use async getters for nested web components
 *** TODO URL - use ?UUID= or ?title= 
@@ -154,10 +156,12 @@
       - https://developer.mozilla.org/en-US/docs/Web/CSS/basic-shape
 
 ** Settings 
+*** TODO volume
 *** TODO device e.g. Pixel4a (for per device CSS) 
 *** TODO track retention time
-*** TODO volume
 *** TODO sound set
+*** TODO preferred click patterns
+*** TODO knob PID constants (?)
 *** https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Customizable_select
 
 ** Figma
@@ -195,7 +199,7 @@
       - [ ] display as e.g. orange while transitioning
 
 ** Time Signature
-*** TODO time signature number picker is too small on mobile
+*** DONE time signature number picker is too small on mobile
 *** TODO setting tactus/figura triggers redraw + change event)
 *** TODO presets
      - use ligatures e.g timeSig2over4
@@ -225,14 +229,6 @@
       - https://css-tricks.com/grainy-gradients
       - https://graphicdesign.stackexchange.com/questions/97228/how-to-create-an-undulating-fabric-texture-using-inkscape/97234#97234
 
-- [ ] volume
-- [ ] display important errors
-
-- [ ] settings
-      - sound sets
-      - click patterns
-      - (?) knob PID constants
-
 ** Textures
       - Master of Poisons (book cover)
       - Penrose tiles
@@ -248,9 +244,9 @@
       - MIDI file import/export
 
 ** About
-      - https://webkit.org/blog/16547/better-typography-with-text-wrap-pretty/
-      - handwriting font
-         - https://chameth.com/making-a-font-of-my-handwriting/
+      - https://webkit.org/blog/16547/better-typography-with-text-wrap-pretty
+      - (?) handwriting font
+         - https://chameth.com/making-a-font-of-my-handwriting
 
 ** TLA+
       - send EVENT.STOPPED event on receiving EVENT.STOP  even if state is already STOPPED

@@ -65,6 +65,18 @@ export class MetronomeNode extends AudioWorkletNode {
 
       case 'flipped':
         this.#flipped(event.data)
+
+        this.subscribers.dispatchEvent(
+          new CustomEvent(EVENTS.CLICK, {
+            detail: {
+              playing: event.data.state === STATE.PLAYING,
+              stopped: event.data.state === STATE.STOPPED,
+              bar: event.data.bar,
+              beat: event.data.beat,
+              loops: event.data.loops,
+            },
+          }),
+        )
         break
     }
   }

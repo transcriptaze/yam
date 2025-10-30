@@ -5,6 +5,7 @@ import { parsePulse } from '../util.js'
 const AudioContext = window.AudioContext || window.webkitAudioContext
 
 let audioContext
+
 class Engine {
   #ctx = null
   #metronome = null
@@ -17,7 +18,7 @@ class Engine {
   #track = null
   #loop = false
   #ding = false
-  #volume = 1.5
+  #volume = 1
   #subscribers = new EventTarget()
 
   constructor() {}
@@ -159,7 +160,7 @@ class Engine {
   }
 
   set volume(v) {
-    if (!Number.isNaN(v) && v >= 0.0 && v <= 2.5) {
+    if (!Number.isNaN(v) && v >= 0.0 && v <= 4) {
       this.#volume = v
 
       if (this.initialised) {

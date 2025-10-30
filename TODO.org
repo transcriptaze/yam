@@ -11,6 +11,7 @@
 **** TODO 5
 
 *** TODO soundsets (cf. https://github.com/transcriptaze/yam/issues/20)
+**** DONE volume setting
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** DONE expand single section
@@ -156,7 +157,7 @@
       - https://developer.mozilla.org/en-US/docs/Web/CSS/basic-shape
 
 ** Settings 
-*** TODO volume
+*** DONE volume
 *** TODO device e.g. Pixel4a (for per device CSS) 
 *** TODO track retention time
 *** TODO sound set

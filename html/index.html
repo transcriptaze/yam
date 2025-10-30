@@ -873,10 +873,6 @@
     }
 
     // ... attach event handlers (because .. Safari)
-    const onContextMenu = (event) => {
-      event.preventDefault()
-    }
-
     toolbar.reset.onclick = () => reset()
     toolbar.metronome.onclick = () => show('metronome')
     toolbar.playlist.onclick = () => show('playlist')
@@ -928,7 +924,7 @@
       event.preventDefault()
     })
 
-    // ... start!
+    // ... good to go!
     initialise()
     requestWakeLock()
   </script>

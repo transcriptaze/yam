@@ -81,6 +81,19 @@ html.settings main {
       margin: 0;
     }
   }
+
+  div.volume {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+
+    input[type="text"] {
+      background: none;
+      border: none;
+      outline: none;
+      width: 3em;
+    }
+  }
 }
 
 

@@ -42,6 +42,7 @@ export function initialise() {
   engine.BPM = settings.BPM
   engine.timeSignature = settings.timeSignature
   engine.pulse = settings.pulse
+  engine.volume = settings.volume
 
   state.initialise(settings)
 

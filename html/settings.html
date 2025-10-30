@@ -20,25 +20,28 @@
           </select>
 
           <label for="volume">Volume</label>
-          <input id="volume" type="range" min="0" max="2.5" value="1.0" step="0.1" list="markers" />
+          <div class="volume">
+            <input id="volume" type="range" min="0" max="4" value="1.0" step="0.1" list="markers" />
+            <input             type="text" value="1.0" readonly />
+          </div>
 
           <datalist id="markers">
             <option value="0"></option>
             <option value="0.25"></option>
             <option value="0.50"></option>
             <option value="0.75"></option>
-            <option value="1">1</option>
-            <option value="1.25"></option>
+            <option value="1"></option>
             <option value="1.50"></option>
-            <option value="1.75"></option>
-            <option value="2">1</option>
-            <option value="2.25"></option>
+            <option value="2"></option>
             <option value="2.50"></option>
+            <option value="3"></option>
+            <option value="3.50"></option>
+            <option value="4"></option>
           </datalist>
         </div>
       </main>
 
-      <toolbar>
+      <toolbar class="settings">
          <div class="menu">
            <div class="left-menu">
              <a href="./index.html#metronome">
@@ -47,6 +50,8 @@
              <a href="./index.html#playlist">
                <img id="playlist" class="visible" src="./images/playlist.svg" draggable="false" />
              </a>
+            <!-- <button id="load"><img src="./images/import.svg"         draggable="false" /></button> -->
+            <!-- <button id="save"><img src="./images/export.svg"         draggable="false" /></button> -->
            </div>
            <div class="right-menu">
              <a href="./about.html">
@@ -55,11 +60,50 @@
            </div>
          </div>
       </toolbar>
+
     </div>
   </body>
 
   <!-- SCRIPTS -->
   <script type="module">
+    import { initialise } from './javascript/pages/settings.js'
+
+    const toolbar = {
+      // save: document.querySelector('toolbar #save'),
+      // load: document.querySelector('toolbar #load'),
+    }
+
+    // ... attach event handlers (because .. Safari)
+    // toolbar.save.onclick = () => save()
+    // toolbar.load.onclick = () => load()
+
+    document.addEventListener('contextmenu', (event) => {
+      event.preventDefault()
+    })
+
+    // Android Chrome: set viewport height in CSS variable because the viewport height for a
+    //                 PWA app loaded from the home page is incorrect
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const vh = window.visualViewport?.height || window.innerHeight
+
+        document.documentElement.style.setProperty('--vh', `${vh}px`)
+      }, 100)
+    })
+
+    window.onerror = (message, source, lineno, colno, error) => {
+      onError({ message, source, lineno, colno, error })
+      return true
+    }
+
+    window.addEventListener("unhandledrejection", (event) => {
+      onError(event.reason)
+      event.preventDefault()
+    })
+
+    // ... good to go!
+    initialise()
+
   </script>
 
 </html>

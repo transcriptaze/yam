@@ -6,6 +6,9 @@ class Settings {
   #pulse = 'quarter'
   #playlist = '00000000-0000-0000-0000-000000000000'
 
+  #theme = 'default'
+  #volume = 1.0
+
   get BPM() {
     return this.#BPM
   }
@@ -56,6 +59,24 @@ class Settings {
     this.#playlist = v || '00000000-0000-0000-0000-000000000000'
   }
 
+  get theme() {
+    return this.#theme
+  }
+
+  set theme(v) {}
+
+  get volume() {
+    return this.#volume
+  }
+
+  set volume(v) {
+    const volume = parseFloat(`${v}`)
+
+    if (!Number.isNaN(volume) && volume >= 0.0 && volume <= 4) {
+      this.#volume = volume
+    }
+  }
+
   save() {
     const object = {
       settings: {
@@ -63,6 +84,9 @@ class Settings {
         timeSignature: this.timeSignature,
         pulse: this.pulse,
         playlist: this.playlist,
+
+        theme: this.#theme,
+        volume: this.#volume,
       },
     }
 
@@ -78,6 +102,9 @@ class Settings {
       this.timeSignature = object?.settings?.timeSignature
       this.pulse = object?.settings?.pulse
       this.playlist = object?.settings?.playlist
+
+      this.theme = object?.settings.theme
+      this.volume = object?.settings.volume
     } catch (err) {
       console.log(err)
     }

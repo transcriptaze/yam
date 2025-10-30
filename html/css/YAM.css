@@ -253,6 +253,17 @@ html.settings main div.settings input[type=range] {
   width: 200px;
   margin: 0;
 }
+html.settings main div.volume {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
+html.settings main div.volume input[type=text] {
+  background: none;
+  border: none;
+  outline: none;
+  width: 3em;
+}
 
 @media (max-width: 768px) and (orientation: portrait) {
   html.settings maint {

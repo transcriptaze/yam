@@ -1,7 +1,22 @@
-import { put, debugf, infof, warnf } from './DB.js'
+import { get, put, debugf, infof, warnf } from './DB.js'
 
-export function hasClick(_ctx, _sound) {
-  return false
+export function hasClick(_ctx, sound) {
+  const f = (db, resolve) => {
+    const query = db.transaction(['audio']).objectStore('audio').getKey(sound)
+
+    query.onsuccess = (event) => {
+      const rs = event.target.result
+
+      resolve(rs === sound)
+    }
+
+    query.onerror = (event) => {
+      warnf(`query::onerror ${event.target.error.message}`)
+      resolve(false)
+    }
+  }
+
+  return get(f)
 }
 
 export function getClick(ctx, sound) {

@@ -111,6 +111,26 @@ export function put(f) {
   })
 }
 
+export function remove(f) {
+  return new Promise((resolve) => {
+    const request = window.indexedDB.open(DB, VERSION)
+
+    request.onerror = (event) => {
+      warnf(LOGTAG, `open::onerror ${event}`)
+      resolve(false)
+    }
+
+    request.onupgradeneeded = (event) => {
+      warnf(LOGTAG, 'open::onupgradeneeded')
+      upgrade(event.target.result)
+    }
+
+    request.onsuccess = (event) => {
+      f(event.target.result)
+    }
+  })
+}
+
 export function exec(f) {
   return new Promise((resolve, reject) => {
     const request = window.indexedDB.open(DB, VERSION)

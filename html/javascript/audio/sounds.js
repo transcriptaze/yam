@@ -33,14 +33,30 @@ export function get(ctx) {
 }
 
 function _get(ctx, sound) {
-  const re = new RegExp('^audio/default/(.*?)\\.wav$')
-  const match = re.exec(sound)
+  const match = new RegExp('^audio/default/(.*?)\\.wav$').exec(sound)
   const name = match[1] ?? ''
+  const key = `default::${name}`
 
-  if (DB.hasClick(ctx, sound)) {
-    return DB.getClick(ctx, sound)
-  }
+  return DB.hasClick(ctx, key).then((ok) => {
+    console.log('>>> HAS', { key }, { ok })
 
+    return _fetch(ctx, sound, key)
+  })
+
+  // return fetch(`../${sound}`, GET)
+  //   .then((response) => {
+  //     if (response.ok) {
+  //       return response.blob()
+  //     } else {
+  //       throw new Error(response.statusText)
+  //     }
+  //   })
+  //   .then((blob) => DB.putClick(key, blob))
+  //   .then((blob) => blob.arrayBuffer())
+  //   .then((buffer) => ctx.decodeAudioData(buffer))
+}
+
+function _fetch(ctx, sound, key) {
   return fetch(`../${sound}`, GET)
     .then((response) => {
       if (response.ok) {
@@ -49,7 +65,7 @@ function _get(ctx, sound) {
         throw new Error(response.statusText)
       }
     })
-    .then((blob) => DB.putClick(`default::${name}`, blob))
+    .then((blob) => DB.putClick(key, blob))
     .then((blob) => blob.arrayBuffer())
     .then((buffer) => ctx.decodeAudioData(buffer))
 }

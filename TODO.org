@@ -15,7 +15,9 @@
 **** DONE volume setting
 **** DONE logarithmic gain
 **** DONE store sample in IndexedDB
-**** TODO query DB for click
+**** DONE query DB for click
+**** TODO get click from DB
+**** TODO deleteTrack
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** DONE expand single section

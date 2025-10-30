@@ -1,4 +1,4 @@
-import * as DB from '../db.js'
+import * as DB from '../db/db.js'
 import { warnf } from '../log.js'
 import * as generators from '../generators.js'
 import { PULSES, INF } from '../constants.js'

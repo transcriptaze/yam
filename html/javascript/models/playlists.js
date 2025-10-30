@@ -1,4 +1,4 @@
-import * as DB from '../db.js'
+import * as DB from '../db/db.js'
 import { Playlist } from './playlist.js'
 import { warnf } from '../log.js'
 import { UUIDv4 } from '../uuid.js'

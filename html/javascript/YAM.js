@@ -24,8 +24,6 @@ const widgets = {
   editor: document.querySelector('yam-editor'),
 }
 
-let ID = 0
-
 export function initialise() {
   // ... initialise WebAudio
   const webaudio = !!(window.AudioContext || window.webkitAudioContext || window.mozAudioContext)
@@ -44,6 +42,7 @@ export function initialise() {
   engine.BPM = settings.BPM
   engine.timeSignature = settings.timeSignature
   engine.pulse = settings.pulse
+  engine.volume = settings.volume
 
   state.initialise(settings)
 
@@ -100,22 +99,9 @@ export function initialise() {
     .catch((err) => warnf(err))
 
   // ... setup audio engine
-  engine.addEventListener(
-    EVENTS.PLAYING,
-    () => {
-      widgets.metronome.onPlaying()
-      requestAnimationFrame(() => animate(++ID))
-    },
-    false,
-  )
-
-  engine.addEventListener(
-    EVENTS.STOPPED,
-    () => {
-      widgets.metronome.onStopped()
-    },
-    false,
-  )
+  engine.addEventListener(EVENTS.PLAYING, (event) => onPlaying(event), false)
+  engine.addEventListener(EVENTS.STOPPED, (event) => onStopped(event), false)
+  engine.addEventListener(EVENTS.CLICK, (event) => onClick(event.detail), false)
 
   widgets.metronome.enabled = true
 
@@ -403,6 +389,24 @@ function rewire() {
   models.playlists.addEventListener('deleted', (e) => onPlaylistDeleted(e))
 
   document.addEventListener('keydown', (e) => onKeyDown(e))
+}
+
+function onPlaying() {
+  widgets.metronome.onPlaying()
+}
+
+function onStopped() {
+  widgets.metronome.onStopped()
+}
+
+function onClick(state) {
+  widgets.pads.redraw(state)
+  widgets.info.redraw(state)
+  widgets.timeSignature.redraw(state)
+  widgets.mm.redraw(state)
+  widgets.knob.redraw(state)
+  widgets.wheel.redraw(state)
+  widgets.loop.redraw(state)
 }
 
 function onKeyDown(event) {
@@ -889,28 +893,6 @@ function onPlaylistDeleted(event) {
     widgets.metronome.eof = playlist?.EOF(track) ?? true
 
     engine.track = track
-  }
-}
-
-function animate(id) {
-  const runstate = {
-    playing: engine.playing,
-    stopped: engine.stopped,
-    bar: engine.bar,
-    beat: engine.beat,
-    loops: engine.loops,
-  }
-
-  widgets.pads.redraw(runstate)
-  widgets.info.redraw(runstate)
-  widgets.timeSignature.redraw(runstate)
-  widgets.mm.redraw(runstate)
-  widgets.knob.redraw(runstate)
-  widgets.wheel.redraw(runstate)
-  widgets.loop.redraw(runstate)
-
-  if (!runstate.stopped) {
-    requestAnimationFrame(() => animate(id))
   }
 }
 

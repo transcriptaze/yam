@@ -154,7 +154,7 @@ export class Info extends HTMLElement {
       }
 
       this.#progress.value = 0
-      this.#progress.max = this.#track.bars
+      this.#progress.max = this.#track?.bars ?? 0
     } else if (playing && !stopped && bar != this.#cache.bar) {
       this.#cache.bar = bar
 
@@ -198,9 +198,9 @@ export class Info extends HTMLElement {
   }
 
   set #bars({ playing, section, bar }) {
-    const bars = this.#track.bars
-    const countIn = this.#track.countIn
-    const pickup = this.#track.pickup
+    const bars = this.#track?.bars ?? 0
+    const countIn = this.#track?.countIn ?? 0
+    const pickup = this.#track?.pickup ?? 0
 
     const measures = section?.measures ?? 0
     const start = section?.start ?? INF

@@ -1,4 +1,4 @@
-import * as DB from '../db.js'
+import * as DB from '../db/db.js'
 
 const SOUNDS = [
   'audio/default/tick.wav',
@@ -33,24 +33,41 @@ export function get(ctx) {
 }
 
 function _get(ctx, sound) {
-  if (DB.has(ctx, sound)) {
-    return DB.click(ctx, sound)
-  } else {
-    return new Promise((resolve, reject) => {
-      fetch(`../${sound}`, GET)
-        .then((response) => {
-          if (response.ok) {
-            return response.blob()
-          } else {
-            throw new Error(response.statusText)
-          }
-        })
-        .then((blob) => blob.arrayBuffer())
-        .then((buffer) => ctx.decodeAudioData(buffer))
-        .then(resolve)
-        .catch(reject)
+  const match = new RegExp('^audio/default/(.*?)\\.wav$').exec(sound)
+  const name = match[1] ?? ''
+  const key = `default::${name}`
+
+  return DB.hasClick(ctx, key).then((ok) => {
+    console.log('>>> HAS', { key }, { ok })
+
+    return _fetch(ctx, sound, key)
+  })
+
+  // return fetch(`../${sound}`, GET)
+  //   .then((response) => {
+  //     if (response.ok) {
+  //       return response.blob()
+  //     } else {
+  //       throw new Error(response.statusText)
+  //     }
+  //   })
+  //   .then((blob) => DB.putClick(key, blob))
+  //   .then((blob) => blob.arrayBuffer())
+  //   .then((buffer) => ctx.decodeAudioData(buffer))
+}
+
+function _fetch(ctx, sound, key) {
+  return fetch(`../${sound}`, GET)
+    .then((response) => {
+      if (response.ok) {
+        return response.blob()
+      } else {
+        throw new Error(response.statusText)
+      }
     })
-  }
+    .then((blob) => DB.putClick(key, blob))
+    .then((blob) => blob.arrayBuffer())
+    .then((buffer) => ctx.decodeAudioData(buffer))
 }
 
 function _update(_ctx) {

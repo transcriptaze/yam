@@ -216,8 +216,9 @@ html.settings main div.settings {
   min-width: 200px;
   display: grid;
   grid-template-columns: auto 1fr;
-  grid-template-rows: auto;
+  grid-template-rows: auto auto;
   column-gap: 12px;
+  row-gap: 32px;
 }
 html.settings main div.settings label {
   width: fit-content;
@@ -247,6 +248,21 @@ html.settings main div.settings select option {
   padding-left: 8px;
   padding-right: 8px;
   transition: 0.4s;
+}
+html.settings main div.settings input[type=range] {
+  width: 200px;
+  margin: 0;
+}
+html.settings main div.volume {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
+html.settings main div.volume input[type=text] {
+  background: none;
+  border: none;
+  outline: none;
+  width: 3em;
 }
 
 @media (max-width: 768px) and (orientation: portrait) {

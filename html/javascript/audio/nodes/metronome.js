@@ -69,11 +69,11 @@ export class MetronomeNode extends AudioWorkletNode {
         this.subscribers.dispatchEvent(
           new CustomEvent(EVENTS.CLICK, {
             detail: {
-              playing: event.data.state === STATE.PLAYING,
-              stopped: event.data.state === STATE.STOPPED,
-              bar: event.data.bar,
-              beat: event.data.beat,
-              loops: event.data.loops,
+              playing: this.playing,
+              stopped: this.stopped,
+              bar: this.bar,
+              beat: this.beat,
+              loops: this.loops,
             },
           }),
         )

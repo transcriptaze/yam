@@ -432,14 +432,14 @@ function* transmogrify(track) {
     }
 
     yield {
-      role: {
-        track: section.role,
-        generated: role,
-      },
-
       name: {
         track: section.name,
         generated: name,
+      },
+
+      role: {
+        track: section.role,
+        generated: role,
       },
 
       timeSignature: section.timeSignature,

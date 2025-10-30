@@ -21,22 +21,18 @@
 
           <label for="volume">Volume</label>
           <div class="volume">
-            <input id="volume" type="range" min="0" max="4" value="1.0" step="0.1" list="markers" />
-            <input             type="text" value="1.0" readonly />
+            <input id="volume" type="range" min="-3" max="3" step="0.1" value="0"   list="markers" />
+            <input             type="text"                              value="1.0" readonly />
           </div>
 
           <datalist id="markers">
+            <option value="-3"></option>
+            <option value="-2"></option>
+            <option value="-1"></option>
             <option value="0"></option>
-            <option value="0.25"></option>
-            <option value="0.50"></option>
-            <option value="0.75"></option>
             <option value="1"></option>
-            <option value="1.50"></option>
             <option value="2"></option>
-            <option value="2.50"></option>
             <option value="3"></option>
-            <option value="3.50"></option>
-            <option value="4"></option>
           </datalist>
         </div>
       </main>
@@ -66,7 +62,7 @@
 
   <!-- SCRIPTS -->
   <script type="module">
-    import { initialise } from './javascript/pages/settings.js'
+    import { initialise, onError } from './javascript/pages/settings.js'
 
     const toolbar = {
       // save: document.querySelector('toolbar #save'),

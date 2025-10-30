@@ -2,6 +2,7 @@
 
 *** DONE tactus wheel (cf. https://github.com/transcriptaze/yam/issues/12)
 *** DONE replace animationFrame with 'click' event
+*** DONE time signature number picker is too small on mobile
 
 *** TODO loop icon numbers
 **** TODO 1
@@ -12,6 +13,8 @@
 
 *** TODO soundsets (cf. https://github.com/transcriptaze/yam/issues/20)
 **** DONE volume setting
+**** DONE logarithmic gain
+**** TODO store sample in IndexedDB
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** DONE expand single section
@@ -30,10 +33,12 @@
 **** TODO unit tests
 
 *** TODO use realized track
+**** TODO make track UUID private
 **** TODO store in state
 **** TODO rework YAM to use state.track.UUID
 **** TODO reuse state track for widgets
-**** TODO make track UUID private
+**** TODO consistently pass the either whole track or the UUID
+      - OR at least stop mixing up track UUID and track
 
 *** TODO use realized playlist
 *** TODO connectedCallback: event handler duplication
@@ -80,10 +85,7 @@
 *** TODO clock: circular time
 *** TODO trim height of 'play' icon
 *** TODO use different font/colour for track that is in playlist (so that you know you are editing a playlist item)
-*** TODO consistently pass the either whole track or the UUID
-      - OR at least stop mixing up track UUID and track
 *** TODO resize knob/fix SVG overflow
-*** TODO move engine.set to onModified
 *** TODO Rethink '=' from MM
            - (?) maybe use @
            - (?) use @ or = where it makes sense
@@ -116,6 +118,7 @@
 
 ** Playlists
 *** TODO autoplay
+      - announce track (TTS)
 *** TODO save URL as bookmark
 *** TODO flag modified tracks
 *** TODO playlist indicator for back/next (e.g. dots below play controls)
@@ -200,7 +203,6 @@
       - [ ] display as e.g. orange while transitioning
 
 ** Time Signature
-*** DONE time signature number picker is too small on mobile
 *** TODO setting tactus/figura triggers redraw + change event)
 *** TODO presets
      - use ligatures e.g timeSig2over4

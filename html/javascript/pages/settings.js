@@ -16,8 +16,8 @@ export function initialise() {
   settings.restore()
 
   widgets.theme.value = settings.theme
-  widgets.volume.value = settings.volume
-  widgets.volumex.value = settings.volume
+  widgets.volume.value = 10 * Math.log10(settings.volume)
+  widgets.volumex.value = Math.round(20 * settings.volume) / 20
 }
 
 export function onError(err) {
@@ -32,13 +32,17 @@ function onTheme(event) {
 
 function onVolume(event) {
   if (event.type === 'input') {
-    widgets.volumex.value = widgets.volume.value
+    const volume = Math.pow(10, widgets.volume.value / 10)
+
+    widgets.volumex.value = Math.round(20 * volume) / 20
   }
 
   if (event.type === 'change') {
-    widgets.volumex.value = widgets.volume.value
+    const volume = Math.pow(10, widgets.volume.value / 10)
 
-    settings.volume = widgets.volume.value
+    widgets.volumex.value = Math.round(20 * volume) / 20
+
+    settings.volume = Math.round(10 * volume) / 10
     settings.save()
   }
 }

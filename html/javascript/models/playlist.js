@@ -1,4 +1,4 @@
-import * as DB from '../db.js'
+import * as DB from '../db/db.js'
 import { infof } from '../log.js'
 
 const LOGTAG = 'playlist'

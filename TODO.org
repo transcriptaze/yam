@@ -14,7 +14,8 @@
 *** TODO soundsets (cf. https://github.com/transcriptaze/yam/issues/20)
 **** DONE volume setting
 **** DONE logarithmic gain
-**** TODO store sample in IndexedDB
+**** DONE store sample in IndexedDB
+**** TODO query DB for click
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** DONE expand single section

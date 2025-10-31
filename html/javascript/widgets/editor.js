@@ -423,12 +423,46 @@ function* transmogrify(track) {
       bars = 0
 
       for (const subsection of _subsections) {
+        defaults.timeSignature = subsection.timeSignature ?? defaults.timeSignature
+        defaults.pulse = subsection.pulse ?? pulse
+        defaults.tempo = subsection.tempo ?? tempo
+
         subsections.push({
+          timeSignature: subsection.timeSignature,
+
+          tempo: {
+            pulse: subsection.pulse,
+            BPM: subsection.tempo,
+          },
+
           measures: subsection.measures ?? Number.POSITIVE_INFINITY,
+
+          defaults: {
+            timeSignature: defaults.timeSignature,
+            pulse: defaults.pulse,
+            BPM: defaults.tempo,
+          },
         })
 
         bars += subsection.measures ?? Number.POSITIVE_INFINITY
       }
+    } else {
+      subsections.push({
+        timeSignature: timeSignature,
+
+        tempo: {
+          pulse: pulse,
+          BPM: tempo,
+        },
+
+        measures: section.measures ?? (['count-in', 'anacrusis'].includes(role) ? 1 : Number.POSITIVE_INFINITY),
+
+        defaults: {
+          timeSignature: defaults.timeSignature,
+          pulse: defaults.pulse,
+          BPM: defaults.tempo,
+        },
+      })
     }
 
     yield {

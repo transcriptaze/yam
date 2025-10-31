@@ -56,6 +56,8 @@ export class Subsection extends HTMLElement {
       timeSignature: subsection?.timeSignature ?? '',
       defaults: subsection?.defaults ?? {},
     }
+
+    this.#measures = subsection?.measures ?? '∞'
   }
 
   set defaults(object) {
@@ -143,6 +145,22 @@ export class Subsection extends HTMLElement {
         e.timeSignature = timeSignature
       }
     })()
+  }
+
+  get #measures() {
+    if (this.#fields.measures == null) {
+      this.#fields.measures = this.shadowRoot?.querySelector('#measures')
+    }
+
+    return this.#fields.measures.value
+  }
+
+  set #measures(bars) {
+    if (this.#fields.measures == null) {
+      this.#fields.measures = this.shadowRoot?.querySelector('#measures')
+    }
+
+    this.#fields.measures.value = bars
   }
 }
 

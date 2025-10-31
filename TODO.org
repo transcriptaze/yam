@@ -9,7 +9,7 @@
 **** DONE 2
 **** TODO 3
 **** TODO 4
-**** TODO 5
+**** DONE 5
 
 *** TODO soundsets (cf. https://github.com/transcriptaze/yam/issues/20)
 **** DONE volume setting
@@ -20,10 +20,7 @@
 **** TODO deleteTrack
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
-**** DONE expand single section
 **** DONE slide in on initialisation
-**** DONE section time signature popup at bottom of list is unusable
-**** DONE section time signature not saving tactus/figura
 **** TODO display subsections
 **** TODO enable editor save iff changed
 

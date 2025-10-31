@@ -76,6 +76,7 @@ export class Section extends HTMLElement {
       role: shadow.querySelector('#role'),
       measures: shadow.querySelector('#measures'),
       expand: shadow.querySelector('#arrow'),
+      subsections: shadow.querySelector('div.subsections'),
     }
 
     if (Object.values(this.#fields).some((e) => e == null)) {
@@ -132,17 +133,33 @@ export class Section extends HTMLElement {
     this.#measures.value = section?.measures ?? 0
     this.#measures.placeholder = this.#role.value === 'anacrusis' ? 1 : '∞'
 
-    this.#subsection = {
-      timeSignature: section?.timeSignature ?? '',
-      tempo: section?.tempo ?? {},
-      defaults: section?.defaults ?? {},
+    const subsections = section?.subsections ?? []
+
+    for (const subsection of subsections) {
+      const e = document.createElement('yam-subsection')
+
+      e.subsection = subsection
+
+      this.#subsections.appendChild(e)
+
+      // set #subsection(subsection) {
+      //   void (async () => {
+      //     await customElements.whenDefined('yam-subsection')
+      //     const e = this.shadowRoot?.querySelector('yam-subsection')
+      //     if (e) {
+      //       e.subsection = subsection
+      //     }
+      //   })()
+      // }
+
+      // break
     }
   }
 
   set defaults(object) {
-    this.#subsection.then((e) => {
-      e.defaults = object
-    })
+    // this.#subsection.then((e) => {
+    //   e.defaults = object
+    // })
   }
 
   get name() {
@@ -195,23 +212,27 @@ export class Section extends HTMLElement {
     return this.#fields.measures
   }
 
-  get #subsection() {
-    return (async () => {
-      await customElements.whenDefined('yam-subsection')
-
-      return this.shadowRoot?.querySelector('yam-subsection')
-    })()
+  get #subsections() {
+    return this.#fields.subsections
   }
 
-  set #subsection(subsection) {
-    void (async () => {
-      await customElements.whenDefined('yam-subsection')
-      const e = this.shadowRoot?.querySelector('yam-subsection')
-      if (e) {
-        e.subsection = subsection
-      }
-    })()
-  }
+  // get #subsection() {
+  //   return (async () => {
+  //     await customElements.whenDefined('yam-subsection')
+  //
+  //     return this.shadowRoot?.querySelector('yam-subsection')
+  //   })()
+  // }
+
+  // set #subsection(subsection) {
+  //   void (async () => {
+  //     await customElements.whenDefined('yam-subsection')
+  //     const e = this.shadowRoot?.querySelector('yam-subsection')
+  //     if (e) {
+  //       e.subsection = subsection
+  //     }
+  //   })()
+  // }
 }
 
 customElements.define('yam-section', Section)

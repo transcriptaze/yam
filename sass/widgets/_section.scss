@@ -19,11 +19,13 @@
       align-items: center;
     }
 
-    div.metricals {
-      background: #fcfcfc;
+    div.subsections {
+      background: none;
       width: 100%;
 
-      display: inline-block;
+      display: flex;
+      flex-direction: column;
+      row-gap: 1px;
     }
 
     #arrow {
@@ -118,7 +120,7 @@
   div.section.collapsed {
     row-gap: 0px;
 
-    div.metricals {
+    div.subsections {
       display: none;
     }
 

@@ -1,4 +1,4 @@
-import { get, put, exec, debugf, infof, warnf } from './DB.js'
+import { get, put, exec, debugf, infof, warnf } from '../db/db.js'
 
 export function playlists() {
   debugf(`get playlists`)

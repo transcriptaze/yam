@@ -90,6 +90,16 @@ export class Subsection extends HTMLElement {
     }
   }
 
+  get measures() {
+    const measures = parseInt(`${this.#measures?.value}`)
+
+    if (!Number.isNaN(measures) && measures >= 0) {
+      return measures
+    }
+
+    return null
+  }
+
   get timeSignature() {
     const e = this.shadowRoot?.querySelector('yam-section-time-signature')
 
@@ -152,7 +162,7 @@ export class Subsection extends HTMLElement {
       this.#fields.measures = this.shadowRoot?.querySelector('#measures')
     }
 
-    return this.#fields.measures.value
+    return this.#fields.measures
   }
 
   set #measures(bars) {

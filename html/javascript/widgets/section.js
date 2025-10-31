@@ -191,8 +191,12 @@ export class Section extends HTMLElement {
     return e?.tempo ?? this.#section.tempo
   }
 
+  // FIXME should map subsections to list of { timeSignature, pulse, tempo }
+  //       editor::set-defaults needs rethinking though
   get subsections() {
-    return Array.from(this.#subsections?.querySelectorAll('yam-subsection') ?? [])
+    const subsections = this.#subsections?.querySelectorAll('yam-subsection')
+
+    return Array.from(subsections ?? [])
   }
 
   get #name() {

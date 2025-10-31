@@ -235,45 +235,65 @@ export class Editor extends HTMLElement {
     }
   }
 
-  // FIXME disabled while reworking to support subsections
   #save() {
-    // const title = this.#title.value
-    // const timeSignature = this.#timeSignature.timeSignature
-    // const pulse = this.#mm.pulse
-    // const tempo = this.#mm.BPM
-    // const BPM = Number.parseInt(this.#BPM.value)
-    // const loop = this.#loop.loop
-    // const loops = this.#loops.value
-    // const ul = this.#sections.querySelector('ul')
-    //
-    // const sections = Array.from(ul.querySelectorAll('yam-section')).map((v) => {
-    //   return {
-    //     name: v.name,
-    //     role: v.role,
-    //     measures: v.measures,
-    //     timeSignature: v.timeSignature,
-    //     pulse: v.tempo.pulse,
-    //     tempo: v.tempo.BPM,
-    //   }
-    // })
-    //
-    // this.dispatchEvent(
-    //   new CustomEvent(EVENTS.EDIT_SAVE, {
-    //     bubbles: true,
-    //     composed: true,
-    //     detail: {
-    //       track: this.#track?.UUID,
-    //       title: title,
-    //       timeSignature: timeSignature,
-    //       pulse: pulse,
-    //       tempo: tempo,
-    //       BPM: !Number.isNaN(BPM) && BPM >= 40 && BPM <= 200 ? BPM : null,
-    //       loop: loop,
-    //       loops: ['2', '3', '4', '5'].includes(loops) ? Number.parseInt(loops) : INF,
-    //       sections: [...sections],
-    //     },
-    //   }),
-    // )
+    const title = this.#title.value
+    const timeSignature = this.#timeSignature.timeSignature
+    const pulse = this.#mm.pulse
+    const tempo = this.#mm.BPM
+    const BPM = Number.parseInt(this.#BPM.value)
+    const loop = this.#loop.loop
+    const loops = this.#loops.value
+    const ul = this.#sections.querySelector('ul')
+
+    const sections = Array.from(ul.querySelectorAll('yam-section')).map((v) => {
+      const subsection = (ss) => {
+        const object = {
+          measures: ss.measures,
+        }
+
+        if (ss.timeSignature != null && ss.timeSignature != '') {
+          object.timeSignature = ss.timeSignature
+        }
+
+        if (ss.tempo.pulse != null && ss.tempo.pulse != '') {
+          object.pulse = ss.tempo.pulse
+        }
+
+        if (ss.tempo.BPM != null && ss.tempo.BPM != '') {
+          object.tempo = ss.tempo.BPM
+        }
+
+        return object
+      }
+
+      return {
+        name: v.name,
+        role: v.role,
+        measures: v.measures,
+        timeSignature: v.timeSignature,
+        pulse: v.tempo.pulse,
+        tempo: v.tempo.BPM,
+        subsections: v.subsections.map((ss) => subsection(ss)),
+      }
+    })
+
+    this.dispatchEvent(
+      new CustomEvent(EVENTS.EDIT_SAVE, {
+        bubbles: true,
+        composed: true,
+        detail: {
+          track: this.#track?.UUID,
+          title: title,
+          timeSignature: timeSignature,
+          pulse: pulse,
+          tempo: tempo,
+          BPM: !Number.isNaN(BPM) && BPM >= 40 && BPM <= 200 ? BPM : null,
+          loop: loop,
+          loops: ['2', '3', '4', '5'].includes(loops) ? Number.parseInt(loops) : INF,
+          sections: [...sections],
+        },
+      }),
+    )
   }
 
   #add() {

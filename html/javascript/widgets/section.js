@@ -6,7 +6,7 @@ export class Section extends HTMLElement {
   }
 
   // ... fields
-  #fields = {}
+  #cache = {}
 
   // ... state
   #section = {}
@@ -70,18 +70,6 @@ export class Section extends HTMLElement {
 
     shadow.appendChild(stylesheet)
     shadow.appendChild(clone)
-
-    this.#fields = {
-      name: shadow.querySelector('#name'),
-      role: shadow.querySelector('#role'),
-      measures: shadow.querySelector('#measures'),
-      expand: shadow.querySelector('#arrow'),
-      subsections: shadow.querySelector('div.subsections'),
-    }
-
-    if (Object.values(this.#fields).some((e) => e == null)) {
-      throw new Error('missing fields')
-    }
   }
 
   connectedCallback() {
@@ -141,46 +129,53 @@ export class Section extends HTMLElement {
       e.subsection = subsection
 
       this.#subsections.appendChild(e)
-
-      // set #subsection(subsection) {
-      //   void (async () => {
-      //     await customElements.whenDefined('yam-subsection')
-      //     const e = this.shadowRoot?.querySelector('yam-subsection')
-      //     if (e) {
-      //       e.subsection = subsection
-      //     }
-      //   })()
-      // }
-
-      // break
     }
   }
 
-  set defaults(object) {
-    // this.#subsection.then((e) => {
-    //   e.defaults = object
-    // })
-  }
+  // // NTS: returns the defaults from the last subsection for the cascase update
+  // set defaults(object) {
+  //   const subsections = this.#subsections?.querySelectorAll('yam-subsection') ?? []
+  //
+  //   for (const subsection of subsections) {
+  //     subsection.defaults = object
+  //
+  //     const { beats, divisions } = parseTimeSignature(`${subsection.timeSignature}`)
+  //     const tempo = subsection.tempo
+  //
+  //     if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
+  //       object.timeSignature = subsection.timeSignature
+  //     }
+  //
+  //     if (tempo.pulse != null && tempo.pulse !== '') {
+  //       object.pulse = tempo.pulse
+  //     }
+  //
+  //     if (tempo.BPM != null && tempo.BPM >= 40 && tempo.BPM < 200) {
+  //       object.BPM = tempo.BPM
+  //     }
+  //   }
+  // }
 
   get name() {
-    return this.#fields.name.value.trim()
+    return this.#cache.name.value.trim()
   }
 
   get role() {
-    return this.#fields.role.value.trim()
+    return this.#cache.role.value.trim()
   }
 
   get measures() {
-    if (this.#fields.measures.value === '') {
-      return INF
-    } else {
-      const N = Number.parseInt(this.#fields.measures.value)
+    const measures = this.#measures?.value ?? ''
 
-      if (Number.isNaN(N)) {
-        return undefined
-      } else {
-        return N
-      }
+    if (measures === '') {
+      return INF
+    }
+
+    const N = Number.parseInt(measures)
+    if (Number.isNaN(N)) {
+      return undefined
+    } else {
+      return N
     }
   }
 
@@ -196,43 +191,49 @@ export class Section extends HTMLElement {
     return e?.tempo ?? this.#section.tempo
   }
 
-  get #expand() {
-    return this.#fields.expand
+  get subsections() {
+    return Array.from(this.#subsections?.querySelectorAll('yam-subsection') ?? [])
   }
 
   get #name() {
-    return this.#fields.name
+    if (this.#cache.name == null) {
+      this.#cache.name = this.shadowRoot?.querySelector('#name')
+    }
+
+    return this.#cache.name
   }
 
   get #role() {
-    return this.#fields.role
+    if (this.#cache.role == null) {
+      this.#cache.role = this.shadowRoot.querySelector('#role')
+    }
+
+    return this.#cache.role
   }
 
   get #measures() {
-    return this.#fields.measures
+    if (this.#cache.measures == null) {
+      this.#cache.measures = this.shadowRoot?.querySelector('#measures')
+    }
+
+    return this.#cache.measures
   }
 
   get #subsections() {
-    return this.#fields.subsections
+    if (this.#cache.subsections == null) {
+      this.#cache.subsections = this.shadowRoot?.querySelector('div.subsections')
+    }
+
+    return this.#cache.subsections
   }
 
-  // get #subsection() {
-  //   return (async () => {
-  //     await customElements.whenDefined('yam-subsection')
-  //
-  //     return this.shadowRoot?.querySelector('yam-subsection')
-  //   })()
-  // }
+  get #expand() {
+    if (this.#cache.expand == null) {
+      this.#cache.expand = this.shadowRoot.querySelector('#arrow')
+    }
 
-  // set #subsection(subsection) {
-  //   void (async () => {
-  //     await customElements.whenDefined('yam-subsection')
-  //     const e = this.shadowRoot?.querySelector('yam-subsection')
-  //     if (e) {
-  //       e.subsection = subsection
-  //     }
-  //   })()
-  // }
+    return this.#cache.expand
+  }
 }
 
 customElements.define('yam-section', Section)

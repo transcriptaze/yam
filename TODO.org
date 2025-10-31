@@ -22,7 +22,10 @@
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** DONE slide in on initialisation
 **** TODO display subsections
+      - save edits
+      - switch measures field between section/subsection
 **** TODO enable editor save iff changed
+**** TODO merge sections
 
 *** TODO clicks
 **** TODO generate clicks for count-in

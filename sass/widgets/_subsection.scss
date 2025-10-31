@@ -5,7 +5,7 @@
     height: fit-content;
 
     display: grid;
-    grid-template-columns: auto auto 1fr;
+    grid-template-columns: auto auto 1fr auto;
     grid-template-rows: auto;
     column-gap: 8px;    
 
@@ -19,6 +19,11 @@
       grid-row: 1
     }
 
+    #measures {
+      grid-column: 4;
+      grid-row: 1    
+    }
+
     yam-time-signature {
       height: 32px;
     }
@@ -26,6 +31,57 @@
     yam-mm {
       height: 32px;
     }
+
+    input {
+      box-sizing: border-box;
+
+      padding-top: 6px;
+      padding-bottom: 6px;
+      padding-left: 6px;
+      padding-right: 6px;
+
+      font-size: 0.9em;
+      text-overflow: ellipsis;
+
+      border: none;
+      outline: none;
+    }
+
+    input:invalid {
+      color: red;
+    }
+
+    input::placeholder {
+      font-style: italic;
+      color: #a0a0a0;
+    }
+
+    input[readonly] {
+      color: gray;
+      font-style: italic;
+      font-weight: normal;
+    }
+
+    input[readonly]:invalid {
+      color: red;
+    }
+
+    input[type="number"] {
+      text-align: center;
+      font-style: normal;
+
+      &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+      }
+
+      -moz-appearance:textfield;
+    }
+
+    #measures {
+      width: 3em;
+      font-family: "YAM", "Lato", sans;
+    }
+
   }
 }
 

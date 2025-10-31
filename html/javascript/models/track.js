@@ -340,6 +340,83 @@ export class Track {
       } else {
         section.timeSignature = v.timeSignature
       }
+
+      // ... subsections
+      section.subsections = section.subsections ?? []
+
+      const subsections = v.subsections ?? []
+      const updated = subsections.filter((ss, i) => i < section.subsections.length)
+      const added = subsections.filter((ss, i) => i >= section.subsections.length)
+
+      updated.forEach((ss, i) => {
+        const subsection = section.subsections[i]
+
+        // ... time signature
+        if (ss.timeSignature == null || ss.timeSignature === '') {
+          subsection.timeSignature = null
+        } else {
+          subsection.timeSignature = ss.timeSignature
+        }
+
+        // ... measures
+        if (ss.measures == INF) {
+          subsection.measures = INF
+        } else if (!Number.isNaN(ss.measures) && ss.measures >= 0) {
+          subsection.measures = ss.measures
+        }
+
+        // ... pulse
+        if (ss.pulse == null || ss.pulse === '') {
+          subsection.pulse = null
+        } else if (PULSES.includes(ss.pulse)) {
+          subsection.pulse = ss.pulse
+        }
+
+        // ... tempo
+        if (ss.tempo == null || ss.tempo === '') {
+          subsection.tempo = null
+        } else if (!Number.isNaN(ss.tempo) && ss.tempo >= 40 && ss.tempo <= 200) {
+          subsection.tempo = ss.tempo
+        }
+      })
+
+      added.forEach((ss) => {
+        const measures = Number.parseInt(ss.measures ?? '')
+        const subsection = {
+          measures: Number.isNaN(measures) ? INF : measures,
+        }
+
+        if (ss.timeSignature != null && ss.timeSignature !== '') {
+          subsection.timeSignature = ss.timeSignature
+        }
+
+        if (ss.pulse != null && ss.pulse !== '' && PULSES.includes(ss.pulse)) {
+          subsection.pulse = ss.pulse
+        }
+
+        if (ss.tempo != null && ss.tempo !== '' && !Number.isNaN(ss.tempo) && ss.tempo >= 40 && ss.tempo <= 200) {
+          subsection.tempo = ss.tempo
+        }
+
+        section.subsections.push(subsection)
+      })
+
+      const deleted = section.subsections
+        .map((v, i) => {
+          const measures = Number.parseInt(v.measures ?? '')
+
+          return {
+            i: i,
+            deleted: measures < 1,
+          }
+        })
+        .filter((v) => v.deleted === true)
+        .map((v) => v.i)
+        .reverse()
+
+      deleted.forEach((ix) => {
+        section.subsections.splice(ix, 1)
+      })
     })
 
     added.forEach((v) => {

@@ -735,7 +735,7 @@ function onSave() {
   }
 }
 
-function onEdited(event) {
+function onEdited(_event) {
   try {
     const track = models.tracks.track(event.detail.track)
 
@@ -769,11 +769,6 @@ function onEdited(event) {
         widgets.mm.track = track
 
         widgets.info.modified = state.modified
-        // widgets.info.title = track.title
-        // widgets.timeSignature.timeSignature = track.timeSignature
-        // widgets.mm.pulse = track.pulse
-        // widgets.mm.BPM = track.BPM
-        // widgets.mm.timeSignature = track.timeSignature
         widgets.loop.loop = track.loop
         widgets.knob.BPM = track.BPM
         widgets.knob.tempo = track.tempo

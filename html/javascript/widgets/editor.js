@@ -1,6 +1,6 @@
 import { EVENTS, INF } from '../constants.js'
-import { parseTimeSignature } from '../util.js'
 import * as generators from '../generators.js'
+import { parseTimeSignature } from '../util.js'
 
 export class Editor extends HTMLElement {
   static get observedAttributes() {
@@ -246,6 +246,26 @@ export class Editor extends HTMLElement {
     const ul = this.#sections.querySelector('ul')
 
     const sections = Array.from(ul.querySelectorAll('yam-section')).map((v) => {
+      const subsection = (ss) => {
+        const object = {
+          measures: ss.measures,
+        }
+
+        if (ss.timeSignature != null && ss.timeSignature != '') {
+          object.timeSignature = ss.timeSignature
+        }
+
+        if (ss.tempo.pulse != null && ss.tempo.pulse != '') {
+          object.pulse = ss.tempo.pulse
+        }
+
+        if (ss.tempo.BPM != null && ss.tempo.BPM != '') {
+          object.tempo = ss.tempo.BPM
+        }
+
+        return object
+      }
+
       return {
         name: v.name,
         role: v.role,
@@ -253,6 +273,7 @@ export class Editor extends HTMLElement {
         timeSignature: v.timeSignature,
         pulse: v.tempo.pulse,
         tempo: v.tempo.BPM,
+        subsections: v.subsections.map((ss) => subsection(ss)),
       }
     })
 
@@ -341,51 +362,38 @@ export class Editor extends HTMLElement {
     return this.#fields.plus
   }
 
-  // ... "cascade" updates section defaults values
+  // ... "cascade" updates section/subsection defaults values
   set #defaults(object) {
     const sections = Array.from(this.#sections?.querySelectorAll('yam-section'))
     const it = sections.values()
-    let pulse = object?.pulse
-    let BPM = object?.BPM
-    let timeSignature = object?.timeSignature
 
-    if (pulse != null && pulse != '') {
-      for (const section of it) {
-        section.defaults = {
+    let timeSignature = object?.timeSignature ?? this.#timeSignature.timeSignature
+    let pulse = object?.pulse ?? this.#mm.pulse
+    let BPM = object?.BPM ?? this.#mm.BPM
+
+    for (const section of it) {
+      const subsections = section.subsections
+
+      for (const subsection of subsections) {
+        subsection.defaults = {
+          timeSignature: timeSignature,
           pulse: pulse,
+          BPM: BPM,
         }
 
-        const tempo = section.tempo
+        const { beats, divisions } = parseTimeSignature(`${subsection.timeSignature}`)
+        const tempo = subsection.tempo
+
+        if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
+          timeSignature = subsection.timeSignature
+        }
 
         if (tempo.pulse != null && tempo.pulse !== '') {
           pulse = tempo.pulse
         }
-      }
-    }
-
-    if (BPM != null && BPM >= 40 && BPM <= 200) {
-      for (const section of it) {
-        section.defaults = {
-          BPM: BPM,
-        }
-
-        const tempo = section.tempo
 
         if (tempo.BPM != null && tempo.BPM >= 40 && tempo.BPM < 200) {
           BPM = tempo.BPM
-        }
-      }
-    }
-
-    if (timeSignature != null) {
-      for (const section of it) {
-        section.defaults = {
-          timeSignature: timeSignature,
-        }
-
-        const { beats, divisions } = parseTimeSignature(`${section.timeSignature}`)
-        if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
-          timeSignature = section.timeSignature
         }
       }
     }
@@ -423,12 +431,50 @@ function* transmogrify(track) {
       bars = 0
 
       for (const subsection of _subsections) {
+        defaults.timeSignature = subsection.timeSignature ?? defaults.timeSignature
+        defaults.pulse = subsection.pulse ?? pulse
+        defaults.tempo = subsection.tempo ?? tempo
+
+        timeSignature = subsection.timeSignature ?? timeSignature
+        pulse = subsection.pulse ?? pulse
+        tempo = subsection.tempo ?? tempo
+
         subsections.push({
+          timeSignature: subsection.timeSignature,
+
+          tempo: {
+            pulse: subsection.pulse,
+            BPM: subsection.tempo,
+          },
+
           measures: subsection.measures ?? Number.POSITIVE_INFINITY,
+
+          defaults: {
+            timeSignature: defaults.timeSignature,
+            pulse: defaults.pulse,
+            BPM: defaults.tempo,
+          },
         })
 
         bars += subsection.measures ?? Number.POSITIVE_INFINITY
       }
+    } else {
+      subsections.push({
+        timeSignature: section.timeSignature,
+
+        tempo: {
+          pulse: section.pulse,
+          BPM: section.tempo,
+        },
+
+        measures: section.measures ?? (['count-in', 'anacrusis'].includes(role) ? 1 : Number.POSITIVE_INFINITY),
+
+        defaults: {
+          timeSignature: defaults.timeSignature,
+          pulse: defaults.pulse,
+          BPM: defaults.tempo,
+        },
+      })
     }
 
     yield {

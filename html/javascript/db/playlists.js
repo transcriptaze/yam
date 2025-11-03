@@ -3,7 +3,7 @@ import { get, put, exec, debugf, infof, warnf } from '../db/db.js'
 export function playlists() {
   debugf(`get playlists`)
 
-  const f = (db, resolve) => {
+  const f = (db, resolve, _reject) => {
     const query = db.transaction(['playlists']).objectStore('playlists').getAll()
 
     query.onsuccess = (event) => {

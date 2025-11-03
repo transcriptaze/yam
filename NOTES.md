@@ -101,7 +101,7 @@
 5. https://openprocessing.org/sketch/1514409
 6. https://github.com/vincentsijben/bpm-timings-for-processing
 7. https://github.com/cwilso/metronome
-
+8. (4 Smart Devices Controlled by Touch, Not Screens or Apps)[https://www.yankodesign.com/2025/11/01/4-smart-devices-controlled-by-touch-not-screens-or-apps]
 
 ## References
 1. https://stackoverflow.com/questions/10588607/tutorial-for-html5-dragdrop-sortable-list 

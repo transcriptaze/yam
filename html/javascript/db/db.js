@@ -62,7 +62,7 @@ function upgrade(db, from, to) {
 }
 
 export function get(f) {
-  return new Promise((resolve) => {
+  return new Promise((resolve, reject) => {
     const request = window.indexedDB.open(DB, VERSION)
 
     request.onerror = (event) => {
@@ -81,7 +81,7 @@ export function get(f) {
     }
 
     request.onsuccess = (event) => {
-      f(event.target.result, resolve)
+      f(event.target.result, resolve, reject)
     }
   })
 }

@@ -1,30 +1,24 @@
 * -- TODO --
 
-*** DONE tactus wheel (cf. https://github.com/transcriptaze/yam/issues/12)
-*** DONE replace animationFrame with 'click' event
-*** DONE time signature number picker is too small on mobile
-
 *** TODO loop icon numbers
 **** TODO 1
 **** DONE 2
 **** TODO 3
 **** TODO 4
 **** DONE 5
+**** TODO (?) rather use large numbers in centre
 
 *** TODO soundsets (cf. https://github.com/transcriptaze/yam/issues/20)
-**** DONE volume setting
-**** DONE logarithmic gain
-**** DONE store sample in IndexedDB
-**** DONE query DB for click
-**** TODO get click from DB
+**** DONE get click from DB
+**** TODO version check + upgrade
 **** TODO deleteTrack
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
-**** DONE slide in on initialisation
+**** TODO enable editor save iff changed
 **** TODO display subsections
       - switch measures field between section/subsection
       - display subsection BPM (calculated)
-**** TODO enable editor save iff changed
+**** TODO slide-in sections list
 **** TODO merge sections
 **** TODO canonicalize track on save/load
 

@@ -1,5 +1,5 @@
 import * as nodes from './nodes/nodes.js'
-import * as sounds from './sounds.js'
+import * as soundsets from './soundsets.js'
 import { parsePulse } from '../util.js'
 
 const AudioContext = window.AudioContext || window.webkitAudioContext
@@ -27,7 +27,7 @@ class Engine {
     if (this.initialised) {
       return Promise.resolve()
     } else {
-      return sounds
+      return soundsets
         .get(ctx)
         .then(([tick, tock, tack, stick, ding]) => {
           const sounds = {

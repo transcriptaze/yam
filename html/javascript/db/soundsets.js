@@ -1,7 +1,7 @@
-import { get, put, debugf, infof, warnf } from './db.js'
+import { get, put, infof, warnf } from './db.js'
 
-export function hasClick(_ctx, sound) {
-  const f = (db, resolve) => {
+export function hasClick(sound) {
+  const f = (db, resolve, _reject) => {
     const query = db.transaction(['audio']).objectStore('audio').getKey(sound)
 
     query.onsuccess = (event) => {
@@ -19,53 +19,22 @@ export function hasClick(_ctx, sound) {
   return get(f)
 }
 
-export function getClick(ctx, sound) {
-  debugf(`get click ${sound}`)
+export function getClick(sound) {
+  const f = (db, resolve, reject) => {
+    const query = db.transaction(['audio']).objectStore('audio').get(sound)
 
-  // return new Promise((resolve, reject) => {
-  //   const request = window.indexedDB.open(DB, VERSION)
+    query.onsuccess = (event) => {
+      const rs = event.target.result
 
-  //   request.onerror = (event) => {
-  //     warnf( `request::get.onerror ${event}`)
-  //     reject('error retrieving ${sound}')
-  //   }
+      resolve(rs.blob)
+    }
 
-  //   request.onupgradeneeded = (_event) => {
-  //     warnf( 'request::get.onupgradeneeded')
-  //     upgrade(event.target.result)
-  //   }
+    query.onerror = (event) => {
+      reject(`${event.target.error.message}`)
+    }
+  }
 
-  //   request.onsuccess = (event) => {
-  //     const db = event.target.result
-  //     const query = db.transaction(['audio']).objectStore('audio').get(sound)
-
-  //     query.onsuccess = (event) => {
-  //       if (event.target.result != null) {
-  //         resolve(event.target.result)
-  //       } else {
-  //         fetch(`../audio/default/${sound}.wav`, GET)
-  //           .then((response) => {
-  //             if (response.ok) {
-  //               return response.blob()
-  //             } else {
-  //               throw new Error(response.statusText)
-  //             }
-  //           })
-  //           .then((blob) => blob.arrayBuffer())
-  //           .then((buffer) => ctx.decodeAudioData(buffer))
-  //           .then(resolve)
-  //           .catch(reject)
-  //       }
-  //     }
-
-  //     query.onerror = (event) => {
-  //       warnf( `query::get.onerror ${event.target.error.message}`)
-  //       reject('error retrieving ${sound}')
-  //     }
-  //   }
-  // })
-
-  throw new Error('*** NOT IMPLEMENTED ***')
+  return get(f)
 }
 
 export function putClick(sound, blob) {

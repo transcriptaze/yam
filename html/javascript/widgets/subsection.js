@@ -1,3 +1,5 @@
+import { EVENTS } from '../constants.js'
+
 export class Subsection extends HTMLElement {
   static get observedAttributes() {
     return []
@@ -8,6 +10,15 @@ export class Subsection extends HTMLElement {
 
   // ... state
   #subsection = {}
+
+  // ... handlers
+  #handlers = {
+    measures: {
+      change: () => {
+        this.dispatchEvent(new CustomEvent(EVENTS.SECTION_CHANGED, { bubbles: true, composed: true, detail: {} }))
+      },
+    },
+  }
 
   constructor() {
     super()
@@ -33,6 +44,8 @@ export class Subsection extends HTMLElement {
 
   connectedCallback() {
     this.classList.add('component-subsection')
+
+    this.#measures.addEventListener('input', this.#handlers.measures.change)
   }
 
   disconnectedCallback() {}

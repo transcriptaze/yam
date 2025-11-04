@@ -43,11 +43,11 @@
     }
 
     input[type="checkbox"][data-loops="4"]:checked + label {
-       background-image: url('/images/loop-4.svg');
+       background-image: url('/images/loop-4x.svg');
     }
 
     input[type="checkbox"][data-loops="5"]:checked + label {
-       background-image: url('/images/loop-5x.svg');
+       background-image: url('/images/loop-5.svg');
     }
 
     input[type="checkbox"]:checked + label {

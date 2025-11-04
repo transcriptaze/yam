@@ -1,4 +1,7 @@
 import * as DB from '../db/db.js'
+import { infof, warnf } from '../log.js'
+
+const LOGTAG = 'soundsets'
 
 const SOUNDS = [
   'audio/default/tick.wav',
@@ -8,7 +11,7 @@ const SOUNDS = [
   'audio/default/ding.wav',
 ]
 
-const GET = {
+const FETCH = {
   method: 'GET',
   mode: 'cors',
   credentials: 'same-origin',
@@ -21,43 +24,47 @@ const GET = {
 }
 
 export function get(ctx) {
-  const promise = Promise.all(SOUNDS.map((sound) => _get(ctx, sound)))
+  const f = (sound) => {
+    const match = new RegExp('^audio/default/(.*?)\\.wav$').exec(sound)
+    const name = match[1] ?? ''
+    const key = `default::${name}`
+
+    return DB.hasClick(key).then((ok) => {
+      if (ok) {
+        return _get(ctx, sound, key)
+      } else {
+        return _fetch(ctx, sound, key)
+      }
+    })
+  }
+
+  const promise = Promise.all(SOUNDS.map((sound) => f(sound)))
 
   promise.then(() => {
     _update(ctx).catch((err) => {
-      console.warn(`background update error ${err}`)
+      warnf(LOGTAG, `background update error ${err}`)
     })
   })
 
   return promise
 }
 
-function _get(ctx, sound) {
-  const match = new RegExp('^audio/default/(.*?)\\.wav$').exec(sound)
-  const name = match[1] ?? ''
-  const key = `default::${name}`
-
-  return DB.hasClick(ctx, key).then((ok) => {
-    console.log('>>> HAS', { key }, { ok })
-
+function _get(ctx, sound, key) {
+  const fallback = (err) => {
+    warnf(LOGTAG, `${err}`)
     return _fetch(ctx, sound, key)
-  })
+  }
 
-  // return fetch(`../${sound}`, GET)
-  //   .then((response) => {
-  //     if (response.ok) {
-  //       return response.blob()
-  //     } else {
-  //       throw new Error(response.statusText)
-  //     }
-  //   })
-  //   .then((blob) => DB.putClick(key, blob))
-  //   .then((blob) => blob.arrayBuffer())
-  //   .then((buffer) => ctx.decodeAudioData(buffer))
+  return DB.getClick(key)
+    .then((blob) => blob.arrayBuffer())
+    .then((buffer) => ctx.decodeAudioData(buffer))
+    .catch((err) => fallback(err))
 }
 
 function _fetch(ctx, sound, key) {
-  return fetch(`../${sound}`, GET)
+  infof(LOGTAG, `fetch ${sound}`)
+
+  return fetch(`../${sound}`, FETCH)
     .then((response) => {
       if (response.ok) {
         return response.blob()
@@ -72,7 +79,7 @@ function _fetch(ctx, sound, key) {
 
 function _update(_ctx) {
   return new Promise(() => {
-    fetch(`../audio/samples.json`, GET)
+    fetch(`../audio/samples.json`, FETCH)
       .then((response) => {
         if (response.ok) {
           return response.json()

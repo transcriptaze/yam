@@ -73,4 +73,5 @@ export const EVENTS = {
   SECTION_PULSE_CHANGE: 'section-pulse-change',
   SECTION_BPM_CHANGE: 'section-bpm-change',
   SECTION_EXPAND: 'section-expand',
+  SECTION_CHANGED: 'section-changed',
 }

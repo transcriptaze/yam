@@ -25,6 +25,7 @@ export class Editor extends HTMLElement {
         }
 
         this.#defaults = defaults
+        this.#modified = true
       },
     },
 
@@ -43,6 +44,25 @@ export class Editor extends HTMLElement {
         }
 
         this.#defaults = defaults
+        this.#modified = true
+      },
+    },
+
+    BPM: {
+      change: () => {
+        this.#modified = true
+      },
+    },
+
+    loop: {
+      change: () => {
+        this.#modified = true
+      },
+    },
+
+    loops: {
+      change: () => {
+        this.#modified = true
       },
     },
 
@@ -90,6 +110,14 @@ export class Editor extends HTMLElement {
         }
 
         this.#defaults = defaults
+        this.#modified = true
+      },
+
+      changed: (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        this.#modified = true
       },
     },
 
@@ -148,9 +176,14 @@ export class Editor extends HTMLElement {
     this.#mm.addEventListener('change', this.#handlers.mm.change)
     this.#plus.addEventListener('click', this.#handlers.plus.click)
 
+    this.#fields.BPM.addEventListener('change', this.#handlers.BPM.change)
+    this.#fields.loop.addEventListener('change', this.#handlers.loop.change)
+    this.#fields.loops.addEventListener('change', this.#handlers.loops.change)
+
     this.#sections.addEventListener(EVENTS.SECTION_TIME_SIGNATURE_CHANGE, this.#handlers.sections.change)
     this.#sections.addEventListener(EVENTS.SECTION_PULSE_CHANGE, this.#handlers.sections.change)
     this.#sections.addEventListener(EVENTS.SECTION_BPM_CHANGE, this.#handlers.sections.change)
+    this.#sections.addEventListener(EVENTS.SECTION_CHANGED, this.#handlers.sections.changed)
     this.#sections.addEventListener(EVENTS.SECTION_EXPAND, this.#handlers.sections.expand)
   }
 
@@ -167,7 +200,7 @@ export class Editor extends HTMLElement {
     const ul = this.#sections.querySelector('ul')
     const icon = this.#sections.querySelector('div.header img')
 
-    save.disabled = track == null
+    save.disabled = true
 
     this.#title.value = track?.title ?? ''
 
@@ -396,6 +429,15 @@ export class Editor extends HTMLElement {
           BPM = tempo.BPM
         }
       }
+    }
+  }
+
+  set #modified(v) {
+    if (v === true) {
+      const container = this.shadowRoot.querySelector('div.track-editor')
+      const save = container.querySelector('#save')
+
+      save.disabled = this.#track == null
     }
   }
 }

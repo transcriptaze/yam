@@ -1,9 +1,9 @@
-import { get, put, exec, debugf, infof, warnf } from './db.js'
+import { get, put, remove, exec, debugf, infof, warnf } from './db.js'
 
 export function tracks() {
   debugf(`get tracks`)
 
-  const f = (db, resolve) => {
+  const f = (db, resolve, _reject) => {
     const query = db.transaction(['tracks']).objectStore('tracks').getAll()
 
     query.onsuccess = (event) => {
@@ -93,4 +93,25 @@ export function putTrack(track) {
   }
 
   put(f)
+}
+
+export function deleteTrack(track) {
+  infof(`delete track '${track.title}'`)
+
+  const f = (db) => {
+    const transaction = db.transaction(['tracks'], 'readwrite')
+
+    transaction.onerror = (event) => {
+      warnf(`${event.target.error.message}`)
+    }
+
+    const table = transaction.objectStore('tracks')
+    const rq = table.delete(track.UUID)
+
+    rq.onsuccess = (_event) => {
+      infof(`deleted track ${track.title}`)
+    }
+  }
+
+  remove(f)
 }

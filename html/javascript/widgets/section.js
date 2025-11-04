@@ -13,6 +13,13 @@ export class Section extends HTMLElement {
 
   // ... handlers
   #handlers = {
+    name: {
+      change: () => {
+        console.log('asdfasdf')
+        this.dispatchEvent(new CustomEvent(EVENTS.SECTION_CHANGED, { bubbles: true, composed: true, detail: {} }))
+      },
+    },
+
     role: {
       change: (e) => {
         const shadow = this.shadowRoot
@@ -31,12 +38,18 @@ export class Section extends HTMLElement {
           measures.removeAttribute('max')
           measures.reportValidity()
         }
+
+        this.dispatchEvent(new CustomEvent(EVENTS.SECTION_CHANGED, { bubbles: true, composed: true, detail: {} }))
       },
     },
 
     measures: {
       invalid: (e) => {
         e.preventDefault()
+      },
+
+      change: () => {
+        this.dispatchEvent(new CustomEvent(EVENTS.SECTION_CHANGED, { bubbles: true, composed: true, detail: {} }))
       },
     },
 
@@ -75,8 +88,10 @@ export class Section extends HTMLElement {
   connectedCallback() {
     this.classList.add('component-section')
 
+    this.#name.addEventListener('input', this.#handlers.name.change)
     this.#role.addEventListener('input', this.#handlers.role.change)
     this.#measures.addEventListener('invalid', this.#handlers.measures.invalid)
+    this.#measures.addEventListener('input', this.#handlers.measures.change)
     this.#expand.addEventListener('click', this.#handlers.expand.click)
   }
 
@@ -131,30 +146,6 @@ export class Section extends HTMLElement {
       this.#subsections.appendChild(e)
     }
   }
-
-  // // NTS: returns the defaults from the last subsection for the cascase update
-  // set defaults(object) {
-  //   const subsections = this.#subsections?.querySelectorAll('yam-subsection') ?? []
-  //
-  //   for (const subsection of subsections) {
-  //     subsection.defaults = object
-  //
-  //     const { beats, divisions } = parseTimeSignature(`${subsection.timeSignature}`)
-  //     const tempo = subsection.tempo
-  //
-  //     if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
-  //       object.timeSignature = subsection.timeSignature
-  //     }
-  //
-  //     if (tempo.pulse != null && tempo.pulse !== '') {
-  //       object.pulse = tempo.pulse
-  //     }
-  //
-  //     if (tempo.BPM != null && tempo.BPM >= 40 && tempo.BPM < 200) {
-  //       object.BPM = tempo.BPM
-  //     }
-  //   }
-  // }
 
   get name() {
     return this.#cache.name.value.trim()

@@ -14,7 +14,7 @@
 **** TODO version check + upgrade
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
-**** TODO enable editor save iff changed
+**** DONE enable editor save iff changed
 **** TODO display subsections
       - switch measures field between section/subsection
       - display subsection BPM (calculated)

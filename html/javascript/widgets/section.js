@@ -15,7 +15,6 @@ export class Section extends HTMLElement {
   #handlers = {
     name: {
       change: () => {
-        console.log('asdfasdf')
         this.dispatchEvent(new CustomEvent(EVENTS.SECTION_CHANGED, { bubbles: true, composed: true, detail: {} }))
       },
     },

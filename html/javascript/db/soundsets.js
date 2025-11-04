@@ -1,4 +1,4 @@
-import { get, put, debugf, infof, warnf } from './db.js'
+import { get, put, infof, warnf } from './db.js'
 
 export function hasClick(sound) {
   const f = (db, resolve, _reject) => {

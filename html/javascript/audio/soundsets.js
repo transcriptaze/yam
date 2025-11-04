@@ -1,5 +1,5 @@
 import * as DB from '../db/db.js'
-import { warnf } from '../log.js'
+import { infof, warnf } from '../log.js'
 
 const LOGTAG = 'soundsets'
 
@@ -51,7 +51,7 @@ export function get(ctx) {
 
 function _get(ctx, sound, key) {
   const fallback = (err) => {
-      warnf(LOGTAG, `${err}`)
+    warnf(LOGTAG, `${err}`)
     return _fetch(ctx, sound, key)
   }
 
@@ -62,7 +62,7 @@ function _get(ctx, sound, key) {
 }
 
 function _fetch(ctx, sound, key) {
-  infof(LOGTAG,`fetch ${sounds}`)
+  infof(LOGTAG, `fetch ${sound}`)
 
   return fetch(`../${sound}`, FETCH)
     .then((response) => {

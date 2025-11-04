@@ -10,8 +10,8 @@
 
 *** TODO soundsets (cf. https://github.com/transcriptaze/yam/issues/20)
 **** DONE get click from DB
+**** DONE deleteTrack
 **** TODO version check + upgrade
-**** TODO deleteTrack
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** TODO enable editor save iff changed

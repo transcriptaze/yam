@@ -1956,14 +1956,13 @@ div.playlist-track [popover]:popover-open::backdrop {
 :host(.component-section) div.section input[readonly] {
   color: gray;
   font-style: italic;
-  font-weight: normal;
+  font-weight: 300;
 }
 :host(.component-section) div.section input[readonly]:invalid {
   color: red;
 }
 :host(.component-section) div.section input[type=number] {
   text-align: center;
-  font-style: normal;
   -moz-appearance: textfield;
 }
 :host(.component-section) div.section input[type=number]::-webkit-inner-spin-button {

@@ -84,7 +84,7 @@
     input[readonly] {
       color: gray;
       font-style: italic;
-      font-weight: normal;
+      font-weight: 300;
     }
 
     input[readonly]:invalid {
@@ -93,7 +93,6 @@
 
     input[type="number"] {
       text-align: center;
-      font-style: normal;
 
       &::-webkit-inner-spin-button {
         -webkit-appearance: none;

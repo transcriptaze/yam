@@ -50,17 +50,23 @@ export class Section extends HTMLElement {
       change: () => {
         this.dispatchEvent(new CustomEvent(EVENTS.SECTION_CHANGED, { bubbles: true, composed: true, detail: {} }))
       },
+
+      changed: () => {
+        const subsections = this.subsections
+        const bars = subsections.reduce((bars, ss) => (Number.isNaN(ss.measures) || ss.measures == null ? INF : bars + ss.measures), 0)
+
+        this.#measures.value = Number.isFinite(bars) ? bars : ''
+      },
     },
 
     expand: {
       click: (e) => {
         e.preventDefault()
 
-        const attr = this.getAttribute('expanded')
-        if (attr == null) {
-          this.setAttribute('expanded', '')
-        } else {
+        if (this.#expanded) {
           this.removeAttribute('expanded')
+        } else {
+          this.setAttribute('expanded', '')
         }
 
         this.dispatchEvent(new CustomEvent(EVENTS.SECTION_EXPAND, { bubbles: true, composed: true, detail: {} }))
@@ -92,6 +98,8 @@ export class Section extends HTMLElement {
     this.#measures.addEventListener('invalid', this.#handlers.measures.invalid)
     this.#measures.addEventListener('input', this.#handlers.measures.change)
     this.#expand.addEventListener('click', this.#handlers.expand.click)
+
+    this.#subsections.addEventListener(EVENTS.SECTION_MEASURES_CHANGE, this.#handlers.measures.changed)
   }
 
   disconnectedCallback() {}
@@ -108,6 +116,8 @@ export class Section extends HTMLElement {
       } else {
         div.classList.add('collapsed')
       }
+
+      this.#measures.readOnly = this.#expanded || (this.#section?.subsections?.length ?? 0) > 1
     }
   }
 
@@ -125,13 +135,12 @@ export class Section extends HTMLElement {
     if (this.#role.value === 'anacrusis') {
       this.#measures.setAttribute('min', 1)
       this.#measures.setAttribute('max', 1)
-      this.#measures.readOnly = false
     } else {
       this.#measures.setAttribute('min', 1)
       this.#measures.removeAttribute('max')
-      this.#measures.readOnly = (section?.subsections?.length ?? 0) > 0
     }
 
+    this.#measures.readOnly = this.#expanded || (section?.subsections?.length ?? 0) > 1
     this.#measures.value = section?.measures ?? 0
     this.#measures.placeholder = this.#role.value === 'anacrusis' ? 1 : '∞'
 
@@ -227,6 +236,10 @@ export class Section extends HTMLElement {
     }
 
     return this.#cache.expand
+  }
+
+  get #expanded() {
+    return this.getAttribute('expanded') == null ? false : true
   }
 }
 

@@ -183,6 +183,7 @@ export class Editor extends HTMLElement {
     this.#sections.addEventListener(EVENTS.SECTION_TIME_SIGNATURE_CHANGE, this.#handlers.sections.change)
     this.#sections.addEventListener(EVENTS.SECTION_PULSE_CHANGE, this.#handlers.sections.change)
     this.#sections.addEventListener(EVENTS.SECTION_BPM_CHANGE, this.#handlers.sections.change)
+    this.#sections.addEventListener(EVENTS.SECTION_MEASURES_CHANGE, this.#handlers.sections.changed)
     this.#sections.addEventListener(EVENTS.SECTION_CHANGED, this.#handlers.sections.changed)
     this.#sections.addEventListener(EVENTS.SECTION_EXPAND, this.#handlers.sections.expand)
   }

@@ -15,7 +15,7 @@ export class Subsection extends HTMLElement {
   #handlers = {
     measures: {
       change: () => {
-        this.dispatchEvent(new CustomEvent(EVENTS.SECTION_CHANGED, { bubbles: true, composed: true, detail: {} }))
+        this.dispatchEvent(new CustomEvent(EVENTS.SECTION_MEASURES_CHANGE, { bubbles: true, composed: true, detail: {} }))
       },
     },
   }
@@ -70,7 +70,8 @@ export class Subsection extends HTMLElement {
       defaults: subsection?.defaults ?? {},
     }
 
-    this.#measures = subsection?.measures ?? '∞'
+    this.#measures = subsection?.measures ?? ''
+    this.#measures.placeholder = '∞'
   }
 
   set defaults(object) {

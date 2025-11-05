@@ -18,10 +18,21 @@
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** DONE enable editor save iff changed
 **** TODO display subsections
+      - can't edit section measures if role/name is blank ??
       - display subsection BPM (calculated)
 **** TODO slide-in sections list
 **** TODO merge sections
 **** TODO canonicalize track on save/load
+**** DONE fix save error
+```
+{
+    "message": "Uncaught TypeError: Cannot read properties of undefined (reading 'pulse')",
+    "source": "https://yam-8sz.pages.dev/javascript/widgets/editor.js",
+    "lineno": 308,
+    "colno": 24,
+    "error": {}
+}
+```
 
 *** TODO clicks
 **** TODO generate clicks for count-in
@@ -48,6 +59,7 @@
 *** TODO make errors visible
       - title text
       - message box
+      - icon is too close to right edge
 
 *** TODO edit from playlist
 *** TODO use async getters for nested web components

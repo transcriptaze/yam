@@ -305,8 +305,8 @@ export class Editor extends HTMLElement {
         role: v.role,
         measures: v.measures,
         timeSignature: v.timeSignature,
-        pulse: v.tempo.pulse,
-        tempo: v.tempo.BPM,
+        pulse: v.tempo?.pulse,
+        tempo: v.tempo?.BPM,
         subsections: v.subsections.map((ss) => subsection(ss)),
       }
     })

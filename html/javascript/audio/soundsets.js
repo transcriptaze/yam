@@ -46,7 +46,15 @@ export function get(ctx) {
     })
   })
 
-  return promise
+  return promise.then(([tick, tock, tack, stick, ding]) => {
+    return {
+      tick: tick,
+      tock: tock,
+      tack: tack,
+      stick: stick,
+      ding: ding,
+    }
+  })
 }
 
 function _get(ctx, sound, key) {
@@ -56,7 +64,7 @@ function _get(ctx, sound, key) {
   }
 
   return DB.getClick(key)
-    .then((blob) => blob.arrayBuffer())
+    .then(({ blob }) => blob.arrayBuffer())
     .then((buffer) => ctx.decodeAudioData(buffer))
     .catch((err) => fallback(err))
 }
@@ -72,7 +80,7 @@ function _fetch(ctx, sound, key) {
         throw new Error(response.statusText)
       }
     })
-    .then((blob) => DB.putClick(key, blob))
+    .then((blob) => DB.putClick(key, blob, 0))
     .then((blob) => blob.arrayBuffer())
     .then((buffer) => ctx.decodeAudioData(buffer))
 }
@@ -88,7 +96,27 @@ function _update(_ctx) {
         }
       })
       .then((json) => {
-        console.log(json)
+        Object.entries(json).forEach(([name, v]) => {
+          _check(`default::${name}`, v.version, v.file)
+        })
       })
+  })
+}
+
+function _check(key, version, file) {
+  return DB.getClick(key).then((record) => {
+    if (version > record.version) {
+      infof(LOGTAG, `updating '${key}' to version ${version}`)
+
+      fetch(`../${file}`, FETCH)
+        .then((response) => {
+          if (response.ok) {
+            return response.blob()
+          } else {
+            throw new Error(response.statusText)
+          }
+        })
+        .then((blob) => DB.putClick(key, blob, version))
+    }
   })
 }

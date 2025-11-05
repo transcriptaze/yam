@@ -29,17 +29,7 @@ class Engine {
     } else {
       return soundsets
         .get(ctx)
-        .then(([tick, tock, tack, stick, ding]) => {
-          const sounds = {
-            tick: tick,
-            tock: tock,
-            tack: tack,
-            stick: stick,
-            ding: ding,
-          }
-
-          return metronome(ctx, sounds, this.#subscribers)
-        })
+        .then((sounds) => metronome(ctx, sounds, this.#subscribers))
         .then((metronome) => {
           metronome.BPM = this.#BPM
           metronome.timeSignature = this.#timeSignature

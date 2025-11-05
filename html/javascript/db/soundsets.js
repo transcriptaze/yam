@@ -26,7 +26,15 @@ export function getClick(sound) {
     query.onsuccess = (event) => {
       const rs = event.target.result
 
-      resolve(rs.blob)
+      if (rs != null) {
+        resolve({
+          sound: rs.sound,
+          version: rs.version,
+          blob: rs.blob,
+        })
+      } else {
+        reject(`no DB record for '${sound}'`)
+      }
     }
 
     query.onerror = (event) => {
@@ -37,13 +45,13 @@ export function getClick(sound) {
   return get(f)
 }
 
-export function putClick(sound, blob) {
+export function putClick(sound, blob, version) {
   infof(`store click '${sound}'`)
 
   const record = {
     sound: sound,
     blob: blob,
-    version: 0,
+    version: !Number.isNaN(version) && version > 0 ? version : 0,
   }
 
   const f = (db) => {

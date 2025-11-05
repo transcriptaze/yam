@@ -43,6 +43,7 @@ export function initialise() {
   engine.timeSignature = settings.timeSignature
   engine.pulse = settings.pulse
   engine.volume = settings.volume
+  engine.soundset = settings.soundset
 
   state.initialise(settings)
 

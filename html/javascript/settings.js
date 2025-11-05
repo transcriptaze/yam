@@ -7,6 +7,7 @@ class Settings {
   #playlist = '00000000-0000-0000-0000-000000000000'
 
   #theme = 'default'
+  #soundset = 'soundset'
   #volume = 1.0
 
   get BPM() {
@@ -65,6 +66,12 @@ class Settings {
 
   set theme(v) {}
 
+  get soundset() {
+    return this.#soundset
+  }
+
+  set soundset(v) {}
+
   get volume() {
     return this.#volume
   }
@@ -86,6 +93,7 @@ class Settings {
         playlist: this.playlist,
 
         theme: this.#theme,
+        soundset: this.#soundset,
         volume: this.#volume,
       },
     }
@@ -104,6 +112,7 @@ class Settings {
       this.playlist = object?.settings?.playlist
 
       this.theme = object?.settings.theme
+      this.soundset = object?.settings.soundset
       this.volume = object?.settings.volume
     } catch (err) {
       console.log(err)

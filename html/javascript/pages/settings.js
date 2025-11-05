@@ -2,6 +2,7 @@ import { settings } from '../settings.js'
 
 const widgets = {
   theme: document.querySelector('#theme'),
+  soundset: document.querySelector('#soundset'),
   volume: document.querySelector('#volume'),
   volumex: document.querySelector('#volume + input[type="text"]'),
 }
@@ -9,6 +10,7 @@ const widgets = {
 export function initialise() {
   // ... attach event handlers
   widgets.theme.addEventListener('change', (event) => onTheme(event))
+  widgets.soundset.addEventListener('change', (event) => onSoundset(event))
   widgets.volume.addEventListener('input', (event) => onVolume(event))
   widgets.volume.addEventListener('change', (event) => onVolume(event))
 
@@ -16,6 +18,7 @@ export function initialise() {
   settings.restore()
 
   widgets.theme.value = settings.theme
+  widgets.soundset.value = settings.soundset
   widgets.volume.value = 10 * Math.log10(settings.volume)
   widgets.volumex.value = Math.round(20 * settings.volume) / 20
 }
@@ -27,6 +30,10 @@ export function onError(err) {
 }
 
 function onTheme(event) {
+  console.log(event)
+}
+
+function onSoundset(event) {
   console.log(event)
 }
 

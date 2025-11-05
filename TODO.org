@@ -1,5 +1,11 @@
 * -- TODO --
 
+*** DONE soundsets (cf. https://github.com/transcriptaze/yam/issues/20)
+**** DONE get click from DB
+**** DONE deleteTrack
+**** DONE version check + upgrade
+**** DONE settings: soundset
+
 *** TODO loop icon numbers
 **** TODO 1
 **** DONE 2
@@ -7,13 +13,6 @@
 **** DONE 4
 **** DONE 5
 **** TODO (?) use large numbers in centre
-
-*** TODO soundsets (cf. https://github.com/transcriptaze/yam/issues/20)
-**** DONE get click from DB
-**** DONE deleteTrack
-**** DONE version check + upgrade
-**** TODO settings: soundset
-**** TODO settings: per sample volume
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** DONE enable editor save iff changed
@@ -24,15 +23,6 @@
 **** TODO merge sections
 **** TODO canonicalize track on save/load
 **** DONE fix save error
-```
-{
-    "message": "Uncaught TypeError: Cannot read properties of undefined (reading 'pulse')",
-    "source": "https://yam-8sz.pages.dev/javascript/widgets/editor.js",
-    "lineno": 308,
-    "colno": 24,
-    "error": {}
-}
-```
 
 *** TODO clicks
 **** TODO generate clicks for count-in

@@ -6,7 +6,7 @@
 **** TODO 3
 **** DONE 4
 **** DONE 5
-**** TODO (?) rather use large numbers in centre
+**** TODO (?) use large numbers in centre
 
 *** TODO soundsets (cf. https://github.com/transcriptaze/yam/issues/20)
 **** DONE get click from DB
@@ -46,7 +46,8 @@
 *** TODO Cloudflare (cf. https://github.com/transcriptaze/yam/issues/6)
 *** TODO (maybe) keep selected playlist on import
 *** TODO make errors visible
-      - icon + title text
+      - title text
+      - message box
 
 *** TODO edit from playlist
 *** TODO use async getters for nested web components
@@ -54,8 +55,6 @@
 *** TODO URL match on track if playlist not found
 *** TODO 'All Tracks' should not display tracklist
 *** TODO (?) move spacebar toggle into metronome widget
-*** TODO requestAnimationFrame is not always 60fps
-      - only update if changed
 *** TODO different grip icon
 *** TODO onSave should only update editor title, BPM, etc
 *** TODO playlists loaded from file include deleted playlists
@@ -85,9 +84,6 @@
 *** TODO trim height of 'play' icon
 *** TODO use different font/colour for track that is in playlist (so that you know you are editing a playlist item)
 *** TODO resize knob/fix SVG overflow
-*** TODO Rethink '=' from MM
-           - (?) maybe use @
-           - (?) use @ or = where it makes sense
 *** TODO rework state logic as FSM
       - seperate web components from logic
       - tests
@@ -181,7 +177,8 @@
       - https://colorhunt.co/palette/f6f0f0f2e2b1d5c7a3bdb395
       - https://dribbble.com/shots/14685674-MetroPulse-Metronome-Screens-II
       - https://dribbble.com/shots/21007853-Metronome-App-Device-Experiment
-      
+*** TODO register yam: protocol
+
 ** Metronome
 *** TODO textured buttons
       - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy

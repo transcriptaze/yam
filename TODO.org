@@ -6,13 +6,12 @@
 **** DONE version check + upgrade
 **** DONE settings: soundset
 
-*** TODO About: build number (cf. https://github.com/transcriptaze/yam/issues/27)
+*** DONE About: build number (cf. https://github.com/transcriptaze/yam/issues/27)
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** DONE enable editor save iff changed
 **** DONE fix save error
 **** TODO display subsections
-      - can't edit section measures if role/name is blank ??
       - display subsection BPM (calculated)
 **** TODO slide-in sections list
 **** TODO merge sections

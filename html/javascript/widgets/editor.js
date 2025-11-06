@@ -331,6 +331,7 @@ export class Editor extends HTMLElement {
   }
 
   #add() {
+    // ... add and initialise new section
     const ul = this.#sections.querySelector('ul')
     const li = document.createElement('li')
     const section = document.createElement('yam-section')
@@ -339,6 +340,21 @@ export class Editor extends HTMLElement {
       name: '',
       role: '',
       measures: INF,
+      subsections: [
+        {
+          measures: null,
+          timeSignature: null,
+          tempo: {
+            pulse: null,
+            BPM: null,
+          },
+          defaults: {
+            timeSignature: '4:4',
+            pulse: 'quarter',
+            BPM: 120,
+          },
+        },
+      ],
     }
 
     li.setAttribute('draggable', false)
@@ -346,6 +362,11 @@ export class Editor extends HTMLElement {
     li.appendChild(section)
 
     ul.appendChild(li)
+
+    // ... set default values
+    this.#defaults = {}
+
+    section.setAttribute('expanded', '')
   }
 
   #toggle() {

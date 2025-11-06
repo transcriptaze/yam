@@ -5,6 +5,7 @@
     <link rel="icon"       href="./images/favicon.png" />
     <link rel="stylesheet" href="./css/YAM.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <meta name="build"    content="__BUILD_NUMBER__">
   </head>
 
   <body>
@@ -36,6 +37,9 @@
 
         <h2>License</h2>
         <p>GNU General Public License Version 3</p>
+
+        <h2>Version</h2>
+        <p><em>Alpha <span id="build-number"></span></em></p>
 
         <h2>Attributions and acknowledgments</h2>
         <ol>
@@ -87,15 +91,19 @@
     // Android Chrome: set viewport height in CSS variable because the viewport height for a
     //                 PWA app loaded from the home page is incorrect
     window.addEventListener('load', () => {
-      console.log('-------------- load')
       setTimeout(() => {
         const vh = window.visualViewport?.height || window.innerHeight
-
-      console.log('-------------- load',{vh})
 
         document.documentElement.style.setProperty('--vh', `${vh}px`)
       }, 100)
     })
+
+    // ... display build number
+    const build = document.querySelector('meta[name="build"]').content
+
+    if (build != null && build !== '__BUILD_NUMBER__') {
+      document.getElementById('build-number').textContent = `(${build})`
+    }
 
   </script>
 

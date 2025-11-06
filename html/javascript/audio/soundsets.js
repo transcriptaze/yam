@@ -23,7 +23,9 @@ const FETCH = {
   },
 }
 
-export function get(ctx) {
+export function get(ctx, soundset) {
+  console.log({ soundset })
+
   const f = (sound) => {
     const match = new RegExp('^audio/default/(.*?)\\.wav$').exec(sound)
     const name = match[1] ?? ''
@@ -87,7 +89,7 @@ function _fetch(ctx, sound, key) {
 
 function _update(_ctx) {
   return new Promise(() => {
-    fetch(`../audio/samples.json`, FETCH)
+    fetch(`../audio/soundsets.json`, FETCH)
       .then((response) => {
         if (response.ok) {
           return response.json()
@@ -96,9 +98,13 @@ function _update(_ctx) {
         }
       })
       .then((json) => {
-        Object.entries(json).forEach(([name, v]) => {
-          _check(`default::${name}`, v.version, v.file)
-        })
+        const soundset = json['default']
+
+        if (soundset != null) {
+          Object.entries(soundset).forEach(([name, v]) => {
+            _check(`default::${name}`, v.version, v.file)
+          })
+        }
       })
   })
 }

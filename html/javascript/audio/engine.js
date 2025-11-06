@@ -19,6 +19,7 @@ class Engine {
   #loop = false
   #ding = false
   #volume = 1
+  #soundset = 'default'
   #subscribers = new EventTarget()
 
   constructor() {}
@@ -28,7 +29,7 @@ class Engine {
       return Promise.resolve()
     } else {
       return soundsets
-        .get(ctx)
+        .get(ctx, this.#soundset)
         .then((sounds) => metronome(ctx, sounds, this.#subscribers))
         .then((metronome) => {
           metronome.BPM = this.#BPM
@@ -157,6 +158,10 @@ class Engine {
         this.#gain.gain.linearRampToValueAtTime(v, this.#ctx.currentTime + 0.5)
       }
     }
+  }
+
+  set soundset(v) {
+    this.#soundset = v == null ? 'default' : `${v}`
   }
 
   get playing() {

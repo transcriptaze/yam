@@ -964,7 +964,7 @@ div.beat.on div.shape {
   background-image: url("/images/loop-2.svg");
 }
 :host(.component-loop) div.loop input[type=checkbox][data-loops="3"]:checked + label {
-  background-image: url("/images/loop-3x.svg");
+  background-image: url("/images/loop-1x.svg");
 }
 :host(.component-loop) div.loop input[type=checkbox][data-loops="4"]:checked + label {
   background-image: url("/images/loop-4.svg");

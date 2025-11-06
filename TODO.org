@@ -1,12 +1,13 @@
 * -- TODO --
 
 *** DONE soundsets (cf. https://github.com/transcriptaze/yam/issues/20)
-**** DONE get click from DB
-**** DONE deleteTrack
-**** DONE version check + upgrade
-**** DONE settings: soundset
-
 *** DONE About: build number (cf. https://github.com/transcriptaze/yam/issues/27)
+
+*** TODO '+' button on playlists (cf. https://github.com/transcriptaze/yam/issues/14)
+**** DONE popup
+**** TODO list tracks not in playlist
+**** TODO 'new' track
+**** TODO automatically create new track in editor for All Tracks
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** DONE enable editor save iff changed
@@ -295,6 +296,8 @@
 9. Plugin architecture
 
 10. Import/render MIDI
+
+11. Metronome-as-a-service (?)
 
 * Other
       - (?) Processing

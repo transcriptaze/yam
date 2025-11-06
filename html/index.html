@@ -626,6 +626,7 @@
 
     <template id="template-playlists">
       <yam-tracklist></yam-tracklist>
+      <yam-add-tracks></yam-add-tracks>
       <div class="playlists unsortable">
         <div class="list">
           <yam-playlist id="all" title="All Tracks" uuid="00000000-0000-0000-0000-000000000000"></yam-playlist>
@@ -659,7 +660,7 @@
           <div class="list">
             <ul></ul>
             <div class="footer">
-              <button id="plus" disabled><img src="./images/plus.svg" draggable="false" /></button>
+              <button id="plus"><img src="./images/plus.svg" draggable="false" /></button>
             </div>
           </div>
         </div>
@@ -681,6 +682,13 @@
     </template>
 
     <template id="template-tracklist">
+      <div class="tracklist">
+        <ul></ul>
+      </div>
+    </template>
+
+    <template id="template-add-tracks">
+      --- LIST OF TRACKS TO ADD ---
       <div class="tracklist">
         <ul></ul>
       </div>

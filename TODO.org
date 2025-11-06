@@ -6,6 +6,18 @@
 **** DONE version check + upgrade
 **** DONE settings: soundset
 
+*** TODO About: build number (cf. https://github.com/transcriptaze/yam/issues/27)
+
+*** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
+**** DONE enable editor save iff changed
+**** DONE fix save error
+**** TODO display subsections
+      - can't edit section measures if role/name is blank ??
+      - display subsection BPM (calculated)
+**** TODO slide-in sections list
+**** TODO merge sections
+**** TODO canonicalize track on save/load
+
 *** TODO loop icon numbers
 **** TODO 1
 **** DONE 2
@@ -13,16 +25,6 @@
 **** DONE 4
 **** DONE 5
 **** TODO (?) use large numbers in centre
-
-*** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
-**** DONE enable editor save iff changed
-**** TODO display subsections
-      - can't edit section measures if role/name is blank ??
-      - display subsection BPM (calculated)
-**** TODO slide-in sections list
-**** TODO merge sections
-**** TODO canonicalize track on save/load
-**** DONE fix save error
 
 *** TODO clicks
 **** TODO generate clicks for count-in

@@ -1,3 +1,12 @@
+BUILD := $(shell git rev-parse --short HEAD)
+UNAME := $(shell uname)
+
+ifeq ($(UNAME),Darwin)
+   SED := sed -i ''
+else
+   SED := sed -i
+endif
+
 .DEFAULT_GOAL := build
 .PHONY: sass
 
@@ -21,12 +30,16 @@ test: build
 	npm test
 
 benchmark: build
+	@echo "benchmark: nothing to do"
 
 coverage: build
+	@echo "coverage: nothincg to do"
 
 vet: 
+	@echo "vet: nothing to do"
 
 lint:
+	@echo "lint: nothing to do"
 
 build-all: test vet lint
 
@@ -39,6 +52,7 @@ release: build-all rollup
 	rsync -av --exclude='**/.DS_Store' ./httpd.*      dist/yam
 	rsync -av --exclude='**/.DS_Store' ./dist/rollup  dist/yam/html
 	tar --directory=dist/yam -cvzf dist/yam.tar.gz .
+	$(SED) "s/__BUILD_NUMBER__/$(BUILD)/" dist/yam/html/rollup/about.html
 	cd dist/yam && zip --recurse-paths ../yam.zip .
 
 cloudflare:  build build-all
@@ -47,6 +61,7 @@ cloudflare:  build build-all
 	mkdir -p dist/cloudflare
 	rsync -av --exclude='**/.DS_Store' ./html/       dist/cloudflare
 	rsync -av --exclude='**/.DS_Store' ./cloudflare/ dist/cloudflare
+	$(SED) "s/__BUILD_NUMBER__/$(BUILD)/" dist/cloudflare/about.html
 	cd dist/cloudflare && zip --recurse-paths -FS ../cloudflare.zip . -x ".DS_Store"
 
 debug:

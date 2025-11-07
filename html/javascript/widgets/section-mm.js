@@ -18,13 +18,17 @@ export class SectionMM extends HTMLElement {
     return ['disabled']
   }
 
-  #BPM = 120
-  #pulse = 'quarter'
+  #tempo = {
+    BPM: 120,
+    pulse: 'quarter',
+  }
 
   #defaults = {
     pulse: 'quarter',
     BPM: 120,
   }
+
+  #fields = {}
 
   #handlers = {
     list: {
@@ -49,25 +53,20 @@ export class SectionMM extends HTMLElement {
       },
     },
 
-    input: {
+    BPM: {
       keypress: (e) => {
-        const shadow = this.shadowRoot
-        const input = shadow.querySelector('input')
-
         if (e.key === 'Enter') {
-          input.blur()
+          this.#BPM.blur()
         } else if (!/[0-9]/.test(e.key)) {
           e.preventDefault()
         }
       },
 
       change: (_) => {
-        const shadow = this.shadowRoot
-        const input = shadow.querySelector('input')
-        const bpm = parseInt(`${input.value}`, 10)
+        const bpm = parseInt(`${this.#BPM.value}`, 10)
 
-        if (input.value === '' || (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200)) {
-          this.#BPM = Number.isNaN(bpm) ? '' : bpm
+        if (this.#BPM.value === '' || (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200)) {
+          this.#tempo.BPM = Number.isNaN(bpm) ? '' : bpm
 
           this.dispatchEvent(
             new CustomEvent(EVENTS.SECTION_BPM_CHANGE, {
@@ -117,12 +116,11 @@ export class SectionMM extends HTMLElement {
 
     const shadow = this.shadowRoot
     const list = shadow.querySelector('div.content')
-    const input = shadow.querySelector('input')
     const button = shadow.querySelector('[popovertarget]')
 
     list.addEventListener('click', this.#handlers.list.click)
-    input.addEventListener('keypress', this.#handlers.input.keypress)
-    input.addEventListener('input', this.#handlers.input.change)
+    this.#BPM.addEventListener('keypress', this.#handlers.BPM.keypress)
+    this.#BPM.addEventListener('input', this.#handlers.BPM.change)
 
     // FireFox doesn't support CSS anchor positioning
     if (!CSS.supports('top: anchor(bottom)')) {
@@ -130,7 +128,9 @@ export class SectionMM extends HTMLElement {
     }
   }
 
-  disconnectedCallback() {}
+  disconnectedCallback() {
+    this.#fields = {}
+  }
 
   adoptedCallback() {}
 
@@ -141,14 +141,14 @@ export class SectionMM extends HTMLElement {
   }
 
   get pulse() {
-    return this.#pulse
+    return this.#tempo.pulse
   }
 
   set pulse(v) {
     if (v == null || v === '') {
-      this.#pulse = ''
+      this.#tempo.pulse = ''
     } else {
-      this.#pulse = parsePulse(v)
+      this.#tempo.pulse = parsePulse(v)
     }
 
     this.#redraw()
@@ -172,17 +172,15 @@ export class SectionMM extends HTMLElement {
   }
 
   get BPM() {
-    return this.#BPM
+    return this.#tempo.BPM
   }
 
   set BPM(v) {
-    const shadow = this.shadowRoot
-    const input = shadow.querySelector('input')
     const bpm = parseInt(`${v}`, 10)
 
     if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
-      this.#BPM = bpm
-      input.value = `${bpm}`
+      this.#tempo.BPM = bpm
+      this.#BPM.value = `${bpm}`
     }
   }
 
@@ -224,9 +222,9 @@ export class SectionMM extends HTMLElement {
     this.pulse = pulse
 
     if (BPM == null || Number.isNaN(BPM) || BPM === '') {
-      this.#BPM = ''
+      this.#tempo.BPM = ''
     } else {
-      this.#BPM = BPM
+      this.#tempo.BPM = BPM
     }
 
     this.#redraw()
@@ -235,46 +233,73 @@ export class SectionMM extends HTMLElement {
   set disabled(v) {
     const shadow = this.shadowRoot
     const button = shadow.querySelector('button')
-    const input = shadow.querySelector('input')
 
     button.disabled = v === true
-    input.disabled = v === true
+    this.#BPM.disabled = v === true
+    this.#bpm.disabled = v === true
   }
 
   redraw(BPM, pulse, { playing, stopped }) {
-    if (((playing || stopped) && BPM !== this.#BPM) || pulse !== this.#pulse) {
-      this.#BPM = BPM
-      this.#pulse = pulse
+    if (((playing || stopped) && BPM !== this.#tempo.BPM) || pulse !== this.#tempo.pulse) {
+      this.#tempo.BPM = BPM
+      this.#tempo.pulse = pulse
 
       this.#redraw()
     }
+  }
+
+  get #BPM() {
+    if (this.#fields.BPM == null) {
+      this.#fields.BPM = this.shadowRoot?.querySelector('#BPM')
+    }
+
+    return this.#fields.BPM
+  }
+
+  get #bpm() {
+    if (this.#fields.bpm == null) {
+      this.#fields.bpm = this.shadowRoot?.querySelector('#bpm')
+    }
+
+    return this.#fields.bpm
   }
 
   #redraw() {
     const shadow = this.shadowRoot
     const button = shadow.querySelector('div.MM button')
     const pulse = shadow.querySelector('#pulse')
-    const BPM = shadow.querySelector('input')
 
-    if (this.#pulse != null && this.#pulse !== '') {
+    if (this.#tempo.pulse != null && this.#tempo.pulse !== '') {
       button.classList.remove('none')
     } else {
       button.classList.add('none')
     }
 
-    const p = this.#pulse != null && this.#pulse !== '' ? `${this.#pulse}` : `${this.#defaults.pulse}`
+    const p = this.#tempo.pulse != null && this.#tempo.pulse !== '' ? `${this.#tempo.pulse}` : `${this.#defaults.pulse}`
     const k = PULSES.has(p) ? p : 'quarter'
 
-    if (this.#BPM != null && this.#BPM !== '') {
+    if (this.#tempo.BPM != null && this.#tempo.BPM !== '') {
       pulse.src = PULSES.get(k).img
-    } else if ((this.#BPM == null || this.#BPM === '') && (this.#pulse == null || this.#pulse === '')) {
+    } else if ((this.#tempo.BPM == null || this.#tempo.BPM === '') && (this.#tempo.pulse == null || this.#tempo.pulse === '')) {
       pulse.src = PULSES.get(k).img
     } else {
       pulse.src = PULSES.get(k).imx
     }
 
-    BPM.value = `${this.#BPM}`
-    BPM.placeholder = this.#defaults.BPM
+    this.#BPM.value = `${this.#tempo.BPM}`
+    this.#BPM.placeholder = this.#defaults.BPM
+
+    // ... display metronome BPM (subsection tempo * track BPM / track tempo)
+    const bpm = parseInt(`${this.#tempo.BPM}`)
+    const defval = parseInt(`${this.#defaults.BPM}`)
+
+    if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
+      this.#bpm.value = `(${bpm})`
+    } else if (!Number.isNaN(defval) && defval >= 40 && defval <= 200) {
+      this.#bpm.value = `(${defval})`
+    } else {
+      this.#bpm.value = ``
+    }
   }
 }
 

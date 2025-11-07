@@ -175,6 +175,13 @@
 
         display: none;
       }
+
+      yam-add-tracks {
+        grid-column: 1;
+        grid-row: 1;
+
+        display: none;
+      }
     }
 
     div.list {
@@ -314,6 +321,28 @@
   div.playlist.selected.editing {
     div.summary {
       grid-template-columns: 16px 1fr auto;
+    }
+  }
+
+  div.playlist.adding {
+    div.menu {
+      #menu {
+        display: none;
+      }
+
+      #save {
+         display: block;
+      }
+    }
+
+    div.tracks {
+      div.list {
+        display: none;
+      }
+
+      yam-add-tracks {
+        display: block;
+      }
     }
   }
 

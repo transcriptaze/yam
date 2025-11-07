@@ -7,7 +7,7 @@ export class Playlists extends HTMLElement {
 
   #playlists = []
   #selected = null
-  #tracklist = null
+  #fields = {}
 
   #drag = {
     li: null,
@@ -57,14 +57,14 @@ export class Playlists extends HTMLElement {
     const all = shadow.getElementById('all')
     const plus = shadow.getElementById('plus')
 
-    this.#tracklist = shadow.querySelector('yam-tracklist')
-
     all.addEventListener(EVENTS.TOGGLE_PLAYLIST, this.#toggle)
-    plus.addEventListener('click', this.#handlers.plus.click)
     shadow.addEventListener(EVENTS.EDIT_PLAYLIST, this.#handlers.playlist.edit)
+    plus.addEventListener('click', this.#handlers.plus.click)
   }
 
-  disconnectedCallback() {}
+  disconnectedCallback() {
+    this.#fields = {}
+  }
 
   adoptedCallback() {}
 
@@ -103,7 +103,7 @@ export class Playlists extends HTMLElement {
 
       list.forEach((v) => {
         if (v.UUID === playlist) {
-          v.open(this.#tracklist)
+          v.open(this.#tracklist, this.#add_tracks)
           v.selected = track
         }
       })
@@ -227,6 +227,22 @@ export class Playlists extends HTMLElement {
     list.find((v) => v.UUID === playlist.UUID)?.muted(track, muted)
   }
 
+  get #tracklist() {
+    if (this.#fields.tracklist == null) {
+      this.#fields.tracklist = this.shadowRoot?.querySelector('yam-tracklist')
+    }
+
+    return this.#fields.tracklist
+  }
+
+  get #add_tracks() {
+    if (this.#fields.add_tracks == null) {
+      this.#fields.add_tracks = this.shadowRoot?.querySelector('yam-add-tracks')
+    }
+
+    return this.#fields.add_tracks
+  }
+
   #create(playlist) {
     const li = document.createElement('li')
     const grip = document.createElement('div')
@@ -276,7 +292,7 @@ export class Playlists extends HTMLElement {
 
       lists.forEach((v) => {
         if (v.UUID === UUID) {
-          v.open(this.#tracklist)
+          v.open(this.#tracklist, this.#add_tracks)
         }
       })
 

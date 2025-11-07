@@ -11,6 +11,9 @@ export class Playlist extends HTMLElement {
   #updated = false
   #tracks = []
   #tracklist = null
+  #add_tracks = null
+
+  #fields = {}
 
   #drag = {
     li: null,
@@ -172,6 +175,12 @@ export class Playlist extends HTMLElement {
         }
       },
     },
+
+    plus: {
+      click: () => {
+        this.plus()
+      },
+    },
   }
 
   constructor() {
@@ -216,9 +225,13 @@ export class Playlist extends HTMLElement {
 
     trash.addEventListener('click', this.#handlers.trash.click)
     trash.addEventListener('transitionend', this.#handlers.trash.transitionend)
+
+    this.#plus?.addEventListener('click', this.#handlers.plus.click)
   }
 
-  disconnectedCallback() {}
+  disconnectedCallback() {
+    this.#fields = {}
+  }
 
   adoptedCallback() {}
 
@@ -304,7 +317,7 @@ export class Playlist extends HTMLElement {
     }
   }
 
-  open(tracklist) {
+  open(tracklist, add_tracks) {
     const shadow = this.shadowRoot
     const container = shadow.querySelector('div.playlist')
     const tracks = container.querySelector('div.tracks')
@@ -321,8 +334,10 @@ export class Playlist extends HTMLElement {
 
     tracks.classList.remove('hidden')
     tracks.appendChild(tracklist)
+    // tracks.appendChild(add_tracks)
 
     this.#tracklist = tracklist
+    this.#add_tracks = add_tracks
   }
 
   close() {
@@ -385,6 +400,26 @@ export class Playlist extends HTMLElement {
     document.addEventListener('mousedown', this.#clickOutside)
   }
 
+  plus() {
+    const container = this.shadowRoot.querySelector('div.playlist')
+
+    if (this.#add_tracks != null) {
+      this.#add_tracks.selected = this.#tracks
+    }
+
+    container.classList.add('adding')
+
+    document.addEventListener('mousedown', this.#clickOutside)
+  }
+
+  get #plus() {
+    if (this.#fields.plus == null) {
+      this.#fields.plus = this.shadowRoot?.querySelector('#plus')
+    }
+
+    return this.#fields.plus
+  }
+
   #set(list) {
     const shadow = this.shadowRoot
     const container = shadow.querySelector('div.playlist')
@@ -433,12 +468,18 @@ export class Playlist extends HTMLElement {
   }
 
   #edited() {
-    const shadow = this.shadowRoot
-    const container = shadow.querySelector('div.playlist')
+    const container = this.shadowRoot.querySelector('div.playlist')
     const title = container.querySelector('div.title input')
 
     container.classList.remove('editing')
     title.disabled = true
+    document.removeEventListener('mousedown', this.#clickOutside)
+  }
+
+  #added() {
+    const container = this.shadowRoot.querySelector('div.playlist')
+
+    container.classList.remove('adding')
     document.removeEventListener('mousedown', this.#clickOutside)
   }
 
@@ -498,15 +539,26 @@ export class Playlist extends HTMLElement {
 
   #clickOutside = (event) => {
     const shadow = this.shadowRoot
-    const container = shadow.querySelector('div.playlist.selected.editing')
+    const editing = shadow.querySelector('div.playlist.selected.editing')
+    const adding = shadow.querySelector('div.playlist.selected.adding')
     const host = document.querySelector('yam-playlists')
 
-    if (!event.composedPath().includes(container)) {
-      this.#save()
+    if (editing != null) {
+      if (!event.composedPath().includes(editing)) {
+        this.#save()
+      }
+      if (!event.composedPath().includes(host)) {
+        this.#edited()
+      }
     }
 
-    if (!event.composedPath().includes(host)) {
-      this.#edited()
+    if (adding != null) {
+      if (!event.composedPath().includes(adding)) {
+        // this.#save()
+      }
+      if (!event.composedPath().includes(host)) {
+        this.#added()
+      }
     }
   }
 

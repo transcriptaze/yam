@@ -1124,6 +1124,9 @@ div.beat.on div.shape {
 :host(.component-playlists) yam-tracklist {
   display: none;
 }
+:host(.component-playlists) yam-add-tracks {
+  display: none;
+}
 @media (max-width: 768px) and (orientation: portrait) {
   :host(.component-playlists) div.playlists div.grip {
     width: 48px;
@@ -1281,6 +1284,11 @@ div.beat.on div.shape {
   grid-row: 1;
   display: none;
 }
+:host(.component-playlist) div.playlist div.tracks yam-add-tracks {
+  grid-column: 1;
+  grid-row: 1;
+  display: none;
+}
 :host(.component-playlist) div.playlist div.list {
   display: flex;
   flex-direction: column;
@@ -1377,6 +1385,18 @@ div.beat.on div.shape {
 }
 :host(.component-playlist) div.playlist.selected.editing div.summary {
   grid-template-columns: 16px 1fr auto;
+}
+:host(.component-playlist) div.playlist.adding div.menu #menu {
+  display: none;
+}
+:host(.component-playlist) div.playlist.adding div.menu #save {
+  display: block;
+}
+:host(.component-playlist) div.playlist.adding div.tracks div.list {
+  display: none;
+}
+:host(.component-playlist) div.playlist.adding div.tracks yam-add-tracks {
+  display: block;
 }
 :host(.component-playlist) details:not([open]) #edit {
   display: none;
@@ -1628,6 +1648,16 @@ div.playlist-track [popover]:popover-open::backdrop {
 }
 :host(.component-tracklist-item) div.tracklist-item input[type=checkbox]:checked ~ label .checkbox {
   background: url("/images/checkbox-checked.svg") no-repeat center/contain;
+}
+
+:host(.component-add-tracks) div.tracklist ul {
+  list-style-type: none;
+  margin-left: 0px;
+  padding-left: 4px;
+  padding-right: 12px;
+}
+:host(.component-add-tracks) div.tracklist ul li + li {
+  margin-top: 2px;
 }
 
 :host(.component-editor) div.track-editor {
@@ -2223,7 +2253,7 @@ div.playlist-track [popover]:popover-open::backdrop {
 }
 :host(.component-section-mm) div.MM {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 1fr auto;
   grid-template-rows: 1fr;
   justify-items: center;
   align-items: center;
@@ -2249,11 +2279,15 @@ div.playlist-track [popover]:popover-open::backdrop {
   box-sizing: border-box;
   height: 100%;
 }
-:host(.component-section-mm) div.MM input {
+:host(.component-section-mm) div.MM #BPM {
   grid-column: 2;
   grid-row: 1;
   justify-self: start;
-  background: none;
+}
+:host(.component-section-mm) div.MM #bpm {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: start;
 }
 :host(.component-section-mm) div.MM [popover] {
   top: calc(anchor(bottom) - 12px);
@@ -2304,20 +2338,14 @@ div.playlist-track [popover]:popover-open::backdrop {
   filter: grayscale(100%) opacity(50%);
 }
 :host(.component-section-mm) input {
-  width: 2em;
-  height: fit-content;
-  background: transparent;
-  padding-left: 0px;
-  padding-right: 16px;
-  padding-top: 4px;
-  padding-bottom: 4px;
+  box-sizing: border-box;
+  background: none;
   border: none;
   border-radius: 4px;
   outline: none;
-  color: #444444;
-  font-size: 14px;
-  font-weight: normal;
-  text-align: left;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 0px;
 }
 :host(.component-section-mm) input::placeholder {
   font-style: italic;
@@ -2328,6 +2356,31 @@ div.playlist-track [popover]:popover-open::backdrop {
 }
 :host(.component-section-mm) input:disabled {
   color: #a0a0a0;
+}
+:host(.component-section-mm) input#BPM {
+  width: 3em;
+  height: fit-content;
+  padding-right: 16px;
+  color: #444444;
+  font-size: 14px;
+  font-weight: normal;
+  text-align: left;
+}
+:host(.component-section-mm) input#bpm {
+  min-width: 0em;
+  height: fit-content;
+  field-sizing: content;
+  color: #ff0000;
+  font-size: 12px;
+  font-style: italic;
+  font-weight: normal;
+  text-align: left;
+}
+:host(.component-section-mm) #BPM:invalid + #bpm {
+  color: #b0b0b0;
+}
+:host(.component-section-mm) #BPM:placeholder-shown + #bpm {
+  color: #b0b0b0;
 }
 
 :host(.component-section-mm:not([figura=eighth])) #list > div > li[data-pulse=eighth] {

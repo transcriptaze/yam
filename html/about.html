@@ -101,8 +101,10 @@
     // ... display build number
     const build = document.querySelector('meta[name="build"]').content
 
-    if (build != null && build !== '__BUILD_NUMBER__') {
-      document.getElementById('build-number').textContent = `(${build})`
+    if (build != null && `${build}` !== '__BUILD_NUMBER__') {
+      document.getElementById('build-number').textContent = `v0.0.${build}`
+    } else {
+      document.getElementById('build-number').textContent = `v0.0`
     }
 
   </script>

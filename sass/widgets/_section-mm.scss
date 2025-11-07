@@ -6,7 +6,7 @@
 
   div.MM {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr 1fr auto;
     grid-template-rows: 1fr;
     justify-items: center;
     align-items: center;
@@ -38,11 +38,16 @@
       }
     }
 
-    input {
+    #BPM {
       grid-column: 2;
       grid-row: 1;
       justify-self: start;
-      background: none;
+    }
+
+    #bpm {
+      grid-column: 3;
+      grid-row: 1;
+      justify-self: start;
     }
 
     [popover] {
@@ -112,23 +117,16 @@
   } 
 
   input {
-      width: 2em;
-      height: fit-content;
-      background: transparent;
+      box-sizing: border-box;
 
-      padding-left: 0px;
-      padding-right: 16px;
-      padding-top: 4px;
-      padding-bottom: 4px;
-
+      background: none;
       border: none;
       border-radius: 4px;
       outline: none;
 
-      color: #444444;
-      font-size: 14px;
-      font-weight: normal;
-      text-align: left;
+      padding-top: 4px;
+      padding-bottom: 4px;
+      padding-left: 0px;
   }
 
   input::placeholder {
@@ -144,6 +142,37 @@
     color: #a0a0a0;
   } 
 
+  input#BPM {
+      width: 3em;
+      height: fit-content;
+
+      padding-right: 16px;
+
+      color: #444444;
+      font-size: 14px;
+      font-weight: normal;
+      text-align: left;
+  }
+
+  input#bpm {
+      min-width: 0em;
+      height: fit-content;
+      field-sizing: content;
+
+      color: #ff0000;
+      font-size: 12px;
+      font-style: italic;
+      font-weight: normal;
+      text-align: left;
+  }
+
+  #BPM:invalid + #bpm {
+    color: #b0b0b0;
+  }
+
+  #BPM:placeholder-shown + #bpm {
+    color: #b0b0b0;
+  }
 }
 
 :host(.component-section-mm:not([figura="eighth"])) {

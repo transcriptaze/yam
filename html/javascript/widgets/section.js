@@ -6,7 +6,7 @@ export class Section extends HTMLElement {
   }
 
   // ... fields
-  #cache = {}
+  #fields = {}
 
   // ... state
   #section = {}
@@ -102,7 +102,9 @@ export class Section extends HTMLElement {
     this.#subsections.addEventListener(EVENTS.SECTION_MEASURES_CHANGE, this.#handlers.measures.changed)
   }
 
-  disconnectedCallback() {}
+  disconnectedCallback() {
+    this.#fields = {}
+  }
 
   adoptedCallback() {}
 
@@ -156,11 +158,11 @@ export class Section extends HTMLElement {
   }
 
   get name() {
-    return this.#cache.name.value.trim()
+    return this.#fields.name.value.trim()
   }
 
   get role() {
-    return this.#cache.role.value.trim()
+    return this.#fields.role.value.trim()
   }
 
   get measures() {
@@ -199,43 +201,43 @@ export class Section extends HTMLElement {
   }
 
   get #name() {
-    if (this.#cache.name == null) {
-      this.#cache.name = this.shadowRoot?.querySelector('#name')
+    if (this.#fields.name == null) {
+      this.#fields.name = this.shadowRoot?.querySelector('#name')
     }
 
-    return this.#cache.name
+    return this.#fields.name
   }
 
   get #role() {
-    if (this.#cache.role == null) {
-      this.#cache.role = this.shadowRoot.querySelector('#role')
+    if (this.#fields.role == null) {
+      this.#fields.role = this.shadowRoot.querySelector('#role')
     }
 
-    return this.#cache.role
+    return this.#fields.role
   }
 
   get #measures() {
-    if (this.#cache.measures == null) {
-      this.#cache.measures = this.shadowRoot?.querySelector('#measures')
+    if (this.#fields.measures == null) {
+      this.#fields.measures = this.shadowRoot?.querySelector('#measures')
     }
 
-    return this.#cache.measures
+    return this.#fields.measures
   }
 
   get #subsections() {
-    if (this.#cache.subsections == null) {
-      this.#cache.subsections = this.shadowRoot?.querySelector('div.subsections')
+    if (this.#fields.subsections == null) {
+      this.#fields.subsections = this.shadowRoot?.querySelector('div.subsections')
     }
 
-    return this.#cache.subsections
+    return this.#fields.subsections
   }
 
   get #expand() {
-    if (this.#cache.expand == null) {
-      this.#cache.expand = this.shadowRoot.querySelector('#arrow')
+    if (this.#fields.expand == null) {
+      this.#fields.expand = this.shadowRoot.querySelector('#arrow')
     }
 
-    return this.#cache.expand
+    return this.#fields.expand
   }
 
   get #expanded() {

@@ -104,7 +104,7 @@ export class PlaylistItem extends HTMLElement {
     const trash = shadow.getElementById('trash')
     const popover = shadow.querySelector('div [popover]')
 
-    title.innerHTML = this.#title
+    title.textContent = this.#title
 
     menu.addEventListener('click', this.#handlers.menu.click)
     popover.addEventListener('toggle', this.#handlers.popover.toggle)
@@ -152,7 +152,7 @@ export class PlaylistItem extends HTMLElement {
     const title = shadow.querySelector('#title')
 
     this.#title = v == null ? '' : `${v}`
-    title.innerHTML = this.#title
+    title.textContent = this.#title
   }
 
   get muted() {

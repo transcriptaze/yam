@@ -55,7 +55,7 @@ export class TrackListItem extends HTMLElement {
     const shadow = this.shadowRoot
     const title = shadow.querySelector('#title')
 
-    title.innerHTML = v == null ? '' : `${v}`
+    title.textContent = v == null ? '' : `${v}`
   }
 
   get selected() {

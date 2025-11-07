@@ -54,7 +54,7 @@ export class MM extends HTMLElement {
         const mirror = shadow.querySelector('#mirror span')
         const bpm = parseInt(`${input.value}`, 10)
 
-        mirror.innerHTML = input.value
+        mirror.textContent = input.value
 
         if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
           this.#BPM = bpm
@@ -197,7 +197,7 @@ export class MM extends HTMLElement {
     if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
       this.#BPM = bpm
       input.value = `${bpm}`
-      mirror.innerHTML = input.value
+      mirror.textContent = input.value
     }
   }
 

@@ -17,10 +17,10 @@
 **** TODO display subsection BPM (calculated)
       - copy track tempo/BPM down to subsections
       - field-sizing: content
-
+**** TODO section measures not editable after expand-collapse
 **** TODO slide-in sections list
-**** TODO merge sections
-**** TODO canonicalize track on save/load
+
+*** TODO coloured subsections (cf. https://github.com/transcriptaze/yam/issues/8)
 
 *** TODO loop icon numbers
 **** TODO 1
@@ -29,6 +29,11 @@
 **** DONE 4
 **** DONE 5
 **** TODO (?) use large numbers in centre
+
+*** TODO make errors visible (cf. https://github.com/transcriptaze/yam/issues/38)
+      - title text
+      - message box
+      - icon is too close to right edge
 
 *** TODO clicks
 **** TODO generate clicks for count-in
@@ -52,11 +57,6 @@
 ** Fixes
 *** TODO Cloudflare (cf. https://github.com/transcriptaze/yam/issues/6)
 *** TODO (maybe) keep selected playlist on import
-*** TODO make errors visible
-      - title text
-      - message box
-      - icon is too close to right edge
-
 *** TODO edit from playlist
 *** TODO use async getters for nested web components
 *** TODO URL - use ?UUID= or ?title= 
@@ -303,6 +303,8 @@
 
 11. Metronome-as-a-service (?)
 
+12. CLI (?)
+
 * Other
       - (?) Processing
             - https://processing.org/reference/libraries/sound/index.html
@@ -386,4 +388,4 @@
       - "3D" red/green or the dots thing
       - Industrial theme
           - https://hackaday.com/wp-content/uploads/2025/05/industrial-design-keeb.webp
-
+      - https://www.youtube.com/watch?v=q3OuCR0EpGo

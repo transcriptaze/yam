@@ -82,7 +82,7 @@ export class Info extends HTMLElement {
 
       this.#container.classList.add('details')
       this.#text.classList.remove('playing')
-      this.#section.innerHTML = section?.name ?? ''
+      this.#section.textContent = section?.name ?? ''
       this.#bars = {
         playing: false,
       }
@@ -135,12 +135,12 @@ export class Info extends HTMLElement {
       if (!playing) {
         this.style.setProperty('--accent-color', `#c0c0c040`)
         this.#text.classList.remove('playing')
-        this.#section.innerHTML = name
+        this.#section.textContent = name
       } else if (playing) {
         this.style.setProperty('--text-color', text)
         this.style.setProperty('--accent-color', colour)
         this.#text.classList.add('playing')
-        this.#section.innerHTML = name
+        this.#section.textContent = name
       }
     }
 
@@ -219,18 +219,18 @@ export class Info extends HTMLElement {
         break
 
       case !playing && bars <= 0:
-        this.#bars.innerHTML = ''
+        this.#bars.textContent = ''
         break
 
       case !playing:
         if (countIn > 0 && pickup > 0) {
-          this.#bars.innerHTML = `${countIn}+${pickup}+${bars - countIn - pickup}`
+          this.#bars.textContent = `${countIn}+${pickup}+${bars - countIn - pickup}`
         } else if (countIn > 0) {
-          this.#bars.innerHTML = `${countIn}+${bars - countIn - pickup}`
+          this.#bars.textContent = `${countIn}+${bars - countIn - pickup}`
         } else if (pickup > 0) {
-          this.#bars.innerHTML = `${pickup}+${bars - countIn - pickup}`
+          this.#bars.textContent = `${pickup}+${bars - countIn - pickup}`
         } else {
-          this.#bars.innerHTML = `${bars - countIn - pickup}`
+          this.#bars.textContent = `${bars - countIn - pickup}`
         }
         break
 
@@ -239,15 +239,15 @@ export class Info extends HTMLElement {
         break
 
       case playing && measures > 0 && bar != null && bar >= start:
-        this.#bars.innerHTML = `${bar - start + 1}/${measures}`
+        this.#bars.textContent = `${bar - start + 1}/${measures}`
         break
 
       case playing && measures > 0:
-        this.#bars.innerHTML = `${measures}`
+        this.#bars.textContent = `${measures}`
         break
 
       default:
-        this.#bars.innerHTML = ''
+        this.#bars.textContent = ''
     }
   }
 

@@ -277,15 +277,15 @@ export function load() {
     if (!!object && !err) {
       ok.disabled = false
       dialog.classList.remove('error')
-      msg.innerHTML = filename ? `Import tracks from '${filename}'?` : `Import tracks from YAM file?`
+      msg.textContent = filename ? `Import tracks from '${filename}'?` : `Import tracks from YAM file?`
     } else {
       ok.disabled = true
       dialog.classList.add('error')
 
       if (!err) {
-        msg.innerHTML = filename ? `'${filename}' is not a valid YAM file` : `Invalid YAM file!`
+        msg.textContent = filename ? `'${filename}' is not a valid YAM file` : `Invalid YAM file!`
       } else {
-        msg.innerHTML = filename ? `Error loading file '${filename}'` : `Error loading YAM file!`
+        msg.textContent = filename ? `Error loading file '${filename}'` : `Error loading YAM file!`
       }
     }
 

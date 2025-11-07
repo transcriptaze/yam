@@ -153,8 +153,8 @@ export class Info extends HTMLElement {
         bar: null,
       }
 
-      this.#progress.value = 0
-      this.#progress.max = this.#track?.bars ?? 0
+      this.#progress.head = 0
+      this.#progress.bars = this.#track?.bars ?? 0
     } else if (playing && !stopped && bar != this.#cache.bar) {
       this.#cache.bar = bar
 
@@ -168,11 +168,11 @@ export class Info extends HTMLElement {
       const start = section?.start ?? INF
 
       if (measures > 0 && measures !== INF && bar >= start) {
-        this.#progress.value = bar - start + 1
-        this.#progress.max = measures
+        this.#progress.head = bar - start + 1
+        this.#progress.bars = measures
       } else {
-        this.#progress.value = 0
-        this.#progress.max = measures
+        this.#progress.head = 0
+        this.#progress.bars = measures
       }
     }
   }

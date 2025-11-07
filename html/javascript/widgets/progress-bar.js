@@ -5,8 +5,25 @@ export class ProgressBar extends HTMLElement {
     return []
   }
 
-  #max = Number.POSITIVE_INFINITY
-  #value = 0
+  #bars = Number.POSITIVE_INFINITY
+  #head = 0
+  #subsections = [
+    // {
+    //   start: 0,
+    //   end: 4,
+    //   colour: '#ff0000',
+    // },
+    // {
+    //   start: 4,
+    //   end: 8,
+    //   colour: '#00ff00',
+    // },
+    // {
+    //   start: 8,
+    //   end: 12,
+    //   colour: '#0000ff',
+    // },
+  ]
 
   constructor() {
     super()
@@ -34,26 +51,26 @@ export class ProgressBar extends HTMLElement {
 
   attributeChangedCallback(_name, _from, _to) {}
 
-  get value() {
-    return this.#value
+  get head() {
+    return this.#head
   }
 
-  set value(v) {
-    if (!Number.isNaN(v) && v !== this.#value) {
-      this.#value = Math.max(0, v)
+  set head(v) {
+    if (!Number.isNaN(v) && v !== this.#head) {
+      this.#head = Math.max(0, v)
       this.redraw()
     }
   }
 
-  get max() {
-    return this.#max
+  get bars() {
+    return this.#bars
   }
 
-  set max(v) {
-    const max = Number.isNaN(v) || v === INF ? 0 : v
+  set bars(v) {
+    const bars = Number.isNaN(v) || v === INF ? 0 : v
 
-    if (max !== this.#max) {
-      this.#max = Math.max(0, max)
+    if (bars !== this.#bars) {
+      this.#bars = Math.max(0, bars)
       this.redraw()
     }
   }
@@ -70,15 +87,17 @@ export class ProgressBar extends HTMLElement {
 
     const width = canvas.width
     const height = canvas.height
-    const w = this.max > 0 ? (width * this.value) / this.max : 0
-    const dw = this.max > 0 ? width / this.max : 0
-    const colour = style.backgroundColor
-    const startColour = faded(colour, 0)
+    const w = this.bars > 0 ? (width * this.head) / this.bars : 0
+    const dw = this.bars > 0 ? width / this.bars : 0
 
     ctx.clearRect(0, 0, width, height)
 
     if (w > 0 && dw > 25) {
+      let bar = 0
       for (let x = 0; x < w; x += dw) {
+        const subsection = this.#subsections.findLast((ss) => ss.start <= bar)
+        const colour = subsection?.colour ?? style.backgroundColor
+        const startColour = faded(colour, 0)
         const gradient = ctx.createLinearGradient(x, 0, x + dw, height)
 
         gradient.addColorStop(0, colour)
@@ -89,24 +108,53 @@ export class ProgressBar extends HTMLElement {
         ctx.beginPath()
         ctx.rect(x, 0, dw, height)
         ctx.fill()
+
+        bar++
       }
     } else if (w > 0) {
-      const gradient = ctx.createLinearGradient(0, 0, w, height)
-      const stop = this.value > 0 ? Math.max(0, this.value - 1) / this.max : 0
+      let x = 0
 
-      gradient.addColorStop(0, colour)
-      gradient.addColorStop(0.05, startColour)
-      gradient.addColorStop(1, colour)
+      const subsections = this.#subsections.filter((ss) => ss.start < this.head)
+      for (const subsection of subsections) {
+        const bar = Math.min(this.head, subsection.end)
+        const xʼ = bar * dw
 
-      // NTS: stop can be (mistakenly and/or temporarily) greater than 1 because value and max are set independently
-      if (stop > 0) {
-        gradient.addColorStop(Math.min(1, stop), colour)
+        const colour = subsection.colour ?? style.backgroundColor
+        const startColour = faded(colour, 0)
+        const gradient = ctx.createLinearGradient(x, 0, xʼ, height)
+
+        gradient.addColorStop(0, colour)
+        gradient.addColorStop(0.05, startColour)
+        gradient.addColorStop(1, colour)
+
+        ctx.fillStyle = gradient
+        ctx.beginPath()
+        ctx.rect(x, 0, xʼ - x, height)
+        ctx.fill()
+
+        x = xʼ
       }
 
-      ctx.fillStyle = gradient
-      ctx.beginPath()
-      ctx.rect(0, 0, w, height)
-      ctx.fill()
+      if (x < w) {
+        const colour = style.backgroundColor
+        const startColour = faded(colour, 0)
+        const gradient = ctx.createLinearGradient(x, 0, w, height)
+        const stop = this.head > 0 ? Math.max(0, this.head - 1) / this.bars : 0
+
+        gradient.addColorStop(0, colour)
+        gradient.addColorStop(0.05, startColour)
+        gradient.addColorStop(1, colour)
+
+        // NTS: stop can be (mistakenly and/or temporarily) greater than 1 because value and bars are set independently
+        if (stop > 0) {
+          gradient.addColorStop(Math.min(1, stop), colour)
+        }
+
+        ctx.fillStyle = gradient
+        ctx.beginPath()
+        ctx.rect(x, 0, w, height)
+        ctx.fill()
+      }
     }
   }
 }

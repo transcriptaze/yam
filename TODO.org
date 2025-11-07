@@ -8,12 +8,16 @@
 **** TODO list tracks not in playlist
 **** TODO 'new' track
 **** TODO automatically create new track in editor for All Tracks
+**** TODO check edit dismiss actually works
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** DONE enable editor save iff changed
 **** DONE fix save error
-**** TODO display subsections
-      - display subsection BPM (calculated)
+**** DONE display subsections
+**** TODO display subsection BPM (calculated)
+      - copy track tempo/BPM down to subsections
+      - field-sizing: content
+
 **** TODO slide-in sections list
 **** TODO merge sections
 **** TODO canonicalize track on save/load

@@ -292,7 +292,7 @@ export class Playlists extends HTMLElement {
 
       lists.forEach((v) => {
         if (v.UUID === UUID) {
-          v.open(this.#tracklist)
+          v.open(this.#tracklist, this.#add_tracks)
         }
       })
 

@@ -334,7 +334,7 @@ export class Playlist extends HTMLElement {
 
     tracks.classList.remove('hidden')
     tracks.appendChild(tracklist)
-    tracks.appendChild(add_tracks)
+    // tracks.appendChild(add_tracks)
 
     this.#tracklist = tracklist
     this.#add_tracks = add_tracks

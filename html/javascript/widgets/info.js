@@ -131,7 +131,7 @@ export class Info extends HTMLElement {
       const colour = section?.colour ?? '#00000000'
       const text = COLOURS.get(section?.colour ?? '') ?? '#222222'
 
-      // NB set the colour before setting the progress bar value/max
+      // NB set the colour/subsections before setting the progress bar head/bars
       if (!playing) {
         this.style.setProperty('--accent-color', `#c0c0c040`)
         this.#text.classList.remove('playing')
@@ -142,6 +142,8 @@ export class Info extends HTMLElement {
         this.#text.classList.add('playing')
         this.#section.textContent = name
       }
+
+      this.#progress.subsections = section?.subsections ?? []
     }
 
     if (!playing && stopped) {

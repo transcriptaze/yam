@@ -16,7 +16,7 @@ export class ProgressBar extends HTMLElement {
     // {
     //   start: 4,
     //   end: 8,
-    //   colour: '#00ff00',
+    //   // colour: '#00ff00',
     // },
     // {
     //   start: 8,
@@ -75,6 +75,23 @@ export class ProgressBar extends HTMLElement {
     }
   }
 
+  set subsections(v) {
+    const subsections = []
+    let start = 0
+
+    for (const ss of v) {
+      subsections.push({
+        start: start,
+        end: start + ss.measures,
+        colour: ss.colour,
+      })
+
+      start += ss.measures
+    }
+
+    this.#subsections = subsections
+  }
+
   redraw() {
     const style = getComputedStyle(this)
     const shadow = this.shadowRoot
@@ -92,22 +109,29 @@ export class ProgressBar extends HTMLElement {
 
     ctx.clearRect(0, 0, width, height)
 
+    // ... gradient function
+    const g = (colour, x, xʼ) => {
+      const startColour = faded(colour, 0)
+      const gradient = ctx.createLinearGradient(x, 0, xʼ, height)
+
+      gradient.addColorStop(0, colour)
+      gradient.addColorStop(0.05, startColour)
+      gradient.addColorStop(1, colour)
+
+      ctx.fillStyle = gradient
+      ctx.beginPath()
+      ctx.rect(x, 0, xʼ - x, height)
+      ctx.fill()
+    }
+
+    // ... gradient loop
     if (w > 0 && dw > 25) {
       let bar = 0
       for (let x = 0; x < w; x += dw) {
         const subsection = this.#subsections.findLast((ss) => ss.start <= bar)
         const colour = subsection?.colour ?? style.backgroundColor
-        const startColour = faded(colour, 0)
-        const gradient = ctx.createLinearGradient(x, 0, x + dw, height)
 
-        gradient.addColorStop(0, colour)
-        gradient.addColorStop(0.05, startColour)
-        gradient.addColorStop(1, colour)
-
-        ctx.fillStyle = gradient
-        ctx.beginPath()
-        ctx.rect(x, 0, dw, height)
-        ctx.fill()
+        g(colour, x, x + dw)
 
         bar++
       }
@@ -116,25 +140,16 @@ export class ProgressBar extends HTMLElement {
 
       const subsections = this.#subsections.filter((ss) => ss.start < this.head)
       for (const subsection of subsections) {
+        const colour = subsection.colour ?? style.backgroundColor
         const bar = Math.min(this.head, subsection.end)
         const xʼ = bar * dw
 
-        const colour = subsection.colour ?? style.backgroundColor
-        const startColour = faded(colour, 0)
-        const gradient = ctx.createLinearGradient(x, 0, xʼ, height)
-
-        gradient.addColorStop(0, colour)
-        gradient.addColorStop(0.05, startColour)
-        gradient.addColorStop(1, colour)
-
-        ctx.fillStyle = gradient
-        ctx.beginPath()
-        ctx.rect(x, 0, xʼ - x, height)
-        ctx.fill()
+        g(colour, x, xʼ)
 
         x = xʼ
       }
 
+      // FIXME use gradient function
       if (x < w) {
         const colour = style.backgroundColor
         const startColour = faded(colour, 0)

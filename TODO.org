@@ -22,8 +22,10 @@
 
 *** TODO coloured subsections (cf. https://github.com/transcriptaze/yam/issues/8)
 **** DONE render coloured subsections
+**** DONE use track.section.subsections
 **** TODO don't do the gradient blend thing at end/start of subsections
 **** TODO FIXME stop can be (mistakenly and/or temporarily) greater than 1 because value and bars are set independently
+**** TODO FIXME use gradient function
 
 *** TODO loop icon numbers
 **** TODO 1

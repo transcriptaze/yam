@@ -145,6 +145,7 @@ export function* transmogrify(track) {
           timeSignature: timeSignature,
           pulse: pulse,
           tempo: tempo,
+          colour: subsection.colour,
           clicks: _clicks(subsection.clicks) ?? clicks,
           dings: subsection.dings ?? [],
         })

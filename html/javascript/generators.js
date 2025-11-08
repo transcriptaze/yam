@@ -139,16 +139,21 @@ export function* transmogrify(track) {
         pulse = subsection.pulse ?? pulse
         tempo = subsection.tempo ?? tempo
 
-        subsections.push({
+        const ss = {
           start: start,
           measures: bars,
           timeSignature: timeSignature,
           pulse: pulse,
           tempo: tempo,
-          colour: subsection.colour,
           clicks: _clicks(subsection.clicks) ?? clicks,
           dings: subsection.dings ?? [],
-        })
+        }
+
+        if (subsection.colour != null) {
+          ss.colour = subsection.colour
+        }
+
+        subsections.push(ss)
 
         start += bars
       }

@@ -114,6 +114,18 @@ export class Subsection extends HTMLElement {
     return null
   }
 
+  set measures(v) {
+    if (v === '') {
+      this.#measures.value = ''
+      return
+    }
+
+    const measures = Number.parseInt(`${v}`)
+    if (!Number.isNaN(measures) && measures >= 0) {
+      this.#measures.value = `${measures}`
+    }
+  }
+
   get timeSignature() {
     const e = this.shadowRoot?.querySelector('yam-section-time-signature')
 

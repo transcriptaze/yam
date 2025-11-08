@@ -36,7 +36,7 @@ coverage: build
 	@echo "coverage: nothincg to do"
 
 vet: 
-	@echo "vet: nothing to do"
+	@echo "vet:  nothing to do"
 
 lint:
 	@echo "lint: nothing to do"

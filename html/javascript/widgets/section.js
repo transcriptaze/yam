@@ -48,6 +48,13 @@ export class Section extends HTMLElement {
       },
 
       change: () => {
+        const subsections = this.subsections ?? []
+
+        for (const subsection of subsections) {
+          subsection.measures = this.#measures.value
+          break
+        }
+
         this.dispatchEvent(new CustomEvent(EVENTS.SECTION_CHANGED, { bubbles: true, composed: true, detail: {} }))
       },
 

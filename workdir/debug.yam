@@ -406,7 +406,8 @@
           "subsections": [
             {
               "measures": 4,
-              "tempo": 80
+              "tempo": 80,
+              "colour": "#ff0000"
             },
             {
               "measures": 4,
@@ -415,7 +416,8 @@
             },
             {
               "measures": 4,
-              "pulse": "dotted-quarter"
+              "pulse": "dotted-quarter",
+              "colour": "#0000ff"
             }
           ]
         }

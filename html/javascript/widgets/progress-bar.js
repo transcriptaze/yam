@@ -90,6 +90,10 @@ export class ProgressBar extends HTMLElement {
       canvas.width = canvas.clientWidth
     }
 
+    if (canvas.height != canvas.clientHeight) {
+      canvas.height = canvas.clientHeight
+    }
+
     const width = canvas.width
     const height = canvas.height
     const w = this.bars > 0 ? (width * this.head) / this.bars : 0
@@ -112,7 +116,7 @@ export class ProgressBar extends HTMLElement {
 
       ctx.fillStyle = gradient
       ctx.beginPath()
-      ctx.rect(x, 0, xʼ - x, height)
+      ctx.rect(x, 0.5, xʼ - x, height - 1)
       ctx.fill()
     }
 

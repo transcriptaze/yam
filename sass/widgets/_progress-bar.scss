@@ -3,6 +3,7 @@
 
   div {
     position: relative;
+    box-sizing: border-box;
     display: block;
     
     width: 100%;
@@ -16,6 +17,7 @@
 
   canvas {
     position: absolute; // mega-hack for canvas resizing problem :-(
+    box-sizing: border-box;
     top: 0; 
     left: 0;
 

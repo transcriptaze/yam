@@ -3,6 +3,14 @@
 *** DONE soundsets (cf. https://github.com/transcriptaze/yam/issues/20)
 *** DONE About: build number (cf. https://github.com/transcriptaze/yam/issues/27)
 
+*** TODO coloured subsections (cf. https://github.com/transcriptaze/yam/issues/8)
+**** DONE render coloured subsections
+**** DONE use track.section.subsections
+**** DONE FIXME stop can be (mistakenly and/or temporarily) greater than 1 because value and bars are set independently
+**** TODO FIXME use gradient function
+**** TODO don't do the gradient blend thing at end/start of subsections
+**** TODO (?) paint subsections 'inside' bar (e.g. 1px margin at top/bottom.left,right)
+
 *** TODO '+' button on playlists (cf. https://github.com/transcriptaze/yam/issues/14)
 **** DONE popup
 **** TODO list tracks not in playlist
@@ -20,13 +28,6 @@
       - field-sizing: content
 **** TODO (?) section measures not editable after expand-collapse
 **** TODO slide-in sections list
-
-*** TODO coloured subsections (cf. https://github.com/transcriptaze/yam/issues/8)
-**** DONE render coloured subsections
-**** DONE use track.section.subsections
-**** TODO don't do the gradient blend thing at end/start of subsections
-**** TODO FIXME stop can be (mistakenly and/or temporarily) greater than 1 because value and bars are set independently
-**** TODO FIXME use gradient function
 
 *** TODO loop icon numbers
 **** DONE 1
@@ -321,6 +322,7 @@
       - (?) sox
       - (?) cue sheets
             - https://wiki.hydrogenaudio.org/index.php?title=Cue_sheet
+      - (?) https://docs.swmansion.com/TypeGPU/examples
 
 * Notes
   1.  https://music.stackexchange.com/questions/91171/bar-counting-metronome  

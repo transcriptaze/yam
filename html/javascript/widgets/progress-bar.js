@@ -7,23 +7,7 @@ export class ProgressBar extends HTMLElement {
 
   #bars = Number.POSITIVE_INFINITY
   #head = 0
-  #subsections = [
-    // {
-    //   start: 0,
-    //   end: 4,
-    //   colour: '#ff0000',
-    // },
-    // {
-    //   start: 4,
-    //   end: 8,
-    //   // colour: '#00ff00',
-    // },
-    // {
-    //   start: 8,
-    //   end: 12,
-    //   colour: '#0000ff',
-    // },
-  ]
+  #subsections = []
 
   constructor() {
     super()
@@ -55,22 +39,26 @@ export class ProgressBar extends HTMLElement {
     return this.#head
   }
 
-  set head(v) {
-    if (!Number.isNaN(v) && v !== this.#head) {
-      this.#head = Math.max(0, v)
-      this.redraw()
-    }
-  }
-
   get bars() {
     return this.#bars
   }
 
-  set bars(v) {
-    const bars = Number.isNaN(v) || v === INF ? 0 : v
+  set value({ head, bars }) {
+    const _head = Number.isNaN(head) || head === INF ? 0 : head
+    const _bars = Number.isNaN(bars) || bars === INF ? 0 : bars
+    let redraw = false
 
-    if (bars !== this.#bars) {
-      this.#bars = Math.max(0, bars)
+    if (_bars !== this.#bars) {
+      this.#bars = Math.max(0, _bars)
+      redraw = true
+    }
+
+    if (!Number.isNaN(_head) && _head !== this.#head) {
+      this.#head = Math.min(Math.max(0, _head), this.#bars)
+      redraw = true
+    }
+
+    if (redraw) {
       this.redraw()
     }
   }
@@ -154,16 +142,10 @@ export class ProgressBar extends HTMLElement {
         const colour = style.backgroundColor
         const startColour = faded(colour, 0)
         const gradient = ctx.createLinearGradient(x, 0, w, height)
-        const stop = this.head > 0 ? Math.max(0, this.head - 1) / this.bars : 0
 
         gradient.addColorStop(0, colour)
         gradient.addColorStop(0.05, startColour)
         gradient.addColorStop(1, colour)
-
-        // NTS: stop can be (mistakenly and/or temporarily) greater than 1 because value and bars are set independently
-        if (stop > 0) {
-          gradient.addColorStop(Math.min(1, stop), colour)
-        }
 
         ctx.fillStyle = gradient
         ctx.beginPath()

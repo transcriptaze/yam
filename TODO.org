@@ -8,8 +8,8 @@
 **** DONE use track.section.subsections
 **** DONE FIXME stop can be (mistakenly and/or temporarily) greater than 1 because value and bars are set independently
 **** DONE FIXME use gradient function
-**** TODO don't do the gradient blend thing at end/start of subsections
-**** TODO (?) paint subsections 'inside' bar (e.g. 1px margin at top/bottom.left,right)
+**** DONE don't do the gradient blend thing at end/start of subsections
+**** TODO paint subsections 'inside' bar (e.g. 1px margin at top/bottom.left,right)
 
 *** TODO '+' button on playlists (cf. https://github.com/transcriptaze/yam/issues/14)
 **** DONE popup

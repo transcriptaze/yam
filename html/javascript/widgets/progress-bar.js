@@ -98,12 +98,16 @@ export class ProgressBar extends HTMLElement {
     ctx.clearRect(0, 0, width, height)
 
     // ... gradient function
-    const g = (colour, x, xʼ) => {
+    const g = (colour, x, xʼ, blur) => {
       const startColour = faded(colour, 0)
       const gradient = ctx.createLinearGradient(x, 0, xʼ, height)
 
-      gradient.addColorStop(0, colour)
-      gradient.addColorStop(0.05, startColour)
+      if (blur === true) {
+        gradient.addColorStop(0, colour)
+        gradient.addColorStop(0.05, startColour)
+      } else {
+        gradient.addColorStop(0, startColour)
+      }
       gradient.addColorStop(1, colour)
 
       ctx.fillStyle = gradient
@@ -119,7 +123,7 @@ export class ProgressBar extends HTMLElement {
         const subsection = this.#subsections.findLast((ss) => ss.start <= bar)
         const colour = subsection?.colour ?? style.backgroundColor
 
-        g(colour, x, x + dw)
+        g(colour, x, x + dw, false)
 
         bar++
       }
@@ -132,13 +136,13 @@ export class ProgressBar extends HTMLElement {
         const bar = Math.min(this.head, subsection.end)
         const xʼ = bar * dw
 
-        g(colour, x, xʼ)
+        g(colour, x, xʼ, false)
 
         x = xʼ
       }
 
       if (x < w) {
-        g(style.backgroundColor, x, w)
+        g(style.backgroundColor, x, w, false)
       }
     }
   }

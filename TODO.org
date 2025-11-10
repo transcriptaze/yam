@@ -7,7 +7,7 @@
 **** DONE render coloured subsections
 **** DONE use track.section.subsections
 **** DONE FIXME stop can be (mistakenly and/or temporarily) greater than 1 because value and bars are set independently
-**** TODO FIXME use gradient function
+**** DONE FIXME use gradient function
 **** TODO don't do the gradient blend thing at end/start of subsections
 **** TODO (?) paint subsections 'inside' bar (e.g. 1px margin at top/bottom.left,right)
 

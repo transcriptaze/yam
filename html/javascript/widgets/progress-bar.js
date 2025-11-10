@@ -137,20 +137,8 @@ export class ProgressBar extends HTMLElement {
         x = xʼ
       }
 
-      // FIXME use gradient function
       if (x < w) {
-        const colour = style.backgroundColor
-        const startColour = faded(colour, 0)
-        const gradient = ctx.createLinearGradient(x, 0, w, height)
-
-        gradient.addColorStop(0, colour)
-        gradient.addColorStop(0.05, startColour)
-        gradient.addColorStop(1, colour)
-
-        ctx.fillStyle = gradient
-        ctx.beginPath()
-        ctx.rect(x, 0, w, height)
-        ctx.fill()
+        g(style.backgroundColor, x, w)
       }
     }
   }

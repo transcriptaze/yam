@@ -74,6 +74,10 @@ export class Subsection extends HTMLElement {
     this.#measures.placeholder = '∞'
   }
 
+  set track(object) {
+    this.#tempo.then((v) => (v.track = object))
+  }
+
   set defaults(object) {
     const timeSignature = object?.timeSignature
     const pulse = object?.pulse

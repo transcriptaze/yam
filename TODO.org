@@ -16,9 +16,9 @@
 **** DONE popup
 **** DONE list tracks not in playlist
 **** TODO add selected tracks to playlist
+      - save button (?)
 **** TODO 'new' track
-**** TODO automatically create new track in editor for All Tracks
-**** TODO check edit dismiss actually works
+**** TODO fix dismiss on mobile
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** DONE enable editor save iff changed
@@ -26,7 +26,6 @@
 **** DONE display subsections
 **** DONE subsection measures not updated from section measures
 **** TODO display subsection BPM (calculated)
-      - copy track tempo/BPM down to subsections
       - field-sizing: content
 **** TODO slide-in sections list
 
@@ -63,6 +62,7 @@
 *** TODO connectedCallback: event handler duplication
 
 ** Fixes
+*** TODO allow BPM's less than 40/greater than 200 in subsections (because of tempo/BPM scaling thing)
 *** TODO Cloudflare (cf. https://github.com/transcriptaze/yam/issues/6)
 *** TODO (maybe) keep selected playlist on import
 *** TODO edit from playlist

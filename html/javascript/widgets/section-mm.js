@@ -23,6 +23,11 @@ export class SectionMM extends HTMLElement {
     pulse: 'quarter',
   }
 
+  #track = {
+    tempo: 120,
+    BPM: 120,
+  }
+
   #defaults = {
     pulse: 'quarter',
     BPM: 120,
@@ -152,6 +157,18 @@ export class SectionMM extends HTMLElement {
     }
 
     this.#redraw()
+  }
+
+  set track(object) {
+    const tempo = object?.tempo
+    const BPM = object?.BPM
+
+    if (!Number.isNaN(tempo) && tempo >= 40 && tempo <= 200) {
+      if (!Number.isNaN(BPM) && BPM >= 40 && BPM <= 200) {
+        this.#track.tempo = tempo
+        this.#track.BPM = BPM
+      }
+    }
   }
 
   set defaults(object) {
@@ -294,9 +311,9 @@ export class SectionMM extends HTMLElement {
     const defval = parseInt(`${this.#defaults.BPM}`)
 
     if (!Number.isNaN(bpm) && bpm >= 40 && bpm <= 200) {
-      this.#bpm.value = `(${bpm})`
+      this.#bpm.value = `(${Math.round((bpm * this.#track.BPM) / this.#track.tempo)})`
     } else if (!Number.isNaN(defval) && defval >= 40 && defval <= 200) {
-      this.#bpm.value = `(${defval})`
+      this.#bpm.value = `(${Math.round((defval * this.#track.BPM) / this.#track.tempo)})`
     } else {
       this.#bpm.value = ``
     }

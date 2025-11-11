@@ -3,6 +3,8 @@ export class AddTracks extends HTMLElement {
     return []
   }
 
+  #tracks = new Map()
+
   constructor() {
     super()
 
@@ -30,6 +32,8 @@ export class AddTracks extends HTMLElement {
   attributeChangedCallback(_name, _from, _to) {}
 
   set tracks(tracks) {
+    this.#tracks = new Map(tracks.map((v) => [v.UUID, v]))
+
     // ... initialise <ul>
     const ul = this.shadowRoot.querySelector('ul')
     const list = []
@@ -55,6 +59,25 @@ export class AddTracks extends HTMLElement {
     })
 
     ul.replaceChildren(...list)
+  }
+
+  get selected() {
+    const shadow = this.shadowRoot
+    const items = shadow.querySelectorAll('yam-tracklist-item')
+    const selected = []
+
+    items.forEach((v) => {
+      if (v.selected) {
+        const UUID = v.getAttribute('uuid')
+        const track = this.#tracks.get(UUID)
+
+        if (track != null) {
+          selected.push(track)
+        }
+      }
+    })
+
+    return selected
   }
 
   set selected(tracks) {

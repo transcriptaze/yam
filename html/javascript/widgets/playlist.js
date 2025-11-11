@@ -113,8 +113,19 @@ export class Playlist extends HTMLElement {
         event.preventDefault()
         event.stopPropagation()
 
-        this.#save()
-        this.#edited()
+        const container = this.shadowRoot.querySelector('div.playlist')
+        const editing = container.classList.contains('editing')
+        const adding = container.classList.contains('adding')
+
+        if (editing && !adding) {
+          this.#save_edits()
+          this.#edited()
+        }
+
+        if (adding && !editing) {
+          this.#save_adds()
+          this.#added()
+        }
       },
     },
 
@@ -131,7 +142,7 @@ export class Playlist extends HTMLElement {
         const title = container.querySelector('div.title input')
 
         if (event.key === 'Enter') {
-          this.#save()
+          this.#save_edits()
           this.#edited()
           return true
         }
@@ -483,9 +494,8 @@ export class Playlist extends HTMLElement {
     document.removeEventListener('mousedown', this.#clickOutside)
   }
 
-  #save() {
-    const shadow = this.shadowRoot
-    const container = shadow.querySelector('div.playlist')
+  #save_edits() {
+    const container = this.shadowRoot.querySelector('div.playlist')
     const title = container.querySelector('div.title input')
     const tracklist = container.querySelector('yam-tracklist')
 
@@ -537,6 +547,37 @@ export class Playlist extends HTMLElement {
     )
   }
 
+  #save_adds() {
+    const container = this.shadowRoot.querySelector('div.playlist')
+    const add_tracks = container.querySelector('yam-add-tracks')
+
+    if (add_tracks == null) {
+      return
+    }
+
+    const selected = add_tracks?.selected ?? []
+    const tracks = new Set()
+
+    this.#tracks.forEach((v) => {
+      tracks.add(v.UUID)
+    })
+
+    selected.forEach((v) => {
+      tracks.add(`${v.UUID}`)
+    })
+
+    this.dispatchEvent(
+      new CustomEvent('change', {
+        bubbles: true,
+        composed: true,
+        detail: {
+          playlist: this.UUID,
+          tracks: Array.from(tracks),
+        },
+      }),
+    )
+  }
+
   #clickOutside = (event) => {
     const shadow = this.shadowRoot
     const editing = shadow.querySelector('div.playlist.selected.editing')
@@ -544,18 +585,12 @@ export class Playlist extends HTMLElement {
     const host = document.querySelector('yam-playlists')
 
     if (editing != null) {
-      if (!event.composedPath().includes(editing)) {
-        this.#save()
-      }
       if (!event.composedPath().includes(host)) {
         this.#edited()
       }
     }
 
     if (adding != null) {
-      if (!event.composedPath().includes(adding)) {
-        // this.#save()
-      }
       if (!event.composedPath().includes(host)) {
         this.#added()
       }

@@ -36,10 +36,10 @@ At minimum, the browser must support _WebAudio_ and a reasonably recent implemen
 | Browser    | Version        | Status           | Notes                                      |
 |------------|----------------|------------------|--------------------------------------------|
 | Chrome     | (latest)       | **Ok**           |                                            |
-| Firefox    | (latest)       | **Mostly ok**    | Even more layout hacks :-(                 |
+| Firefox    | (latest)       | **Mostly ok**    | _as above_                                 |
 | Edge       | (latest)       | **Seems ok**     |                                            |
 | Opera      | (latest)       | **Ok**           |                                            |
-| Opera Mini |                | **NO**           | Does not support WebAudio                  |
+| Opera Mini |                | **NO**           | _Does not support WebAudio_                |
 
 
 ## iOS

@@ -1193,7 +1193,6 @@ div.beat.on div.shape {
 :host(.component-playlist) div.playlist div.summary div.menu #save {
   grid-column: 1;
   grid-row: 1;
-  display: none;
 }
 :host(.component-playlist) div.playlist div.summary div.menu #save img {
   width: 32px;
@@ -1365,6 +1364,12 @@ div.beat.on div.shape {
 }
 :host(.component-playlist) div.playlist.selected div.title input {
   font-weight: bold;
+}
+:host(.component-playlist) div.playlist div.menu #menu {
+  display: block;
+}
+:host(.component-playlist) div.playlist div.menu #save {
+  display: none;
 }
 :host(.component-playlist) div.playlist.editing div.title {
   padding-right: 14px;
@@ -2384,9 +2389,10 @@ div.playlist-track [popover]:popover-open::backdrop {
   color: #a0a0a0;
 }
 :host(.component-section-mm) input#BPM {
-  width: 3em;
+  min-width: 2em;
+  field-sizing: content;
   height: fit-content;
-  padding-right: 16px;
+  padding-right: 4px;
   color: #444444;
   font-size: 14px;
   font-weight: normal;

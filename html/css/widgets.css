@@ -765,6 +765,7 @@ div.beat.on div.shape {
 }
 :host(.component-progress-bar) div {
   position: relative;
+  box-sizing: border-box;
   display: block;
   width: 100%;
   height: 100%;
@@ -775,6 +776,7 @@ div.beat.on div.shape {
 }
 :host(.component-progress-bar) canvas {
   position: absolute;
+  box-sizing: border-box;
   top: 0;
   left: 0;
   width: 100%;
@@ -865,10 +867,12 @@ div.beat.on div.shape {
 :host(.component-info) div.info div.detail div.progress {
   grid-column: 1;
   grid-row: 1;
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
 }
 :host(.component-info) div.info div.detail yam-progress {
+  box-sizing: border-box;
   width: 100%;
   height: 100%;
   background: var(--accent-color);
@@ -1650,6 +1654,10 @@ div.playlist-track [popover]:popover-open::backdrop {
   background: url("/images/checkbox-checked.svg") no-repeat center/contain;
 }
 
+:host(.component-add-tracks) div.tracklist {
+  box-sizing: border-box;
+  padding-bottom: 24px;
+}
 :host(.component-add-tracks) div.tracklist ul {
   list-style-type: none;
   margin-left: 0px;
@@ -1658,6 +1666,24 @@ div.playlist-track [popover]:popover-open::backdrop {
 }
 :host(.component-add-tracks) div.tracklist ul li + li {
   margin-top: 2px;
+}
+:host(.component-add-tracks) div.tracklist ul li.hidden {
+  display: none;
+}
+:host(.component-add-tracks) div.tracklist hr {
+  margin-left: 32px;
+  margin-right: 24px;
+}
+:host(.component-add-tracks) div.tracklist button {
+  background: none;
+  border: none;
+  outline: none;
+  overflow: hidden;
+  color: #666666;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-left: 32px;
+  margin-right: 24px;
 }
 
 :host(.component-editor) div.track-editor {

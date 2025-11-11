@@ -30,7 +30,7 @@ export class Editor extends HTMLElement {
     },
 
     mm: {
-      change: (event) => {
+      changed: (event) => {
         const defaults = {}
 
         if (event.detail.pulse) {
@@ -50,7 +50,21 @@ export class Editor extends HTMLElement {
 
     BPM: {
       change: () => {
-        this.#modified = true
+        const BPM = Number.parseInt(this.#BPM.value)
+
+        if (!Number.isNaN(BPM) && BPM >= 40 && BPM <= 200) {
+          this.#modified = true
+          this.#defaults = {}
+        }
+      },
+
+      changed: () => {
+        const BPM = Number.parseInt(this.#BPM.value)
+
+        if (!Number.isNaN(BPM) && BPM >= 40 && BPM <= 200) {
+          this.#modified = true
+          this.#defaults = {}
+        }
       },
     },
 
@@ -173,10 +187,11 @@ export class Editor extends HTMLElement {
     toggle.addEventListener('click', this.#handlers.sections.click)
 
     this.#timeSignature.addEventListener('change', this.#handlers.timeSignature.change)
-    this.#mm.addEventListener('change', this.#handlers.mm.change)
+    this.#mm.addEventListener('change', this.#handlers.mm.changed)
     this.#plus.addEventListener('click', this.#handlers.plus.click)
 
-    this.#fields.BPM.addEventListener('change', this.#handlers.BPM.change)
+    this.#fields.BPM.addEventListener('input', this.#handlers.BPM.change)
+    this.#fields.BPM.addEventListener('change', this.#handlers.BPM.changed)
     this.#fields.loop.addEventListener('change', this.#handlers.loop.change)
     this.#fields.loops.addEventListener('change', this.#handlers.loops.change)
 
@@ -261,6 +276,7 @@ export class Editor extends HTMLElement {
     }
 
     this.#track = track
+    this.#defaults = {}
   }
 
   update(track) {
@@ -422,6 +438,11 @@ export class Editor extends HTMLElement {
     const sections = Array.from(this.#sections?.querySelectorAll('yam-section'))
     const it = sections.values()
 
+    const track = {
+      tempo: this.#mm.BPM,
+      BPM: Number.parseInt(this.#BPM.value),
+    }
+
     let timeSignature = object?.timeSignature ?? this.#timeSignature.timeSignature
     let pulse = object?.pulse ?? this.#mm.pulse
     let BPM = object?.BPM ?? this.#mm.BPM
@@ -430,6 +451,8 @@ export class Editor extends HTMLElement {
       const subsections = section.subsections
 
       for (const subsection of subsections) {
+        subsection.track = track
+
         subsection.defaults = {
           timeSignature: timeSignature,
           pulse: pulse,

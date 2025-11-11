@@ -16,8 +16,7 @@
 **** DONE fix save error
 **** DONE display subsections
 **** DONE subsection measures not updated from section measures
-**** TODO display subsection BPM (calculated)
-      - field-sizing: content
+**** DONE display subsection BPM (calculated)
 **** TODO slide-in sections list
 
 *** TODO loop icon numbers

@@ -143,10 +143,10 @@
   } 
 
   input#BPM {
-      width: 3em;
+      min-width: 2em;
+      field-sizing: content;
       height: fit-content;
-
-      padding-right: 16px;
+      padding-right: 4px;
 
       color: #444444;
       font-size: 14px;

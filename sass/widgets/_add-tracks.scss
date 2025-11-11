@@ -1,5 +1,8 @@
 :host(.component-add-tracks) {
   div.tracklist {
+    box-sizing: border-box;
+    padding-bottom: 24px;
+
     ul {
       list-style-type: none;
       margin-left: 0px;
@@ -9,6 +12,29 @@
       li + li {
         margin-top: 2px;
       }
+
+      li.hidden {
+        display: none;
+      }
+    }
+
+    hr {
+      margin-left: 32px;    
+      margin-right: 24px;    
+    }
+
+    button {
+      background: none;
+      border: none;
+      outline: none;
+      overflow: hidden;
+
+      color: #666666;
+      font-size: 0.9em;
+      font-style: italic;
+
+      margin-left: 32px;
+      margin-right: 24px;    
     }
   }
 }

@@ -1654,6 +1654,10 @@ div.playlist-track [popover]:popover-open::backdrop {
   background: url("/images/checkbox-checked.svg") no-repeat center/contain;
 }
 
+:host(.component-add-tracks) div.tracklist {
+  box-sizing: border-box;
+  padding-bottom: 24px;
+}
 :host(.component-add-tracks) div.tracklist ul {
   list-style-type: none;
   margin-left: 0px;
@@ -1662,6 +1666,24 @@ div.playlist-track [popover]:popover-open::backdrop {
 }
 :host(.component-add-tracks) div.tracklist ul li + li {
   margin-top: 2px;
+}
+:host(.component-add-tracks) div.tracklist ul li.hidden {
+  display: none;
+}
+:host(.component-add-tracks) div.tracklist hr {
+  margin-left: 32px;
+  margin-right: 24px;
+}
+:host(.component-add-tracks) div.tracklist button {
+  background: none;
+  border: none;
+  outline: none;
+  overflow: hidden;
+  color: #666666;
+  font-size: 0.9em;
+  font-style: italic;
+  margin-left: 32px;
+  margin-right: 24px;
 }
 
 :host(.component-editor) div.track-editor {

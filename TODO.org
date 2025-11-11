@@ -14,7 +14,8 @@
 
 *** TODO '+' button on playlists (cf. https://github.com/transcriptaze/yam/issues/14)
 **** DONE popup
-**** TODO list tracks not in playlist
+**** DONE list tracks not in playlist
+**** TODO add selected tracks to playlist
 **** TODO 'new' track
 **** TODO automatically create new track in editor for All Tracks
 **** TODO check edit dismiss actually works
@@ -27,7 +28,6 @@
 **** TODO display subsection BPM (calculated)
       - copy track tempo/BPM down to subsections
       - field-sizing: content
-**** TODO (?) section measures not editable after expand-collapse
 **** TODO slide-in sections list
 
 *** TODO loop icon numbers

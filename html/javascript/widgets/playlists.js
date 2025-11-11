@@ -78,9 +78,14 @@ export class Playlists extends HTMLElement {
 
   set tracklist(tracks) {
     const tracklist = this.#tracklist
+    const add_tracks = this.#add_tracks
 
     if (tracklist != null) {
       tracklist.tracks = tracks
+    }
+
+    if (add_tracks != null) {
+      add_tracks.tracks = tracks
     }
   }
 

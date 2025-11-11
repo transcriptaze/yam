@@ -2,15 +2,8 @@
 
 *** DONE soundsets (cf. https://github.com/transcriptaze/yam/issues/20)
 *** DONE About: build number (cf. https://github.com/transcriptaze/yam/issues/27)
-
 *** DONE coloured subsections (cf. https://github.com/transcriptaze/yam/issues/8)
-**** DONE render coloured subsections
-**** DONE use track.section.subsections
-**** DONE FIXME stop can be (mistakenly and/or temporarily) greater than 1 because value and bars are set independently
-**** DONE FIXME use gradient function
-**** DONE don't do the gradient blend thing at end/start of subsections
-**** DONE paint subsections 'inside' bar (e.g. 1px margin at top/bottom.left,right)
-**** TODO remove gradient blur entirely
+**** DONE remove gradient blur entirely
 
 *** TODO '+' button on playlists (cf. https://github.com/transcriptaze/yam/issues/14)
 **** DONE popup
@@ -30,11 +23,6 @@
 **** TODO slide-in sections list
 
 *** TODO loop icon numbers
-**** DONE 1
-**** DONE 2
-**** DONE 3
-**** DONE 4
-**** DONE 5
 **** TODO (?) use large numbers in centre
 
 *** TODO make errors visible (cf. https://github.com/transcriptaze/yam/issues/38)

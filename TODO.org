@@ -4,19 +4,13 @@
 *** DONE About: build number (cf. https://github.com/transcriptaze/yam/issues/27)
 *** DONE coloured subsections (cf. https://github.com/transcriptaze/yam/issues/8)
 *** DONE '+' button on playlists (cf. https://github.com/transcriptaze/yam/issues/14)
-**** DONE popup
-**** DONE list tracks not in playlist
-**** DONE add selected tracks to playlist
-**** DONE fix dismiss on mobile
-**** DONE 'new' track
-
-*** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
+*** DONE track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** DONE enable editor save iff changed
 **** DONE fix save error
 **** DONE display subsections
 **** DONE subsection measures not updated from section measures
 **** DONE display subsection BPM (calculated)
-**** TODO slide-in sections list
+**** DONE slide-in sections list
 
 *** TODO loop icon numbers
 **** TODO (?) use large numbers in centre

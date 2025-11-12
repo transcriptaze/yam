@@ -1854,6 +1854,9 @@ div.playlist-track [popover]:popover-open::backdrop {
   transform: translateY(-14px);
   transition: all 0.25s ease-in;
 }
+:host(.component-editor) div.track-editor div.sections ul li yam-section {
+  display: inline-block;
+}
 :host(.component-editor) div.track-editor div.sections ul li.show {
   opacity: 1;
   transform: translateY(0);

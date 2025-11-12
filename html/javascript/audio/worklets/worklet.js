@@ -285,8 +285,6 @@ export class Metronome extends AudioWorkletProcessor {
           const playhead = `${cluck.bar}.${cluck.beat}`
           const dings = this.#track?.dings ?? []
 
-          // console.log('>>>', {ding}, {dings}, {playhead}, dings.includes(playhead))
-
           if (ding && dings.includes(playhead)) {
             const ting = this.clicks.get('ding')
             if (ting != null) {

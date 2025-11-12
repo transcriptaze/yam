@@ -1,9 +1,24 @@
+import { EVENTS } from '../constants.js'
+
 export class AddTracks extends HTMLElement {
   static get observedAttributes() {
     return []
   }
 
   #tracks = new Map()
+
+  #fields = {}
+
+  #handlers = {
+    new_track: {
+      click: (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        this.dispatchEvent(new CustomEvent(EVENTS.NEW_TRACK, { bubbles: true, composed: true, detail: {} }))
+      },
+    },
+  }
 
   constructor() {
     super()
@@ -23,6 +38,8 @@ export class AddTracks extends HTMLElement {
 
   connectedCallback() {
     this.classList.add('component-add-tracks')
+
+    this.#new_track.addEventListener('click', this.#handlers.new_track.click)
   }
 
   disconnectedCallback() {}
@@ -98,6 +115,14 @@ export class AddTracks extends HTMLElement {
         li.classList.remove('hidden')
       }
     })
+  }
+
+  get #new_track() {
+    if (this.#fields.new_track == null) {
+      this.#fields.new_track = this.shadowRoot?.querySelector('#new-track')
+    }
+
+    return this.#fields.new_track
   }
 }
 

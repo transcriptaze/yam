@@ -369,6 +369,7 @@ function rewire() {
   widgets.playlists.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
   widgets.playlists.addEventListener(EVENTS.MUTE_TRACK, (e) => onMute(e))
   widgets.playlists.addEventListener(EVENTS.DELETE_TRACK, (e) => onTrackDelete(e))
+  widgets.playlists.addEventListener(EVENTS.NEW_TRACK, (e) => onTrackNew(e))
 
   widgets.editor.addEventListener(EVENTS.EDIT_SAVE, (e) => onEdited(e))
 
@@ -660,6 +661,40 @@ function onTrackDelete(event) {
   }
 }
 
+function onTrackNew() {
+  try {
+    const object = {
+      BPM: state.BPM,
+      timeSignature: state.timeSignature,
+      pulse: state.pulse,
+    }
+
+    const track = models.tracks.create(object)
+
+    // ... add to 'All Tracks' playlist
+    const all = models.playlists.playlist(DEFAULT.UUID)
+
+    all.add(track)
+    all.save()
+
+    // ... add to current playlist
+    const playlist = models.playlists.playlist(state.playlist)
+    if (playlist != null) {
+      playlist.add(track)
+      playlist.select(track.UUID)
+      playlist.save()
+    }
+
+    widgets.playlists.tracklist = models.tracks.tracks
+    widgets.editor.track = track
+    engine.track = track
+
+    document.querySelector('toolbar').classList.add('editable')
+  } catch (err) {
+    onError(err)
+  }
+}
+
 function onSave() {
   try {
     const object = {
@@ -674,7 +709,7 @@ function onSave() {
     let track = models.tracks.track(state.track)
 
     if (track == null) {
-      track = models.tracks.create()
+      track = models.tracks.create(object)
 
       // ... add to 'All Tracks' playlist
       const all = models.playlists.playlist(DEFAULT.UUID)

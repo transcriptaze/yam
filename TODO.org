@@ -3,13 +3,12 @@
 *** DONE soundsets (cf. https://github.com/transcriptaze/yam/issues/20)
 *** DONE About: build number (cf. https://github.com/transcriptaze/yam/issues/27)
 *** DONE coloured subsections (cf. https://github.com/transcriptaze/yam/issues/8)
-
-*** TODO '+' button on playlists (cf. https://github.com/transcriptaze/yam/issues/14)
+*** DONE '+' button on playlists (cf. https://github.com/transcriptaze/yam/issues/14)
 **** DONE popup
 **** DONE list tracks not in playlist
 **** DONE add selected tracks to playlist
 **** DONE fix dismiss on mobile
-**** TODO 'new' track
+**** DONE 'new' track
 
 *** TODO track editor (cf. https://github.com/transcriptaze/yam/issues/2)
 **** DONE enable editor save iff changed

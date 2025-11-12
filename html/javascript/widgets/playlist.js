@@ -188,8 +188,17 @@ export class Playlist extends HTMLElement {
     },
 
     plus: {
-      click: () => {
+      click: (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+
         this.plus()
+      },
+    },
+
+    container: {
+      new_track: () => {
+        this.#added()
       },
     },
   }
@@ -238,6 +247,8 @@ export class Playlist extends HTMLElement {
     trash.addEventListener('transitionend', this.#handlers.trash.transitionend)
 
     this.#plus?.addEventListener('click', this.#handlers.plus.click)
+
+    container.addEventListener(EVENTS.NEW_TRACK, this.#handlers.container.new_track)
   }
 
   disconnectedCallback() {

@@ -101,7 +101,9 @@ export class AddTracks extends HTMLElement {
     const set = new Set(tracks.map((v) => v.UUID))
 
     const ul = this.shadowRoot.querySelector('ul')
+    const hr = this.shadowRoot.querySelector('hr')
     const list = Array.from(ul.querySelectorAll('yam-tracklist-item'))
+    let count = 0
 
     list.forEach((v) => {
       const uuid = v.getAttribute('uuid')
@@ -113,8 +115,15 @@ export class AddTracks extends HTMLElement {
         li.classList.add('hidden')
       } else {
         li.classList.remove('hidden')
+        count++
       }
     })
+
+    if (count == 0) {
+      hr.classList.add('hide')
+    } else {
+      hr.classList.remove('hide')      
+    }
   }
 
   get #new_track() {

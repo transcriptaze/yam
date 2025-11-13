@@ -198,6 +198,7 @@ export class Playlist extends HTMLElement {
 
     container: {
       new_track: () => {
+        this.#save_adds()
         this.#added()
       },
     },

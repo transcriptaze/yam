@@ -1679,6 +1679,9 @@ div.playlist-track [popover]:popover-open::backdrop {
   margin-left: 32px;
   margin-right: 24px;
 }
+:host(.component-add-tracks) div.tracklist hr.hide {
+  display: none;
+}
 :host(.component-add-tracks) div.tracklist button {
   background: none;
   border: none;

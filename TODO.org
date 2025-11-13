@@ -11,14 +11,14 @@
 **** DONE subsection measures not updated from section measures
 **** DONE display subsection BPM (calculated)
 **** DONE slide-in sections list
+*** TODO make errors visible (cf. https://github.com/transcriptaze/yam/issues/38)
+**** DONE icon is too close to right edge
+**** DONE message box
+**** DONE copy to clipboard
+**** DONE title text
 
 *** TODO loop icon numbers
 **** TODO (?) use large numbers in centre
-
-*** TODO make errors visible (cf. https://github.com/transcriptaze/yam/issues/38)
-      - title text
-      - message box
-      - icon is too close to right edge
 
 *** TODO clicks
 **** TODO generate clicks for count-in

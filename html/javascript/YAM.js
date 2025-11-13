@@ -9,6 +9,7 @@ import { EVENTS } from './constants.js'
 
 const LOGTAG = 'YAM'
 let DEBUG = false
+let ERROR = null
 
 const widgets = {
   pads: document.querySelector('yam-pads'),
@@ -334,13 +335,32 @@ export async function toggleWakeLock() {
 export function onError(err) {
   console.error('ERROR', err)
 
+  ERROR = err
+
   document.querySelector('#about')?.classList.add('error')
+  document.querySelector('#oops').title = `${err.message}`
+}
+
+export async function showError() {
+  if (ERROR != null) {
+    try {
+      const msg = JSON.stringify(ERROR, null, '  ')
+
+      alert(msg)
+      await navigator.clipboard.writeText(msg)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  document.querySelector('#about')?.classList.remove('error')
 }
 
 export function debug() {
   DEBUG = !DEBUG
 
-  engine.debug = DEBUG
+  // engine.debug = DEBUG
+  throw new Error('ooops')
 }
 
 // wire up event handlers

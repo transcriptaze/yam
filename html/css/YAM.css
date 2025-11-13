@@ -482,18 +482,17 @@ toolbar #reset:hover {
 toolbar #settings {
   display: none;
 }
-toolbar #bug {
-  display: none;
-}
 toolbar #wakelock.active img {
   filter: invert(10%) sepia(99%) saturate(5774%) hue-rotate(14deg) brightness(90%) contrast(121%);
 }
 toolbar #about {
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto;
   justify-items: center;
   align-items: center;
+  padding-right: 12px;
 }
 toolbar #about a {
   grid-column: 1;

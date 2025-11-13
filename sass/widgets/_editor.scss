@@ -201,6 +201,10 @@
          opacity: 0;
          transform: translateY(-14px);
          transition: all 0.25s ease-in;
+
+         yam-section {
+           display: inline-block;
+         }
        }
 
         li.show {

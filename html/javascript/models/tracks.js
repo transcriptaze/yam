@@ -1,9 +1,11 @@
 import * as DB from '../db/db.js'
 import { UUIDv4 } from '../uuid.js'
 import { Track } from './track.js'
+import * as generators from '../generators.js'
 
 class Tracks extends EventTarget {
   #tracks = []
+  #titles = generators.titles(Math.floor(Math.random() * 11))
 
   constructor() {
     super()
@@ -44,11 +46,18 @@ class Tracks extends EventTarget {
     this.#tracks = tracks
   }
 
-  create() {
+  create(object) {
     const set = new Set(this.#tracks.map((v) => v.UUID))
     const uuid = UUIDv4(set).next().value
     const track = new Track({
       UUID: uuid,
+      title: object?.title ?? this.#titles(),
+      tempo: object?.BPM ?? 120,
+      timeSignature: object?.timeSignature ?? '4:4',
+      pulse: object?.pulse ?? 'quarter',
+      metronome: {
+        BPM: object?.BPM ?? 120,
+      },
     })
 
     DB.putTrack(track.object)

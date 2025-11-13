@@ -60,7 +60,7 @@ toolbar {
   }
 
   #bug {
-    display: none;
+    // display: none;
   }
 
   #wakelock.active {
@@ -70,11 +70,15 @@ toolbar {
   }
 
   #about {
+    box-sizing: border-box;
+
     display: grid;
     grid-template-columns: auto;
     grid-template-rows: auto;
     justify-items: center;
     align-items: center;
+
+    padding-right: 12px;
 
     a {
       grid-column: 1;

@@ -228,4 +228,75 @@ describe('tests track sections transmogrify', function () {
 
     expect(sections).to.eql(expected)
   })
+
+  describe('tests track title generator', function () {
+    it('title generator', function () {
+      const titles = [
+        { expected: 'Ghosts in the Static' },
+        { expected: 'Electric Honey' },
+        { expected: 'The Long Way Home from Yesterday' },
+        { expected: 'Blueprints for Silence' },
+        { expected: 'Algorithms At Midnight' },
+        { expected: 'Your Shadow’s Got My Eyes' },
+        { expected: 'Polaroids of a Parallel Life' },
+        { expected: 'Caffeine & Catastrophe' },
+        { expected: 'Second Hand Universe' },
+        { expected: 'Gravity’s Just a Suggestion' },
+
+        { expected: 'Ghosts in the Static' },
+        { expected: 'Electric Honey' },
+        { expected: 'The Long Way Home from Yesterday' },
+        { expected: 'Blueprints for Silence' },
+        { expected: 'Algorithms At Midnight' },
+        { expected: 'Your Shadow’s Got My Eyes' },
+        { expected: 'Polaroids of a Parallel Life' },
+        { expected: 'Caffeine & Catastrophe' },
+        { expected: 'Second Hand Universe' },
+        { expected: 'Gravity’s Just a Suggestion' },
+      ]
+
+      const g = generators.titles()
+
+      for (const t of titles) {
+        const title = g()
+
+        expect(title).to.equal(t.expected)
+      }
+    })
+
+    it('title generator with seed', function () {
+      const titles = [
+        { expected: 'Algorithms At Midnight' },
+        { expected: 'Your Shadow’s Got My Eyes' },
+        { expected: 'Polaroids of a Parallel Life' },
+        { expected: 'Caffeine & Catastrophe' },
+        { expected: 'Second Hand Universe' },
+        { expected: 'Gravity’s Just a Suggestion' },
+
+        { expected: 'Ghosts in the Static' },
+        { expected: 'Electric Honey' },
+        { expected: 'The Long Way Home from Yesterday' },
+        { expected: 'Blueprints for Silence' },
+        { expected: 'Algorithms At Midnight' },
+        { expected: 'Your Shadow’s Got My Eyes' },
+        { expected: 'Polaroids of a Parallel Life' },
+        { expected: 'Caffeine & Catastrophe' },
+        { expected: 'Second Hand Universe' },
+        { expected: 'Gravity’s Just a Suggestion' },
+
+        { expected: 'Ghosts in the Static' },
+        { expected: 'Electric Honey' },
+        { expected: 'The Long Way Home from Yesterday' },
+        { expected: 'Blueprints for Silence' },
+      ]
+
+      const g = generators.titles(4)
+
+      for (const t of titles) {
+        const title = g()
+
+        expect(title).to.equal(t.expected)
+      }
+    })
+  })
 })

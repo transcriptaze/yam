@@ -9,6 +9,7 @@ import { EVENTS } from './constants.js'
 
 const LOGTAG = 'YAM'
 let DEBUG = false
+let ERROR = null
 
 const widgets = {
   pads: document.querySelector('yam-pads'),
@@ -334,13 +335,32 @@ export async function toggleWakeLock() {
 export function onError(err) {
   console.error('ERROR', err)
 
+  ERROR = err
+
   document.querySelector('#about')?.classList.add('error')
+  document.querySelector('#oops').title = `${err.message}`
+}
+
+export async function showError() {
+  if (ERROR != null) {
+    try {
+      const msg = JSON.stringify(ERROR, null, '  ')
+
+      alert(msg)
+      await navigator.clipboard.writeText(msg)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  document.querySelector('#about')?.classList.remove('error')
 }
 
 export function debug() {
   DEBUG = !DEBUG
 
-  engine.debug = DEBUG
+  // engine.debug = DEBUG
+  throw new Error('ooops')
 }
 
 // wire up event handlers
@@ -369,6 +389,7 @@ function rewire() {
   widgets.playlists.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
   widgets.playlists.addEventListener(EVENTS.MUTE_TRACK, (e) => onMute(e))
   widgets.playlists.addEventListener(EVENTS.DELETE_TRACK, (e) => onTrackDelete(e))
+  widgets.playlists.addEventListener(EVENTS.NEW_TRACK, (e) => onTrackNew(e))
 
   widgets.editor.addEventListener(EVENTS.EDIT_SAVE, (e) => onEdited(e))
 
@@ -660,6 +681,40 @@ function onTrackDelete(event) {
   }
 }
 
+function onTrackNew() {
+  try {
+    const object = {
+      BPM: state.BPM,
+      timeSignature: state.timeSignature,
+      pulse: state.pulse,
+    }
+
+    const track = models.tracks.create(object)
+
+    // ... add to 'All Tracks' playlist
+    const all = models.playlists.playlist(DEFAULT.UUID)
+
+    all.add(track)
+    all.save()
+
+    // ... add to current playlist
+    const playlist = models.playlists.playlist(state.playlist)
+    if (playlist != null) {
+      playlist.add(track)
+      playlist.select(track.UUID)
+      playlist.save()
+    }
+
+    widgets.playlists.tracklist = models.tracks.tracks
+    widgets.editor.track = track
+    engine.track = track
+
+    document.querySelector('toolbar').classList.add('editable')
+  } catch (err) {
+    onError(err)
+  }
+}
+
 function onSave() {
   try {
     const object = {
@@ -674,7 +729,7 @@ function onSave() {
     let track = models.tracks.track(state.track)
 
     if (track == null) {
-      track = models.tracks.create()
+      track = models.tracks.create(object)
 
       // ... add to 'All Tracks' playlist
       const all = models.playlists.playlist(DEFAULT.UUID)

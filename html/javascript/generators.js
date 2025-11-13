@@ -91,6 +91,35 @@ export function clicks(v) {
   return null
 }
 
+function* title(seed) {
+  const titles = [
+    'Ghosts in the Static',
+    'Electric Honey',
+    'The Long Way Home from Yesterday',
+    'Blueprints for Silence',
+    'Algorithms At Midnight',
+    'Your Shadow’s Got My Eyes',
+    'Polaroids of a Parallel Life',
+    'Caffeine & Catastrophe',
+    'Second Hand Universe',
+    'Gravity’s Just a Suggestion',
+  ]
+
+  let index = seed
+
+  while (true) {
+    yield `${titles[index++ % titles.length]}`
+  }
+}
+
+export function titles(seed) {
+  const g = title(seed ?? 0)
+
+  return () => {
+    return g.next().value
+  }
+}
+
 export function* transmogrify(track) {
   const sections = track?.sections ?? []
   const _roles = roles()

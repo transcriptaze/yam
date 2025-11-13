@@ -5,17 +5,14 @@
 *** DONE coloured subsections (cf. https://github.com/transcriptaze/yam/issues/8)
 *** DONE '+' button on playlists (cf. https://github.com/transcriptaze/yam/issues/14)
 *** DONE track editor (cf. https://github.com/transcriptaze/yam/issues/2)
-**** DONE enable editor save iff changed
-**** DONE fix save error
-**** DONE display subsections
-**** DONE subsection measures not updated from section measures
-**** DONE display subsection BPM (calculated)
-**** DONE slide-in sections list
-*** TODO make errors visible (cf. https://github.com/transcriptaze/yam/issues/38)
-**** DONE icon is too close to right edge
-**** DONE message box
-**** DONE copy to clipboard
-**** DONE title text
+*** DONE make errors visible (cf. https://github.com/transcriptaze/yam/issues/38)
+*** DONE CI deploy to yam-alpha (cf. https://github.com/transcriptaze/yam/issues/6)
+**** DONE alpha CI build with rollup for Cloudflare
+**** DONE build artifacts for alpha branch
+**** TODO update README images
+**** TODO Cloudflare yam-alpha page
+**** TODO increase cache expiry in header for _alpha_ branch
+**** TODO standalone Go executable
 
 *** TODO loop icon numbers
 **** TODO (?) use large numbers in centre

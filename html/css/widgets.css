@@ -761,7 +761,7 @@ div.beat.on div.shape {
 }
 
 :host(.component-progress-bar) {
-  background: var(--accent-color, pink);
+  background: var(--accent-color, #c0c0c0);
 }
 :host(.component-progress-bar) div {
   position: relative;

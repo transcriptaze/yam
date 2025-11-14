@@ -11,7 +11,7 @@
 **** DONE build artifacts for alpha branch
 **** DONE update README images
 **** DONE Cloudflare yam-alpha page
-**** TODO increase cache expiry in header for _alpha_ branch
+**** DONE increase cache expiry in header for _alpha_ branch
 **** TODO standalone Go executable
 
 *** TODO loop icon numbers

@@ -64,7 +64,7 @@ It's also _pre-alpha_ i.e. expect the code, design, architecture, everything to 
 
 The web app is packaged as a zip file that includes the HTML, images, audio and rollup'd Javascript that can be served by almost any basic
 HTTP server that includes Cross Origin Resources Sharing support. Simply download and unpack the _yam_alpha.zip_ file from the most from
-the most recent [Alpha release](https://github.com/transcriptaze/yam/actions/workflows/nightly.yml) build - and host the _html_ folder on
+the most recent [Alpha release](https://github.com/transcriptaze/yam/actions/workflows/alpha.yml) build - and host the _html_ folder on
 a web server of your choice.
 
 The zip file includes scripts for the _Python_ and _NodeJS_ built-in HTTP servers, but the web app is entirely static so whatever
@@ -141,6 +141,6 @@ Everything in this repository is licensed under [GPL-3.0](https://github.com/tra
    - [Steinberg](https://www.steinberg.net)
 
 10. Lato font
-   - [Lato Fonts](https://www.latofonts.com)
-   - [SIL Open Font License 1.1](https://openfontlicense.org)
+    - [Lato Fonts](https://www.latofonts.com)
+    - [SIL Open Font License 1.1](https://openfontlicense.org)
 

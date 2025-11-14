@@ -155,10 +155,9 @@ export class ProgressBar extends HTMLElement {
 function faded(colour, alpha) {
   // rgb(..)
   {
-    const match = colour.match(/rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+).*/)
+    const match = colour.match(/^rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+).*/)
 
     if (match) {
-      console.log('>>> RGB', { colour }, { match })
       const [_, r, g, b] = match
 
       return `rgb(${r}, ${g}, ${b}, ${alpha})`
@@ -167,10 +166,9 @@ function faded(colour, alpha) {
 
   // rgba(..)
   {
-    const match = colour.match(/rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+).*/)
+    const match = colour.match(/^rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+).*/)
 
     if (match) {
-      console.log('>>> RGBA', { colour }, { match })
       const [_, r, g, b] = match
 
       return `rgb(${r}, ${g}, ${b}, ${alpha})`
@@ -179,10 +177,9 @@ function faded(colour, alpha) {
 
   // #xxxxxx
   {
-    const match = colour.match(/#([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})/)
+    const match = colour.match(/^#([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})/)
 
     if (match) {
-      console.log('>>> HEX', { colour }, { match })
       const r = parseInt(match[1], 16)
       const g = parseInt(match[2], 16)
       const b = parseInt(match[3], 16)

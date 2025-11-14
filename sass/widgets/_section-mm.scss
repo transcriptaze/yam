@@ -134,10 +134,6 @@
     color: #b0b0b0;
   }
 
-  input:invalid {
-    color: red;
-  }
-
   input:disabled {
     color: #a0a0a0;
   } 
@@ -152,6 +148,10 @@
       font-size: 14px;
       font-weight: normal;
       text-align: left;
+
+      &:invalid {
+        color: red;
+      }
   }
 
   input#bpm {
@@ -159,7 +159,7 @@
       height: fit-content;
       field-sizing: content;
 
-      color: #ff0000;
+      color: #808080;
       font-size: 12px;
       font-style: italic;
       font-weight: normal;

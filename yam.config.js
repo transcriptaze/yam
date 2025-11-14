@@ -4,7 +4,7 @@ export default [
   {
     input: 'html/javascript/YAM.js',
     output: {
-      file: 'dist/rollup/javascript/YAM.js',
+      file: 'dist/yam/javascript/YAM.js',
       format: 'esm',
       sourcemap: false,
     },

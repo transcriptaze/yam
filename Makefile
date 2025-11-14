@@ -55,19 +55,21 @@ release: build-all rollup
 	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/yam/html/rollup/about.html
 	cd dist/yam && zip --recurse-paths ../yam.zip .
 
-cloudflare:  build build-all
+cloudflare:  build
 	rm -rf dist/cloudflare.zip
 	rm -rf dist/cloudflare
 	mkdir -p dist/cloudflare
+
 	cp -r html/*       dist/cloudflare/
 	cp -r cloudflare/* dist/cloudflare/
 	rm -f dist/cloudflare/.gitignore
 	rm -f dist/cloudflare/LICENSE
 	rm -f dist/cloudflare/package.json
-	find dist/cloudflare -name ".DS_Store" -delete
-	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/cloudflare/about.html
-
-	cd dist/cloudflare && zip --recurse-paths -FS ../cloudflare.zip . -x ".DS_Store"
+# 	find dist/cloudflare -name ".DS_Store" -delete
+# 
+# 	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/cloudflare/about.html
+# 
+# 	cd dist/cloudflare && zip --recurse-paths -FS ../cloudflare.zip . -x ".DS_Store"
 
 debug:
 	find html/javascript -name "*.js" -exec npx eslint   --fix {} +

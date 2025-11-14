@@ -65,10 +65,8 @@ cloudflare:  build
 	rm -f dist/cloudflare/.gitignore
 	rm -f dist/cloudflare/LICENSE
 	rm -f dist/cloudflare/package.json
+	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/cloudflare/about.html
 # 	find dist/cloudflare -name ".DS_Store" -delete
-# 
-# 	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/cloudflare/about.html
-# 
 # 	cd dist/cloudflare && zip --recurse-paths -FS ../cloudflare.zip . -x ".DS_Store"
 
 debug:

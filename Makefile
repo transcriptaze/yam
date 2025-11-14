@@ -47,7 +47,7 @@ build-all: test vet lint
 package: build-all
 	rm -rf dist/yam
 	npm run package
-	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/yam/html/about.html
+	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/yam/about.html
 
 release: package
 	cd dist/yam && zip --recurse-paths ../yam.zip .

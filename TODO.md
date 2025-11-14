@@ -2,18 +2,16 @@
 
 ## In Progress
 
-- [ ] Alpha release 0.0.0 (cf. https://github.com/transcriptaze/yam/issues/6)
+- [x] Alpha release 0.0.0 (cf. https://github.com/transcriptaze/yam/issues/6)
     - [x] alpha CI build with rollup for Cloudflare
     - [x] build artifacts for alpha branch
     - [x] update README images
     - [x] Cloudflare yam-alpha page
     - [x] increase cache expiry in header for _alpha_ branch
     - [x] use rollup'd JS on yam-alpha
-    - [ ] tag & release
+    - [x] tag & release
 
-- [ ] standalone Go executable
-
-- [ ] loop icon: use large numbers in centre (?)
+- (?) loop icon: use large numbers in centre
 
 - [ ] clicks
     - [ ] generate clicks for count-in
@@ -76,62 +74,62 @@
 - [ ] rework state logic as FSM
       - seperate web components from logic
       - tests
-- [ ] TODO fix page layout for when it gets really squashed
-- [ ] TODO landscape+mobile
+- [ ] fix page layout for when it gets really squashed
+- [ ] landscape+mobile
 
 ## Todo
 
-** Reset
-*** TODO red if next tap will reset to defaults
+### Reset
+    - [ ] red if next tap will reset to defaults
 
-** Toolbar
-*** TODO move page logic to CSS
+### Toolbar
+    - [ ] move page logic to CSS
 
-** Control knob
-*** TODO integrate along path (fit curve to points ? low pass filter points ?)
-*** TODO rework rotation with matrix
-*** TODO slide-x
-*** TODO animate when BPM changed by input
-*** TODO velocity sensitive
-*** (?) openwc
+### Control knob
+    - [ ] integrate along path (fit curve to points ? low pass filter points ?)
+    - [ ] rework rotation with matrix
+    - [ ] slide-x
+    - [ ] animate when BPM changed by input
+    - [ ] velocity sensitive
+    - [ ] openwc
 
-** Thumbwheel
-*** TODO indicator triangle
-*** TODO edge gradient
-*** TODO progress bar      
-*** TODO velocity sensitive
-*** TODO animate when BPM changed by input
+### Thumbwheel
+    - [ ] indicator triangle
+    - [ ] edge gradient
+    - [ ] progress bar      
+    - [ ] velocity sensitive
+    - [ ] animate when BPM changed by input
 
-** Playlists
-*** TODO autoplay
+### Playlists
+    - [ ] autoplay
       - announce track (TTS)
-*** TODO save URL as bookmark
-*** TODO flag modified tracks
-*** TODO playlist indicator for back/next (e.g. dots below play controls)
-*** TODO lock
-*** TODO save/load zipped (.yamz)
-*** TODO slots for <random> tracks
-      - weighted by last/least played
+    - [ ] save URL as bookmark
+    - [ ] flag modified tracks
+    - [ ] playlist indicator for back/next (e.g. dots below play controls)
+    - [ ] lock
+    - [ ] save/load zipped (.yamz)
+    - [ ] slots for <random> tracks
+        - weighted by last/least played
 
-*** TODO schedulable e.g. Mondays
-  - [ ] slide in/out
-  - (?) shuffle
-  - (?) sort
-  - (?) embed other playlist e.g. 'In Progress' in 'Monday'
-  - https://css-tricks.com/exploring-what-the-details-and-summary-elements-can-do/
-  - https://css-tricks.com/simple-swipe-with-vanilla-javascript
-  - https://stackoverflow.com/questions/9367279/can-i-do-a-swipe-left-or-right-in-chrome-pc-with-a-mouse
+### Other
+    - [ ] schedulable e.g. Mondays
+    - [ ] slide in/out
+    - (?) shuffle
+    - (?) sort
+    - (?) embed other playlist e.g. 'In Progress' in 'Monday'
+    - https://css-tricks.com/exploring-what-the-details-and-summary-elements-can-do/
+    - https://css-tricks.com/simple-swipe-with-vanilla-javascript
+    - https://stackoverflow.com/questions/9367279/can-i-do-a-swipe-left-or-right-in-chrome-pc-with-a-mouse
 
-** Track
-*** TODO (?) tags
-*** TODO hover styles
-*** TODO lock
-*** TODO clone
-*** TODO coloured subsections
+### Track
+    - [ ] (?) tags
+    - [ ] hover styles
+    - [ ] lock
+    - [ ] clone
 
-** Pads
-*** TODO fix janky pads change
-*** TODO what to do about overflow
+### Pads
+    - [ ] fix janky pads change
+    - [ ] what to do about overflow
             - (?) scroll into view
             - (!) change presentation
                   - dots for e.g 12+ beats
@@ -145,33 +143,32 @@
       - https://w3c.github.io/smufl/latest/tables/conductor-symbols.html
       - https://developer.mozilla.org/en-US/docs/Web/CSS/basic-shape
 
-** Settings 
-*** DONE volume
-*** TODO device e.g. Pixel4a (for per device CSS) 
-*** TODO track retention time
-*** TODO sound set
-*** TODO preferred click patterns
-*** TODO knob PID constants (?)
-*** https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Customizable_select
+### Settings 
+    - [ ] device e.g. Pixel4a (for per device CSS) 
+    - [ ] track retention time
+    - [ ] sound set
+    - [ ] preferred click patterns
+    - [ ] knob PID constants (?)
+    - https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Customizable_select
 
-** Figma
-*** TODO portrait mockup
-*** TODO landscape mockup
-*** TODO desktop mockup
+### Figma
+    - [ ] portrait mockup
+    - [ ] landscape mockup
+    - [ ] desktop mockup
 
-** Misc
-*** TODO themes
-      - [ ] setttings
-      - [ ] setup on initial load
-      - https://colorhunt.co/palette/f5ece05f99ae336d82693382
-      - https://colorhunt.co/palette/ffa725fff5e4c1d8c36a9c89
-      - https://colorhunt.co/palette/f6f0f0f2e2b1d5c7a3bdb395
-      - https://dribbble.com/shots/14685674-MetroPulse-Metronome-Screens-II
-      - https://dribbble.com/shots/21007853-Metronome-App-Device-Experiment
-*** TODO register yam: protocol
+### Misc
+    - [ ] TODO themes
+         - [ ] setttings
+         - [ ] setup on initial load
+         - https://colorhunt.co/palette/f5ece05f99ae336d82693382
+         - https://colorhunt.co/palette/ffa725fff5e4c1d8c36a9c89
+         - https://colorhunt.co/palette/f6f0f0f2e2b1d5c7a3bdb395
+         - https://dribbble.com/shots/14685674-MetroPulse-Metronome-Screens-II
+         - https://dribbble.com/shots/21007853-Metronome-App-Device-Experiment
+    - [ ] register yam: protocol
 
-** Metronome
-*** TODO textured buttons
+### Metronome
+    - [ ] textured buttons
       - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy
       - https://kube.io/blog/liquid-glass-css-svg/
       - [ ] dotted quarter
@@ -179,8 +176,8 @@
       - [ ] 'fix' sounds (they don't sound great - EQ? reverb?)
       - [ ] rather wire up play/stop in YAM.js
 
-** MM
-*** TODO what to do if pulse is set to eighth and time signature changes to e.g. 3:4 ????
+### MM
+    - [ ] what to do if pulse is set to eighth and time signature changes to e.g. 3:4 ????
       - [ ] pulse
             - [ ] engine
       - [ ] ramp ease-in
@@ -189,9 +186,9 @@
             - [ ] max/min parameters
       - [ ] display as e.g. orange while transitioning
 
-** Time Signature
-*** TODO setting tactus/figura triggers redraw + change event)
-*** TODO presets
+### Time Signature
+    - [ ] setting tactus/figura triggers redraw + change event)
+    - [ ] presets
      - use ligatures e.g timeSig2over4
      - https://www.w3.org/2019/03/smufl13/tables/time-signatures.html
      - https://torinak.com/font/lsfont.html
@@ -219,7 +216,7 @@
       - https://css-tricks.com/grainy-gradients
       - https://graphicdesign.stackexchange.com/questions/97228/how-to-create-an-undulating-fabric-texture-using-inkscape/97234#97234
 
-** Textures
+### Textures
       - Master of Poisons (book cover)
       - Penrose tiles
       - 'hat' tiles
@@ -228,23 +225,23 @@
       - https://daniel.do/article/making-noisy-svgs
       - https://kube.io/blog/liquid-glass-css-svg/
 
-** Plugins
+### Plugins
       - statistics
       - make-me-a-sandwich JSON editor pages
       - MIDI file import/export
 
-** About
+### About
       - https://webkit.org/blog/16547/better-typography-with-text-wrap-pretty
       - (?) handwriting font
          - https://chameth.com/making-a-font-of-my-handwriting
 
-** TLA+
+### TLA+
       - send EVENT.STOPPED event on receiving EVENT.STOP  even if state is already STOPPED
       - send EVENT.RUNNING event on receiving EVENT.START even if state is already RUNNING
       - UI.thread queue + click events
 
 
-* Features
+## Features
 
 1. Statistics
    - export to TSV
@@ -288,7 +285,7 @@
 
 12. CLI (?)
 
-* Other
+## Other
       - (?) Processing
             - https://processing.org/reference/libraries/sound/index.html
             - https://code.compartmental.net/minim
@@ -300,7 +297,7 @@
             - https://wiki.hydrogenaudio.org/index.php?title=Cue_sheet
       - (?) https://docs.swmansion.com/TypeGPU/examples
 
-* Notes
+## Notes
   1.  https://music.stackexchange.com/questions/91171/bar-counting-metronome  
   2.  https://wam-examples.vidalmazuy.fr/example1-js/index.html
   3.  https://css-tricks.com/the-different-and-modern-ways-to-toggle-content/#aa-styling-the-dialogs-backdrop
@@ -326,13 +323,13 @@
   - https://docs.openvino.ai/2024/notebooks/music-generation-with-output.html
   - https://kube.io/blog/liquid-glass-css-svg
 
-** Flutter
+### Flutter
    1. https://medium.com/@utkuaydogdu01/playing-audio-by-processing-raw-pcm-audio-data-in-flutter-practical-guide-and-best-audio-packages-455dedcd129e
 
 
-* Fun stuff
+## Fun stuff
 
-*** Halloween theme
+### Halloween theme
       - black and purple
       - little pumpkin beats
           - bats
@@ -343,7 +340,7 @@
       - screams
       - zombies
 
-*** April 1st 
+### April 1st 
       - weird theme, weird BPM
       - googley eyes/eye rolls
       - dog barks
@@ -357,13 +354,13 @@
       - left-handed day (everything reversed including ticks i.e. tock-tock-tock-tick)
       - https://www.youtube.com/watch?v=-OG87X6XSWU
 
-*** Pi day
+### Pi day
       - 3.1418:4 time
       - pie beats
       - geometry knob
       - https://www.youtube.com/watch?v=-OG87X6XSWU&pp=ugUEEgJlbg%3D%3D
 
-*** Other
+### Other
       - Footrot Flats (dog chasing sheep - or vice versa, barking)
       - WIP (half erased pencil sketch, coffee stains)
       - PPC (pink pony club theme)

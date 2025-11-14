@@ -59,8 +59,12 @@ cloudflare:  build build-all
 	rm -rf dist/cloudflare.zip
 	rm -rf dist/cloudflare
 	mkdir -p dist/cloudflare
-	rsync -av --exclude='**/.DS_Store' ./html/       dist/cloudflare
-	rsync -av --exclude='**/.DS_Store' ./cloudflare/ dist/cloudflare
+	cp -r html/*       dist/cloudflare/
+	cp -r cloudflare/* dist/cloudflare/
+	rm -f dist/cloudflare/.gitignore
+	rm -f dist/cloudflare/LICENSE
+	rm -f dist/cloudflare/package.json
+	find dist/cloudflare -name ".DS_Store" -delete
 	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/cloudflare/about.html
 
 	cd dist/cloudflare && zip --recurse-paths -FS ../cloudflare.zip . -x ".DS_Store"

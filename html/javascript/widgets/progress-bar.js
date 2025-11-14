@@ -104,10 +104,15 @@ export class ProgressBar extends HTMLElement {
     // ... gradient function
     const g = (colour, x, xʼ) => {
       const startColour = faded(colour, 0)
-      const gradient = ctx.createLinearGradient(x, 0, xʼ, height)
+      const gradient = ctx.createLinearGradient(x, 0, xʼ, 0)
 
       gradient.addColorStop(0, startColour)
       gradient.addColorStop(1, colour)
+
+      ctx.fillStyle = `${faded(colour, 0.05)}`
+      ctx.beginPath()
+      ctx.rect(x, 0, xʼ - x, height)
+      ctx.fill()
 
       ctx.fillStyle = gradient
       ctx.beginPath()
@@ -148,15 +153,45 @@ export class ProgressBar extends HTMLElement {
 }
 
 function faded(colour, alpha) {
-  const match = colour.match(/\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+)/)
+  // rgb(..)
+  {
+    const match = colour.match(/rgb\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+).*/)
 
-  if (!match) {
-    return 'rgba(255,255,255,0)'
-  } else {
-    const [_, r, g, b] = match
+    if (match) {
+      console.log('>>> RGB', { colour }, { match })
+      const [_, r, g, b] = match
 
-    return `rgba(${r}, ${g}, ${b}, ${alpha})`
+      return `rgb(${r}, ${g}, ${b}, ${alpha})`
+    }
   }
+
+  // rgba(..)
+  {
+    const match = colour.match(/rgba\(([0-9]+)\s*,\s*([0-9]+)\s*,\s*([0-9]+).*/)
+
+    if (match) {
+      console.log('>>> RGBA', { colour }, { match })
+      const [_, r, g, b] = match
+
+      return `rgb(${r}, ${g}, ${b}, ${alpha})`
+    }
+  }
+
+  // #xxxxxx
+  {
+    const match = colour.match(/#([0-9a-fA-F]{2})([0-9a-fA-F]{2})([0-9a-fA-F]{2})/)
+
+    if (match) {
+      console.log('>>> HEX', { colour }, { match })
+      const r = parseInt(match[1], 16)
+      const g = parseInt(match[2], 16)
+      const b = parseInt(match[3], 16)
+
+      return `rgb(${r}, ${g}, ${b}, ${alpha})`
+    }
+  }
+
+  return 'rgba(255,255,255,0)'
 }
 
 customElements.define('yam-progress', ProgressBar)

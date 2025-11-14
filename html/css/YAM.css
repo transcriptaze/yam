@@ -482,6 +482,9 @@ toolbar #reset:hover {
 toolbar #settings {
   display: none;
 }
+toolbar #bug {
+  display: none;
+}
 toolbar #wakelock.active img {
   filter: invert(10%) sepia(99%) saturate(5774%) hue-rotate(14deg) brightness(90%) contrast(121%);
 }

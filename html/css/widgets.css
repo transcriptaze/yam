@@ -761,7 +761,7 @@ div.beat.on div.shape {
 }
 
 :host(.component-progress-bar) {
-  background: var(--accent-color, pink);
+  background: var(--accent-color, #c0c0c0);
 }
 :host(.component-progress-bar) div {
   position: relative;
@@ -1678,6 +1678,9 @@ div.playlist-track [popover]:popover-open::backdrop {
 :host(.component-add-tracks) div.tracklist hr {
   margin-left: 32px;
   margin-right: 24px;
+}
+:host(.component-add-tracks) div.tracklist hr.hide {
+  display: none;
 }
 :host(.component-add-tracks) div.tracklist button {
   background: none;

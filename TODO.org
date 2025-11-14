@@ -9,7 +9,7 @@
 *** DONE CI deploy to yam-alpha (cf. https://github.com/transcriptaze/yam/issues/6)
 **** DONE alpha CI build with rollup for Cloudflare
 **** DONE build artifacts for alpha branch
-**** TODO update README images
+**** DONE update README images
 **** TODO Cloudflare yam-alpha page
 **** TODO increase cache expiry in header for _alpha_ branch
 **** TODO standalone Go executable

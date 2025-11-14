@@ -122,7 +122,7 @@ export class AddTracks extends HTMLElement {
     if (count == 0) {
       hr.classList.add('hide')
     } else {
-      hr.classList.remove('hide')      
+      hr.classList.remove('hide')
     }
   }
 

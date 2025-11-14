@@ -10,13 +10,6 @@ YAM is pretty much designed exclusively for use by an _almost but not entirely h
 guitarist without any appreciable musical ability who plays an old (but adored!) Taylor 310e and needs all the
 help he can get. If that description is not you (it probably isn't 😄) then YMMV!
 
-It's available online if you want to try it out:
-
-https://yam-alpha.pages.dev
-
-(or follow the installation instructions [below](#installation) to run your own version).
-
-
 ## Waivers and Demurrers
 
 This is very much a personal project and (currently at least) developed and tested almost exclusively with Google Chrome on a Pixel 5a.

@@ -1,85 +1,85 @@
-* -- TODO --
+# TODO
 
-*** DONE soundsets (cf. https://github.com/transcriptaze/yam/issues/20)
-*** DONE About: build number (cf. https://github.com/transcriptaze/yam/issues/27)
-*** DONE coloured subsections (cf. https://github.com/transcriptaze/yam/issues/8)
-*** DONE '+' button on playlists (cf. https://github.com/transcriptaze/yam/issues/14)
-*** DONE track editor (cf. https://github.com/transcriptaze/yam/issues/2)
-*** DONE make errors visible (cf. https://github.com/transcriptaze/yam/issues/38)
-*** DONE CI deploy to yam-alpha (cf. https://github.com/transcriptaze/yam/issues/6)
-**** DONE alpha CI build with rollup for Cloudflare
-**** DONE build artifacts for alpha branch
-**** DONE update README images
-**** DONE Cloudflare yam-alpha page
-**** DONE increase cache expiry in header for _alpha_ branch
-**** TODO standalone Go executable
+## In Progress
 
-*** TODO loop icon numbers
-**** TODO (?) use large numbers in centre
+- [ ] Alpha release 0.0.0 (cf. https://github.com/transcriptaze/yam/issues/6)
+    - [x] alpha CI build with rollup for Cloudflare
+    - [x] build artifacts for alpha branch
+    - [x] update README images
+    - [x] Cloudflare yam-alpha page
+    - [x] increase cache expiry in header for _alpha_ branch
+    - [x] use rollup'd JS on yam-alpha
+    - [ ] tag & release
 
-*** TODO clicks
-**** TODO generate clicks for count-in
-**** TODO generate clicks for anacrusis (also 3:8, 6:8, 9:8, 12:8)
-**** TODO generate clicks for 5:4
-**** TODO clicks 3:8, 6:8, 9:8 and 12:8, dotted-quarter
-**** TODO not cascading - revert to track clicks or default clicks for time-signature
-**** TODO unit tests
+- [ ] standalone Go executable
 
-*** TODO use realized track
-**** TODO make track UUID private
-**** TODO store in state
-**** TODO rework YAM to use state.track.UUID
-**** TODO reuse state track for widgets
-**** TODO consistently pass the either whole track or the UUID
-      - OR at least stop mixing up track UUID and track
+- [ ] loop icon: use large numbers in centre (?)
 
-*** TODO use realized playlist
-*** TODO connectedCallback: event handler duplication
+- [ ] clicks
+    - [ ] generate clicks for count-in
+    - [ ] generate clicks for anacrusis (also 3:8, 6:8, 9:8, 12:8)
+    - [ ] generate clicks for 5:4
+    - [ ] clicks 3:8, 6:8, 9:8 and 12:8, dotted-quarter
+    - [ ] not cascading - revert to track clicks or default clicks for time-signature
+    - [ ] unit tests
 
-** Fixes
-*** TODO allow BPM's less than 40/greater than 200 in subsections (because of tempo/BPM scaling thing)
-*** TODO Cloudflare (cf. https://github.com/transcriptaze/yam/issues/6)
-*** TODO (maybe) keep selected playlist on import
-*** TODO edit from playlist
-*** TODO use async getters for nested web components
-*** TODO URL - use ?UUID= or ?title= 
-*** TODO URL match on track if playlist not found
-*** TODO 'All Tracks' should not display tracklist
-*** TODO (?) move spacebar toggle into metronome widget
-*** TODO different grip icon
-*** TODO onSave should only update editor title, BPM, etc
-*** TODO playlists loaded from file include deleted playlists
-*** TODO editor: metronome div vertical alignment
-*** TODO editor: role drop down list
-*** TODO portrait/fullscreen: put something (title? logo? yams?) in the 'safe area' at the top
-*** TODO move start/stop/delay to clock
+- [ ] use realized track
+    - [ ] make track UUID private
+    - [ ] store in state
+    - [ ] rework YAM to use state.track.UUID
+    - [ ] reuse state track for widgets
+    - [ ] consistently pass the either whole track or the UUID
+        - OR at least stop mixing up track UUID and track
 
-*** TODO automatically open editor on new playlist
-*** TODO playlists: replace playlist.index with an ordered list
-*** TODO delete track in 'All Tracks' deletes track from all playlists and DB
+- [ ] use realized playlist
+- [ ] connectedCallback: event handler duplication
 
-*** TODO 'change' events should all be CustomEvents
-*** TODO web components: bubble events
-*** TODO web-component box-sizing fixes
-*** TODO playlist: fade-out top and bottom of scrollable list
-*** TODO models.playlist CRUD interface
+## Fixes
+- [ ] allow BPM's less than 40/greater than 200 in subsections (because of tempo/BPM scaling thing)
+- [ ] Cloudflare (cf. https://github.com/transcriptaze/yam/issues/6)
+- [ ] (maybe) keep selected playlist on import
+- [ ] edit from playlist
+- [ ] use async getters for nested web components
+- [ ] URL - use ?UUID= or ?title= 
+- [ ] URL match on track if playlist not found
+- [ ] 'All Tracks' should not display tracklist
+- [ ] (?) move spacebar toggle into metronome widget
+- [ ] different grip icon
+- [ ] onSave should only update editor title, BPM, etc
+- [ ] playlists loaded from file include deleted playlists
+- [ ] editor: metronome div vertical alignment
+- [ ] editor: role drop down list
+- [ ] portrait/fullscreen: put something (title? logo? yams?) in the 'safe area' at the top
+- [ ] move start/stop/delay to clock
 
-*** TODO 6:8, dotted quarter: intermediate clicks @60BPM
-*** TODO 6:8, quarter notes
-*** TODO 6:8, eighth notes
-*** TODO 3:4 dotted quarter notes
-*** TODO 2:2 time
-*** TODO minimum click subinterval 125ms
-*** TODO scale up SVG images (too small -> precision issues)
-*** TODO clock: circular time
-*** TODO trim height of 'play' icon
-*** TODO use different font/colour for track that is in playlist (so that you know you are editing a playlist item)
-*** TODO resize knob/fix SVG overflow
-*** TODO rework state logic as FSM
+- [ ] automatically open editor on new playlist
+- [ ] playlists: replace playlist.index with an ordered list
+- [ ] delete track in 'All Tracks' deletes track from all playlists and DB
+
+- [ ] 'change' events should all be CustomEvents
+- [ ] web components: bubble events
+- [ ] web-component box-sizing fixes
+- [ ] playlist: fade-out top and bottom of scrollable list
+- [ ] models.playlist CRUD interface
+
+- [ ] 6:8, dotted quarter: intermediate clicks @60BPM
+- [ ] 6:8, quarter notes
+- [ ] 6:8, eighth notes
+- [ ] 3:4 dotted quarter notes
+- [ ] 2:2 time
+- [ ] minimum click subinterval 125ms
+- [ ] scale up SVG images (too small -> precision issues)
+- [ ] clock: circular time
+- [ ] trim height of 'play' icon
+- [ ] use different font/colour for track that is in playlist (so that you know you are editing a playlist item)
+- [ ] resize knob/fix SVG overflow
+- [ ] rework state logic as FSM
       - seperate web components from logic
       - tests
-*** TODO fix page layout for when it gets really squashed
-*** TODO landscape+mobile
+- [ ] TODO fix page layout for when it gets really squashed
+- [ ] TODO landscape+mobile
+
+## Todo
 
 ** Reset
 *** TODO red if next tap will reset to defaults

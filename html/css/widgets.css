@@ -2388,9 +2388,6 @@ div.playlist-track [popover]:popover-open::backdrop {
   font-style: italic;
   color: #b0b0b0;
 }
-:host(.component-section-mm) input:invalid {
-  color: red;
-}
 :host(.component-section-mm) input:disabled {
   color: #a0a0a0;
 }
@@ -2404,11 +2401,14 @@ div.playlist-track [popover]:popover-open::backdrop {
   font-weight: normal;
   text-align: left;
 }
+:host(.component-section-mm) input#BPM:invalid {
+  color: red;
+}
 :host(.component-section-mm) input#bpm {
   min-width: 0em;
   height: fit-content;
   field-sizing: content;
-  color: #ff0000;
+  color: #808080;
   font-size: 12px;
   font-style: italic;
   font-weight: normal;

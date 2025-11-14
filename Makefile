@@ -15,6 +15,7 @@ all: test      \
      coverage
 
 clean:
+	rm -rf dist
 
 format: 
 # 	find html -name "*.html"          -exec npx prettier --write {} +
@@ -43,19 +44,20 @@ lint:
 
 build-all: test vet lint
 
-rollup:
-	npm run package
-
-release: build-all rollup
+package: build-all
 	rm -rf dist/yam
-	mkdir -p dist/yam
-	rsync -av --exclude='**/.DS_Store' ./httpd.*      dist/yam
-	rsync -av --exclude='**/.DS_Store' ./dist/rollup  dist/yam/html
-	tar --directory=dist/yam -cvzf dist/yam.tar.gz .
-	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/yam/html/rollup/about.html
+	npm run package
+	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/yam/html/about.html
+
+release: package
 	cd dist/yam && zip --recurse-paths ../yam.zip .
 
-cloudflare:  build
+cloudflare: build
+	rm -rf dist/cloudflare
+	npm run cloudflare
+	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/cloudflare/about.html
+
+cloudflare-dev:  build
 	rm -rf dist/cloudflare.zip
 	rm -rf dist/cloudflare
 	mkdir -p dist/cloudflare
@@ -79,6 +81,10 @@ sass:
 run: build
 	python3 httpd.py
 
-run-rollup: build
-	python3 httpd.py --host='0.0.0.0' --port=8080 --dir='dist/rollup'
+run-yam: package
+	python3 httpd.py --host='0.0.0.0' --port=8118 --dir='dist/yam'
+
+run-cloudflare: cloudflare
+	python3 httpd.py --host='0.0.0.0' --port=8118 --dir='dist/cloudflare'
+
 

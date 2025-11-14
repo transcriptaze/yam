@@ -2,10 +2,6 @@ name: cloudflare
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ "alpha" ]
-  pull_request:
-    branches: [ "alpha" ]
 
 env:
   CARGO_TERM_COLOR: always

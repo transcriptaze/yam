@@ -2,14 +2,7 @@
 
 ## In Progress
 
-- [x] Alpha release 0.0.0 (cf. https://github.com/transcriptaze/yam/issues/6)
-    - [x] alpha CI build with rollup for Cloudflare
-    - [x] build artifacts for alpha branch
-    - [x] update README images
-    - [x] Cloudflare yam-alpha page
-    - [x] increase cache expiry in header for _alpha_ branch
-    - [x] use rollup'd JS on yam-alpha
-    - [x] tag & release
+- [ ] standalone Go executable (cf. https://github.com/transcriptaze/yam/issues/39)
 
 - (?) loop icon: use large numbers in centre
 
@@ -322,6 +315,7 @@
   - https://docs.openvino.ai/2024/notebooks/stable-audio-with-output.html
   - https://docs.openvino.ai/2024/notebooks/music-generation-with-output.html
   - https://kube.io/blog/liquid-glass-css-svg
+  - https://github.com/lunarring/lunar_tools
 
 ### Flutter
    1. https://medium.com/@utkuaydogdu01/playing-audio-by-processing-raw-pcm-audio-data-in-flutter-practical-guide-and-best-audio-packages-455dedcd129e

@@ -67,7 +67,7 @@ HTTP server that includes Cross Origin Resources Sharing support. Simply downloa
 the most recent [Alpha release](https://github.com/transcriptaze/yam/actions/workflows/alpha.yml) build - and host the _html_ folder on
 a web server of your choice.
 
-The zip file includes scripts for the _Python_ and _NodeJS_ built-in HTTP servers, but the web app is entirely static so whatever
+The zip file includes scripts for the _Python_, _NodeJS_ and _Go_ built-in HTTP servers, but the web app is entirely static so whatever
 you have will probably work as long as CORS is enabled and has the following headers:
 ```
   Access-Control-Allow-Origin: *
@@ -79,13 +79,24 @@ you have will probably work as long as CORS is enabled and has the following hea
 ### Python
 To run the built-in _Python_ HTTP server:
 ```
-python3 httpd.py
+python3 yam.py
 ```
 
 ### NodeJS
 To run the built-in _NodeJS_ HTTP server:
 ```
-node httpd.mjs
+node yam.mjs
+```
+
+### Go
+To run the built-in _Go_ HTTP server:
+```
+go run yam.go
+```
+or
+```
+go build -o bin/
+./bin/yam
 ```
 
 ## License

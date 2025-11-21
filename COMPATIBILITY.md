@@ -8,7 +8,7 @@ At minimum, the browser must support _WebAudio_ and a reasonably recent implemen
 |------------|----------------|------------------|--------------------------------------------|
 | Chrome     | (recent'ish)   | **Ok**           |                                            |
 | Firefox    | (latest)       | **Mostly ok**    | _Do NOT ask about the layout hacks_        |
-| Safari     | (old)          | **Broken**       | _sigh_                                     |
+| Safari     | (latest)       | **Ok**           | _Some minor layout issues_                 |
 | Opera      | (latest)       | **Ok**           |                                            |
 
 

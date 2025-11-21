@@ -79,12 +79,12 @@ sass:
 	npx sass --watch sass:html/css --no-source-map  --style=expanded
 
 run: build
-	python3 httpd.py
+	python3 yam.py
 
 run-yam: package
-	python3 httpd.py --host='0.0.0.0' --port=8118 --dir='dist/yam'
+	python3 yam.py --host='0.0.0.0' --port=8118 --dir='dist/yam'
 
 run-cloudflare: cloudflare
-	python3 httpd.py --host='0.0.0.0' --port=8118 --dir='dist/cloudflare'
+	python3 yam.py --host='0.0.0.0' --port=8118 --dir='dist/cloudflare'
 
 

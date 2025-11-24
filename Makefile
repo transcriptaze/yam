@@ -95,5 +95,4 @@ go:
 	go run yam.go
 
 go-help:
-	go fmt yam.go
 	go run yam.go --help

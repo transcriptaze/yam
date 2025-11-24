@@ -16,7 +16,7 @@
         - [ ] ARM7
     - [ ] about.html version number
     - [ ] README
-    - [ ] CHANGELOG
+    - [x] CHANGELOG
 
 - (?) loop icon: use large numbers in centre
 

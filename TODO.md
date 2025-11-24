@@ -5,8 +5,8 @@
 - [ ] standalone Go executable (cf. https://github.com/transcriptaze/yam/issues/39)
     - [x] embedded HTML
     - [x] external HTML
+    - [x] --help
     - [ ] CORS
-    - [ ] --help
     - [ ] dist
         - [ ] MacOS Intel
         - [ ] MacOS ARM

@@ -29,7 +29,7 @@ func main() {
 	dir := ""
 
 	flag.IntVar(&port, "port", port, "HTTP port")
-	flag.StringVar(&dir, "html", "", "HTML folder (defaults to embedded HTML)")
+	flag.StringVar(&dir, "html", "", "optional HTML folder (defaults to serving embedded HTML)")
 	flag.Parse()
 
 	if dir != "" {

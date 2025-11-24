@@ -1,15 +1,18 @@
 package main
 
 import (
+	"embed"
 	"fmt"
 	"io/fs"
+	"log"
+	"log/slog"
 	"net/http"
 	"os"
 	"strings"
-	"log"
-	"log/slog"
 )
 
+//go:embed html
+var html embed.FS
 
 type httpdFS struct {
 	http.FileSystem
@@ -20,12 +23,22 @@ type httpdFile struct {
 }
 
 func main() {
-	port := 8118
+	port := "8118"
+	if os.Getenv("PORT") != "" {
+		port = os.Getenv("PORT")
+	}
 
-	run(port, os.DirFS("./html"))
+	// run(port, os.DirFS("./html"))
+
+	// ... run with embedded FS
+	if dir, err := fs.Sub(html, "html"); err != nil {
+		fatalf("%v", err)
+	} else {
+		run(port, dir)
+	}
 }
 
-func run(port int, html fs.FS) {
+func run(port string, html fs.FS) {
 	infof("initialising")
 
 	// ... initialise HTTP server
@@ -33,16 +46,7 @@ func run(port int, html fs.FS) {
 		http.FS(html),
 	}
 
-	// http.Handle("/css/", http.FileServer(fsys))
-	// http.Handle("/fonts/", http.FileServer(fsys))
-	// http.Handle("/images/", http.FileServer(fsys))
-	// http.Handle("/javascript/", http.FileServer(fsys))
-	// http.Handle("/favicon.ico", http.FileServer(fsys))
 	http.Handle("/", http.FileServer(fsys))
-
-	// if os.Getenv("PORT") != "" {
-	// 	port = os.Getenv("PORT")
-	// }
 
 	infof("listening on port %v", port)
 	fatalf("%v", http.ListenAndServe(fmt.Sprintf(":%v", port), nil))

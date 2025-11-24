@@ -3,6 +3,19 @@
 ## In Progress
 
 - [ ] standalone Go executable (cf. https://github.com/transcriptaze/yam/issues/39)
+    - [x] embedded HTML
+    - [ ] external HTML
+    - [ ] CORS
+    - [ ] dist
+        - [ ] MacOS Intel
+        - [ ] MacOS ARM
+        - [ ] Linux
+        - [ ] Windows
+        - [ ] ARM6
+        - [ ] ARM7
+    - [ ] about.html version number
+    - [ ] README
+    - [ ] CHANGELOG
 
 - (?) loop icon: use large numbers in centre
 

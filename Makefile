@@ -43,6 +43,9 @@ lint:
 	@echo "lint: nothing to do"
 
 build-all: test vet lint
+	mkdir -p bin
+	go fmt          yam.go
+	go build -o bin yam.go
 
 package: build-all
 	rm -rf dist/yam
@@ -88,3 +91,6 @@ run-cloudflare: cloudflare
 	python3 yam.py --host='0.0.0.0' --port=8118 --dir='dist/cloudflare'
 
 
+go:
+	go fmt yam.go
+	go run yam.go

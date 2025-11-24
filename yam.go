@@ -2,43 +2,46 @@ package main
 
 import (
 	"embed"
+	"flag"
 	"fmt"
 	"io/fs"
 	"log"
 	"log/slog"
 	"net/http"
 	"os"
+	"strconv"
 	"strings"
 )
 
 //go:embed html
 var html embed.FS
 
-type httpdFS struct {
-	http.FileSystem
-}
-
-type httpdFile struct {
-	http.File
-}
-
 func main() {
-	port := "8118"
-	if os.Getenv("PORT") != "" {
-		port = os.Getenv("PORT")
+	port := 8118
+	if p := os.Getenv("PORT"); p != "" {
+		if v, err := strconv.ParseInt(p, 10, 32); err != nil {
+			warnf("invalid PORT environment variable %v (%v)", p, err)
+		} else {
+			port = int(v)
+		}
 	}
 
-	// run(port, os.DirFS("./html"))
+	dir := ""
 
-	// ... run with embedded FS
-	if dir, err := fs.Sub(html, "html"); err != nil {
+	flag.IntVar(&port, "port", port, "HTTP port")
+	flag.StringVar(&dir, "html", "", "HTML folder (defaults to embedded HTML)")
+	flag.Parse()
+
+	if dir != "" {
+		run(port, os.DirFS(dir))
+	} else if embedded, err := fs.Sub(html, "html"); err != nil {
 		fatalf("%v", err)
 	} else {
-		run(port, dir)
+		run(port, embedded)
 	}
 }
 
-func run(port string, html fs.FS) {
+func run(port int, html fs.FS) {
 	infof("initialising")
 
 	// ... initialise HTTP server
@@ -59,10 +62,22 @@ func infof(format string, args ...any) {
 	slog.Info(msg)
 }
 
+func warnf(format string, args ...any) {
+	f := fmt.Sprintf("%-8v %v", "YAM", format)
+	msg := fmt.Sprintf(f, args...)
+
+	slog.Warn(msg)
+}
+
 func fatalf(format string, args ...any) {
 	f := fmt.Sprintf("%-8v %v", "YAM", format)
 
 	log.Fatalf(f, args...)
+}
+
+// --- httpdFS ---
+type httpdFS struct {
+	http.FileSystem
 }
 
 func (fs httpdFS) Open(name string) (http.File, error) {
@@ -79,6 +94,11 @@ func (fs httpdFS) Open(name string) (http.File, error) {
 	}
 
 	return httpdFile{f}, err
+}
+
+// --- httpdFile ---
+type httpdFile struct {
+	http.File
 }
 
 func (f httpdFile) Readdir(N int) (fis []os.FileInfo, err error) {

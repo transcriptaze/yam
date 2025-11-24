@@ -34,10 +34,10 @@ It's also _pre-alpha_ i.e. expect the code, design, architecture, everything to 
 
 | Platform    | Browser    | Version        | Ok               | Notes                                      |
 |-------------|------------|----------------|------------------|--------------------------------------------|
-| **MacOs**   | Chrome     | (recent'ish)   | Yes              |                                            |
-|             | Firefox    | (latest)       | Yes              | _Do NOT ask about the layout hacks_        |
-|             | Safari     | (old)          | No               |                                            |
-|             | Opera      | (latest)       | Yes              |                                            |
+| **MacOs**   | Chrome     | _latest_       | Yes              |                                            |
+|             | Firefox    | _latest_       | Yes              | _Do NOT ask about the layout hacks_        |
+|             | Safari     | _latest_       | Yes              | _Some minor layout glitches_               |
+|             | Opera      | _latest_       | Yes              |                                            |
 |             |            |                |                  |                                            |
 | **Windows** | Chrome     |                |                  |                                            |
 |             | Firefox    |                |                  |                                            |
@@ -48,9 +48,9 @@ It's also _pre-alpha_ i.e. expect the code, design, architecture, everything to 
 |             | Firefox    |                |                  |                                            |
 |             | Opera      |                |                  |                                            |
 |             |            |                |                  |                                            |
-| **Android** | Chrome     | (latest)       | Yes              |                                            |
-|             | Firefox    | (latest)       | Mostly           | _(as above)_                               |
-|             | Edge       | (latest)       | Yes              |                                            |
+| **Android** | Chrome     | _latest_       | Yes              |                                            |
+|             | Firefox    | _latest_       | Mostly           | _(as above)_                               |
+|             | Edge       | _latest_       | Yes              |                                            |
 |             | Opera      |                |                  |                                            |
 |             | Opera Mini |                | No               | _No WebAudio support_                      |
 |             |            |                |                  |                                            |
@@ -67,7 +67,7 @@ HTTP server that includes Cross Origin Resources Sharing support. Simply downloa
 the most recent [Alpha release](https://github.com/transcriptaze/yam/actions/workflows/alpha.yml) build - and host the _html_ folder on
 a web server of your choice.
 
-The zip file includes scripts for the _Python_ and _NodeJS_ built-in HTTP servers, but the web app is entirely static so whatever
+The zip file includes scripts for the _Python_, _NodeJS_ and _Go_ built-in HTTP servers, but the web app is entirely static so whatever
 you have will probably work as long as CORS is enabled and has the following headers:
 ```
   Access-Control-Allow-Origin: *
@@ -79,13 +79,53 @@ you have will probably work as long as CORS is enabled and has the following hea
 ### Python
 To run the built-in _Python_ HTTP server:
 ```
-python3 httpd.py
+python3 yam.py
 ```
 
 ### NodeJS
 To run the built-in _NodeJS_ HTTP server:
 ```
-node httpd.mjs
+node yam.mjs
+```
+
+### Go
+To run the built-in _Go_ HTTP server:
+```
+go run yam.go
+```
+or
+```
+go build -o bin/
+./bin/yam
+```
+
+## Development
+
+### Requirements
+
+- NodeJS v24.11.1+
+
+### Build
+
+1. Clone the repository:
+```
+git clone https://github.com/transcriptaze/yam.git
+cd yam
+```
+
+2. Install the NodeJS development modules:
+
+- _prettier_
+- _eslint_
+- _sass_
+
+```
+npm install
+```
+
+3. Build and run:
+```
+make run
 ```
 
 ## License

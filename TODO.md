@@ -6,7 +6,7 @@
     - [x] embedded HTML
     - [x] external HTML
     - [x] --help
-    - [ ] CORS
+    - [x] CORS
     - [ ] dist
         - [ ] MacOS Intel
         - [ ] MacOS ARM

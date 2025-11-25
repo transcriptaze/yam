@@ -44,15 +44,27 @@ func main() {
 func run(port int, html fs.FS) {
 	infof("initialising")
 
-	// ... initialise HTTP server
 	fsys := httpdFS{
 		http.FS(html),
 	}
 
-	http.Handle("/", http.FileServer(fsys))
+	handler := CORS(http.FileServer(fsys))
+	address := fmt.Sprintf(":%v", port)
 
 	infof("listening on port %v", port)
-	fatalf("%v", http.ListenAndServe(fmt.Sprintf(":%v", port), nil))
+	fatalf("%v", http.ListenAndServe(address, handler))
+}
+
+func CORS(handler http.Handler) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, rq *http.Request) {
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		w.Header().Set("Access-Control-Allow-Methods", "GET, OPTIONS")
+		w.Header().Set("Access-Control-Allow-Headers", "Accept, Content-Type, Content-Length, Accept-Encoding, X-CSRF-Token, Authorization")
+		w.Header().Set("Cross-Origin-Embedder-Policy", "require-corp")
+		w.Header().Set("Cross-Origin-Opener-Policy", "same-origin")
+
+		handler.ServeHTTP(w, rq)
+	})
 }
 
 func infof(format string, args ...any) {

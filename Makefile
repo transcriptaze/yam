@@ -42,18 +42,29 @@ vet:
 lint:
 	@echo "lint: nothing to do"
 
-build-all: test vet lint
-	mkdir -p bin
-	go fmt          yam.go
-	go build -o bin yam.go
+build-all: test vet lint go
+	mkdir -p dist/yam/linux
+	mkdir -p dist/yam/arm
+	mkdir -p dist/yam/arm7
+	mkdir -p dist/yam/arm6
+	mkdir -p dist/yam/darwin-x64
+	mkdir -p dist/yam/darwin-arm64
+	mkdir -p dist/yam/windows
+	env GOOS=linux   GOARCH=amd64         GOWORK=off go build -trimpath -o dist/yam/linux        yam.go
+	env GOOS=linux   GOARCH=arm64         GOWORK=off go build -trimpath -o dist/yam/arm          yam.go
+	env GOOS=linux   GOARCH=arm   GOARM=7 GOWORK=off go build -trimpath -o dist/yam/arm7         yam.go
+	env GOOS=linux   GOARCH=arm   GOARM=6 GOWORK=off go build -trimpath -o dist/yam/arm6         yam.go
+	env GOOS=darwin  GOARCH=amd64         GOWORK=off go build -trimpath -o dist/yam/darwin-x64   yam.go
+	env GOOS=darwin  GOARCH=arm64         GOWORK=off go build -trimpath -o dist/yam/darwin-arm64 yam.go
+	env GOOS=windows GOARCH=amd64         GOWORK=off go build -trimpath -o dist/yam/windows      yam.go
 
 package: build-all
 	rm -rf dist/yam
 	npm run package
-	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/yam/about.html
+	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/yam/html/about.html
 
-release: package
-	cd dist/yam && zip --recurse-paths ../yam.zip .
+release: package go-build-all
+	cd dist/yam/html && zip --recurse-paths ../yam.zip .
 
 cloudflare: build
 	rm -rf dist/cloudflare
@@ -85,14 +96,21 @@ run: build
 	python3 yam.py
 
 run-yam: package
-	python3 yam.py --host='0.0.0.0' --port=8118 --dir='dist/yam'
+	python3 yam.py --host='0.0.0.0' --port=8118 --dir='dist/yam/html'
 
 run-cloudflare: cloudflare
 	python3 yam.py --host='0.0.0.0' --port=8118 --dir='dist/cloudflare'
 
 go:
+	mkdir -p bin
 	go fmt yam.go
-	go run yam.go
+	go build -o bin
 
-go-help:
-	go run yam.go --help
+go-build-all:
+
+go-help: go
+	./bin/yam --help
+
+go-run: go
+	./bin/yam
+

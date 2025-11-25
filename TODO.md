@@ -7,13 +7,13 @@
     - [x] external HTML
     - [x] --help
     - [x] CORS
-    - [ ] dist
-        - [ ] MacOS Intel
-        - [ ] MacOS ARM
-        - [ ] Linux
-        - [ ] Windows
-        - [ ] ARM6
-        - [ ] ARM7
+    - [x] dist
+        - [x] MacOS Intel
+        - [x] MacOS ARM
+        - [x] Linux
+        - [x] Windows
+        - [x] ARM6
+        - [x] ARM7
     - [ ] about.html version number
     - [ ] README
     - [x] CHANGELOG

@@ -1,11 +1,7 @@
-name: alpha
+name: debug
 
 on:
   workflow_dispatch:
-  push:
-    branches: [ "alpha" ]
-  pull_request:
-    branches: [ "alpha" ]
 
 jobs:
   build:

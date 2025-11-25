@@ -32,41 +32,41 @@ jobs:
     - name: Upload Linux artifact
       uses: actions/upload-artifact@v4
       with:
-        path: dist/yam/linux/yam
+        path: dist/yam/linux
         name: yam_linux-alpha
 
     - name: Upload MacOS Intel artifact
       uses: actions/upload-artifact@v4
       with:
-        path: dist/yam/darwin-x64/yam
+        path: dist/yam/darwin-x64
         name: yam_darwin-x64-alpha
 
     - name: Upload MacOS Apple silicon artifact
       uses: actions/upload-artifact@v4
       with:
-        path: dist/yam/darwin-arm64/yam
+        path: dist/yam/darwin-arm64
         name: yam_darwin-arm64-alpha
 
     - name: Upload Windows artifact
       uses: actions/upload-artifact@v4
       with:
-        path: dist/yam/windows/yam.exe
-        name: yam_windows-alpha.exe
+        path: dist/yam/windows
+        name: yam_windows-alpha
 
     - name: Upload ARM artifact
       uses: actions/upload-artifact@v4
       with:
-        path: dist/yam/arm/yam
+        path: dist/yam/arm
         name: yam_arm-alpha
 
     - name: Upload ARMv7 artifact
       uses: actions/upload-artifact@v4
       with:
-        path: dist/yam/arm7/yam
+        path: dist/yam/arm7
         name: yam_arm7-alpha
 
     - name: Upload ARMv6 artifact
       uses: actions/upload-artifact@v4
       with:
-        path: dist/yam/arm6/yam
+        path: dist/yam/arm6
         name: yam_arm6-alpha

@@ -50,20 +50,20 @@ build-all: test vet lint go
 	mkdir -p dist/yam/darwin-x64
 	mkdir -p dist/yam/darwin-arm64
 	mkdir -p dist/yam/windows
-	env GOOS=linux   GOARCH=amd64         GOWORK=off go build -trimpath -o dist/yam/linux        yam.go
-	env GOOS=linux   GOARCH=arm64         GOWORK=off go build -trimpath -o dist/yam/arm          yam.go
-	env GOOS=linux   GOARCH=arm   GOARM=7 GOWORK=off go build -trimpath -o dist/yam/arm7         yam.go
-	env GOOS=linux   GOARCH=arm   GOARM=6 GOWORK=off go build -trimpath -o dist/yam/arm6         yam.go
-	env GOOS=darwin  GOARCH=amd64         GOWORK=off go build -trimpath -o dist/yam/darwin-x64   yam.go
-	env GOOS=darwin  GOARCH=arm64         GOWORK=off go build -trimpath -o dist/yam/darwin-arm64 yam.go
-	env GOOS=windows GOARCH=amd64         GOWORK=off go build -trimpath -o dist/yam/windows      yam.go
+	env GOOS=linux   GOARCH=amd64         GOWORK=off go build -trimpath -o dist/yam/linux        ./...
+	env GOOS=linux   GOARCH=arm64         GOWORK=off go build -trimpath -o dist/yam/arm          ./...
+	env GOOS=linux   GOARCH=arm   GOARM=7 GOWORK=off go build -trimpath -o dist/yam/arm7         ./...
+	env GOOS=linux   GOARCH=arm   GOARM=6 GOWORK=off go build -trimpath -o dist/yam/arm6         ./...
+	env GOOS=darwin  GOARCH=amd64         GOWORK=off go build -trimpath -o dist/yam/darwin-x64   ./...
+	env GOOS=darwin  GOARCH=arm64         GOWORK=off go build -trimpath -o dist/yam/darwin-arm64 ./...
+	env GOOS=windows GOARCH=amd64         GOWORK=off go build -trimpath -o dist/yam/windows      ./...
 
 package: build-all
 	rm -rf dist/yam
 	npm run package
 	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/yam/html/about.html
 
-release: package go-build-all
+release: package
 	cd dist/yam/html && zip --recurse-paths ../yam.zip .
 
 cloudflare: build
@@ -105,8 +105,6 @@ go:
 	mkdir -p bin
 	go fmt yam.go
 	go build -o bin
-
-go-build-all:
 
 go-help: go
 	./bin/yam --help

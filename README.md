@@ -8,7 +8,7 @@ Just one more _WebAudio_ metronome web app to add to the many, many other metron
 
 YAM is pretty much designed exclusively for use by an _almost but not entirely ham-fisted_ acoustic fingerstyle
 guitarist without any appreciable musical ability who plays an old (but adored!) Taylor 310e and needs all the
-help he can get. If that description is not you (it probably isn't 😄) then YMMV!
+help they can get. If that description is not you (it probably isn't 😄) then YMMV!
 
 It's available online if you want to try it out:
 
@@ -22,7 +22,7 @@ https://yam-alpha.pages.dev
 This is very much a personal project and (currently at least) developed and tested almost exclusively with Google Chrome on a Pixel 5a.
 It will be a pleasant surprise and/or minor miracle if it works at all on anything else but you never know.
 
-It's also _pre-alpha_ i.e. expect the code, design, architecture, everything to change **often**.
+It's also in _alpha_ i.e. expect the code, design, architecture, everything to change **often**.
 
 
 ## Screenshots
@@ -51,7 +51,7 @@ It's also _pre-alpha_ i.e. expect the code, design, architecture, everything to 
 | **Android** | Chrome     | _latest_       | Yes              |                                            |
 |             | Firefox    | _latest_       | Mostly           | _(as above)_                               |
 |             | Edge       | _latest_       | Yes              |                                            |
-|             | Opera      |                |                  |                                            |
+|             | Opera      | _latest_       | Yes              |                                            |
 |             | Opera Mini |                | No               | _No WebAudio support_                      |
 |             |            |                |                  |                                            |
 | **iOS**     | Firefox    |                |                  |                                            |
@@ -64,8 +64,8 @@ It's also _pre-alpha_ i.e. expect the code, design, architecture, everything to 
 
 The web app is packaged as a zip file that includes the HTML, images, audio and rollup'd Javascript that can be served by almost any basic
 HTTP server that includes Cross Origin Resources Sharing support. Simply download and unpack the _yam_alpha.zip_ file from the most from
-the most recent [Alpha release](https://github.com/transcriptaze/yam/actions/workflows/alpha.yml) build - and host the _html_ folder on
-a web server of your choice.
+the most recent [release](https://github.com/transcriptaze/yam/releases) build - and host the _html_ folder on a web server of your
+choice.
 
 The zip file includes scripts for the _Python_, _NodeJS_ and _Go_ built-in HTTP servers, but the web app is entirely static so whatever
 you have will probably work as long as CORS is enabled and has the following headers:
@@ -75,6 +75,18 @@ you have will probably work as long as CORS is enabled and has the following hea
   Cross-Origin-Embedder-Policy: require-corp
   Cross-Origin-Opener-Policy: same-origin
 ```
+
+_Development_ versions which include unreleased functionality can be downloaded from the most recent build on the _alpha_ branch
+[_build_ page](https://github.com/transcriptaze/yam/actions/workflows/alpha.yml). The _alpha_ build includes:
+- the HTML _zip_ file
+- executables for 
+    - MacOS (Intel and Apple Silicon)
+    - Linux
+    - Windows
+    - RaspberryPi (ARM6 and ARM7)
+
+The HTML, images, etc are embedded in the executable - so simply running the executable starts a functional YAM HTTP server.
+
 
 ### Python
 To run the built-in _Python_ HTTP server:
@@ -95,7 +107,8 @@ go run yam.go
 ```
 or
 ```
-go build -o bin/
+mkdir -p bin
+go build -o bin ./...
 ./bin/yam
 ```
 

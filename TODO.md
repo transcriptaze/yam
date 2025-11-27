@@ -2,14 +2,14 @@
 
 ## In Progress
 
-- [ ] standalone Go executable (cf. https://github.com/transcriptaze/yam/issues/39)
+- [x] standalone Go executable (cf. https://github.com/transcriptaze/yam/issues/39)
     - [x] embedded HTML
     - [x] external HTML
     - [x] --help
     - [x] CORS
     - [x] dist
     - [x] about.html version number
-    - [ ] README
+    - [x] README
     - [x] CHANGELOG
 
 - (?) loop icon: use large numbers in centre

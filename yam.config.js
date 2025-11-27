@@ -4,23 +4,23 @@ export default [
   {
     input: 'html/javascript/YAM.js',
     output: {
-      file: 'dist/yam/javascript/YAM.js',
+      file: 'dist/yam/html/javascript/YAM.js',
       format: 'esm',
       sourcemap: false,
     },
     plugins: [
       copy({
         targets: [
-          { src: 'html/index.html',       dest: 'dist/yam' },
-          { src: 'html/about.html',       dest: 'dist/yam' },
-          { src: 'html/settings.html',    dest: 'dist/yam' },
-          { src: 'html/unsupported.html', dest: 'dist/yam' },
-          { src: 'html/favicon.png',      dest: 'dist/yam' },
-          { src: 'html/favicon.ico',      dest: 'dist/yam' },
-          { src: 'html/css/**/*',         dest: 'dist/yam/css' },
-          { src: 'html/fonts/**/*',       dest: 'dist/yam/fonts' },
-          { src: 'html/images/**/*',      dest: 'dist/yam/images' },
-          { src: 'html/audio/**/*',       dest: 'dist/yam/audio' },
+          { src: 'html/index.html',       dest: 'dist/yam/html' },
+          { src: 'html/about.html',       dest: 'dist/yam/html' },
+          { src: 'html/settings.html',    dest: 'dist/yam/html' },
+          { src: 'html/unsupported.html', dest: 'dist/yam/html' },
+          { src: 'html/favicon.png',      dest: 'dist/yam/html' },
+          { src: 'html/favicon.ico',      dest: 'dist/yam/html' },
+          { src: 'html/css/**/*',         dest: 'dist/yam/html/css' },
+          { src: 'html/fonts/**/*',       dest: 'dist/yam/html/fonts' },
+          { src: 'html/images/**/*',      dest: 'dist/yam/html/images' },
+          { src: 'html/audio/**/*',       dest: 'dist/yam/html/audio' },
         ],
         copyOnce: true,
       }),
@@ -30,7 +30,7 @@ export default [
   {
     input: 'html/javascript/widgets/widgets.js',
     output: {
-      file: 'dist/yam/javascript/widgets/widgets.js',
+      file: 'dist/yam/html/javascript/widgets/widgets.js',
       format: 'esm',
       sourcemap: false,
     },
@@ -39,7 +39,7 @@ export default [
   {
     input: 'html/javascript/audio/worklets/worklet.js',
     output: {
-      file: 'dist/yam/javascript/audio/worklets/worklet.js',
+      file: 'dist/yam/html/javascript/audio/worklets/worklet.js',
       format: 'esm',
       sourcemap: false,
     },

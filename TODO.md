@@ -8,13 +8,7 @@
     - [x] --help
     - [x] CORS
     - [x] dist
-        - [x] MacOS Intel
-        - [x] MacOS ARM
-        - [x] Linux
-        - [x] Windows
-        - [x] ARM6
-        - [x] ARM7
-    - [ ] about.html version number
+    - [x] about.html version number
     - [ ] README
     - [x] CHANGELOG
 

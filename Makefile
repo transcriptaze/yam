@@ -104,7 +104,7 @@ run-cloudflare: cloudflare
 go:
 	mkdir -p bin
 	go fmt yam.go
-	go build -o bin
+	go build -ldflags "-X main.BUILD=$(BUILD)" -o bin
 
 go-help: go
 	./bin/yam --help

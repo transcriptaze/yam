@@ -68,6 +68,7 @@ export const EVENTS = {
   MUTE_TRACK: 'mute-track',
   DELETE_TRACK: 'delete-track',
   NEW_TRACK: 'new-track',
+  RANDOM_TRACK: 'random-track',
 
   EDIT_SAVE: 'edit-save',
   SECTION_TIME_SIGNATURE_CHANGE: 'section-time-signature-change',

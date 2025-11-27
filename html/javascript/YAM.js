@@ -390,6 +390,7 @@ function rewire() {
   widgets.playlists.addEventListener(EVENTS.MUTE_TRACK, (e) => onMute(e))
   widgets.playlists.addEventListener(EVENTS.DELETE_TRACK, (e) => onTrackDelete(e))
   widgets.playlists.addEventListener(EVENTS.NEW_TRACK, (e) => onTrackNew(e))
+  widgets.playlists.addEventListener(EVENTS.RANDOM_TRACK, (e) => onTrackRandom(e))
 
   widgets.editor.addEventListener(EVENTS.EDIT_SAVE, (e) => onEdited(e))
 
@@ -713,6 +714,42 @@ function onTrackNew() {
   } catch (err) {
     onError(err)
   }
+}
+
+function onTrackRandom() {
+  console.log('... onTrackRandom')
+
+  // try {
+  //   const object = {
+  //     BPM: state.BPM,
+  //     timeSignature: state.timeSignature,
+  //     pulse: state.pulse,
+  //   }
+  //
+  //   const track = models.tracks.create(object)
+  //
+  //   // ... add to 'All Tracks' playlist
+  //   const all = models.playlists.playlist(DEFAULT.UUID)
+  //
+  //   all.add(track)
+  //   all.save()
+  //
+  //   // ... add to current playlist
+  //   const playlist = models.playlists.playlist(state.playlist)
+  //   if (playlist != null) {
+  //     playlist.add(track)
+  //     playlist.select(track.UUID)
+  //     playlist.save()
+  //   }
+  //
+  //   widgets.playlists.tracklist = models.tracks.tracks
+  //   widgets.editor.track = track
+  //   engine.track = track
+  //
+  //   document.querySelector('toolbar').classList.add('editable')
+  // } catch (err) {
+  //   onError(err)
+  // }
 }
 
 function onSave() {

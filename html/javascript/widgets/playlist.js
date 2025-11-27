@@ -201,6 +201,10 @@ export class Playlist extends HTMLElement {
         this.#save_adds()
         this.#added()
       },
+
+      random_track: () => {
+        this.#added()
+      },
     },
   }
 
@@ -250,6 +254,7 @@ export class Playlist extends HTMLElement {
     this.#plus?.addEventListener('click', this.#handlers.plus.click)
 
     container.addEventListener(EVENTS.NEW_TRACK, this.#handlers.container.new_track)
+    container.addEventListener(EVENTS.RANDOM_TRACK, this.#handlers.container.random_track)
   }
 
   disconnectedCallback() {

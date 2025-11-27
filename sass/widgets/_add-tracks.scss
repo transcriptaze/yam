@@ -3,6 +3,9 @@
     box-sizing: border-box;
     padding-bottom: 24px;
 
+    display: flex;
+    flex-direction: column;
+
     ul {
       list-style-type: none;
       margin-left: 0px;
@@ -28,6 +31,8 @@
     }
 
     button {
+      align-self: start;
+
       background: none;
       border: none;
       outline: none;

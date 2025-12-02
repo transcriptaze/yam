@@ -5,6 +5,10 @@ export const DEFAULT = {
   UUID: '00000000-0000-0000-0000-000000000000',
 }
 
+export const RANDOM = {
+  UUID: '00000000-0000-0000-0000-000000000001',
+}
+
 export const DIVISIONS = [1, 2, 4, 8, 16, 32]
 export const PULSES = ['eighth', 'eighth-doublet', 'quarter', 'dotted-quarter', 'half', 'dotted-half']
 

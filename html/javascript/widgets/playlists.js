@@ -1,4 +1,4 @@
-import { DEFAULT, EVENTS } from '../constants.js'
+import { DEFAULT, EVENTS, RANDOM } from '../constants.js'
 
 export class Playlists extends HTMLElement {
   static get observedAttributes() {
@@ -452,6 +452,11 @@ export class Playlists extends HTMLElement {
 function transmogrify(playlist, tracks) {
   const muted = playlist.muted
   const m = new Map(tracks.map((track) => [track.UUID, track]))
+
+  m.set(RANDOM.UUID, {
+    UUID: RANDOM.UUID,
+    title: '« random track »',
+  })
 
   return {
     UUID: playlist.UUID,

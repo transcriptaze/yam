@@ -1,4 +1,4 @@
-import { EVENTS } from '../constants.js'
+import { EVENTS, RANDOM } from '../constants.js'
 
 export class PlaylistItem extends HTMLElement {
   static get observedAttributes() {
@@ -129,10 +129,19 @@ export class PlaylistItem extends HTMLElement {
   }
 
   set track({ UUID, title, muted, selected }) {
+    const shadow = this.shadowRoot
+    const container = shadow.querySelector('.playlist-track')
+
     this.UUID = UUID
     this.title = title
     this.muted = muted
     this.selected = selected
+
+    if (UUID === RANDOM.UUID) {
+      container.classList.add('random')
+    } else {
+      container.classList.remove('random')
+    }
   }
 
   get UUID() {

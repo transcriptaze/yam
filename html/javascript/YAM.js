@@ -719,37 +719,25 @@ function onTrackNew() {
 function onTrackRandom() {
   console.log('... onTrackRandom')
 
-  // try {
-  //   const object = {
-  //     BPM: state.BPM,
-  //     timeSignature: state.timeSignature,
-  //     pulse: state.pulse,
-  //   }
-  //
-  //   const track = models.tracks.create(object)
-  //
-  //   // ... add to 'All Tracks' playlist
-  //   const all = models.playlists.playlist(DEFAULT.UUID)
-  //
-  //   all.add(track)
-  //   all.save()
-  //
-  //   // ... add to current playlist
-  //   const playlist = models.playlists.playlist(state.playlist)
-  //   if (playlist != null) {
-  //     playlist.add(track)
-  //     playlist.select(track.UUID)
-  //     playlist.save()
-  //   }
-  //
-  //   widgets.playlists.tracklist = models.tracks.tracks
-  //   widgets.editor.track = track
-  //   engine.track = track
-  //
-  //   document.querySelector('toolbar').classList.add('editable')
-  // } catch (err) {
-  //   onError(err)
-  // }
+  try {
+    const track = models.tracks.random()
+
+    // ... add to current playlist
+    const playlist = models.playlists.playlist(state.playlist)
+    if (playlist != null) {
+      playlist.add(track)
+      // playlist.select(track.UUID)
+      //     playlist.save()
+    }
+
+    //   widgets.playlists.tracklist = models.tracks.tracks
+    //   widgets.editor.track = track
+    //   engine.track = track
+    //
+    //   document.querySelector('toolbar').classList.add('editable')
+  } catch (err) {
+    onError(err)
+  }
 }
 
 function onSave() {

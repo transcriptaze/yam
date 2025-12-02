@@ -1584,6 +1584,11 @@ div.playlist-track [popover]:popover-open::backdrop {
   font-weight: bold;
 }
 
+div.playlist-track.random div#title {
+  font-weight: 600;
+  font-style: italic;
+}
+
 :host(.muted) div.playlist-track #title {
   color: var(--track-colour-muted);
   font-style: italic;

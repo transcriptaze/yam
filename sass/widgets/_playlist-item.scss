@@ -127,6 +127,13 @@ div.playlist-track {
   }
 }
 
+div.playlist-track.random {
+  div#title {
+    font-weight: 600;
+    font-style: italic;
+  }
+}
+
 :host(.muted) div.playlist-track {
   #title {
     color: var(--track-colour-muted);

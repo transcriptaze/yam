@@ -1,6 +1,7 @@
 import * as DB from '../db/db.js'
 import { UUIDv4 } from '../uuid.js'
 import { Track } from './track.js'
+import { RANDOM } from '../constants.js'
 import * as generators from '../generators.js'
 
 class Tracks extends EventTarget {
@@ -25,25 +26,18 @@ class Tracks extends EventTarget {
 
   restore() {
     return DB.tracks().then((list) => {
-      this.#tracks = list.map((o) => new Track(o))
+      this.load(list)
 
       return this.tracks
     })
   }
 
   load(list) {
-    const tracks = []
-    for (const object of list) {
-      try {
-        const track = new Track(object)
-
-        tracks.push(track)
-      } catch (err) {
-        console.error(err)
-      }
+    const f = (o) => {
+      return new Track(o)
     }
 
-    this.#tracks = tracks
+    this.#tracks = list.map((o) => f(o)).filter((t) => t != null)
   }
 
   create(object) {
@@ -62,6 +56,16 @@ class Tracks extends EventTarget {
 
     DB.putTrack(track.object)
     this.#tracks.push(track)
+
+    return track
+  }
+
+  random() {
+    const track = new Track({
+      UUID: RANDOM.UUID,
+      title: '<< random >>',
+      metronome: {},
+    })
 
     return track
   }

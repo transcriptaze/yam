@@ -1,5 +1,7 @@
 import * as DB from '../db/db.js'
+import { UUIDv4 } from '../uuid.js'
 import { infof } from '../log.js'
+import { RANDOM } from '../constants.js'
 
 const LOGTAG = 'playlist'
 const VERSION = 0
@@ -12,6 +14,7 @@ export class Playlist extends EventTarget {
 
   #title = ''
   #tracks = []
+  #random = []
   #muted = new Set()
   #selected = null
 
@@ -33,6 +36,7 @@ export class Playlist extends EventTarget {
 
     this.#title = object.title == null ? '' : `${object.title}`.trim()
     this.#tracks = object.tracks == null ? [] : object.tracks
+    this.#random = object.random == null ? [] : object.random
     this.#muted = object.muted == null ? new Set() : new Set([...object.muted])
   }
 
@@ -45,6 +49,7 @@ export class Playlist extends EventTarget {
 
       title: this.title,
       tracks: [...this.tracks],
+      random: [...this.random],
       muted: [...this.#muted],
     }
   }
@@ -126,30 +131,9 @@ export class Playlist extends EventTarget {
     return this.#tracks.some((v) => v === track)
   }
 
-  select(track) {
-    this.#selected = track
-
-    this.dispatchEvent(new CustomEvent('selected', { detail: { playlist: this.UUID, track: track } }))
-  }
-
-  add(track) {
-    if (track.UUID != null && track.UUID !== '' && !this.tracks.includes(track.UUID)) {
-      this.tracks.push(track.UUID)
-      this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: this.UUID } }))
-    }
-  }
-
-  remove(track) {
-    const ix = this.#tracks.findIndex((e) => `${e}` === `${track}`)
-    if (ix !== -1) {
-      this.#tracks.splice(ix, 1)
-
-      if (this.#selected === track) {
-        this.#selected = null
-      }
-
-      this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: this.UUID } }))
-    }
+  // NTS: returns true if the uuid matches an internal 'random' track
+  internal(uuid) {
+    return this.#random.some((v) => v.UUID === uuid)
   }
 
   shuffled(tracks) {
@@ -187,6 +171,12 @@ export class Playlist extends EventTarget {
       this.save()
       infof(LOGTAG, `pruned playlist '${this.title}'`)
     }
+  }
+
+  select(track) {
+    this.#selected = track
+
+    this.dispatchEvent(new CustomEvent('selected', { detail: { playlist: this.UUID, track: track } }))
   }
 
   back() {
@@ -243,16 +233,6 @@ export class Playlist extends EventTarget {
     }
   }
 
-  delete() {
-    this.#deleted ??= Date.now()
-
-    return this
-  }
-
-  save() {
-    DB.putPlaylist(this.object)
-  }
-
   BOF(track) {
     const UUID = track?.UUID ?? ''
     const index = this.#tracks.findIndex((v) => v === UUID)
@@ -270,5 +250,53 @@ export class Playlist extends EventTarget {
 
       return index !== -1 ? index + 1 === this.#tracks.length : null
     }
+  }
+
+  add(track) {
+    // ... random track ?
+    if (track.UUID === RANDOM.UUID) {
+      const set = new Set(this.#tracks.map((v) => v.UUID))
+      const uuid = UUIDv4(set).next().value
+      const track = {
+        UUID: uuid,
+        title: '<< random >>',
+      }
+
+      this.#random.push(track)
+      this.#tracks.push(track.UUID)
+      this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: this.UUID } }))
+
+      return
+    }
+
+    // ... normal track
+    if (track.UUID != null && track.UUID !== '' && !this.tracks.includes(track.UUID)) {
+      this.#tracks.push(track.UUID)
+      this.save()
+      this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: this.UUID } }))
+    }
+  }
+
+  remove(track) {
+    const ix = this.#tracks.findIndex((e) => `${e}` === `${track}`)
+    if (ix !== -1) {
+      this.#tracks.splice(ix, 1)
+
+      if (this.#selected === track) {
+        this.#selected = null
+      }
+
+      this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: this.UUID } }))
+    }
+  }
+
+  delete() {
+    this.#deleted ??= Date.now()
+
+    return this
+  }
+
+  save() {
+    DB.putPlaylist(this.object)
   }
 }

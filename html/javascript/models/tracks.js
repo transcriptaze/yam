@@ -1,7 +1,6 @@
 import * as DB from '../db/db.js'
 import { UUIDv4 } from '../uuid.js'
 import { Track } from './track.js'
-import { RANDOM } from '../constants.js'
 import * as generators from '../generators.js'
 
 class Tracks extends EventTarget {
@@ -56,16 +55,6 @@ class Tracks extends EventTarget {
 
     DB.putTrack(track.object)
     this.#tracks.push(track)
-
-    return track
-  }
-
-  random() {
-    const track = new Track({
-      UUID: RANDOM.UUID,
-      title: '<< random >>',
-      metronome: {},
-    })
 
     return track
   }

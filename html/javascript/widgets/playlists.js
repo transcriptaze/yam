@@ -168,9 +168,8 @@ export class Playlists extends HTMLElement {
   }
 
   update(playlist, tracks) {
-    const shadow = this.shadowRoot
-    const all = shadow.getElementById('all')
-    const ul = shadow.querySelector('ul')
+    const all = this.shadowRoot.getElementById('all')
+    const ul = this.shadowRoot.querySelector('ul')
     const children = Array.from(ul.children).map((v) => v.querySelector('yam-playlist'))
     const lists = [all, ...children]
     const p = transmogrify(playlist, tracks)
@@ -453,19 +452,14 @@ function transmogrify(playlist, tracks) {
   const muted = playlist.muted
   const m = new Map(tracks.map((track) => [track.UUID, track]))
 
-  m.set(RANDOM.UUID, {
-    UUID: RANDOM.UUID,
-    title: '« random track »',
-  })
-
   return {
     UUID: playlist.UUID,
     title: playlist.title,
     tracks: playlist.tracks
-      .filter((uuid) => m.has(uuid))
-      .map((uuid) => m.get(uuid))
+      .filter((uuid) => m.has(uuid) || playlist.internal(uuid))
+      .map((uuid) => (m.has(uuid) ? m.get(uuid) : { UUID: uuid, title: RANDOM.TITLE, random: true }))
       .map((v) => {
-        return { UUID: `${v.UUID}`, title: `${v.title}`, muted: muted.includes(v.UUID) }
+        return { UUID: `${v.UUID}`, title: `${v.title}`, muted: muted.includes(v.UUID), random: v.random }
       }),
   }
 }

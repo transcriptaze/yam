@@ -658,7 +658,7 @@ export class Playlist extends HTMLElement {
     const li = document.createElement('li')
     const grip = document.createElement('div')
     const img = document.createElement('img')
-    const track = document.createElement('yam-playlist-item')
+    const item = document.createElement('yam-playlist-item')
 
     li.setAttribute('draggable', false)
     li.ondragover = this.#dragover
@@ -675,18 +675,19 @@ export class Playlist extends HTMLElement {
     grip.addEventListener('pointerdown', this.#onPointerDown)
     grip.appendChild(img)
 
-    track.track = {
+    item.track = {
       UUID: v.UUID,
       title: v.title,
       muted: v.muted,
       selected: v.UUID === this.#selected,
+      random: v.random === true ? true : false,
     }
 
-    track.addEventListener(EVENTS.MUTE_TRACK, this.#mute)
-    track.addEventListener(EVENTS.DELETE_TRACK, this.#trash)
+    item.addEventListener(EVENTS.MUTE_TRACK, this.#mute)
+    item.addEventListener(EVENTS.DELETE_TRACK, this.#trash)
 
     li.appendChild(grip)
-    li.appendChild(track)
+    li.appendChild(item)
 
     ul.appendChild(li)
   }

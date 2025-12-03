@@ -4,8 +4,7 @@ import * as fs from './fs.js'
 import { state } from './state.js'
 import { settings } from './settings.js'
 import * as log from './log.js'
-import { DEFAULT, INF } from './constants.js'
-import { EVENTS } from './constants.js'
+import { DEFAULT, EVENTS, RANDOM, INF } from './constants.js'
 
 const LOGTAG = 'YAM'
 let DEBUG = false
@@ -632,12 +631,6 @@ function onSelected(event) {
   }
 }
 
-function onPlaylistDelete(event) {
-  const playlist = event.detail.playlist
-
-  models.playlists.delete(playlist)
-}
-
 function onPlaylist(e) {
   const list = models.playlists.playlist(e.detail.playlist)
   const tracks = models.tracks.tracks
@@ -645,6 +638,12 @@ function onPlaylist(e) {
   if (list != null) {
     widgets.playlists.update(list, tracks)
   }
+}
+
+function onPlaylistDelete(event) {
+  const playlist = event.detail.playlist
+
+  models.playlists.delete(playlist)
 }
 
 function onTrackDelete(event) {
@@ -693,17 +692,13 @@ function onTrackNew() {
     const track = models.tracks.create(object)
 
     // ... add to 'All Tracks' playlist
-    const all = models.playlists.playlist(DEFAULT.UUID)
-
-    all.add(track)
-    all.save()
+    models.playlists.playlist(DEFAULT.UUID)?.add(track)
 
     // ... add to current playlist
     const playlist = models.playlists.playlist(state.playlist)
     if (playlist != null) {
       playlist.add(track)
       playlist.select(track.UUID)
-      playlist.save()
     }
 
     widgets.playlists.tracklist = models.tracks.tracks
@@ -717,24 +712,14 @@ function onTrackNew() {
 }
 
 function onTrackRandom() {
-  console.log('... onTrackRandom')
-
   try {
-    const track = models.tracks.random()
-
-    // ... add to current playlist
     const playlist = models.playlists.playlist(state.playlist)
     if (playlist != null) {
-      playlist.add(track)
-      // playlist.select(track.UUID)
-      //     playlist.save()
+      playlist.add({
+        UUID: RANDOM.UUID,
+        title: '<< random >>',
+      })
     }
-
-    //   widgets.playlists.tracklist = models.tracks.tracks
-    //   widgets.editor.track = track
-    //   engine.track = track
-    //
-    //   document.querySelector('toolbar').classList.add('editable')
   } catch (err) {
     onError(err)
   }

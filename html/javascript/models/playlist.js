@@ -183,7 +183,12 @@ export class Playlist extends EventTarget {
 
     // ... muted
     {
-      const invalid = [...this.#muted].filter((v) => !tracks.includes(v))
+      const invalid = [...this.#muted].filter((v) => {
+        const ix = tracks.findIndex((t) => t === v)
+        const jx = this.#random.findIndex((t) => t.UUID === v)
+
+        return ix === -1 && jx === -1
+      })
 
       for (const track of invalid) {
         if (this.#muted.delete(`${track}`)) {

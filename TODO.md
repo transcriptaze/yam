@@ -7,10 +7,9 @@
 - [ ] random track (cf. https://github.com/transcriptaze/yam/issues/32)
     - [x] allow multiple random tracks in a playlist
     - [x] save/restore
+    - [x] delete
+    - [x] mute
     - [ ] make UUIDv4 globally random i.e. register all UUIDs
-    - [ ] delete
-    - [ ] mute
-    - [ ] mute random tracks individually if there is more than one
     - [ ] _play_ random track
        - next
        - back

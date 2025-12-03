@@ -23,6 +23,7 @@ export class Playlist extends EventTarget {
       UUID: playlist.UUID,
       title: playlist.title,
       tracks: [...playlist.tracks],
+      random: [...playlist.random],
     })
   }
 
@@ -41,17 +42,19 @@ export class Playlist extends EventTarget {
   }
 
   get object() {
-    return {
+    const object = {
       UUID: this.UUID,
       version: this.#version,
       index: this.#index,
       deleted: this.#deleted,
 
       title: this.title,
-      tracks: [...this.tracks],
+      tracks: [...this.#tracks],
       random: [...this.#random],
       muted: [...this.#muted],
     }
+
+    return object
   }
 
   get index() {
@@ -145,12 +148,34 @@ export class Playlist extends EventTarget {
     // ... tracks
     let pruned = false
     {
-      const invalid = this.#tracks.filter((v) => !tracks.includes(v))
+      const invalid = this.#tracks.filter((v) => {
+        const ix = tracks.findIndex((t) => t === v)
+        const jx = this.#random.findIndex((t) => t.UUID === v)
+
+        return ix === -1 && jx === -1
+      })
 
       for (const track of invalid) {
         const ix = this.#tracks.findIndex((e) => `${e}` === `${track}`)
         if (ix !== -1) {
           this.#tracks.splice(ix, 1)
+          pruned = true
+        }
+      }
+    }
+
+    // ... random
+    {
+      const invalid = [...this.#random].filter((v) => {
+        const ix = this.#tracks.findIndex((t) => t === v.UUID)
+
+        return ix === -1
+      })
+
+      for (const track of invalid) {
+        const ix = this.#random.findIndex((e) => `${e.UUID}` === `${track.UUID}`)
+        if (ix !== -1) {
+          this.#random.splice(ix, 1)
           pruned = true
         }
       }

@@ -49,7 +49,7 @@ export class Playlist extends EventTarget {
 
       title: this.title,
       tracks: [...this.tracks],
-      random: [...this.random],
+      random: [...this.#random],
       muted: [...this.#muted],
     }
   }
@@ -264,6 +264,7 @@ export class Playlist extends EventTarget {
 
       this.#random.push(track)
       this.#tracks.push(track.UUID)
+      this.save()
       this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: this.UUID } }))
 
       return

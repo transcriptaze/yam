@@ -3,11 +3,17 @@
 ## In Progress
 
 - [x] standalone Go executable (cf. https://github.com/transcriptaze/yam/issues/39)
+
 - [ ] random track (cf. https://github.com/transcriptaze/yam/issues/32)
-    - [ ] need to make UUIDv4 globally random
-       - register all UUIDs
-    - [ ] allow multiple random tracks in a playlist
+    - [ ] save/restore
+        - [ ] need to make UUIDv4 globally random i.e. register all UUIDs
+        - [ ] random track not being restored on full refresh/reload
+    - [x] allow multiple random tracks in a playlist
     - [ ] mute random tracks individually if there is more than one
+    - [ ] _play_ random track
+       - next
+       - back
+       - select
     - [ ] README
     - [ ] CHANGELOG
 

@@ -121,17 +121,17 @@ div.playlist-track {
   }
 }
 
-:host(.selected) div.playlist-track {
+// NTS: must come before :host(.selected) div.playlist-track
+div.playlist-track.random {
   div#title {
-    font-weight: bold;
+    font-style: italic;
   }
 }
 
-div.playlist-track.random {
+:host(.selected) div.playlist-track {
   div#title {
-    color: #663399;
-    font-weight: 600;
-    font-style: italic;
+    font-style: normal;   // NTS for random tracks
+    font-weight: bold;
   }
 }
 

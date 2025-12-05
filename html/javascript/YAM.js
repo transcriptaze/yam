@@ -545,17 +545,8 @@ function onBack() {
 
 function onNext() {
   const UUID = state.playlist
-  const playlist = models.playlists.playlist(UUID)
 
-  if (playlist != null) {
-    playlist.next()
-  }
-}
-
-// NTS: state/track conflict => either need to update only changed fields here
-//      or in the original event handlers
-function onStateModified() {
-  widgets.info.modified = state.modified
+  models.playlists.playlist(UUID)?.next()
 }
 
 function onTrackSelect(event) {
@@ -591,6 +582,7 @@ function onMuted(e, muted) {
 
 function onSelected(event) {
   const playlist = models.playlists.playlist(event.detail.playlist)
+  const item = event.detail.item
   const track = models.tracks.track(event.detail.track)
   const toolbar = document.querySelector('toolbar')
 
@@ -601,7 +593,7 @@ function onSelected(event) {
 
   widgets.playlists.selected = {
     playlist: playlist?.UUID,
-    track: track?.UUID,
+    track: item, // track?.UUID,
   }
 
   widgets.pads.track = track
@@ -723,6 +715,12 @@ function onTrackRandom() {
   } catch (err) {
     onError(err)
   }
+}
+
+// NTS: state/track conflict => either need to update only changed fields here
+//      or in the original event handlers
+function onStateModified() {
+  widgets.info.modified = state.modified
 }
 
 function onSave() {

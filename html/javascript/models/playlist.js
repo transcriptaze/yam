@@ -2,6 +2,7 @@ import * as DB from '../db/db.js'
 import { UUIDv4, reserve } from '../uuid.js'
 import { infof } from '../log.js'
 import { RANDOM } from '../constants.js'
+import * as models from './models.js'
 
 const LOGTAG = 'playlist'
 const VERSION = 0
@@ -206,9 +207,31 @@ export class Playlist extends EventTarget {
   }
 
   select(track) {
+    // ... random track ?
+    const random = this.#random.find((t) => t.UUID === track)
+    if (random != null) {
+      const tracks = new Set(models.tracks.tracks.map((v) => v.UUID))
+      const playlist = new Set(this.#tracks)
+      const difference = Array.from(tracks.difference(playlist))
+      const N = difference.length
+
+      if (N > 0) {
+        const ix = Math.floor(N * Math.random())
+
+        this.dispatchEvent(new CustomEvent('selected', { detail: { playlist: this.UUID, item: track, track: difference[ix] } }))
+      } else {
+        console.log('>>>>>>>>> AWOOOGAH - NOTHING LEFT')
+      }
+
+      this.#selected = track
+
+      return
+    }
+
+    // ... normal
     this.#selected = track
 
-    this.dispatchEvent(new CustomEvent('selected', { detail: { playlist: this.UUID, track: track } }))
+    this.dispatchEvent(new CustomEvent('selected', { detail: { playlist: this.UUID, item: track, track: track } }))
   }
 
   back() {

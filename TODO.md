@@ -9,11 +9,15 @@
     - [x] save/restore
     - [x] delete
     - [x] mute
-    - [ ] make UUIDv4 globally random i.e. register all UUIDs
+    - [x] make UUIDv4 globally random i.e. register all UUIDs
     - [ ] _play_ random track
-       - next
-       - back
-       - select
+       - [x] next
+       - [ ] back
+       - [ ] select
+       - [ ] selected style
+       - [ ] BOF/EOF
+       - [ ] skip to next/back if difference is empty
+       - [ ] temporarily assign selected track to random (clear on reload)
     - [ ] README
     - [ ] CHANGELOG
 

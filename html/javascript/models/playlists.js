@@ -177,10 +177,9 @@ class Playlists extends EventTarget {
 
   #selected = (event) => {
     const playlist = event.detail.playlist
-    const track = event.detail.track
 
     if (this.#playlists.some((u) => u.UUID == playlist)) {
-      this.dispatchEvent(new CustomEvent('selected', { detail: { playlist: playlist, track: track } }))
+      this.dispatchEvent(new CustomEvent('selected', { detail: event.detail }))
     }
   }
 

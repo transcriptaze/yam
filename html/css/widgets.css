@@ -1580,14 +1580,13 @@ div.playlist-track [popover]:popover-open::backdrop {
   }
 }
 
-:host(.selected) div.playlist-track div#title {
-  font-weight: bold;
+div.playlist-track.random div#title {
+  font-style: italic;
 }
 
-div.playlist-track.random div#title {
-  color: #663399;
-  font-weight: 600;
-  font-style: italic;
+:host(.selected) div.playlist-track div#title {
+  font-style: normal;
+  font-weight: bold;
 }
 
 :host(.muted) div.playlist-track #title {

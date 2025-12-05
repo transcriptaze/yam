@@ -93,9 +93,8 @@ export class Playlists extends HTMLElement {
     this.#selected = playlist
 
     if (playlist != null) {
-      const shadow = this.shadowRoot
-      const all = shadow.getElementById('all')
-      const ul = shadow.querySelector('ul')
+      const all = this.shadowRoot.getElementById('all')
+      const ul = this.shadowRoot.querySelector('ul')
       const children = Array.from(ul.children).map((v) => v.querySelector('yam-playlist'))
       const list = [all, ...children]
 

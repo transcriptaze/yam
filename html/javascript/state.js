@@ -197,6 +197,7 @@ class State extends EventTarget {
     this.#timeSignature = track?.timeSignature ?? this.#timeSignature
     this.#pulse = track?.pulse ?? this.#pulse
     this.#loop = track?.loop ?? false
+    this.#ding = track?.ding ?? false
     this.#modified = false
 
     this.dispatchEvent(new CustomEvent('change', { detail: {} }))

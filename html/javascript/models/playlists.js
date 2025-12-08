@@ -70,6 +70,7 @@ class Playlists extends EventTarget {
     if (playlist != null) {
       playlist.delete()
 
+      this.save()
       this.dispatchEvent(new CustomEvent('deleted', { detail: { playlist: UUID } }))
     }
   }

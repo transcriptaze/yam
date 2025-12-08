@@ -10,12 +10,21 @@
     - [x] delete
     - [x] mute
     - [x] make UUIDv4 globally random i.e. register all UUIDs
+    - [ ] add ticked tracks as well
     - [ ] _play_ random track
        - [x] next
+       - [x] selected style
+       - [ ] EOF
+          - [x] initialise
+          - [x] selected
+          - [x] onTrackDelete
+          - [ ] onSave
+          - [ ] onPlaylistChange
+          - [x] onPlaylistSelected
+          - [x] onPlaylistDeleted
        - [ ] back
+       - [ ] BOF
        - [ ] select
-       - [ ] selected style
-       - [ ] BOF/EOF
        - [ ] skip to next/back if difference is empty
        - [ ] temporarily assign selected track to random (clear on reload)
     - [ ] README

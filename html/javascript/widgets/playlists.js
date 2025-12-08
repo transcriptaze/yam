@@ -198,12 +198,21 @@ export class Playlists extends HTMLElement {
   }
 
   deleted(playlist) {
+    let UUID = ''
+
+    if (playlist != null && typeof playlist === 'string') {
+      UUID = playlist
+    } else if (playlist != null && typeof playlist === 'object' && playlist.constructor.name === 'Playlist') {
+      UUID = playlist.UUID ?? ''
+    }
+
+
     const shadow = this.shadowRoot
     const ul = shadow.querySelector('ul')
     const playlists = Array.from(ul.children).map((v) => v.querySelector('yam-playlist'))
-    const e = playlists.find((v) => v.UUID === playlist.UUID)
+    const e = playlists.find((v) => v.UUID === UUID)
 
-    this.#playlists = this.#playlists.filter((v) => v.UUID !== playlist.UUID)
+    this.#playlists = this.#playlists.filter((v) => v.UUID !== UUID)
 
     if (e != null) {
       ul.removeChild(e.parentElement)

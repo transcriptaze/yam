@@ -296,7 +296,13 @@ export class Playlist extends EventTarget {
   }
 
   EOF(track) {
-    const UUID = track?.UUID ?? ''
+    let UUID = ''
+
+    if (track != null && typeof track === 'string') {
+      UUID = track
+    } else if (track != null && typeof track === 'object' && track.constructor.name === 'Track') {
+      UUID = track.UUID ?? ''
+    }
 
     if (UUID === '') {
       return this.#tracks.length == 0

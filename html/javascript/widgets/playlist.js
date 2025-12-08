@@ -478,16 +478,16 @@ export class Playlist extends HTMLElement {
     const container = this.shadowRoot.querySelector('div.playlist')
     const ul = container.querySelector('ul')
 
-    if (UUID != null) {
-      console.log('>>> playlist::#select', { UUID })
-    }
+    // if (UUID != null) {
+    //   console.log('>>> playlist::#select', { UUID })
+    // }
 
     for (const li of ul.children) {
       const track = li.querySelector('yam-playlist-item')
 
-      if (UUID != null && track.UUID === UUID) {
-        console.log('>>> playlist::#select DEBUG ', track.UUID, { UUID })
-      }
+      // if (UUID != null && track.UUID === UUID) {
+      //   console.log('>>> playlist::#select DEBUG ', track.UUID, { UUID })
+      // }
 
       track.selected = track.UUID === UUID
     }

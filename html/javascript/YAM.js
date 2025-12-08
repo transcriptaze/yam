@@ -611,7 +611,7 @@ function onSelected(event) {
   widgets.knob.BPM = track?.BPM
 
   widgets.metronome.bof = playlist?.BOF(track) ?? true
-  widgets.metronome.eof = playlist?.EOF(track) ?? true
+  widgets.metronome.eof = playlist?.EOF(item) ?? true
 
   widgets.editor.track = track
   engine.track = track
@@ -919,39 +919,36 @@ function onPlaylistShuffled(event) {
   models.playlists.playlist(event.detail.playlist)?.shuffled(event.detail.tracks)
 }
 
-// FIXME eeewwwwww :-(
 function onPlaylistDeleted(event) {
   const playlist = models.playlists.playlist(event.detail.playlist)
 
-  widgets.playlists.deleted(playlist)
-  models.playlists.save()
+  widgets.playlists.deleted(playlist?.UUID)
 
   if (state.playlist === playlist.UUID) {
+    const playlist = models.playlists.playlist(DEFAULT.UUID)
+
     state.selected = {
-      playlist: null,
+      playlist: playlist.UUID,
+      track: null,
+    }
+
+    settings.playlist = playlist.UUID
+    settings.save()
+
+    widgets.playlists.selected = {
+      playlist: playlist.UUID,
       track: null,
     }
 
     widgets.editor.track = null
+    widgets.info.track = null
+    widgets.timeSignature.track = null
+    widgets.mm.track = null
 
-    const track = models.tracks.track(state.track)
+    widgets.metronome.bof = playlist?.BOF(null) ?? true
+    widgets.metronome.eof = playlist?.EOF(null) ?? true
 
-    settings.playlist = playlist?.UUID
-    settings.save()
-
-    widgets.playlists.selected = {
-      playlist: playlist?.UUID,
-      track: track?.UUID,
-    }
-
-    widgets.info.track = track
-    widgets.timeSignature.track = track
-    widgets.mm.track = track
-
-    widgets.metronome.bof = playlist?.BOF(track) ?? true
-    widgets.metronome.eof = playlist?.EOF(track) ?? true
-
-    engine.track = track
+    engine.track = null
   }
 }
 

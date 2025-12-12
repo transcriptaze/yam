@@ -209,7 +209,12 @@ export class Playlist extends EventTarget {
   select(track) {
     // ... random track ?
     const random = this.#random.find((t) => t.UUID === track)
+
     if (random != null) {
+      // NTS: *MUST* be set before dispatchEvent for BOF/EOF to work
+      this.#selected = track
+
+      // ... pick unused track
       const tracks = new Set(models.tracks.tracks.map((v) => v.UUID))
       const playlist = new Set(this.#tracks)
       const difference = Array.from(tracks.difference(playlist))
@@ -219,11 +224,7 @@ export class Playlist extends EventTarget {
         const ix = Math.floor(N * Math.random())
 
         this.dispatchEvent(new CustomEvent('selected', { detail: { playlist: this.UUID, item: track, track: difference[ix] } }))
-      } else {
-        console.log('>>>>>>>>> AWOOOGAH - NOTHING LEFT')
       }
-
-      this.#selected = track
 
       return
     }
@@ -295,14 +296,8 @@ export class Playlist extends EventTarget {
     return index !== -1 ? index === 0 : null
   }
 
-  EOF(track) {
-    let UUID = ''
-
-    if (track != null && typeof track === 'string') {
-      UUID = track
-    } else if (track != null && typeof track === 'object' && track.constructor.name === 'Track') {
-      UUID = track.UUID ?? ''
-    }
+  get EOF() {
+    let UUID = this.selected ?? ''
 
     if (UUID === '') {
       return this.#tracks.length == 0

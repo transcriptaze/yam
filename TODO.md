@@ -3,6 +3,8 @@
 ## In Progress
 
 - [x] standalone Go executable (cf. https://github.com/transcriptaze/yam/issues/39)
+- [ ] _content-visibility: auto_
+- [ ] new playlist has visible playlist grab handle
 
 - [ ] random track (cf. https://github.com/transcriptaze/yam/issues/32)
     - [x] allow multiple random tracks in a playlist
@@ -12,21 +14,31 @@
     - [x] make UUIDv4 globally random i.e. register all UUIDs
     - [ ] add ticked tracks as well
     - [ ] _play_ random track
+       - [x] select
        - [x] next
+       - [ ] back
        - [x] selected style
-       - [ ] EOF
+       - [x] EOF
           - [x] initialise
-          - [x] selected
+          - [x] select
+          - [x] next
           - [x] onTrackDelete
-          - [ ] onSave
-          - [ ] onPlaylistChange
+          - [x] onSave
+          - [x] onPlaylistChange
           - [x] onPlaylistSelected
           - [x] onPlaylistDeleted
-       - [ ] back
        - [ ] BOF
-       - [ ] select
+          - [ ] initialise
+          - [ ] select
+          - [ ] back
+          - [ ] onTrackDelete
+          - [ ] onSave
+          - [ ] onPlaylistChange
+          - [ ] onPlaylistSelected
+          - [ ] onPlaylistDeleted
        - [ ] skip to next/back if difference is empty
-       - [ ] temporarily assign selected track to random (clear on reload)
+       - [ ] temporarily assign selected track to 'random' (clear on reload)
+       - (?) include random tracks in edit track list
     - [ ] README
     - [ ] CHANGELOG
 
@@ -179,6 +191,7 @@
     - [ ] TODO themes
          - [ ] setttings
          - [ ] setup on initial load
+         - https://piccalil.li/blog/a-pragmatic-guide-to-modern-css-colours-part-two/
          - https://colorhunt.co/palette/f5ece05f99ae336d82693382
          - https://colorhunt.co/palette/ffa725fff5e4c1d8c36a9c89
          - https://colorhunt.co/palette/f6f0f0f2e2b1d5c7a3bdb395

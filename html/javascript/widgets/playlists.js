@@ -206,7 +206,6 @@ export class Playlists extends HTMLElement {
       UUID = playlist.UUID ?? ''
     }
 
-
     const shadow = this.shadowRoot
     const ul = shadow.querySelector('ul')
     const playlists = Array.from(ul.children).map((v) => v.querySelector('yam-playlist'))

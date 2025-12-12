@@ -91,8 +91,10 @@ export function initialise() {
 
       const playlist = models.playlists.playlist(settings.playlist)
 
+      playlist?.select(null)
+
       widgets.metronome.bof = playlist?.BOF(null) ?? true
-      widgets.metronome.eof = playlist?.EOF(null) ?? true
+      widgets.metronome.eof = playlist?.EOF ?? true
 
       models.playlists.prune(models.tracks.tracks)
       models.tracks.prune(models.playlists)
@@ -582,7 +584,6 @@ function onMuted(e, muted) {
 
 function onSelected(event) {
   const playlist = models.playlists.playlist(event.detail.playlist)
-  const item = event.detail.item
   const track = models.tracks.track(event.detail.track)
   const toolbar = document.querySelector('toolbar')
 
@@ -593,7 +594,7 @@ function onSelected(event) {
 
   widgets.playlists.selected = {
     playlist: playlist?.UUID,
-    track: item, // track?.UUID,
+    track: playlist?.selected,
   }
 
   widgets.pads.track = track
@@ -611,7 +612,7 @@ function onSelected(event) {
   widgets.knob.BPM = track?.BPM
 
   widgets.metronome.bof = playlist?.BOF(track) ?? true
-  widgets.metronome.eof = playlist?.EOF(item) ?? true
+  widgets.metronome.eof = playlist?.EOF ?? true
 
   widgets.editor.track = track
   engine.track = track
@@ -664,8 +665,9 @@ function onTrackDelete(event) {
     widgets.loop.loop = false
     widgets.loop.loops = INF
     widgets.ding.track = null
+
     widgets.metronome.bof = playlist?.BOF(null) ?? true
-    widgets.metronome.eof = playlist?.EOF(null) ?? true
+    widgets.metronome.eof = playlist?.EOF ?? true
 
     widgets.editor.track = null
 
@@ -774,7 +776,7 @@ function onSave() {
 
     widgets.playlists.selected = {
       playlist: playlist?.UUID,
-      track: track?.UUID,
+      track: playlist?.selected,
     }
 
     widgets.pads.track = track
@@ -787,8 +789,9 @@ function onSave() {
     widgets.ding.track = track
     widgets.knob.tempo = track?.tempo
     widgets.knob.BPM = track?.BPM
+
     widgets.metronome.bof = playlist?.BOF(track) ?? true
-    widgets.metronome.eof = playlist?.EOF(track) ?? true
+    widgets.metronome.eof = playlist?.EOF ?? true
 
     widgets.editor.update(track)
 
@@ -884,7 +887,7 @@ function onPlaylistChange(event) {
 
     if (playlist.UUID === state.playlist) {
       widgets.metronome.bof = playlist?.BOF(state.track) ?? true
-      widgets.metronome.eof = playlist?.EOF(state.track) ?? true
+      widgets.metronome.eof = playlist?.EOF ?? true
     }
   }
 }
@@ -907,7 +910,7 @@ function onPlaylistSelected(event) {
     playlist?.select(null)
 
     widgets.metronome.bof = playlist?.BOF(null) ?? true
-    widgets.metronome.eof = playlist?.EOF(null) ?? true
+    widgets.metronome.eof = playlist?.EOF ?? true
     widgets.editor.track = null
 
     settings.playlist = playlist?.UUID
@@ -926,6 +929,8 @@ function onPlaylistDeleted(event) {
 
   if (state.playlist === playlist.UUID) {
     const playlist = models.playlists.playlist(DEFAULT.UUID)
+
+    playlist?.select(null)
 
     state.selected = {
       playlist: playlist.UUID,
@@ -946,7 +951,7 @@ function onPlaylistDeleted(event) {
     widgets.mm.track = null
 
     widgets.metronome.bof = playlist?.BOF(null) ?? true
-    widgets.metronome.eof = playlist?.EOF(null) ?? true
+    widgets.metronome.eof = playlist?.EOF ?? true
 
     engine.track = null
   }

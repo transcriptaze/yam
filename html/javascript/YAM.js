@@ -93,7 +93,7 @@ export function initialise() {
 
       playlist?.select(null)
 
-      widgets.metronome.bof = playlist?.BOF(null) ?? true
+      widgets.metronome.bof = playlist?.BOF ?? true
       widgets.metronome.eof = playlist?.EOF ?? true
 
       models.playlists.prune(models.tracks.tracks)
@@ -611,7 +611,7 @@ function onSelected(event) {
   widgets.knob.tempo = track?.tempo
   widgets.knob.BPM = track?.BPM
 
-  widgets.metronome.bof = playlist?.BOF(track) ?? true
+  widgets.metronome.bof = playlist?.BOF ?? true
   widgets.metronome.eof = playlist?.EOF ?? true
 
   widgets.editor.track = track
@@ -666,7 +666,7 @@ function onTrackDelete(event) {
     widgets.loop.loops = INF
     widgets.ding.track = null
 
-    widgets.metronome.bof = playlist?.BOF(null) ?? true
+    widgets.metronome.bof = playlist?.BOF ?? true
     widgets.metronome.eof = playlist?.EOF ?? true
 
     widgets.editor.track = null
@@ -790,7 +790,7 @@ function onSave() {
     widgets.knob.tempo = track?.tempo
     widgets.knob.BPM = track?.BPM
 
-    widgets.metronome.bof = playlist?.BOF(track) ?? true
+    widgets.metronome.bof = playlist?.BOF ?? true
     widgets.metronome.eof = playlist?.EOF ?? true
 
     widgets.editor.update(track)
@@ -886,7 +886,7 @@ function onPlaylistChange(event) {
     playlist.save()
 
     if (playlist.UUID === state.playlist) {
-      widgets.metronome.bof = playlist?.BOF(state.track) ?? true
+      widgets.metronome.bof = playlist?.BOF ?? true
       widgets.metronome.eof = playlist?.EOF ?? true
     }
   }
@@ -909,7 +909,7 @@ function onPlaylistSelected(event) {
   if (playlist?.UUID !== state.playlist) {
     playlist?.select(null)
 
-    widgets.metronome.bof = playlist?.BOF(null) ?? true
+    widgets.metronome.bof = playlist?.BOF ?? true
     widgets.metronome.eof = playlist?.EOF ?? true
     widgets.editor.track = null
 
@@ -950,7 +950,7 @@ function onPlaylistDeleted(event) {
     widgets.timeSignature.track = null
     widgets.mm.track = null
 
-    widgets.metronome.bof = playlist?.BOF(null) ?? true
+    widgets.metronome.bof = playlist?.BOF ?? true
     widgets.metronome.eof = playlist?.EOF ?? true
 
     engine.track = null

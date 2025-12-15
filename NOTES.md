@@ -93,6 +93,7 @@
 
 1. https://moises.ai/features/metronome-online/
 
+
 ## Other
 1. https://jevontane.com/metrobars
 2. http://wellhoefer.info/metro
@@ -103,6 +104,11 @@
 7. https://github.com/cwilso/metronome
 8. (4 Smart Devices Controlled by Touch, Not Screens or Apps)[https://www.yankodesign.com/2025/11/01/4-smart-devices-controlled-by-touch-not-screens-or-apps]
 
+
+## UX
+1. [Are we stuck with the same Desktop UX forever?](https://www.youtube.com/watch?v=1fZTOjd_bOQ)
+
+
 ## References
 1. https://stackoverflow.com/questions/10588607/tutorial-for-html5-dragdrop-sortable-list 
 2. https://github.com/timruffles/mobile-drag-drop
@@ -112,6 +118,7 @@
 6. https://music.stackexchange.com/questions/91171/bar-counting-metronome
 7. https://music.stackexchange.com/questions/1683/what-should-i-look-for-in-a-good-metronome
 8. https://music.stackexchange.com/questions/131430/metronome-with-built-in-microphone
+
 
 ### 6/8
 - https://www.reddit.com/r/pianolearning/comments/13k96g1/how_do_you_set_metronome_for_68

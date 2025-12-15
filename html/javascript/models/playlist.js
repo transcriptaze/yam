@@ -289,11 +289,16 @@ export class Playlist extends EventTarget {
     }
   }
 
-  BOF(track) {
-    const UUID = track?.UUID ?? ''
-    const index = this.#tracks.findIndex((v) => v === UUID)
+  get BOF() {
+    let UUID = this.selected ?? ''
 
-    return index !== -1 ? index === 0 : null
+    if (UUID === '') {
+      return true
+    } else {
+      const index = this.#tracks.findIndex((v) => v === UUID)
+
+      return index !== -1 ? index === 0 : null
+    }
   }
 
   get EOF() {

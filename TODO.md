@@ -12,33 +12,20 @@
     - [x] delete
     - [x] mute
     - [x] make UUIDv4 globally random i.e. register all UUIDs
-    - [ ] add ticked tracks as well
-    - [ ] _play_ random track
-       - [x] select
-       - [x] next
-       - [ ] back
-       - [x] selected style
-       - [x] EOF
-          - [x] initialise
-          - [x] select
-          - [x] next
-          - [x] onTrackDelete
-          - [x] onSave
-          - [x] onPlaylistChange
-          - [x] onPlaylistSelected
-          - [x] onPlaylistDeleted
-       - [ ] BOF
-          - [ ] initialise
-          - [ ] select
-          - [ ] back
-          - [ ] onTrackDelete
-          - [ ] onSave
-          - [ ] onPlaylistChange
-          - [ ] onPlaylistSelected
-          - [ ] onPlaylistDeleted
-       - [ ] skip to next/back if difference is empty
-       - [ ] temporarily assign selected track to 'random' (clear on reload)
-       - (?) include random tracks in edit track list
+    - [ ] save ticked tracks as well
+    - [x] _play_ random track
+    - [x] select
+    - [x] next
+    - [x] back
+    - [x] selected style
+    - [x] EOF
+    - [x] BOF
+    - [ ] skip to next/back if difference is empty
+    - [ ] include random tracks in edit track list
+    - [ ] don't use tracks assigned to other random tracks
+    - [ ] keep random track assignment for session
+       - clear on open playlist ?
+       - clear on elapsed time ?
     - [ ] README
     - [ ] CHANGELOG
 

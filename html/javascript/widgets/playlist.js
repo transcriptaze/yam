@@ -203,6 +203,7 @@ export class Playlist extends HTMLElement {
       },
 
       random_track: () => {
+        this.#save_adds()
         this.#added()
       },
     },

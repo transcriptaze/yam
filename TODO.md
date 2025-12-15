@@ -12,7 +12,7 @@
     - [x] delete
     - [x] mute
     - [x] make UUIDv4 globally random i.e. register all UUIDs
-    - [ ] save ticked tracks as well
+    - [x] save ticked tracks as well
     - [x] _play_ random track
     - [x] select
     - [x] next

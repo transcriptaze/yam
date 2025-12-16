@@ -18,6 +18,7 @@ export class Playlist extends EventTarget {
   #random = []
   #muted = new Set()
   #selected = null
+  #track = null
 
   static clone(playlist) {
     return new Playlist({
@@ -206,33 +207,36 @@ export class Playlist extends EventTarget {
     }
   }
 
-  select(track) {
-    // ... random track ?
-    const random = this.#random.find((t) => t.UUID === track)
+  select(item) {
+    let ok = true
 
-    if (random != null) {
-      // NTS: *MUST* be set before dispatchEvent for BOF/EOF to work
-      this.#selected = track
+    const f = () => {
+      // ... random track ?
+      const random = this.#random.find((t) => t.UUID === item)
 
       // ... pick unused track
-      const tracks = new Set(models.tracks.tracks.map((v) => v.UUID))
-      const playlist = new Set(this.#tracks)
-      const difference = Array.from(tracks.difference(playlist))
-      const N = difference.length
-
-      if (N > 0) {
+      if (random != null) {
+        const tracks = new Set(models.tracks.tracks.map((v) => v.UUID))
+        const playlist = new Set(this.#tracks)
+        const difference = Array.from(tracks.difference(playlist))
+        const N = difference.length
         const ix = Math.floor(N * Math.random())
 
-        this.dispatchEvent(new CustomEvent('selected', { detail: { playlist: this.UUID, item: track, track: difference[ix] } }))
+        ok = N > 0
+
+        return N > 0 ? difference[ix] : this.#track
       }
 
-      return
+      return item
     }
 
     // ... normal
-    this.#selected = track
+    this.#selected = item
+    this.#track = f()
 
-    this.dispatchEvent(new CustomEvent('selected', { detail: { playlist: this.UUID, item: track, track: track } }))
+    this.dispatchEvent(new CustomEvent('selected', { detail: { playlist: this.UUID, item: item, track: this.#track } }))
+
+    return ok
   }
 
   back() {
@@ -255,12 +259,18 @@ export class Playlist extends EventTarget {
     const g = () => {
       let { value, done } = ix.next()
 
-      while (!done && muted.has(value)) {
-        ;({ value, done } = ix.next())
-      }
+      while (!done) {
+        while (!done && muted.has(value)) {
+          ;({ value, done } = ix.next())
+        }
 
-      if (!done) {
-        this.select(value)
+        if (!done) {
+          if (this.select(value)) {
+            return
+          } else {
+            ;({ value, done } = ix.next())
+          }
+        }
       }
     }
 
@@ -345,6 +355,7 @@ export class Playlist extends EventTarget {
 
       if (this.#selected === track) {
         this.#selected = null
+        this.#track = null
       }
 
       this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: this.UUID } }))

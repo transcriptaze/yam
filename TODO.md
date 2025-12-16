@@ -20,7 +20,13 @@
     - [x] selected style
     - [x] EOF
     - [x] BOF
+    - [ ] save playlist after random item move
     - [ ] skip to next/back if difference is empty
+       - [x] one random, no unused tracks
+       - [x] multiple sequential randoms, no unused tracks
+       - [x] click/select
+       - [ ] more randoms than unused tracks
+
     - [ ] include random tracks in edit track list
     - [ ] don't use tracks assigned to other random tracks
     - [ ] keep random track assignment for session

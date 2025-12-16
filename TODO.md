@@ -22,18 +22,15 @@
     - [x] EOF
     - [x] BOF
     - [x] playlist mysteriously reordering on drag start
-
-    - [ ] don't use tracks assigned to other random tracks
-    - [ ] skip to next/back if difference is empty
+    - [x] keep random track assignment for session
+    - [x] don't use tracks assigned to other random tracks
+    - [x] skip to next/back if difference is empty
        - [x] one random, no unused tracks
        - [x] multiple sequential randoms, no unused tracks
        - [x] click/select
-       - [ ] more randoms than unused tracks
+       - [x] more randoms than unused tracks
 
     - [ ] include random tracks in edit track list
-    - [ ] keep random track assignment for session
-       - clear on open playlist ?
-       - clear on elapsed time ?
     - [ ] README
     - [ ] CHANGELOG
 

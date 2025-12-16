@@ -46,6 +46,14 @@ export class Playlist extends EventTarget {
   }
 
   get object() {
+    const random = this.#random.map((v) => {
+      return {
+        UUID: v.UUID,
+        title: v.title,
+      }
+    })
+
+    // NTS: clone arrays to prevent external mutation of private fields
     const object = {
       UUID: this.UUID,
       version: this.#version,
@@ -54,7 +62,7 @@ export class Playlist extends EventTarget {
 
       title: this.title,
       tracks: [...this.#tracks],
-      random: [...this.#random],
+      random: random,
       muted: [...this.#muted],
     }
 
@@ -214,17 +222,26 @@ export class Playlist extends EventTarget {
       // ... random track ?
       const random = this.#random.find((t) => t.UUID === item)
 
+      // ... already assigned ?
+      if (random != null && random.track != null) {
+        return random.track
+      }
+
       // ... pick unused track
       if (random != null) {
         const tracks = new Set(models.tracks.tracks.map((v) => v.UUID))
-        const playlist = new Set(this.#tracks)
+        const used = new Set(this.#random.filter((v) => v.track != null).map((v) => v.track))
+        const playlist = new Set([...this.#tracks, ...used])
+
         const difference = Array.from(tracks.difference(playlist))
         const N = difference.length
         const ix = Math.floor(N * Math.random())
+        const track = N > 0 ? difference[ix] : this.#track
 
+        random.track = N > 0 ? track : null
         ok = N > 0
 
-        return N > 0 ? difference[ix] : this.#track
+        return track
       }
 
       return item

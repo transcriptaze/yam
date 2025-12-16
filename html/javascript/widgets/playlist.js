@@ -732,8 +732,7 @@ export class Playlist extends HTMLElement {
     // ... revert to playlist if dragend without drop
     if (!this.#drag.dropped) {
       Promise.resolve().then(() => {
-        const shadow = this.shadowRoot
-        const ul = shadow.querySelector('ul')
+        const ul = this.shadowRoot.querySelector('ul')
         const children = Array.from(ul.children)
         const tracks = this.#tracks.slice(0)
 
@@ -776,8 +775,7 @@ export class Playlist extends HTMLElement {
         this.#drag.over = li
 
         Promise.resolve().then(() => {
-          const shadow = this.shadowRoot
-          const ul = shadow.querySelector('ul')
+          const ul = this.shadowRoot.querySelector('ul')
           const children = Array.from(ul.children)
           const ix = this.#drag.list.findIndex((v) => v.UUID === this.#drag.UUID)
           const jx = children.indexOf(li)
@@ -787,6 +785,7 @@ export class Playlist extends HTMLElement {
 
             // NTS: this could be so much neater if Safari did web components properly
             this.#drag.list.forEach((e, index) => {
+              console.log(e)
               const track = children[index].querySelector('yam-playlist-item')
 
               if (track.UUID !== e.UUID) {
@@ -795,6 +794,7 @@ export class Playlist extends HTMLElement {
                   title: e.title,
                   muted: e.muted,
                   selected: e.UUID === this.#selected,
+                  random: e.random === true ? true : false,
                 }
               }
             })

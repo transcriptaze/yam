@@ -20,7 +20,9 @@
     - [x] selected style
     - [x] EOF
     - [x] BOF
-    - [ ] save playlist after random item move
+    - [ ] playlist mysteriously reordering on drag start
+
+    - [ ] don't use tracks assigned to other random tracks
     - [ ] skip to next/back if difference is empty
        - [x] one random, no unused tracks
        - [x] multiple sequential randoms, no unused tracks
@@ -28,7 +30,6 @@
        - [ ] more randoms than unused tracks
 
     - [ ] include random tracks in edit track list
-    - [ ] don't use tracks assigned to other random tracks
     - [ ] keep random track assignment for session
        - clear on open playlist ?
        - clear on elapsed time ?

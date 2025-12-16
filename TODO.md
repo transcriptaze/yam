@@ -5,6 +5,7 @@
 - [x] standalone Go executable (cf. https://github.com/transcriptaze/yam/issues/39)
 - [ ] _content-visibility: auto_
 - [ ] new playlist has visible playlist grab handle
+- [ ] changing pulse in track editor doesn't update pads
 
 - [ ] random track (cf. https://github.com/transcriptaze/yam/issues/32)
     - [x] allow multiple random tracks in a playlist
@@ -20,7 +21,7 @@
     - [x] selected style
     - [x] EOF
     - [x] BOF
-    - [ ] playlist mysteriously reordering on drag start
+    - [x] playlist mysteriously reordering on drag start
 
     - [ ] don't use tracks assigned to other random tracks
     - [ ] skip to next/back if difference is empty

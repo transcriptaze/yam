@@ -785,7 +785,6 @@ export class Playlist extends HTMLElement {
 
             // NTS: this could be so much neater if Safari did web components properly
             this.#drag.list.forEach((e, index) => {
-              console.log(e)
               const track = children[index].querySelector('yam-playlist-item')
 
               if (track.UUID !== e.UUID) {
@@ -807,6 +806,9 @@ export class Playlist extends HTMLElement {
   #dragleave = (_event) => {}
 
   #drop = (_event) => {
+    this.#tracks = this.#drag.list
+    this.#drag.dropped = true
+
     const tracks = this.#drag.list.map((v) => v.UUID)
 
     this.dispatchEvent(
@@ -819,8 +821,6 @@ export class Playlist extends HTMLElement {
         },
       }),
     )
-
-    this.#drag.dropped = true
   }
 }
 

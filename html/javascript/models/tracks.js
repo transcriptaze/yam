@@ -1,5 +1,5 @@
 import * as DB from '../db/db.js'
-import { UUIDv4 } from '../uuid.js'
+import { UUIDv4, reserve } from '../uuid.js'
 import { Track } from './track.js'
 import * as generators from '../generators.js'
 
@@ -25,30 +25,24 @@ class Tracks extends EventTarget {
 
   restore() {
     return DB.tracks().then((list) => {
-      this.#tracks = list.map((o) => new Track(o))
+      this.load(list)
 
       return this.tracks
     })
   }
 
   load(list) {
-    const tracks = []
-    for (const object of list) {
-      try {
-        const track = new Track(object)
-
-        tracks.push(track)
-      } catch (err) {
-        console.error(err)
-      }
+    const f = (o) => {
+      return new Track(o)
     }
 
-    this.#tracks = tracks
+    this.#tracks = list.map((o) => f(o)).filter((t) => t != null)
+
+    reserve(this.#tracks.map((v) => v.UUID))
   }
 
   create(object) {
-    const set = new Set(this.#tracks.map((v) => v.UUID))
-    const uuid = UUIDv4(set).next().value
+    const uuid = UUIDv4().next().value
     const track = new Track({
       UUID: uuid,
       title: object?.title ?? this.#titles(),

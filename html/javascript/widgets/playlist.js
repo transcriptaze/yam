@@ -201,6 +201,11 @@ export class Playlist extends HTMLElement {
         this.#save_adds()
         this.#added()
       },
+
+      random_track: () => {
+        this.#save_adds()
+        this.#added()
+      },
     },
   }
 
@@ -250,6 +255,7 @@ export class Playlist extends HTMLElement {
     this.#plus?.addEventListener('click', this.#handlers.plus.click)
 
     container.addEventListener(EVENTS.NEW_TRACK, this.#handlers.container.new_track)
+    container.addEventListener(EVENTS.RANDOM_TRACK, this.#handlers.container.random_track)
   }
 
   disconnectedCallback() {
@@ -470,8 +476,7 @@ export class Playlist extends HTMLElement {
   }
 
   #select(UUID) {
-    const shadow = this.shadowRoot
-    const container = shadow.querySelector('div.playlist')
+    const container = this.shadowRoot.querySelector('div.playlist')
     const ul = container.querySelector('ul')
 
     for (const li of ul.children) {
@@ -653,7 +658,7 @@ export class Playlist extends HTMLElement {
     const li = document.createElement('li')
     const grip = document.createElement('div')
     const img = document.createElement('img')
-    const track = document.createElement('yam-playlist-item')
+    const item = document.createElement('yam-playlist-item')
 
     li.setAttribute('draggable', false)
     li.ondragover = this.#dragover
@@ -670,18 +675,19 @@ export class Playlist extends HTMLElement {
     grip.addEventListener('pointerdown', this.#onPointerDown)
     grip.appendChild(img)
 
-    track.track = {
+    item.track = {
       UUID: v.UUID,
       title: v.title,
       muted: v.muted,
       selected: v.UUID === this.#selected,
+      random: v.random === true ? true : false,
     }
 
-    track.addEventListener(EVENTS.MUTE_TRACK, this.#mute)
-    track.addEventListener(EVENTS.DELETE_TRACK, this.#trash)
+    item.addEventListener(EVENTS.MUTE_TRACK, this.#mute)
+    item.addEventListener(EVENTS.DELETE_TRACK, this.#trash)
 
     li.appendChild(grip)
-    li.appendChild(track)
+    li.appendChild(item)
 
     ul.appendChild(li)
   }
@@ -723,8 +729,7 @@ export class Playlist extends HTMLElement {
     // ... revert to playlist if dragend without drop
     if (!this.#drag.dropped) {
       Promise.resolve().then(() => {
-        const shadow = this.shadowRoot
-        const ul = shadow.querySelector('ul')
+        const ul = this.shadowRoot.querySelector('ul')
         const children = Array.from(ul.children)
         const tracks = this.#tracks.slice(0)
 
@@ -767,8 +772,7 @@ export class Playlist extends HTMLElement {
         this.#drag.over = li
 
         Promise.resolve().then(() => {
-          const shadow = this.shadowRoot
-          const ul = shadow.querySelector('ul')
+          const ul = this.shadowRoot.querySelector('ul')
           const children = Array.from(ul.children)
           const ix = this.#drag.list.findIndex((v) => v.UUID === this.#drag.UUID)
           const jx = children.indexOf(li)
@@ -786,6 +790,7 @@ export class Playlist extends HTMLElement {
                   title: e.title,
                   muted: e.muted,
                   selected: e.UUID === this.#selected,
+                  random: e.random === true ? true : false,
                 }
               }
             })
@@ -798,6 +803,9 @@ export class Playlist extends HTMLElement {
   #dragleave = (_event) => {}
 
   #drop = (_event) => {
+    this.#tracks = this.#drag.list
+    this.#drag.dropped = true
+
     const tracks = this.#drag.list.map((v) => v.UUID)
 
     this.dispatchEvent(
@@ -810,8 +818,6 @@ export class Playlist extends HTMLElement {
         },
       }),
     )
-
-    this.#drag.dropped = true
   }
 }
 

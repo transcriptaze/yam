@@ -5,6 +5,11 @@ export const DEFAULT = {
   UUID: '00000000-0000-0000-0000-000000000000',
 }
 
+export const RANDOM = {
+  UUID: '00000000-0000-0000-0000-000000000001',
+  TITLE: '« random »',
+}
+
 export const DIVISIONS = [1, 2, 4, 8, 16, 32]
 export const PULSES = ['eighth', 'eighth-doublet', 'quarter', 'dotted-quarter', 'half', 'dotted-half']
 
@@ -68,6 +73,7 @@ export const EVENTS = {
   MUTE_TRACK: 'mute-track',
   DELETE_TRACK: 'delete-track',
   NEW_TRACK: 'new-track',
+  RANDOM_TRACK: 'random-track',
 
   EDIT_SAVE: 'edit-save',
   SECTION_TIME_SIGNATURE_CHANGE: 'section-time-signature-change',

@@ -128,11 +128,20 @@ export class PlaylistItem extends HTMLElement {
     }
   }
 
-  set track({ UUID, title, muted, selected }) {
+  set track({ UUID, title, muted, selected, random }) {
+    const shadow = this.shadowRoot
+    const container = shadow.querySelector('.playlist-track')
+
     this.UUID = UUID
     this.title = title
     this.muted = muted
     this.selected = selected
+
+    if (random === true) {
+      container.classList.add('random')
+    } else {
+      container.classList.remove('random')
+    }
   }
 
   get UUID() {

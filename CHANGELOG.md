@@ -4,6 +4,7 @@
 
 ### Added
 1. Go executable with embedded HTML.
+2. _random_ tracks in playlist.
 
 ### Updated
 1. Fixed missing 'ding' when saving changed track.

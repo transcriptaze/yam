@@ -1,7 +1,7 @@
 import * as DB from '../db/db.js'
 import { Playlist } from './playlist.js'
 import { warnf } from '../log.js'
-import { UUIDv4 } from '../uuid.js'
+import { UUIDv4, reserve } from '../uuid.js'
 import { DEFAULT } from '../constants.js'
 
 const LOGTAG = 'playlists'
@@ -43,8 +43,7 @@ class Playlists extends EventTarget {
       ix++
     }
 
-    const set = new Set(this.#playlists.map((v) => v.UUID))
-    const uuid = UUIDv4(set).next().value
+    const uuid = UUIDv4().next().value
     const title = `Playlist #${ix}`
     const indices = this.#playlists.filter((v) => !v.deleted).map((v) => v.index)
     const index = Math.max(1, ...indices)
@@ -71,6 +70,7 @@ class Playlists extends EventTarget {
     if (playlist != null) {
       playlist.delete()
 
+      this.save()
       this.dispatchEvent(new CustomEvent('deleted', { detail: { playlist: UUID } }))
     }
   }
@@ -110,6 +110,8 @@ class Playlists extends EventTarget {
     deflist.tracks = [...new Set(deflist.tracks).union(tracks)]
 
     this.playlists = [deflist, ...playlists.filter((v) => v.UUID !== DEFAULT.UUID)]
+
+    reserve(this.#playlists.map((v) => v.UUID))
   }
 
   save() {
@@ -176,10 +178,9 @@ class Playlists extends EventTarget {
 
   #selected = (event) => {
     const playlist = event.detail.playlist
-    const track = event.detail.track
 
     if (this.#playlists.some((u) => u.UUID == playlist)) {
-      this.dispatchEvent(new CustomEvent('selected', { detail: { playlist: playlist, track: track } }))
+      this.dispatchEvent(new CustomEvent('selected', { detail: event.detail }))
     }
   }
 

@@ -18,6 +18,15 @@ export class AddTracks extends HTMLElement {
         this.dispatchEvent(new CustomEvent(EVENTS.NEW_TRACK, { bubbles: true, composed: true, detail: {} }))
       },
     },
+
+    random_track: {
+      click: (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        this.dispatchEvent(new CustomEvent(EVENTS.RANDOM_TRACK, { bubbles: true, composed: true, detail: {} }))
+      },
+    },
   }
 
   constructor() {
@@ -40,6 +49,7 @@ export class AddTracks extends HTMLElement {
     this.classList.add('component-add-tracks')
 
     this.#new_track.addEventListener('click', this.#handlers.new_track.click)
+    this.#random_track.addEventListener('click', this.#handlers.random_track.click)
   }
 
   disconnectedCallback() {}
@@ -132,6 +142,14 @@ export class AddTracks extends HTMLElement {
     }
 
     return this.#fields.new_track
+  }
+
+  get #random_track() {
+    if (this.#fields.random_track == null) {
+      this.#fields.random_track = this.shadowRoot?.querySelector('#random-track')
+    }
+
+    return this.#fields.random_track
   }
 }
 

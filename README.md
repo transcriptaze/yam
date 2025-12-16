@@ -4,7 +4,7 @@
 
 **-- IN DEVELOPMENT (PRE-ALPHA) --**
 
-Just one more _WebAudio_ metronome web app to add to the many, many other metronomes out there.
+Yet another _WebAudio_ metronome web app to add to the many, many other _yet-another-metronomes_ out there.
 
 YAM is pretty much designed exclusively for use by an _almost but not entirely ham-fisted_ acoustic fingerstyle
 guitarist without any appreciable musical ability who plays an old (but adored!) Taylor 310e and needs all the
@@ -19,8 +19,8 @@ https://yam-alpha.pages.dev
 
 ## Waivers and Demurrers
 
-This is very much a personal project and (currently at least) developed and tested almost exclusively with Google Chrome on a Pixel 5a.
-It will be a pleasant surprise and/or minor miracle if it works at all on anything else but you never know.
+This is very much a personal project and (currently at least) developed and tested almost exclusively with Google Chrome
+on a Pixel 5a. It will be a pleasant surprise and/or minor miracle if it works at all on anything else but you never know.
 
 It's also in _alpha_ i.e. expect the code, design, architecture, everything to change **often**.
 

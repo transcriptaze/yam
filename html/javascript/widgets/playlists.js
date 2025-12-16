@@ -1,4 +1,4 @@
-import { DEFAULT, EVENTS } from '../constants.js'
+import { DEFAULT, EVENTS, RANDOM } from '../constants.js'
 
 export class Playlists extends HTMLElement {
   static get observedAttributes() {
@@ -93,9 +93,8 @@ export class Playlists extends HTMLElement {
     this.#selected = playlist
 
     if (playlist != null) {
-      const shadow = this.shadowRoot
-      const all = shadow.getElementById('all')
-      const ul = shadow.querySelector('ul')
+      const all = this.shadowRoot.getElementById('all')
+      const ul = this.shadowRoot.querySelector('ul')
       const children = Array.from(ul.children).map((v) => v.querySelector('yam-playlist'))
       const list = [all, ...children]
 
@@ -168,9 +167,8 @@ export class Playlists extends HTMLElement {
   }
 
   update(playlist, tracks) {
-    const shadow = this.shadowRoot
-    const all = shadow.getElementById('all')
-    const ul = shadow.querySelector('ul')
+    const all = this.shadowRoot.getElementById('all')
+    const ul = this.shadowRoot.querySelector('ul')
     const children = Array.from(ul.children).map((v) => v.querySelector('yam-playlist'))
     const lists = [all, ...children]
     const p = transmogrify(playlist, tracks)
@@ -200,12 +198,20 @@ export class Playlists extends HTMLElement {
   }
 
   deleted(playlist) {
+    let UUID = ''
+
+    if (playlist != null && typeof playlist === 'string') {
+      UUID = playlist
+    } else if (playlist != null && typeof playlist === 'object' && playlist.constructor.name === 'Playlist') {
+      UUID = playlist.UUID ?? ''
+    }
+
     const shadow = this.shadowRoot
     const ul = shadow.querySelector('ul')
     const playlists = Array.from(ul.children).map((v) => v.querySelector('yam-playlist'))
-    const e = playlists.find((v) => v.UUID === playlist.UUID)
+    const e = playlists.find((v) => v.UUID === UUID)
 
-    this.#playlists = this.#playlists.filter((v) => v.UUID !== playlist.UUID)
+    this.#playlists = this.#playlists.filter((v) => v.UUID !== UUID)
 
     if (e != null) {
       ul.removeChild(e.parentElement)
@@ -457,10 +463,10 @@ function transmogrify(playlist, tracks) {
     UUID: playlist.UUID,
     title: playlist.title,
     tracks: playlist.tracks
-      .filter((uuid) => m.has(uuid))
-      .map((uuid) => m.get(uuid))
+      .filter((uuid) => m.has(uuid) || playlist.internal(uuid))
+      .map((uuid) => (m.has(uuid) ? m.get(uuid) : { UUID: uuid, title: RANDOM.TITLE, random: true }))
       .map((v) => {
-        return { UUID: `${v.UUID}`, title: `${v.title}`, muted: muted.includes(v.UUID) }
+        return { UUID: `${v.UUID}`, title: `${v.title}`, muted: muted.includes(v.UUID), random: v.random }
       }),
   }
 }

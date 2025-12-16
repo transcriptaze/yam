@@ -1,3 +1,5 @@
+import { RANDOM } from '../constants.js'
+
 export class TrackList extends HTMLElement {
   static get observedAttributes() {
     return []
@@ -34,9 +36,8 @@ export class TrackList extends HTMLElement {
   set tracks(tracks) {
     this.#tracks = new Map(tracks.map((v) => [v.UUID, v]))
 
-    // ... initialise <ul>
-    const shadow = this.shadowRoot
-    const ul = shadow.querySelector('ul')
+    // ... initialise tracklist <ul>
+    const ul = this.shadowRoot.querySelector('div.tracklist > ul')
     const list = []
 
     const clean = (v) => `${v}`.toLowerCase().replace(/\s+/g, '')
@@ -63,8 +64,8 @@ export class TrackList extends HTMLElement {
   }
 
   get selected() {
-    const shadow = this.shadowRoot
-    const items = shadow.querySelectorAll('yam-tracklist-item')
+    const items = this.shadowRoot.querySelector('div.tracklist > ul')?.querySelectorAll('yam-tracklist-item') ?? []
+    const random = this.shadowRoot.querySelector('div.random > ul').querySelectorAll('yam-tracklist-item') ?? []
     const selected = []
 
     items.forEach((v) => {
@@ -78,17 +79,57 @@ export class TrackList extends HTMLElement {
       }
     })
 
+    random.forEach((v) => {
+      if (v.selected) {
+        const UUID = v.getAttribute('uuid')
+
+        selected.push({
+          UUID: UUID,
+          title: RANDOM.title,
+        })
+      }
+    })
+
     return selected
   }
 
   set selected(tracks) {
-    const shadow = this.shadowRoot
-    const items = shadow.querySelectorAll('yam-tracklist-item')
-    const set = new Set(tracks.map((v) => v.UUID))
+    // ... tick/untick tracks
+    const tracklist = this.shadowRoot.querySelector('div.tracklist > ul')
+    const items = tracklist?.querySelectorAll('yam-tracklist-item') ?? []
+    const set = new Set(tracks.filter((v) => v.random !== true).map((v) => v.UUID))
 
     items.forEach((v) => {
       v.selected = set.has(v.getAttribute('uuid'))
     })
+
+    // ... populate the random tracks list
+    const random = tracks.filter((v) => v.random === true)
+    const div = this.shadowRoot.querySelector('div.random')
+    const ul = div?.querySelector('ul')
+    const list = []
+
+    if (random != null && random.length > 0) {
+      div?.classList.remove('hide')
+    } else {
+      div?.classList.add('hide')
+    }
+
+    if (random != null && random.length > 0) {
+      random.forEach((v) => {
+        const li = document.createElement('li')
+        const item = document.createElement('yam-tracklist-item')
+
+        item.setAttribute('uuid', v.UUID)
+        item.setAttribute('title', v.title)
+        item.selected = true
+
+        li.appendChild(item)
+        list.push(li)
+      })
+    }
+
+    ul?.replaceChildren(...list)
   }
 
   updated(track) {

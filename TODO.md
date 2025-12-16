@@ -29,8 +29,7 @@
        - [x] multiple sequential randoms, no unused tracks
        - [x] click/select
        - [x] more randoms than unused tracks
-
-    - [ ] include random tracks in edit track list
+    - [x] include random tracks in edit track list
     - [ ] README
     - [ ] CHANGELOG
 

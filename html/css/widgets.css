@@ -1610,14 +1610,21 @@ div.playlist-track.random div#title {
   transition: filter 0.5s ease;
 }
 
-:host(.component-tracklist) div.tracklist ul {
+:host(.component-tracklist) ul {
   list-style-type: none;
   margin-left: 0px;
   padding-left: 4px;
   padding-right: 12px;
 }
-:host(.component-tracklist) div.tracklist ul li + li {
+:host(.component-tracklist) ul li + li {
   margin-top: 2px;
+}
+:host(.component-tracklist) hr {
+  margin-left: 32px;
+  margin-right: 24px;
+}
+:host(.component-tracklist) div.random.hide {
+  display: none;
 }
 
 :host(.component-tracklist-item) div.tracklist-item {

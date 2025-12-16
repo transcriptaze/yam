@@ -537,11 +537,8 @@ export class Playlist extends HTMLElement {
     const tracks = []
 
     this.#tracks.forEach((v) => {
-      if (set.has(v.UUID) || v.random === true) {
-        tracks.push(v)
-      }
-
       if (set.has(v.UUID)) {
+        tracks.push(v)
         added.add(v.UUID)
       }
     })

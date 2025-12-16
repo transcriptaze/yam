@@ -7,7 +7,7 @@
 - [ ] new playlist has visible playlist grab handle
 - [ ] changing pulse in track editor doesn't update pads
 
-- [ ] random track (cf. https://github.com/transcriptaze/yam/issues/32)
+- [x] random track (cf. https://github.com/transcriptaze/yam/issues/32)
     - [x] allow multiple random tracks in a playlist
     - [x] save/restore
     - [x] delete
@@ -30,8 +30,8 @@
        - [x] click/select
        - [x] more randoms than unused tracks
     - [x] include random tracks in edit track list
-    - [ ] README
-    - [ ] CHANGELOG
+    - [x] README
+    - [x] CHANGELOG
 
 - (?) loop icon: use large numbers in centre
 

@@ -5,8 +5,8 @@
 - [x] standalone Go executable (cf. https://github.com/transcriptaze/yam/issues/39)
 - [x] random track (cf. https://github.com/transcriptaze/yam/issues/32)
 - [x] No random option for _all tracks_
+- [x] new playlist has visible playlist grab handle
 
-- [ ] new playlist has visible playlist grab handle
 - [ ] changing pulse in track editor doesn't update pads
 - [ ] Don't reset track loop count on stop/start (cf. https://github.com/transcriptaze/yam/issues/44)
 

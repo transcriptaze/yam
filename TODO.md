@@ -6,8 +6,8 @@
 - [x] random track (cf. https://github.com/transcriptaze/yam/issues/32)
 - [x] No random option for _all tracks_
 - [x] new playlist has visible playlist grab handle
+- [x] changing pulse in track editor doesn't update pads
 
-- [ ] changing pulse in track editor doesn't update pads
 - [ ] Don't reset track loop count on stop/start (cf. https://github.com/transcriptaze/yam/issues/44)
 
 - (?) loop icon: use large numbers in centre

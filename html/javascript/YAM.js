@@ -831,6 +831,7 @@ function onEdited(_event) {
         state.commit()
 
         // ... update widgets
+        widgets.pads.track = track
         widgets.info.track = track
         widgets.timeSignature.track = track
         widgets.mm.track = track

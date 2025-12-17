@@ -150,8 +150,8 @@ export class Playlists extends HTMLElement {
   }
 
   add(playlist, tracks) {
-    const shadow = this.shadowRoot
-    const ul = shadow.querySelector('ul')
+    const ul = this.shadowRoot.querySelector('ul')
+    const div = this.shadowRoot.querySelector('div.playlists')
 
     // ... user playlist?
     if (playlist.UUID !== DEFAULT.UUID) {
@@ -163,6 +163,9 @@ export class Playlists extends HTMLElement {
       if (li) {
         ul.appendChild(li)
       }
+
+      // NTS: new playlists are automatically opened
+      div.classList.add('unsortable')
     }
   }
 

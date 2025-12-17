@@ -1709,6 +1709,10 @@ div.playlist-track.random div#title {
   margin-right: 24px;
 }
 
+:host(.all-tracks) #random-track {
+  display: none;
+}
+
 :host(.component-editor) div.track-editor {
   box-sizing: border-box;
   height: 100%;

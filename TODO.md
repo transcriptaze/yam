@@ -8,7 +8,11 @@
 - [x] new playlist has visible playlist grab handle
 - [x] changing pulse in track editor doesn't update pads
 
-- [ ] Don't reset track loop count on stop/start (cf. https://github.com/transcriptaze/yam/issues/44)
+- [x] Don't reset track loop count on stop/start (cf. https://github.com/transcriptaze/yam/issues/44)
+    - [x] Don't reset loop count on stop/start
+    - [x] Reset loop count on load track
+    - [x] Reset loop count on end of loops
+    - [x] Display actual loop count in info
 
 - (?) loop icon: use large numbers in centre
 

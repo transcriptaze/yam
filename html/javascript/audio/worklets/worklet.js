@@ -144,8 +144,10 @@ export class Metronome extends AudioWorkletProcessor {
 
   play() {
     if (this.FSM.onPlay()) {
+      // NTS: dont't reset loop count on play/stop so that you can restart without "losing your place"
+      // this.#loops = 0
+
       this.section = null
-      this.#loops = 0
       this.clock.reset()
     }
   }
@@ -195,10 +197,13 @@ export class Metronome extends AudioWorkletProcessor {
 
     this.FSM.onStop()
 
+    // NTS: always reset loop count on loading a track
+    this.#loops = 0
+
     if (playing) {
       if (this.FSM.onPlay()) {
         this.section = null
-        this.#loops = 0
+        // this.#loops = 0
         this.clock.reset()
       }
     }
@@ -276,6 +281,9 @@ export class Metronome extends AudioWorkletProcessor {
             this.section = null
             this.clock.reset()
           } else {
+            // NTS: reset internal loop count
+            this.#loops = 0
+
             this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
             this.port.postMessage({
               message: 'stopped',
@@ -299,7 +307,9 @@ export class Metronome extends AudioWorkletProcessor {
       }
     } else if (this.stopping) {
       this.FSM.onStopped()
-      this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
+      // NTS: send current loops - doesn't reset loop count on stop anymore
+      this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
+
       log('STOP', clock.t, clock.time, BPM, Number.NaN, Number.NaN, gain, tactus, figura)
     }
 

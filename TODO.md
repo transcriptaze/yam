@@ -3,35 +3,12 @@
 ## In Progress
 
 - [x] standalone Go executable (cf. https://github.com/transcriptaze/yam/issues/39)
-- [ ] _content-visibility: auto_
+- [x] random track (cf. https://github.com/transcriptaze/yam/issues/32)
+- [x] No random option for _all tracks_
+
 - [ ] new playlist has visible playlist grab handle
 - [ ] changing pulse in track editor doesn't update pads
-
-- [x] random track (cf. https://github.com/transcriptaze/yam/issues/32)
-    - [x] allow multiple random tracks in a playlist
-    - [x] save/restore
-    - [x] delete
-    - [x] mute
-    - [x] make UUIDv4 globally random i.e. register all UUIDs
-    - [x] save ticked tracks as well
-    - [x] _play_ random track
-    - [x] select
-    - [x] next
-    - [x] back
-    - [x] selected style
-    - [x] EOF
-    - [x] BOF
-    - [x] playlist mysteriously reordering on drag start
-    - [x] keep random track assignment for session
-    - [x] don't use tracks assigned to other random tracks
-    - [x] skip to next/back if difference is empty
-       - [x] one random, no unused tracks
-       - [x] multiple sequential randoms, no unused tracks
-       - [x] click/select
-       - [x] more randoms than unused tracks
-    - [x] include random tracks in edit track list
-    - [x] README
-    - [x] CHANGELOG
+- [ ] Don't reset track loop count on stop/start (cf. https://github.com/transcriptaze/yam/issues/44)
 
 - (?) loop icon: use large numbers in centre
 
@@ -55,6 +32,7 @@
 - [ ] connectedCallback: event handler duplication
 
 ## Fixes
+- [ ] _content-visibility: auto_
 - [ ] allow BPM's less than 40/greater than 200 in subsections (because of tempo/BPM scaling thing)
 - [ ] Cloudflare (cf. https://github.com/transcriptaze/yam/issues/6)
 - [ ] (maybe) keep selected playlist on import

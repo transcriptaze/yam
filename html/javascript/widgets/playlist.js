@@ -1,4 +1,4 @@
-import { EVENTS } from '../constants.js'
+import { DEFAULT, EVENTS } from '../constants.js'
 
 export class Playlist extends HTMLElement {
   static get observedAttributes() {
@@ -367,6 +367,13 @@ export class Playlist extends HTMLElement {
 
     this.#tracklist = tracklist
     this.#add_tracks = add_tracks
+
+    // ... 'All Tracks' ?
+    if (this.UUID === DEFAULT.UUID) {
+      add_tracks.classList.add('all-tracks')
+    } else {
+      add_tracks.classList.remove('all-tracks')
+    }
   }
 
   close() {

@@ -47,3 +47,9 @@
     }
   }
 }
+
+:host(.all-tracks) {
+  #random-track {
+    display: none;
+  }
+}

@@ -7,12 +7,11 @@
 - [x] No random option for _all tracks_
 - [x] new playlist has visible playlist grab handle
 - [x] changing pulse in track editor doesn't update pads
-
 - [x] Don't reset track loop count on stop/start (cf. https://github.com/transcriptaze/yam/issues/44)
-    - [x] Don't reset loop count on stop/start
-    - [x] Reset loop count on load track
-    - [x] Reset loop count on end of loops
-    - [x] Display actual loop count in info
+
+- [ ] Fix toolbar overlap on desktop when developer tools is open and expanded (cf. https://github.com/transcriptaze/yam/issues/42)
+- [ ] Fix mobile + landscape layout (cf. https://github.com/transcriptaze/yam/issues/25)
+
 
 - (?) loop icon: use large numbers in centre
 

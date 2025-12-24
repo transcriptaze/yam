@@ -99,44 +99,6 @@ export class Clock {
     }
   }
 
-  // FIXME (working name for https://github.com/transcriptaze/yam/issues/45)
-  cluck(tick, BPM, tactus) {
-    const interval = (60 * 1000) / BPM
-    const last = this.#tock.last
-    const start = tick * this.#Δt // ms
-    const end = (tick + 1) * this.#Δt //ms
-    let click = false
-
-    // ... increment whole beats
-    let next = last
-    let beat = this.#tock.beat
-    while (next + interval < end) {
-      next += interval
-      beat += 1
-    }
-
-    this.#tock.beat = (Math.round(2 * beat) / 2) % tactus
-
-    if (start <= next && next < end) {
-      this.#tock.last = next
-
-      if (this.#tock.beat === 0) {
-        this.#tock.bar += 1
-      }
-    }
-
-    // ... click
-    if (start <= next && next < end) {
-      click = true
-    }
-
-    return {
-      click: click,
-      bar: this.#tock.bar,
-      beat: this.#tock.beat + 1,
-    }
-  }
-
   click(tick, BPM, tactus, figura, pulse) {
     const { interval, subinterval, clicksPerBeat } = this.interval(BPM, figura, pulse)
     const last = this.#last.time
@@ -176,6 +138,56 @@ export class Clock {
     }
 
     return false
+  }
+
+  // FIXME interim fix for https://github.com/transcriptaze/yam/issues/45
+  cluck(tick, BPM, tactus) {
+    // ... increment quarter note intervals
+    const last = this.#tock.last
+    const start = tick * this.#Δt // ms
+    const end = (tick + 1) * this.#Δt //ms
+    let click = false
+
+    let next = last
+    let bar = this.#tock.bar
+    let beat = this.#tock.beat
+
+    let interval = (60 * 1000) / BPM
+    while (next + interval < end) {
+      next += interval
+      beat += 1
+    }
+
+    beat = (Math.round(2 * beat) / 2) % tactus
+
+    if (start <= next && next < end) {
+      this.#tock.last = next
+
+      if (beat === 0) {
+        bar += 1
+      }
+    }
+
+    this.#tock.bar = bar
+    this.#tock.beat = beat
+
+    // ... increment eighth note intervals
+    interval = (60 * 1000) / BPM / 2
+    while (next + interval < end) {
+      next += interval
+      beat += 0.5
+    }
+
+    // ... click
+    if (start <= next && next < end) {
+      click = true
+    }
+
+    return {
+      click: click,
+      bar: bar,
+      beat: beat + 1,
+    }
   }
 
   interval(BPM, figura, pulse) {

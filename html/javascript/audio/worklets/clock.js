@@ -8,9 +8,15 @@ export class Clock {
   #fs = 44100
   #buffersize = 128
   #Δt = (1000 * 128) / 44100
-  #δt = 1 / 44100 // eslint-disable-line
+  // #δt = 1 / 44100
   #last = {
     time: 0,
+  }
+
+  #tock = {
+    bar: 0,
+    beat: 0,
+    last: 0,
   }
 
   #debug = false
@@ -39,7 +45,6 @@ export class Clock {
     if (!Number.isNaN(fs) && fs > 0.0) {
       this.#fs = fs
       this.#Δt = (1000 * this.#buffersize) / this.#fs
-      this.#δt = 1 / this.#fs
     }
   }
 
@@ -49,7 +54,6 @@ export class Clock {
     if (!Number.isNaN(N) && N > 0) {
       this.#buffersize = N
       this.#Δt = (1000 * this.#buffersize) / this.#fs
-      this.#δt = 1 / this.#fs
     }
   }
 
@@ -68,6 +72,12 @@ export class Clock {
     this.#last = {
       time: 0,
     }
+
+    this.#tock = {
+      bar: 0,
+      beat: 0,
+      last: 0,
+    }
   }
 
   tick(BPM, tactus, figura, pulse, N) {
@@ -78,11 +88,52 @@ export class Clock {
     this.#tick = this.#tick < 0 ? 0 : this.#tick + 1
 
     const click = this.click(this.t, BPM, tactus, figura, pulse)
+    const tock = this.cluck(this.t, BPM, tactus)
 
     return {
       click: click,
       bar: this.bar,
       beat: this.beat,
+
+      tock: tock,
+    }
+  }
+
+  // FIXME (working name for https://github.com/transcriptaze/yam/issues/45)
+  cluck(tick, BPM, tactus) {
+    const interval = (60 * 1000) / BPM
+    const last = this.#tock.last
+    const start = tick * this.#Δt // ms
+    const end = (tick + 1) * this.#Δt //ms
+    let click = false
+
+    // ... increment whole beats
+    let next = last
+    let beat = this.#tock.beat
+    while (next + interval < end) {
+      next += interval
+      beat += 1
+    }
+
+    this.#tock.beat = (Math.round(2 * beat) / 2) % tactus
+
+    if (start <= next && next < end) {
+      this.#tock.last = next
+
+      if (this.#tock.beat === 0) {
+        this.#tock.bar += 1
+      }
+    }
+
+    // ... click
+    if (start <= next && next < end) {
+      click = true
+    }
+
+    return {
+      click: click,
+      bar: this.#tock.bar,
+      beat: this.#tock.beat + 1,
     }
   }
 
@@ -100,7 +151,7 @@ export class Clock {
       beat += 1
     }
 
-    // ... increment half beats
+    // ... increment subdivision beats
     let δt = 0
     let subbeat = 0
     while (next + δt + subinterval < end) {

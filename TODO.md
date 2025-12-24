@@ -9,8 +9,18 @@
 - [x] changing pulse in track editor doesn't update pads
 - [x] Don't reset track loop count on stop/start (cf. https://github.com/transcriptaze/yam/issues/44)
 
+- [ ] Fix pickup at e.g. 4.5 for 4:4 time (cf. https://github.com/transcriptaze/yam/issues/45)
+    - [ ] Rework clock as generator
+    - [ ] Rework clock to 'tick' on sixteenths, eighths, triplets, etc
+    - [ ] (interim) check if clock tick is in section.clicks and force click
+    - [ ] Rework click logic to generate track clicks ahead of time
+    - [ ] What to do about infinite sections ???
+
 - [ ] Fix toolbar overlap on desktop when developer tools is open and expanded (cf. https://github.com/transcriptaze/yam/issues/42)
+
 - [ ] Fix mobile + landscape layout (cf. https://github.com/transcriptaze/yam/issues/25)
+    - [ ] full width pads
+    - [ ] wheel
 
 
 - (?) loop icon: use large numbers in centre

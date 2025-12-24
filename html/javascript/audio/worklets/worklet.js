@@ -233,6 +233,7 @@ export class Metronome extends AudioWorkletProcessor {
 
     if (this.starting) {
       clock.tick(BPM, tactus, figura, pulse, N)
+
       if (clock.time >= 250) {
         if (this.FSM.on250ms()) {
           clock.reset()
@@ -258,11 +259,11 @@ export class Metronome extends AudioWorkletProcessor {
       } else if (cluck.click) {
         const measure = cluck.bar
         const section = this.#track.sections.find((v) => measure >= v.start && measure <= v.end)
-        const id = this.section?.ID ?? 0
 
-        if (section != null && section.ID != id) {
-          console.log({ measure }, section)
-        }
+        // const id = this.section?.ID ?? 0
+        // if (section != null && section.ID != id) {
+        //   console.log({ measure }, section)
+        // }
 
         if (section != null) {
           this.section = section
@@ -303,6 +304,15 @@ export class Metronome extends AudioWorkletProcessor {
           this.cue(cluck.beat, pulse)
           this.flip({ state: FSM.STATE.PLAYING, bar: cluck.bar, beat: cluck.beat, loops: this.#loops })
           log('PLAY', clock.t, clock.time, BPM, cluck.bar, cluck.beat, tactus, figura, pulse)
+        }
+      } else if (cluck.tock.click) {
+        // FIXME half-assed fix for https://github.com/transcriptaze/yam/issues/45
+        const measure = cluck.bar
+        const section = this.#track.sections.find((v) => measure >= v.start && measure <= v.end)
+        const clicks = section?.clicks ?? []
+
+        if (clicks.includes(cluck.tock.beat)) {
+          this.cue(cluck.tock.beat, pulse)
         }
       }
     } else if (this.stopping) {

@@ -492,6 +492,28 @@
       }
     },
     {
+      "UUID": "5a2b15b6-1630-42a9-91f7-613ea3eb5911",
+      "version": 0,
+      "title": "(debug - anacrusis)",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "CountIn @ 4.5",
+          "role": "anacrusis",
+          "clicks": [
+            4.5
+          ]
+        }
+      ],
+      "metronome": {
+        "BPM": 120,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
       "UUID": "c9b989e1-b13b-4beb-96c1-0b19adfaf9c7",
       "version": 0,
       "title": "Red Right Hand",

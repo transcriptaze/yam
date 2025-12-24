@@ -21,7 +21,7 @@
         "css": "sass sass:httpd/css --no-source-map --style=expanded",
         "watch": "sass --watch sass:httpd/css --no-source-map --style=expanded",
         "test": "mocha --require test/setup.js 'test/**/*_spec.js'",
-        "debug": "mocha --require test/setup.js 'test/audio/nodes/generators_spec.js'",
+        "debug": "mocha --require test/setup.js 'test/audio/clock/tock_spec.js'",
         "package": "rollup --c yam.config.js",
         "cloudflare": "rollup --config cloudflare.config.js"
     },

@@ -8,6 +8,16 @@
 - [x] new playlist has visible playlist grab handle
 - [x] changing pulse in track editor doesn't update pads
 - [x] Don't reset track loop count on stop/start (cf. https://github.com/transcriptaze/yam/issues/44)
+- [x] Import error
+```
+{
+    "message": "Uncaught TypeError: playlist.internal is not a function",
+    "source": "http://127.0.0.1:8118/javascript/widgets/playlists.js",
+    "lineno": 469,
+    "colno": 49,
+    "error": {}
+}
+```
 
 - [ ] Fix toolbar overlap on desktop when developer tools is open and expanded (cf. https://github.com/transcriptaze/yam/issues/42)
 
@@ -21,7 +31,6 @@
 - [ ] Fix mobile + landscape layout (cf. https://github.com/transcriptaze/yam/issues/25)
     - [ ] full width pads
     - [ ] wheel
-
 
 - (?) loop icon: use large numbers in centre
 

@@ -240,7 +240,7 @@ export function load() {
       settings.playlist = DEFAULT.UUID
       settings.save()
 
-      widgets.playlists.initialise(object.playlists, object.tracks)
+      widgets.playlists.initialise(models.playlists.playlists, models.tracks.tracks)
 
       widgets.pads.timeSignature = state.timeSignature
       widgets.pads.pulse = state.pulse

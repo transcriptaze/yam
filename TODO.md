@@ -18,6 +18,8 @@
     "error": {}
 }
 ```
+- [x] Take 5 freezes
+
 
 - [ ] Fix toolbar overlap on desktop when developer tools is open and expanded (cf. https://github.com/transcriptaze/yam/issues/42)
 

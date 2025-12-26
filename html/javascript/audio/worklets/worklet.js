@@ -311,7 +311,9 @@ export class Metronome extends AudioWorkletProcessor {
         const section = this.#track.sections.find((v) => measure >= v.start && measure <= v.end)
         const clicks = section?.clicks ?? []
 
-        if (clicks.includes(cluck.tock.beat)) {
+        if (Array.isArray(clicks) && clicks.includes(cluck.tock.beat)) {
+          this.cue(cluck.tock.beat, pulse)
+        } else if (clicks instanceof Map && clicks.has(cluck.tock.beat)) {
           this.cue(cluck.tock.beat, pulse)
         }
       }

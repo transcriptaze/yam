@@ -67,6 +67,9 @@ export function initialise() {
   widgets.knob.BPM = state.BPM
   widgets.knob.tempo = null
 
+  widgets.wheel.BPM = state.BPM
+  widgets.wheel.tempo = null
+
   // ... initialise playlists
   Promise.all([models.playlists.restore(), models.tracks.restore()])
     .then(([playlists, tracks]) => {
@@ -498,6 +501,7 @@ function onKnob(changed) {
 
   state.BPM = BPM
   widgets.mm.BPM = BPM
+  widgets.wheel.BPM = BPM
   engine.BPM = BPM
 
   if (state.track === '' && changed) {
@@ -512,6 +516,7 @@ function onWheel(changed) {
 
   state.BPM = BPM
   widgets.mm.BPM = BPM
+  widgets.knob.BPM = BPM
   engine.BPM = state.BPM
 
   if (state.track === '' && changed) {
@@ -610,6 +615,9 @@ function onSelected(event) {
 
   widgets.knob.tempo = track?.tempo
   widgets.knob.BPM = track?.BPM
+
+  widgets.wheel.tempo = track?.tempo
+  widgets.wheel.BPM = track?.BPM
 
   widgets.metronome.bof = playlist?.BOF ?? true
   widgets.metronome.eof = playlist?.EOF ?? true
@@ -789,6 +797,8 @@ function onSave() {
     widgets.ding.track = track
     widgets.knob.tempo = track?.tempo
     widgets.knob.BPM = track?.BPM
+    widgets.wheel.tempo = track?.tempo
+    widgets.wheel.BPM = track?.BPM
 
     widgets.metronome.bof = playlist?.BOF ?? true
     widgets.metronome.eof = playlist?.EOF ?? true
@@ -841,6 +851,7 @@ function onEdited(_event) {
         widgets.knob.BPM = track.BPM
         widgets.knob.tempo = track.tempo
         widgets.wheel.BPM = track.BPM
+        widgets.wheel.tempo = track.tempo
         widgets.loop.loops = track.loops
 
         // ... update engine

@@ -9,30 +9,21 @@
 - [x] changing pulse in track editor doesn't update pads
 - [x] Don't reset track loop count on stop/start (cf. https://github.com/transcriptaze/yam/issues/44)
 - [x] Import error
-```
-{
-    "message": "Uncaught TypeError: playlist.internal is not a function",
-    "source": "http://127.0.0.1:8118/javascript/widgets/playlists.js",
-    "lineno": 469,
-    "colno": 49,
-    "error": {}
-}
-```
-- [x] Take 5 freezes
 
 
 - [ ] Fix toolbar overlap on desktop when developer tools is open and expanded (cf. https://github.com/transcriptaze/yam/issues/42)
 
 - [ ] Fix pickup at e.g. 4.5 for 4:4 time (cf. https://github.com/transcriptaze/yam/issues/45)
     - [x] (interim) check if clock tick is in section.clicks and force click
+    - [x] Take 5 freezes
     - [ ] Rework clock as generator
     - [ ] Rework clock to 'tick' on sixteenths, eighths, triplets, etc
     - [ ] Rework click logic to generate track clicks ahead of time
     - [ ] What to do about infinite sections ???
 
 - [ ] Fix mobile + landscape layout (cf. https://github.com/transcriptaze/yam/issues/25)
+    - [x] wheel not set to track BPM
     - [ ] full width pads
-    - [ ] wheel
 
 - (?) loop icon: use large numbers in centre
 

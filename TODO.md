@@ -24,6 +24,7 @@
 - [ ] Fix mobile + landscape layout (cf. https://github.com/transcriptaze/yam/issues/25)
     - [x] wheel not set to track BPM
     - [x] pads not centered
+    - [x] layout shifts when _ding_ is visible
     - [ ] full width pads
 
 - (?) loop icon: use large numbers in centre

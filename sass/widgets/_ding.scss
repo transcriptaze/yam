@@ -49,5 +49,12 @@
 }
 
 :host(.component-ding[hidden]) {
-   display: none;
+  display: none;
+}
+
+@media (orientation: landscape) {
+  :host(.component-ding[hidden]) {
+    display: revert;
+    visibility: hidden;
+  }
 }

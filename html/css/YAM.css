@@ -806,6 +806,8 @@ div.metronome yam-loop {
 }
 @media (max-width: 1024px) and (orientation: landscape) {
   div.metronome {
+    box-sizing: border-box;
+    margin-right: 16px;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto 1fr;
@@ -814,10 +816,15 @@ div.metronome yam-loop {
     align-items: start;
   }
   div.metronome yam-pads {
-    width: calc(100% - 32px);
+    width: 100%;
   }
   div.metronome yam-info {
-    width: 80%;
+    box-sizing: border-box;
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
     align-self: center;
   }
   div.metronome div.metrics {
@@ -840,7 +847,7 @@ div.metronome yam-loop {
     display: block;
   }
   div.metronome yam-metronome {
-    justify-self: start;
+    justify-self: center;
     margin-left: 12px;
     margin-right: 12px;
   }

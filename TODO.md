@@ -27,6 +27,7 @@
     - [x] layout shifts when _ding_ is visible
     - [x] full width pads
     - [x] fix play/stop size
+    - [x] title area should be wider
 
 - (?) loop icon: use large numbers in centre
 

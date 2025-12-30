@@ -164,7 +164,7 @@ div.editor yam-editor {
     justify-self: center;
     align-self: start;
     width: fit-content;
-    height: fit-content;
+    height: 100%;
   }
   div.metronome.hidden {
     display: none;

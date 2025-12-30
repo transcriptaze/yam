@@ -25,7 +25,8 @@
     - [x] wheel not set to track BPM
     - [x] pads not centered
     - [x] layout shifts when _ding_ is visible
-    - [ ] full width pads
+    - [x] full width pads
+    - [x] fix play/stop size
 
 - (?) loop icon: use large numbers in centre
 

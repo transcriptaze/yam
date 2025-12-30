@@ -126,6 +126,8 @@ div.editor {
   div.metronome {
     grid-column: 1;
     grid-row: 1;
+    justify-self: center;
+    align-self: start;
 
     width: fit-content;
     height: fit-content;

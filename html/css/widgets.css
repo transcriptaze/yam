@@ -1033,6 +1033,12 @@ div.beat.on div.shape {
   display: none;
 }
 
+@media (orientation: landscape) {
+  :host(.component-ding[hidden]) {
+    display: revert;
+    visibility: hidden;
+  }
+}
 :host(.component-playlists) div.playlists {
   height: 100%;
   margin: 0;

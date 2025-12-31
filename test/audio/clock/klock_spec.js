@@ -2,7 +2,7 @@ import { describe, it } from 'mocha'
 import { expect } from 'chai'
 import { Klock } from '../../../html/javascript/audio/worklets/klock.js'
 
-describe('tests klock.tock', function () {
+describe('tests klock.tick', function () {
   it('4:4, quarter notes, 60BPM, 1kHz, 128 samples', function () {
     // prettier-ignore
     const tests = [
@@ -54,7 +54,7 @@ describe('tests klock.tock', function () {
       { tick: 40, expected: { click: false, bar: 2, beat: 2   } },
     ]
 
-    const clock = new Klock()
+    const clock = new Klock(60, 4)
 
     clock.fs = 1000
     clock.buffersize = 128

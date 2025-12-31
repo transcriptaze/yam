@@ -19,7 +19,8 @@
     - [ ] Rework clock as generator
     - [ ] Rework clock to 'tick' on sixteenths, eighths, triplets, etc
     - [ ] Rework click logic to generate track clicks ahead of time
-    - [ ] What to do about infinite sections ???
+        - OR 'cue' generator
+        - what to do about infinite sections ???
 
 - [ ] Fix mobile + landscape layout (cf. https://github.com/transcriptaze/yam/issues/25)
     - [x] wheel not set to track BPM
@@ -71,7 +72,8 @@
 
 - [ ] automatically open editor on new playlist
 - [ ] playlists: replace playlist.index with an ordered list
-- [ ] delete track in 'All Tracks' deletes track from all playlists and DB
+- (?) delete track in 'All Tracks' deletes track from all playlists and DB
+        - or maybe delete in 'All Tracks' is disabled unless it is not used anywhere else
 
 - [ ] 'change' events should all be CustomEvents
 - [ ] web components: bubble events

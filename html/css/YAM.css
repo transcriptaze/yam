@@ -58,21 +58,25 @@
 }
 
 main {
+  box-sizing: border-box;
   background: inherit;
-  display: grid;
-  grid-template-columns: 0.5fr 1fr 1fr 1fr;
-  grid-template-rows: 660px;
-  grid-template-areas: "dummy metronome playlist editor";
-  column-gap: 8px;
-  align-items: stretch;
+  width: fit-content;
   height: 693px;
+  min-width: 0;
   margin: 0;
   padding-top: 24px;
   padding-bottom: 24px;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 24px;
+  padding-right: 24px;
   border: none;
   overflow-y: hidden;
+  overflow-x: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 660px;
+  grid-template-areas: "metronome playlist editor";
+  column-gap: 8px;
+  align-items: stretch;
 }
 
 div.panel {
@@ -108,12 +112,13 @@ div.editor yam-editor {
 
 @media (max-width: 768px) and (orientation: portrait) {
   main {
+    width: 100%;
     padding: 0px;
+    overflow: hidden;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     column-gap: 0px;
-    overflow: hidden;
   }
   div.panel {
     width: 100dvw;
@@ -144,12 +149,14 @@ div.editor yam-editor {
 }
 @media (max-width: 1024px) and (orientation: landscape) {
   main {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    overflow: hidden;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     column-gap: 0px;
-    padding: 0px;
-    overflow: hidden;
   }
   div.panel {
     width: 100%;
@@ -852,42 +859,37 @@ div.metronome yam-loop {
     margin-right: 12px;
   }
 }
-:root {
-  --vh: 100vh;
-}
-
 html {
   height: 100%;
-  background: black;
+  background: var(--background);
   font-family: "Lato";
   box-sizing: border-box;
   user-select: none;
 }
 
 body {
-  background: var(--background);
-  margin: 0px;
-  padding-top: 0px;
-}
-body div.content {
   width: 100dvw;
   height: 100dvh;
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: 1fr auto;
+  margin: 0;
+  padding: 0;
+}
+body div.content {
+  min-width: max-content;
+  display: flex;
   overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 1fr;
+  grid-template-areas: "main toolbar";
 }
 
 main {
-  grid-column: 1/3;
-  grid-row: 1;
+  grid-area: main;
   justify-self: center;
-  height: 645px;
 }
 
 toolbar {
-  grid-row: 1;
-  grid-column: 2;
+  grid-area: toolbar;
 }
 
 dialog.import {
@@ -936,7 +938,7 @@ dialog.error p.message {
 
 @media (max-width: 768px) and (orientation: portrait) {
   body div.content {
-    height: --vh;
+    height: 100dvh;
     margin-top: env(safe-area-inset-top);
     display: grid;
     grid-template-columns: 1fr;
@@ -962,9 +964,13 @@ dialog.error p.message {
   }
 }
 @media (max-width: 1024px) and (orientation: landscape) {
+  body {
+    width: 100dvw;
+  }
   body div.content {
     height: 100dvh;
     width: calc(100dvw - env(safe-area-inset-left));
+    min-width: 0;
     margin-left: env(safe-area-inset-left);
     display: grid;
     grid-template-columns: 1fr auto;

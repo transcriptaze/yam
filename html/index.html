@@ -5,15 +5,6 @@
     <link rel="icon"       href="/favicon.png" type="image/png" />
     <link rel="stylesheet" href="./css/YAM.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<!-- 
-    <style>
-      @font-face {
-        font-family: "BravuraText";
-        src: url("./fonts/Bravura/BravuraText.woff2") format("woff2");
-        font-display: swap;
-      }
-    </style>
- -->
   </head>
 
   <body>
@@ -24,21 +15,25 @@
           <yam-info tabindex="-1" enterkeyhint="done" >
             <yam-progress slot="progress"></yam-progress>
           </yam-info>
+        
           <div class="metrics">
             <yam-time-signature tabindex="-1" enterkeyhint="done"></yam-time-signature>
             <yam-mm             tabindex="-1" enterkeyhint="done" exportparts="BPM"></yam-mm>
             <yam-loop           tabindex="-1"></yam-loop>
             <yam-ding           tabindex="-1" hidden></yam-ding>
           </div>
+        
           <div class="bpm">
             <yam-knob  tabindex="-1"></yam-knob>
             <yam-wheel tabindex="-1"></yam-wheel>
           </div>
           <yam-metronome tabindex="-1" autofocus></yam-metronome>
         </div>
+        
         <div class="panel playlists hidden">
           <yam-playlists></yam-playlists>
         </div>
+        
         <div class="panel editor hidden">
           <yam-editor></yam-editor>
         </div>
@@ -400,13 +395,6 @@
               font-weight: 500;
               font-display: swap;
             }
-<!--
-            .bravura {
-              font-family: "BravuraText";
-              font-size: 12px;
-              font-weight: normal;
-            }
--->
           </style>
 
           <defs>
@@ -510,13 +498,6 @@
               font-weight: 500;
               font-display: swap;
             }
-<!--
-            .bravura {
-              font-family: "BravuraText";
-              font-size: 12px;
-              font-weight: normal;
-            }
--->
           </style>
 
           <defs>

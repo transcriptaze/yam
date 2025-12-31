@@ -1,9 +1,10 @@
 export class Klock {
+  #generator = null
   #fs = 44100
   #buffersize = 128
   #Δt = (1000 * 128) / 44100
 
-  #tick = -1
+  // #tick = -1
 
   #state = {
     bar: 0,
@@ -11,7 +12,9 @@ export class Klock {
     last: 0,
   }
 
-  constructor() {}
+  constructor(BPM, tactus) {
+    this.#generator = this.#run(BPM, tactus)
+  }
 
   set fs(v) {
     const fs = Number.parseFloat(`${v}`)
@@ -31,12 +34,27 @@ export class Klock {
     }
   }
 
+  // NTS: generator.next(..) return { click, bar, beat, BPM, tactus, ... }
   tick(BPM, tactus) {
-    this.#tick = this.#tick < 0 ? 0 : this.#tick + 1
+    const { click, bar, beat } = this.#generator.next({ BPM, tactus }).value
 
-    const t = this.#tick > 0 ? this.#tick : 0
+    return { click, bar, beat }
+  }
 
-    return this.#tock(t, BPM, tactus)
+  *#run(BPM, tactus) {
+    const state = {
+      tick: 0,
+      BPM: BPM,
+      tactus: tactus,
+    }
+
+    while (true) {
+      const tock = yield this.#tock(state.tick, state.BPM, state.tactus)
+
+      state.BPM = tock.BPM
+      state.tactus = tock.tactus
+      state.tick++
+    }
   }
 
   #tock(tick, BPM, tactus) {
@@ -85,6 +103,9 @@ export class Klock {
       click: click,
       bar: bar,
       beat: beat + 1,
+
+      BPM: BPM,
+      tactus: tactus,
     }
   }
 }

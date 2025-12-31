@@ -11,6 +11,11 @@
 - [x] Import error
 
 - [ ] Fix toolbar overlap on desktop when developer tools is open and expanded (cf. https://github.com/transcriptaze/yam/issues/42)
+   - [x] Fixed overlap
+   - [x] Rather make div.content scrollable
+   - [ ] Grab to scroll
+   - [ ] Hide scrollbar
+   - [ ] Vertical scrollbar ???
 
 - [ ] Fix pickup at e.g. 4.5 for 4:4 time (cf. https://github.com/transcriptaze/yam/issues/45)
     - [x] (interim) check if clock tick is in section.clicks and force click

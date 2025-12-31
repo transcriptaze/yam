@@ -1,5 +1,19 @@
 main {
+  box-sizing: border-box;
   background: inherit;
+  width: fit-content;
+  height: 693px;
+  min-width: 0; 
+  margin: 0;
+
+  padding-top: 24px;
+  padding-bottom: 24px;
+  padding-left: 24px;
+  padding-right: 24px;
+
+  border: none;
+  overflow-y: hidden; 
+  overflow-x: auto;
 
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -7,17 +21,6 @@ main {
   grid-template-areas: "metronome playlist editor";
   column-gap: 8px;
   align-items: stretch;
-
-  height: 693px;
-  margin: 0;
-
-  padding-top: 24px;
-  padding-bottom: 24px;
-  padding-left: 16px;
-  padding-right: 16px;
-
-  border: none;
-  overflow-y: hidden; 
 }
 
 div.panel {
@@ -58,14 +61,14 @@ div.editor {
 
 @media (max-width: 768px) and (orientation:portrait) {
   main {
+    width: 100%;
     padding: 0px;
+    overflow: hidden;
 
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     column-gap: 0px;
-
-    overflow: hidden;
   }
 
   div.panel {
@@ -105,13 +108,15 @@ div.editor {
 
 @media (max-width: 1024px) and (orientation: landscape) {
   main {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    overflow: hidden;
+
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     column-gap: 0px;
-
-    padding: 0px;
-    overflow: hidden;
   }
 
   div.panel {

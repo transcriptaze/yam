@@ -2,9 +2,9 @@ main {
   background: inherit;
 
   display: grid;
-  grid-template-columns: 0.5fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 660px;
-  grid-template-areas: "dummy metronome playlist editor";
+  grid-template-areas: "metronome playlist editor";
   column-gap: 8px;
   align-items: stretch;
 

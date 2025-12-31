@@ -29,28 +29,28 @@ body {
   padding-top: 0px;
 
   div.content {  
-    width: 100dvw;
+    width: 100%;
     height: 100dvh;
 
     display: grid;
-    grid-template-rows: 1fr;
     grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr;
+    grid-template-areas: "main toolbar";
 
     overflow: hidden;
   }
 }
 
 main {
-  grid-column: 1 / 3;
-  grid-row: 1;
+  grid-area: main;
   justify-self: center;
 
   height: 645px;
+  overflow-x: auto;
 }
 
 toolbar {
-  grid-row: 1;
-  grid-column: 2;
+  grid-area: toolbar;
 }
 
 dialog.import {

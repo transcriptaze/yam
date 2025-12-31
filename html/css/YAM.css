@@ -60,9 +60,9 @@
 main {
   background: inherit;
   display: grid;
-  grid-template-columns: 0.5fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 660px;
-  grid-template-areas: "dummy metronome playlist editor";
+  grid-template-areas: "metronome playlist editor";
   column-gap: 8px;
   align-items: stretch;
   height: 693px;
@@ -870,24 +870,24 @@ body {
   padding-top: 0px;
 }
 body div.content {
-  width: 100dvw;
+  width: 100%;
   height: 100dvh;
   display: grid;
-  grid-template-rows: 1fr;
   grid-template-columns: 1fr auto;
+  grid-template-rows: 1fr;
+  grid-template-areas: "main toolbar";
   overflow: hidden;
 }
 
 main {
-  grid-column: 1/3;
-  grid-row: 1;
+  grid-area: main;
   justify-self: center;
   height: 645px;
+  overflow-x: auto;
 }
 
 toolbar {
-  grid-row: 1;
-  grid-column: 2;
+  grid-area: toolbar;
 }
 
 dialog.import {

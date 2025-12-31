@@ -10,7 +10,6 @@
 - [x] Don't reset track loop count on stop/start (cf. https://github.com/transcriptaze/yam/issues/44)
 - [x] Import error
 
-
 - [ ] Fix toolbar overlap on desktop when developer tools is open and expanded (cf. https://github.com/transcriptaze/yam/issues/42)
 
 - [ ] Fix pickup at e.g. 4.5 for 4:4 time (cf. https://github.com/transcriptaze/yam/issues/45)
@@ -29,6 +28,7 @@
     - [x] full width pads
     - [x] fix play/stop size
     - [x] title area should be wider
+    - [ ] wheel progress bar
 
 - (?) loop icon: use large numbers in centre
 

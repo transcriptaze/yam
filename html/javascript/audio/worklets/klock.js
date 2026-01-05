@@ -1,10 +1,10 @@
 export class Klock {
-  #generator = null
-  #fs = 44100
-  #buffersize = 128
-  #Δt = (1000 * 128) / 44100
-
-  // #tick = -1
+  #klock = {
+    generator: null,
+    fs: 44100,
+    Δt: (1000 * 128) / 44100,
+    buffersize: 128,
+  }
 
   #state = {
     bar: 0,
@@ -12,33 +12,39 @@ export class Klock {
     last: 0,
   }
 
-  constructor(BPM, tactus) {
-    this.#generator = this.#run(BPM, tactus)
+  constructor(fs, buffersize, BPM, tactus) {
+    this.#fs = fs
+    this.#buffersize = buffersize
+    this.#klock.generator = this.#run(BPM, tactus)
   }
 
-  set fs(v) {
+  set #fs(v) {
     const fs = Number.parseFloat(`${v}`)
 
     if (!Number.isNaN(fs) && fs > 0.0) {
-      this.#fs = fs
-      this.#Δt = (1000 * this.#buffersize) / this.#fs
+      this.#klock.fs = fs
+      this.#klock.Δt = (1000 * this.#klock.buffersize) / this.#klock.fs
     }
   }
 
-  set buffersize(v) {
+  set #buffersize(v) {
     const N = Number.parseInt(`${v}`)
 
     if (!Number.isNaN(N) && N > 0) {
-      this.#buffersize = N
-      this.#Δt = (1000 * this.#buffersize) / this.#fs
+      this.#klock.buffersize = N
+      this.#klock.Δt = (1000 * this.#klock.buffersize) / this.#klock.fs
     }
   }
 
   // NTS: generator.next(..) return { click, bar, beat, BPM, tactus, ... }
   tick(BPM, tactus) {
-    const { click, bar, beat } = this.#generator.next({ BPM, tactus }).value
+    const state = this.#klock.generator.next({ BPM, tactus }).value
 
-    return { click, bar, beat }
+    return {
+      click: state.click,
+      bar: state.bar,
+      beat: state.beat,
+    }
   }
 
   *#run(BPM, tactus) {
@@ -60,8 +66,8 @@ export class Klock {
   #tock(tick, BPM, tactus) {
     // ... increment quarter note intervals
     const last = this.#state.last
-    const start = tick * this.#Δt // ms
-    const end = (tick + 1) * this.#Δt //ms
+    const start = tick * this.#klock.Δt // ms
+    const end = (tick + 1) * this.#klock.Δt //ms
     let click = false
 
     let next = last

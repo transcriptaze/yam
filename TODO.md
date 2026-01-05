@@ -20,10 +20,12 @@
 - [ ] Fix pickup at e.g. 4.5 for 4:4 time (cf. https://github.com/transcriptaze/yam/issues/45)
     - [x] (interim) check if clock tick is in section.clicks and force click
     - [x] Take 5 freezes
-    - [ ] Rework clock as generator
-    - [ ] Rework clock to 'tick' on sixteenths, eighths, triplets, etc
-    - [ ] Rework click logic to generate track clicks ahead of time
-        - OR 'cue' generator
+    - [x] Rework clock as generator
+    - [ ] unit test: tactus change
+    - [ ] unit test: BPM change
+    - [ ] Tick on on sixteenths
+    - [ ] Tick on triplets
+    - [ ] 'cue' generator
         - what to do about infinite sections ???
 
 - [ ] Fix mobile + landscape layout (cf. https://github.com/transcriptaze/yam/issues/25)
@@ -33,9 +35,10 @@
     - [x] full width pads
     - [x] fix play/stop size
     - [x] title area should be wider
-    - [ ] wheel ramp
-    - [ ] wheel progress bar
+    - [ ] wheel ramp/progress bar
     - [ ] wheel tap area is asymmetric (left/- is on the edge, right/+ is close to middle)
+    - [ ] restructure info area
+    - [ ] move loop and ding widgets into play controls area
 
 - [ ] clicks
     - [ ] generate clicks for count-in

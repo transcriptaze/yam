@@ -33,9 +33,9 @@
     - [x] full width pads
     - [x] fix play/stop size
     - [x] title area should be wider
+    - [ ] wheel ramp
     - [ ] wheel progress bar
-
-- (?) loop icon: use large numbers in centre
+    - [ ] wheel tap area is asymmetric (left/- is on the edge, right/+ is close to middle)
 
 - [ ] clicks
     - [ ] generate clicks for count-in
@@ -57,6 +57,7 @@
 - [ ] connectedCallback: event handler duplication
 
 ## Fixes
+- [ ] clicks
 - [ ] _content-visibility: auto_
 - [ ] allow BPM's less than 40/greater than 200 in subsections (because of tempo/BPM scaling thing)
 - [ ] Cloudflare (cf. https://github.com/transcriptaze/yam/issues/6)

@@ -21,8 +21,8 @@
     - [x] (interim) check if clock tick is in section.clicks and force click
     - [x] Take 5 freezes
     - [x] Rework clock as generator
-    - [ ] unit test: tactus change
     - [ ] unit test: BPM change
+    - [ ] unit test: tactus change
     - [ ] Tick on on sixteenths
     - [ ] Tick on triplets
     - [ ] 'cue' generator

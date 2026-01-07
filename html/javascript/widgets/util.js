@@ -37,3 +37,19 @@ export function clamp(v, min, max) {
 
   return Math.min(Math.max(v, min), max)
 }
+
+// Utility function to map wheel rotation + bar offset to BPM
+export function wrap(offset, rotation) {
+  const m = -0.48484848 // (40 - 200)/(2*165)
+  const c = 120 // (40 + 200)/2
+  const angle = offset + rotation
+  let offsetʼ = offset
+
+  if (angle > 90) {
+    offsetʼ = -180 + offset
+  } else if (angle < -90) {
+    offsetʼ = 180 + offset
+  }
+
+  return m * offsetʼ + c
+}

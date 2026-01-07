@@ -1,4 +1,4 @@
-import { clamp, sin, cos, abs } from './util.js'
+import { clamp, sin, cos, abs, wrap } from './util.js'
 
 const WEDGE = 30 // degrees
 const R = 60
@@ -245,11 +245,13 @@ export class Wheel extends HTMLElement {
       const svg = shadow.querySelector('svg')
       const labels = svg.querySelectorAll('#labels .label')
       const knurls = svg.querySelectorAll('#knurls .knurl')
+      const bars = svg.querySelectorAll('#ramp path')
 
       const range = this.max - this.min
       const BPM = this.#value
       const rotation = ((BPM - 120) * (360 - WEDGE)) / range
 
+      // ... labels
       for (const label of labels) {
         const offset = parseFloat(`${label.dataset.angle}`)
 
@@ -268,6 +270,7 @@ export class Wheel extends HTMLElement {
         }
       }
 
+      // ... knurls
       for (const knurl of knurls) {
         const offset = parseFloat(`${knurl.dataset.angle}`)
 
@@ -278,6 +281,36 @@ export class Wheel extends HTMLElement {
           const scale = abs(cos(angleʼ))
 
           knurl.setAttribute('transform', `translate(${dx},0) scale(${scale},1)`)
+        }
+      }
+
+      // ... ramp
+      const HEIGHT = { MIN: 1.5, MAX: 8.5 }
+
+      for (const bar of bars) {
+        const offset = parseFloat(`${bar.dataset.angle}`)
+
+        if (!Number.isNaN(offset)) {
+          const angle = (360 + rotation + offset) % 360
+          const angleʼ = (angle <= 90 ? angle : angle <= 270 ? angle + 180 : angle + 360) % 360
+          const dx = (R * sin(angleʼ)).toFixed(5)
+          const scale = abs(cos(angleʼ)).toFixed(5)
+
+          const bpm = wrap(offset, rotation)
+          let v = (bpm - 40) / (200 - 40)
+          let fill = '#4eccff'
+
+          if (bpm < 40 || bpm > 200) {
+            v = 1.0
+            fill = 'none'
+          }
+
+          const height = HEIGHT.MIN + v * (HEIGHT.MAX - HEIGHT.MIN)
+          const h = -height.toFixed(3)
+
+          bar.setAttribute('d', `M-2,1.25 a4,4,0,0,1,3,0 l0,${h}  a4,4,0,0,1,-3,0 z`)
+          bar.setAttribute('transform', `translate(${dx},0) scale(${scale},1)`)
+          bar.setAttribute('fill', `${fill}`)
         }
       }
     }

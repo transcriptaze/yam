@@ -35,7 +35,7 @@
     - [x] full width pads
     - [x] fix play/stop size
     - [x] title area should be wider
-    - [ ] wheel ramp/progress bar
+    - [x] wheel ramp/progress bar
     - [ ] wheel tap area is asymmetric (left/- is on the edge, right/+ is close to middle)
     - [ ] restructure info area
     - [ ] move loop and ding widgets into play controls area

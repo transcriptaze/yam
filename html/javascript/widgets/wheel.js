@@ -13,6 +13,8 @@ export class Wheel extends HTMLElement {
   #max = 200
   #BPM = 120
   #value = 120
+  #tempo = Number.NaN
+
   #drag = {
     dragging: false,
     coarse: false,
@@ -113,6 +115,17 @@ export class Wheel extends HTMLElement {
 
   get max() {
     return this.#max
+  }
+
+  set tempo(v) {
+    const bpm = parseInt(`${v}`, 10)
+    if (!Number.isNaN(bpm) && bpm >= this.min && bpm <= this.max) {
+      this.#tempo = bpm
+    } else {
+      this.#tempo = Number.NaN
+    }
+
+    this.#redraw(true)
   }
 
   redraw({ _playing, _stopped }) {}
@@ -303,6 +316,8 @@ export class Wheel extends HTMLElement {
           if (bpm < 40 || bpm > 200) {
             v = 1.0
             fill = 'none'
+          } else if (!Number.isNaN(this.#tempo) && Math.min(this.#tempo, BPM) < bpm && bpm < Math.max(this.#tempo, BPM)) {
+            fill = 'red'
           }
 
           const height = HEIGHT.MIN + v * (HEIGHT.MAX - HEIGHT.MIN)

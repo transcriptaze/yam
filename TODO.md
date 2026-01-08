@@ -38,7 +38,13 @@
     - [x] wheel ramp/progress bar
     - [x] wheel skipping taps
     - [ ] restructure info area
+       - increase font size
+       - move save to end
+       - box-sizing: border-box; breaks div.title
+       - placeholder div for details when invisible
+
     - [ ] move loop and ding widgets into play controls area
+    - [ ] make wheel bigger
 
 - [ ] clicks
     - [ ] generate clicks for count-in

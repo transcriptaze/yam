@@ -4,11 +4,14 @@
   --text: #222222;
 
   div.info {
+    box-sizing: border-box;
+
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
 
     div.title {
+      // box-sizing: border-box;
       height: 32px;
 
       display: grid;
@@ -72,6 +75,7 @@
     }
 
     div.detail {
+      box-sizing: border-box;
       visibility: hidden;
 
       display: grid;
@@ -197,4 +201,49 @@
     }
   }
 
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+  :host(.component-info) {
+    div.info {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      grid-template-rows: auto;
+      column-gap: 4px;
+
+      div.title {      
+      }
+
+      div.detail {
+        height: 100%;
+        margin-top: 0px;
+        border-radius: 4px 4px 4px 4px;
+
+        display: grid;
+        grid-template-columns: 1fr;
+        grid-template-rows: 1fr 12px;
+
+        div.text {
+          grid-column: 1;
+          grid-row: 1;
+        }
+
+        div.overlay {
+          grid-column: 1;
+          grid-row: 2;
+        }
+
+        div.progress {
+          grid-column: 1;
+          grid-row: 2;
+        }
+      }
+    }
+
+    div.info.details {
+      div.title {
+         border-radius: 4px 4px 4px 4px;
+      }
+    }
+  }
 }

@@ -154,12 +154,13 @@ div.metronome {
 @media (max-width: 1024px) and (orientation: landscape) {
   div.metronome {
     box-sizing: border-box;
+    margin-left: 16px;
     margin-right: 16px;
 
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto 1fr;
-    grid-template-areas: "pads pads" "metrics info" "bpm metronome";
+    grid-template-rows: auto auto auto 1fr;
+    grid-template-areas: "pads pads" "info info" "metrics metronome" "bpm metronome";
     justify-items: center;
     align-items: start;
 

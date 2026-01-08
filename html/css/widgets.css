@@ -791,6 +791,7 @@ div.beat.on div.shape {
   --text: #222222;
 }
 :host(.component-info) div.info {
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto;
@@ -843,6 +844,7 @@ div.beat.on div.shape {
   filter: grayscale(100%) opacity(50%);
 }
 :host(.component-info) div.info div.detail {
+  box-sizing: border-box;
   visibility: hidden;
   display: grid;
   grid-template-columns: 1fr;
@@ -935,6 +937,37 @@ div.beat.on div.shape {
   visibility: visible;
 }
 
+@media (max-width: 1024px) and (orientation: landscape) {
+  :host(.component-info) div.info {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+    column-gap: 4px;
+  }
+  :host(.component-info) div.info div.detail {
+    height: 100%;
+    margin-top: 0px;
+    border-radius: 4px 4px 4px 4px;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 12px;
+  }
+  :host(.component-info) div.info div.detail div.text {
+    grid-column: 1;
+    grid-row: 1;
+  }
+  :host(.component-info) div.info div.detail div.overlay {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  :host(.component-info) div.info div.detail div.progress {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  :host(.component-info) div.info.details div.title {
+    border-radius: 4px 4px 4px 4px;
+  }
+}
 :host(.component-loop) div.loop {
   box-sizing: border-box;
   height: 100%;

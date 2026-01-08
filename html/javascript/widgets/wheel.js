@@ -176,7 +176,7 @@ export class Wheel extends HTMLElement {
       const dt = event.timeStamp - drag.start.timestamp
       const delta = this.#value - drag.start.value
 
-      if (dt < 125 && Math.abs(delta) < 5) {
+      if (dt < 200 && Math.abs(delta) < 5) {
         const increment = this.#tapped(drag)
 
         const bpm = parseInt(`${drag.start.value}`, 10)

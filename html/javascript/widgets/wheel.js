@@ -176,7 +176,7 @@ export class Wheel extends HTMLElement {
       const dt = event.timeStamp - drag.start.timestamp
       const delta = this.#value - drag.start.value
 
-      if (dt < 125 && Math.abs(delta) < 5) {
+      if (dt < 200 && Math.abs(delta) < 5) {
         const increment = this.#tapped(drag)
 
         const bpm = parseInt(`${drag.start.value}`, 10)
@@ -262,6 +262,7 @@ export class Wheel extends HTMLElement {
 
       const range = this.max - this.min
       const BPM = this.#value
+      const tempo = Number.isNaN(this.#tempo) ? BPM : this.#tempo
       const rotation = ((BPM - 120) * (360 - WEDGE)) / range
 
       // ... labels
@@ -298,7 +299,7 @@ export class Wheel extends HTMLElement {
       }
 
       // ... ramp
-      const HEIGHT = { MIN: 1.5, MAX: 8.5 }
+      const HEIGHT = { MIN: 1, MAX: 8.5 }
 
       for (const bar of bars) {
         const offset = parseFloat(`${bar.dataset.angle}`)
@@ -310,14 +311,17 @@ export class Wheel extends HTMLElement {
           const scale = abs(cos(angleʼ)).toFixed(5)
 
           const bpm = wrap(offset, rotation)
-          let v = (bpm - 40) / (200 - 40)
-          let fill = '#4eccff'
+          const v = bpm / 200
+          let fill = '#444444'
 
-          if (bpm < 40 || bpm > 200) {
-            v = 1.0
+          if (bpm > 200) {
             fill = 'none'
-          } else if (!Number.isNaN(this.#tempo) && Math.min(this.#tempo, BPM) < bpm && bpm < Math.max(this.#tempo, BPM)) {
-            fill = 'red'
+          } else if (bpm < tempo && BPM < bpm) {
+            fill = '#f00000'
+          } else if (bpm > tempo && BPM > bpm) {
+            fill = '#f00000'
+          } else if (bpm <= BPM) {
+            fill = '#4eccff'
           }
 
           const height = HEIGHT.MIN + v * (HEIGHT.MAX - HEIGHT.MIN)

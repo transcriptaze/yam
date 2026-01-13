@@ -957,14 +957,19 @@ div.beat.on div.shape {
     column-gap: 4px;
   }
   :host(.component-info) div.info div.title {
-    border-radius: 4px 4px 4px 4px;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    border-radius: 4px 0px 0px 4px;
+  }
+  :host(.component-info) div.info div.title input {
+    font-size: 1.1em;
   }
   :host(.component-info) div.info div.detail {
     grid-column: 2;
     grid-row: 1;
     height: 100%;
     margin-top: 0px;
-    border-radius: 4px 4px 4px 4px;
+    border-radius: 0px 0px 0px 0px;
     visibility: visible;
     display: grid;
     grid-template-columns: 1fr;
@@ -975,6 +980,7 @@ div.beat.on div.shape {
     grid-column: 1;
     grid-row: 1;
     visibility: hidden;
+    font-size: 0.95em;
   }
   :host(.component-info) div.info div.detail div.overlay {
     grid-column: 1;

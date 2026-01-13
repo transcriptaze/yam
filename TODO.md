@@ -39,9 +39,9 @@
     - [x] wheel skipping taps
     - [x] wheel indicator
     - [ ] make wheel bigger
+    - [x] fix progress bar colour changes
     - [ ] restructure info area
        - [x] move save to end
-       - [ ] fix progress bar colour changes
        - increase font size
        - box-sizing: border-box; breaks div.title
     - [ ] move loop and ding widgets into play controls area

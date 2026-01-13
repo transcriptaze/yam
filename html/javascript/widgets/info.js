@@ -148,6 +148,7 @@ export class Info extends HTMLElement {
 
     if (!playing && stopped) {
       this.#cache.bar = null
+      this.#cache.section = null
 
       this.#bars = {
         playing: playing,

@@ -38,14 +38,10 @@
     - [x] wheel ramp/progress bar
     - [x] wheel skipping taps
     - [x] wheel indicator
-    - [ ] make wheel bigger
     - [x] fix progress bar colour changes
     - [x] restructure info area
-       - [x] move save to end
-       - [x] increase font size
-       - [x] box-sizing: border-box; breaks div.title
-       - [x] section font doesn't revert to italic on stop (first sectiont thing?)
-    - [ ] move loop and ding widgets into play controls area
+    - [x] move loop and ding widgets into play controls area
+    - [ ] make wheel bigger
 
 - [ ] clicks
     - [ ] generate clicks for count-in

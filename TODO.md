@@ -40,11 +40,11 @@
     - [x] wheel indicator
     - [ ] make wheel bigger
     - [x] fix progress bar colour changes
-    - [ ] restructure info area
+    - [x] restructure info area
        - [x] move save to end
        - [x] increase font size
-       - [ ] box-sizing: border-box; breaks div.title
-       - [ ] section font doesn't revert to italic on stop (first sectiont thing?)
+       - [x] box-sizing: border-box; breaks div.title
+       - [x] section font doesn't revert to italic on stop (first sectiont thing?)
     - [ ] move loop and ding widgets into play controls area
 
 - [ ] clicks

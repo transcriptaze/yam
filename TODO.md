@@ -40,11 +40,10 @@
     - [x] wheel indicator
     - [ ] make wheel bigger
     - [ ] restructure info area
+       - [x] move save to end
+       - [ ] fix progress bar colour changes
        - increase font size
-       - move save to end
        - box-sizing: border-box; breaks div.title
-       - placeholder div for details when invisible
-
     - [ ] move loop and ding widgets into play controls area
 
 - [ ] clicks

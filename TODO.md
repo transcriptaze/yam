@@ -37,6 +37,8 @@
     - [x] title area should be wider
     - [x] wheel ramp/progress bar
     - [x] wheel skipping taps
+    - [x] wheel indicator
+    - [ ] make wheel bigger
     - [ ] restructure info area
        - increase font size
        - move save to end
@@ -44,7 +46,6 @@
        - placeholder div for details when invisible
 
     - [ ] move loop and ding widgets into play controls area
-    - [ ] make wheel bigger
 
 - [ ] clicks
     - [ ] generate clicks for count-in

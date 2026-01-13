@@ -41,7 +41,7 @@
     - [x] fix progress bar colour changes
     - [x] restructure info area
     - [x] move loop and ding widgets into play controls area
-    - [ ] make wheel bigger
+    - [x] make wheel bigger
 
 - [ ] clicks
     - [ ] generate clicks for count-in

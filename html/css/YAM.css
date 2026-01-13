@@ -774,7 +774,7 @@ div.metronome div.bpm yam-knob {
 div.metronome div.bpm yam-wheel {
   display: none;
   grid-area: wheel;
-  width: 200px;
+  width: 224px;
   outline: none;
 }
 div.metronome yam-metronome {

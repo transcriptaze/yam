@@ -2,8 +2,6 @@
 
 # Yet Another Metronome
 
-**-- IN DEVELOPMENT (PRE-ALPHA) --**
-
 Yet another _WebAudio_ metronome web app to add to the many, many other _yet-another-metronomes_ out there.
 
 YAM is pretty much designed exclusively for use by an _almost but not entirely ham-fisted_ acoustic fingerstyle

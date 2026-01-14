@@ -365,17 +365,20 @@ main.about p.license {
 main.about ol {
   margin-top: 0px;
 }
-main.about ul.guide {
+main.about div.guide {
+  display: block;
+}
+main.about ul.menu {
   list-style-type: none;
 }
-main.about ul.guide img {
+main.about ul.menu img {
   height: 32px;
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 6px;
   padding-right: 6px;
 }
-main.about ul.guide li {
+main.about ul.menu li {
   display: grid;
   grid-template-rows: auto;
   grid-template-columns: 60px 1fr;
@@ -412,6 +415,10 @@ main.about ul.guide li {
     margin-left: 24px;
     margin-right: 24px;
     overflow-y: scroll;
+  }
+  main.about div.guide {
+    display: flex;
+    flow-direction: column;
   }
 }
 main.unsupported {

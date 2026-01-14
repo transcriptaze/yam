@@ -79,11 +79,15 @@ main.about {
     margin-top: 0px;
   }
 
-  ul.guide {
+  div.guide {
+    display: block;
+  }
+
+  ul.menu {
     list-style-type: none;
   }
 
-  ul.guide img {
+  ul.menu img {
     height: 32px;
     padding-top: 6px;
     padding-bottom: 6px;
@@ -91,7 +95,7 @@ main.about {
     padding-right: 6px;
   }
 
-  ul.guide li {
+  ul.menu li {
     display: grid;
     grid-template-rows: auto;
     grid-template-columns: 60px 1fr;
@@ -137,5 +141,10 @@ main.about {
     margin-right: 24px;
 
     overflow-y: scroll;
+
+    div.guide {
+      display: flex;
+      flow-direction: column;
+    }
   }
 }

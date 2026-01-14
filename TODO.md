@@ -9,17 +9,18 @@
 - [x] changing pulse in track editor doesn't update pads
 - [x] Don't reset track loop count on stop/start (cf. https://github.com/transcriptaze/yam/issues/44)
 - [x] Import error
+- [x] Fix pickup at e.g. 4.5 for 4:4 time (cf. https://github.com/transcriptaze/yam/issues/45)
 
-- [ ] Fix toolbar overlap on desktop when developer tools is open and expanded (cf. https://github.com/transcriptaze/yam/issues/42)
-   - [x] Fixed overlap
-   - [x] Rather make div.content scrollable
-   - [ ] Grab to scroll
-   - [ ] Hide scrollbar
-   - [ ] Vertical scrollbar ???
+- [ ] Fix mobile + landscape layout (cf. https://github.com/transcriptaze/yam/issues/25)
+    - [ ] editor
+       - [x] put track and metronome on the same row
+       - [ ] restructure sections/subsections to use whole row
 
-- [ ] Fix pickup at e.g. 4.5 for 4:4 time (cf. https://github.com/transcriptaze/yam/issues/45)
-    - [x] (interim) check if clock tick is in section.clicks and force click
-    - [x] Take 5 freezes
+    - [ ] playlist
+    - [ ] about
+    - [ ] settings
+
+- [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [x] Rework clock as generator
     - [ ] unit test: BPM change
     - [ ] unit test: tactus change
@@ -28,20 +29,12 @@
     - [ ] 'cue' generator
         - what to do about infinite sections ???
 
-- [ ] Fix mobile + landscape layout (cf. https://github.com/transcriptaze/yam/issues/25)
-    - [x] wheel not set to track BPM
-    - [x] pads not centered
-    - [x] layout shifts when _ding_ is visible
-    - [x] full width pads
-    - [x] fix play/stop size
-    - [x] title area should be wider
-    - [x] wheel ramp/progress bar
-    - [x] wheel skipping taps
-    - [x] wheel indicator
-    - [x] fix progress bar colour changes
-    - [x] restructure info area
-    - [x] move loop and ding widgets into play controls area
-    - [x] make wheel bigger
+- [ ] Fix toolbar overlap on desktop when developer tools is open and expanded (cf. https://github.com/transcriptaze/yam/issues/42)
+   - [x] Fixed overlap
+   - [x] Rather make div.content scrollable
+   - [ ] Grab to scroll
+   - [ ] Hide scrollbar
+   - [ ] Vertical scrollbar ???
 
 - [ ] clicks
     - [ ] generate clicks for count-in

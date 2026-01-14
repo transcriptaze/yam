@@ -12,13 +12,13 @@
 - [x] Fix pickup at e.g. 4.5 for 4:4 time (cf. https://github.com/transcriptaze/yam/issues/45)
 
 - [ ] Fix mobile + landscape layout (cf. https://github.com/transcriptaze/yam/issues/25)
+    - [x] about
+    - [x] ~~settings~~
     - [ ] editor
        - [x] put track and metronome on the same row
        - [ ] restructure sections/subsections to use whole row
 
     - [ ] playlist
-    - [ ] about
-    - [ ] settings
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [x] Rework clock as generator

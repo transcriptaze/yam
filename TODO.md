@@ -17,8 +17,7 @@
     - [x] editor
        - [x] put track and metronome on the same row
        - [x] restructure sections/subsections to use whole row
-
-    - [ ] fix wheel vertical centre
+    - [x] fix wheel vertical centre
     - [ ] playlist
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)

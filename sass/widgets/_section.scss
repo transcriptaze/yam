@@ -6,7 +6,6 @@
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: auto auto;
-    row-gap: 1px;
 
     div.summary {
       background: #ffffff;
@@ -113,6 +112,7 @@
     #measures {
       width: 3em;
       font-family: "YAM", "Lato", sans;
+      visibility: hidden;
     }
   }
 
@@ -126,6 +126,20 @@
     #arrow {
       transform: rotate(0deg);
     }
+
+    #measures {
+      visibility: visible;
+    }
   }
 }
 
+@media (max-width: 1024px) and (orientation: landscape) {
+  :host(.component-section) {
+    div.section {
+      display: grid;
+      grid-template-columns: auto auto;
+      grid-template-rows: auto;
+      column-gap: 1px;
+   }
+  }
+}

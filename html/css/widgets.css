@@ -2109,7 +2109,6 @@ div.playlist-track.random div#title {
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto;
-  row-gap: 1px;
 }
 :host(.component-section) div.section div.summary {
   background: #ffffff;
@@ -2190,6 +2189,7 @@ div.playlist-track.random div#title {
 :host(.component-section) div.section #measures {
   width: 3em;
   font-family: "YAM", "Lato", sans;
+  visibility: hidden;
 }
 :host(.component-section) div.section.collapsed {
   row-gap: 0px;
@@ -2200,7 +2200,18 @@ div.playlist-track.random div#title {
 :host(.component-section) div.section.collapsed #arrow {
   transform: rotate(0deg);
 }
+:host(.component-section) div.section.collapsed #measures {
+  visibility: visible;
+}
 
+@media (max-width: 1024px) and (orientation: landscape) {
+  :host(.component-section) div.section {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    column-gap: 1px;
+  }
+}
 :host(.component-subsection) div.subsection {
   background: #fcfcfc;
   width: 100%;

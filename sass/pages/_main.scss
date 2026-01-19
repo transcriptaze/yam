@@ -42,8 +42,12 @@ div.playlists {
   min-height: 0;
     
   yam-playlists {
-     display: block;
-     height: 100%;
+    display: block;
+    height: 100%;
+  }
+
+  yam-playlist-tracks {
+    display: none;
   }
 }
 
@@ -145,6 +149,22 @@ div.editor {
   div.playlists {
     grid-column: 1;
     grid-row: 1;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+
+    yam-playlists {
+      grid-column: 1;
+      grid-row: 1;
+    }
+
+    yam-playlist-tracks {
+      grid-column: 2;
+      grid-row: 1;
+
+      display: block;
+    }
   }
 
   div.playlists.hidden {

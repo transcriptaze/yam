@@ -21,6 +21,7 @@ const widgets = {
   wheel: document.querySelector('yam-wheel'),
   metronome: document.querySelector('yam-metronome'),
   playlists: document.querySelector('yam-playlists'),
+  tracks: document.querySelector('yam-playlist-tracks'),
   editor: document.querySelector('yam-editor'),
 }
 
@@ -98,6 +99,7 @@ export function initialise() {
 
       widgets.metronome.bof = playlist?.BOF ?? true
       widgets.metronome.eof = playlist?.EOF ?? true
+      widgets.tracks.playlist = { playlist: playlist, selected: null }
 
       models.playlists.prune(models.tracks.tracks)
       models.tracks.prune(models.playlists)

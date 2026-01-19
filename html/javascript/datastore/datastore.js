@@ -1,5 +1,27 @@
 import * as models from '../models/models.js'
-import { realize } from './track.js'
+import * as _playlist from './playlist.js'
+import * as _track from './track.js'
+
+export const playlists = {
+  get(v) {
+    // .. resolve 'playlist' arg to an actual playlist
+    let playlist = null
+
+    if (v != null && typeof v === 'string') {
+      playlist = models.playlists.playlist(v)
+    }
+
+    if (v != null && typeof v === 'object' && v.constructor.name === 'Playlist') {
+      playlist = v
+    }
+
+    if (playlist == null) {
+      return null
+    }
+
+    return _playlist.realize(playlist)
+  },
+}
 
 export const tracks = {
   // Disambiguates the 'track' arg and returns a 'realized' object that is the track
@@ -22,6 +44,6 @@ export const tracks = {
       return null
     }
 
-    return realize(track)
+    return _track.realize(track)
   },
 }

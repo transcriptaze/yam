@@ -448,7 +448,7 @@
   }
 }
 
-:host(.component-playlist[uuid="00000000-0000-0000-0000-000000000000"]) {
+:host(.component-playlist[uuid="00000000-0000-0000-0000-000000000000"]) div.playlist {
     img#trash {
       display: none;
     }
@@ -466,4 +466,12 @@
       filter: invert(13%) sepia(88%) saturate(7445%) hue-rotate(0deg) brightness(103%) contrast(112%);
       transition: filter 0.5s ease;
     }
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+  :host(.component-playlist) div.playlist {
+    div.tracks {
+      display: none;
+    }
+  }
 }

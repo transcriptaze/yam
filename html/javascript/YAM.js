@@ -923,6 +923,7 @@ function onPlaylistSelected(event) {
   if (playlist?.UUID !== state.playlist) {
     playlist?.select(null)
 
+    widgets.tracks.playlist = { playlist: playlist, selected: null }
     widgets.metronome.bof = playlist?.BOF ?? true
     widgets.metronome.eof = playlist?.EOF ?? true
     widgets.editor.track = null

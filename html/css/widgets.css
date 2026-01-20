@@ -1549,7 +1549,7 @@ div.beat.on div.shape {
 :host-context(.unsortable) div.playlist.editing div.grip {
   display: none;
 }
-:host(.component-playlist[uuid="00000000-0000-0000-0000-000000000000"]) img#trash {
+:host(.component-playlist[uuid="00000000-0000-0000-0000-000000000000"]) div.playlist img#trash {
   display: none;
 }
 
@@ -1564,6 +1564,11 @@ div.beat.on div.shape {
   transition: filter 0.5s ease;
 }
 
+@media (max-width: 1024px) and (orientation: landscape) {
+  :host(.component-playlist) div.playlist div.tracks {
+    display: none;
+  }
+}
 div.playlist-track {
   width: 100%;
   margin-bottom: 6px;

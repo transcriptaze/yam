@@ -367,21 +367,21 @@ export class PlaylistTracks extends HTMLElement {
   set #tracks(list) {
     const container = this.shadowRoot.querySelector('div.playlist-tracks')
     const ul = container.querySelector('ul')
-    // const children = Array.from(ul.children)
+    const children = Array.from(ul.children)
     let ix = 0
 
-    //   for (; ix < list.length && ix < children.length; ix++) {
-    //     this.#update(ul, list[ix], children[ix])
-    //   }
+    for (; ix < list.length && ix < children.length; ix++) {
+      this.#update(ul, list[ix], children[ix])
+    }
 
     for (; ix < list.length; ix++) {
       this.#add(ul, list[ix])
     }
 
-    //   for (; ix < children.length; ix++) {
-    //     this.#delete(ul, children[ix])
-    //   }
-    //
+    for (; ix < children.length; ix++) {
+      this.#delete(ul, children[ix])
+    }
+
     //   // ... reselect
     //   const track = list.find((v) => v.UUID === this.selected)
     //   const UUID = track?.UUID ?? null
@@ -601,17 +601,17 @@ export class PlaylistTracks extends HTMLElement {
     ul.appendChild(li)
   }
 
-  // #update(ul, v, li) {
-  //   const track = li.querySelector('yam-playlist-item')
-  //
-  //   track.UUID = v.UUID
-  //   track.title = v.title
-  //   track.muted = v.muted
-  // }
+  #update(ul, v, li) {
+    const track = li.querySelector('yam-playlist-item')
 
-  // #delete(ul, li) {
-  //   ul.removeChild(li)
-  // }
+    track.UUID = v.UUID
+    track.title = v.title
+    track.muted = v.muted
+  }
+
+  #delete(ul, li) {
+    ul.removeChild(li)
+  }
 
   #onPointerDown = (_event) => {
     //   const li = event.currentTarget.parentElement

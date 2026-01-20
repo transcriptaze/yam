@@ -20,6 +20,11 @@
     - [ ] fix wheel outline
     - [ ] playlist
        - [ ] standalone tracklist
+            - [x] initialise playlist
+            - [x] select playlist
+            - [ ] select track
+       - [x] hide embedded tracklists
+       - [ ] separate scrolling
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [x] Rework clock as generator

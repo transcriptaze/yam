@@ -6,7 +6,7 @@ export class PlaylistTracks extends HTMLElement {
     return []
   }
 
-  // #UUID = ''
+  #UUID = ''
   #selected = null
   // #updated = false
   // #tracklist = null
@@ -22,165 +22,165 @@ export class PlaylistTracks extends HTMLElement {
   //   dropped: false,
   // }
 
-  // #handlers = {
-  //   summary: {
-  //     click: (event) => {
-  //       event.preventDefault()
-  //
-  //       const shadow = this.shadowRoot
-  //       const container = shadow.querySelector('div.playlist')
-  //       const open = container.hasAttribute('open')
-  //       const tracks = container.querySelector('div.tracks')
-  //
-  //       if (!open) {
-  //         container.setAttribute('open', '')
-  //         tracks.classList.remove('hidden')
-  //       } else {
-  //         container.removeAttribute('open')
-  //         tracks.classList.add('hidden')
-  //       }
-  //
-  //       this.dispatchEvent(
-  //         new CustomEvent(EVENTS.TOGGLE_PLAYLIST, {
-  //           bubbles: true,
-  //           composed: true,
-  //           detail: { playlist: this.UUID, open: !open },
-  //         }),
-  //       )
-  //     },
-  //   },
-  //
-  //   menu: {
-  //     click: (event) => {
-  //       event.stopPropagation()
-  //     },
-  //
-  //     toggle: (event) => {
-  //       event.stopPropagation()
-  //
-  //       const shadow = this.shadowRoot
-  //       const trash = shadow.querySelector('#trash')
-  //
-  //       if (event.newState === 'open') {
-  //         this.classList.remove('deleting')
-  //         trash.classList.remove('locked')
-  //       }
-  //
-  //       if (event.newState === 'closed') {
-  //         this.classList.remove('deleting')
-  //       }
-  //     },
-  //   },
-  //
-  //   ul: {
-  //     click: (event) => {
-  //       if (event.target.UUID != null) {
-  //         event.preventDefault()
-  //         this.dispatchEvent(
-  //           new CustomEvent(EVENTS.SELECT_TRACK, {
-  //             bubbles: true,
-  //             composed: true,
-  //             detail: { playlist: this.UUID, track: event.target.UUID },
-  //           }),
-  //         )
-  //       }
-  //     },
-  //   },
-  //
-  //   edit: {
-  //     click: (event) => {
-  //       event.preventDefault()
-  //       event.stopPropagation()
-  //
-  //       const shadow = this.shadowRoot
-  //       const menu = shadow.querySelector('[popover]')
-  //
-  //       menu.hidePopover()
-  //
-  //       this.dispatchEvent(
-  //         new CustomEvent(EVENTS.EDIT_PLAYLIST, {
-  //           bubbles: true,
-  //           composed: true,
-  //           detail: {},
-  //         }),
-  //       )
-  //     },
-  //   },
-  //
-  //   save: {
-  //     click: (event) => {
-  //       event.preventDefault()
-  //       event.stopPropagation()
-  //
-  //       // const container = this.shadowRoot.querySelector('div.playlist')
-  //       // const editing = container.classList.contains('editing')
-  //       // const adding = container.classList.contains('adding')
-  //
-  //       // if (editing && !adding) {
-  //       //   this.#save_edits()
-  //       //   this.#edited()
-  //       // }
-  //
-  //       // if (adding && !editing) {
-  //       //   this.#save_adds()
-  //       //   this.#added()
-  //       // }
-  //     },
-  //   },
-  //
-  //   trash: {
-  //     click: (event) => {
-  //       event.preventDefault()
-  //       event.stopPropagation()
-  //
-  //       const shadow = this.shadowRoot
-  //       const trash = shadow.querySelector('#trash')
-  //
-  //       if (this.classList.contains('deleting') && !trash.classList.contains('locked')) {
-  //         this.dispatchEvent(
-  //           new CustomEvent(EVENTS.DELETE_PLAYLIST, {
-  //             bubbles: true,
-  //             composed: true,
-  //             detail: { playlist: this.UUID },
-  //           }),
-  //         )
-  //       } else {
-  //         this.classList.add('deleting')
-  //         trash.classList.add('locked')
-  //       }
-  //     },
-  //
-  //     transitionend: (event) => {
-  //       const shadow = this.shadowRoot
-  //       const trash = shadow.querySelector('#trash')
-  //
-  //       if (event.propertyName === 'filter') {
-  //         trash.classList.remove('locked')
-  //       }
-  //     },
-  //   },
-  //
-  //   plus: {
-  //     click: (event) => {
-  //       event.preventDefault()
-  //       event.stopPropagation()
-  //
-  //       this.plus()
-  //     },
-  //   },
-  //
-  //   container: {
-  //     new_track: () => {
-  //       // this.#save_adds()
-  //       // this.#added()
-  //     },
-  //
-  //     random_track: () => {
-  //       // this.#save_adds()
-  //       // this.#added()
-  //     },
-  //   },
-  // }
+  #handlers = {
+    //   summary: {
+    //     click: (event) => {
+    //       event.preventDefault()
+    //
+    //       const shadow = this.shadowRoot
+    //       const container = shadow.querySelector('div.playlist')
+    //       const open = container.hasAttribute('open')
+    //       const tracks = container.querySelector('div.tracks')
+    //
+    //       if (!open) {
+    //         container.setAttribute('open', '')
+    //         tracks.classList.remove('hidden')
+    //       } else {
+    //         container.removeAttribute('open')
+    //         tracks.classList.add('hidden')
+    //       }
+    //
+    //       this.dispatchEvent(
+    //         new CustomEvent(EVENTS.TOGGLE_PLAYLIST, {
+    //           bubbles: true,
+    //           composed: true,
+    //           detail: { playlist: this.UUID, open: !open },
+    //         }),
+    //       )
+    //     },
+    //   },
+    //
+    //   menu: {
+    //     click: (event) => {
+    //       event.stopPropagation()
+    //     },
+    //
+    //     toggle: (event) => {
+    //       event.stopPropagation()
+    //
+    //       const shadow = this.shadowRoot
+    //       const trash = shadow.querySelector('#trash')
+    //
+    //       if (event.newState === 'open') {
+    //         this.classList.remove('deleting')
+    //         trash.classList.remove('locked')
+    //       }
+    //
+    //       if (event.newState === 'closed') {
+    //         this.classList.remove('deleting')
+    //       }
+    //     },
+    //   },
+
+    ul: {
+      click: (event) => {
+        if (event.target.UUID != null) {
+          event.preventDefault()
+          this.dispatchEvent(
+            new CustomEvent(EVENTS.SELECT_TRACK, {
+              bubbles: true,
+              composed: true,
+              detail: { playlist: this.#UUID, track: event.target.UUID },
+            }),
+          )
+        }
+      },
+    },
+
+    //   edit: {
+    //     click: (event) => {
+    //       event.preventDefault()
+    //       event.stopPropagation()
+    //
+    //       const shadow = this.shadowRoot
+    //       const menu = shadow.querySelector('[popover]')
+    //
+    //       menu.hidePopover()
+    //
+    //       this.dispatchEvent(
+    //         new CustomEvent(EVENTS.EDIT_PLAYLIST, {
+    //           bubbles: true,
+    //           composed: true,
+    //           detail: {},
+    //         }),
+    //       )
+    //     },
+    //   },
+    //
+    //   save: {
+    //     click: (event) => {
+    //       event.preventDefault()
+    //       event.stopPropagation()
+    //
+    //       // const container = this.shadowRoot.querySelector('div.playlist')
+    //       // const editing = container.classList.contains('editing')
+    //       // const adding = container.classList.contains('adding')
+    //
+    //       // if (editing && !adding) {
+    //       //   this.#save_edits()
+    //       //   this.#edited()
+    //       // }
+    //
+    //       // if (adding && !editing) {
+    //       //   this.#save_adds()
+    //       //   this.#added()
+    //       // }
+    //     },
+    //   },
+    //
+    //   trash: {
+    //     click: (event) => {
+    //       event.preventDefault()
+    //       event.stopPropagation()
+    //
+    //       const shadow = this.shadowRoot
+    //       const trash = shadow.querySelector('#trash')
+    //
+    //       if (this.classList.contains('deleting') && !trash.classList.contains('locked')) {
+    //         this.dispatchEvent(
+    //           new CustomEvent(EVENTS.DELETE_PLAYLIST, {
+    //             bubbles: true,
+    //             composed: true,
+    //             detail: { playlist: this.UUID },
+    //           }),
+    //         )
+    //       } else {
+    //         this.classList.add('deleting')
+    //         trash.classList.add('locked')
+    //       }
+    //     },
+    //
+    //     transitionend: (event) => {
+    //       const shadow = this.shadowRoot
+    //       const trash = shadow.querySelector('#trash')
+    //
+    //       if (event.propertyName === 'filter') {
+    //         trash.classList.remove('locked')
+    //       }
+    //     },
+    //   },
+    //
+    //   plus: {
+    //     click: (event) => {
+    //       event.preventDefault()
+    //       event.stopPropagation()
+    //
+    //       this.plus()
+    //     },
+    //   },
+    //
+    //   container: {
+    //     new_track: () => {
+    //       // this.#save_adds()
+    //       // this.#added()
+    //     },
+    //
+    //     random_track: () => {
+    //       // this.#save_adds()
+    //       // this.#added()
+    //     },
+    //   },
+  }
 
   constructor() {
     super()
@@ -201,12 +201,11 @@ export class PlaylistTracks extends HTMLElement {
   connectedCallback() {
     this.classList.add('component-playlist-tracks')
 
-    // const shadow = this.shadowRoot
     // const container = shadow.querySelector('div.playlist')
     // const summary = container.querySelector('div.summary')
     // const menu = shadow.querySelector('button#menu')
     // const popover = shadow.querySelector('[popover]')
-    // const ul = shadow.querySelector('ul')
+    const ul = this.shadowRoot.querySelector('div.list > ul')
     // const edit = shadow.querySelector('#edit')
     // const trash = shadow.querySelector('#trash')
     // const save = shadow.querySelector('#save')
@@ -214,7 +213,7 @@ export class PlaylistTracks extends HTMLElement {
     // summary.addEventListener('click', this.#handlers.summary.click)
     // menu.addEventListener('click', this.#handlers.menu.click)
     // popover.addEventListener('toggle', this.#handlers.menu.toggle)
-    // ul.addEventListener('click', this.#handlers.ul.click)
+    ul.addEventListener('click', this.#handlers.ul.click)
     // edit.addEventListener('click', this.#handlers.edit.click)
     // save.addEventListener('click', this.#handlers.save.click)
 
@@ -236,7 +235,7 @@ export class PlaylistTracks extends HTMLElement {
   attributeChangedCallback(_name, _from, _to) {}
 
   set playlist({ playlist, selected }) {
-    // this.#UUID = playlist?.UUID ?? ''
+    this.#UUID = playlist?.UUID ?? ''
     this.#tracks = datastore.playlists.get(playlist)?.tracks ?? []
   }
 
@@ -244,9 +243,11 @@ export class PlaylistTracks extends HTMLElement {
   //   return this.#selected
   // }
 
-  // set selected(v) {
-  //   this.#select(v)
-  // }
+  set selected({ playlist, track }) {
+    if (playlist === this.#UUID) {
+      this.#select(track)
+    }
+  }
 
   // set deleting(v) {
   //   const shadow = this.shadowRoot
@@ -389,25 +390,25 @@ export class PlaylistTracks extends HTMLElement {
     //   this.#select(UUID)
   }
 
-  // #select(UUID) {
-  //   const container = this.shadowRoot.querySelector('div.playlist')
-  //   const ul = container.querySelector('ul')
-  //
-  //   for (const li of ul.children) {
-  //     const track = li.querySelector('yam-playlist-item')
-  //
-  //     track.selected = track.UUID === UUID
-  //   }
-  //
-  //   // ... set #selected
-  //   const track = this.#tracks.find((v) => v.UUID === UUID)
-  //
-  //   if (track == null && this.#selected != null) {
-  //     this.#selected = null
-  //   } else if ((UUID == null && this.#selected != null) || (UUID != null && UUID !== this.#selected)) {
-  //     this.#selected = UUID
-  //   }
-  // }
+  #select(UUID) {
+    const container = this.shadowRoot.querySelector('div.playlist-tracks')
+    const ul = container.querySelector('ul')
+
+    for (const li of ul.children) {
+      const track = li.querySelector('yam-playlist-item')
+
+      track.selected = track.UUID === UUID
+    }
+
+    // // ... set #selected
+    // const track = this.#tracks.find((v) => v.UUID === UUID)
+    //
+    // if (track == null && this.#selected != null) {
+    //   this.#selected = null
+    // } else if ((UUID == null && this.#selected != null) || (UUID != null && UUID !== this.#selected)) {
+    //   this.#selected = UUID
+    // }
+  }
 
   // #edited() {
   //   const container = this.shadowRoot.querySelector('div.playlist')

@@ -22,9 +22,10 @@
        - [ ] standalone tracklist
             - [x] initialise playlist
             - [x] select playlist
-            - [ ] select track
+            - [x] select track
        - [x] hide embedded tracklists
        - [ ] separate scrolling
+       - [ ] allow playlist drag always
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [x] Rework clock as generator

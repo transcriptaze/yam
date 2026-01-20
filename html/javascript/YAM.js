@@ -398,6 +398,8 @@ function rewire() {
   widgets.playlists.addEventListener(EVENTS.NEW_TRACK, (e) => onTrackNew(e))
   widgets.playlists.addEventListener(EVENTS.RANDOM_TRACK, (e) => onTrackRandom(e))
 
+  widgets.tracks.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
+
   widgets.editor.addEventListener(EVENTS.EDIT_SAVE, (e) => onEdited(e))
 
   info.addEventListener('change', (e) => onTitle(e))
@@ -600,6 +602,11 @@ function onSelected(event) {
   }
 
   widgets.playlists.selected = {
+    playlist: playlist?.UUID,
+    track: playlist?.selected,
+  }
+
+  widgets.tracks.selected = {
     playlist: playlist?.UUID,
     track: playlist?.selected,
   }

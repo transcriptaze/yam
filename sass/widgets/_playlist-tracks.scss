@@ -1,31 +1,35 @@
 :host(.component-playlist-tracks) {
   div.playlist-tracks {
     box-sizing: border-box;
-
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    row-gap: 2px;
+    height: 100%;
+    overflow: hidden;
 
     margin-top: 4px;
     margin-bottom: 4px;
-
     padding-top: 0px;
     padding-bottom: 0px;
     padding-left: 4px;
     padding-right: 4px;
-
     border-radius: 12px;
 
-    div.tracks {
-      display: grid;
-      grid-template-columns: 1fr;
-      grid-template-rows: auto;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: 1fr auto;
+    row-gap: 2px;
 
-      div.list {
-        grid-column: 1;
-        grid-row: 1;
-      }
+    div.list {
+      grid-column: 1 / 3;
+      grid-row: 1 / 3;
+    }
+
+    #plus {
+      grid-column: 2;
+      grid-row: 2;
+    }
+
+    div.list {
+      grid-column: 1 / 3;
+      grid-row: 1 / 3;
     }
 
     div.list {
@@ -68,49 +72,26 @@
           }
         }
       }
-
-      div.footer {
-        box-sizing: border-box;
-
-        display: flex;
-        justify-content: center;
-      }
-
-      #plus {
-        width: 80%;
-        margin-top: 8px;
-        margin-bottom: 8px;
-
-        border: 1px solid #222222;
-        border-radius: 8px;
-
-        img {
-          width: 32px;
-        }
-      }
     }
 
-    div.tracks.hidden {
-      display: none;
-    }
-
-    div.grip {
-      width: 28px;
-      height: 100%;
-
+    #plus {
       display: flex;
+      justify-content: center;
       align-items: center;
 
-      padding-top: 0px;
-      padding-bottom: 0px;
-      padding-left: 4px;
-      padding-right: 4px;
+      background: rgba(255, 255, 255, 0.1);   /* semi-transparent */
+      backdrop-filter: blur(5px);
+      -webkit-backdrop-filter: blur(0.5px);
 
+      margin: 8px;
+      padding: 4px;
+      border: none;
+      border-radius: 50%;
       z-index: 2;
-      cursor: grab;
 
       img {
-        width: 16px;      
+        width: 40px;
+        filter: invert(24%) sepia(7%) saturate(6%) hue-rotate(314deg) brightness(97%) contrast(88%);
       }
     }
 

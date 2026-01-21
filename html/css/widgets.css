@@ -1128,6 +1128,12 @@ div.beat.on div.shape {
 :host(.component-playlists) div.playlists div.list {
   grid-column: 1/3;
   grid-row: 1/3;
+}
+:host(.component-playlists) div.playlists #plus {
+  grid-column: 2;
+  grid-row: 2;
+}
+:host(.component-playlists) div.playlists div.list {
   margin-top: 4px;
   margin-bottom: 4px;
   margin-left: 0px;
@@ -1188,8 +1194,6 @@ div.beat.on div.shape {
   display: block;
 }
 :host(.component-playlists) div.playlists #plus {
-  grid-column: 2;
-  grid-row: 2;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1710,10 +1714,8 @@ div.playlist-track.random div#title {
 
 :host(.component-playlist-tracks) div.playlist-tracks {
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  row-gap: 2px;
+  height: 100%;
+  overflow: hidden;
   margin-top: 4px;
   margin-bottom: 4px;
   padding-top: 0px;
@@ -1721,15 +1723,22 @@ div.playlist-track.random div#title {
   padding-left: 4px;
   padding-right: 4px;
   border-radius: 12px;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.tracks {
   display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 1fr auto;
+  row-gap: 2px;
 }
-:host(.component-playlist-tracks) div.playlist-tracks div.tracks div.list {
-  grid-column: 1;
-  grid-row: 1;
+:host(.component-playlist-tracks) div.playlist-tracks div.list {
+  grid-column: 1/3;
+  grid-row: 1/3;
+}
+:host(.component-playlist-tracks) div.playlist-tracks #plus {
+  grid-column: 2;
+  grid-row: 2;
+}
+:host(.component-playlist-tracks) div.playlist-tracks div.list {
+  grid-column: 1/3;
+  grid-row: 1/3;
 }
 :host(.component-playlist-tracks) div.playlist-tracks div.list {
   display: flex;
@@ -1764,38 +1773,22 @@ div.playlist-track.random div#title {
   grid-row: 1;
   flex-grow: 1;
 }
-:host(.component-playlist-tracks) div.playlist-tracks div.list div.footer {
-  box-sizing: border-box;
+:host(.component-playlist-tracks) div.playlist-tracks #plus {
   display: flex;
   justify-content: center;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.list #plus {
-  width: 80%;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  border: 1px solid #222222;
-  border-radius: 8px;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.list #plus img {
-  width: 32px;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.tracks.hidden {
-  display: none;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.grip {
-  width: 28px;
-  height: 100%;
-  display: flex;
   align-items: center;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  padding-left: 4px;
-  padding-right: 4px;
+  background: rgba(255, 255, 255, 0.1); /* semi-transparent */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(0.5px);
+  margin: 8px;
+  padding: 4px;
+  border: none;
+  border-radius: 50%;
   z-index: 2;
-  cursor: grab;
 }
-:host(.component-playlist-tracks) div.playlist-tracks div.grip img {
-  width: 16px;
+:host(.component-playlist-tracks) div.playlist-tracks #plus img {
+  width: 40px;
+  filter: invert(24%) sepia(7%) saturate(6%) hue-rotate(314deg) brightness(97%) contrast(88%);
 }
 :host(.component-playlist-tracks) div.playlist-tracks yam-playlist-item {
   margin-left: 32px;

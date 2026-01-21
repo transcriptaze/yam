@@ -27,8 +27,12 @@
             - [x] select track
             - [x] allow playlist drag always
             - [ ] replace '+' with floating circle '+'
-       - [ ] add
+            - [ ] add
+            - [ ] edit
+            - [ ] mute
+            - [ ] delete
        - [ ] edit
+            - [ ] title overlaps grip
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [x] Rework clock as generator

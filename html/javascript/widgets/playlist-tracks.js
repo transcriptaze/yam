@@ -159,16 +159,16 @@ export class PlaylistTracks extends HTMLElement {
     //       }
     //     },
     //   },
-    //
-    //   plus: {
-    //     click: (event) => {
-    //       event.preventDefault()
-    //       event.stopPropagation()
-    //
-    //       this.plus()
-    //     },
-    //   },
-    //
+
+    plus: {
+      click: (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        this.plus()
+      },
+    },
+
     //   container: {
     //     new_track: () => {
     //       // this.#save_adds()
@@ -206,6 +206,7 @@ export class PlaylistTracks extends HTMLElement {
     // const menu = shadow.querySelector('button#menu')
     // const popover = shadow.querySelector('[popover]')
     const ul = this.shadowRoot.querySelector('div.list > ul')
+    const plus = this.shadowRoot.querySelector('#plus')
     // const edit = shadow.querySelector('#edit')
     // const trash = shadow.querySelector('#trash')
     // const save = shadow.querySelector('#save')
@@ -220,7 +221,7 @@ export class PlaylistTracks extends HTMLElement {
     // trash.addEventListener('click', this.#handlers.trash.click)
     // trash.addEventListener('transitionend', this.#handlers.trash.transitionend)
 
-    // this.#plus?.addEventListener('click', this.#handlers.plus.click)
+    plus.addEventListener('click', this.#handlers.plus.click)
 
     // container.addEventListener(EVENTS.NEW_TRACK, this.#handlers.container.new_track)
     // container.addEventListener(EVENTS.RANDOM_TRACK, this.#handlers.container.random_track)
@@ -345,25 +346,18 @@ export class PlaylistTracks extends HTMLElement {
   //   document.addEventListener('mousedown', this.#clickOutside)
   // }
 
-  // plus() {
-  //   const container = this.shadowRoot.querySelector('div.playlist')
-  //
-  //   if (this.#add_tracks != null) {
-  //     this.#add_tracks.selected = this.#tracks
-  //   }
-  //
-  //   container.classList.add('adding')
-  //
-  //   document.addEventListener('mousedown', this.#clickOutside)
-  // }
-
-  // get #plus() {
-  //   if (this.#fields.plus == null) {
-  //     this.#fields.plus = this.shadowRoot?.querySelector('#plus')
-  //   }
-  //
-  //   return this.#fields.plus
-  // }
+  plus() {
+    console.log('>>>> plus')
+    // const container = this.shadowRoot.querySelector('div.playlist')
+    //
+    // if (this.#add_tracks != null) {
+    //   this.#add_tracks.selected = this.#tracks
+    // }
+    //
+    // container.classList.add('adding')
+    //
+    // document.addEventListener('mousedown', this.#clickOutside)
+  }
 
   set #tracks(list) {
     const container = this.shadowRoot.querySelector('div.playlist-tracks')

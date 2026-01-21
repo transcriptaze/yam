@@ -1266,9 +1266,9 @@ div.beat.on div.shape {
 :host(.component-playlist) div.playlist div.summary div.menu {
   grid-column: 3;
   grid-row: 1;
-  box-sizing: border-box;
 }
 :host(.component-playlist) div.playlist div.summary div.menu {
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto;
@@ -1347,6 +1347,8 @@ div.beat.on div.shape {
   box-sizing: border-box;
   padding-top: 4px;
   padding-bottom: 4px;
+  display: flex;
+  align-items: center;
 }
 :host(.component-playlist) div.playlist div.title input {
   box-sizing: border-box;
@@ -1435,21 +1437,6 @@ div.beat.on div.shape {
 :host(.component-playlist) div.playlist div.tracks.hidden {
   display: none;
 }
-:host(.component-playlist) div.playlist div.grip {
-  width: 28px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  padding-left: 4px;
-  padding-right: 4px;
-  z-index: 2;
-  cursor: grab;
-}
-:host(.component-playlist) div.playlist div.grip img {
-  width: 16px;
-}
 :host(.component-playlist) div.playlist yam-playlist-item {
   margin-left: 32px;
   margin-top: 4px;
@@ -1483,9 +1470,6 @@ div.beat.on div.shape {
 }
 :host(.component-playlist) div.playlist.editing div.tracks yam-tracklist {
   display: block;
-}
-:host(.component-playlist) div.playlist.selected.editing div.summary {
-  grid-template-columns: 16px 1fr auto;
 }
 :host(.component-playlist) div.playlist.adding div.menu #menu {
   display: none;

@@ -33,11 +33,11 @@
       div.menu {
         grid-column: 3;
         grid-row: 1;
-
-        box-sizing: border-box;
       }
 
       div.menu {
+        box-sizing: border-box;
+
         display: grid;
         grid-template-columns: auto;
         grid-template-rows: auto;
@@ -134,6 +134,9 @@
       box-sizing: border-box;
       padding-top: 4px;
       padding-bottom: 4px;
+
+      display: flex;
+      align-items: center;
 
       input {
         box-sizing: border-box;
@@ -248,26 +251,6 @@
       display: none;
     }
 
-    div.grip {
-      width: 28px;
-      height: 100%;
-
-      display: flex;
-      align-items: center;
-
-      padding-top: 0px;
-      padding-bottom: 0px;
-      padding-left: 4px;
-      padding-right: 4px;
-
-      z-index: 2;
-      cursor: grab;
-
-      img {
-        width: 16px;      
-      }
-    }
-
     yam-playlist-item {
       margin-left: 32px;
       margin-top: 4px;
@@ -326,12 +309,6 @@
       }
     }
 
-  }
-
-  div.playlist.selected.editing {
-    div.summary {
-      grid-template-columns: 16px 1fr auto;
-    }
   }
 
   div.playlist.adding {
@@ -475,6 +452,7 @@
       border-bottom-left-radius: 12px;
       border-bottom-right-radius: 12px;
   }
+
 
   :host-context(.unsortable) div.playlist {
   }

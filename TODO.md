@@ -19,13 +19,16 @@
     - [x] fix wheel vertical centre
     - [ ] fix wheel outline
     - [ ] playlist
+       - [x] hide embedded tracklists
+       - [x] separate scrolling
        - [ ] standalone tracklist
             - [x] initialise playlist
             - [x] select playlist
             - [x] select track
-       - [x] hide embedded tracklists
-       - [ ] separate scrolling
+            - [ ] replace '+' with floating circle '+'
        - [ ] allow playlist drag always
+       - [ ] add
+       - [ ] edit
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [x] Rework clock as generator

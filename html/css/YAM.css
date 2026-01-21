@@ -95,13 +95,6 @@ div.playlists {
   overflow-y: auto;
   min-height: 0;
 }
-div.playlists yam-playlists {
-  display: block;
-  height: 100%;
-}
-div.playlists yam-playlist-tracks {
-  display: none;
-}
 
 div.editor {
   grid-area: editor;
@@ -182,18 +175,6 @@ div.editor yam-editor {
   div.playlists {
     grid-column: 1;
     grid-row: 1;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto;
-  }
-  div.playlists yam-playlists {
-    grid-column: 1;
-    grid-row: 1;
-  }
-  div.playlists yam-playlist-tracks {
-    grid-column: 2;
-    grid-row: 1;
-    display: block;
   }
   div.playlists.hidden {
     display: none;
@@ -893,6 +874,32 @@ div.metronome yam-loop {
     justify-self: center;
     margin-left: 12px;
     margin-right: 12px;
+  }
+}
+div.playlists yam-playlists {
+  display: block;
+  height: 100%;
+}
+div.playlists yam-playlist-tracks {
+  display: none;
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+  div.playlists {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+  div.playlists yam-playlists {
+    grid-column: 1;
+    grid-row: 1;
+    overflow-y: scroll;
+  }
+  div.playlists yam-playlist-tracks {
+    grid-column: 2;
+    grid-row: 1;
+    display: block;
+    overflow-y: scroll;
   }
 }
 html {

@@ -21,6 +21,7 @@ const widgets = {
   wheel: document.querySelector('yam-wheel'),
   metronome: document.querySelector('yam-metronome'),
   playlists: document.querySelector('yam-playlists'),
+  tracks: document.querySelector('yam-playlist-tracks'),
   editor: document.querySelector('yam-editor'),
 }
 
@@ -98,6 +99,7 @@ export function initialise() {
 
       widgets.metronome.bof = playlist?.BOF ?? true
       widgets.metronome.eof = playlist?.EOF ?? true
+      widgets.tracks.playlist = { playlist: playlist, selected: null }
 
       models.playlists.prune(models.tracks.tracks)
       models.tracks.prune(models.playlists)
@@ -396,6 +398,8 @@ function rewire() {
   widgets.playlists.addEventListener(EVENTS.NEW_TRACK, (e) => onTrackNew(e))
   widgets.playlists.addEventListener(EVENTS.RANDOM_TRACK, (e) => onTrackRandom(e))
 
+  widgets.tracks.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
+
   widgets.editor.addEventListener(EVENTS.EDIT_SAVE, (e) => onEdited(e))
 
   info.addEventListener('change', (e) => onTitle(e))
@@ -598,6 +602,11 @@ function onSelected(event) {
   }
 
   widgets.playlists.selected = {
+    playlist: playlist?.UUID,
+    track: playlist?.selected,
+  }
+
+  widgets.tracks.selected = {
     playlist: playlist?.UUID,
     track: playlist?.selected,
   }
@@ -921,6 +930,7 @@ function onPlaylistSelected(event) {
   if (playlist?.UUID !== state.playlist) {
     playlist?.select(null)
 
+    widgets.tracks.playlist = { playlist: playlist, selected: null }
     widgets.metronome.bof = playlist?.BOF ?? true
     widgets.metronome.eof = playlist?.EOF ?? true
     widgets.editor.track = null

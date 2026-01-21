@@ -1,5 +1,5 @@
-:host(.component-playlist) {
-  div.playlist {
+:host(.component-playlist-tracks) {
+  div.playlist-tracks {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -274,7 +274,7 @@
     }
   }
 
-  div.playlist.selected {
+  div.playlist-tracks.selected {
     div.title {
       input {
         font-weight: bold;
@@ -282,7 +282,7 @@
     }
   }
 
-  div.playlist {
+  div.playlist-tracks {
     div.menu {
       #menu {
         display: block;
@@ -294,7 +294,7 @@
     }
   }
 
-  div.playlist.editing {
+  div.playlist-tracks.editing {
     div.title {      
       padding-right: 14px;
 
@@ -328,13 +328,13 @@
 
   }
 
-  div.playlist.selected.editing {
+  div.playlist-tracks.selected.editing {
     div.summary {
       grid-template-columns: 16px 1fr auto;
     }
   }
 
-  div.playlist.adding {
+  div.playlist-tracks.adding {
     div.menu {
       #menu {
         display: none;
@@ -363,7 +363,7 @@
   }
 
   @media (max-width: 768px) and (orientation:portrait) {
-    div.playlist {  
+    div.playlist-tracks {  
       div.grip {
         width: 48px;
         padding-left: 12px;
@@ -386,7 +386,7 @@
   }
 
   @media (max-width: 1024px) and (orientation: landscape) {
-    div.playlist {  
+    div.playlist-tracks {  
       div.grip {
         width: 36px;
         padding-left: 8px;
@@ -409,25 +409,25 @@
   }
 }
 
-:host(.component-playlist#all) div.playlist {
+:host(.component-playlist-tracks#all) div.playlist-tracks {
     div.summary {
       border-top-left-radius: 12px;
       border-top-right-radius: 12px;
     }
 }
 
-:host-context(li:last-child) div.playlist div.summary {
+:host-context(li:last-child) div.playlist-tracks div.summary {
       border-bottom-left-radius: 12px;
       border-bottom-right-radius: 12px;
 }
 
-:host-context(li:last-child) div.playlist[open] div.summary {
+:host-context(li:last-child) div.playlist-tracks[open] div.summary {
       border-bottom-left-radius: 0px;
       border-bottom-right-radius: 0px;
 }
 
 :host-context(.unsortable) {
-  div.playlist {
+  div.playlist-tracks {
     div.summary {
       grid-template-columns: 16px 1fr auto;
 
@@ -437,7 +437,7 @@
     }
   }
 
-  div.playlist.editing {
+  div.playlist-tracks.editing {
     div.grip {
       display: none;
     }
@@ -448,13 +448,13 @@
   }
 }
 
-:host(.component-playlist[uuid="00000000-0000-0000-0000-000000000000"]) div.playlist {
+:host(.component-playlist-tracks[uuid="00000000-0000-0000-0000-000000000000"]) {
     img#trash {
       display: none;
     }
 }
 
-:host(.component-playlist.deleting) div.playlist {
+:host(.component-playlist-tracks.deleting) div.playlist {
     div.title input {
       color: var(--playlist-colour-deleting);
       font-style: italic;
@@ -466,12 +466,4 @@
       filter: invert(13%) sepia(88%) saturate(7445%) hue-rotate(0deg) brightness(103%) contrast(112%);
       transition: filter 0.5s ease;
     }
-}
-
-@media (max-width: 1024px) and (orientation: landscape) {
-  :host(.component-playlist) div.playlist {
-    div.tracks {
-      display: none;
-    }
-  }
 }

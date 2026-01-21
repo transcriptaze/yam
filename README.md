@@ -4,11 +4,13 @@
 
 Yet another _WebAudio_ metronome web app to add to the many, many other _yet-another-metronomes_ out there.
 
-YAM is pretty much designed exclusively for use by an _almost but not entirely ham-fisted_ acoustic fingerstyle
-guitarist without any appreciable musical ability who plays an old (but adored!) Taylor 310e and needs all the
-help they can get. If that description is not you (it probably isn't 😄) then YMMV!
+YAM is built around a fairly specific use case: solo acoustic fingerstyle guitar practice sessions — i.e. tracks-in-progress
+organised into playlists — with support for features such as:
+- count-ins
+- pickup bars
+- tempo and time-signature changes
 
-It's available online if you want to try it out:
+An online version is available:
 
 https://yam-alpha.pages.dev
 

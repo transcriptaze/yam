@@ -34,6 +34,7 @@
         
         <div class="panel playlists hidden">
           <yam-playlists></yam-playlists>
+          <yam-playlist-tracks></yam-playlist-tracks>
         </div>
         
         <div class="panel editor hidden">
@@ -687,6 +688,17 @@
             <div class="footer">
               <button id="plus"><img src="./images/plus.svg" draggable="false" /></button>
             </div>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template id="template-playlist-tracks">
+      <div class="playlist-tracks">
+        <div class="list">
+          <ul></ul>
+          <div class="footer">
+            <button id="plus"><img src="./images/plus.svg" draggable="false" /></button>
           </div>
         </div>
       </div>

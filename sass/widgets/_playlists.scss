@@ -140,5 +140,14 @@
         padding-left: 16px;
       }
     }
+   
+    div.playlists.unsortable {
+      div.grip {
+        width: 48px;
+        padding-left: 16px;
+
+        // display: grid;
+      }
+    }
   }
 }

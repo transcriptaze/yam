@@ -1226,6 +1226,10 @@ div.beat.on div.shape {
     width: 48px;
     padding-left: 16px;
   }
+  :host(.component-playlists) div.playlists.unsortable div.grip {
+    width: 48px;
+    padding-left: 16px;
+  }
 }
 
 :host(.component-playlist) div.playlist {
@@ -1543,12 +1547,10 @@ div.beat.on div.shape {
 :host-context(.unsortable) div.playlist div.summary {
   grid-template-columns: 16px 1fr auto;
 }
-:host-context(.unsortable) div.playlist div.summary div.grip {
-  visibility: hidden;
-}
 :host-context(.unsortable) div.playlist.editing div.grip {
   display: none;
 }
+
 :host(.component-playlist[uuid="00000000-0000-0000-0000-000000000000"]) div.playlist img#trash {
   display: none;
 }
@@ -1565,8 +1567,15 @@ div.beat.on div.shape {
 }
 
 @media (max-width: 1024px) and (orientation: landscape) {
+  :host(.component-playlist) div.playlist div.summary {
+    grid-template-columns: 36px 1fr auto;
+  }
   :host(.component-playlist) div.playlist div.tracks {
     display: none;
+  }
+  :host-context(li:last-child) div.playlist div.summary {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
   }
 }
 div.playlist-track {
@@ -1700,133 +1709,18 @@ div.playlist-track.random div#title {
 }
 
 :host(.component-playlist-tracks) div.playlist-tracks {
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   row-gap: 2px;
+  margin-top: 4px;
+  margin-bottom: 4px;
   padding-top: 0px;
   padding-bottom: 0px;
   padding-left: 4px;
   padding-right: 4px;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.summary {
-  display: grid;
-  grid-template-columns: 36px 1fr auto;
-  grid-template-rows: auto;
-  background: rgba(255, 128, 0, 0.2509803922);
-  color: #804000;
-  overflow: hidden;
-  outline: none;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.summary div.placeholder {
-  grid-column: 1;
-  grid-row: 1;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.summary div.title {
-  grid-column: 2;
-  grid-row: 1;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.summary div.menu {
-  grid-column: 3;
-  grid-row: 1;
-  box-sizing: border-box;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.summary div.menu {
-  display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: auto;
-  justify-items: end;
-  align-items: center;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.summary div.menu #menu {
-  grid-column: 1;
-  grid-row: 1;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.summary div.menu #menu img {
-  width: 16px;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.summary div.menu #save {
-  grid-column: 1;
-  grid-row: 1;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.summary div.menu #save img {
-  width: 32px;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.summary button {
-  display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: auto;
-  align-items: center;
-  background: none;
-  padding-top: 3px;
-  padding-bottom: 3px;
-  padding-left: 8px;
-  padding-right: 4px;
-  border: none;
-  outline: none;
-  background: transparent;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.summary [popover] {
-  top: calc(anchor(bottom) + 4px);
-  left: calc(anchor(left) - 60px);
-  transform: translateX(0px);
-  margin: 0px;
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 4px;
-  padding-right: 4px;
-  background: #ffffff;
-  outline: none;
-  border: none;
-  border-radius: 4px;
-  width: fit-content;
-  height: fit-content;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.summary [popover] div {
-  display: grid;
-  grid-auto-flow: column;
-  grid-auto-columns: minmax(2px, 1fr);
-  grid-template-rows: auto;
-  column-gap: 4px;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.summary [popover] div img {
-  height: 32px;
-  width: auto;
-  border-radius: 4px;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  padding-left: 2px;
-  padding-right: 2px;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.summary img {
-  height: 24px;
-  width: auto;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.title {
-  box-sizing: border-box;
-  padding-top: 4px;
-  padding-bottom: 4px;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.title input {
-  box-sizing: border-box;
-  width: 100%;
-  padding-top: 6px;
-  padding-bottom: 4px;
-  padding-left: 8px;
-  padding-right: 8px;
-  border: none;
-  border-radius: 4px;
-  outline: none;
-  background: none;
-  font-weight: 500;
-  text-align: center;
-  text-overflow: ellipsis;
-  pointer-events: none;
-  user-select: none;
+  border-radius: 12px;
 }
 :host(.component-playlist-tracks) div.playlist-tracks div.tracks {
   display: grid;
@@ -1836,16 +1730,6 @@ div.playlist-track.random div#title {
 :host(.component-playlist-tracks) div.playlist-tracks div.tracks div.list {
   grid-column: 1;
   grid-row: 1;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.tracks yam-tracklist {
-  grid-column: 1;
-  grid-row: 1;
-  display: none;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.tracks yam-add-tracks {
-  grid-column: 1;
-  grid-row: 1;
-  display: none;
 }
 :host(.component-playlist-tracks) div.playlist-tracks div.list {
   display: flex;
@@ -1917,122 +1801,15 @@ div.playlist-track.random div#title {
   margin-left: 32px;
   margin-top: 4px;
 }
-:host(.component-playlist-tracks) div.playlist-tracks.selected div.title input {
-  font-weight: bold;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.menu #menu {
-  display: block;
-}
-:host(.component-playlist-tracks) div.playlist-tracks div.menu #save {
-  display: none;
-}
-:host(.component-playlist-tracks) div.playlist-tracks.editing div.title {
-  padding-right: 14px;
-}
-:host(.component-playlist-tracks) div.playlist-tracks.editing div.title input {
-  background: rgba(252, 252, 252, 0.5019607843);
-  text-align: left;
-  pointer-events: auto;
-  user-select: text;
-}
-:host(.component-playlist-tracks) div.playlist-tracks.editing div.menu #menu {
-  display: none;
-}
-:host(.component-playlist-tracks) div.playlist-tracks.editing div.menu #save {
-  display: block;
-}
-:host(.component-playlist-tracks) div.playlist-tracks.editing div.tracks div.list {
-  display: none;
-}
-:host(.component-playlist-tracks) div.playlist-tracks.editing div.tracks yam-tracklist {
-  display: block;
-}
-:host(.component-playlist-tracks) div.playlist-tracks.selected.editing div.summary {
-  grid-template-columns: 16px 1fr auto;
-}
-:host(.component-playlist-tracks) div.playlist-tracks.adding div.menu #menu {
-  display: none;
-}
-:host(.component-playlist-tracks) div.playlist-tracks.adding div.menu #save {
-  display: block;
-}
-:host(.component-playlist-tracks) div.playlist-tracks.adding div.tracks div.list {
-  display: none;
-}
-:host(.component-playlist-tracks) div.playlist-tracks.adding div.tracks yam-add-tracks {
-  display: block;
-}
-:host(.component-playlist-tracks) details:not([open]) #edit {
-  display: none;
-}
 @media (max-width: 768px) and (orientation: portrait) {
-  :host(.component-playlist-tracks) div.playlist-tracks div.grip {
-    width: 48px;
-    padding-left: 12px;
-  }
-  :host(.component-playlist-tracks) div.playlist-tracks div.grip img {
-    width: 20px;
-  }
-  :host(.component-playlist-tracks) div.playlist-tracks div.menu button {
-    padding-right: 12px;
-  }
   :host(.component-playlist-tracks) div.playlist-tracks yam-playlist-item {
     margin-left: 40px;
   }
 }
 @media (max-width: 1024px) and (orientation: landscape) {
-  :host(.component-playlist-tracks) div.playlist-tracks div.grip {
-    width: 36px;
-    padding-left: 8px;
-  }
-  :host(.component-playlist-tracks) div.playlist-tracks div.grip img {
-    width: 20px;
-  }
-  :host(.component-playlist-tracks) div.playlist-tracks div.menu button {
-    padding-right: 12px;
-  }
   :host(.component-playlist-tracks) div.playlist-tracks yam-playlist-item {
     margin-left: 36px;
   }
-}
-
-:host(.component-playlist-tracks#all) div.playlist-tracks div.summary {
-  border-top-left-radius: 12px;
-  border-top-right-radius: 12px;
-}
-
-:host-context(li:last-child) div.playlist-tracks div.summary {
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
-
-:host-context(li:last-child) div.playlist-tracks[open] div.summary {
-  border-bottom-left-radius: 0px;
-  border-bottom-right-radius: 0px;
-}
-
-:host-context(.unsortable) div.playlist-tracks div.summary {
-  grid-template-columns: 16px 1fr auto;
-}
-:host-context(.unsortable) div.playlist-tracks div.summary div.grip {
-  visibility: hidden;
-}
-:host-context(.unsortable) div.playlist-tracks.editing div.grip {
-  display: none;
-}
-:host(.component-playlist-tracks[uuid="00000000-0000-0000-0000-000000000000"]) img#trash {
-  display: none;
-}
-
-:host(.component-playlist-tracks.deleting) div.playlist div.title input {
-  color: var(--playlist-colour-deleting);
-  font-style: italic;
-  font-weight: normal;
-  text-decoration: line-through;
-}
-:host(.component-playlist-tracks.deleting) div.playlist img#trash {
-  filter: invert(13%) sepia(88%) saturate(7445%) hue-rotate(0deg) brightness(103%) contrast(112%);
-  transition: filter 0.5s ease;
 }
 
 :host(.component-tracklist) ul {

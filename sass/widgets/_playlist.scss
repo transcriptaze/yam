@@ -430,20 +430,12 @@
   div.playlist {
     div.summary {
       grid-template-columns: 16px 1fr auto;
-
-      div.grip {
-        visibility: hidden;    
-      }
     }
   }
 
   div.playlist.editing {
     div.grip {
       display: none;
-    }
-
-    div.title {      
-      // margin-left: 12px;
     }
   }
 }
@@ -470,8 +462,20 @@
 
 @media (max-width: 1024px) and (orientation: landscape) {
   :host(.component-playlist) div.playlist {
+    div.summary {
+      grid-template-columns: 36px 1fr auto;
+    }
+
     div.tracks {
       display: none;
     }
+  }
+
+  :host-context(li:last-child) div.playlist div.summary {
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+  }
+
+  :host-context(.unsortable) div.playlist {
   }
 }

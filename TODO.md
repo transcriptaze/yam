@@ -25,8 +25,8 @@
             - [x] initialise playlist
             - [x] select playlist
             - [x] select track
+            - [x] allow playlist drag always
             - [ ] replace '+' with floating circle '+'
-       - [ ] allow playlist drag always
        - [ ] add
        - [ ] edit
 

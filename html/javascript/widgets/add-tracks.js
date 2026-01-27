@@ -1,3 +1,4 @@
+import * as datastore from '../datastore/datastore.js'
 import { EVENTS } from '../constants.js'
 
 export class AddTracks extends HTMLElement {
@@ -134,6 +135,11 @@ export class AddTracks extends HTMLElement {
     } else {
       hr.classList.remove('hide')
     }
+  }
+
+  set playlist(playlist) {
+    this.tracks = datastore.tracks.list()
+    this.selected = datastore.playlists.get(playlist)?.tracks ?? []
   }
 
   get #new_track() {

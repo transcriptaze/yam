@@ -101,6 +101,22 @@ export class Playlist extends EventTarget {
     this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: this.UUID } }))
   }
 
+  addx(tracks) {
+    console.log('>>>>', tracks)
+
+    const merged = new Set()
+
+    this.tracks.forEach((v) => {
+      merged.add(v.UUID)
+    })
+
+    tracks.forEach((v) => {
+      merged.add(`${v.UUID}`)
+    })
+
+    console.log(merged)
+  }
+
   update(title, tracks) {
     if (title != null) {
       this.#title = `${title}`.trim()

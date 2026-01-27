@@ -28,9 +28,13 @@
             - [x] allow playlist drag always
             - [x] replace '+' with floating circle '+'
             - [ ] add
+                - unify add_track and add_tracks
+                - rethink random track logic
+
             - [ ] edit
             - [ ] mute
             - [ ] delete
+            - [ ] fix height (involuntary scrollbar)
        - [x] edit
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)

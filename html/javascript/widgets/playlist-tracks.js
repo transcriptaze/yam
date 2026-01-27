@@ -6,7 +6,7 @@ export class PlaylistTracks extends HTMLElement {
     return []
   }
 
-  #UUID = ''
+  #playlist = ''
   #selected = null
   // #updated = false
   // #tracklist = null
@@ -80,7 +80,7 @@ export class PlaylistTracks extends HTMLElement {
             new CustomEvent(EVENTS.SELECT_TRACK, {
               bubbles: true,
               composed: true,
-              detail: { playlist: this.#UUID, track: event.target.UUID },
+              detail: { playlist: this.#playlist, track: event.target.UUID },
             }),
           )
         }
@@ -165,7 +165,16 @@ export class PlaylistTracks extends HTMLElement {
         event.preventDefault()
         event.stopPropagation()
 
-        this.plus()
+        this.#plus()
+      },
+    },
+
+    save: {
+      click: (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        this.#save()
       },
     },
 
@@ -207,6 +216,7 @@ export class PlaylistTracks extends HTMLElement {
     // const popover = shadow.querySelector('[popover]')
     const ul = this.shadowRoot.querySelector('div.list > ul')
     const plus = this.shadowRoot.querySelector('#plus')
+    const save = this.shadowRoot.querySelector('#save')
     // const edit = shadow.querySelector('#edit')
     // const trash = shadow.querySelector('#trash')
     // const save = shadow.querySelector('#save')
@@ -222,6 +232,7 @@ export class PlaylistTracks extends HTMLElement {
     // trash.addEventListener('transitionend', this.#handlers.trash.transitionend)
 
     plus.addEventListener('click', this.#handlers.plus.click)
+    save.addEventListener('click', this.#handlers.save.click)
 
     // container.addEventListener(EVENTS.NEW_TRACK, this.#handlers.container.new_track)
     // container.addEventListener(EVENTS.RANDOM_TRACK, this.#handlers.container.random_track)
@@ -236,7 +247,7 @@ export class PlaylistTracks extends HTMLElement {
   attributeChangedCallback(_name, _from, _to) {}
 
   set playlist({ playlist, selected }) {
-    this.#UUID = playlist?.UUID ?? ''
+    this.#playlist = playlist?.UUID ?? ''
     this.#tracks = datastore.playlists.get(playlist)?.tracks ?? []
   }
 
@@ -245,7 +256,7 @@ export class PlaylistTracks extends HTMLElement {
   // }
 
   set selected({ playlist, track }) {
-    if (playlist === this.#UUID) {
+    if (playlist === this.#playlist) {
       this.#select(track)
     }
   }
@@ -346,17 +357,31 @@ export class PlaylistTracks extends HTMLElement {
   //   document.addEventListener('mousedown', this.#clickOutside)
   // }
 
-  plus() {
-    console.log('>>>> plus')
-    // const container = this.shadowRoot.querySelector('div.playlist')
-    //
-    // if (this.#add_tracks != null) {
-    //   this.#add_tracks.selected = this.#tracks
-    // }
-    //
-    // container.classList.add('adding')
-    //
-    // document.addEventListener('mousedown', this.#clickOutside)
+  #plus() {
+    return (async () => {
+      await customElements.whenDefined('yam-add-tracks')
+
+      const container = this.shadowRoot.querySelector('div.playlist-tracks')
+      const widget = this.shadowRoot?.querySelector('yam-add-tracks')
+
+      if (widget != null) {
+        widget.playlist = this.#playlist
+        container.classList.add('adding')
+      }
+    })()
+  }
+
+  #save() {
+    return (async () => {
+      await customElements.whenDefined('yam-add-tracks')
+
+      const container = this.shadowRoot.querySelector('div.playlist-tracks')
+      const widget = this.shadowRoot?.querySelector('yam-add-tracks')
+      const selected = widget?.selected ?? []
+
+      container.classList.remove('adding')
+      datastore.playlists.add_tracks(this.#playlist, selected)
+    })()
   }
 
   set #tracks(list) {

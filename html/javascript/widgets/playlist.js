@@ -1,3 +1,4 @@
+import * as datastore from '../datastore/datastore.js'
 import { DEFAULT, EVENTS } from '../constants.js'
 
 export class Playlist extends HTMLElement {
@@ -255,7 +256,6 @@ export class Playlist extends HTMLElement {
     this.#plus?.addEventListener('click', this.#handlers.plus.click)
 
     container.addEventListener(EVENTS.NEW_TRACK, this.#handlers.container.new_track)
-    container.addEventListener(EVENTS.RANDOM_TRACK, this.#handlers.container.random_track)
   }
 
   disconnectedCallback() {
@@ -575,31 +575,11 @@ export class Playlist extends HTMLElement {
     const container = this.shadowRoot.querySelector('div.playlist')
     const add_tracks = container.querySelector('yam-add-tracks')
 
-    if (add_tracks == null) {
-      return
+    if (add_tracks != null) {
+      const selected = add_tracks?.selected ?? []
+
+      datastore.playlists.add_tracks(this.#UUID, selected)
     }
-
-    const selected = add_tracks?.selected ?? []
-    const tracks = new Set()
-
-    this.#tracks.forEach((v) => {
-      tracks.add(v.UUID)
-    })
-
-    selected.forEach((v) => {
-      tracks.add(`${v.UUID}`)
-    })
-
-    this.dispatchEvent(
-      new CustomEvent('change', {
-        bubbles: true,
-        composed: true,
-        detail: {
-          playlist: this.UUID,
-          tracks: Array.from(tracks),
-        },
-      }),
-    )
   }
 
   #clickOutside = (event) => {

@@ -28,12 +28,11 @@
             - [x] allow playlist drag always
             - [x] replace '+' with floating circle '+'
             - [ ] add
-                - unify add_track and add_tracks
-                - rethink random track logic
-
+                - [x] random track
+                - [ ] new track
+            - [ ] delete
             - [ ] edit
             - [ ] mute
-            - [ ] delete
             - [ ] fix height (involuntary scrollbar)
        - [x] edit
 

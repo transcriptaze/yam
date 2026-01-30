@@ -4,7 +4,7 @@ import * as fs from './fs.js'
 import { state } from './state.js'
 import { settings } from './settings.js'
 import * as log from './log.js'
-import { DEFAULT, EVENTS, RANDOM, INF } from './constants.js'
+import { DEFAULT, EVENTS, INF } from './constants.js'
 
 const LOGTAG = 'YAM'
 let DEBUG = false
@@ -396,7 +396,6 @@ function rewire() {
   widgets.playlists.addEventListener(EVENTS.MUTE_TRACK, (e) => onMute(e))
   widgets.playlists.addEventListener(EVENTS.DELETE_TRACK, (e) => onTrackDelete(e))
   widgets.playlists.addEventListener(EVENTS.NEW_TRACK, (e) => onTrackNew(e))
-  widgets.playlists.addEventListener(EVENTS.RANDOM_TRACK, (e) => onTrackRandom(e))
 
   widgets.tracks.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
 
@@ -415,7 +414,7 @@ function rewire() {
   models.playlists.addEventListener('muted', (e) => onMuted(e, true))
   models.playlists.addEventListener('unmuted', (e) => onMuted(e, false))
   models.playlists.addEventListener('selected', (e) => onSelected(e))
-  models.playlists.addEventListener('changed', (e) => onPlaylist(e))
+  models.playlists.addEventListener(EVENTS.PLAYLIST_CHANGED, (e) => onPlaylistChanged(e))
   models.playlists.addEventListener('added', (e) => onPlaylistAdded(e))
   models.playlists.addEventListener('deleted', (e) => onPlaylistDeleted(e))
 
@@ -641,12 +640,13 @@ function onSelected(event) {
   }
 }
 
-function onPlaylist(e) {
-  const list = models.playlists.playlist(e.detail.playlist)
+function onPlaylistChanged(e) {
+  const playlist = models.playlists.playlist(e.detail.playlist)
   const tracks = models.tracks.tracks
 
-  if (list != null) {
-    widgets.playlists.update(list, tracks)
+  if (playlist != null) {
+    widgets.playlists.update(playlist, tracks)
+    widgets.tracks.update(playlist)
   }
 }
 
@@ -717,20 +717,6 @@ function onTrackNew() {
     engine.track = track
 
     document.querySelector('toolbar').classList.add('editable')
-  } catch (err) {
-    onError(err)
-  }
-}
-
-function onTrackRandom() {
-  try {
-    const playlist = models.playlists.playlist(state.playlist)
-    if (playlist != null) {
-      playlist.add({
-        UUID: RANDOM.UUID,
-        title: '<< random >>',
-      })
-    }
   } catch (err) {
     onError(err)
   }

@@ -235,7 +235,6 @@ export class PlaylistTracks extends HTMLElement {
     save.addEventListener('click', this.#handlers.save.click)
 
     // container.addEventListener(EVENTS.NEW_TRACK, this.#handlers.container.new_track)
-    // container.addEventListener(EVENTS.RANDOM_TRACK, this.#handlers.container.random_track)
   }
 
   disconnectedCallback() {
@@ -272,6 +271,14 @@ export class PlaylistTracks extends HTMLElement {
   //     menu.hidePopover()
   //   }
   // }
+
+  update(playlist) {
+    const UUID = playlist?.UUID ?? ''
+
+    if (UUID !== '' && this.#playlist === UUID) {
+      this.#tracks = datastore.playlists.get(playlist)?.tracks ?? []
+    }
+  }
 
   // open(tracklist, add_tracks) {
   //   const shadow = this.shadowRoot

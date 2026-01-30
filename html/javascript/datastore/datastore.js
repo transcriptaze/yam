@@ -38,9 +38,8 @@ export const playlists = {
       playlist = v
     }
 
-    // FIXME - unify add_track and add_tracks
     if (playlist != null) {
-      playlist.addx(tracks)
+      playlist.add(...tracks)
     }
   },
 }

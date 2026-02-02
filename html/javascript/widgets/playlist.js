@@ -196,18 +196,6 @@ export class Playlist extends HTMLElement {
         this.plus()
       },
     },
-
-    container: {
-      new_track: () => {
-        this.#save_adds()
-        this.#added()
-      },
-
-      random_track: () => {
-        this.#save_adds()
-        this.#added()
-      },
-    },
   }
 
   constructor() {
@@ -254,8 +242,6 @@ export class Playlist extends HTMLElement {
     trash.addEventListener('transitionend', this.#handlers.trash.transitionend)
 
     this.#plus?.addEventListener('click', this.#handlers.plus.click)
-
-    container.addEventListener(EVENTS.NEW_TRACK, this.#handlers.container.new_track)
   }
 
   disconnectedCallback() {
@@ -572,11 +558,10 @@ export class Playlist extends HTMLElement {
   }
 
   #save_adds() {
-    const container = this.shadowRoot.querySelector('div.playlist')
-    const add_tracks = container.querySelector('yam-add-tracks')
+    const addTracks = this.shadowRoot.querySelector('div.playlist yam-add-tracks')
 
-    if (add_tracks != null) {
-      const selected = add_tracks?.selected ?? []
+    if (addTracks != null) {
+      const selected = addTracks?.selected ?? []
 
       datastore.playlists.add_tracks(this.#UUID, selected)
     }

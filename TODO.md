@@ -29,7 +29,8 @@
             - [x] replace '+' with floating circle '+'
             - [ ] add
                 - [x] random track
-                - [ ] new track
+                - [x] new track
+                - [ ] update _All Tracks_
             - [ ] delete
             - [ ] edit
             - [ ] mute

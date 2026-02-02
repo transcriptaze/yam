@@ -1,6 +1,6 @@
 import * as datastore from '../datastore/datastore.js'
 import { UUIDv4 } from '../uuid.js'
-import { EVENTS, RANDOM } from '../constants.js'
+import { RANDOM } from '../constants.js'
 
 export class AddTracks extends HTMLElement {
   static get observedAttributes() {
@@ -15,7 +15,24 @@ export class AddTracks extends HTMLElement {
         event.preventDefault()
         event.stopPropagation()
 
-        this.dispatchEvent(new CustomEvent(EVENTS.NEW_TRACK, { bubbles: true, composed: true, detail: {} }))
+        const UUID = UUIDv4().next().value
+        const track = {
+          UUID: UUID,
+          title: '<< new >>',
+        }
+
+        const ul = this.shadowRoot.querySelector('ul')
+        const li = document.createElement('li')
+        const item = document.createElement('yam-tracklist-item')
+
+        item.setAttribute('uuid', UUID)
+        item.setAttribute('title', track.title)
+        item.selected = true
+
+        li.appendChild(item)
+        ul.appendChild(li)
+
+        this.#tracks.set(UUID, track)
       },
     },
 

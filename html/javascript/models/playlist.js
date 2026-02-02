@@ -107,24 +107,35 @@ export class Playlist extends EventTarget {
         // ... random track ?
         case track.UUID === RANDOM.UUID:
           {
-            const track = {
+            const _track = {
               UUID: UUIDv4().next().value,
               title: '<< random >>',
             }
 
-            this.#random.push(track)
-            this.#tracks.push(track.UUID)
-            this.save()
+            this.#random.push(_track)
+            this.#tracks.push(_track.UUID)
+          }
+          break
+
+        // ... new track?
+        case track.UUID != null && track.UUID !== '' && !models.tracks.has(track.UUID):
+          {
+            const _track = models.tracks.create({
+              UUID: track.UUID,
+            })
+
+            this.#tracks.push(_track.UUID)
           }
           break
 
         // ... normal track
         case track.UUID != null && track.UUID !== '' && !this.tracks.includes(track.UUID):
           this.#tracks.push(track.UUID)
-          this.save()
           break
       }
     }
+
+    this.save()
 
     this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_CHANGED, { detail: { playlist: this.UUID } }))
   }

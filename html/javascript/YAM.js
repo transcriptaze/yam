@@ -395,7 +395,6 @@ function rewire() {
   widgets.playlists.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
   widgets.playlists.addEventListener(EVENTS.MUTE_TRACK, (e) => onMute(e))
   widgets.playlists.addEventListener(EVENTS.DELETE_TRACK, (e) => onTrackDelete(e))
-  widgets.playlists.addEventListener(EVENTS.NEW_TRACK, (e) => onTrackNew(e))
 
   widgets.tracks.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
 
@@ -689,36 +688,6 @@ function onTrackDelete(event) {
     widgets.editor.track = null
 
     toolbar.classList.remove('editable')
-  }
-}
-
-function onTrackNew() {
-  try {
-    const object = {
-      BPM: state.BPM,
-      timeSignature: state.timeSignature,
-      pulse: state.pulse,
-    }
-
-    const track = models.tracks.create(object)
-
-    // ... add to 'All Tracks' playlist
-    models.playlists.playlist(DEFAULT.UUID)?.add(track)
-
-    // ... add to current playlist
-    const playlist = models.playlists.playlist(state.playlist)
-    if (playlist != null) {
-      playlist.add(track)
-      playlist.select(track.UUID)
-    }
-
-    widgets.playlists.tracklist = models.tracks.tracks
-    widgets.editor.track = track
-    engine.track = track
-
-    document.querySelector('toolbar').classList.add('editable')
-  } catch (err) {
-    onError(err)
   }
 }
 

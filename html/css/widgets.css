@@ -1813,23 +1813,6 @@ div.playlist-track.random div#title {
   }
 }
 
-:host(.component-tracklist) ul {
-  list-style-type: none;
-  margin-left: 0px;
-  padding-left: 4px;
-  padding-right: 12px;
-}
-:host(.component-tracklist) ul li + li {
-  margin-top: 2px;
-}
-:host(.component-tracklist) hr {
-  margin-left: 32px;
-  margin-right: 24px;
-}
-:host(.component-tracklist) div.random.hide {
-  display: none;
-}
-
 :host(.component-tracklist-item) div.tracklist-item {
   display: grid;
   grid-template-columns: auto auto 1fr;
@@ -1877,6 +1860,8 @@ div.playlist-track.random div#title {
 :host(.component-add-tracks) div.tracklist {
   box-sizing: border-box;
   padding-bottom: 24px;
+  height: 100%;
+  overflow-y: auto;
   display: flex;
   flex-direction: column;
 }
@@ -1893,6 +1878,7 @@ div.playlist-track.random div#title {
   display: none;
 }
 :host(.component-add-tracks) div.tracklist hr {
+  flex-shrink: 0;
   margin-left: 32px;
   margin-right: 24px;
 }
@@ -1901,7 +1887,9 @@ div.playlist-track.random div#title {
 }
 :host(.component-add-tracks) div.tracklist button {
   align-self: start;
+  flex-shrink: 0;
   background: none;
+  overflow: visible;
   border: none;
   outline: none;
   overflow: hidden;

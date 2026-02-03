@@ -33,7 +33,7 @@
                 - [x] random track
                 - [x] new track
                 - [x] close add-tracks if different playlist selected
-                - [ ] fix add-tracks scrolling
+                - [x] fix add-tracks scrolling
                 - [ ] update _All Tracks_
                 - (?) rename add-tracks widget
             - [ ] delete

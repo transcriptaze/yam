@@ -4,7 +4,7 @@ div.playlists {
     height: 100%;
   }
 
-  yam-playlist-tracks {
+  yam-tracklist {
     display: none;
   }
 }
@@ -27,7 +27,7 @@ div.playlists {
       overflow-y: scroll;
     }
 
-    yam-playlist-tracks {
+    yam-tracklist {
       grid-column: 2;
       grid-row: 1;
 

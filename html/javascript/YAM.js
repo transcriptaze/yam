@@ -21,7 +21,7 @@ const widgets = {
   wheel: document.querySelector('yam-wheel'),
   metronome: document.querySelector('yam-metronome'),
   playlists: document.querySelector('yam-playlists'),
-  tracks: document.querySelector('yam-playlist-tracks'),
+  tracks: document.querySelector('yam-tracklist'),
   editor: document.querySelector('yam-editor'),
 }
 

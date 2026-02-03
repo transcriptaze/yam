@@ -36,7 +36,8 @@
                 - [x] close add-tracks if different playlist selected
                 - [x] fix add-tracks scrolling
                 - [x] update _All Tracks_
-                - (?) rename yam-playlist-tracks widget
+                - [x] rename yam-playlist-tracks widget
+                - [ ] rename playlist-item and tracklist-item
             - [ ] delete
             - [ ] mute
             - [ ] fix height (involuntary scrollbar)

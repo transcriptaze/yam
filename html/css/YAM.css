@@ -880,7 +880,7 @@ div.playlists yam-playlists {
   display: block;
   height: 100%;
 }
-div.playlists yam-playlist-tracks {
+div.playlists yam-tracklist {
   display: none;
 }
 
@@ -895,7 +895,7 @@ div.playlists yam-playlist-tracks {
     grid-row: 1;
     overflow-y: scroll;
   }
-  div.playlists yam-playlist-tracks {
+  div.playlists yam-tracklist {
     grid-column: 2;
     grid-row: 1;
     display: block;

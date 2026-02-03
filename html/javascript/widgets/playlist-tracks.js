@@ -125,6 +125,8 @@ export class PlaylistTracks extends HTMLElement {
   set playlist({ playlist, selected }) {
     this.#playlist = playlist?.UUID ?? ''
     this.#tracks = datastore.playlists.get(playlist)?.tracks ?? []
+
+    this.shadowRoot.querySelector('div.playlist-tracks').classList.remove('adding')
   }
 
   // get selected() {

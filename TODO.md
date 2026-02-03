@@ -21,23 +21,24 @@
     - [ ] playlist
        - [x] hide embedded tracklists
        - [x] separate scrolling
+       - [x] edit
        - [ ] standalone tracklist
             - [x] initialise playlist
             - [x] select playlist
             - [x] select track
             - [x] allow playlist drag always
             - [x] replace '+' with floating circle '+'
+            - [x] remove edit-tracks
             - [ ] add
                 - [x] random track
                 - [x] new track
-                - [ ] update _All Tracks_
-                - [ ] close add-tracks if different playlist selected
+                - [x] close add-tracks if different playlist selected
                 - [ ] fix add-tracks scrolling
-            - [x] remove edit-tracks
+                - [ ] update _All Tracks_
+                - (?) rename add-tracks widget
             - [ ] delete
             - [ ] mute
             - [ ] fix height (involuntary scrollbar)
-       - [x] edit
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [x] Rework clock as generator

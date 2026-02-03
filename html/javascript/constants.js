@@ -63,17 +63,17 @@ export const EVENTS = {
 
   SHUFFLE_PLAYLISTS: 'shuffle-playlists',
 
-  TOGGLE_PLAYLIST: 'toggle-playlist',
-  SELECT_PLAYLIST: 'select-playlist',
-  EDIT_PLAYLIST: 'edit-playlist',
-  SHUFFLE_PLAYLIST: 'shuffle-playlist',
-  DELETE_PLAYLIST: 'delete-playlist',
+  TOGGLE_PLAYLIST: 'playlist-toggle',
+  SELECT_PLAYLIST: 'playlist-select',
+  EDIT_PLAYLIST: 'playlist-edit',
+  SHUFFLE_PLAYLIST: 'playlist-shuffle',
+  DELETE_PLAYLIST: 'playlist-delete',
+
+  PLAYLIST_CHANGED: 'playlist-changed',
 
   SELECT_TRACK: 'select-track',
   MUTE_TRACK: 'mute-track',
   DELETE_TRACK: 'delete-track',
-  NEW_TRACK: 'new-track',
-  RANDOM_TRACK: 'random-track',
 
   EDIT_SAVE: 'edit-save',
   SECTION_TIME_SIGNATURE_CHANGE: 'section-time-signature-change',

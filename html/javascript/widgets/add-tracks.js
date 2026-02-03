@@ -1,4 +1,6 @@
-import { EVENTS } from '../constants.js'
+import * as datastore from '../datastore/datastore.js'
+import { UUIDv4 } from '../uuid.js'
+import { RANDOM } from '../constants.js'
 
 export class AddTracks extends HTMLElement {
   static get observedAttributes() {
@@ -7,24 +9,56 @@ export class AddTracks extends HTMLElement {
 
   #tracks = new Map()
 
-  #fields = {}
-
   #handlers = {
-    new_track: {
+    newTrack: {
       click: (event) => {
         event.preventDefault()
         event.stopPropagation()
 
-        this.dispatchEvent(new CustomEvent(EVENTS.NEW_TRACK, { bubbles: true, composed: true, detail: {} }))
+        const UUID = UUIDv4().next().value
+        const track = {
+          UUID: UUID,
+          title: '<< new >>',
+        }
+
+        const ul = this.shadowRoot.querySelector('ul')
+        const li = document.createElement('li')
+        const item = document.createElement('yam-tracklist-item')
+
+        item.setAttribute('uuid', UUID)
+        item.setAttribute('title', track.title)
+        item.selected = true
+
+        li.appendChild(item)
+        ul.appendChild(li)
+
+        this.#tracks.set(UUID, track)
       },
     },
 
-    random_track: {
+    randomTrack: {
       click: (event) => {
         event.preventDefault()
         event.stopPropagation()
 
-        this.dispatchEvent(new CustomEvent(EVENTS.RANDOM_TRACK, { bubbles: true, composed: true, detail: {} }))
+        const UUID = UUIDv4().next().value
+        const track = {
+          UUID: RANDOM.UUID,
+          title: '<< random >>',
+        }
+
+        const ul = this.shadowRoot.querySelector('ul')
+        const li = document.createElement('li')
+        const item = document.createElement('yam-tracklist-item')
+
+        item.setAttribute('uuid', UUID)
+        item.setAttribute('title', track.title)
+        item.selected = true
+
+        li.appendChild(item)
+        ul.appendChild(li)
+
+        this.#tracks.set(UUID, track)
       },
     },
   }
@@ -48,8 +82,11 @@ export class AddTracks extends HTMLElement {
   connectedCallback() {
     this.classList.add('component-add-tracks')
 
-    this.#new_track.addEventListener('click', this.#handlers.new_track.click)
-    this.#random_track.addEventListener('click', this.#handlers.random_track.click)
+    const newTrack = this.shadowRoot?.querySelector('#new-track')
+    const randomTrack = this.shadowRoot?.querySelector('#random-track')
+
+    newTrack.addEventListener('click', this.#handlers.newTrack.click)
+    randomTrack.addEventListener('click', this.#handlers.randomTrack.click)
   }
 
   disconnectedCallback() {}
@@ -136,20 +173,9 @@ export class AddTracks extends HTMLElement {
     }
   }
 
-  get #new_track() {
-    if (this.#fields.new_track == null) {
-      this.#fields.new_track = this.shadowRoot?.querySelector('#new-track')
-    }
-
-    return this.#fields.new_track
-  }
-
-  get #random_track() {
-    if (this.#fields.random_track == null) {
-      this.#fields.random_track = this.shadowRoot?.querySelector('#random-track')
-    }
-
-    return this.#fields.random_track
+  set playlist(playlist) {
+    this.tracks = datastore.tracks.list()
+    this.selected = datastore.playlists.get(playlist)?.tracks ?? []
   }
 }
 

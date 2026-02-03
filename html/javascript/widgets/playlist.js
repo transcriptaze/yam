@@ -1,3 +1,4 @@
+import * as datastore from '../datastore/datastore.js'
 import { DEFAULT, EVENTS } from '../constants.js'
 
 export class Playlist extends HTMLElement {
@@ -10,7 +11,6 @@ export class Playlist extends HTMLElement {
   #selected = null
   #updated = false
   #tracks = []
-  #tracklist = null
   #add_tracks = null
 
   #fields = {}
@@ -93,18 +93,8 @@ export class Playlist extends HTMLElement {
         event.preventDefault()
         event.stopPropagation()
 
-        const shadow = this.shadowRoot
-        const menu = shadow.querySelector('[popover]')
-
-        menu.hidePopover()
-
-        this.dispatchEvent(
-          new CustomEvent(EVENTS.EDIT_PLAYLIST, {
-            bubbles: true,
-            composed: true,
-            detail: {},
-          }),
-        )
+        this.shadowRoot.querySelector('[popover]').hidePopover()
+        this.edit()
       },
     },
 
@@ -195,18 +185,6 @@ export class Playlist extends HTMLElement {
         this.plus()
       },
     },
-
-    container: {
-      new_track: () => {
-        this.#save_adds()
-        this.#added()
-      },
-
-      random_track: () => {
-        this.#save_adds()
-        this.#added()
-      },
-    },
   }
 
   constructor() {
@@ -253,9 +231,6 @@ export class Playlist extends HTMLElement {
     trash.addEventListener('transitionend', this.#handlers.trash.transitionend)
 
     this.#plus?.addEventListener('click', this.#handlers.plus.click)
-
-    container.addEventListener(EVENTS.NEW_TRACK, this.#handlers.container.new_track)
-    container.addEventListener(EVENTS.RANDOM_TRACK, this.#handlers.container.random_track)
   }
 
   disconnectedCallback() {
@@ -346,7 +321,7 @@ export class Playlist extends HTMLElement {
     }
   }
 
-  open(tracklist, add_tracks) {
+  open(add_tracks) {
     const shadow = this.shadowRoot
     const container = shadow.querySelector('div.playlist')
     const tracks = container.querySelector('div.tracks')
@@ -362,10 +337,8 @@ export class Playlist extends HTMLElement {
     container.classList.add('selected')
 
     tracks.classList.remove('hidden')
-    tracks.appendChild(tracklist)
     tracks.appendChild(add_tracks)
 
-    this.#tracklist = tracklist
     this.#add_tracks = add_tracks
 
     // ... 'All Tracks' ?
@@ -421,10 +394,6 @@ export class Playlist extends HTMLElement {
     const shadow = this.shadowRoot
     const container = shadow.querySelector('div.playlist')
     const title = container.querySelector('div.title input')
-
-    if (this.#tracklist != null) {
-      this.#tracklist.selected = this.#tracks
-    }
 
     container.classList.add('editing')
     title.disabled = false
@@ -519,44 +488,7 @@ export class Playlist extends HTMLElement {
   }
 
   #save_edits() {
-    const container = this.shadowRoot.querySelector('div.playlist')
-    const title = container.querySelector('div.title input')
-    const tracklist = container.querySelector('yam-tracklist')
-
-    if (tracklist == null) {
-      this.dispatchEvent(
-        new CustomEvent('change', {
-          bubbles: true,
-          composed: true,
-          detail: {
-            playlist: this.UUID,
-            title: title.value,
-          },
-        }),
-      )
-
-      return
-    }
-
-    const selected = tracklist?.selected ?? []
-    const set = new Set(selected.map((v) => v.UUID))
-    const added = new Set()
-    const tracks = []
-
-    this.#tracks.forEach((v) => {
-      if (set.has(v.UUID)) {
-        tracks.push(v)
-        added.add(v.UUID)
-      }
-    })
-
-    const remaining = set.difference(added)
-
-    selected.forEach((v) => {
-      if (remaining.has(v.UUID)) {
-        tracks.push({ UUID: `${v.UUID}`, title: `${v.title}`, muted: false })
-      }
-    })
+    const title = this.shadowRoot.querySelector('div.playlist div.title input')
 
     this.dispatchEvent(
       new CustomEvent('change', {
@@ -565,41 +497,19 @@ export class Playlist extends HTMLElement {
         detail: {
           playlist: this.UUID,
           title: title.value,
-          tracks: tracks.map((v) => v.UUID),
         },
       }),
     )
   }
 
   #save_adds() {
-    const container = this.shadowRoot.querySelector('div.playlist')
-    const add_tracks = container.querySelector('yam-add-tracks')
+    const addTracks = this.shadowRoot.querySelector('div.playlist yam-add-tracks')
 
-    if (add_tracks == null) {
-      return
+    if (addTracks != null) {
+      const selected = addTracks?.selected ?? []
+
+      datastore.playlists.add_tracks(this.#UUID, selected)
     }
-
-    const selected = add_tracks?.selected ?? []
-    const tracks = new Set()
-
-    this.#tracks.forEach((v) => {
-      tracks.add(v.UUID)
-    })
-
-    selected.forEach((v) => {
-      tracks.add(`${v.UUID}`)
-    })
-
-    this.dispatchEvent(
-      new CustomEvent('change', {
-        bubbles: true,
-        composed: true,
-        detail: {
-          playlist: this.UUID,
-          tracks: Array.from(tracks),
-        },
-      }),
-    )
   }
 
   #clickOutside = (event) => {

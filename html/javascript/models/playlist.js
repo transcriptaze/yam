@@ -1,7 +1,7 @@
 import * as DB from '../db/db.js'
 import { UUIDv4, reserve } from '../uuid.js'
 import { infof } from '../log.js'
-import { RANDOM } from '../constants.js'
+import { EVENTS, RANDOM } from '../constants.js'
 import * as models from './models.js'
 
 const LOGTAG = 'playlist'
@@ -87,7 +87,7 @@ export class Playlist extends EventTarget {
     if (title != this.title) {
       this.#title = title
 
-      this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: this.UUID } }))
+      this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_CHANGED, { detail: { playlist: this.UUID } }))
     }
   }
 
@@ -98,7 +98,46 @@ export class Playlist extends EventTarget {
   set tracks(v) {
     this.#tracks = v ?? []
 
-    this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: this.UUID } }))
+    this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_CHANGED, { detail: { playlist: this.UUID } }))
+  }
+
+  add(...tracks) {
+    for (const track of tracks) {
+      switch (true) {
+        // ... random track ?
+        case track.UUID === RANDOM.UUID:
+          {
+            const _track = {
+              UUID: UUIDv4().next().value,
+              title: '<< random >>',
+            }
+
+            this.#random.push(_track)
+            this.#tracks.push(_track.UUID)
+          }
+          break
+
+        // ... new track?
+        case track.UUID != null && track.UUID !== '' && !models.tracks.has(track.UUID):
+          {
+            const _track = models.tracks.create({
+              UUID: track.UUID,
+            })
+
+            this.#tracks.push(_track.UUID)
+          }
+          break
+
+        // ... normal track
+        case track.UUID != null && track.UUID !== '' && !this.tracks.includes(track.UUID):
+          this.#tracks.push(track.UUID)
+          break
+      }
+    }
+
+    this.save()
+
+    this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_CHANGED, { detail: { playlist: this.UUID } }))
   }
 
   update(title, tracks) {
@@ -113,7 +152,7 @@ export class Playlist extends EventTarget {
       this.#muted = new Set([...muted])
     }
 
-    this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: this.UUID } }))
+    this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_CHANGED, { detail: { playlist: this.UUID } }))
   }
 
   get selected() {
@@ -340,31 +379,6 @@ export class Playlist extends EventTarget {
     }
   }
 
-  add(track) {
-    // ... random track ?
-    if (track.UUID === RANDOM.UUID) {
-      const uuid = UUIDv4().next().value
-      const track = {
-        UUID: uuid,
-        title: '<< random >>',
-      }
-
-      this.#random.push(track)
-      this.#tracks.push(track.UUID)
-      this.save()
-      this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: this.UUID } }))
-
-      return
-    }
-
-    // ... normal track
-    if (track.UUID != null && track.UUID !== '' && !this.tracks.includes(track.UUID)) {
-      this.#tracks.push(track.UUID)
-      this.save()
-      this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: this.UUID } }))
-    }
-  }
-
   remove(track) {
     const ix = this.#tracks.findIndex((e) => `${e}` === `${track}`)
     if (ix !== -1) {
@@ -375,7 +389,7 @@ export class Playlist extends EventTarget {
         this.#track = null
       }
 
-      this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: this.UUID } }))
+      this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_CHANGED, { detail: { playlist: this.UUID } }))
     }
   }
 

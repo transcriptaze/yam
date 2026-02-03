@@ -6,11 +6,9 @@ export class PlaylistTracks extends HTMLElement {
     return []
   }
 
-  #UUID = ''
+  #playlist = ''
   #selected = null
   // #updated = false
-  // #tracklist = null
-  // #add_tracks = null
 
   // #fields = {}
 
@@ -23,55 +21,6 @@ export class PlaylistTracks extends HTMLElement {
   // }
 
   #handlers = {
-    //   summary: {
-    //     click: (event) => {
-    //       event.preventDefault()
-    //
-    //       const shadow = this.shadowRoot
-    //       const container = shadow.querySelector('div.playlist')
-    //       const open = container.hasAttribute('open')
-    //       const tracks = container.querySelector('div.tracks')
-    //
-    //       if (!open) {
-    //         container.setAttribute('open', '')
-    //         tracks.classList.remove('hidden')
-    //       } else {
-    //         container.removeAttribute('open')
-    //         tracks.classList.add('hidden')
-    //       }
-    //
-    //       this.dispatchEvent(
-    //         new CustomEvent(EVENTS.TOGGLE_PLAYLIST, {
-    //           bubbles: true,
-    //           composed: true,
-    //           detail: { playlist: this.UUID, open: !open },
-    //         }),
-    //       )
-    //     },
-    //   },
-    //
-    //   menu: {
-    //     click: (event) => {
-    //       event.stopPropagation()
-    //     },
-    //
-    //     toggle: (event) => {
-    //       event.stopPropagation()
-    //
-    //       const shadow = this.shadowRoot
-    //       const trash = shadow.querySelector('#trash')
-    //
-    //       if (event.newState === 'open') {
-    //         this.classList.remove('deleting')
-    //         trash.classList.remove('locked')
-    //       }
-    //
-    //       if (event.newState === 'closed') {
-    //         this.classList.remove('deleting')
-    //       }
-    //     },
-    //   },
-
     ul: {
       click: (event) => {
         if (event.target.UUID != null) {
@@ -80,54 +29,13 @@ export class PlaylistTracks extends HTMLElement {
             new CustomEvent(EVENTS.SELECT_TRACK, {
               bubbles: true,
               composed: true,
-              detail: { playlist: this.#UUID, track: event.target.UUID },
+              detail: { playlist: this.#playlist, track: event.target.UUID },
             }),
           )
         }
       },
     },
 
-    //   edit: {
-    //     click: (event) => {
-    //       event.preventDefault()
-    //       event.stopPropagation()
-    //
-    //       const shadow = this.shadowRoot
-    //       const menu = shadow.querySelector('[popover]')
-    //
-    //       menu.hidePopover()
-    //
-    //       this.dispatchEvent(
-    //         new CustomEvent(EVENTS.EDIT_PLAYLIST, {
-    //           bubbles: true,
-    //           composed: true,
-    //           detail: {},
-    //         }),
-    //       )
-    //     },
-    //   },
-    //
-    //   save: {
-    //     click: (event) => {
-    //       event.preventDefault()
-    //       event.stopPropagation()
-    //
-    //       // const container = this.shadowRoot.querySelector('div.playlist')
-    //       // const editing = container.classList.contains('editing')
-    //       // const adding = container.classList.contains('adding')
-    //
-    //       // if (editing && !adding) {
-    //       //   this.#save_edits()
-    //       //   this.#edited()
-    //       // }
-    //
-    //       // if (adding && !editing) {
-    //       //   this.#save_adds()
-    //       //   this.#added()
-    //       // }
-    //     },
-    //   },
-    //
     //   trash: {
     //     click: (event) => {
     //       event.preventDefault()
@@ -165,21 +73,18 @@ export class PlaylistTracks extends HTMLElement {
         event.preventDefault()
         event.stopPropagation()
 
-        this.plus()
+        this.#plus()
       },
     },
 
-    //   container: {
-    //     new_track: () => {
-    //       // this.#save_adds()
-    //       // this.#added()
-    //     },
-    //
-    //     random_track: () => {
-    //       // this.#save_adds()
-    //       // this.#added()
-    //     },
-    //   },
+    save: {
+      click: (event) => {
+        event.preventDefault()
+        event.stopPropagation()
+
+        this.#save()
+      },
+    },
   }
 
   constructor() {
@@ -201,42 +106,24 @@ export class PlaylistTracks extends HTMLElement {
   connectedCallback() {
     this.classList.add('component-playlist-tracks')
 
-    // const container = shadow.querySelector('div.playlist')
-    // const summary = container.querySelector('div.summary')
-    // const menu = shadow.querySelector('button#menu')
-    // const popover = shadow.querySelector('[popover]')
     const ul = this.shadowRoot.querySelector('div.list > ul')
     const plus = this.shadowRoot.querySelector('#plus')
-    // const edit = shadow.querySelector('#edit')
-    // const trash = shadow.querySelector('#trash')
-    // const save = shadow.querySelector('#save')
+    const save = this.shadowRoot.querySelector('#save')
 
-    // summary.addEventListener('click', this.#handlers.summary.click)
-    // menu.addEventListener('click', this.#handlers.menu.click)
-    // popover.addEventListener('toggle', this.#handlers.menu.toggle)
     ul.addEventListener('click', this.#handlers.ul.click)
-    // edit.addEventListener('click', this.#handlers.edit.click)
-    // save.addEventListener('click', this.#handlers.save.click)
-
-    // trash.addEventListener('click', this.#handlers.trash.click)
-    // trash.addEventListener('transitionend', this.#handlers.trash.transitionend)
 
     plus.addEventListener('click', this.#handlers.plus.click)
-
-    // container.addEventListener(EVENTS.NEW_TRACK, this.#handlers.container.new_track)
-    // container.addEventListener(EVENTS.RANDOM_TRACK, this.#handlers.container.random_track)
+    save.addEventListener('click', this.#handlers.save.click)
   }
 
-  disconnectedCallback() {
-    // this.#fields = {}
-  }
+  disconnectedCallback() {}
 
   adoptedCallback() {}
 
   attributeChangedCallback(_name, _from, _to) {}
 
   set playlist({ playlist, selected }) {
-    this.#UUID = playlist?.UUID ?? ''
+    this.#playlist = playlist?.UUID ?? ''
     this.#tracks = datastore.playlists.get(playlist)?.tracks ?? []
   }
 
@@ -245,7 +132,7 @@ export class PlaylistTracks extends HTMLElement {
   // }
 
   set selected({ playlist, track }) {
-    if (playlist === this.#UUID) {
+    if (playlist === this.#playlist) {
       this.#select(track)
     }
   }
@@ -262,47 +149,13 @@ export class PlaylistTracks extends HTMLElement {
   //   }
   // }
 
-  // open(tracklist, add_tracks) {
-  //   const shadow = this.shadowRoot
-  //   const container = shadow.querySelector('div.playlist')
-  //   const tracks = container.querySelector('div.tracks')
-  //   const ul = tracks.querySelector('ul')
-  //
-  //   // NTS: only render tracks on open
-  //   if (ul.children.length === 0 || this.#updated) {
-  //     this.#set(this.#tracks)
-  //     this.#updated = false
-  //   }
-  //
-  //   container.setAttribute('open', '')
-  //   container.classList.add('selected')
-  //
-  //   tracks.classList.remove('hidden')
-  //   tracks.appendChild(tracklist)
-  //   tracks.appendChild(add_tracks)
-  //
-  //   this.#tracklist = tracklist
-  //   this.#add_tracks = add_tracks
-  //
-  //   // ... 'All Tracks' ?
-  //   if (this.UUID === DEFAULT.UUID) {
-  //     add_tracks.classList.add('all-tracks')
-  //   } else {
-  //     add_tracks.classList.remove('all-tracks')
-  //   }
-  // }
+  update(playlist) {
+    const UUID = playlist?.UUID ?? ''
 
-  // close() {
-  //   const shadow = this.shadowRoot
-  //   const container = shadow.querySelector('div.playlist')
-  //   const tracks = container.querySelector('div.tracks')
-  //
-  //   container.classList.remove('editing')
-  //   container.classList.remove('selected')
-  //   container.removeAttribute('open')
-  //
-  //   tracks.classList.add('hidden')
-  // }
+    if (UUID !== '' && this.#playlist === UUID) {
+      this.#tracks = datastore.playlists.get(playlist)?.tracks ?? []
+    }
+  }
 
   // muted(track, muted) {
   //   const shadow = this.shadowRoot
@@ -314,49 +167,31 @@ export class PlaylistTracks extends HTMLElement {
   //   }
   // }
 
-  // updated(track) {
-  //   // ... update stored track title
-  //   {
-  //     const match = this.#tracks.find((v) => v.UUID === track.UUID)
-  //     if (match != null) {
-  //       match.title = track.title
-  //     }
-  //   }
-  //
-  //   // ... update displayed track title
-  //   {
-  //     const tracks = this.shadowRoot.querySelectorAll('ul yam-playlist-item')
-  //     const match = tracks.values().find((v) => v.UUID === track.UUID)
-  //     if (match != null) {
-  //       match.title = track.title
-  //     }
-  //   }
-  // }
+  #plus() {
+    return (async () => {
+      await customElements.whenDefined('yam-add-tracks')
 
-  // edit() {
-  //   const shadow = this.shadowRoot
-  //   const container = shadow.querySelector('div.playlist')
-  //
-  //   if (this.#tracklist != null) {
-  //     this.#tracklist.selected = this.#tracks
-  //   }
-  //
-  //   container.classList.add('editing')
-  //
-  //   document.addEventListener('mousedown', this.#clickOutside)
-  // }
+      const container = this.shadowRoot.querySelector('div.playlist-tracks')
+      const widget = this.shadowRoot?.querySelector('yam-add-tracks')
 
-  plus() {
-    console.log('>>>> plus')
-    // const container = this.shadowRoot.querySelector('div.playlist')
-    //
-    // if (this.#add_tracks != null) {
-    //   this.#add_tracks.selected = this.#tracks
-    // }
-    //
-    // container.classList.add('adding')
-    //
-    // document.addEventListener('mousedown', this.#clickOutside)
+      if (widget != null) {
+        widget.playlist = this.#playlist
+        container.classList.add('adding')
+      }
+    })()
+  }
+
+  #save() {
+    return (async () => {
+      await customElements.whenDefined('yam-add-tracks')
+
+      const container = this.shadowRoot.querySelector('div.playlist-tracks')
+      const widget = this.shadowRoot?.querySelector('yam-add-tracks')
+      const selected = widget?.selected ?? []
+
+      container.classList.remove('adding')
+      datastore.playlists.add_tracks(this.#playlist, selected)
+    })()
   }
 
   set #tracks(list) {
@@ -376,12 +211,6 @@ export class PlaylistTracks extends HTMLElement {
     for (; ix < children.length; ix++) {
       this.#delete(ul, children[ix])
     }
-
-    //   // ... reselect
-    //   const track = list.find((v) => v.UUID === this.selected)
-    //   const UUID = track?.UUID ?? null
-    //
-    //   this.#select(UUID)
   }
 
   #select(UUID) {
@@ -393,111 +222,7 @@ export class PlaylistTracks extends HTMLElement {
 
       track.selected = track.UUID === UUID
     }
-
-    // // ... set #selected
-    // const track = this.#tracks.find((v) => v.UUID === UUID)
-    //
-    // if (track == null && this.#selected != null) {
-    //   this.#selected = null
-    // } else if ((UUID == null && this.#selected != null) || (UUID != null && UUID !== this.#selected)) {
-    //   this.#selected = UUID
-    // }
   }
-
-  // #edited() {
-  //   const container = this.shadowRoot.querySelector('div.playlist')
-  //
-  //   container.classList.remove('editing')
-  //   document.removeEventListener('mousedown', this.#clickOutside)
-  // }
-
-  // #added() {
-  //   const container = this.shadowRoot.querySelector('div.playlist')
-  //
-  //   container.classList.remove('adding')
-  //   document.removeEventListener('mousedown', this.#clickOutside)
-  // }
-
-  // #save_edits() {
-  //   const container = this.shadowRoot.querySelector('div.playlist')
-  //   const tracklist = container.querySelector('yam-tracklist')
-  //
-  //   if (tracklist == null) {
-  //     this.dispatchEvent(
-  //       new CustomEvent('change', {
-  //         bubbles: true,
-  //         composed: true,
-  //         detail: {
-  //           playlist: this.UUID,
-  //         },
-  //       }),
-  //     )
-  //
-  //     return
-  //   }
-  //
-  //   const selected = tracklist?.selected ?? []
-  //   const set = new Set(selected.map((v) => v.UUID))
-  //   const added = new Set()
-  //   const tracks = []
-  //
-  //   this.#tracks.forEach((v) => {
-  //     if (set.has(v.UUID)) {
-  //       tracks.push(v)
-  //       added.add(v.UUID)
-  //     }
-  //   })
-  //
-  //   const remaining = set.difference(added)
-  //
-  //   selected.forEach((v) => {
-  //     if (remaining.has(v.UUID)) {
-  //       tracks.push({ UUID: `${v.UUID}`, title: `${v.title}`, muted: false })
-  //     }
-  //   })
-  //
-  //   this.dispatchEvent(
-  //     new CustomEvent('change', {
-  //       bubbles: true,
-  //       composed: true,
-  //       detail: {
-  //         playlist: this.UUID,
-  //         tracks: tracks.map((v) => v.UUID),
-  //       },
-  //     }),
-  //   )
-  // }
-
-  // #save_adds() {
-  //   const container = this.shadowRoot.querySelector('div.playlist')
-  //   const add_tracks = container.querySelector('yam-add-tracks')
-  //
-  //   if (add_tracks == null) {
-  //     return
-  //   }
-  //
-  //   const selected = add_tracks?.selected ?? []
-  //   const tracks = new Set()
-  //
-  //   this.#tracks.forEach((v) => {
-  //     tracks.add(v.UUID)
-  //   })
-  //
-  //   selected.forEach((v) => {
-  //     tracks.add(`${v.UUID}`)
-  //   })
-  //
-  //   this.dispatchEvent(
-  //     new CustomEvent('change', {
-  //       bubbles: true,
-  //       composed: true,
-  //       detail: {
-  //         playlist: this.UUID,
-  //         tracks: Array.from(tracks),
-  //       },
-  //     }),
-  //   )
-  // }
 
   // #clickOutside = (event) => {
   //   const shadow = this.shadowRoot

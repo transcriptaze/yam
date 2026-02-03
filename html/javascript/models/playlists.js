@@ -2,7 +2,7 @@ import * as DB from '../db/db.js'
 import { Playlist } from './playlist.js'
 import { warnf } from '../log.js'
 import { UUIDv4, reserve } from '../uuid.js'
-import { DEFAULT } from '../constants.js'
+import { DEFAULT, EVENTS } from '../constants.js'
 
 const LOGTAG = 'playlists'
 
@@ -32,7 +32,7 @@ class Playlists extends EventTarget {
       v.addEventListener('muted', this.#muted)
       v.addEventListener('unmuted', this.#unmuted)
       v.addEventListener('selected', this.#selected)
-      v.addEventListener('changed', this.#changed)
+      v.addEventListener(EVENTS.PLAYLIST_CHANGED, this.#changed)
     })
   }
 
@@ -57,7 +57,7 @@ class Playlists extends EventTarget {
     playlist.addEventListener('muted', this.#muted)
     playlist.addEventListener('unmuted', this.#unmuted)
     playlist.addEventListener('selected', this.#selected)
-    playlist.addEventListener('changed', this.#changed)
+    playlist.addEventListener(EVENTS.PLAYLIST_CHANGED, this.#changed)
 
     this.#playlists.push(playlist)
     this.save()
@@ -188,7 +188,7 @@ class Playlists extends EventTarget {
     const playlist = event.detail.playlist
 
     if (this.#playlists.some((u) => u.UUID == playlist)) {
-      this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: playlist } }))
+      this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_CHANGED, { detail: { playlist: playlist } }))
     }
   }
 }

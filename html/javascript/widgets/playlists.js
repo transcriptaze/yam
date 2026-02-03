@@ -24,14 +24,6 @@ export class Playlists extends HTMLElement {
         this.dispatchEvent(new CustomEvent('new', { detail: {} }))
       },
     },
-
-    playlist: {
-      edit: (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        e.target.edit()
-      },
-    },
   }
 
   constructor() {
@@ -53,13 +45,8 @@ export class Playlists extends HTMLElement {
   connectedCallback() {
     this.classList.add('component-playlists')
 
-    const shadow = this.shadowRoot
-    const all = shadow.getElementById('all')
-    const plus = shadow.getElementById('plus')
-
-    all.addEventListener(EVENTS.TOGGLE_PLAYLIST, this.#toggle)
-    shadow.addEventListener(EVENTS.EDIT_PLAYLIST, this.#handlers.playlist.edit)
-    plus.addEventListener('click', this.#handlers.plus.click)
+    this.shadowRoot.getElementById('all').addEventListener(EVENTS.TOGGLE_PLAYLIST, this.#toggle)
+    this.shadowRoot.getElementById('plus').addEventListener('click', this.#handlers.plus.click)
   }
 
   disconnectedCallback() {
@@ -77,12 +64,7 @@ export class Playlists extends HTMLElement {
   }
 
   set tracklist(tracks) {
-    const tracklist = this.#tracklist
     const add_tracks = this.#add_tracks
-
-    if (tracklist != null) {
-      tracklist.tracks = tracks
-    }
 
     if (add_tracks != null) {
       add_tracks.tracks = tracks
@@ -107,7 +89,7 @@ export class Playlists extends HTMLElement {
 
       list.forEach((v) => {
         if (v.UUID === playlist) {
-          v.open(this.#tracklist, this.#add_tracks)
+          v.open(this.#add_tracks)
           v.selected = track
         }
       })
@@ -196,8 +178,6 @@ export class Playlists extends HTMLElement {
     const list = [all, ...children]
 
     list.forEach((v) => v.updated(track))
-
-    this.#tracklist.updated(track)
   }
 
   deleted(playlist) {
@@ -239,14 +219,6 @@ export class Playlists extends HTMLElement {
       })
 
     list.find((v) => v.UUID === playlist.UUID)?.muted(track, muted)
-  }
-
-  get #tracklist() {
-    if (this.#fields.tracklist == null) {
-      this.#fields.tracklist = this.shadowRoot?.querySelector('yam-tracklist')
-    }
-
-    return this.#fields.tracklist
   }
 
   get #add_tracks() {
@@ -306,7 +278,7 @@ export class Playlists extends HTMLElement {
 
       lists.forEach((v) => {
         if (v.UUID === UUID) {
-          v.open(this.#tracklist, this.#add_tracks)
+          v.open(this.#add_tracks)
         }
       })
 

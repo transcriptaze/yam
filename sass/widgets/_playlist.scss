@@ -170,13 +170,6 @@
         grid-row: 1;
       }
 
-      yam-tracklist {
-        grid-column: 1;
-        grid-row: 1;
-
-        display: none;
-      }
-
       yam-add-tracks {
         grid-column: 1;
         grid-row: 1;
@@ -298,17 +291,6 @@
          display: block;
       }
     }
-
-    div.tracks {
-      div.list {
-        display: none;
-      }
-
-      yam-tracklist {
-        display: block;
-      }
-    }
-
   }
 
   div.playlist.adding {

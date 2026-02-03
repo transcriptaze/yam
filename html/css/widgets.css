@@ -1376,11 +1376,6 @@ div.beat.on div.shape {
   grid-column: 1;
   grid-row: 1;
 }
-:host(.component-playlist) div.playlist div.tracks yam-tracklist {
-  grid-column: 1;
-  grid-row: 1;
-  display: none;
-}
 :host(.component-playlist) div.playlist div.tracks yam-add-tracks {
   grid-column: 1;
   grid-row: 1;
@@ -1463,12 +1458,6 @@ div.beat.on div.shape {
   display: none;
 }
 :host(.component-playlist) div.playlist.editing div.menu #save {
-  display: block;
-}
-:host(.component-playlist) div.playlist.editing div.tracks div.list {
-  display: none;
-}
-:host(.component-playlist) div.playlist.editing div.tracks yam-tracklist {
   display: block;
 }
 :host(.component-playlist) div.playlist.adding div.menu #menu {

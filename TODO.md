@@ -31,8 +31,10 @@
                 - [x] random track
                 - [x] new track
                 - [ ] update _All Tracks_
+                - [ ] close add-tracks if different playlist selected
+                - [ ] fix add-tracks scrolling
+            - [x] remove edit-tracks
             - [ ] delete
-            - [ ] edit
             - [ ] mute
             - [ ] fix height (involuntary scrollbar)
        - [x] edit

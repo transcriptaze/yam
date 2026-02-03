@@ -22,6 +22,7 @@
        - [x] hide embedded tracklists
        - [x] separate scrolling
        - [x] edit
+            - [ ] update title via datastore + 'changed' event
        - [ ] standalone tracklist
             - [x] initialise playlist
             - [x] select playlist
@@ -34,8 +35,8 @@
                 - [x] new track
                 - [x] close add-tracks if different playlist selected
                 - [x] fix add-tracks scrolling
-                - [ ] update _All Tracks_
-                - (?) rename add-tracks widget
+                - [x] update _All Tracks_
+                - (?) rename yam-playlist-tracks widget
             - [ ] delete
             - [ ] mute
             - [ ] fix height (involuntary scrollbar)

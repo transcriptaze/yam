@@ -30,6 +30,7 @@
             - [x] allow playlist drag always
             - [x] replace '+' with floating circle '+'
             - [x] remove edit-tracks
+            - [ ] fix height (involuntary scrollbar)
             - [ ] add
                 - [x] random track
                 - [x] new track
@@ -37,10 +38,11 @@
                 - [x] fix add-tracks scrolling
                 - [x] update _All Tracks_
                 - [x] rename yam-playlist-tracks widget
-                - [ ] rename playlist-item and tracklist-item
+                - [x] rename tracklist-item
+                - [ ] rename playlist-tracks
             - [ ] delete
             - [ ] mute
-            - [ ] fix height (involuntary scrollbar)
+            - [ ] drag 'n drop
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [x] Rework clock as generator

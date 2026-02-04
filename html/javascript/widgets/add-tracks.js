@@ -23,7 +23,7 @@ export class AddTracks extends HTMLElement {
 
         const ul = this.shadowRoot.querySelector('ul')
         const li = document.createElement('li')
-        const item = document.createElement('yam-tracklist-item')
+        const item = document.createElement('yam-add-tracks-item')
 
         item.setAttribute('uuid', UUID)
         item.setAttribute('title', track.title)
@@ -49,7 +49,7 @@ export class AddTracks extends HTMLElement {
 
         const ul = this.shadowRoot.querySelector('ul')
         const li = document.createElement('li')
-        const item = document.createElement('yam-tracklist-item')
+        const item = document.createElement('yam-add-tracks-item')
 
         item.setAttribute('uuid', UUID)
         item.setAttribute('title', track.title)
@@ -113,7 +113,7 @@ export class AddTracks extends HTMLElement {
 
     tracks.toSorted(compare).forEach((v) => {
       const li = document.createElement('li')
-      const item = document.createElement('yam-tracklist-item')
+      const item = document.createElement('yam-add-tracks-item')
 
       item.setAttribute('uuid', v.UUID)
       item.setAttribute('title', v.title)
@@ -127,7 +127,7 @@ export class AddTracks extends HTMLElement {
 
   get selected() {
     const shadow = this.shadowRoot
-    const items = shadow.querySelectorAll('yam-tracklist-item')
+    const items = shadow.querySelectorAll('yam-add-tracks-item')
     const selected = []
 
     items.forEach((v) => {
@@ -149,7 +149,7 @@ export class AddTracks extends HTMLElement {
 
     const ul = this.shadowRoot.querySelector('ul')
     const hr = this.shadowRoot.querySelector('hr')
-    const list = Array.from(ul.querySelectorAll('yam-tracklist-item'))
+    const list = Array.from(ul.querySelectorAll('yam-add-tracks-item'))
     let count = 0
 
     list.forEach((v) => {

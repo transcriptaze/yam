@@ -1813,50 +1813,6 @@ div.playlist-track.random div#title {
   }
 }
 
-:host(.component-tracklist-item) div.tracklist-item {
-  display: grid;
-  grid-template-columns: auto auto 1fr;
-  grid-template-rows: auto;
-  column-gap: 0px;
-}
-:host(.component-tracklist-item) div.tracklist-item input[type=checkbox] {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-:host(.component-tracklist-item) div.tracklist-item .checkbox {
-  width: 20px;
-  height: 20px;
-  background: url("/images/checkbox-unchecked.svg") no-repeat center/contain;
-  display: inline-block;
-  margin-right: 8px;
-}
-:host(.component-tracklist-item) div.tracklist-item label {
-  width: 100%;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto;
-  color: #666666;
-  font-size: 0.9em;
-  font-style: normal;
-  overflow: hidden;
-  transition: all 0.25s ease;
-}
-:host(.component-tracklist-item) div.tracklist-item label #title {
-  width: 100%;
-  overflow: hidden;
-  text-wrap: nowrap;
-  text-overflow: ellipsis;
-}
-:host(.component-tracklist-item) div.tracklist-item input[type=checkbox]:checked ~ label {
-  color: #222222;
-  font-style: normal;
-  font-weight: 500;
-}
-:host(.component-tracklist-item) div.tracklist-item input[type=checkbox]:checked ~ label .checkbox {
-  background: url("/images/checkbox-checked.svg") no-repeat center/contain;
-}
-
 :host(.component-add-tracks) div.tracklist {
   box-sizing: border-box;
   padding-bottom: 24px;
@@ -1901,6 +1857,50 @@ div.playlist-track.random div#title {
 
 :host(.all-tracks) #random-track {
   display: none;
+}
+
+:host(.component-add-tracks-item) div.tracklist-item {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  grid-template-rows: auto;
+  column-gap: 0px;
+}
+:host(.component-add-tracks-item) div.tracklist-item input[type=checkbox] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+:host(.component-add-tracks-item) div.tracklist-item .checkbox {
+  width: 20px;
+  height: 20px;
+  background: url("/images/checkbox-unchecked.svg") no-repeat center/contain;
+  display: inline-block;
+  margin-right: 8px;
+}
+:host(.component-add-tracks-item) div.tracklist-item label {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto;
+  color: #666666;
+  font-size: 0.9em;
+  font-style: normal;
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+:host(.component-add-tracks-item) div.tracklist-item label #title {
+  width: 100%;
+  overflow: hidden;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+}
+:host(.component-add-tracks-item) div.tracklist-item input[type=checkbox]:checked ~ label {
+  color: #222222;
+  font-style: normal;
+  font-weight: 500;
+}
+:host(.component-add-tracks-item) div.tracklist-item input[type=checkbox]:checked ~ label .checkbox {
+  background: url("/images/checkbox-checked.svg") no-repeat center/contain;
 }
 
 :host(.component-editor) div.track-editor {

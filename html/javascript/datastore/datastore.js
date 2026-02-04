@@ -2,6 +2,7 @@ import * as models from '../models/models.js'
 import * as _playlist from './playlist.js'
 import * as _track from './track.js'
 import * as _tracks from './tracks.js'
+import { DEFAULT, RANDOM } from '../constants.js'
 
 export const playlists = {
   // Disambiguates the 'playlist' arg and returns a 'realized' object that is the playlist
@@ -40,6 +41,13 @@ export const playlists = {
 
     if (playlist != null) {
       playlist.add(...tracks)
+    }
+
+    // ... update 'All Tracks'
+    const all = models.playlists.playlist(DEFAULT.UUID)
+
+    if (all != null) {
+      all.add(...tracks.filter((v) => v.UUID != RANDOM.UUID))
     }
   },
 }

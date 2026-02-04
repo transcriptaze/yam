@@ -39,7 +39,7 @@
                 - [x] update _All Tracks_
                 - [x] rename yam-playlist-tracks widget
                 - [x] rename tracklist-item
-                - [ ] rename playlist-tracks
+                - [x] rename tracklist
             - [ ] delete
             - [ ] mute
             - [ ] drag 'n drop

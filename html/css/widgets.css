@@ -1213,7 +1213,7 @@ div.beat.on div.shape {
 :host(.component-playlists) div.playlists.unsortable div.grip {
   display: none;
 }
-:host(.component-playlists) yam-tracklist {
+:host(.component-playlists) yam-playlist-tracks {
   display: none;
 }
 :host(.component-playlists) yam-add-tracks {
@@ -1555,6 +1555,134 @@ div.beat.on div.shape {
     border-bottom-right-radius: 12px;
   }
 }
+:host(.component-playlist-tracks) div.playlist-tracks {
+  box-sizing: border-box;
+  height: 100%;
+  overflow: hidden;
+  margin-top: 4px;
+  margin-bottom: 4px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 4px;
+  padding-right: 4px;
+  border-radius: 12px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 1fr auto;
+  row-gap: 2px;
+}
+:host(.component-playlist-tracks) div.playlist-tracks div.list {
+  grid-column: 1/3;
+  grid-row: 1/3;
+}
+:host(.component-playlist-tracks) div.playlist-tracks #plus {
+  grid-column: 2;
+  grid-row: 2;
+}
+:host(.component-playlist-tracks) div.playlist-tracks #save {
+  grid-column: 2;
+  grid-row: 2;
+}
+:host(.component-playlist-tracks) div.playlist-tracks yam-add-tracks {
+  grid-column: 1/3;
+  grid-row: 1/3;
+}
+:host(.component-playlist-tracks) div.playlist-tracks div.list {
+  display: flex;
+  flex-direction: column;
+  justify-items: start;
+  background: rgba(254, 254, 254, 0.2509803922);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+:host(.component-playlist-tracks) div.playlist-tracks div.list ul {
+  overflow: hidden;
+  overflow-y: auto;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  list-style: none;
+}
+:host(.component-playlist-tracks) div.playlist-tracks div.list ul li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto;
+  column-gap: 0px;
+  align-items: center;
+}
+:host(.component-playlist-tracks) div.playlist-tracks div.list ul li div.grip {
+  grid-column: 1/3;
+  grid-row: 1;
+}
+:host(.component-playlist-tracks) div.playlist-tracks div.list ul li yam-playlist-item {
+  grid-column: 1/3;
+  grid-row: 1;
+  flex-grow: 1;
+}
+:host(.component-playlist-tracks) div.playlist-tracks yam-playlist-item {
+  margin-left: 32px;
+  margin-top: 4px;
+}
+:host(.component-playlist-tracks) div.playlist-tracks yam-add-tracks {
+  display: none;
+}
+:host(.component-playlist-tracks) div.playlist-tracks #plus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1); /* semi-transparent */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(0.5px);
+  margin: 8px;
+  padding: 4px;
+  border: none;
+  border-radius: 50%;
+  z-index: 2;
+}
+:host(.component-playlist-tracks) div.playlist-tracks #plus img {
+  width: 40px;
+  filter: invert(24%) sepia(7%) saturate(6%) hue-rotate(314deg) brightness(97%) contrast(88%);
+}
+:host(.component-playlist-tracks) div.playlist-tracks #save {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1); /* semi-transparent */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(0.5px);
+  margin: 8px;
+  padding: 4px;
+  border: none;
+  border-radius: 50%;
+  z-index: 2;
+}
+:host(.component-playlist-tracks) div.playlist-tracks #save img {
+  width: 40px;
+}
+:host(.component-playlist-tracks) div.playlist-tracks.adding div.list {
+  display: none;
+}
+:host(.component-playlist-tracks) div.playlist-tracks.adding yam-add-tracks {
+  display: block;
+}
+:host(.component-playlist-tracks) div.playlist-tracks.adding #plus {
+  display: none;
+}
+:host(.component-playlist-tracks) div.playlist-tracks.adding #save {
+  display: flex;
+}
+@media (max-width: 768px) and (orientation: portrait) {
+  :host(.component-playlist-tracks) div.playlist-tracks yam-playlist-item {
+    margin-left: 40px;
+  }
+}
+@media (max-width: 1024px) and (orientation: landscape) {
+  :host(.component-playlist-tracks) div.playlist-tracks yam-playlist-item {
+    margin-left: 36px;
+  }
+}
+
 div.playlist-track {
   width: 100%;
   margin-bottom: 6px;
@@ -1683,134 +1811,6 @@ div.playlist-track.random div#title {
 :host(.deleting) div.playlist-track img#trash {
   filter: invert(13%) sepia(88%) saturate(7445%) hue-rotate(0deg) brightness(103%) contrast(112%);
   transition: filter 0.5s ease;
-}
-
-:host(.component-tracklist) div.playlist-tracks {
-  box-sizing: border-box;
-  height: 100%;
-  overflow: hidden;
-  margin-top: 4px;
-  margin-bottom: 4px;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  padding-left: 4px;
-  padding-right: 4px;
-  border-radius: 12px;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  grid-template-rows: 1fr auto;
-  row-gap: 2px;
-}
-:host(.component-tracklist) div.playlist-tracks div.list {
-  grid-column: 1/3;
-  grid-row: 1/3;
-}
-:host(.component-tracklist) div.playlist-tracks #plus {
-  grid-column: 2;
-  grid-row: 2;
-}
-:host(.component-tracklist) div.playlist-tracks #save {
-  grid-column: 2;
-  grid-row: 2;
-}
-:host(.component-tracklist) div.playlist-tracks yam-add-tracks {
-  grid-column: 1/3;
-  grid-row: 1/3;
-}
-:host(.component-tracklist) div.playlist-tracks div.list {
-  display: flex;
-  flex-direction: column;
-  justify-items: start;
-  background: rgba(254, 254, 254, 0.2509803922);
-  border-bottom-left-radius: 12px;
-  border-bottom-right-radius: 12px;
-}
-:host(.component-tracklist) div.playlist-tracks div.list ul {
-  overflow: hidden;
-  overflow-y: auto;
-  margin-top: 8px;
-  margin-bottom: 8px;
-  padding-left: 8px;
-  padding-right: 8px;
-  list-style: none;
-}
-:host(.component-tracklist) div.playlist-tracks div.list ul li {
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto;
-  column-gap: 0px;
-  align-items: center;
-}
-:host(.component-tracklist) div.playlist-tracks div.list ul li div.grip {
-  grid-column: 1/3;
-  grid-row: 1;
-}
-:host(.component-tracklist) div.playlist-tracks div.list ul li yam-playlist-item {
-  grid-column: 1/3;
-  grid-row: 1;
-  flex-grow: 1;
-}
-:host(.component-tracklist) div.playlist-tracks yam-playlist-item {
-  margin-left: 32px;
-  margin-top: 4px;
-}
-:host(.component-tracklist) div.playlist-tracks yam-add-tracks {
-  display: none;
-}
-:host(.component-tracklist) div.playlist-tracks #plus {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.1); /* semi-transparent */
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(0.5px);
-  margin: 8px;
-  padding: 4px;
-  border: none;
-  border-radius: 50%;
-  z-index: 2;
-}
-:host(.component-tracklist) div.playlist-tracks #plus img {
-  width: 40px;
-  filter: invert(24%) sepia(7%) saturate(6%) hue-rotate(314deg) brightness(97%) contrast(88%);
-}
-:host(.component-tracklist) div.playlist-tracks #save {
-  display: none;
-  justify-content: center;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.1); /* semi-transparent */
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(0.5px);
-  margin: 8px;
-  padding: 4px;
-  border: none;
-  border-radius: 50%;
-  z-index: 2;
-}
-:host(.component-tracklist) div.playlist-tracks #save img {
-  width: 40px;
-}
-:host(.component-tracklist) div.playlist-tracks.adding div.list {
-  display: none;
-}
-:host(.component-tracklist) div.playlist-tracks.adding yam-add-tracks {
-  display: block;
-}
-:host(.component-tracklist) div.playlist-tracks.adding #plus {
-  display: none;
-}
-:host(.component-tracklist) div.playlist-tracks.adding #save {
-  display: flex;
-}
-@media (max-width: 768px) and (orientation: portrait) {
-  :host(.component-tracklist) div.playlist-tracks yam-playlist-item {
-    margin-left: 40px;
-  }
-}
-@media (max-width: 1024px) and (orientation: landscape) {
-  :host(.component-tracklist) div.playlist-tracks yam-playlist-item {
-    margin-left: 36px;
-  }
 }
 
 :host(.component-add-tracks) div.tracklist {

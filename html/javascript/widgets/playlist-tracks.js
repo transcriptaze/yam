@@ -1,7 +1,7 @@
 import * as datastore from '../datastore/datastore.js'
 import { EVENTS } from '../constants.js'
 
-export class Tracklist extends HTMLElement {
+export class PlaylistTracks extends HTMLElement {
   static get observedAttributes() {
     return []
   }
@@ -9,8 +9,6 @@ export class Tracklist extends HTMLElement {
   #playlist = ''
   #selected = null
   // #updated = false
-
-  // #fields = {}
 
   // #drag = {
   //   li: null,
@@ -90,7 +88,7 @@ export class Tracklist extends HTMLElement {
   constructor() {
     super()
 
-    const template = document.querySelector('#template-tracklist')
+    const template = document.querySelector('#template-playlist-tracks')
     const stylesheet = document.createElement('link')
     const content = template.content
     const shadow = this.attachShadow({ mode: 'open' })
@@ -104,7 +102,7 @@ export class Tracklist extends HTMLElement {
   }
 
   connectedCallback() {
-    this.classList.add('component-tracklist')
+    this.classList.add('component-playlist-tracks')
 
     const ul = this.shadowRoot.querySelector('div.list > ul')
     const plus = this.shadowRoot.querySelector('#plus')
@@ -452,4 +450,4 @@ export class Tracklist extends HTMLElement {
   }
 }
 
-customElements.define('yam-tracklist', Tracklist)
+customElements.define('yam-playlist-tracks', PlaylistTracks)

@@ -30,8 +30,8 @@
             - [x] allow playlist drag always
             - [x] replace '+' with floating circle '+'
             - [x] remove edit-tracks
-            - [ ] fix height (involuntary scrollbar)
-            - [ ] add
+            - [x] fix height (involuntary scrollbar)
+            - [x] add
                 - [x] random track
                 - [x] new track
                 - [x] close add-tracks if different playlist selected

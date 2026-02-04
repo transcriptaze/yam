@@ -490,16 +490,7 @@ export class Playlist extends HTMLElement {
   #save_edits() {
     const title = this.shadowRoot.querySelector('div.playlist div.title input')
 
-    this.dispatchEvent(
-      new CustomEvent('change', {
-        bubbles: true,
-        composed: true,
-        detail: {
-          playlist: this.UUID,
-          title: title.value,
-        },
-      }),
-    )
+    datastore.playlists.setTitle(this.#UUID, title.value)
   }
 
   #save_adds() {
@@ -508,7 +499,7 @@ export class Playlist extends HTMLElement {
     if (addTracks != null) {
       const selected = addTracks?.selected ?? []
 
-      datastore.playlists.add_tracks(this.#UUID, selected)
+      datastore.playlists.addTracks(this.#UUID, selected)
     }
   }
 

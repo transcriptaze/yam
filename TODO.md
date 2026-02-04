@@ -22,7 +22,7 @@
        - [x] hide embedded tracklists
        - [x] separate scrolling
        - [x] edit
-            - [ ] update title via datastore + 'changed' event
+            - [x] update title via datastore + 'changed' event
        - [ ] standalone tracklist
             - [x] initialise playlist
             - [x] select playlist

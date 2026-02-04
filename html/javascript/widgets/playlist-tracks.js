@@ -190,7 +190,7 @@ export class PlaylistTracks extends HTMLElement {
       const selected = widget?.selected ?? []
 
       container.classList.remove('adding')
-      datastore.playlists.add_tracks(this.#playlist, selected)
+      datastore.playlists.addTracks(this.#playlist, selected)
     })()
   }
 

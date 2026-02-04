@@ -387,7 +387,6 @@ function rewire() {
   wheel.addEventListener('changed', () => onWheel(true))
 
   widgets.playlists.addEventListener('new', (e) => onPlaylistNew(e))
-  widgets.playlists.addEventListener('change', (e) => onPlaylistChange(e))
   widgets.playlists.addEventListener(EVENTS.SHUFFLE_PLAYLISTS, (e) => onPlaylistsShuffled(e))
   widgets.playlists.addEventListener(EVENTS.SELECT_PLAYLIST, (e) => onPlaylistSelected(e))
   widgets.playlists.addEventListener(EVENTS.SHUFFLE_PLAYLIST, (e) => onPlaylistShuffled(e))
@@ -852,20 +851,6 @@ function onPlaylistsShuffled(event) {
 
 function onPlaylistNew(_event) {
   models.playlists.create()
-}
-
-function onPlaylistChange(event) {
-  const playlist = models.playlists.playlist(event.detail.playlist)
-
-  if (playlist != null) {
-    playlist.update(event.detail.title, event.detail.tracks)
-    playlist.save()
-
-    if (playlist.UUID === state.playlist) {
-      widgets.metronome.bof = playlist?.BOF ?? true
-      widgets.metronome.eof = playlist?.EOF ?? true
-    }
-  }
 }
 
 function onPlaylistAdded(event) {

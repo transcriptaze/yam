@@ -526,13 +526,7 @@ export class Playlist extends HTMLElement {
     event.preventDefault()
     event.stopPropagation()
 
-    this.dispatchEvent(
-      new CustomEvent(EVENTS.MUTE_TRACK, {
-        bubbles: true,
-        composed: true,
-        detail: { playlist: this.UUID, track: event.detail.UUID, mute: event.detail.mute },
-      }),
-    )
+    datastore.playlists.muteTrack(this.#UUID, event.detail.UUID, event.detail.mute)
   }
 
   #trash = (event) => {

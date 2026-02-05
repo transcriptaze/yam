@@ -71,6 +71,8 @@ export const EVENTS = {
 
   PLAYLIST_CHANGED: 'playlist-changed',
   PLAYLIST_TRACK_DELETED: 'playlist-track-deleted',
+  PLAYLIST_TRACK_MUTED: 'muted',
+  PLAYLIST_TRACK_UNMUTED: 'unmuted',
 
   SELECT_TRACK: 'select-track',
   MUTE_TRACK: 'mute-track',

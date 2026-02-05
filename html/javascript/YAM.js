@@ -392,7 +392,6 @@ function rewire() {
   widgets.playlists.addEventListener(EVENTS.SHUFFLE_PLAYLIST, (e) => onPlaylistShuffled(e))
   widgets.playlists.addEventListener(EVENTS.DELETE_PLAYLIST, (e) => onPlaylistDelete(e))
   widgets.playlists.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
-  widgets.playlists.addEventListener(EVENTS.MUTE_TRACK, (e) => onMute(e))
 
   widgets.tracks.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
 
@@ -408,11 +407,11 @@ function rewire() {
 
   state.addEventListener('change', (e) => onStateModified(e))
 
-  models.playlists.addEventListener('muted', (e) => onMuted(e, true))
-  models.playlists.addEventListener('unmuted', (e) => onMuted(e, false))
   models.playlists.addEventListener('selected', (e) => onSelected(e))
   models.playlists.addEventListener(EVENTS.PLAYLIST_CHANGED, (e) => onPlaylistChanged(e))
   models.playlists.addEventListener(EVENTS.PLAYLIST_TRACK_DELETED, (e) => onPlaylistTrackDeleted(e))
+  models.playlists.addEventListener(EVENTS.PLAYLIST_TRACK_MUTED, (e) => onMuted(e, true))
+  models.playlists.addEventListener(EVENTS.PLAYLIST_TRACK_UNMUTED, (e) => onMuted(e, false))
   models.playlists.addEventListener('added', (e) => onPlaylistAdded(e))
   models.playlists.addEventListener('deleted', (e) => onPlaylistDeleted(e))
 
@@ -565,27 +564,14 @@ function onTrackSelect(event) {
   show('metronome')
 }
 
-function onMute(event) {
-  const playlist = models.playlists.playlist(event.detail.playlist)
-  const track = event.detail.track
-  const mute = event.detail.mute === true
-
-  if (playlist != null) {
-    if (mute) {
-      playlist.mute(track)
-    } else {
-      playlist.unmute(track)
-    }
-  }
-}
-
 function onMuted(e, muted) {
   const playlist = models.playlists.playlist(event.detail.playlist)
   const track = e.detail.track
 
   widgets.playlists.mute(playlist, track, muted)
+  widgets.tracks.update(playlist)
 
-  playlist?.save()
+  // playlist?.save()
 }
 
 function onSelected(event) {

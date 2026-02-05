@@ -342,16 +342,16 @@ export class Playlist extends EventTarget {
   mute(track) {
     if (track != null && this.#tracks.includes(track)) {
       this.#muted.add(track)
-
-      this.dispatchEvent(new CustomEvent('muted', { detail: { playlist: this.UUID, track: track } }))
+      this.save()
+      this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_TRACK_MUTED, { detail: { playlist: this.UUID, track: track } }))
     }
   }
 
   unmute(track) {
     if (track != null && this.#tracks.includes(track)) {
       this.#muted.delete(track)
-
-      this.dispatchEvent(new CustomEvent('unmuted', { detail: { playlist: this.UUID, track: track } }))
+      this.save()
+      this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_TRACK_UNMUTED, { detail: { playlist: this.UUID, track: track } }))
     }
   }
 

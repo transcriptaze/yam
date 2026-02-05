@@ -36,7 +36,7 @@
             - [x] delete
                - [x] rework _playlists_ widget to also delete using _datastore_
                - [x] automatically save in playlist::delete
-            - [ ] mute
+            - [x] mute/unmute
             - [ ] drag 'n drop
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)

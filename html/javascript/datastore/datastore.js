@@ -28,7 +28,23 @@ export const playlists = {
     return _playlist.realize(playlist)
   },
 
-  add_tracks(v, tracks) {
+  setTitle(v, title) {
+    let playlist = null
+
+    if (v != null && typeof v === 'string') {
+      playlist = models.playlists.playlist(v)
+    }
+
+    if (v != null && typeof v === 'object' && v.constructor.name === 'Playlist') {
+      playlist = v
+    }
+
+    if (playlist != null) {
+      playlist.title = title
+    }
+  },
+
+  addTracks(v, tracks) {
     let playlist = null
 
     if (v != null && typeof v === 'string') {
@@ -48,6 +64,25 @@ export const playlists = {
 
     if (all != null) {
       all.add(...tracks.filter((v) => v.UUID != RANDOM.UUID))
+    }
+  },
+
+  deleteTrack(v, track) {
+    let playlist = null
+
+    if (v != null && typeof v === 'string') {
+      playlist = models.playlists.playlist(v)
+    }
+
+    if (v != null && typeof v === 'object' && v.constructor.name === 'Playlist') {
+      playlist = v
+    }
+
+    playlist?.remove(track)
+    playlist?.save()
+
+    if (!models.playlists.has(track)) {
+      models.tracks.remove(track)
     }
   },
 }

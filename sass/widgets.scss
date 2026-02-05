@@ -16,10 +16,10 @@
 @use 'widgets/ding';
 @use 'widgets/playlists';
 @use 'widgets/playlist';
+@use 'widgets/playlist-tracks';
 @use 'widgets/playlist-item';
-@use 'widgets/tracklist';
-@use 'widgets/tracklist-item';
 @use 'widgets/add-tracks';
+@use 'widgets/add-tracks-item';
 @use 'widgets/editor';
 @use 'widgets/section';
 @use 'widgets/subsection';

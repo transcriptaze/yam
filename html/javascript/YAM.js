@@ -21,7 +21,7 @@ const widgets = {
   wheel: document.querySelector('yam-wheel'),
   metronome: document.querySelector('yam-metronome'),
   playlists: document.querySelector('yam-playlists'),
-  tracks: document.querySelector('yam-tracklist'),
+  tracks: document.querySelector('yam-playlist-tracks'),
   editor: document.querySelector('yam-editor'),
 }
 
@@ -387,7 +387,6 @@ function rewire() {
   wheel.addEventListener('changed', () => onWheel(true))
 
   widgets.playlists.addEventListener('new', (e) => onPlaylistNew(e))
-  widgets.playlists.addEventListener('change', (e) => onPlaylistChange(e))
   widgets.playlists.addEventListener(EVENTS.SHUFFLE_PLAYLISTS, (e) => onPlaylistsShuffled(e))
   widgets.playlists.addEventListener(EVENTS.SELECT_PLAYLIST, (e) => onPlaylistSelected(e))
   widgets.playlists.addEventListener(EVENTS.SHUFFLE_PLAYLIST, (e) => onPlaylistShuffled(e))
@@ -414,6 +413,7 @@ function rewire() {
   models.playlists.addEventListener('unmuted', (e) => onMuted(e, false))
   models.playlists.addEventListener('selected', (e) => onSelected(e))
   models.playlists.addEventListener(EVENTS.PLAYLIST_CHANGED, (e) => onPlaylistChanged(e))
+  models.playlists.addEventListener(EVENTS.PLAYLIST_TRACK_DELETED, (e) => onPlaylistTrackDeleted(e))
   models.playlists.addEventListener('added', (e) => onPlaylistAdded(e))
   models.playlists.addEventListener('deleted', (e) => onPlaylistDeleted(e))
 
@@ -649,6 +649,41 @@ function onPlaylistChanged(e) {
   }
 }
 
+function onPlaylistTrackDeleted(e) {
+  const playlist = models.playlists.playlist(e.detail.playlist)
+  const track = event.detail.track
+  const tracks = models.tracks.tracks
+  const toolbar = document.querySelector('toolbar')
+
+  if (playlist != null) {
+    widgets.playlists.update(playlist, tracks)
+    widgets.tracks.update(playlist)
+  }
+
+  if (state.playlist === event.detail.playlist && state.track === track) {
+    state.selected = {
+      playlist: playlist.UUID,
+      track: null,
+    }
+
+    widgets.pads.track = null
+    widgets.info.track = null
+    widgets.timeSignature.track = null
+    widgets.mm.track = null
+    widgets.loop.enabled = false
+    widgets.loop.loop = false
+    widgets.loop.loops = INF
+    widgets.ding.track = null
+
+    widgets.metronome.bof = playlist?.BOF ?? true
+    widgets.metronome.eof = playlist?.EOF ?? true
+
+    widgets.editor.track = null
+
+    toolbar.classList.remove('editable')
+  }
+}
+
 function onPlaylistDelete(event) {
   const playlist = event.detail.playlist
 
@@ -852,20 +887,6 @@ function onPlaylistsShuffled(event) {
 
 function onPlaylistNew(_event) {
   models.playlists.create()
-}
-
-function onPlaylistChange(event) {
-  const playlist = models.playlists.playlist(event.detail.playlist)
-
-  if (playlist != null) {
-    playlist.update(event.detail.title, event.detail.tracks)
-    playlist.save()
-
-    if (playlist.UUID === state.playlist) {
-      widgets.metronome.bof = playlist?.BOF ?? true
-      widgets.metronome.eof = playlist?.EOF ?? true
-    }
-  }
 }
 
 function onPlaylistAdded(event) {

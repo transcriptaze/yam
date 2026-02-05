@@ -129,6 +129,8 @@ export class PlaylistTracks extends HTMLElement {
       if (widget != null) {
         widget.playlist = this.#playlist
         container.classList.add('adding')
+
+        document.addEventListener('mousedown', this.#clickOutside)
       }
     })()
   }
@@ -182,24 +184,15 @@ export class PlaylistTracks extends HTMLElement {
     }
   }
 
-  // #clickOutside = (event) => {
-  //   const shadow = this.shadowRoot
-  //   const editing = shadow.querySelector('div.playlist.selected.editing')
-  //   const adding = shadow.querySelector('div.playlist.selected.adding')
-  //   const host = document.querySelector('yam-playlists')
-  //
-  //   if (editing != null) {
-  //     if (!event.composedPath().includes(host)) {
-  //       this.#edited()
-  //     }
-  //   }
-  //
-  //   if (adding != null) {
-  //     if (!event.composedPath().includes(host)) {
-  //       this.#added()
-  //     }
-  //   }
-  // }
+  #clickOutside = (_event) => {
+    const container = this.shadowRoot.querySelector('div.playlist-tracks')
+    const adding = this.shadowRoot.querySelector('div.playlist-tracks.adding')
+
+    if (adding != null) {
+      container.classList.remove('adding')
+      document.removeEventListener('mousedown', this.#clickOutside)
+    }
+  }
 
   #mute = (event) => {
     event.preventDefault()

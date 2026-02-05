@@ -32,11 +32,10 @@
             - [x] remove edit-tracks
             - [x] fix height (involuntary scrollbar)
             - [x] add
-               - [ ] close on click outside
-            - [ ] delete
+               - [x] close on click outside
+            - [x] delete
                - [x] rework _playlists_ widget to also delete using _datastore_
                - [x] automatically save in playlist::delete
-               - (?) commonalise YAM::onPlaylistChanged and YAM::onPlaylistTrackDeleted
             - [ ] mute
             - [ ] drag 'n drop
 

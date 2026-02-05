@@ -18,11 +18,11 @@
     - [x] editor
     - [x] fix wheel vertical centre
     - [ ] fix wheel outline
+    - [ ] extend progress bar across whole width
     - [ ] playlist
        - [x] hide embedded tracklists
        - [x] separate scrolling
        - [x] edit
-            - [x] update title via datastore + 'changed' event
        - [ ] standalone tracklist
             - [x] initialise playlist
             - [x] select playlist
@@ -32,18 +32,11 @@
             - [x] remove edit-tracks
             - [x] fix height (involuntary scrollbar)
             - [x] add
-                - [x] random track
-                - [x] new track
-                - [x] close add-tracks if different playlist selected
-                - [x] fix add-tracks scrolling
-                - [x] update _All Tracks_
-                - [x] rename yam-playlist-tracks widget
-                - [x] rename tracklist-item
-                - [x] rename tracklist
+               - [ ] close on click outside
             - [ ] delete
-               - [ ] rework _playlists_ widget to also delete using _datastore_
-               - [ ] maybe commonalise YAM::onPlaylistChanged and YAM::onPlaylistTrackDeleted
-               - [ ] automatically save in playlist::delete
+               - [x] rework _playlists_ widget to also delete using _datastore_
+               - [x] automatically save in playlist::delete
+               - (?) commonalise YAM::onPlaylistChanged and YAM::onPlaylistTrackDeleted
             - [ ] mute
             - [ ] drag 'n drop
 

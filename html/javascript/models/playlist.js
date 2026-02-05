@@ -389,6 +389,7 @@ export class Playlist extends EventTarget {
         this.#track = null
       }
 
+      this.save()
       this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_TRACK_DELETED, { detail: { playlist: this.UUID, track: track } }))
     }
   }

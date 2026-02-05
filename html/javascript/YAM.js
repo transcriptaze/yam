@@ -393,7 +393,6 @@ function rewire() {
   widgets.playlists.addEventListener(EVENTS.DELETE_PLAYLIST, (e) => onPlaylistDelete(e))
   widgets.playlists.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
   widgets.playlists.addEventListener(EVENTS.MUTE_TRACK, (e) => onMute(e))
-  widgets.playlists.addEventListener(EVENTS.DELETE_TRACK, (e) => onTrackDelete(e))
 
   widgets.tracks.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
 
@@ -688,42 +687,6 @@ function onPlaylistDelete(event) {
   const playlist = event.detail.playlist
 
   models.playlists.delete(playlist)
-}
-
-function onTrackDelete(event) {
-  const playlist = models.playlists.playlist(event.detail.playlist)
-  const track = event.detail.track
-  const toolbar = document.querySelector('toolbar')
-
-  playlist?.remove(track)
-  playlist?.save()
-
-  if (!models.playlists.has(track)) {
-    models.tracks.remove(track)
-  }
-
-  if (state.playlist === event.detail.playlist && state.track === track) {
-    state.selected = {
-      playlist: playlist.UUID,
-      track: null,
-    }
-
-    widgets.pads.track = null
-    widgets.info.track = null
-    widgets.timeSignature.track = null
-    widgets.mm.track = null
-    widgets.loop.enabled = false
-    widgets.loop.loop = false
-    widgets.loop.loops = INF
-    widgets.ding.track = null
-
-    widgets.metronome.bof = playlist?.BOF ?? true
-    widgets.metronome.eof = playlist?.EOF ?? true
-
-    widgets.editor.track = null
-
-    toolbar.classList.remove('editable')
-  }
 }
 
 // NTS: state/track conflict => either need to update only changed fields here

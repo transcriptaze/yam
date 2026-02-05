@@ -79,7 +79,6 @@ export const playlists = {
     }
 
     playlist?.remove(track)
-    playlist?.save()
 
     if (!models.playlists.has(track)) {
       models.tracks.remove(track)

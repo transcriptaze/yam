@@ -29,11 +29,11 @@ class Playlists extends EventTarget {
     })
 
     playlists.forEach((v) => {
-      v.addEventListener('muted', this.#forward)
-      v.addEventListener('unmuted', this.#forward)
       v.addEventListener('selected', this.#forward)
       v.addEventListener(EVENTS.PLAYLIST_CHANGED, this.#forward)
       v.addEventListener(EVENTS.PLAYLIST_TRACK_DELETED, this.#forward)
+      v.addEventListener(EVENTS.PLAYLIST_TRACK_MUTED, this.#forward)
+      v.addEventListener(EVENTS.PLAYLIST_TRACK_UNMUTED, this.#forward)
     })
   }
 
@@ -55,11 +55,11 @@ class Playlists extends EventTarget {
       title: title,
     })
 
-    playlist.addEventListener('muted', this.#forward)
-    playlist.addEventListener('unmuted', this.#forward)
     playlist.addEventListener('selected', this.#forward)
     playlist.addEventListener(EVENTS.PLAYLIST_CHANGED, this.#forward)
     playlist.addEventListener(EVENTS.PLAYLIST_TRACK_DELETED, this.#forward)
+    playlist.addEventListener(EVENTS.PLAYLIST_TRACK_MUTED, this.#forward)
+    playlist.addEventListener(EVENTS.PLAYLIST_TRACK_UNMUTED, this.#forward)
 
     this.#playlists.push(playlist)
     this.save()

@@ -392,8 +392,6 @@ function rewire() {
   widgets.playlists.addEventListener(EVENTS.SHUFFLE_PLAYLIST, (e) => onPlaylistShuffled(e))
   widgets.playlists.addEventListener(EVENTS.DELETE_PLAYLIST, (e) => onPlaylistDelete(e))
   widgets.playlists.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
-  widgets.playlists.addEventListener(EVENTS.MUTE_TRACK, (e) => onMute(e))
-  widgets.playlists.addEventListener(EVENTS.DELETE_TRACK, (e) => onTrackDelete(e))
 
   widgets.tracks.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
 
@@ -409,11 +407,11 @@ function rewire() {
 
   state.addEventListener('change', (e) => onStateModified(e))
 
-  models.playlists.addEventListener('muted', (e) => onMuted(e, true))
-  models.playlists.addEventListener('unmuted', (e) => onMuted(e, false))
   models.playlists.addEventListener('selected', (e) => onSelected(e))
   models.playlists.addEventListener(EVENTS.PLAYLIST_CHANGED, (e) => onPlaylistChanged(e))
   models.playlists.addEventListener(EVENTS.PLAYLIST_TRACK_DELETED, (e) => onPlaylistTrackDeleted(e))
+  models.playlists.addEventListener(EVENTS.PLAYLIST_TRACK_MUTED, (e) => onMuted(e, true))
+  models.playlists.addEventListener(EVENTS.PLAYLIST_TRACK_UNMUTED, (e) => onMuted(e, false))
   models.playlists.addEventListener('added', (e) => onPlaylistAdded(e))
   models.playlists.addEventListener('deleted', (e) => onPlaylistDeleted(e))
 
@@ -566,27 +564,14 @@ function onTrackSelect(event) {
   show('metronome')
 }
 
-function onMute(event) {
-  const playlist = models.playlists.playlist(event.detail.playlist)
-  const track = event.detail.track
-  const mute = event.detail.mute === true
-
-  if (playlist != null) {
-    if (mute) {
-      playlist.mute(track)
-    } else {
-      playlist.unmute(track)
-    }
-  }
-}
-
 function onMuted(e, muted) {
   const playlist = models.playlists.playlist(event.detail.playlist)
   const track = e.detail.track
 
   widgets.playlists.mute(playlist, track, muted)
+  widgets.tracks.update(playlist)
 
-  playlist?.save()
+  // playlist?.save()
 }
 
 function onSelected(event) {
@@ -688,42 +673,6 @@ function onPlaylistDelete(event) {
   const playlist = event.detail.playlist
 
   models.playlists.delete(playlist)
-}
-
-function onTrackDelete(event) {
-  const playlist = models.playlists.playlist(event.detail.playlist)
-  const track = event.detail.track
-  const toolbar = document.querySelector('toolbar')
-
-  playlist?.remove(track)
-  playlist?.save()
-
-  if (!models.playlists.has(track)) {
-    models.tracks.remove(track)
-  }
-
-  if (state.playlist === event.detail.playlist && state.track === track) {
-    state.selected = {
-      playlist: playlist.UUID,
-      track: null,
-    }
-
-    widgets.pads.track = null
-    widgets.info.track = null
-    widgets.timeSignature.track = null
-    widgets.mm.track = null
-    widgets.loop.enabled = false
-    widgets.loop.loop = false
-    widgets.loop.loops = INF
-    widgets.ding.track = null
-
-    widgets.metronome.bof = playlist?.BOF ?? true
-    widgets.metronome.eof = playlist?.EOF ?? true
-
-    widgets.editor.track = null
-
-    toolbar.classList.remove('editable')
-  }
 }
 
 // NTS: state/track conflict => either need to update only changed fields here

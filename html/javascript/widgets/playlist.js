@@ -526,40 +526,14 @@ export class Playlist extends HTMLElement {
     event.preventDefault()
     event.stopPropagation()
 
-    this.dispatchEvent(
-      new CustomEvent(EVENTS.MUTE_TRACK, {
-        bubbles: true,
-        composed: true,
-        detail: { playlist: this.UUID, track: event.detail.UUID, mute: event.detail.mute },
-      }),
-    )
+    datastore.playlists.muteTrack(this.#UUID, event.detail.UUID, event.detail.mute)
   }
 
   #trash = (event) => {
     event.preventDefault()
     event.stopPropagation()
 
-    const UUID = event.detail.track
-
-    if (UUID != null && UUID !== '') {
-      const shadow = this.shadowRoot
-      const container = shadow.querySelector('div.tracks')
-      const tracks = container.querySelectorAll('ul yam-playlist-item')
-      const track = tracks.values().find((v) => v.UUID === UUID)
-
-      if (track != null) {
-        this.dispatchEvent(
-          new CustomEvent(EVENTS.DELETE_TRACK, {
-            bubbles: true,
-            composed: true,
-            detail: {
-              playlist: this.UUID,
-              track: track.UUID,
-            },
-          }),
-        )
-      }
-    }
+    datastore.playlists.deleteTrack(this.#UUID, event.detail.track)
   }
 
   #add(ul, v) {

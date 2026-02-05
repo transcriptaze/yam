@@ -79,10 +79,27 @@ export const playlists = {
     }
 
     playlist?.remove(track)
-    playlist?.save()
 
     if (!models.playlists.has(track)) {
       models.tracks.remove(track)
+    }
+  },
+
+  muteTrack(v, track, mute) {
+    let playlist = null
+
+    if (v != null && typeof v === 'string') {
+      playlist = models.playlists.playlist(v)
+    }
+
+    if (v != null && typeof v === 'object' && v.constructor.name === 'Playlist') {
+      playlist = v
+    }
+
+    if (mute) {
+      playlist?.mute(track)
+    } else {
+      playlist?.unmute(track)
     }
   },
 }

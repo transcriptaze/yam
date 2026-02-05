@@ -41,6 +41,9 @@
                 - [x] rename tracklist-item
                 - [x] rename tracklist
             - [ ] delete
+               - [ ] rework _playlists_ widget to also delete using _datastore_
+               - [ ] maybe commonalise YAM::onPlaylistChanged and YAM::onPlaylistTrackDeleted
+               - [ ] automatically save in playlist::delete
             - [ ] mute
             - [ ] drag 'n drop
 

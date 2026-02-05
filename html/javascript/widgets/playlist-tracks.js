@@ -34,38 +34,6 @@ export class PlaylistTracks extends HTMLElement {
       },
     },
 
-    //   trash: {
-    //     click: (event) => {
-    //       event.preventDefault()
-    //       event.stopPropagation()
-    //
-    //       const shadow = this.shadowRoot
-    //       const trash = shadow.querySelector('#trash')
-    //
-    //       if (this.classList.contains('deleting') && !trash.classList.contains('locked')) {
-    //         this.dispatchEvent(
-    //           new CustomEvent(EVENTS.DELETE_PLAYLIST, {
-    //             bubbles: true,
-    //             composed: true,
-    //             detail: { playlist: this.UUID },
-    //           }),
-    //         )
-    //       } else {
-    //         this.classList.add('deleting')
-    //         trash.classList.add('locked')
-    //       }
-    //     },
-    //
-    //     transitionend: (event) => {
-    //       const shadow = this.shadowRoot
-    //       const trash = shadow.querySelector('#trash')
-    //
-    //       if (event.propertyName === 'filter') {
-    //         trash.classList.remove('locked')
-    //       }
-    //     },
-    //   },
-
     plus: {
       click: (event) => {
         event.preventDefault()
@@ -127,27 +95,11 @@ export class PlaylistTracks extends HTMLElement {
     this.shadowRoot.querySelector('div.playlist-tracks').classList.remove('adding')
   }
 
-  // get selected() {
-  //   return this.#selected
-  // }
-
   set selected({ playlist, track }) {
     if (playlist === this.#playlist) {
       this.#select(track)
     }
   }
-
-  // set deleting(v) {
-  //   const shadow = this.shadowRoot
-  //   const menu = shadow.querySelector('[popover]')
-  //
-  //   if (v === true) {
-  //     this.classList.add('deleting')
-  //   } else {
-  //     this.classList.remove('deleting')
-  //     menu.hidePopover()
-  //   }
-  // }
 
   update(playlist) {
     const UUID = playlist?.UUID ?? ''
@@ -211,6 +163,12 @@ export class PlaylistTracks extends HTMLElement {
     for (; ix < children.length; ix++) {
       this.#delete(ul, children[ix])
     }
+
+    // ... reselect
+    const track = list.find((v) => v.UUID === this.selected)
+    const UUID = track?.UUID ?? null
+
+    this.#select(UUID)
   }
 
   #select(UUID) {
@@ -260,27 +218,7 @@ export class PlaylistTracks extends HTMLElement {
     event.preventDefault()
     event.stopPropagation()
 
-    //   const UUID = event.detail.track
-    //
-    //   if (UUID != null && UUID !== '') {
-    //     const shadow = this.shadowRoot
-    //     const container = shadow.querySelector('div.tracks')
-    //     const tracks = container.querySelectorAll('ul yam-playlist-item')
-    //     const track = tracks.values().find((v) => v.UUID === UUID)
-    //
-    //     if (track != null) {
-    //       this.dispatchEvent(
-    //         new CustomEvent(EVENTS.DELETE_TRACK, {
-    //           bubbles: true,
-    //           composed: true,
-    //           detail: {
-    //             playlist: this.UUID,
-    //             track: track.UUID,
-    //           },
-    //         }),
-    //       )
-    //     }
-    //   }
+    datastore.playlists.deleteTrack(this.#playlist, event.detail.track)
   }
 
   #add(ul, v) {

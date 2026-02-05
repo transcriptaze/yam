@@ -413,6 +413,7 @@ function rewire() {
   models.playlists.addEventListener('unmuted', (e) => onMuted(e, false))
   models.playlists.addEventListener('selected', (e) => onSelected(e))
   models.playlists.addEventListener(EVENTS.PLAYLIST_CHANGED, (e) => onPlaylistChanged(e))
+  models.playlists.addEventListener(EVENTS.PLAYLIST_TRACK_DELETED, (e) => onPlaylistTrackDeleted(e))
   models.playlists.addEventListener('added', (e) => onPlaylistAdded(e))
   models.playlists.addEventListener('deleted', (e) => onPlaylistDeleted(e))
 
@@ -645,6 +646,41 @@ function onPlaylistChanged(e) {
   if (playlist != null) {
     widgets.playlists.update(playlist, tracks)
     widgets.tracks.update(playlist)
+  }
+}
+
+function onPlaylistTrackDeleted(e) {
+  const playlist = models.playlists.playlist(e.detail.playlist)
+  const track = event.detail.track
+  const tracks = models.tracks.tracks
+  const toolbar = document.querySelector('toolbar')
+
+  if (playlist != null) {
+    widgets.playlists.update(playlist, tracks)
+    widgets.tracks.update(playlist)
+  }
+
+  if (state.playlist === event.detail.playlist && state.track === track) {
+    state.selected = {
+      playlist: playlist.UUID,
+      track: null,
+    }
+
+    widgets.pads.track = null
+    widgets.info.track = null
+    widgets.timeSignature.track = null
+    widgets.mm.track = null
+    widgets.loop.enabled = false
+    widgets.loop.loop = false
+    widgets.loop.loops = INF
+    widgets.ding.track = null
+
+    widgets.metronome.bof = playlist?.BOF ?? true
+    widgets.metronome.eof = playlist?.EOF ?? true
+
+    widgets.editor.track = null
+
+    toolbar.classList.remove('editable')
   }
 }
 

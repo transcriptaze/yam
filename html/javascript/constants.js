@@ -70,6 +70,7 @@ export const EVENTS = {
   DELETE_PLAYLIST: 'playlist-delete',
 
   PLAYLIST_CHANGED: 'playlist-changed',
+  PLAYLIST_TRACK_DELETED: 'playlist-track-deleted',
 
   SELECT_TRACK: 'select-track',
   MUTE_TRACK: 'mute-track',

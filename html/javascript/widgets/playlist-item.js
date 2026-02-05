@@ -70,7 +70,7 @@ export class PlaylistItem extends HTMLElement {
         }
       },
 
-      transitionend: (event) => {
+      transitionEnd: (event) => {
         const trash = this.shadowRoot.getElementById('trash')
 
         if (event.propertyName === 'filter') {
@@ -111,7 +111,7 @@ export class PlaylistItem extends HTMLElement {
     mute.addEventListener('click', this.#handlers.mute.click)
 
     trash.addEventListener('click', this.#handlers.trash.click)
-    trash.addEventListener('transitionend', this.#handlers.trash.transitionend)
+    trash.addEventListener('transitionend', this.#handlers.trash.transitionEnd)
   }
 
   disconnectedCallback() {}

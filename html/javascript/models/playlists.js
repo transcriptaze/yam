@@ -29,10 +29,11 @@ class Playlists extends EventTarget {
     })
 
     playlists.forEach((v) => {
-      v.addEventListener('muted', this.#muted)
-      v.addEventListener('unmuted', this.#unmuted)
-      v.addEventListener('selected', this.#selected)
-      v.addEventListener(EVENTS.PLAYLIST_CHANGED, this.#changed)
+      v.addEventListener('muted', this.#forward)
+      v.addEventListener('unmuted', this.#forward)
+      v.addEventListener('selected', this.#forward)
+      v.addEventListener(EVENTS.PLAYLIST_CHANGED, this.#forward)
+      v.addEventListener(EVENTS.PLAYLIST_TRACK_DELETED, this.#forward)
     })
   }
 
@@ -54,10 +55,11 @@ class Playlists extends EventTarget {
       title: title,
     })
 
-    playlist.addEventListener('muted', this.#muted)
-    playlist.addEventListener('unmuted', this.#unmuted)
-    playlist.addEventListener('selected', this.#selected)
-    playlist.addEventListener(EVENTS.PLAYLIST_CHANGED, this.#changed)
+    playlist.addEventListener('muted', this.#forward)
+    playlist.addEventListener('unmuted', this.#forward)
+    playlist.addEventListener('selected', this.#forward)
+    playlist.addEventListener(EVENTS.PLAYLIST_CHANGED, this.#forward)
+    playlist.addEventListener(EVENTS.PLAYLIST_TRACK_DELETED, this.#forward)
 
     this.#playlists.push(playlist)
     this.save()
@@ -158,38 +160,8 @@ class Playlists extends EventTarget {
     this.save()
   }
 
-  #muted = (event) => {
-    const playlist = event.detail.playlist
-    const track = event.detail.track
-
-    if (this.#playlists.some((u) => u.UUID == playlist)) {
-      this.dispatchEvent(new CustomEvent('muted', { detail: { playlist: playlist, track: track } }))
-    }
-  }
-
-  #unmuted = (event) => {
-    const playlist = event.detail.playlist
-    const track = event.detail.track
-
-    if (this.#playlists.some((u) => u.UUID == playlist)) {
-      this.dispatchEvent(new CustomEvent('unmuted', { detail: { playlist: playlist, track: track } }))
-    }
-  }
-
-  #selected = (event) => {
-    const playlist = event.detail.playlist
-
-    if (this.#playlists.some((u) => u.UUID == playlist)) {
-      this.dispatchEvent(new CustomEvent('selected', { detail: event.detail }))
-    }
-  }
-
-  #changed = (event) => {
-    const playlist = event.detail.playlist
-
-    if (this.#playlists.some((u) => u.UUID == playlist)) {
-      this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_CHANGED, { detail: { playlist: playlist } }))
-    }
+  #forward = (event) => {
+    this.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }))
   }
 }
 

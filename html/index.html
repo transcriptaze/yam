@@ -631,16 +631,16 @@
           <input  data-ref="title" enterkeyhint="done" required />
         </div>
         <div class="detail">
-          <div class="overlay"></div>
-          <div class="progress">
-            <slot name="progress"><progress max="100" value="0"></progress></slot>
-          </div>
           <div class="text">
             <div data-ref="name"></div>
             <div data-ref="bars"></div>
           </div>
         </div>
         <button data-ref="save" disabled><img src="./images/save.svg" draggable="false"/></button>
+        <div class="overlay"></div>
+        <div class="progress">
+          <slot name="progress"><progress max="100" value="0"></progress></slot>
+        </div>
       </div>
     </template>
 

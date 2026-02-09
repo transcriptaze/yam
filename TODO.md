@@ -19,7 +19,7 @@
     - [ ] fix wheel vertical centre
           - [ ] try minmax() to allow margin for time signature, etc
     - [x] fix wheel outline
-    - [ ] extend progress bar across whole width
+    - [x] extend progress bar across whole width
     - [ ] playlist
        - [x] hide embedded tracklists
        - [x] separate scrolling
@@ -33,10 +33,7 @@
             - [x] remove edit-tracks
             - [x] fix height (involuntary scrollbar)
             - [x] add
-               - [x] close on click outside
             - [x] delete
-               - [x] rework _playlists_ widget to also delete using _datastore_
-               - [x] automatically save in playlist::delete
             - [x] mute/unmute
             - [ ] drag 'n drop
 

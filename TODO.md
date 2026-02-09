@@ -35,7 +35,7 @@
             - [x] add
             - [x] delete
             - [x] mute/unmute
-            - [ ] drag 'n drop
+            - [x] drag 'n drop
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [x] Rework clock as generator

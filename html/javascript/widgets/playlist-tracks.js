@@ -357,7 +357,6 @@ export class PlaylistTracks extends HTMLElement {
     const tracks = this.#drag.list.map((v) => v.UUID)
 
     datastore.playlists.shuffleTracks(this.#playlist, tracks)
-
   }
 }
 

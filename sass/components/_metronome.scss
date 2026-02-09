@@ -209,7 +209,7 @@ div.metronome {
     div.bpm {
       grid-column: 1;
       grid-row: 3 / 5;
-      align-self: center;
+      align-self: start;
 
       yam-knob {
         display: none;
@@ -217,6 +217,7 @@ div.metronome {
 
       yam-wheel {
         display: block;
+        margin-top: max(80px, calc(50% - 13px));
       }
     }
 

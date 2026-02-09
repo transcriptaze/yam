@@ -16,8 +16,7 @@
     - [x] about
     - [x] ~~settings~~
     - [x] editor
-    - [ ] fix wheel vertical centre
-          - [ ] try minmax() to allow margin for time signature, etc
+    - [x] fix wheel vertical centre
     - [x] fix wheel outline
     - [x] extend progress bar across whole width
     - [ ] playlist

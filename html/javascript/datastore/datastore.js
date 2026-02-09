@@ -102,6 +102,20 @@ export const playlists = {
       playlist?.unmute(track)
     }
   },
+
+  shuffleTracks(v, tracks) {
+    let playlist = null
+
+    if (v != null && typeof v === 'string') {
+      playlist = models.playlists.playlist(v)
+    }
+
+    if (v != null && typeof v === 'object' && v.constructor.name === 'Playlist') {
+      playlist = v
+    }
+
+    playlist?.shuffled(tracks)
+  },
 }
 
 export const tracks = {

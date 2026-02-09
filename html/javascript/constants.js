@@ -66,7 +66,6 @@ export const EVENTS = {
   TOGGLE_PLAYLIST: 'playlist-toggle',
   SELECT_PLAYLIST: 'playlist-select',
   EDIT_PLAYLIST: 'playlist-edit',
-  SHUFFLE_PLAYLIST: 'playlist-shuffle',
   DELETE_PLAYLIST: 'playlist-delete',
 
   PLAYLIST_CHANGED: 'playlist-changed',

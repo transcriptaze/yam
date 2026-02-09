@@ -389,7 +389,6 @@ function rewire() {
   widgets.playlists.addEventListener('new', (e) => onPlaylistNew(e))
   widgets.playlists.addEventListener(EVENTS.SHUFFLE_PLAYLISTS, (e) => onPlaylistsShuffled(e))
   widgets.playlists.addEventListener(EVENTS.SELECT_PLAYLIST, (e) => onPlaylistSelected(e))
-  widgets.playlists.addEventListener(EVENTS.SHUFFLE_PLAYLIST, (e) => onPlaylistShuffled(e))
   widgets.playlists.addEventListener(EVENTS.DELETE_PLAYLIST, (e) => onPlaylistDelete(e))
   widgets.playlists.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
 
@@ -863,10 +862,6 @@ function onPlaylistSelected(event) {
     settings.playlist = playlist?.UUID
     settings.save()
   }
-}
-
-function onPlaylistShuffled(event) {
-  models.playlists.playlist(event.detail.playlist)?.shuffled(event.detail.tracks)
 }
 
 function onPlaylistDeleted(event) {

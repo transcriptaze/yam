@@ -605,6 +605,8 @@ export class Playlist extends HTMLElement {
     this.#drag.UUID = track.UUID
     this.#drag.list = this.#tracks?.slice(0) ?? []
     this.#drag.dropped = false
+
+    console.log('>>>> ', this.#drag.list)
   }
 
   #dragend = (_event) => {
@@ -690,16 +692,7 @@ export class Playlist extends HTMLElement {
 
     const tracks = this.#drag.list.map((v) => v.UUID)
 
-    this.dispatchEvent(
-      new CustomEvent(EVENTS.SHUFFLE_PLAYLIST, {
-        bubbles: true,
-        composed: true,
-        detail: {
-          playlist: this.UUID,
-          tracks: tracks,
-        },
-      }),
-    )
+    datastore.playlists.shuffleTracks(this.#UUID, tracks)
   }
 }
 

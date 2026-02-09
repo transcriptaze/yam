@@ -6,17 +6,20 @@ export class PlaylistTracks extends HTMLElement {
     return []
   }
 
+  #state = {
+    tracks: [],
+  }
+
   #playlist = ''
   #selected = null
-  // #updated = false
 
-  // #drag = {
-  //   li: null,
-  //   over: null,
-  //   UUID: '',
-  //   list: [],
-  //   dropped: false,
-  // }
+  #drag = {
+    li: null,
+    over: null,
+    UUID: '',
+    list: [],
+    dropped: false,
+  }
 
   #handlers = {
     ul: {
@@ -91,6 +94,7 @@ export class PlaylistTracks extends HTMLElement {
   set playlist({ playlist, selected }) {
     this.#playlist = playlist?.UUID ?? ''
     this.#tracks = datastore.playlists.get(playlist)?.tracks ?? []
+    this.#state.tracks = datastore.playlists.get(playlist)?.tracks ?? []
 
     this.shadowRoot.querySelector('div.playlist-tracks').classList.remove('adding')
   }
@@ -106,18 +110,9 @@ export class PlaylistTracks extends HTMLElement {
 
     if (UUID !== '' && this.#playlist === UUID) {
       this.#tracks = datastore.playlists.get(playlist)?.tracks ?? []
+      this.#state.tracks = datastore.playlists.get(playlist)?.tracks ?? []
     }
   }
-
-  // muted(track, muted) {
-  //   const shadow = this.shadowRoot
-  //   const tracks = shadow.querySelectorAll('ul yam-playlist-item')
-  //   const match = tracks.values().find((v) => v.UUID === track)
-  //
-  //   if (match != null) {
-  //     match.muted = muted
-  //   }
-  // }
 
   #plus() {
     return (async () => {
@@ -258,120 +253,111 @@ export class PlaylistTracks extends HTMLElement {
     ul.removeChild(li)
   }
 
-  #onPointerDown = (_event) => {
-    //   const li = event.currentTarget.parentElement
-    //
-    //   li.setAttribute('draggable', true)
+  #onPointerDown = (event) => {
+    const li = event.currentTarget.parentElement
+
+    li.setAttribute('draggable', true)
   }
 
-  // Ref. https://stackoverflow.com/questions/10588607/tutorial-for-html5-dragdrop-sortable-list
-  #dragstart = (_event) => {
-    //   const li = event.currentTarget
-    //   const track = li.querySelector('yam-playlist-item')
-    //
-    //   event.dataTransfer.effectAllowed = 'move'
-    //   event.dataTransfer.setData('text/plain', track.UUID)
-    //
-    //   this.#drag.li = event.target
-    //   this.#drag.over = null
-    //   this.#drag.UUID = track.UUID
-    //   this.#drag.list = this.#tracks?.slice(0) ?? []
-    //   this.#drag.dropped = false
+  #dragstart = (event) => {
+    const li = event.currentTarget
+    const track = li.querySelector('yam-playlist-item')
+
+    event.dataTransfer.effectAllowed = 'move'
+    event.dataTransfer.setData('text/plain', track.UUID)
+
+    this.#drag.li = event.target
+    this.#drag.over = null
+    this.#drag.UUID = track.UUID
+    this.#drag.list = this.#state.tracks?.slice(0) ?? []
+    this.#drag.dropped = false
   }
 
   #dragend = (_event) => {
-    //   // ... revert to playlist if dragend without drop
-    //   if (!this.#drag.dropped) {
-    //     Promise.resolve().then(() => {
-    //       const ul = this.shadowRoot.querySelector('ul')
-    //       const children = Array.from(ul.children)
-    //       const tracks = this.#tracks.slice(0)
-    //
-    //       // NTS: this could be so much neater if Safari did web components properly
-    //       tracks.forEach((e, index) => {
-    //         const track = children[index].querySelector('yam-playlist-item')
-    //         if (track.UUID !== e.UUID) {
-    //           track.track = {
-    //             UUID: e.UUID,
-    //             title: e.title,
-    //             muted: e.muted,
-    //             selected: e.UUID === this.#selected,
-    //           }
-    //         }
-    //       })
-    //     })
-    //   }
-    //
-    //   // ... clean up
-    //   this.#drag.li.setAttribute('draggable', false)
-    //   this.#drag.li = null
-    //   this.#drag.over = null
-    //   this.#drag.UUID = ''
-    //   this.#drag.list = []
-    //   this.#drag.dropped = false
+    // ... revert to playlist if dragend without drop
+    if (!this.#drag.dropped) {
+      Promise.resolve().then(() => {
+        const ul = this.shadowRoot.querySelector('ul')
+        const children = Array.from(ul.children)
+        const tracks = this.#state.tracks.slice(0)
+
+        // NTS: this could be so much neater if Safari did web components properly
+        tracks.forEach((e, index) => {
+          const track = children[index].querySelector('yam-playlist-item')
+          if (track.UUID !== e.UUID) {
+            track.track = {
+              UUID: e.UUID,
+              title: e.title,
+              muted: e.muted,
+              selected: e.UUID === this.#selected,
+            }
+          }
+        })
+      })
+    }
+
+    // ... clean up
+    this.#drag.li.setAttribute('draggable', false)
+    this.#drag.li = null
+    this.#drag.over = null
+    this.#drag.UUID = ''
+    this.#drag.list = []
+    this.#drag.dropped = false
   }
 
   #dragover = (event) => {
     event.preventDefault() // NTS: needed for drop to fire.
     event.dataTransfer.dropEffect = 'move'
 
-    //   const li = event.target.closest('li')
-    //
-    //   if (li !== this.#drag.over) {
-    //     const rect = li.getBoundingClientRect()
-    //     const top = rect.top + 0.2 * rect.height
-    //     const bottom = rect.top + 0.8 * rect.height
-    //
-    //     if (event.clientY > top && event.clientY < bottom) {
-    //       this.#drag.over = li
-    //
-    //       Promise.resolve().then(() => {
-    //         const ul = this.shadowRoot.querySelector('ul')
-    //         const children = Array.from(ul.children)
-    //         const ix = this.#drag.list.findIndex((v) => v.UUID === this.#drag.UUID)
-    //         const jx = children.indexOf(li)
-    //
-    //         if (ix !== -1 && jx !== -1 && ix != jx) {
-    //           ;[this.#drag.list[ix], this.#drag.list[jx]] = [this.#drag.list[jx], this.#drag.list[ix]]
-    //
-    //           // NTS: this could be so much neater if Safari did web components properly
-    //           this.#drag.list.forEach((e, index) => {
-    //             const track = children[index].querySelector('yam-playlist-item')
-    //
-    //             if (track.UUID !== e.UUID) {
-    //               track.track = {
-    //                 UUID: e.UUID,
-    //                 title: e.title,
-    //                 muted: e.muted,
-    //                 selected: e.UUID === this.#selected,
-    //                 random: e.random === true ? true : false,
-    //               }
-    //             }
-    //           })
-    //         }
-    //       })
-    //     }
-    //   }
+    const li = event.target.closest('li')
+
+    if (li !== this.#drag.over) {
+      const rect = li.getBoundingClientRect()
+      const top = rect.top + 0.2 * rect.height
+      const bottom = rect.top + 0.8 * rect.height
+
+      if (event.clientY > top && event.clientY < bottom) {
+        this.#drag.over = li
+
+        Promise.resolve().then(() => {
+          const ul = this.shadowRoot.querySelector('ul')
+          const children = Array.from(ul.children)
+          const ix = this.#drag.list.findIndex((v) => v.UUID === this.#drag.UUID)
+          const jx = children.indexOf(li)
+
+          if (ix !== -1 && jx !== -1 && ix != jx) {
+            ;[this.#drag.list[ix], this.#drag.list[jx]] = [this.#drag.list[jx], this.#drag.list[ix]]
+
+            // NTS: this could be so much neater if Safari did web components properly
+            this.#drag.list.forEach((e, index) => {
+              const track = children[index].querySelector('yam-playlist-item')
+
+              if (track.UUID !== e.UUID) {
+                track.track = {
+                  UUID: e.UUID,
+                  title: e.title,
+                  muted: e.muted,
+                  selected: e.UUID === this.#selected,
+                  random: e.random === true ? true : false,
+                }
+              }
+            })
+          }
+        })
+      }
+    }
   }
 
   #dragleave = (_event) => {}
 
   #drop = (_event) => {
-    //   this.#tracks = this.#drag.list
-    //   this.#drag.dropped = true
-    //
-    //   const tracks = this.#drag.list.map((v) => v.UUID)
-    //
-    //   this.dispatchEvent(
-    //     new CustomEvent(EVENTS.SHUFFLE_PLAYLIST, {
-    //       bubbles: true,
-    //       composed: true,
-    //       detail: {
-    //         playlist: this.UUID,
-    //         tracks: tracks,
-    //       },
-    //     }),
-    //   )
+    this.#state.tracks = this.#drag.list
+    this.#drag.dropped = true
+
+    const tracks = this.#drag.list.map((v) => v.UUID)
+
+    datastore.playlists.shuffleTracks(this.#playlist, tracks)
+
   }
 }
 

@@ -62,7 +62,7 @@ div.metronome {
   padding-left: 32px;
   padding-right: 32px;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto auto auto;
   grid-template-rows: auto;
   justify-items: center;
   align-items: center;
@@ -95,7 +95,7 @@ div.metronome #play {
 div.metronome #play img {
   grid-row: 1;
   grid-column: 1;
-  height: 100%;
+  width: 64px;
 }
 div.metronome #play img.hidden {
   visibility: hidden;
@@ -135,6 +135,17 @@ div.metronome.playing #play img.stop {
   transform: scale(1);
 }
 
+@media (max-width: 1024px) and (orientation: landscape) {
+  div.metronome {
+    column-gap: 12px;
+  }
+  div.metronome #back {
+    justify-self: end;
+  }
+  div.metronome #next {
+    justify-self: start;
+  }
+}
 :host(.component-mm) {
   box-sizing: border-box;
   display: inline-block;

@@ -160,7 +160,11 @@ div.metronome {
     display: grid;
     grid-template-columns: 50% auto 1fr auto;
     grid-template-rows: auto auto auto 1fr;
-    grid-template-areas: "pads pads pads pads" "info info info info" "metrics metronome metronome metronome" "bpm metronome metronome metronome";
+    grid-template-areas: 
+      "pads pads pads pads" 
+      "info info info info" 
+      "metrics other other other" 
+      "bpm metronome metronome metronome";
     justify-items: center;
     align-items: start;
 
@@ -199,6 +203,8 @@ div.metronome {
     yam-loop {
       grid-column: 2;
       grid-row: 3;
+
+      justify-self: start;
     }
 
     yam-ding {
@@ -208,8 +214,12 @@ div.metronome {
 
     div.bpm {
       grid-column: 1;
-      grid-row: 3 / 5;
+      grid-row: 4;
+      justify-items: center;
       align-self: center;
+
+      width: 100%;
+      height: 100%;
 
       yam-knob {
         display: none;
@@ -217,15 +227,27 @@ div.metronome {
 
       yam-wheel {
         display: block;
-        // margin-top: max(64px, calc(50% - 13px));
       }
+
+      margin-top: -32px;
+      background: #80008020;
     }
 
     yam-metronome {
-      justify-self: center;
+      grid-column: 2 / 5;
+      grid-row: 4;
 
+      justify-self: center;
+      align-self: center;
+
+      width: 100%;
+      height: 100%;
+
+      margin-top: -32px;
       margin-left: 12px;
       margin-right: 12px;
+
+      background: #00808020;
     }
   }
 }

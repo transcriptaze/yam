@@ -83,7 +83,7 @@ cloudflare-dev:  build
 	rm -f dist/cloudflare/package.json
 	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/cloudflare/about.html
 	find dist/cloudflare -name ".DS_Store" -delete
-# 	cd dist/cloudflare && zip --recurse-paths -FS ../cloudflare.zip . -x ".DS_Store"
+	cd dist/cloudflare && zip --recurse-paths -FS ../cloudflare.zip . -x ".DS_Store"
 
 debug:
 	find html/javascript -name "*.js" -exec npx eslint   --fix {} +

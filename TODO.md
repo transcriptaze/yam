@@ -16,25 +16,17 @@
     - [x] about
     - [x] ~~settings~~
     - [x] editor
-    - [x] fix wheel vertical centre
     - [x] fix wheel outline
     - [x] extend progress bar across whole width
-    - [ ] playlist
+    - [x] playlist
        - [x] hide embedded tracklists
        - [x] separate scrolling
        - [x] edit
-       - [ ] standalone tracklist
-            - [x] initialise playlist
-            - [x] select playlist
-            - [x] select track
-            - [x] allow playlist drag always
-            - [x] replace '+' with floating circle '+'
-            - [x] remove edit-tracks
-            - [x] fix height (involuntary scrollbar)
-            - [x] add
-            - [x] delete
-            - [x] mute/unmute
-            - [x] drag 'n drop
+       - [x] standalone tracklist
+    - [ ] fix wheel vertical centre
+        - 741px x 341px
+        - rethink layout to align wheel and controls properly
+        - i.e. resize controls
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [x] Rework clock as generator

@@ -934,7 +934,7 @@
     toolbar.fullscreen.addEventListener('click', (event) => {
       if (document.fullscreenEnabled) {
          if (document.fullscreenElement == null) {
-            document.body.requestFullscreen()
+            document.documentElement.requestFullscreen()
          } else {
             document.exitFullscreen()
          }

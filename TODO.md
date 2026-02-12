@@ -10,6 +10,8 @@
 - [x] Don't reset track loop count on stop/start (cf. https://github.com/transcriptaze/yam/issues/44)
 - [x] Import error
 - [x] Fix pickup at e.g. 4.5 for 4:4 time (cf. https://github.com/transcriptaze/yam/issues/45)
+- [x] Full screen goes black
+- [ ] Random tracks are not exported/imported
 
 - [ ] Fix mobile + landscape layout (cf. https://github.com/transcriptaze/yam/issues/25)
     - [x] metronome

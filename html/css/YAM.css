@@ -782,7 +782,7 @@ div.metronome div.bpm yam-wheel {
 }
 div.metronome yam-metronome {
   grid-area: metronome;
-  height: 100%;
+  align-self: center;
   outline: none;
 }
 div.metronome yam-time-signature {
@@ -824,6 +824,7 @@ div.metronome yam-loop {
     grid-template-areas: "pads pads pads pads" "info info info info" "metrics other other other" "bpm metronome metronome metronome";
     justify-items: center;
     align-items: start;
+    column-gap: 2px;
   }
   div.metronome yam-pads {
     width: 100%;
@@ -866,9 +867,8 @@ div.metronome yam-loop {
     justify-items: center;
     align-self: center;
     width: 100%;
-    height: 100%;
-    margin-top: -32px;
     background: rgba(128, 0, 128, 0.1254901961);
+    border-radius: 16px;
   }
   div.metronome div.bpm yam-knob {
     display: none;
@@ -882,11 +882,10 @@ div.metronome yam-loop {
     justify-self: center;
     align-self: center;
     width: 100%;
-    height: 100%;
-    margin-top: -32px;
     margin-left: 12px;
     margin-right: 12px;
     background: rgba(0, 128, 128, 0.1254901961);
+    border-radius: 16px;
   }
 }
 div.playlists yam-playlists {

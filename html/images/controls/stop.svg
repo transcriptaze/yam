@@ -1,13 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" 
      width="10.72"
-     height="33.84"
-     viewBox="0 0 10.72 33.84">
-  <rect fill="#222222" stroke="#222222" stroke-width="0.741068" stroke-linejoin="round" stroke-miterlimit="2"
+     height="15"
+     viewBox="0 -7.5 10.72 15">
+  <g transform="translate(0,-16.5)">  
+    <rect fill="#222222" stroke="#222222" stroke-width="0.741068" stroke-linejoin="round" stroke-miterlimit="2"
         width="9.2989321"
         height="9.338932"
         x="0.71053392"
         y="11.940534"
         ry="0.43016899"
         rx="0.43016899" />
+  </g>
 </svg>
 

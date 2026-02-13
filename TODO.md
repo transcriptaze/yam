@@ -13,7 +13,7 @@
 - [x] Full screen goes black
 - [x] ~~Random tracks are not imported~~
 
-- [ ] Fix mobile + landscape layout (cf. https://github.com/transcriptaze/yam/issues/25)
+- [x] Fix mobile + landscape layout (cf. https://github.com/transcriptaze/yam/issues/25)
     - [x] metronome
     - [x] about
     - [x] ~~settings~~
@@ -21,10 +21,7 @@
     - [x] fix wheel outline
     - [x] extend progress bar across whole width
     - [x] playlist
-    - [ ] fix wheel vertical centre
-        - 741px x 341px
-        - rethink layout to align wheel and controls properly
-        - i.e. resize controls
+    - [x] fix wheel vertical centre
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [x] Rework clock as generator

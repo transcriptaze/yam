@@ -867,8 +867,6 @@ div.metronome yam-loop {
     justify-items: center;
     align-self: center;
     width: 100%;
-    background: rgba(128, 0, 128, 0.1254901961);
-    border-radius: 16px;
   }
   div.metronome div.bpm yam-knob {
     display: none;
@@ -884,8 +882,6 @@ div.metronome yam-loop {
     width: 100%;
     margin-left: 12px;
     margin-right: 12px;
-    background: rgba(0, 128, 128, 0.1254901961);
-    border-radius: 16px;
   }
 }
 div.playlists yam-playlists {

@@ -12,16 +12,7 @@
 - [x] Fix pickup at e.g. 4.5 for 4:4 time (cf. https://github.com/transcriptaze/yam/issues/45)
 - [x] Full screen goes black
 - [x] ~~Random tracks are not imported~~
-
 - [x] Fix mobile + landscape layout (cf. https://github.com/transcriptaze/yam/issues/25)
-    - [x] metronome
-    - [x] about
-    - [x] ~~settings~~
-    - [x] editor
-    - [x] fix wheel outline
-    - [x] extend progress bar across whole width
-    - [x] playlist
-    - [x] fix wheel vertical centre
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [x] Rework clock as generator

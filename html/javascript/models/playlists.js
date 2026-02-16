@@ -1,8 +1,8 @@
 import * as DB from '../db/db.js'
 import { Playlist } from './playlist.js'
 import { warnf } from '../log.js'
-import { UUIDv4 } from '../uuid.js'
-import { DEFAULT } from '../constants.js'
+import { UUIDv4, reserve } from '../uuid.js'
+import { DEFAULT, EVENTS } from '../constants.js'
 
 const LOGTAG = 'playlists'
 
@@ -29,10 +29,11 @@ class Playlists extends EventTarget {
     })
 
     playlists.forEach((v) => {
-      v.addEventListener('muted', this.#muted)
-      v.addEventListener('unmuted', this.#unmuted)
-      v.addEventListener('selected', this.#selected)
-      v.addEventListener('changed', this.#changed)
+      v.addEventListener('selected', this.#forward)
+      v.addEventListener(EVENTS.PLAYLIST_CHANGED, this.#forward)
+      v.addEventListener(EVENTS.PLAYLIST_TRACK_DELETED, this.#forward)
+      v.addEventListener(EVENTS.PLAYLIST_TRACK_MUTED, this.#forward)
+      v.addEventListener(EVENTS.PLAYLIST_TRACK_UNMUTED, this.#forward)
     })
   }
 
@@ -43,8 +44,7 @@ class Playlists extends EventTarget {
       ix++
     }
 
-    const set = new Set(this.#playlists.map((v) => v.UUID))
-    const uuid = UUIDv4(set).next().value
+    const uuid = UUIDv4().next().value
     const title = `Playlist #${ix}`
     const indices = this.#playlists.filter((v) => !v.deleted).map((v) => v.index)
     const index = Math.max(1, ...indices)
@@ -55,10 +55,11 @@ class Playlists extends EventTarget {
       title: title,
     })
 
-    playlist.addEventListener('muted', this.#muted)
-    playlist.addEventListener('unmuted', this.#unmuted)
-    playlist.addEventListener('selected', this.#selected)
-    playlist.addEventListener('changed', this.#changed)
+    playlist.addEventListener('selected', this.#forward)
+    playlist.addEventListener(EVENTS.PLAYLIST_CHANGED, this.#forward)
+    playlist.addEventListener(EVENTS.PLAYLIST_TRACK_DELETED, this.#forward)
+    playlist.addEventListener(EVENTS.PLAYLIST_TRACK_MUTED, this.#forward)
+    playlist.addEventListener(EVENTS.PLAYLIST_TRACK_UNMUTED, this.#forward)
 
     this.#playlists.push(playlist)
     this.save()
@@ -71,6 +72,7 @@ class Playlists extends EventTarget {
     if (playlist != null) {
       playlist.delete()
 
+      this.save()
       this.dispatchEvent(new CustomEvent('deleted', { detail: { playlist: UUID } }))
     }
   }
@@ -110,6 +112,8 @@ class Playlists extends EventTarget {
     deflist.tracks = [...new Set(deflist.tracks).union(tracks)]
 
     this.playlists = [deflist, ...playlists.filter((v) => v.UUID !== DEFAULT.UUID)]
+
+    reserve(this.#playlists.map((v) => v.UUID))
   }
 
   save() {
@@ -156,39 +160,8 @@ class Playlists extends EventTarget {
     this.save()
   }
 
-  #muted = (event) => {
-    const playlist = event.detail.playlist
-    const track = event.detail.track
-
-    if (this.#playlists.some((u) => u.UUID == playlist)) {
-      this.dispatchEvent(new CustomEvent('muted', { detail: { playlist: playlist, track: track } }))
-    }
-  }
-
-  #unmuted = (event) => {
-    const playlist = event.detail.playlist
-    const track = event.detail.track
-
-    if (this.#playlists.some((u) => u.UUID == playlist)) {
-      this.dispatchEvent(new CustomEvent('unmuted', { detail: { playlist: playlist, track: track } }))
-    }
-  }
-
-  #selected = (event) => {
-    const playlist = event.detail.playlist
-    const track = event.detail.track
-
-    if (this.#playlists.some((u) => u.UUID == playlist)) {
-      this.dispatchEvent(new CustomEvent('selected', { detail: { playlist: playlist, track: track } }))
-    }
-  }
-
-  #changed = (event) => {
-    const playlist = event.detail.playlist
-
-    if (this.#playlists.some((u) => u.UUID == playlist)) {
-      this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: playlist } }))
-    }
+  #forward = (event) => {
+    this.dispatchEvent(new CustomEvent(event.type, { detail: event.detail }))
   }
 }
 

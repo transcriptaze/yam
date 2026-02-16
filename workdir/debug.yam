@@ -7,9 +7,21 @@
       "title": "Songs to play when I'm drunk and high and thinking about my ex",
       "tracks": [
         "b8acedd3-58bc-4084-8beb-37c93f4c0e3b",
+        "3af2c1e3-c3b3-4b24-b140-0951849af9a3",
         "4b6d4905-e18b-4568-b48d-367c79674381",
         "5304dd6e-32ac-4e53-8a3b-7f246cb77820",
+        "a2f5717b-681f-43b8-bf72-e85df7b0698c",
         "d76f150d-8461-4fd9-a934-da7bf2699132"
+      ],
+      "random": [
+        {
+          "UUID": "3af2c1e3-c3b3-4b24-b140-0951849af9a3",
+          "title": "<< random >>"
+        },
+        {
+          "UUID": "a2f5717b-681f-43b8-bf72-e85df7b0698c",
+          "title": "<< random >>"
+        }
       ],
       "muted": []
     },
@@ -489,6 +501,28 @@
           1,
           4
         ]
+      }
+    },
+    {
+      "UUID": "5a2b15b6-1630-42a9-91f7-613ea3eb5911",
+      "version": 0,
+      "title": "(debug - anacrusis)",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "CountIn @ 4.5",
+          "role": "anacrusis",
+          "clicks": [
+            4.5
+          ]
+        }
+      ],
+      "metronome": {
+        "BPM": 120,
+        "loop": false,
+        "ding": false
       }
     },
     {

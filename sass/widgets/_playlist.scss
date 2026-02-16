@@ -33,11 +33,11 @@
       div.menu {
         grid-column: 3;
         grid-row: 1;
-
-        box-sizing: border-box;
       }
 
       div.menu {
+        box-sizing: border-box;
+
         display: grid;
         grid-template-columns: auto;
         grid-template-rows: auto;
@@ -135,6 +135,9 @@
       padding-top: 4px;
       padding-bottom: 4px;
 
+      display: flex;
+      align-items: center;
+
       input {
         box-sizing: border-box;
   
@@ -165,13 +168,6 @@
       div.list {
         grid-column: 1;
         grid-row: 1;
-      }
-
-      yam-tracklist {
-        grid-column: 1;
-        grid-row: 1;
-
-        display: none;
       }
 
       yam-add-tracks {
@@ -248,26 +244,6 @@
       display: none;
     }
 
-    div.grip {
-      width: 28px;
-      height: 100%;
-
-      display: flex;
-      align-items: center;
-
-      padding-top: 0px;
-      padding-bottom: 0px;
-      padding-left: 4px;
-      padding-right: 4px;
-
-      z-index: 2;
-      cursor: grab;
-
-      img {
-        width: 16px;      
-      }
-    }
-
     yam-playlist-item {
       margin-left: 32px;
       margin-top: 4px;
@@ -314,23 +290,6 @@
       #save {
          display: block;
       }
-    }
-
-    div.tracks {
-      div.list {
-        display: none;
-      }
-
-      yam-tracklist {
-        display: block;
-      }
-    }
-
-  }
-
-  div.playlist.selected.editing {
-    div.summary {
-      grid-template-columns: 16px 1fr auto;
     }
   }
 
@@ -430,10 +389,6 @@
   div.playlist {
     div.summary {
       grid-template-columns: 16px 1fr auto;
-
-      div.grip {
-        visibility: hidden;    
-      }
     }
   }
 
@@ -441,14 +396,10 @@
     div.grip {
       display: none;
     }
-
-    div.title {      
-      // margin-left: 12px;
-    }
   }
 }
 
-:host(.component-playlist[uuid="00000000-0000-0000-0000-000000000000"]) {
+:host(.component-playlist[uuid="00000000-0000-0000-0000-000000000000"]) div.playlist {
     img#trash {
       display: none;
     }
@@ -466,4 +417,25 @@
       filter: invert(13%) sepia(88%) saturate(7445%) hue-rotate(0deg) brightness(103%) contrast(112%);
       transition: filter 0.5s ease;
     }
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+  :host(.component-playlist) div.playlist {
+    div.summary {
+      grid-template-columns: 36px 1fr auto;
+    }
+
+    div.tracks {
+      display: none;
+    }
+  }
+
+  :host-context(li:last-child) div.playlist div.summary {
+      border-bottom-left-radius: 12px;
+      border-bottom-right-radius: 12px;
+  }
+
+
+  :host-context(.unsortable) div.playlist {
+  }
 }

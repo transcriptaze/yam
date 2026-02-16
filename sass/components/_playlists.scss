@@ -1,4 +1,12 @@
 div.playlists {
+  yam-playlists {
+    display: block;
+    height: 100%;
+  }
+
+  yam-playlist-tracks {
+    display: none;
+  }
 }
 
 @media (max-width: 768px) and (orientation:portrait) {
@@ -8,5 +16,24 @@ div.playlists {
 
 @media (max-width: 1024px) and (orientation: landscape) {
   div.playlists {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+
+    yam-playlists {
+      grid-column: 1;
+      grid-row: 1;
+
+      overflow-y: scroll;
+    }
+
+    yam-playlist-tracks {
+      grid-column: 2;
+      grid-row: 1;
+
+      display: block;
+      overflow-y: scroll;
+    }
+
   }
 }

@@ -144,8 +144,10 @@ export class Metronome extends AudioWorkletProcessor {
 
   play() {
     if (this.FSM.onPlay()) {
+      // NTS: dont't reset loop count on play/stop so that you can restart without "losing your place"
+      // this.#loops = 0
+
       this.section = null
-      this.#loops = 0
       this.clock.reset()
     }
   }
@@ -195,10 +197,13 @@ export class Metronome extends AudioWorkletProcessor {
 
     this.FSM.onStop()
 
+    // NTS: always reset loop count on loading a track
+    this.#loops = 0
+
     if (playing) {
       if (this.FSM.onPlay()) {
         this.section = null
-        this.#loops = 0
+        // this.#loops = 0
         this.clock.reset()
       }
     }
@@ -228,6 +233,7 @@ export class Metronome extends AudioWorkletProcessor {
 
     if (this.starting) {
       clock.tick(BPM, tactus, figura, pulse, N)
+
       if (clock.time >= 250) {
         if (this.FSM.on250ms()) {
           clock.reset()
@@ -253,11 +259,11 @@ export class Metronome extends AudioWorkletProcessor {
       } else if (cluck.click) {
         const measure = cluck.bar
         const section = this.#track.sections.find((v) => measure >= v.start && measure <= v.end)
-        const id = this.section?.ID ?? 0
 
-        if (section != null && section.ID != id) {
-          console.log({ measure }, section)
-        }
+        // const id = this.section?.ID ?? 0
+        // if (section != null && section.ID != id) {
+        //   console.log({ measure }, section)
+        // }
 
         if (section != null) {
           this.section = section
@@ -276,6 +282,9 @@ export class Metronome extends AudioWorkletProcessor {
             this.section = null
             this.clock.reset()
           } else {
+            // NTS: reset internal loop count
+            this.#loops = 0
+
             this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
             this.port.postMessage({
               message: 'stopped',
@@ -296,10 +305,23 @@ export class Metronome extends AudioWorkletProcessor {
           this.flip({ state: FSM.STATE.PLAYING, bar: cluck.bar, beat: cluck.beat, loops: this.#loops })
           log('PLAY', clock.t, clock.time, BPM, cluck.bar, cluck.beat, tactus, figura, pulse)
         }
+      } else if (cluck.tock.click) {
+        // FIXME half-assed fix for https://github.com/transcriptaze/yam/issues/45
+        const measure = cluck.bar
+        const section = this.#track.sections.find((v) => measure >= v.start && measure <= v.end)
+        const clicks = section?.clicks ?? []
+
+        if (Array.isArray(clicks) && clicks.includes(cluck.tock.beat)) {
+          this.cue(cluck.tock.beat, pulse)
+        } else if (clicks instanceof Map && clicks.has(cluck.tock.beat)) {
+          this.cue(cluck.tock.beat, pulse)
+        }
       }
     } else if (this.stopping) {
       this.FSM.onStopped()
-      this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
+      // NTS: send current loops - doesn't reset loop count on stop anymore
+      this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
+
       log('STOP', clock.t, clock.time, BPM, Number.NaN, Number.NaN, gain, tactus, figura)
     }
 

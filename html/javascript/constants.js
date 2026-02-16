@@ -5,6 +5,11 @@ export const DEFAULT = {
   UUID: '00000000-0000-0000-0000-000000000000',
 }
 
+export const RANDOM = {
+  UUID: '00000000-0000-0000-0000-000000000001',
+  TITLE: '« random »',
+}
+
 export const DIVISIONS = [1, 2, 4, 8, 16, 32]
 export const PULSES = ['eighth', 'eighth-doublet', 'quarter', 'dotted-quarter', 'half', 'dotted-half']
 
@@ -58,16 +63,19 @@ export const EVENTS = {
 
   SHUFFLE_PLAYLISTS: 'shuffle-playlists',
 
-  TOGGLE_PLAYLIST: 'toggle-playlist',
-  SELECT_PLAYLIST: 'select-playlist',
-  EDIT_PLAYLIST: 'edit-playlist',
-  SHUFFLE_PLAYLIST: 'shuffle-playlist',
-  DELETE_PLAYLIST: 'delete-playlist',
+  TOGGLE_PLAYLIST: 'playlist-toggle',
+  SELECT_PLAYLIST: 'playlist-select',
+  EDIT_PLAYLIST: 'playlist-edit',
+  DELETE_PLAYLIST: 'playlist-delete',
+
+  PLAYLIST_CHANGED: 'playlist-changed',
+  PLAYLIST_TRACK_DELETED: 'playlist-track-deleted',
+  PLAYLIST_TRACK_MUTED: 'muted',
+  PLAYLIST_TRACK_UNMUTED: 'unmuted',
 
   SELECT_TRACK: 'select-track',
   MUTE_TRACK: 'mute-track',
   DELETE_TRACK: 'delete-track',
-  NEW_TRACK: 'new-track',
 
   EDIT_SAVE: 'edit-save',
   SECTION_TIME_SIGNATURE_CHANGE: 'section-time-signature-change',

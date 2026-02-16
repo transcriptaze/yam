@@ -5,15 +5,6 @@
     <link rel="icon"       href="/favicon.png" type="image/png" />
     <link rel="stylesheet" href="./css/YAM.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-<!-- 
-    <style>
-      @font-face {
-        font-family: "BravuraText";
-        src: url("./fonts/Bravura/BravuraText.woff2") format("woff2");
-        font-display: swap;
-      }
-    </style>
- -->
   </head>
 
   <body>
@@ -24,21 +15,28 @@
           <yam-info tabindex="-1" enterkeyhint="done" >
             <yam-progress slot="progress"></yam-progress>
           </yam-info>
+        
           <div class="metrics">
             <yam-time-signature tabindex="-1" enterkeyhint="done"></yam-time-signature>
             <yam-mm             tabindex="-1" enterkeyhint="done" exportparts="BPM"></yam-mm>
-            <yam-loop           tabindex="-1"></yam-loop>
-            <yam-ding           tabindex="-1" hidden></yam-ding>
           </div>
+
+          <yam-loop tabindex="-1"></yam-loop>
+          <yam-ding tabindex="-1" hidden></yam-ding>
+        
           <div class="bpm">
             <yam-knob  tabindex="-1"></yam-knob>
             <yam-wheel tabindex="-1"></yam-wheel>
           </div>
+
           <yam-metronome tabindex="-1" autofocus></yam-metronome>
         </div>
+        
         <div class="panel playlists hidden">
           <yam-playlists></yam-playlists>
+          <yam-playlist-tracks></yam-playlist-tracks>
         </div>
+        
         <div class="panel editor hidden">
           <yam-editor></yam-editor>
         </div>
@@ -292,7 +290,7 @@
     <template id="template-wheel">
       <div class="wheel">
         <input type="range" min="40" max="200" step="1" value="120" />
-        <svg version="1.1" viewBox="-50 -18 100 36" overflow="visible">
+        <svg version="1.1" viewBox="-50 -18 100 23.5" overflow="visible">
           <style>
             .small {
               font: 5px sans-serif;
@@ -318,15 +316,15 @@
               <rect x="-50" y="-10" width="100%" height="100%" fill="url(#wheel)" />
             </mask>
 
-            <rect id="knurl" x="-2" y="-8.5" width="3" height="11" rx="2" stroke="none" fill="#808080" />
+            <rect id="knurl" x="-2" y="-8.5"  width="3" height="11" rx="2" stroke="none" fill="#808080" />
           </defs>
 
           <g>
-            <rect x="-50" y="-18" width="100%" height="100%" stroke="#22222220" fill="#22222220" />
+            <rect x="-51.5" y="-18" width="103%" height="100%" stroke="#22222220" fill="#22222220" />
           </g>
 
-          <g id="wheel" transform="translate(0,4)">
-            <rect x="-50" y="-16" width="100%" height="20" rx="1" stroke="#222222" stroke-width="0.75" fill="#222222" />
+          <g id="wheel" transform="translate(0,0)">
+            <rect x="-50" y="-16.5" width="100%" height="20.5" rx="1" stroke="#222222" stroke-width="0.75" fill="#222222" />
 
             <g id="labels" class="small" text-anchor="middle" stroke-width="0.1" transform="translate(0,-10.5)" stroke="#fcfcfc" fill="#fefefe" clip-path="url(#clip-region)">
               <text class="label" x="0" y="0" transform="translate(-104.4708572938,0) scale(0.9659258263,1)" data-angle="-165">200</text>
@@ -346,6 +344,8 @@
               <text class="label" x="0" y="0" transform="translate( 70.1118232618,0)  scale(0.555570233,1)"  data-angle="123.75">60</text>
               <text class="label" x="0" y="0" transform="translate( 85.0513381879,0)  scale(0.8128466846,1)" data-angle="144.375">50</text>
               <text class="label" x="0" y="0" transform="translate(104.4708572938,0)  scale(0.9659258263,1)" data-angle="165">40</text>
+
+              <polygon points="-2.5,-6.5 0,-4.5, 2.5,-6.5" stroke="none" fill="#ffffff" />
             </g>
 
             <g id="knurls" clip-path="url(#clip-region)">
@@ -366,8 +366,8 @@
               <use href="#knurl" class="knurl" transform="translate( -6.2717077961,0) scale(0.9945218954,1)" data-angle="-6"  />
 
               <use href="#knurl" class="knurl" transform="translate(0,0) scale(1,1)" data-angle="0" />
-
-              <use href="#knurl" class="knurl" transform="translate( 6.2717077961,0) scale(0.9945218954,1)" data-angle="6" />
+ 
+              <use href="#knurl" class="knurl" transform="translate( 6.2717077961,0) scale(0.9945218954,1)" data-angle="6"  />
               <use href="#knurl" class="knurl" transform="translate(12.4747014491,0) scale(0.9781476007,1)" data-angle="12" />
               <use href="#knurl" class="knurl" transform="translate(18.5410196625,0) scale(0.9781476007,1)" data-angle="18" />
               <use href="#knurl" class="knurl" transform="translate(24.4041985845,0) scale(0.9135454576,1)" data-angle="24" />
@@ -382,6 +382,42 @@
               <use href="#knurl" class="knurl" transform="translate(58.6888560440,0) scale(0.2079116908,1)" data-angle="78" />
               <use href="#knurl" class="knurl" transform="translate(59.6713137221,0) scale(0.1045284633,1)" data-angle="84" />
               <use href="#knurl" class="knurl" transform="translate(60,           0) scale(0.1,1)"          data-angle="90" />
+
+            </g>
+
+            <g id="ramp" clip-path="url(#clip-region)" stroke="none" fill="#4eccff">
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-8.0  a4,4,0,0,1,-3,0 z" transform="translate(-59.9177720853,0) scale(0.0523359562,1)" data-angle="-87" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-7.75 a4,4,0,0,1,-3,0 z" transform="translate(-59.2613004357,0) scale(0.1564344650,1)" data-angle="-81" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-7.5  a4,4,0,0,1,-3,0 z" transform="translate(-57.9555495773,0) scale(0.2588190451,1)" data-angle="-75" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-7.25 a4,4,0,0,1,-3,0 z" transform="translate(-56.0148255898,0) scale(0.3583679495,1)" data-angle="-69" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-7.0  a4,4,0,0,1,-3,0 z" transform="translate(-53.4603914513,0) scale(0.4539904997,1)" data-angle="-63" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-6.75 a4,4,0,0,1,-3,0 z" transform="translate(-50.3202340767,0) scale(0.544639035,1)"  data-angle="-57" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-6.5  a4,4,0,0,1,-3,0 z" transform="translate(-46.6287576874,0) scale(0.629320391,1)"  data-angle="-51" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-6.25 a4,4,0,0,1,-3,0 z" transform="translate(-42.4264068712,0) scale(0.7071067812,1)" data-angle="-45" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-6.0  a4,4,0,0,1,-3,0 z" transform="translate(-37.759223463,0)  scale(0.7771459615,1)" data-angle="-39" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-5.75 a4,4,0,0,1,-3,0 z" transform="translate(-32.6783421009,0) scale(0.8386705679,1)" data-angle="-33" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-5.5  a4,4,0,0,1,-3,0 z" transform="translate(-27.2394299844,0) scale(0.8910065242,1)" data-angle="-27" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-5.25 a4,4,0,0,1,-3,0 z" transform="translate(-21.5020769727,0) scale(0.9335804265,1)" data-angle="-21" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-5.0  a4,4,0,0,1,-3,0 z" transform="translate(-15.5291427062,0) scale(0.9659258263,1)" data-angle="-15" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-4.75 a4,4,0,0,1,-3,0 z" transform="translate(-9.3860679024,0)  scale(0.9876883406,1)" data-angle="-9"  />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-4.5  a4,4,0,0,1,-3,0 z" transform="translate(-3.1401573746,0)  scale(0.9986295348,1)" data-angle="-3"  />
+
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-4.0  a4,4,0,0,1,-3,0 z" transform="translate(3.1401573746,0)  scale(0.9986295348,1)" data-angle="3"  />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-3.75 a4,4,0,0,1,-3,0 z" transform="translate(9.3860679024,0)  scale(0.9876883406,1)" data-angle="9"  />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-3.5  a4,4,0,0,1,-3,0 z" transform="translate(15.5291427062,0) scale(0.9659258263,1)" data-angle="15" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-3.25 a4,4,0,0,1,-3,0 z" transform="translate(21.5020769727,0) scale(0.9335804265,1)" data-angle="21" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-3.0  a4,4,0,0,1,-3,0 z" transform="translate(27.2394299844,0) scale(0.8910065242,1)" data-angle="27" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-2.75 a4,4,0,0,1,-3,0 z" transform="translate(32.6783421009,0) scale(0.8386705679,1)" data-angle="33" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-2.5  a4,4,0,0,1,-3,0 z" transform="translate(37.759223463,0)  scale(0.7771459615,1)" data-angle="39" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-2.25 a4,4,0,0,1,-3,0 z" transform="translate(42.4264068712,0) scale(0.7071067812,1)" data-angle="45" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-2.0  a4,4,0,0,1,-3,0 z" transform="translate(46.6287576874,0) scale(0.629320391,1)"  data-angle="51" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-1.75 a4,4,0,0,1,-3,0 z" transform="translate(50.3202340767,0) scale(0.544639035,1)"  data-angle="57" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-1.5  a4,4,0,0,1,-3,0 z" transform="translate(53.4603914513,0) scale(0.4539904997,1)" data-angle="63" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-1.25 a4,4,0,0,1,-3,0 z" transform="translate(56.0148255898,0) scale(0.3583679495,1)" data-angle="69" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-1.0  a4,4,0,0,1,-3,0 z" transform="translate(57.9555495773,0) scale(0.2588190451,1)" data-angle="75" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-0.75 a4,4,0,0,1,-3,0 z" transform="translate(59.2613004357,0) scale(0.1564344650,1)" data-angle="81" />
+              <path d="M-2,1.25 a4,4,0,0,1,3,0 l0,-0.5  a4,4,0,0,1,-3,0 z" transform="translate(59.9177720853,0) scale(0.0523359562,1)" data-angle="87" />
+ 
             </g>
           </g>
         </svg>
@@ -400,13 +436,6 @@
               font-weight: 500;
               font-display: swap;
             }
-<!--
-            .bravura {
-              font-family: "BravuraText";
-              font-size: 12px;
-              font-weight: normal;
-            }
--->
           </style>
 
           <defs>
@@ -510,13 +539,6 @@
               font-weight: 500;
               font-display: swap;
             }
-<!--
-            .bravura {
-              font-family: "BravuraText";
-              font-size: 12px;
-              font-weight: normal;
-            }
--->
           </style>
 
           <defs>
@@ -607,17 +629,17 @@
       <div class="info">
         <div class="title">
           <input  data-ref="title" enterkeyhint="done" required />
-          <button data-ref="save" disabled><img src="./images/save.svg" draggable="false"/></button>
         </div>
         <div class="detail">
-          <div class="overlay"></div>
-          <div class="progress">
-            <slot name="progress"><progress max="100" value="0"></progress></slot>
-          </div>
           <div class="text">
             <div data-ref="name"></div>
             <div data-ref="bars"></div>
           </div>
+        </div>
+        <button data-ref="save" disabled><img src="./images/save.svg" draggable="false"/></button>
+        <div class="overlay"></div>
+        <div class="progress">
+          <slot name="progress"><progress max="100" value="0"></progress></slot>
         </div>
       </div>
     </template>
@@ -629,7 +651,7 @@
     </template>
 
     <template id="template-playlists">
-      <yam-tracklist></yam-tracklist>
+      <yam-playlist-tracks></yam-playlist-tracks>
       <yam-add-tracks></yam-add-tracks>
       <div class="playlists unsortable">
         <div class="list">
@@ -671,6 +693,21 @@
       </div>
     </template>
 
+    <template id="template-playlist-tracks">
+      <div class="playlist-tracks">
+        <div class="list">
+          <ul></ul>
+        </div>
+        <yam-add-tracks></yam-add-tracks>
+        <button id="plus">
+          <img src="./images/circle-plus.svg" draggable="false" />
+        </button>
+        <button id="save">
+          <img src="./images/save.svg" draggable="false" />
+        </button>
+      </div>
+    </template>
+
     <template id="template-playlist-item">
       <div class="playlist-track">
         <div id="title"></div>
@@ -685,21 +722,16 @@
       </div>
     </template>
 
-    <template id="template-tracklist">
-      <div class="tracklist">
-        <ul></ul>
-      </div>
-    </template>
-
     <template id="template-add-tracks">
       <div class="tracklist">
         <ul></ul>
         <hr />
-        <button id="new-track">--&nbsp;new track&nbsp;--</button>
+        <button id="new-track">&#11000;&nbsp;new track</button>
+        <button id="random-track">&#11000;&nbsp;random track</button>
       </div>
     </template>
 
-    <template id="template-tracklist-item">
+    <template id="template-add-tracks-item">
       <div class="tracklist-item">
         <input id="track" type="checkbox" />
         <label for="track">
@@ -714,6 +746,8 @@
         <div class="track">
           <input  id="title" type="text" />
           <button id="save" disabled><img src="./images/save.svg" draggable="false"/></button>
+        </div>
+        <div class="metrics">
           <yam-time-signature tabindex="-1" enterkeyhint="done" disabled></yam-time-signature>
           <yam-mm             tabindex="-1" enterkeyhint="done" disabled></yam-mm>
         </div>
@@ -900,7 +934,7 @@
     toolbar.fullscreen.addEventListener('click', (event) => {
       if (document.fullscreenEnabled) {
          if (document.fullscreenElement == null) {
-            document.body.requestFullscreen()
+            document.documentElement.requestFullscreen()
          } else {
             document.exitFullscreen()
          }

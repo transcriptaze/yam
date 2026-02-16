@@ -70,7 +70,7 @@ export class PlaylistItem extends HTMLElement {
         }
       },
 
-      transitionend: (event) => {
+      transitionEnd: (event) => {
         const trash = this.shadowRoot.getElementById('trash')
 
         if (event.propertyName === 'filter') {
@@ -111,7 +111,7 @@ export class PlaylistItem extends HTMLElement {
     mute.addEventListener('click', this.#handlers.mute.click)
 
     trash.addEventListener('click', this.#handlers.trash.click)
-    trash.addEventListener('transitionend', this.#handlers.trash.transitionend)
+    trash.addEventListener('transitionend', this.#handlers.trash.transitionEnd)
   }
 
   disconnectedCallback() {}
@@ -128,11 +128,20 @@ export class PlaylistItem extends HTMLElement {
     }
   }
 
-  set track({ UUID, title, muted, selected }) {
+  set track({ UUID, title, muted, selected, random }) {
+    const shadow = this.shadowRoot
+    const container = shadow.querySelector('.playlist-track')
+
     this.UUID = UUID
     this.title = title
     this.muted = muted
     this.selected = selected
+
+    if (random === true) {
+      container.classList.add('random')
+    } else {
+      container.classList.remove('random')
+    }
   }
 
   get UUID() {

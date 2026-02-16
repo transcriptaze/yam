@@ -58,21 +58,25 @@
 }
 
 main {
+  box-sizing: border-box;
   background: inherit;
-  display: grid;
-  grid-template-columns: 0.5fr 1fr 1fr 1fr;
-  grid-template-rows: 660px;
-  grid-template-areas: "dummy metronome playlist editor";
-  column-gap: 8px;
-  align-items: stretch;
+  width: fit-content;
   height: 693px;
+  min-width: 0;
   margin: 0;
   padding-top: 24px;
   padding-bottom: 24px;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: 24px;
+  padding-right: 24px;
   border: none;
   overflow-y: hidden;
+  overflow-x: auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 660px;
+  grid-template-areas: "metronome playlist editor";
+  column-gap: 8px;
+  align-items: stretch;
 }
 
 div.panel {
@@ -91,10 +95,6 @@ div.playlists {
   overflow-y: auto;
   min-height: 0;
 }
-div.playlists yam-playlists {
-  display: block;
-  height: 100%;
-}
 
 div.editor {
   grid-area: editor;
@@ -108,12 +108,13 @@ div.editor yam-editor {
 
 @media (max-width: 768px) and (orientation: portrait) {
   main {
+    width: 100%;
     padding: 0px;
+    overflow: hidden;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     column-gap: 0px;
-    overflow: hidden;
   }
   div.panel {
     width: 100dvw;
@@ -144,12 +145,14 @@ div.editor yam-editor {
 }
 @media (max-width: 1024px) and (orientation: landscape) {
   main {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    overflow: hidden;
     display: grid;
     grid-template-columns: 1fr;
     grid-template-rows: 1fr;
     column-gap: 0px;
-    padding: 0px;
-    overflow: hidden;
   }
   div.panel {
     width: 100%;
@@ -161,8 +164,10 @@ div.editor yam-editor {
   div.metronome {
     grid-column: 1;
     grid-row: 1;
+    justify-self: center;
+    align-self: start;
     width: fit-content;
-    height: fit-content;
+    height: 100%;
   }
   div.metronome.hidden {
     display: none;
@@ -356,17 +361,20 @@ main.about p.license {
 main.about ol {
   margin-top: 0px;
 }
-main.about ul.guide {
+main.about div.guide {
+  display: block;
+}
+main.about ul.menu {
   list-style-type: none;
 }
-main.about ul.guide img {
+main.about ul.menu img {
   height: 32px;
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 6px;
   padding-right: 6px;
 }
-main.about ul.guide li {
+main.about ul.menu li {
   display: grid;
   grid-template-rows: auto;
   grid-template-columns: 60px 1fr;
@@ -403,6 +411,10 @@ main.about ul.guide li {
     margin-left: 24px;
     margin-right: 24px;
     overflow-y: scroll;
+  }
+  main.about div.guide {
+    display: flex;
+    flow-direction: column;
   }
 }
 main.unsupported {
@@ -691,9 +703,9 @@ toolbar.playlist #edit {
 div.metronome {
   box-sizing: border-box;
   display: grid;
-  grid-template-columns: 1fr auto auto 1fr;
+  grid-template-columns: 1fr auto auto;
   grid-template-rows: auto auto auto auto 1fr;
-  grid-template-areas: "pads pads pads pads" "info info info info" "metrics metrics metrics metrics" "spare3 bpm bpm spare4" "spare5 metronome metronome spare6";
+  grid-template-areas: "pads pads pads" "info info info" "metrics loop ding" "bpm bpm bpm" "metronome metronome metronome";
   justify-items: center;
   align-items: start;
 }
@@ -714,7 +726,7 @@ div.metronome div.metrics {
   box-sizing: border-box;
   grid-area: metrics;
   display: grid;
-  grid-template-columns: 4fr auto 1fr auto 2fr auto 1fr;
+  grid-template-columns: auto auto;
   grid-template-rows: auto;
   align-items: center;
   column-gap: 4px;
@@ -725,28 +737,26 @@ div.metronome div.metrics {
 }
 div.metronome div.metrics yam-time-signature {
   box-sizing: border-box;
-  grid-column: 2;
+  grid-column: 1;
   grid-row: 1;
   justify-self: end;
 }
 div.metronome div.metrics yam-mm {
   box-sizing: border-box;
-  grid-column: 4;
+  grid-column: 2;
   grid-row: 1;
   justify-self: center;
 }
-div.metronome div.metrics yam-loop {
+div.metronome yam-loop {
   box-sizing: border-box;
-  grid-column: 6;
-  grid-row: 1;
+  grid-area: loop;
   justify-self: center;
   height: 100%;
   outline: none;
 }
-div.metronome div.metrics yam-ding {
+div.metronome yam-ding {
   box-sizing: border-box;
-  grid-column: 7;
-  grid-row: 1;
+  grid-area: ding;
   justify-self: center;
   height: 100%;
   outline: none;
@@ -767,12 +777,12 @@ div.metronome div.bpm yam-knob {
 div.metronome div.bpm yam-wheel {
   display: none;
   grid-area: wheel;
-  width: 200px;
+  width: 224px;
   outline: none;
 }
 div.metronome yam-metronome {
   grid-area: metronome;
-  height: 100%;
+  align-self: center;
   outline: none;
 }
 div.metronome yam-time-signature {
@@ -804,32 +814,59 @@ div.metronome yam-loop {
 }
 @media (max-width: 1024px) and (orientation: landscape) {
   div.metronome {
+    box-sizing: border-box;
+    width: 100%;
+    padding-left: 16px;
+    padding-right: 16px;
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto 1fr;
-    grid-template-areas: "pads pads" "metrics info" "bpm metronome";
+    grid-template-columns: 50% auto 1fr auto;
+    grid-template-rows: auto auto auto 1fr;
+    grid-template-areas: "pads pads pads pads" "info info info info" "metrics other other other" "bpm metronome metronome metronome";
     justify-items: center;
     align-items: start;
+    column-gap: 2px;
   }
   div.metronome yam-pads {
-    width: calc(100% - 32px);
+    width: 100%;
   }
   div.metronome yam-info {
-    width: 80%;
+    box-sizing: border-box;
+    width: 100%;
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
     align-self: center;
   }
   div.metronome div.metrics {
-    justify-self: end;
     height: 64px;
   }
   div.metronome div.metrics yam-time-signature {
+    justify-self: end;
+    margin-right: 16px;
+  }
+  div.metronome div.metrics yam-mm {
     justify-self: start;
+    margin-left: 16px;
   }
   div.metronome div.metrics yam-mm::part(BPM) {
     font-size: 24px;
   }
+  div.metronome yam-loop {
+    grid-column: 2;
+    grid-row: 3;
+    justify-self: start;
+  }
+  div.metronome yam-ding {
+    grid-column: 4;
+    grid-row: 3;
+  }
   div.metronome div.bpm {
+    grid-column: 1;
+    grid-row: 4;
+    justify-items: center;
     align-self: center;
+    width: 100%;
   }
   div.metronome div.bpm yam-knob {
     display: none;
@@ -838,47 +875,72 @@ div.metronome yam-loop {
     display: block;
   }
   div.metronome yam-metronome {
-    justify-self: start;
+    grid-column: 2/5;
+    grid-row: 4;
+    justify-self: center;
+    align-self: center;
+    width: 100%;
     margin-left: 12px;
     margin-right: 12px;
   }
 }
-:root {
-  --vh: 100vh;
+div.playlists yam-playlists {
+  display: block;
+  height: 100%;
+}
+div.playlists yam-playlist-tracks {
+  display: none;
 }
 
+@media (max-width: 1024px) and (orientation: landscape) {
+  div.playlists {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto;
+  }
+  div.playlists yam-playlists {
+    grid-column: 1;
+    grid-row: 1;
+    overflow-y: scroll;
+  }
+  div.playlists yam-playlist-tracks {
+    grid-column: 2;
+    grid-row: 1;
+    display: block;
+    overflow-y: scroll;
+  }
+}
 html {
   height: 100%;
-  background: black;
+  background: var(--background);
   font-family: "Lato";
   box-sizing: border-box;
   user-select: none;
 }
 
 body {
-  background: var(--background);
-  margin: 0px;
-  padding-top: 0px;
-}
-body div.content {
   width: 100dvw;
   height: 100dvh;
-  display: grid;
-  grid-template-rows: 1fr;
-  grid-template-columns: 1fr auto;
+  margin: 0;
+  padding: 0;
+}
+body div.content {
+  min-width: max-content;
+  display: flex;
   overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 1fr;
+  grid-template-areas: "main toolbar";
 }
 
 main {
-  grid-column: 1/3;
-  grid-row: 1;
+  grid-area: main;
   justify-self: center;
-  height: 645px;
 }
 
 toolbar {
-  grid-row: 1;
-  grid-column: 2;
+  grid-area: toolbar;
 }
 
 dialog.import {
@@ -927,7 +989,7 @@ dialog.error p.message {
 
 @media (max-width: 768px) and (orientation: portrait) {
   body div.content {
-    height: --vh;
+    height: 100dvh;
     margin-top: env(safe-area-inset-top);
     display: grid;
     grid-template-columns: 1fr;
@@ -953,9 +1015,13 @@ dialog.error p.message {
   }
 }
 @media (max-width: 1024px) and (orientation: landscape) {
+  body {
+    width: 100dvw;
+  }
   body div.content {
     height: 100dvh;
     width: calc(100dvw - env(safe-area-inset-left));
+    min-width: 0;
     margin-left: env(safe-area-inset-left);
     display: grid;
     grid-template-columns: 1fr auto;

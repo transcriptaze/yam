@@ -1,4 +1,4 @@
-import { DEFAULT, EVENTS } from '../constants.js'
+import { DEFAULT, EVENTS, RANDOM } from '../constants.js'
 
 export class Playlists extends HTMLElement {
   static get observedAttributes() {
@@ -24,14 +24,6 @@ export class Playlists extends HTMLElement {
         this.dispatchEvent(new CustomEvent('new', { detail: {} }))
       },
     },
-
-    playlist: {
-      edit: (e) => {
-        e.preventDefault()
-        e.stopPropagation()
-        e.target.edit()
-      },
-    },
   }
 
   constructor() {
@@ -53,13 +45,8 @@ export class Playlists extends HTMLElement {
   connectedCallback() {
     this.classList.add('component-playlists')
 
-    const shadow = this.shadowRoot
-    const all = shadow.getElementById('all')
-    const plus = shadow.getElementById('plus')
-
-    all.addEventListener(EVENTS.TOGGLE_PLAYLIST, this.#toggle)
-    shadow.addEventListener(EVENTS.EDIT_PLAYLIST, this.#handlers.playlist.edit)
-    plus.addEventListener('click', this.#handlers.plus.click)
+    this.shadowRoot.getElementById('all').addEventListener(EVENTS.TOGGLE_PLAYLIST, this.#toggle)
+    this.shadowRoot.getElementById('plus').addEventListener('click', this.#handlers.plus.click)
   }
 
   disconnectedCallback() {
@@ -77,12 +64,7 @@ export class Playlists extends HTMLElement {
   }
 
   set tracklist(tracks) {
-    const tracklist = this.#tracklist
     const add_tracks = this.#add_tracks
-
-    if (tracklist != null) {
-      tracklist.tracks = tracks
-    }
 
     if (add_tracks != null) {
       add_tracks.tracks = tracks
@@ -93,9 +75,8 @@ export class Playlists extends HTMLElement {
     this.#selected = playlist
 
     if (playlist != null) {
-      const shadow = this.shadowRoot
-      const all = shadow.getElementById('all')
-      const ul = shadow.querySelector('ul')
+      const all = this.shadowRoot.getElementById('all')
+      const ul = this.shadowRoot.querySelector('ul')
       const children = Array.from(ul.children).map((v) => v.querySelector('yam-playlist'))
       const list = [all, ...children]
 
@@ -108,7 +89,7 @@ export class Playlists extends HTMLElement {
 
       list.forEach((v) => {
         if (v.UUID === playlist) {
-          v.open(this.#tracklist, this.#add_tracks)
+          v.open(this.#add_tracks)
           v.selected = track
         }
       })
@@ -151,8 +132,8 @@ export class Playlists extends HTMLElement {
   }
 
   add(playlist, tracks) {
-    const shadow = this.shadowRoot
-    const ul = shadow.querySelector('ul')
+    const ul = this.shadowRoot.querySelector('ul')
+    const div = this.shadowRoot.querySelector('div.playlists')
 
     // ... user playlist?
     if (playlist.UUID !== DEFAULT.UUID) {
@@ -164,13 +145,15 @@ export class Playlists extends HTMLElement {
       if (li) {
         ul.appendChild(li)
       }
+
+      // NTS: new playlists are automatically opened
+      div.classList.add('unsortable')
     }
   }
 
   update(playlist, tracks) {
-    const shadow = this.shadowRoot
-    const all = shadow.getElementById('all')
-    const ul = shadow.querySelector('ul')
+    const all = this.shadowRoot.getElementById('all')
+    const ul = this.shadowRoot.querySelector('ul')
     const children = Array.from(ul.children).map((v) => v.querySelector('yam-playlist'))
     const lists = [all, ...children]
     const p = transmogrify(playlist, tracks)
@@ -195,17 +178,23 @@ export class Playlists extends HTMLElement {
     const list = [all, ...children]
 
     list.forEach((v) => v.updated(track))
-
-    this.#tracklist.updated(track)
   }
 
   deleted(playlist) {
+    let UUID = ''
+
+    if (playlist != null && typeof playlist === 'string') {
+      UUID = playlist
+    } else if (playlist != null && typeof playlist === 'object' && playlist.constructor.name === 'Playlist') {
+      UUID = playlist.UUID ?? ''
+    }
+
     const shadow = this.shadowRoot
     const ul = shadow.querySelector('ul')
     const playlists = Array.from(ul.children).map((v) => v.querySelector('yam-playlist'))
-    const e = playlists.find((v) => v.UUID === playlist.UUID)
+    const e = playlists.find((v) => v.UUID === UUID)
 
-    this.#playlists = this.#playlists.filter((v) => v.UUID !== playlist.UUID)
+    this.#playlists = this.#playlists.filter((v) => v.UUID !== UUID)
 
     if (e != null) {
       ul.removeChild(e.parentElement)
@@ -230,14 +219,6 @@ export class Playlists extends HTMLElement {
       })
 
     list.find((v) => v.UUID === playlist.UUID)?.muted(track, muted)
-  }
-
-  get #tracklist() {
-    if (this.#fields.tracklist == null) {
-      this.#fields.tracklist = this.shadowRoot?.querySelector('yam-tracklist')
-    }
-
-    return this.#fields.tracklist
   }
 
   get #add_tracks() {
@@ -297,7 +278,7 @@ export class Playlists extends HTMLElement {
 
       lists.forEach((v) => {
         if (v.UUID === UUID) {
-          v.open(this.#tracklist, this.#add_tracks)
+          v.open(this.#add_tracks)
         }
       })
 
@@ -457,10 +438,10 @@ function transmogrify(playlist, tracks) {
     UUID: playlist.UUID,
     title: playlist.title,
     tracks: playlist.tracks
-      .filter((uuid) => m.has(uuid))
-      .map((uuid) => m.get(uuid))
+      .filter((uuid) => m.has(uuid) || playlist.internal(uuid))
+      .map((uuid) => (m.has(uuid) ? m.get(uuid) : { UUID: uuid, title: RANDOM.TITLE, random: true }))
       .map((v) => {
-        return { UUID: `${v.UUID}`, title: `${v.title}`, muted: muted.includes(v.UUID) }
+        return { UUID: `${v.UUID}`, title: `${v.title}`, muted: muted.includes(v.UUID), random: v.random }
       }),
   }
 }

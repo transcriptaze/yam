@@ -1,4 +1,4 @@
-import { clamp, sin, cos, abs } from './util.js'
+import { clamp, sin, cos, abs, wrap } from './util.js'
 
 const WEDGE = 30 // degrees
 const R = 60
@@ -13,6 +13,8 @@ export class Wheel extends HTMLElement {
   #max = 200
   #BPM = 120
   #value = 120
+  #tempo = Number.NaN
+
   #drag = {
     dragging: false,
     coarse: false,
@@ -115,6 +117,17 @@ export class Wheel extends HTMLElement {
     return this.#max
   }
 
+  set tempo(v) {
+    const bpm = parseInt(`${v}`, 10)
+    if (!Number.isNaN(bpm) && bpm >= this.min && bpm <= this.max) {
+      this.#tempo = bpm
+    } else {
+      this.#tempo = Number.NaN
+    }
+
+    this.#redraw(true)
+  }
+
   redraw({ _playing, _stopped }) {}
 
   #onPointerDown(event) {
@@ -163,7 +176,7 @@ export class Wheel extends HTMLElement {
       const dt = event.timeStamp - drag.start.timestamp
       const delta = this.#value - drag.start.value
 
-      if (dt < 125 && Math.abs(delta) < 5) {
+      if (dt < 200 && Math.abs(delta) < 5) {
         const increment = this.#tapped(drag)
 
         const bpm = parseInt(`${drag.start.value}`, 10)
@@ -245,11 +258,14 @@ export class Wheel extends HTMLElement {
       const svg = shadow.querySelector('svg')
       const labels = svg.querySelectorAll('#labels .label')
       const knurls = svg.querySelectorAll('#knurls .knurl')
+      const bars = svg.querySelectorAll('#ramp path')
 
       const range = this.max - this.min
       const BPM = this.#value
+      const tempo = Number.isNaN(this.#tempo) ? BPM : this.#tempo
       const rotation = ((BPM - 120) * (360 - WEDGE)) / range
 
+      // ... labels
       for (const label of labels) {
         const offset = parseFloat(`${label.dataset.angle}`)
 
@@ -268,6 +284,7 @@ export class Wheel extends HTMLElement {
         }
       }
 
+      // ... knurls
       for (const knurl of knurls) {
         const offset = parseFloat(`${knurl.dataset.angle}`)
 
@@ -278,6 +295,41 @@ export class Wheel extends HTMLElement {
           const scale = abs(cos(angleʼ))
 
           knurl.setAttribute('transform', `translate(${dx},0) scale(${scale},1)`)
+        }
+      }
+
+      // ... ramp
+      const HEIGHT = { MIN: 1, MAX: 8.5 }
+
+      for (const bar of bars) {
+        const offset = parseFloat(`${bar.dataset.angle}`)
+
+        if (!Number.isNaN(offset)) {
+          const angle = (360 + rotation + offset) % 360
+          const angleʼ = (angle <= 90 ? angle : angle <= 270 ? angle + 180 : angle + 360) % 360
+          const dx = (R * sin(angleʼ)).toFixed(5)
+          const scale = abs(cos(angleʼ)).toFixed(5)
+
+          const bpm = wrap(offset, rotation)
+          const v = bpm / 200
+          let fill = '#444444'
+
+          if (bpm > 200) {
+            fill = 'none'
+          } else if (bpm < tempo && BPM < bpm) {
+            fill = '#f00000'
+          } else if (bpm > tempo && BPM > bpm) {
+            fill = '#f00000'
+          } else if (bpm <= BPM) {
+            fill = '#4eccff'
+          }
+
+          const height = HEIGHT.MIN + v * (HEIGHT.MAX - HEIGHT.MIN)
+          const h = -height.toFixed(3)
+
+          bar.setAttribute('d', `M-2,1.25 a4,4,0,0,1,3,0 l0,${h}  a4,4,0,0,1,-3,0 z`)
+          bar.setAttribute('transform', `translate(${dx},0) scale(${scale},1)`)
+          bar.setAttribute('fill', `${fill}`)
         }
       }
     }

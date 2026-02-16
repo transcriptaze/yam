@@ -1,4 +1,10 @@
-export function* UUIDv4(set) {
+const UUIDs = new Set()
+
+export function reserve(set) {
+  set.forEach((v) => UUIDs.add(v))
+}
+
+export function* UUIDv4() {
   const f = () => {
     if (self.crypto?.randomUUID) {
       return self.crypto.randomUUID()
@@ -13,10 +19,13 @@ export function* UUIDv4(set) {
     count++
     const uuid = f()
 
-    if (!set.has(uuid)) {
+    if (!UUIDs.has(uuid)) {
+      UUIDs.add(uuid)
       yield uuid
       return
     }
+
+    console.log(`>>> WARNING: duplicate UUID {uuid}`)
   }
 
   throw new Error('not enough UUIDs left in the universe')

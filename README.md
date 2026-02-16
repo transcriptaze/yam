@@ -2,15 +2,15 @@
 
 # Yet Another Metronome
 
-**-- IN DEVELOPMENT (PRE-ALPHA) --**
+Yet another _WebAudio_ metronome web app to add to the many, many other _yet-another-metronomes_ out there.
 
-Just one more _WebAudio_ metronome web app to add to the many, many other metronomes out there.
+YAM is built around a fairly specific use case: solo acoustic fingerstyle guitar practice sessions — i.e. tracks-in-progress
+organised into playlists — with support for features such as:
+- count-ins
+- pickup bars
+- tempo and time-signature changes
 
-YAM is pretty much designed exclusively for use by an _almost but not entirely ham-fisted_ acoustic fingerstyle
-guitarist without any appreciable musical ability who plays an old (but adored!) Taylor 310e and needs all the
-help they can get. If that description is not you (it probably isn't 😄) then YMMV!
-
-It's available online if you want to try it out:
+An online version is available:
 
 https://yam-alpha.pages.dev
 
@@ -19,8 +19,8 @@ https://yam-alpha.pages.dev
 
 ## Waivers and Demurrers
 
-This is very much a personal project and (currently at least) developed and tested almost exclusively with Google Chrome on a Pixel 5a.
-It will be a pleasant surprise and/or minor miracle if it works at all on anything else but you never know.
+This is very much a personal project and (currently at least) developed and tested almost exclusively with Google Chrome
+on a Pixel 5a. It will be a pleasant surprise and/or minor miracle if it works at all on anything else but you never know.
 
 It's also in _alpha_ i.e. expect the code, design, architecture, everything to change **often**.
 
@@ -58,6 +58,17 @@ It's also in _alpha_ i.e. expect the code, design, architecture, everything to c
 |             | Safari     |                |                  |                                            |
 |             | Opera      |                |                  |                                            |
 |             | Opera Mini |                | No               | _No WebAudio support_                      |
+
+
+## Release Notes
+
+### Current Release
+
+**[v0.1.0](https://github.com/transcriptaze/yam/releases/tag/v0.1.0) - 2026-02-16**
+1. Added Go executable with embedded HTML.
+2. Added support for _random_ tracks in playlist.
+3. Fixed landscape mode on mobile.
+4. Minor bug fixes.
 
 
 ## Installation

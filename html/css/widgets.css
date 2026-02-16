@@ -58,11 +58,10 @@
 }
 
 div.metronome {
-  height: 100%;
   padding-left: 32px;
   padding-right: 32px;
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: auto auto auto;
   grid-template-rows: auto;
   justify-items: center;
   align-items: center;
@@ -90,12 +89,11 @@ div.metronome #play {
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto;
-  height: 100%;
 }
 div.metronome #play img {
   grid-row: 1;
   grid-column: 1;
-  height: 100%;
+  width: 64px;
 }
 div.metronome #play img.hidden {
   visibility: hidden;
@@ -135,6 +133,17 @@ div.metronome.playing #play img.stop {
   transform: scale(1);
 }
 
+@media (max-width: 1024px) and (orientation: landscape) {
+  div.metronome {
+    column-gap: 12px;
+  }
+  div.metronome #back {
+    justify-self: end;
+  }
+  div.metronome #next {
+    justify-self: start;
+  }
+}
 :host(.component-mm) {
   box-sizing: border-box;
   display: inline-block;
@@ -791,29 +800,54 @@ div.beat.on div.shape {
   --text: #222222;
 }
 :host(.component-info) div.info {
+  box-sizing: border-box;
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr auto;
   grid-template-rows: auto auto;
+  column-gap: 0px;
 }
 :host(.component-info) div.info div.title {
-  height: 32px;
+  grid-column: 1;
+  grid-row: 1;
+}
+:host(.component-info) div.info div.detail {
+  grid-column: 1/3;
+  grid-row: 2;
+}
+:host(.component-info) div.info button {
+  grid-column: 2;
+  grid-row: 1;
+}
+:host(.component-info) div.info div.overlay {
+  grid-column: 1/3;
+  grid-row: 2;
+}
+:host(.component-info) div.info div.progress {
+  grid-column: 1/3;
+  grid-row: 2;
+}
+:host(.component-info) div.info div.title {
+  box-sizing: border-box;
+  height: fit-content;
   display: grid;
   grid-template-columns: 1fr auto;
   grid-template-rows: auto;
   align-items: center;
   column-gap: 8px;
   background: rgba(192, 192, 192, 0.2509803922);
-  padding-top: 4px;
-  padding-bottom: 4px;
-  padding-left: 8px;
-  padding-right: 8px;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  padding-left: 0px;
+  padding-right: 0px;
   border: none;
-  border-radius: 4px 4px 4px 4px;
+  border-radius: 4px 0px 0px 4px;
 }
 :host(.component-info) div.info div.title input {
+  box-sizing: border-box;
   background: none;
   border: none;
   border-radius: 4px;
+  margin-right: 0px;
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 12px;
@@ -828,21 +862,8 @@ div.beat.on div.shape {
 :host(.component-info) div.info div.title input:invalid {
   color: red;
 }
-:host(.component-info) div.info div.title button {
-  background: transparent;
-  margin: 0px;
-  padding: 0px;
-  line-height: 0;
-  border: none;
-  outline: none;
-}
-:host(.component-info) div.info div.title button img {
-  height: 28px;
-}
-:host(.component-info) div.info div.title button:disabled img {
-  filter: grayscale(100%) opacity(50%);
-}
 :host(.component-info) div.info div.detail {
+  box-sizing: border-box;
   visibility: hidden;
   display: grid;
   grid-template-columns: 1fr;
@@ -856,46 +877,6 @@ div.beat.on div.shape {
   overflow: hidden;
   padding-top: 0px;
   padding-bottom: 0px;
-}
-:host(.component-info) div.info div.detail div.overlay {
-  grid-column: 1;
-  grid-row: 1;
-  height: 100%;
-  background: var(--accent-color);
-  opacity: 60%;
-}
-:host(.component-info) div.info div.detail div.progress {
-  grid-column: 1;
-  grid-row: 1;
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-}
-:host(.component-info) div.info div.detail yam-progress {
-  box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  background: var(--accent-color);
-}
-:host(.component-info) div.info div.detail progress {
-  padding-top: 0px;
-  padding-bottom: 0px;
-  width: 100%;
-  height: 100%;
-  appearance: none;
-  -moz-appearance: none;
-  -webkit-appearance: none;
-}
-:host(.component-info) div.info div.detail progress::-webkit-progress-bar {
-  background: none;
-}
-:host(.component-info) div.info div.detail progress::-webkit-progress-value {
-  background: var(--accent-color);
-  opacity: 90%;
-}
-:host(.component-info) div.info div.detail progress::-moz-progress-bar {
-  background: var(--accent-color);
-  opacity: 90%;
 }
 :host(.component-info) div.info div.detail div.text {
   grid-column: 1;
@@ -923,18 +904,139 @@ div.beat.on div.shape {
   font-weight: bold;
   color: var(--text-color);
 }
+:host(.component-info) div.info button {
+  background: rgba(192, 192, 192, 0.2509803922);
+  margin: 0px;
+  padding-left: 6px;
+  padding-right: 6px;
+  line-height: 0;
+  border: none;
+  border-radius: 0px 4px 4px 0px;
+  outline: none;
+}
+:host(.component-info) div.info button img {
+  height: 28px;
+}
+:host(.component-info) div.info button:disabled img {
+  filter: grayscale(100%) opacity(50%);
+}
 :host(.component-info) div.info span.infinity {
   font-family: "YAM", "Lato", sans;
   font-size: 1.4em;
   vertical-align: -0.08em;
 }
+:host(.component-info) div.info div.overlay {
+  height: 100%;
+  background: var(--accent-color);
+  border-radius: 0px 0px 4px 4px;
+  opacity: 60%;
+  visibility: hidden;
+}
+:host(.component-info) div.info div.progress {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  border-radius: 0px 0px 4px 4px;
+  visibility: hidden;
+}
+:host(.component-info) div.info yam-progress {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background: var(--accent-color);
+}
+:host(.component-info) div.info progress {
+  padding-top: 0px;
+  padding-bottom: 0px;
+  width: 100%;
+  height: 100%;
+  appearance: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+}
+:host(.component-info) div.info progress::-webkit-progress-bar {
+  background: none;
+}
+:host(.component-info) div.info progress::-webkit-progress-value {
+  background: var(--accent-color);
+  opacity: 90%;
+}
+:host(.component-info) div.info progress::-moz-progress-bar {
+  background: var(--accent-color);
+  opacity: 90%;
+}
 :host(.component-info) div.info.details div.title {
-  border-radius: 4px 4px 0 0;
+  border-radius: 4px 0px 0px 0px;
 }
 :host(.component-info) div.info.details div.detail {
   visibility: visible;
 }
+:host(.component-info) div.info.details button {
+  border-radius: 0px 4px 0px 0px;
+}
+:host(.component-info) div.info.details div.overlay {
+  visibility: visible;
+}
+:host(.component-info) div.info.details div.progress {
+  visibility: visible;
+}
 
+@media (max-width: 1024px) and (orientation: landscape) {
+  :host(.component-info) div.info {
+    display: grid;
+    grid-template-columns: 50% 1fr auto;
+    grid-template-rows: auto 10px;
+    column-gap: 4px;
+    row-gap: 2px;
+  }
+  :host(.component-info) div.info div.title {
+    height: fit-content;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    border-radius: 4px 0px 0px 4px;
+  }
+  :host(.component-info) div.info div.title input {
+    font-size: 1.1em;
+  }
+  :host(.component-info) div.info div.detail {
+    grid-column: 2;
+    grid-row: 1;
+    height: 100%;
+    margin-top: 0px;
+    border-radius: 0px 0px 0px 0px;
+    visibility: visible;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+    row-gap: 1px;
+  }
+  :host(.component-info) div.info div.detail div.text {
+    grid-column: 1;
+    grid-row: 1;
+    visibility: hidden;
+    font-size: 0.95em;
+  }
+  :host(.component-info) div.info div.overlay {
+    grid-column: 1/4;
+    grid-row: 2;
+  }
+  :host(.component-info) div.info div.progress {
+    grid-column: 1/4;
+    grid-row: 2;
+  }
+  :host(.component-info) div.info.details div.detail div.text {
+    visibility: visible;
+  }
+  :host(.component-info) div.info button {
+    grid-column: 3;
+    grid-row: 1;
+  }
+  :host(.component-info) div.progress {
+    background: rgba(192, 192, 192, 0.2509803922);
+  }
+}
 :host(.component-loop) div.loop {
   box-sizing: border-box;
   height: 100%;
@@ -1033,6 +1135,12 @@ div.beat.on div.shape {
   display: none;
 }
 
+@media (orientation: landscape) {
+  :host(.component-ding[hidden]) {
+    display: revert;
+    visibility: hidden;
+  }
+}
 :host(.component-playlists) div.playlists {
   height: 100%;
   margin: 0;
@@ -1044,6 +1152,12 @@ div.beat.on div.shape {
 :host(.component-playlists) div.playlists div.list {
   grid-column: 1/3;
   grid-row: 1/3;
+}
+:host(.component-playlists) div.playlists #plus {
+  grid-column: 2;
+  grid-row: 2;
+}
+:host(.component-playlists) div.playlists div.list {
   margin-top: 4px;
   margin-bottom: 4px;
   margin-left: 0px;
@@ -1104,8 +1218,6 @@ div.beat.on div.shape {
   display: block;
 }
 :host(.component-playlists) div.playlists #plus {
-  grid-column: 2;
-  grid-row: 2;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -1125,7 +1237,7 @@ div.beat.on div.shape {
 :host(.component-playlists) div.playlists.unsortable div.grip {
   display: none;
 }
-:host(.component-playlists) yam-tracklist {
+:host(.component-playlists) yam-playlist-tracks {
   display: none;
 }
 :host(.component-playlists) yam-add-tracks {
@@ -1139,6 +1251,10 @@ div.beat.on div.shape {
 }
 @media (max-width: 1024px) and (orientation: landscape) {
   :host(.component-playlists) div.playlists div.grip {
+    width: 48px;
+    padding-left: 16px;
+  }
+  :host(.component-playlists) div.playlists.unsortable div.grip {
     width: 48px;
     padding-left: 16px;
   }
@@ -1174,9 +1290,9 @@ div.beat.on div.shape {
 :host(.component-playlist) div.playlist div.summary div.menu {
   grid-column: 3;
   grid-row: 1;
-  box-sizing: border-box;
 }
 :host(.component-playlist) div.playlist div.summary div.menu {
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto;
@@ -1255,6 +1371,8 @@ div.beat.on div.shape {
   box-sizing: border-box;
   padding-top: 4px;
   padding-bottom: 4px;
+  display: flex;
+  align-items: center;
 }
 :host(.component-playlist) div.playlist div.title input {
   box-sizing: border-box;
@@ -1281,11 +1399,6 @@ div.beat.on div.shape {
 :host(.component-playlist) div.playlist div.tracks div.list {
   grid-column: 1;
   grid-row: 1;
-}
-:host(.component-playlist) div.playlist div.tracks yam-tracklist {
-  grid-column: 1;
-  grid-row: 1;
-  display: none;
 }
 :host(.component-playlist) div.playlist div.tracks yam-add-tracks {
   grid-column: 1;
@@ -1343,21 +1456,6 @@ div.beat.on div.shape {
 :host(.component-playlist) div.playlist div.tracks.hidden {
   display: none;
 }
-:host(.component-playlist) div.playlist div.grip {
-  width: 28px;
-  height: 100%;
-  display: flex;
-  align-items: center;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  padding-left: 4px;
-  padding-right: 4px;
-  z-index: 2;
-  cursor: grab;
-}
-:host(.component-playlist) div.playlist div.grip img {
-  width: 16px;
-}
 :host(.component-playlist) div.playlist yam-playlist-item {
   margin-left: 32px;
   margin-top: 4px;
@@ -1385,15 +1483,6 @@ div.beat.on div.shape {
 }
 :host(.component-playlist) div.playlist.editing div.menu #save {
   display: block;
-}
-:host(.component-playlist) div.playlist.editing div.tracks div.list {
-  display: none;
-}
-:host(.component-playlist) div.playlist.editing div.tracks yam-tracklist {
-  display: block;
-}
-:host(.component-playlist) div.playlist.selected.editing div.summary {
-  grid-template-columns: 16px 1fr auto;
 }
 :host(.component-playlist) div.playlist.adding div.menu #menu {
   display: none;
@@ -1459,13 +1548,11 @@ div.beat.on div.shape {
 :host-context(.unsortable) div.playlist div.summary {
   grid-template-columns: 16px 1fr auto;
 }
-:host-context(.unsortable) div.playlist div.summary div.grip {
-  visibility: hidden;
-}
 :host-context(.unsortable) div.playlist.editing div.grip {
   display: none;
 }
-:host(.component-playlist[uuid="00000000-0000-0000-0000-000000000000"]) img#trash {
+
+:host(.component-playlist[uuid="00000000-0000-0000-0000-000000000000"]) div.playlist img#trash {
   display: none;
 }
 
@@ -1478,6 +1565,144 @@ div.beat.on div.shape {
 :host(.component-playlist.deleting) div.playlist img#trash {
   filter: invert(13%) sepia(88%) saturate(7445%) hue-rotate(0deg) brightness(103%) contrast(112%);
   transition: filter 0.5s ease;
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+  :host(.component-playlist) div.playlist div.summary {
+    grid-template-columns: 36px 1fr auto;
+  }
+  :host(.component-playlist) div.playlist div.tracks {
+    display: none;
+  }
+  :host-context(li:last-child) div.playlist div.summary {
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+  }
+}
+:host(.component-playlist-tracks) div.playlist-tracks {
+  box-sizing: border-box;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: 1fr auto;
+  row-gap: 2px;
+}
+:host(.component-playlist-tracks) div.playlist-tracks div.list {
+  grid-column: 1/3;
+  grid-row: 1/3;
+}
+:host(.component-playlist-tracks) div.playlist-tracks #plus {
+  grid-column: 2;
+  grid-row: 2;
+}
+:host(.component-playlist-tracks) div.playlist-tracks #save {
+  grid-column: 2;
+  grid-row: 2;
+}
+:host(.component-playlist-tracks) div.playlist-tracks yam-add-tracks {
+  grid-column: 1/3;
+  grid-row: 1/3;
+}
+:host(.component-playlist-tracks) div.playlist-tracks div.list {
+  margin-top: 4px;
+  margin-bottom: 4px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  justify-items: start;
+  background: rgba(254, 254, 254, 0.2509803922);
+  border-bottom-left-radius: 12px;
+  border-bottom-right-radius: 12px;
+}
+:host(.component-playlist-tracks) div.playlist-tracks div.list ul {
+  overflow: hidden;
+  overflow-y: auto;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  list-style: none;
+}
+:host(.component-playlist-tracks) div.playlist-tracks div.list ul li {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto;
+  column-gap: 0px;
+  align-items: center;
+}
+:host(.component-playlist-tracks) div.playlist-tracks div.list ul li div.grip {
+  grid-column: 1/3;
+  grid-row: 1;
+}
+:host(.component-playlist-tracks) div.playlist-tracks div.list ul li yam-playlist-item {
+  grid-column: 1/3;
+  grid-row: 1;
+  flex-grow: 1;
+}
+:host(.component-playlist-tracks) div.playlist-tracks yam-playlist-item {
+  margin-left: 32px;
+  margin-top: 4px;
+}
+:host(.component-playlist-tracks) div.playlist-tracks yam-add-tracks {
+  display: none;
+}
+:host(.component-playlist-tracks) div.playlist-tracks #plus {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1); /* semi-transparent */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(0.5px);
+  margin: 8px;
+  padding: 4px;
+  border: none;
+  border-radius: 50%;
+  z-index: 2;
+}
+:host(.component-playlist-tracks) div.playlist-tracks #plus img {
+  width: 40px;
+  filter: invert(24%) sepia(7%) saturate(6%) hue-rotate(314deg) brightness(97%) contrast(88%);
+}
+:host(.component-playlist-tracks) div.playlist-tracks #save {
+  display: none;
+  justify-content: center;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.1); /* semi-transparent */
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(0.5px);
+  margin: 8px;
+  padding: 4px;
+  border: none;
+  border-radius: 50%;
+  z-index: 2;
+}
+:host(.component-playlist-tracks) div.playlist-tracks #save img {
+  width: 40px;
+}
+:host(.component-playlist-tracks) div.playlist-tracks.adding div.list {
+  display: none;
+}
+:host(.component-playlist-tracks) div.playlist-tracks.adding yam-add-tracks {
+  display: block;
+}
+:host(.component-playlist-tracks) div.playlist-tracks.adding #plus {
+  display: none;
+}
+:host(.component-playlist-tracks) div.playlist-tracks.adding #save {
+  display: flex;
+}
+@media (max-width: 768px) and (orientation: portrait) {
+  :host(.component-playlist-tracks) div.playlist-tracks yam-playlist-item {
+    margin-left: 40px;
+  }
+}
+@media (max-width: 1024px) and (orientation: landscape) {
+  :host(.component-playlist-tracks) div.playlist-tracks yam-playlist-item {
+    margin-left: 36px;
+  }
 }
 
 div.playlist-track {
@@ -1580,7 +1805,12 @@ div.playlist-track [popover]:popover-open::backdrop {
   }
 }
 
+div.playlist-track.random div#title {
+  font-style: italic;
+}
+
 :host(.selected) div.playlist-track div#title {
+  font-style: normal;
   font-weight: bold;
 }
 
@@ -1605,63 +1835,13 @@ div.playlist-track [popover]:popover-open::backdrop {
   transition: filter 0.5s ease;
 }
 
-:host(.component-tracklist) div.tracklist ul {
-  list-style-type: none;
-  margin-left: 0px;
-  padding-left: 4px;
-  padding-right: 12px;
-}
-:host(.component-tracklist) div.tracklist ul li + li {
-  margin-top: 2px;
-}
-
-:host(.component-tracklist-item) div.tracklist-item {
-  display: grid;
-  grid-template-columns: auto auto 1fr;
-  grid-template-rows: auto;
-  column-gap: 0px;
-}
-:host(.component-tracklist-item) div.tracklist-item input[type=checkbox] {
-  opacity: 0;
-  width: 0;
-  height: 0;
-}
-:host(.component-tracklist-item) div.tracklist-item .checkbox {
-  width: 20px;
-  height: 20px;
-  background: url("/images/checkbox-unchecked.svg") no-repeat center/contain;
-  display: inline-block;
-  margin-right: 8px;
-}
-:host(.component-tracklist-item) div.tracklist-item label {
-  width: 100%;
-  display: grid;
-  grid-template-columns: auto 1fr;
-  grid-template-rows: auto;
-  color: #666666;
-  font-size: 0.9em;
-  font-style: normal;
-  overflow: hidden;
-  transition: all 0.25s ease;
-}
-:host(.component-tracklist-item) div.tracklist-item label #title {
-  width: 100%;
-  overflow: hidden;
-  text-wrap: nowrap;
-  text-overflow: ellipsis;
-}
-:host(.component-tracklist-item) div.tracklist-item input[type=checkbox]:checked ~ label {
-  color: #222222;
-  font-style: normal;
-  font-weight: 500;
-}
-:host(.component-tracklist-item) div.tracklist-item input[type=checkbox]:checked ~ label .checkbox {
-  background: url("/images/checkbox-checked.svg") no-repeat center/contain;
-}
-
 :host(.component-add-tracks) div.tracklist {
   box-sizing: border-box;
   padding-bottom: 24px;
+  height: 100%;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
 }
 :host(.component-add-tracks) div.tracklist ul {
   list-style-type: none;
@@ -1676,6 +1856,7 @@ div.playlist-track [popover]:popover-open::backdrop {
   display: none;
 }
 :host(.component-add-tracks) div.tracklist hr {
+  flex-shrink: 0;
   margin-left: 32px;
   margin-right: 24px;
 }
@@ -1683,6 +1864,8 @@ div.playlist-track [popover]:popover-open::backdrop {
   display: none;
 }
 :host(.component-add-tracks) div.tracklist button {
+  align-self: start;
+  flex-shrink: 0;
   background: none;
   border: none;
   outline: none;
@@ -1694,13 +1877,61 @@ div.playlist-track [popover]:popover-open::backdrop {
   margin-right: 24px;
 }
 
+:host(.all-tracks) #random-track {
+  display: none;
+}
+
+:host(.component-add-tracks-item) div.tracklist-item {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  grid-template-rows: auto;
+  column-gap: 0px;
+}
+:host(.component-add-tracks-item) div.tracklist-item input[type=checkbox] {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+:host(.component-add-tracks-item) div.tracklist-item .checkbox {
+  width: 20px;
+  height: 20px;
+  background: url("/images/checkbox-unchecked.svg") no-repeat center/contain;
+  display: inline-block;
+  margin-right: 8px;
+}
+:host(.component-add-tracks-item) div.tracklist-item label {
+  width: 100%;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto;
+  color: #666666;
+  font-size: 0.9em;
+  font-style: normal;
+  overflow: hidden;
+  transition: all 0.25s ease;
+}
+:host(.component-add-tracks-item) div.tracklist-item label #title {
+  width: 100%;
+  overflow: hidden;
+  text-wrap: nowrap;
+  text-overflow: ellipsis;
+}
+:host(.component-add-tracks-item) div.tracklist-item input[type=checkbox]:checked ~ label {
+  color: #222222;
+  font-style: normal;
+  font-weight: 500;
+}
+:host(.component-add-tracks-item) div.tracklist-item input[type=checkbox]:checked ~ label .checkbox {
+  background: url("/images/checkbox-checked.svg") no-repeat center/contain;
+}
+
 :host(.component-editor) div.track-editor {
   box-sizing: border-box;
   height: 100%;
   padding: 4px;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto auto auto 1fr;
   row-gap: 4px;
   align-items: start;
 }
@@ -1708,13 +1939,17 @@ div.playlist-track [popover]:popover-open::backdrop {
   grid-column: 1;
   grid-row: 1;
 }
-:host(.component-editor) div.track-editor div.metronome {
+:host(.component-editor) div.track-editor div.metrics {
   grid-column: 1;
   grid-row: 2;
 }
-:host(.component-editor) div.track-editor div.sections {
+:host(.component-editor) div.track-editor div.metronome {
   grid-column: 1;
   grid-row: 3;
+}
+:host(.component-editor) div.track-editor div.sections {
+  grid-column: 1;
+  grid-row: 4;
 }
 :host(.component-editor) div.track-editor div.track {
   box-sizing: border-box;
@@ -1731,7 +1966,6 @@ div.playlist-track [popover]:popover-open::backdrop {
   grid-template-columns: auto auto 1fr auto;
   grid-template-rows: auto auto;
   column-gap: 4px;
-  row-gap: 12px;
 }
 :host(.component-editor) div.track-editor div.track #title {
   grid-column: 1/4;
@@ -1741,20 +1975,34 @@ div.playlist-track [popover]:popover-open::backdrop {
   grid-column: 4;
   grid-row: 1;
 }
-:host(.component-editor) div.track-editor div.track yam-time-signature {
-  grid-column: 1;
-  grid-row: 2;
+:host(.component-editor) div.track-editor div.metrics {
+  box-sizing: border-box;
+  background: rgba(192, 192, 192, 0.2509803922);
+  width: 100%;
+  height: fit-content;
+  padding-top: 8px;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-bottom: 8px;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto;
+  column-gap: 4px;
 }
-:host(.component-editor) div.track-editor div.track yam-mm {
+:host(.component-editor) div.track-editor div.metrics yam-time-signature {
+  grid-column: 1;
+  grid-row: 1;
+}
+:host(.component-editor) div.track-editor div.metrics yam-mm {
   grid-column: 2;
-  grid-row: 2;
+  grid-row: 1;
 }
 :host(.component-editor) div.track-editor div.metronome {
   box-sizing: border-box;
   background: rgba(192, 192, 192, 0.2509803922);
   width: 100%;
   height: fit-content;
-  padding-top: 12px;
+  padding-top: 8px;
   padding-left: 8px;
   padding-right: 8px;
   padding-bottom: 8px;
@@ -1958,13 +2206,37 @@ div.playlist-track [popover]:popover-open::backdrop {
   margin-left: -8px;
   margin-right: -8px;
 }
+@media (max-width: 1024px) and (orientation: landscape) {
+  :host(.component-editor) div.track-editor {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    column-gap: 2px;
+  }
+  :host(.component-editor) div.track-editor div.track {
+    grid-column: 1/3;
+    grid-row: 1;
+  }
+  :host(.component-editor) div.track-editor div.metrics {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  :host(.component-editor) div.track-editor div.metronome {
+    grid-column: 2;
+    grid-row: 2;
+  }
+  :host(.component-editor) div.track-editor div.sections {
+    grid-column: 1/3;
+    grid-row: 3;
+  }
+}
+
 :host(.component-section) div.section {
   width: 100%;
   height: fit-content;
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto;
-  row-gap: 1px;
 }
 :host(.component-section) div.section div.summary {
   background: #ffffff;
@@ -2045,6 +2317,7 @@ div.playlist-track [popover]:popover-open::backdrop {
 :host(.component-section) div.section #measures {
   width: 3em;
   font-family: "YAM", "Lato", sans;
+  visibility: hidden;
 }
 :host(.component-section) div.section.collapsed {
   row-gap: 0px;
@@ -2055,7 +2328,18 @@ div.playlist-track [popover]:popover-open::backdrop {
 :host(.component-section) div.section.collapsed #arrow {
   transform: rotate(0deg);
 }
+:host(.component-section) div.section.collapsed #measures {
+  visibility: visible;
+}
 
+@media (max-width: 1024px) and (orientation: landscape) {
+  :host(.component-section) div.section {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-rows: auto;
+    column-gap: 1px;
+  }
+}
 :host(.component-subsection) div.subsection {
   background: #fcfcfc;
   width: 100%;

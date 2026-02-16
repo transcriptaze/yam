@@ -11,6 +11,8 @@ export class Info extends HTMLElement {
   #cache = {
     section: -1,
     bar: -1,
+    playing: null,
+    stopped: null,
   }
 
   #handlers = {
@@ -124,8 +126,10 @@ export class Info extends HTMLElement {
   }
 
   #redraw(bar, playing, stopped, section) {
-    if (section?.ID !== this.#cache.section) {
+    if (section?.ID !== this.#cache.section || playing !== this.#cache.playing || stopped !== this.#cache.stopped) {
       this.#cache.section = section?.ID
+      this.#cache.playing = playing
+      this.#cache.stopped = stopped
 
       const name = section?.name ?? ''
       const colour = section?.colour ?? '#00000000'
@@ -148,6 +152,7 @@ export class Info extends HTMLElement {
 
     if (!playing && stopped) {
       this.#cache.bar = null
+      this.#cache.section = null
 
       this.#bars = {
         playing: playing,

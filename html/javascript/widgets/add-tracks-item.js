@@ -1,4 +1,4 @@
-export class TrackListItem extends HTMLElement {
+export class AddTracksItem extends HTMLElement {
   static get observedAttributes() {
     return ['uuid', 'title', 'selected']
   }
@@ -8,7 +8,7 @@ export class TrackListItem extends HTMLElement {
   constructor() {
     super()
 
-    const template = document.getElementById('template-tracklist-item')
+    const template = document.getElementById('template-add-tracks-item')
     const stylesheet = document.createElement('link')
     const content = template.content
     const shadow = this.attachShadow({ mode: 'open' })
@@ -22,7 +22,7 @@ export class TrackListItem extends HTMLElement {
   }
 
   connectedCallback() {
-    this.classList.add('component-tracklist-item')
+    this.classList.add('component-add-tracks-item')
   }
 
   disconnectedCallback() {}
@@ -77,4 +77,4 @@ export class TrackListItem extends HTMLElement {
   }
 }
 
-customElements.define('yam-tracklist-item', TrackListItem)
+customElements.define('yam-add-tracks-item', AddTracksItem)

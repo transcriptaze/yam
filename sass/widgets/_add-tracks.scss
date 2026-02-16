@@ -3,6 +3,12 @@
     box-sizing: border-box;
     padding-bottom: 24px;
 
+    height: 100%;
+    overflow-y: auto;
+
+    display: flex;
+    flex-direction: column;
+
     ul {
       list-style-type: none;
       margin-left: 0px;
@@ -19,6 +25,8 @@
     }
 
     hr {
+      flex-shrink: 0;
+
       margin-left: 32px;    
       margin-right: 24px;    
     }
@@ -28,6 +36,9 @@
     }
 
     button {
+      align-self: start;
+      flex-shrink: 0;
+
       background: none;
       border: none;
       outline: none;
@@ -40,5 +51,11 @@
       margin-left: 32px;
       margin-right: 24px;    
     }
+  }
+}
+
+:host(.all-tracks) {
+  #random-track {
+    display: none;
   }
 }

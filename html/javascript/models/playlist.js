@@ -1,5 +1,8 @@
 import * as DB from '../db/db.js'
+import { UUIDv4, reserve } from '../uuid.js'
 import { infof } from '../log.js'
+import { EVENTS, RANDOM } from '../constants.js'
+import * as models from './models.js'
 
 const LOGTAG = 'playlist'
 const VERSION = 0
@@ -12,14 +15,17 @@ export class Playlist extends EventTarget {
 
   #title = ''
   #tracks = []
+  #random = []
   #muted = new Set()
   #selected = null
+  #track = null
 
   static clone(playlist) {
     return new Playlist({
       UUID: playlist.UUID,
       title: playlist.title,
       tracks: [...playlist.tracks],
+      random: [...playlist.random],
     })
   }
 
@@ -33,20 +39,34 @@ export class Playlist extends EventTarget {
 
     this.#title = object.title == null ? '' : `${object.title}`.trim()
     this.#tracks = object.tracks == null ? [] : object.tracks
+    this.#random = object.random == null ? [] : object.random
     this.#muted = object.muted == null ? new Set() : new Set([...object.muted])
+
+    reserve(this.#random.map((v) => v.UUID))
   }
 
   get object() {
-    return {
+    const random = this.#random.map((v) => {
+      return {
+        UUID: v.UUID,
+        title: v.title,
+      }
+    })
+
+    // NTS: clone arrays to prevent external mutation of private fields
+    const object = {
       UUID: this.UUID,
       version: this.#version,
       index: this.#index,
       deleted: this.#deleted,
 
       title: this.title,
-      tracks: [...this.tracks],
+      tracks: [...this.#tracks],
+      random: random,
       muted: [...this.#muted],
     }
+
+    return object
   }
 
   get index() {
@@ -67,7 +87,7 @@ export class Playlist extends EventTarget {
     if (title != this.title) {
       this.#title = title
 
-      this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: this.UUID } }))
+      this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_CHANGED, { detail: { playlist: this.UUID } }))
     }
   }
 
@@ -78,7 +98,46 @@ export class Playlist extends EventTarget {
   set tracks(v) {
     this.#tracks = v ?? []
 
-    this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: this.UUID } }))
+    this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_CHANGED, { detail: { playlist: this.UUID } }))
+  }
+
+  add(...tracks) {
+    for (const track of tracks) {
+      switch (true) {
+        // ... random track ?
+        case track.UUID === RANDOM.UUID:
+          {
+            const _track = {
+              UUID: UUIDv4().next().value,
+              title: '<< random >>',
+            }
+
+            this.#random.push(_track)
+            this.#tracks.push(_track.UUID)
+          }
+          break
+
+        // ... new track?
+        case track.UUID != null && track.UUID !== '' && !models.tracks.has(track.UUID):
+          {
+            const _track = models.tracks.create({
+              UUID: track.UUID,
+            })
+
+            this.#tracks.push(_track.UUID)
+          }
+          break
+
+        // ... normal track
+        case track.UUID != null && track.UUID !== '' && !this.tracks.includes(track.UUID):
+          this.#tracks.push(track.UUID)
+          break
+      }
+    }
+
+    this.save()
+
+    this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_CHANGED, { detail: { playlist: this.UUID } }))
   }
 
   update(title, tracks) {
@@ -93,7 +152,7 @@ export class Playlist extends EventTarget {
       this.#muted = new Set([...muted])
     }
 
-    this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: this.UUID } }))
+    this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_CHANGED, { detail: { playlist: this.UUID } }))
   }
 
   get selected() {
@@ -126,30 +185,9 @@ export class Playlist extends EventTarget {
     return this.#tracks.some((v) => v === track)
   }
 
-  select(track) {
-    this.#selected = track
-
-    this.dispatchEvent(new CustomEvent('selected', { detail: { playlist: this.UUID, track: track } }))
-  }
-
-  add(track) {
-    if (track.UUID != null && track.UUID !== '' && !this.tracks.includes(track.UUID)) {
-      this.tracks.push(track.UUID)
-      this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: this.UUID } }))
-    }
-  }
-
-  remove(track) {
-    const ix = this.#tracks.findIndex((e) => `${e}` === `${track}`)
-    if (ix !== -1) {
-      this.#tracks.splice(ix, 1)
-
-      if (this.#selected === track) {
-        this.#selected = null
-      }
-
-      this.dispatchEvent(new CustomEvent('changed', { detail: { playlist: this.UUID } }))
-    }
+  // NTS: returns true if the uuid matches an internal 'random' track
+  internal(uuid) {
+    return this.#random.some((v) => v.UUID === uuid)
   }
 
   shuffled(tracks) {
@@ -161,7 +199,12 @@ export class Playlist extends EventTarget {
     // ... tracks
     let pruned = false
     {
-      const invalid = this.#tracks.filter((v) => !tracks.includes(v))
+      const invalid = this.#tracks.filter((v) => {
+        const ix = tracks.findIndex((t) => t === v)
+        const jx = this.#random.findIndex((t) => t.UUID === v)
+
+        return ix === -1 && jx === -1
+      })
 
       for (const track of invalid) {
         const ix = this.#tracks.findIndex((e) => `${e}` === `${track}`)
@@ -172,9 +215,31 @@ export class Playlist extends EventTarget {
       }
     }
 
+    // ... random
+    {
+      const invalid = [...this.#random].filter((v) => {
+        const ix = this.#tracks.findIndex((t) => t === v.UUID)
+
+        return ix === -1
+      })
+
+      for (const track of invalid) {
+        const ix = this.#random.findIndex((e) => `${e.UUID}` === `${track.UUID}`)
+        if (ix !== -1) {
+          this.#random.splice(ix, 1)
+          pruned = true
+        }
+      }
+    }
+
     // ... muted
     {
-      const invalid = [...this.#muted].filter((v) => !tracks.includes(v))
+      const invalid = [...this.#muted].filter((v) => {
+        const ix = tracks.findIndex((t) => t === v)
+        const jx = this.#random.findIndex((t) => t.UUID === v)
+
+        return ix === -1 && jx === -1
+      })
 
       for (const track of invalid) {
         if (this.#muted.delete(`${track}`)) {
@@ -187,6 +252,47 @@ export class Playlist extends EventTarget {
       this.save()
       infof(LOGTAG, `pruned playlist '${this.title}'`)
     }
+  }
+
+  select(item) {
+    let ok = true
+
+    const f = () => {
+      // ... random track ?
+      const random = this.#random.find((t) => t.UUID === item)
+
+      // ... already assigned ?
+      if (random != null && random.track != null) {
+        return random.track
+      }
+
+      // ... pick unused track
+      if (random != null) {
+        const tracks = new Set(models.tracks.tracks.map((v) => v.UUID))
+        const used = new Set(this.#random.filter((v) => v.track != null).map((v) => v.track))
+        const playlist = new Set([...this.#tracks, ...used])
+
+        const difference = Array.from(tracks.difference(playlist))
+        const N = difference.length
+        const ix = Math.floor(N * Math.random())
+        const track = N > 0 ? difference[ix] : this.#track
+
+        random.track = N > 0 ? track : null
+        ok = N > 0
+
+        return track
+      }
+
+      return item
+    }
+
+    // ... normal
+    this.#selected = item
+    this.#track = f()
+
+    this.dispatchEvent(new CustomEvent('selected', { detail: { playlist: this.UUID, item: item, track: this.#track } }))
+
+    return ok
   }
 
   back() {
@@ -209,12 +315,18 @@ export class Playlist extends EventTarget {
     const g = () => {
       let { value, done } = ix.next()
 
-      while (!done && muted.has(value)) {
-        ;({ value, done } = ix.next())
-      }
+      while (!done) {
+        while (!done && muted.has(value)) {
+          ;({ value, done } = ix.next())
+        }
 
-      if (!done) {
-        this.select(value)
+        if (!done) {
+          if (this.select(value)) {
+            return
+          } else {
+            ;({ value, done } = ix.next())
+          }
+        }
       }
     }
 
@@ -230,16 +342,55 @@ export class Playlist extends EventTarget {
   mute(track) {
     if (track != null && this.#tracks.includes(track)) {
       this.#muted.add(track)
-
-      this.dispatchEvent(new CustomEvent('muted', { detail: { playlist: this.UUID, track: track } }))
+      this.save()
+      this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_TRACK_MUTED, { detail: { playlist: this.UUID, track: track } }))
     }
   }
 
   unmute(track) {
     if (track != null && this.#tracks.includes(track)) {
       this.#muted.delete(track)
+      this.save()
+      this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_TRACK_UNMUTED, { detail: { playlist: this.UUID, track: track } }))
+    }
+  }
 
-      this.dispatchEvent(new CustomEvent('unmuted', { detail: { playlist: this.UUID, track: track } }))
+  get BOF() {
+    let UUID = this.selected ?? ''
+
+    if (UUID === '') {
+      return true
+    } else {
+      const index = this.#tracks.findIndex((v) => v === UUID)
+
+      return index !== -1 ? index === 0 : null
+    }
+  }
+
+  get EOF() {
+    let UUID = this.selected ?? ''
+
+    if (UUID === '') {
+      return this.#tracks.length == 0
+    } else {
+      const index = this.#tracks.findIndex((v) => v === UUID)
+
+      return index !== -1 ? index + 1 === this.#tracks.length : null
+    }
+  }
+
+  remove(track) {
+    const ix = this.#tracks.findIndex((e) => `${e}` === `${track}`)
+    if (ix !== -1) {
+      this.#tracks.splice(ix, 1)
+
+      if (this.#selected === track) {
+        this.#selected = null
+        this.#track = null
+      }
+
+      this.save()
+      this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_TRACK_DELETED, { detail: { playlist: this.UUID, track: track } }))
     }
   }
 
@@ -251,24 +402,5 @@ export class Playlist extends EventTarget {
 
   save() {
     DB.putPlaylist(this.object)
-  }
-
-  BOF(track) {
-    const UUID = track?.UUID ?? ''
-    const index = this.#tracks.findIndex((v) => v === UUID)
-
-    return index !== -1 ? index === 0 : null
-  }
-
-  EOF(track) {
-    const UUID = track?.UUID ?? ''
-
-    if (UUID === '') {
-      return this.#tracks.length == 0
-    } else {
-      const index = this.#tracks.findIndex((v) => v === UUID)
-
-      return index !== -1 ? index + 1 === this.#tracks.length : null
-    }
   }
 }

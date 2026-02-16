@@ -1,5 +1,6 @@
 BUILD := $(shell git rev-parse --short HEAD)
 UNAME := $(shell uname)
+VERSION ?= v0.1.0
 
 ifeq ($(UNAME),Darwin)
    SED := sed -i ''
@@ -64,7 +65,14 @@ package: build-all
 	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/yam/html/about.html
 
 release: package
-	cd dist/yam/html && zip --recurse-paths ../yam.zip .
+	cd dist/yam/html && zip --recurse-paths ../../yam-$(VERSION).zip .
+	tar --directory=dist/yam/linux        --exclude=".DS_Store" -cvzf dist/yam-$(VERSION)-linux-x64.tar.gz    .
+	tar --directory=dist/yam/arm          --exclude=".DS_Store" -cvzf dist/yam-$(VERSION)-arm-x64.tar.gz      .
+	tar --directory=dist/yam/arm7         --exclude=".DS_Store" -cvzf dist/yam-$(VERSION)-arm7.tar.gz         .
+	tar --directory=dist/yam/arm6         --exclude=".DS_Store" -cvzf dist/yam-$(VERSION)-arm6.tar.gz         .
+	tar --directory=dist/yam/darwin-x64   --exclude=".DS_Store" -cvzf dist/yam-$(VERSION)-darwin-x64.tar.gz   .
+	tar --directory=dist/yam/darwin-arm64 --exclude=".DS_Store" -cvzf dist/yam-$(VERSION)-darwin-arm64.tar.gz .
+	cd dist/yam/windows && zip --recurse-paths ../../yam-$(VERSION)-windows-x64.zip . -x ".DS_Store"
 
 cloudflare: build
 	rm -rf dist/cloudflare

@@ -2,18 +2,6 @@
 
 ## In Progress
 
-- [x] standalone Go executable (cf. https://github.com/transcriptaze/yam/issues/39)
-- [x] random track (cf. https://github.com/transcriptaze/yam/issues/32)
-- [x] No random option for _all tracks_
-- [x] new playlist has visible playlist grab handle
-- [x] changing pulse in track editor doesn't update pads
-- [x] Don't reset track loop count on stop/start (cf. https://github.com/transcriptaze/yam/issues/44)
-- [x] Import error
-- [x] Fix pickup at e.g. 4.5 for 4:4 time (cf. https://github.com/transcriptaze/yam/issues/45)
-- [x] Full screen goes black
-- [x] ~~Random tracks are not imported~~
-- [x] Fix mobile + landscape layout (cf. https://github.com/transcriptaze/yam/issues/25)
-
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [x] Rework clock as generator
     - [ ] unit test: BPM change

@@ -80,6 +80,18 @@ release: package
 # 	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/cloudflare/about.html
 
 cloudflare:  build
+	rm -rf dist/cloudflare
+	mkdir -p dist/cloudflare
+
+	cp -r html/*       dist/cloudflare/
+	cp -r cloudflare/* dist/cloudflare/
+	rm -f dist/cloudflare/.gitignore
+	rm -f dist/cloudflare/LICENSE
+	rm -f dist/cloudflare/package.json
+	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/cloudflare/about.html
+	find dist/cloudflare -name ".DS_Store" -delete
+
+cloudflare-dev:  build
 	rm -rf dist/cloudflare.zip
 	rm -rf dist/cloudflare
 	mkdir -p dist/cloudflare

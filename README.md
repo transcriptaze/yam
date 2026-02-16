@@ -60,6 +60,17 @@ It's also in _alpha_ i.e. expect the code, design, architecture, everything to c
 |             | Opera Mini |                | No               | _No WebAudio support_                      |
 
 
+## Release Notes
+
+### Current Release
+
+**[v0.1.0](https://github.com/transcriptaze/yam/releases/tag/v0.1.0) - 2026-02-16**
+1. Added Go executable with embedded HTML.
+2. Added support for _random_ tracks in playlist.
+3. Fixed landscape mode on mobile.
+4. Minor bug fixes.
+
+
 ## Installation
 
 The web app is packaged as a zip file that includes the HTML, images, audio and rollup'd Javascript that can be served by almost any basic

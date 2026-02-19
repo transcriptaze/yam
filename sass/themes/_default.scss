@@ -8,6 +8,9 @@ $grey: colours.$grey;
 :root {
   --background: #{$white} url("../images/textures/ricepaper_v3.png");
 
+  --metronome-button-disabled: #ffffff76;
+  --metronome-button-enabled: #222222;
+
   --track-colour-muted: #{$grey};
   --track-colour-deleting: #{$grey};
   --playlist-colour-deleting: #{$grey};

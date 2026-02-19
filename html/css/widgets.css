@@ -38,13 +38,8 @@
 }
 :root {
   --background: #ffffff url("../images/textures/ricepaper_v3.png");
-  --track-colour-muted: #a0a0a0;
-  --track-colour-deleting: #a0a0a0;
-  --playlist-colour-deleting: #a0a0a0;
-}
-
-[data-theme=light] {
-  --background: #ffffff url("../images/textures/ricepaper_v3.png");
+  --metronome-button-disabled: #ffffff76;
+  --metronome-button-enabled: #222222;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
@@ -52,6 +47,8 @@
 
 [data-theme=dark] {
   --background: #222222;
+  --metronome-button-disabled: #ffffff76;
+  --metronome-button-enabled: #4eccff;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
@@ -73,15 +70,28 @@ div.metronome {
 div.metronome button {
   box-sizing: border-box;
   background: none;
+  height: 90px;
   border: none;
   outline: none;
 }
 div.metronome button img {
-  filter: invert(69%) sepia(59%) saturate(1%) hue-rotate(21deg) brightness(100%) contrast(91%);
+  filter: var(--metronome-button-disabled);
   transition: opacity 0.125s ease-in-out, transform 0.2s ease-in-out;
 }
 div.metronome button:enabled img {
-  filter: none;
+  filter: var(--metronome-button-disabled);
+}
+div.metronome button.icon {
+  display: inline-block;
+  background-color: var(--metronome-button-disabled);
+  aspect-ratio: 1;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+}
+div.metronome button.icon:enabled {
+  background-color: var(--metronome-button-enabled);
 }
 div.metronome #play {
   grid-column: 2;
@@ -110,17 +120,13 @@ div.metronome #back {
   grid-column: 1;
   grid-row: 1;
   justify-self: start;
-}
-div.metronome #back img {
-  width: 48px;
+  mask-image: url("/images/controls/skip-backwards.svg");
 }
 div.metronome #next {
   grid-column: 3;
   grid-row: 1;
   justify-self: end;
-}
-div.metronome #next img {
-  width: 48px;
+  mask-image: url("/images/controls/skip-forwards.svg");
 }
 
 div.metronome.playing #play img.play {

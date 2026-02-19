@@ -5,6 +5,21 @@
     <link rel="icon"       href="/favicon.png" type="image/png" />
     <link rel="stylesheet" href="./css/YAM.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <script>
+      (function() {
+        try {
+           const json = localStorage.getItem('YAM')
+           const object = JSON.parse(json)
+           const theme = object?.settings.theme ?? 'default'
+
+           console.log({theme})
+
+           document.documentElement.setAttribute('data-theme', theme);
+        } catch (err) {
+           console.log(err)
+        }
+       })()
+    </script>    
   </head>
 
   <body>

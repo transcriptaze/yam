@@ -47,8 +47,8 @@
 
 [data-theme=dark] {
   --background: #222222;
-  --metronome-button-disabled: #ffffff76;
-  --metronome-button-enabled: #4eccff;
+  --metronome-button-disabled: #50638F;
+  --metronome-button-enabled: #0099FF;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;

@@ -4,10 +4,10 @@
 
 - [ ] dark mode (cf. https://github.com/transcriptaze/yam/issues/48)
     - [x] background
-    - [ ] play
-    - [ ] stop
-    - [ ] back
-    - [ ] forward
+    - [x] play
+    - [x] stop
+    - [x] back
+    - [x] next
     - [ ] toolbar icons
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)

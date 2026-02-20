@@ -47,14 +47,14 @@
 
 [data-theme=dark] {
   --background: #222222;
-  --metronome-button-disabled: #ffffff76;
-  --metronome-button-enabled: #4eccff;
+  --metronome-button-disabled: #50638F;
+  --metronome-button-enabled: #0099FF;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
 }
 
-div.metronome {
+:host(.component-metronome) div.metronome {
   padding-left: 32px;
   padding-right: 32px;
   display: grid;
@@ -67,89 +67,71 @@ div.metronome {
   border: none;
   outline: none;
 }
-div.metronome button {
+:host(.component-metronome) div.metronome button {
   box-sizing: border-box;
-  background: none;
+  display: inline-block;
+  background-color: var(--metronome-button-disabled);
   height: 90px;
   border: none;
   outline: none;
-}
-div.metronome button img {
-  filter: var(--metronome-button-disabled);
-  transition: opacity 0.125s ease-in-out, transform 0.2s ease-in-out;
-}
-div.metronome button:enabled img {
-  filter: var(--metronome-button-disabled);
-}
-div.metronome button.icon {
-  display: inline-block;
-  background-color: var(--metronome-button-disabled);
   aspect-ratio: 1;
   mask-repeat: no-repeat;
   mask-position: center;
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-size: contain;
+  transition: opacity 0.125s ease-in-out, transform 0.2s ease-in-out;
 }
-div.metronome button.icon:enabled {
+:host(.component-metronome) div.metronome button:enabled {
   background-color: var(--metronome-button-enabled);
 }
-div.metronome #play {
-  grid-column: 2;
-  grid-row: 1;
-  display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: auto;
-}
-div.metronome #play img {
-  grid-row: 1;
-  grid-column: 1;
-  width: 64px;
-}
-div.metronome #play img.hidden {
-  visibility: hidden;
-}
-div.metronome #play img.play {
-  opacity: 1;
-  transform: scale(1.25);
-}
-div.metronome #play img.stop {
-  opacity: 0;
-  transform: scale(0.75);
-}
-div.metronome #back {
+:host(.component-metronome) div.metronome #back {
   grid-column: 1;
   grid-row: 1;
   justify-self: start;
   mask-image: url("/images/controls/skip-backwards.svg");
 }
-div.metronome #next {
+:host(.component-metronome) div.metronome #next {
   grid-column: 3;
   grid-row: 1;
   justify-self: end;
   mask-image: url("/images/controls/skip-forwards.svg");
 }
-
-div.metronome.playing #play img.play {
+:host(.component-metronome) div.metronome #play {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  mask-image: url("/images/controls/play.svg");
+  opacity: 1;
+  transform: scale(1.25);
+}
+:host(.component-metronome) div.metronome #stop {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  mask-image: url("/images/controls/stop.svg");
   opacity: 0;
   transform: scale(0.75);
 }
-div.metronome.playing #play img.stop {
-  visibility: visible;
+:host(.component-metronome) div.metronome.playing #play {
+  opacity: 0;
+  transform: scale(0.75);
+}
+:host(.component-metronome) div.metronome.playing #stop {
   opacity: 1;
   transform: scale(1);
 }
-
 @media (max-width: 1024px) and (orientation: landscape) {
-  div.metronome {
+  :host(.component-metronome) div.metronome {
     column-gap: 12px;
   }
-  div.metronome #back {
+  :host(.component-metronome) div.metronome #back {
     justify-self: end;
   }
-  div.metronome #next {
+  :host(.component-metronome) div.metronome #next {
     justify-self: start;
   }
 }
+
 :host(.component-mm) {
   box-sizing: border-box;
   display: inline-block;

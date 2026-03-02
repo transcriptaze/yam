@@ -38,13 +38,8 @@
 }
 :root {
   --background: #ffffff url("../images/textures/ricepaper_v3.png");
-  --track-colour-muted: #a0a0a0;
-  --track-colour-deleting: #a0a0a0;
-  --playlist-colour-deleting: #a0a0a0;
-}
-
-[data-theme=light] {
-  --background: #ffffff url("../images/textures/ricepaper_v3.png");
+  --metronome-button-disabled: #ffffff76;
+  --metronome-button-enabled: #222222;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
@@ -52,6 +47,8 @@
 
 [data-theme=dark] {
   --background: #222222;
+  --metronome-button-disabled: #50638F;
+  --metronome-button-enabled: #0099FF;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;

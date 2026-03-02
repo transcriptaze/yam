@@ -6,10 +6,10 @@ class FSM {
   #dispatch = () => {}
 
   constructor(dispatch) {
-    this.#dispatch = dispatch
+    this.#dispatch = dispatch ?? (() => {})
   }
 
-  click() {
+  toggle() {
     if (!this.#playing && this.#stopped) {
       this.#dispatch(EVENTS.PLAY)
     }
@@ -40,7 +40,13 @@ export class Metronome extends HTMLElement {
   #handlers = {
     play: {
       click: (_) => {
-        this.#FSM.click()
+        this.#FSM.toggle()
+      },
+    },
+
+    stop: {
+      click: (_) => {
+        this.#FSM.toggle()
       },
     },
 
@@ -78,13 +84,15 @@ export class Metronome extends HTMLElement {
   }
 
   connectedCallback() {
-    const shadow = this.shadowRoot
-    const div = shadow.querySelector('div.metronome')
-    const play = div.querySelector('#play')
-    const back = div.querySelector('#back')
-    const next = div.querySelector('#next')
+    this.classList.add('component-metronome')
+
+    const play = this.shadowRoot.querySelector('div.metronome #play')
+    const stop = this.shadowRoot.querySelector('div.metronome #stop')
+    const back = this.shadowRoot.querySelector('div.metronome #back')
+    const next = this.shadowRoot.querySelector('div.metronome #next')
 
     play.addEventListener('click', this.#handlers.play.click)
+    stop.addEventListener('click', this.#handlers.stop.click)
     back.addEventListener('click', this.#handlers.back.click)
     next.addEventListener('click', this.#handlers.next.click)
   }
@@ -96,45 +104,46 @@ export class Metronome extends HTMLElement {
   attributeChangedCallback(_name, _from, _to) {}
 
   set enabled(v) {
-    const shadow = this.shadowRoot
-    const div = shadow.querySelector('div.metronome')
-    const play = div.querySelector('#play')
-
-    play.disabled = v !== true
+    this.#play.disabled = v !== true
+    this.#stop.disabled = v !== true
   }
 
   set bof(v) {
-    const shadow = this.shadowRoot
-    const div = shadow.querySelector('div.metronome')
-    const back = div.querySelector('#back')
-
-    back.disabled = v === true
+    this.#back.disabled = v === true
   }
 
   set eof(v) {
-    const shadow = this.shadowRoot
-    const div = shadow.querySelector('div.metronome')
-    const next = div.querySelector('#next')
-
-    next.disabled = v === true
+    this.#next.disabled = v === true
   }
 
   onPlaying() {
-    const shadow = this.shadowRoot
-    const div = shadow.querySelector('div.metronome')
-
-    div.classList.add('playing')
-
+    this.#container.classList.add('playing')
     this.#FSM.onPlaying()
   }
 
   onStopped() {
-    const shadow = this.shadowRoot
-    const div = shadow.querySelector('div.metronome')
-
-    div.classList.remove('playing')
-
+    this.#container.classList.remove('playing')
     this.#FSM.onStopped()
+  }
+
+  get #container() {
+    return this.shadowRoot.querySelector('div.metronome')
+  }
+
+  get #play() {
+    return this.shadowRoot.querySelector('div.metronome #play')
+  }
+
+  get #stop() {
+    return this.shadowRoot.querySelector('div.metronome #stop')
+  }
+
+  get #back() {
+    return this.shadowRoot.querySelector('div.metronome #back')
+  }
+
+  get #next() {
+    return this.shadowRoot.querySelector('div.metronome #next')
   }
 }
 

@@ -5,6 +5,21 @@
     <link rel="icon"       href="/favicon.png" type="image/png" />
     <link rel="stylesheet" href="./css/YAM.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <script>
+      (function() {
+        try {
+           const json = localStorage.getItem('YAM')
+           const object = JSON.parse(json)
+           const theme = object?.settings.theme ?? 'default'
+
+           console.log({theme})
+
+           document.documentElement.setAttribute('data-theme', theme);
+        } catch (err) {
+           console.log(err)
+        }
+       })()
+    </script>    
   </head>
 
   <body>
@@ -87,12 +102,10 @@
     <!-- TEMPLATES -->
     <template id="template-metronome">
       <div class="metronome">
-        <button id="back" disabled><img src="./images/controls/skip-backwards.svg"  class="visible" draggable="false" /></button>
-        <button id="play" disabled>
-          <img src="./images/controls/play.svg" class="play"        draggable="false" />
-          <img src="./images/controls/stop.svg" class="stop hidden" draggable="false" />
-        </button>
-        <button id="next" disabled><img src="./images/controls/skip-forwards.svg"   class="visible" draggable="false" /></button>
+        <button id="back" class="icon-back" aria-label="Back" disabled></button>
+        <button id="play" class="icon-play" aria-label="Play" disabled></button>
+        <button id="stop" class="icon-stop" aria-label="Play" disabled></button>
+        <button id="next" class="icon-next" aria-label="Next" disabled></button>
       </div>
     </template>
 

@@ -19,8 +19,8 @@ export class SectionMM extends HTMLElement {
   }
 
   #tempo = {
-    BPM: 120,
-    pulse: 'quarter',
+    BPM: undefined,
+    pulse: undefined,
   }
 
   #track = {

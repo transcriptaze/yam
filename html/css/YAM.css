@@ -38,8 +38,10 @@
 }
 :root {
   --background: #ffffff url("../images/textures/ricepaper_v3.png");
-  --metronome-button-disabled: #ffffff76;
+  --metronome-button-disabled: #c0c0c0;
   --metronome-button-enabled: #222222;
+  --toolbar-button-disabled: #ffffff76;
+  --toolbar-button-enabled: #222222;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
@@ -49,6 +51,8 @@
   --background: #222222;
   --metronome-button-disabled: #50638F;
   --metronome-button-enabled: #0099FF;
+  --toolbar-button-disabled: #ffffff76;
+  --toolbar-button-enabled: #92b2e5c0;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
@@ -455,29 +459,102 @@ toolbar div.menu div.left-menu {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  row-gap: 0px;
 }
 toolbar div.menu div.right-menu {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto auto auto;
+  grid-template-areas: "settings" "fullscreen" "wakelock" "theme" "about";
 }
 toolbar img {
   width: 36px;
 }
 toolbar button {
-  background: transparent;
-  border: none;
-  outline: none;
+  box-sizing: border-box;
+  width: 40px;
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 6px;
   padding-right: 6px;
+  border: none;
+  outline: none;
+  display: inline-block;
+  background-color: var(--toolbar-button-enabled);
+  aspect-ratio: 1;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  transition: opacity 0.125s ease-in-out, transform 0.2s ease-in-out;
 }
 toolbar button:disabled {
   display: none;
+  background-color: var(--toolbar-button-disabled);
 }
-toolbar button:disabled img {
-  filter: invert(87%) sepia(5%) saturate(0%) hue-rotate(349deg) brightness(91%) contrast(83%);
+toolbar #reset {
+  mask-image: url("/images/reset.svg");
+  mask-size: 30px;
+}
+toolbar #metronome {
+  mask-image: url("/images/metronome.svg");
+  mask-size: 30px;
+}
+toolbar #playlist {
+  mask-image: url("/images/playlist.svg");
+  mask-size: 30px;
+}
+toolbar #edit {
+  mask-image: url("/images/edit.svg");
+  mask-size: 30px;
+}
+toolbar #load {
+  mask-image: url("/images/import.svg");
+  mask-size: 30px;
+}
+toolbar #save {
+  mask-image: url("/images/export.svg");
+  mask-size: 30px;
+}
+toolbar #settings {
+  grid-area: settings;
+  mask-image: url("/images/settings.svg");
+  mask-size: 30px;
+}
+toolbar #fullscreen {
+  grid-area: fullscreen;
+  mask-image: url("/images/fullscreen.svg");
+  mask-size: 30px;
+}
+toolbar #wakelock {
+  grid-area: wakelock;
+  mask-image: url("/images/wakelock.svg");
+  mask-size: 30px;
+}
+toolbar #theme {
+  grid-area: theme;
+  mask-image: url("/images/theme.svg");
+  mask-size: 30px;
+}
+toolbar #about {
+  grid-area: about;
+  mask-image: url("/images/about.svg");
+  mask-size: 30px;
+}
+toolbar #about.hidden {
+  display: none;
+}
+toolbar #oops {
+  grid-area: about;
+  mask-image: none;
+  background-color: transparent;
+  background-image: url("/images/warning.svg");
+  background-size: 30px;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+toolbar #oops.hidden {
+  display: none;
 }
 toolbar a {
   padding-top: 6px;
@@ -496,30 +573,6 @@ toolbar #bug {
 }
 toolbar #wakelock.active img {
   filter: invert(10%) sepia(99%) saturate(5774%) hue-rotate(14deg) brightness(90%) contrast(121%);
-}
-toolbar #about {
-  box-sizing: border-box;
-  display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: auto;
-  justify-items: center;
-  align-items: center;
-  padding-right: 12px;
-}
-toolbar #about a {
-  grid-column: 1;
-  grid-row: 1;
-}
-toolbar #about img.warning {
-  grid-column: 1;
-  grid-row: 1;
-  display: none;
-}
-toolbar #about.error a {
-  display: none;
-}
-toolbar #about.error img.warning {
-  display: block;
 }
 
 toolbar.metronome #metronome {
@@ -560,12 +613,15 @@ toolbar.playlist #edit {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    column-gap: 4px;
   }
   toolbar div.menu div.right-menu {
     width: fit-content;
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    grid-template-rows: auto;
+    grid-template-areas: "settings fullscreen wakelock theme about";
+    column-gap: 4px;
   }
   toolbar.metronome #playlist {
     display: block;

@@ -66,15 +66,11 @@
       <toolbar>
          <div class="menu">
            <div class="left-menu">
-             <a href="./index.html">
-                <img id="metronome" class="visible" src="./images/metronome.svg" draggable="false" />
-             </a>
-             <a href="./index.html#playlist">
-               <img id="playlist" class="visible" src="./images/playlist.svg" draggable="false" />
-             </a>
+            <button id="metronome" class="icon-metronome" aria-label="Metronome"></button>
+            <button id="playlist"  class="icon-playlist"  aria-label="Playlist"></button>
            </div>
            <div class="right-menu">
-             <img id="settings" class="visible" src="./images/settings.svg" draggable="false" />
+             <button id="settings" class="icon-settings" aria-label="Settings"></button>
            </div>
          </div>
       </toolbar>
@@ -84,11 +80,23 @@
 
   <!-- SCRIPTS -->
   <script type="module">
-    import { show } from './javascript/YAM.js'
+    const toolbar = {
+      metronome: document.querySelector('toolbar #metronome'),
+      playlist: document.querySelector('toolbar #playlist'),
+      settings: document.querySelector('toolbar #settings'),
+    }
 
-    const metronome = document.querySelector('toolbar img#metronome')
-    const playlist = document.querySelector('toolbar img#playlist')
-    const settings = document.querySelector('toolbar #settings')
+    toolbar.metronome.onclick = () => {
+      window.location.href = './index.html'
+    }
+    
+    toolbar.playlist.onclick = () => {
+      window.location.href = './index.html#playlist'
+    }
+
+    toolbar.settings.onclick = () => {
+      window.location.href = './settings.html'
+    }
 
     // Android Chrome: set viewport height in CSS variable because the viewport height for a
     //                 PWA app loaded from the home page is incorrect

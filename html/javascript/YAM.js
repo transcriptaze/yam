@@ -338,12 +338,27 @@ export async function toggleWakeLock() {
   state.toggleWakeLock(button)
 }
 
+export async function toggleTheme() {
+  const theme = document.documentElement.getAttribute('data-theme')
+
+  if (theme === 'default') {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    settings.theme = 'dark'
+  } else {
+    document.documentElement.setAttribute('data-theme', 'default')
+    settings.theme = 'default'
+  }
+
+  settings.save()
+}
+
 export function onError(err) {
   console.error('ERROR', err)
 
   ERROR = err
 
-  document.querySelector('#about')?.classList.add('error')
+  document.querySelector('#about').classList.add('hidden')
+  document.querySelector('#oops').classList.remove('hidden')
   document.querySelector('#oops').title = `${err.message}`
 }
 
@@ -359,7 +374,8 @@ export async function showError() {
     }
   }
 
-  document.querySelector('#about')?.classList.remove('error')
+  document.querySelector('#about').classList.remove('hidden')
+  document.querySelector('#oops').classList.add('hidden')
 }
 
 export function debug() {
@@ -794,11 +810,13 @@ function onEdited(_event) {
         widgets.mm.track = track
 
         widgets.info.modified = state.modified
-        widgets.loop.loop = track.loop
         widgets.knob.BPM = track.BPM
         widgets.knob.tempo = track.tempo
         widgets.wheel.BPM = track.BPM
         widgets.wheel.tempo = track.tempo
+
+        widgets.loop.enabled = track.loopable ?? false
+        widgets.loop.loop = track.loop
         widgets.loop.loops = track.loops
 
         // ... update engine

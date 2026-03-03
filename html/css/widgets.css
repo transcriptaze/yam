@@ -38,8 +38,10 @@
 }
 :root {
   --background: #ffffff url("../images/textures/ricepaper_v3.png");
-  --metronome-button-disabled: #ffffff76;
+  --metronome-button-disabled: #c0c0c0;
   --metronome-button-enabled: #222222;
+  --toolbar-button-disabled: #ffffff76;
+  --toolbar-button-enabled: #222222;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
@@ -49,6 +51,8 @@
   --background: #222222;
   --metronome-button-disabled: #50638F;
   --metronome-button-enabled: #0099FF;
+  --toolbar-button-disabled: #ffffff76;
+  --toolbar-button-enabled: #92b2e5c0;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;

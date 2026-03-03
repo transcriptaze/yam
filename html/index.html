@@ -76,25 +76,30 @@
           </div>
 
           <div class="right-menu">
+<!-- 
             <a id="settings" href="./settings.html" draggable="false">
               <img src="./images/settings.svg" draggable="false" />
             </a>
-
+ -->
             <!-- <button id="fullscreen"><img src="./images/fullscreen.svg"       draggable="false" /></button> -->
             <!-- <button id="wakelock"  disabled><img src="./images/wakelock.svg" draggable="false" /></button> -->
             <!-- <button id="theme"><img src="./images/theme.svg"                 draggable="false" /></button> -->
 
-            <button id="fullscreen" class="icon-fullscreen" aria-label="Fullscreen"></button>
-            <button id="wakelock"   class="icon-wakelock"   aria-label="Wakelock"></button>
-            <button id="theme"      class="icon-theme"      aria-label="Theme"></button>
+            <button id="settings"   class="icon-settings"    aria-label="Settings"></button>
+            <button id="fullscreen" class="icon-fullscreen"  aria-label="Fullscreen"></button>
+            <button id="wakelock"   class="icon-wakelock"    aria-label="Wakelock"></button>
+            <button id="theme"      class="icon-theme"       aria-label="Theme"></button>
+            <button id="about"      class="icon-about"       aria-label="About"></button>
+            <button id="oops"       class="icon-oops hidden" aria-label="Ooops"></button>
 
+<!-- 
             <div id="about" class="about">
               <a href="./about.html" draggable="false">
                 <img class="visible" src="./images/about.svg" draggable="false" />
               </a>
               <img id="oops" class="warning" src="./images/warning.svg" draggable="false" />
             </div>
-
+ -->
           </div>
         </div>
       </toolbar>
@@ -941,10 +946,12 @@
       edit: document.querySelector('toolbar #edit'),
       save: document.querySelector('toolbar #save'),
       load: document.querySelector('toolbar #load'),
+      settings : document.querySelector('toolbar #settings'),
       fullscreen : document.querySelector('toolbar #fullscreen'),
       wakelock: document.querySelector('toolbar #wakelock'),
-      theme: document.querySelector('#theme'),
-      oops: document.querySelector('#oops'),
+      theme: document.querySelector('toolbar #theme'),
+      about: document.querySelector('toolbar #about'),
+      oops: document.querySelector('toolbar #oops'),
     }
 
     // ... attach event handlers (because .. Safari)
@@ -966,6 +973,14 @@
             document.exitFullscreen()
          }
       }
+    })
+
+    toolbar.settings.addEventListener('click', (event) => {
+      window.location.href = "./settings.html"
+    })
+
+    toolbar.about.addEventListener('click', (event) => {
+      window.location.href = "./about.html"
     })
 
     document.addEventListener('contextmenu', (event) => {

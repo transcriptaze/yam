@@ -353,7 +353,8 @@ export function onError(err) {
 
   ERROR = err
 
-  document.querySelector('#about')?.classList.add('error')
+  document.querySelector('#about').classList.add('hidden')
+  document.querySelector('#oops').classList.remove('hidden')
   document.querySelector('#oops').title = `${err.message}`
 }
 
@@ -369,7 +370,8 @@ export async function showError() {
     }
   }
 
-  document.querySelector('#about')?.classList.remove('error')
+  document.querySelector('#about').classList.remove('hidden')
+  document.querySelector('#oops').classList.add('hidden')
 }
 
 export function debug() {

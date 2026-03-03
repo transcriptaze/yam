@@ -17,9 +17,15 @@ toolbar {
     }
 
     div.right-menu {
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
+      display: grid;
+      grid-template-columns: auto;
+      grid-template-rows: auto auto auto auto;
+      grid-template-areas:
+        "settings"
+        "fullscreen"
+        "wakelock"
+        "theme"
+        "about";
     }
   }
 
@@ -88,19 +94,54 @@ toolbar {
       mask-size: 30px;
   }
 
+  #settings {
+      grid-area: settings;
+      mask-image: url('/images/settings.svg');
+      mask-size: 30px;
+  }
+
   #fullscreen {
+      grid-area: fullscreen;
       mask-image: url('/images/fullscreen.svg');
       mask-size: 30px;
   }
 
   #wakelock {
+      grid-area: wakelock;
       mask-image: url('/images/wakelock.svg');
       mask-size: 30px;
   }
 
   #theme {
+      grid-area: theme;
       mask-image: url('/images/theme.svg');
       mask-size: 30px;
+  }
+  
+  #about {
+      grid-area: about;
+      mask-image: url('/images/about.svg');
+      mask-size: 30px;
+  }
+
+  #about.hidden {
+      display: none;
+  }
+
+  #oops {
+      grid-area: about;
+
+      mask-image: none;
+
+      background-color: transparent;
+      background-image: url('/images/warning.svg');
+      background-size: 30px;
+      background-repeat: no-repeat;
+      background-position: center;
+  }
+
+  #oops.hidden {
+      display: none;
   }
   
   // button {
@@ -146,38 +187,38 @@ toolbar {
     }
   }
 
-  #about {
-    box-sizing: border-box;
+// #about {
+//   box-sizing: border-box;
+//
+//   display: grid;
+//   grid-template-columns: auto;
+//   grid-template-rows: auto;
+//   justify-items: center;
+//   align-items: center;
+//
+//   padding-right: 12px;
+//
+//   a {
+//     grid-column: 1;
+//     grid-row: 1;
+//   }
+//
+//   img.warning {
+//     grid-column: 1;
+//     grid-row: 1;
+//     display: none;
+//   }
+// }
 
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto;
-    justify-items: center;
-    align-items: center;
-
-    padding-right: 12px;
-
-    a {
-      grid-column: 1;
-      grid-row: 1;
-    }
-
-    img.warning {
-      grid-column: 1;
-      grid-row: 1;
-      display: none;
-    }
-  }
-
-  #about.error {
-    a {
-      display: none;
-    }
-
-    img.warning {
-      display: block;
-    }
-  }
+//  #about.error {
+//    a {
+//      display: none;
+//    }
+//
+//    img.warning {
+//      display: block;
+//    }
+//  }
 }
 
 toolbar.metronome {
@@ -240,11 +281,19 @@ toolbar.playlist {
 
       div.right-menu {
         width: fit-content;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-end;
+        
+        // display: flex;
+        // flex-direction: row;
+        // justify-content: flex-end;
+        //  column-gap: 4px;
+
+        display: grid;
+        grid-template-columns: auto auto auto auto auto;
+        grid-template-rows: auto;
+        grid-template-areas: "settings fullscreen wakelock theme about";
         column-gap: 4px;
       }
+
     }
   }
 

@@ -13,6 +13,7 @@ toolbar {
       display: flex;
       flex-direction: column;
       justify-content: flex-start;
+      row-gap: 0px;
     }
 
     div.right-menu {
@@ -29,7 +30,7 @@ toolbar {
   button {
     box-sizing: border-box;
 
-    width: 36px;
+    width: 40px;
 
     padding-top: 6px;
     padding-bottom: 6px;
@@ -59,41 +60,49 @@ toolbar {
 
   #reset {
       mask-image: url('/images/reset.svg');
+      mask-size: 30px;
   }
 
   #metronome {
       mask-image: url('/images/metronome.svg');
+      mask-size: 30px;
   }
 
   #playlist {
       mask-image: url('/images/playlist.svg');
+      mask-size: 30px;
   }
 
   #edit {
       mask-image: url('/images/edit.svg');
+      mask-size: 30px;
   }
 
   #load {
       mask-image: url('/images/import.svg');
+      mask-size: 30px;
   }
 
   #save {
       mask-image: url('/images/export.svg');
+      mask-size: 30px;
   }
 
   #fullscreen {
       mask-image: url('/images/fullscreen.svg');
+      mask-size: 30px;
   }
 
   #wakelock {
       mask-image: url('/images/wakelock.svg');
+      mask-size: 30px;
   }
 
   #theme {
       mask-image: url('/images/theme.svg');
+      mask-size: 30px;
   }
   
-theme
   // button {
   //   background: transparent;
   //   border: none;
@@ -226,6 +235,7 @@ toolbar.playlist {
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
+        column-gap: 4px;
       }
 
       div.right-menu {
@@ -233,6 +243,7 @@ toolbar.playlist {
         display: flex;
         flex-direction: row;
         justify-content: flex-end;
+        column-gap: 4px;
       }
     }
   }

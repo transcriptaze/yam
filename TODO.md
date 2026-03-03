@@ -9,6 +9,10 @@
     - [x] back
     - [x] next
     - [ ] toolbar icons
+       - [ ] fix size
+       - [ ] rework about page toolbar
+       - [ ] rework settings page toolbar
+       - [ ] rework unsupported page toolbar
     - [ ] toolbar theme icon
         - light/dark faces
 

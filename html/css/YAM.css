@@ -459,6 +459,7 @@ toolbar div.menu div.left-menu {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  row-gap: 0px;
 }
 toolbar div.menu div.right-menu {
   display: flex;
@@ -470,7 +471,7 @@ toolbar img {
 }
 toolbar button {
   box-sizing: border-box;
-  width: 36px;
+  width: 40px;
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 6px;
@@ -492,32 +493,41 @@ toolbar button:disabled {
 }
 toolbar #reset {
   mask-image: url("/images/reset.svg");
+  mask-size: 30px;
 }
 toolbar #metronome {
   mask-image: url("/images/metronome.svg");
+  mask-size: 30px;
 }
 toolbar #playlist {
   mask-image: url("/images/playlist.svg");
+  mask-size: 30px;
 }
 toolbar #edit {
   mask-image: url("/images/edit.svg");
+  mask-size: 30px;
 }
 toolbar #load {
   mask-image: url("/images/import.svg");
+  mask-size: 30px;
 }
 toolbar #save {
   mask-image: url("/images/export.svg");
+  mask-size: 30px;
 }
 toolbar #fullscreen {
   mask-image: url("/images/fullscreen.svg");
+  mask-size: 30px;
 }
 toolbar #wakelock {
   mask-image: url("/images/wakelock.svg");
+  mask-size: 30px;
 }
 toolbar #theme {
   mask-image: url("/images/theme.svg");
+  mask-size: 30px;
 }
-toolbar theme a {
+toolbar a {
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 6px;
@@ -598,12 +608,14 @@ toolbar.playlist #edit {
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
+    column-gap: 4px;
   }
   toolbar div.menu div.right-menu {
     width: fit-content;
     display: flex;
     flex-direction: row;
     justify-content: flex-end;
+    column-gap: 4px;
   }
   toolbar.metronome #playlist {
     display: block;

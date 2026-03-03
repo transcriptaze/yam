@@ -804,11 +804,13 @@ function onEdited(_event) {
         widgets.mm.track = track
 
         widgets.info.modified = state.modified
-        widgets.loop.loop = track.loop
         widgets.knob.BPM = track.BPM
         widgets.knob.tempo = track.tempo
         widgets.wheel.BPM = track.BPM
         widgets.wheel.tempo = track.tempo
+
+        widgets.loop.enabled = track.loopable ?? false
+        widgets.loop.loop = track.loop
         widgets.loop.loops = track.loops
 
         // ... update engine

@@ -9,6 +9,8 @@
     - [x] back
     - [x] next
     - [ ] toolbar icons
+    - [ ] toolbar theme icon
+        - light/dark faces
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [x] Rework clock as generator

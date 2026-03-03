@@ -338,6 +338,16 @@ export async function toggleWakeLock() {
   state.toggleWakeLock(button)
 }
 
+export async function toggleTheme() {
+  const theme = document.documentElement.getAttribute('data-theme')
+
+  if (theme === 'default') {
+    document.documentElement.setAttribute('data-theme', 'dark')
+  } else {
+    document.documentElement.setAttribute('data-theme', 'default')
+  }
+}
+
 export function onError(err) {
   console.error('ERROR', err)
 

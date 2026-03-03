@@ -40,6 +40,8 @@
   --background: #ffffff url("../images/textures/ricepaper_v3.png");
   --metronome-button-disabled: #ffffff76;
   --metronome-button-enabled: #222222;
+  --toolbar-button-disabled: #ffffff76;
+  --toolbar-button-enabled: #222222;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
@@ -49,6 +51,8 @@
   --background: #222222;
   --metronome-button-disabled: #50638F;
   --metronome-button-enabled: #0099FF;
+  --toolbar-button-disabled: #ffffff76;
+  --toolbar-button-enabled: #D0D7E6;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
@@ -465,21 +469,55 @@ toolbar img {
   width: 36px;
 }
 toolbar button {
-  background: transparent;
-  border: none;
-  outline: none;
+  box-sizing: border-box;
+  width: 36px;
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 6px;
   padding-right: 6px;
+  border: none;
+  outline: none;
+  display: inline-block;
+  background-color: var(--toolbar-button-enabled);
+  aspect-ratio: 1;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+  transition: opacity 0.125s ease-in-out, transform 0.2s ease-in-out;
 }
 toolbar button:disabled {
   display: none;
+  background-color: var(--toolbar-button-disabled);
 }
-toolbar button:disabled img {
-  filter: invert(87%) sepia(5%) saturate(0%) hue-rotate(349deg) brightness(91%) contrast(83%);
+toolbar #reset {
+  mask-image: url("/images/reset.svg");
 }
-toolbar a {
+toolbar #metronome {
+  mask-image: url("/images/metronome.svg");
+}
+toolbar #playlist {
+  mask-image: url("/images/playlist.svg");
+}
+toolbar #edit {
+  mask-image: url("/images/edit.svg");
+}
+toolbar #load {
+  mask-image: url("/images/import.svg");
+}
+toolbar #save {
+  mask-image: url("/images/export.svg");
+}
+toolbar #fullscreen {
+  mask-image: url("/images/fullscreen.svg");
+}
+toolbar #wakelock {
+  mask-image: url("/images/wakelock.svg");
+}
+toolbar #theme {
+  mask-image: url("/images/theme.svg");
+}
+toolbar theme a {
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 6px;

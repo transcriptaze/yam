@@ -27,22 +27,90 @@ toolbar {
   }
 
   button {
-    background: transparent;
-    border: none;
-    outline: none;
+    box-sizing: border-box;
+
+    width: 36px;
 
     padding-top: 6px;
     padding-bottom: 6px;
     padding-left: 6px;
     padding-right: 6px;
+
+    border: none;
+    outline: none;
+
+    display: inline-block;
+    background-color: var(--toolbar-button-enabled);
+
+    aspect-ratio: 1;
+    mask-repeat: no-repeat;
+    mask-position: center;
+
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+
+    transition: opacity 0.125s ease-in-out, transform 0.2s ease-in-out;
   }
 
   button:disabled {
-    display: none;
-    img {
-      filter: invert(87%) sepia(5%) saturate(0%) hue-rotate(349deg) brightness(91%) contrast(83%);
-    }
+     display: none;
+     background-color: var(--toolbar-button-disabled);
   }
+
+  #reset {
+      mask-image: url('/images/reset.svg');
+  }
+
+  #metronome {
+      mask-image: url('/images/metronome.svg');
+  }
+
+  #playlist {
+      mask-image: url('/images/playlist.svg');
+  }
+
+  #edit {
+      mask-image: url('/images/edit.svg');
+  }
+
+  #load {
+      mask-image: url('/images/import.svg');
+  }
+
+  #save {
+      mask-image: url('/images/export.svg');
+  }
+
+  #fullscreen {
+      mask-image: url('/images/fullscreen.svg');
+  }
+
+  #wakelock {
+      mask-image: url('/images/wakelock.svg');
+  }
+
+  #theme {
+      mask-image: url('/images/theme.svg');
+  }
+  
+theme
+  // button {
+  //   background: transparent;
+  //   border: none;
+  //   outline: none;
+  //
+  //   padding-top: 6px;
+  //   padding-bottom: 6px;
+  //   padding-left: 6px;
+  //   padding-right: 6px;
+  // }
+
+  // button:disabled {
+  //   display: none;
+  //   img {
+  //     filter: invert(87%) sepia(5%) saturate(0%) hue-rotate(349deg) brightness(91%) contrast(83%);
+  //   }
+  // }
 
   a {
     padding-top: 6px;

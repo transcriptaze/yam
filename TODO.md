@@ -8,11 +8,10 @@
     - [x] stop
     - [x] back
     - [x] next
-    - [ ] toolbar icons
+    - [x] toolbar icons
        - [x] fix size
-       - [ ] rework about page toolbar
-       - [ ] rework settings page toolbar
-       - [ ] rework unsupported page toolbar
+       - [x] rework about page toolbar
+       - [x] rework settings page toolbar
     - [ ] toolbar theme icon
         - light/dark faces
 

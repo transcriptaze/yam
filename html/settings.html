@@ -44,19 +44,11 @@
       <toolbar class="settings">
          <div class="menu">
            <div class="left-menu">
-             <a href="./index.html#metronome">
-                <img id="metronome" class="visible" src="./images/metronome.svg" draggable="false" />
-             </a>
-             <a href="./index.html#playlist">
-               <img id="playlist" class="visible" src="./images/playlist.svg" draggable="false" />
-             </a>
-            <!-- <button id="load"><img src="./images/import.svg"         draggable="false" /></button> -->
-            <!-- <button id="save"><img src="./images/export.svg"         draggable="false" /></button> -->
+              <button id="metronome" class="icon-metronome" aria-label="Metronome"></button>
+              <button id="playlist"  class="icon-playlist"  aria-label="Playlist"></button>
            </div>
            <div class="right-menu">
-             <a href="./about.html">
-               <img id="about" class="visible" src="./images/about.svg" draggable="false" />
-             </a>
+              <button id="about" class="icon-about" aria-label="About"></button>
            </div>
          </div>
       </toolbar>
@@ -69,13 +61,22 @@
     import { initialise, onError } from './javascript/pages/settings.js'
 
     const toolbar = {
-      // save: document.querySelector('toolbar #save'),
-      // load: document.querySelector('toolbar #load'),
+      metronome: document.querySelector('toolbar #metronome'),
+      playlist: document.querySelector('toolbar #playlist'),
+      about: document.querySelector('toolbar #about'),
     }
 
-    // ... attach event handlers (because .. Safari)
-    // toolbar.save.onclick = () => save()
-    // toolbar.load.onclick = () => load()
+    toolbar.metronome.onclick = () => {
+      window.location.href = './index.html'
+    }
+    
+    toolbar.playlist.onclick = () => {
+      window.location.href = './index.html#playlist'
+    }
+
+    toolbar.about.onclick = () => {
+      window.location.href = './about.html'
+    }
 
     document.addEventListener('contextmenu', (event) => {
       event.preventDefault()

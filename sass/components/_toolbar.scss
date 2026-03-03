@@ -144,24 +144,6 @@ toolbar {
       display: none;
   }
   
-  // button {
-  //   background: transparent;
-  //   border: none;
-  //   outline: none;
-  //
-  //   padding-top: 6px;
-  //   padding-bottom: 6px;
-  //   padding-left: 6px;
-  //   padding-right: 6px;
-  // }
-
-  // button:disabled {
-  //   display: none;
-  //   img {
-  //     filter: invert(87%) sepia(5%) saturate(0%) hue-rotate(349deg) brightness(91%) contrast(83%);
-  //   }
-  // }
-
   a {
     padding-top: 6px;
     padding-bottom: 6px;
@@ -186,39 +168,6 @@ toolbar {
       filter: invert(10%) sepia(99%) saturate(5774%) hue-rotate(14deg) brightness(90%) contrast(121%);
     }
   }
-
-// #about {
-//   box-sizing: border-box;
-//
-//   display: grid;
-//   grid-template-columns: auto;
-//   grid-template-rows: auto;
-//   justify-items: center;
-//   align-items: center;
-//
-//   padding-right: 12px;
-//
-//   a {
-//     grid-column: 1;
-//     grid-row: 1;
-//   }
-//
-//   img.warning {
-//     grid-column: 1;
-//     grid-row: 1;
-//     display: none;
-//   }
-// }
-
-//  #about.error {
-//    a {
-//      display: none;
-//    }
-//
-//    img.warning {
-//      display: block;
-//    }
-//  }
 }
 
 toolbar.metronome {
@@ -282,11 +231,6 @@ toolbar.playlist {
       div.right-menu {
         width: fit-content;
         
-        // display: flex;
-        // flex-direction: row;
-        // justify-content: flex-end;
-        //  column-gap: 4px;
-
         display: grid;
         grid-template-columns: auto auto auto auto auto;
         grid-template-rows: auto;

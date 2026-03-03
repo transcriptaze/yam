@@ -9,7 +9,7 @@
     - [x] back
     - [x] next
     - [ ] toolbar icons
-       - [ ] fix size
+       - [x] fix size
        - [ ] rework about page toolbar
        - [ ] rework settings page toolbar
        - [ ] rework unsupported page toolbar

@@ -343,9 +343,13 @@ export async function toggleTheme() {
 
   if (theme === 'default') {
     document.documentElement.setAttribute('data-theme', 'dark')
+    settings.theme = 'dark'
   } else {
     document.documentElement.setAttribute('data-theme', 'default')
+    settings.theme = 'default'
   }
+
+  settings.save()
 }
 
 export function onError(err) {

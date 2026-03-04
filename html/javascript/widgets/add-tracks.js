@@ -7,7 +7,9 @@ export class AddTracks extends HTMLElement {
     return []
   }
 
-  #tracks = new Map()
+  #state = {
+    tracks: new Map(),
+  }
 
   #handlers = {
     newTrack: {
@@ -32,7 +34,7 @@ export class AddTracks extends HTMLElement {
         li.appendChild(item)
         ul.appendChild(li)
 
-        this.#tracks.set(UUID, track)
+        this.#state.tracks.set(UUID, track)
       },
     },
 
@@ -58,7 +60,7 @@ export class AddTracks extends HTMLElement {
         li.appendChild(item)
         ul.appendChild(li)
 
-        this.#tracks.set(UUID, track)
+        this.#state.tracks.set(UUID, track)
       },
     },
   }
@@ -95,34 +97,9 @@ export class AddTracks extends HTMLElement {
 
   attributeChangedCallback(_name, _from, _to) {}
 
-  set tracks(tracks) {
-    this.#tracks = new Map(tracks.map((v) => [v.UUID, v]))
-
-    // ... initialise <ul>
-    const ul = this.shadowRoot.querySelector('ul')
-    const list = []
-
-    const clean = (v) => `${v}`.toLowerCase().replace(/\s+/g, '')
-
-    const compare = (a, b) => {
-      const p = clean(a.title)
-      const q = clean(b.title)
-
-      return Math.sign(p.localeCompare(q))
-    }
-
-    tracks.toSorted(compare).forEach((v) => {
-      const li = document.createElement('li')
-      const item = document.createElement('yam-add-tracks-item')
-
-      item.setAttribute('uuid', v.UUID)
-      item.setAttribute('title', v.title)
-
-      li.appendChild(item)
-      list.push(li)
-    })
-
-    ul.replaceChildren(...list)
+  set playlist(playlist) {
+    this.#tracks = datastore.tracks.list()
+    this.#selected = datastore.playlists.get(playlist)?.tracks ?? []
   }
 
   get selected() {
@@ -133,7 +110,7 @@ export class AddTracks extends HTMLElement {
     items.forEach((v) => {
       if (v.selected) {
         const UUID = v.getAttribute('uuid')
-        const track = this.#tracks.get(UUID)
+        const track = this.#state.tracks.get(UUID)
 
         if (track != null) {
           selected.push(track)
@@ -144,9 +121,8 @@ export class AddTracks extends HTMLElement {
     return selected
   }
 
-  set selected(tracks) {
+  set #selected(tracks) {
     const set = new Set(tracks.map((v) => v.UUID))
-
     const ul = this.shadowRoot.querySelector('ul')
     const hr = this.shadowRoot.querySelector('hr')
     const list = Array.from(ul.querySelectorAll('yam-add-tracks-item'))
@@ -173,9 +149,34 @@ export class AddTracks extends HTMLElement {
     }
   }
 
-  set playlist(playlist) {
-    this.tracks = datastore.tracks.list()
-    this.selected = datastore.playlists.get(playlist)?.tracks ?? []
+  set #tracks(tracks) {
+    this.#state.tracks = new Map(tracks.map((v) => [v.UUID, v]))
+
+    // ... initialise <ul>
+    const ul = this.shadowRoot.querySelector('ul')
+    const list = []
+
+    const clean = (v) => `${v}`.toLowerCase().replace(/\s+/g, '')
+
+    const compare = (a, b) => {
+      const p = clean(a.title)
+      const q = clean(b.title)
+
+      return Math.sign(p.localeCompare(q))
+    }
+
+    tracks.toSorted(compare).forEach((v) => {
+      const li = document.createElement('li')
+      const item = document.createElement('yam-add-tracks-item')
+
+      item.setAttribute('uuid', v.UUID)
+      item.setAttribute('title', v.title)
+
+      li.appendChild(item)
+      list.push(li)
+    })
+
+    ul.replaceChildren(...list)
   }
 }
 

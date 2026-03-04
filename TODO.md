@@ -2,6 +2,12 @@
 
 ## In Progress
 
+- [ ] deleted tracks show up in 'add tracks' list https://github.com/transcriptaze/yam/issues/51
+    - [ ] new tracks show up as 'new track' instead of the generated name
+    - [ ] landscape: can't add 'new track'
+    - [ ] landscape: can't delete bottom-most track
+    - [ ] fix Ewww in YAM.js
+
 - [ ] dark mode (cf. https://github.com/transcriptaze/yam/issues/48)
     - [x] background
     - [x] play
@@ -9,11 +15,12 @@
     - [x] back
     - [x] next
     - [x] toolbar icons
-       - [x] fix size
-       - [x] rework about page toolbar
-       - [x] rework settings page toolbar
+    - [ ] about page
+    - [ ] settings page
+    - [ ] unsupported page
     - [ ] toolbar theme icon
         - light/dark faces
+
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [x] Rework clock as generator

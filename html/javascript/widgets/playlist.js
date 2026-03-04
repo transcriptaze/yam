@@ -409,7 +409,7 @@ export class Playlist extends HTMLElement {
     const container = this.shadowRoot.querySelector('div.playlist')
 
     if (this.#add_tracks != null) {
-      this.#add_tracks.selected = this.#tracks
+      this.#add_tracks.playlist = this.UUID
     }
 
     container.classList.add('adding')

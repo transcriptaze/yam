@@ -2,11 +2,10 @@
 
 ## In Progress
 
+- [x] deleted tracks show up in 'add tracks' list https://github.com/transcriptaze/yam/issues/51
 - [x] landscape: can't delete bottom-most track on playlist track list
-
-- [ ] deleted tracks show up in 'add tracks' list https://github.com/transcriptaze/yam/issues/51
-    - [ ] new tracks show up as 'new track' instead of the generated name
-    - [ ] landscape: can't add 'new track'
+- [x] landscape: can't add 'new track'
+- [ ] new tracks show up as 'new track' instead of the generated name
 
 - [ ] dark mode (cf. https://github.com/transcriptaze/yam/issues/48)
     - [x] background

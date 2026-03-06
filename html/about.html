@@ -1,11 +1,26 @@
 <!DOCTYPE html>
-<html class="about">
+<html class="about" data-theme="default">
   <head>
     <title>Yet Another Metronome - About</title>
     <link rel="icon"       href="./images/favicon.png" />
     <link rel="stylesheet" href="./css/YAM.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
     <meta name="build"    content="__BUILD_NUMBER__">
+    <script>
+      (function() {
+        try {
+           const json = localStorage.getItem('YAM')
+           const object = JSON.parse(json)
+           const theme = object?.settings.theme ?? 'default'
+
+           console.log({theme})
+
+           document.documentElement.setAttribute('data-theme', theme);
+        } catch (err) {
+           console.log(err)
+        }
+       })()
+    </script>    
   </head>
 
   <body>
@@ -16,24 +31,24 @@
         <h2>User guide</h2>
         <div class="guide">
           <ul class="menu">
-            <li><img src="./images/metronome.svg"  draggable="false" />Displays the metronome</li>
-            <li><img src="./images/playlist.svg"   draggable="false" />Displays the playlists</li>
-            <li><img src="./images/edit.svg"       draggable="false" />Displays the track editor</li>
+            <li><span class="icon icon-metronome" aria-hidden="true"></span>Displays the metronome</li>
+            <li><span class="icon icon-playlist"  aria-hidden="true"></span>Displays the playlists</li>
+            <li><span class="icon icon-edit"      aria-hidden="true"></span>Displays the track editor</li>
           </ul>
           <ul class="menu">
-            <li><img src="./images/import.svg"  draggable="false" />Imports the playlists from a file</li>
-            <li><img src="./images/export.svg"  draggable="false" />Exports the playlists to a file</li>
+            <li><span class="icon icon-import" aria-hidden="true"></span>Imports the playlists from a file</li>
+            <li><span class="icon icon-export" aria-hidden="true"></span>Exports the playlists to a file</li>
           </ul>
           <ul class="menu">
-            <li><img src="./images/reset.svg"      draggable="false" />Resets changes</li>
-            <li><img src="./images/fullscreen.svg" draggable="false" />Toggles fullscreen mode</li>
-            <li><img src="./images/wakelock.svg"   draggable="false" />Wake lock state indicator</li>
+            <li><span class="icon icon-reset"      aria-hidden="true"></span>Resets changes</li>
+            <li><span class="icon icon-fullscreen" aria-hidden="true"></span>Toggles fullscreen mode</li>
+            <li><span class="icon icon-wakelock"   aria-hidden="true"></span>Wake lock state indicator</li>
           </ul>
         </div>
 
         <h2>Source code</h2>
         <a class="github" href="https://github.com/transcriptaze/yam" draggable="false">
-          <img class="github" src="./images/github-mark.svg" draggable="false" />
+          <span class="icon icon-github" aria-hidden="true"></span>
           https://github.com/transcriptaze/yam
         </a>
 
@@ -71,6 +86,7 @@
            </div>
            <div class="right-menu">
              <button id="settings" class="icon-settings" aria-label="Settings"></button>
+             <button id="theme"    class="icon-theme"    aria-label="Theme"></button>
            </div>
          </div>
       </toolbar>
@@ -80,10 +96,13 @@
 
   <!-- SCRIPTS -->
   <script type="module">
+    import { toggleTheme } from './javascript/YAM.js'
+
     const toolbar = {
       metronome: document.querySelector('toolbar #metronome'),
       playlist: document.querySelector('toolbar #playlist'),
       settings: document.querySelector('toolbar #settings'),
+      theme: document.querySelector('toolbar #theme'),
     }
 
     toolbar.metronome.onclick = () => {
@@ -97,6 +116,8 @@
     toolbar.settings.onclick = () => {
       window.location.href = './settings.html'
     }
+
+    toolbar.theme.onclick = () =>  toggleTheme()
 
     // Android Chrome: set viewport height in CSS variable because the viewport height for a
     //                 PWA app loaded from the home page is incorrect

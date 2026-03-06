@@ -15,6 +15,7 @@ main.about {
   flex-direction: column;
   justify-content: flex-start;
 
+  color: var(--text);
 
   h1 {
     display: flex;
@@ -33,6 +34,66 @@ main.about {
      margin-bottom: 8px;
   }
 
+  span.icon {
+    box-sizing: border-box;
+
+    width: 44px;
+    background-color: var(--icon);
+
+    aspect-ratio: 1;
+    mask-repeat: no-repeat;
+    mask-position: center;
+
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-size: contain;
+  }
+
+  span.icon-metronome {
+      mask-image: url('/images/metronome.svg');
+      mask-size: 32px;
+  }
+
+  span.icon-playlist {
+      mask-image: url('/images/playlist.svg');
+      mask-size: 32px;
+  }
+
+  span.icon-edit {
+      mask-image: url('/images/edit.svg');
+      mask-size: 32px;
+  }
+
+  span.icon-import {
+      mask-image: url('/images/import.svg');
+      mask-size: 32px;
+  }
+
+  span.icon-export {
+      mask-image: url('/images/export.svg');
+      mask-size: 32px;
+  }
+
+  span.icon-reset {
+      mask-image: url('/images/reset.svg');
+      mask-size: 32px;
+  }
+
+  span.icon-fullscreen {
+      mask-image: url('/images/fullscreen.svg');
+      mask-size: 32px;
+  }
+
+  span.icon-wakelock {
+      mask-image: url('/images/wakelock.svg');
+      mask-size: 32px;
+  }
+
+  span.icon-github {
+      width: 44px;
+
+      mask-image: url('/images/github-mark.svg');
+      mask-size: 36px;
+  }
 
   img {
     user-select: none;
@@ -40,14 +101,6 @@ main.about {
     -khtml-user-select: none;
     -moz-user-select: none;
     -o-user-select: none;  
-  }
-
-  img.github {
-    width: 36px;
-    padding-top: 8px;
-    padding-bottom: 8px;
-    padding-left: 8px;
-    padding-right: 8px;
   }
 
   a {

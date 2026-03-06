@@ -14,9 +14,9 @@
     - [x] back
     - [x] next
     - [x] toolbar icons
-    - [ ] about page
-    - [ ] settings page
-    - [ ] unsupported page
+    - [x] about page
+    - [x] settings page
+    - [x] unsupported page
     - [ ] toolbar theme icon
         - light/dark faces
 

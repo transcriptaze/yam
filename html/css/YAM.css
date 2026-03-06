@@ -45,6 +45,8 @@
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
+  --text: #222222;
+  --icon: #222222;
 }
 
 [data-theme=dark] {
@@ -52,10 +54,12 @@
   --metronome-button-disabled: #50638F;
   --metronome-button-enabled: #0099FF;
   --toolbar-button-disabled: #ffffff76;
-  --toolbar-button-enabled: #92b2e5c0;
+  --toolbar-button-enabled: #b8c3c7;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
+  --text: #b8c3c7;
+  --icon: #b8c3c7;
 }
 
 main {
@@ -196,6 +200,7 @@ html.settings main {
   margin-bottom: 16px;
   margin-left: 64px;
   margin-right: 64px;
+  color: var(--text);
 }
 html.settings main h1 {
   display: flex;
@@ -269,6 +274,7 @@ html.settings main div.volume input[type=text] {
   border: none;
   outline: none;
   width: 3em;
+  color: var(--text);
 }
 
 @media (max-width: 768px) and (orientation: portrait) {
@@ -309,6 +315,7 @@ main.about {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  color: var(--text);
 }
 main.about h1 {
   display: flex;
@@ -324,19 +331,59 @@ main.about h2 {
   margin-top: 16px;
   margin-bottom: 8px;
 }
+main.about span.icon {
+  box-sizing: border-box;
+  width: 44px;
+  background-color: var(--icon);
+  aspect-ratio: 1;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+}
+main.about span.icon-metronome {
+  mask-image: url("/images/metronome.svg");
+  mask-size: 32px;
+}
+main.about span.icon-playlist {
+  mask-image: url("/images/playlist.svg");
+  mask-size: 32px;
+}
+main.about span.icon-edit {
+  mask-image: url("/images/edit.svg");
+  mask-size: 32px;
+}
+main.about span.icon-import {
+  mask-image: url("/images/import.svg");
+  mask-size: 32px;
+}
+main.about span.icon-export {
+  mask-image: url("/images/export.svg");
+  mask-size: 32px;
+}
+main.about span.icon-reset {
+  mask-image: url("/images/reset.svg");
+  mask-size: 32px;
+}
+main.about span.icon-fullscreen {
+  mask-image: url("/images/fullscreen.svg");
+  mask-size: 32px;
+}
+main.about span.icon-wakelock {
+  mask-image: url("/images/wakelock.svg");
+  mask-size: 32px;
+}
+main.about span.icon-github {
+  width: 44px;
+  mask-image: url("/images/github-mark.svg");
+  mask-size: 36px;
+}
 main.about img {
   user-select: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
   -moz-user-select: none;
   -o-user-select: none;
-}
-main.about img.github {
-  width: 36px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  padding-left: 8px;
-  padding-right: 8px;
 }
 main.about a {
   font-size: 0.9em;
@@ -425,9 +472,23 @@ main.unsupported {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  color: var(--text);
 }
-
-div#unsupported {
+main.unsupported h1 {
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+  font-size: 1.5em;
+}
+main.unsupported h1 img {
+  width: 64px;
+}
+main.unsupported a {
+  font-size: 0.9em;
+  text-decoration: none;
+  color: steelblue;
+}
+main.unsupported div#unsupported {
   margin-top: 128px;
   padding-top: 12px;
   padding-bottom: 12px;
@@ -436,10 +497,10 @@ div#unsupported {
   border: 1px solid grey;
   border-radius: 4px;
 }
-div#unsupported div {
+main.unsupported div#unsupported div {
   margin-bottom: 32px;
 }
-div#unsupported ul {
+main.unsupported div#unsupported ul {
   margin-top: 8px;
   list-style: inside;
 }

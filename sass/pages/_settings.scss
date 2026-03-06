@@ -8,6 +8,8 @@ html.settings main {
   margin-left: 64px;
   margin-right: 64px;
 
+  color: var(--text);
+
   h1 {
     display: flex;
     align-items: center;
@@ -92,6 +94,8 @@ html.settings main {
       border: none;
       outline: none;
       width: 3em;
+
+      color: var(--text);
     }
   }
 }

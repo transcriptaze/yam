@@ -5,6 +5,11 @@ $white: colours.$white;
 $black: colours.$black;
 $grey: colours.$grey;
 
+$warm-beige: #f5e8d8;
+$light-gray: #e4e4e4;
+
+$deep-eucalyptus: #b8c3c7;
+
 [data-theme="dark"] {
   --background: #{$black};
 
@@ -12,9 +17,12 @@ $grey: colours.$grey;
   --metronome-button-enabled: #0099FF;
 
   --toolbar-button-disabled: #ffffff76;
-  --toolbar-button-enabled: #92b2e5c0;
+  --toolbar-button-enabled: #{$deep-eucalyptus};
 
   --track-colour-muted: #{$grey};
   --track-colour-deleting: #{$grey};
   --playlist-colour-deleting: #{$grey};
+
+  --text: #{$deep-eucalyptus};
+  --icon: #{$deep-eucalyptus};
 }

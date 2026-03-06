@@ -125,7 +125,7 @@ export class PlaylistTracks extends HTMLElement {
         widget.playlist = this.#playlist
         container.classList.add('adding')
 
-        document.addEventListener('mousedown', this.#clickOutside)
+        document.addEventListener('click', this.#clickOutside)
       }
     })()
   }

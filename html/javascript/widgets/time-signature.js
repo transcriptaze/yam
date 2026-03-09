@@ -335,48 +335,84 @@ export class TimeSignature extends HTMLElement {
   }
 
   #redraw(timeSignature) {
-    const tactus = this.shadowRoot.querySelector('button div img.tactus')
-    const figura = this.shadowRoot.querySelector('button div img.figura')
-    const common = this.shadowRoot.querySelector('button div img.common')
-    const cut = this.shadowRoot.querySelector('button div img.cut')
+    const tactus = {
+      span: this.shadowRoot.querySelector('button div span.icon-tactus'),
+      img: this.shadowRoot.querySelector('button div img.tactus'),
+    }
+
+    const figura = {
+      span: this.shadowRoot.querySelector('button div span.icon-figura'),
+      img: this.shadowRoot.querySelector('button div img.figura'),
+    }
+
+    const common = {
+      span: this.shadowRoot.querySelector('button div span.icon-common'),
+      img: this.shadowRoot.querySelector('button div img.common'),
+    }
+
+    const cut = {
+      span: this.shadowRoot.querySelector('button div span.icon-cut'),
+      img: this.shadowRoot.querySelector('button div img.cut'),
+    }
 
     const { beats, divisions } = parse(timeSignature)
 
     switch (true) {
       case timeSignature === '':
-        tactus.classList.add('hidden')
-        figura.classList.add('hidden')
-        common.classList.add('hidden')
-        cut.classList.add('hidden')
+        tactus.span.classList.add('hidden')
+        tactus.img.classList.add('hidden')
+        figura.span.classList.add('hidden')
+        figura.img.classList.add('hidden')
+        common.span.classList.add('hidden')
+        common.img.classList.add('hidden')
+        cut.span.classList.add('hidden')
+        cut.img.classList.add('hidden')
         break
 
       case timeSignature === 'common':
-        tactus.classList.add('hidden')
-        figura.classList.add('hidden')
-        common.classList.remove('hidden')
-        cut.classList.add('hidden')
+        tactus.span.classList.add('hidden')
+        tactus.img.classList.add('hidden')
+        figura.span.classList.add('hidden')
+        figura.img.classList.add('hidden')
+        common.span.classList.remove('hidden')
+        common.img.classList.remove('hidden')
+        cut.span.classList.add('hidden')
+        cut.img.classList.add('hidden')
         break
 
       case timeSignature === 'cut':
-        tactus.classList.add('hidden')
-        figura.classList.add('hidden')
-        common.classList.add('hidden')
-        cut.classList.remove('hidden')
+        tactus.span.classList.add('hidden')
+        tactus.img.classList.add('hidden')
+        figura.span.classList.add('hidden')
+        figura.img.classList.add('hidden')
+        common.span.classList.add('hidden')
+        common.img.classList.add('hidden')
+        cut.span.classList.remove('hidden')
+        cut.img.classList.remove('hidden')
         break
 
       default:
-        tactus.classList.remove('hidden')
-        figura.classList.remove('hidden')
-        common.classList.add('hidden')
-        cut.classList.add('hidden')
+        tactus.span.classList.remove('hidden')
+        tactus.img.classList.remove('hidden')
+        figura.span.classList.remove('hidden')
+        figura.img.classList.remove('hidden')
+        common.span.classList.add('hidden')
+        common.img.classList.add('hidden')
+        cut.span.classList.add('hidden')
+        cut.img.classList.add('hidden')
 
         if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
           if (TACTUS.has(`${beats}`)) {
-            tactus.src = TACTUS.get(`${beats}`)
+            const img = TACTUS.get(`${beats}`)
+            tactus.span.style.maskImage = `url('${img}')`
+            tactus.img.src = img
           }
 
           if (FIGURA.has(`${divisions}`)) {
-            figura.src = FIGURA.get(`${divisions}`)
+            const img = FIGURA.get(`${divisions}`)
+
+            figura.span.style.maskImage = `url('${img}')`
+            figura.img.src = img
           }
         }
     }

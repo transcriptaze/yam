@@ -26,7 +26,7 @@
       div {
         box-sizing: border-box;
         display: grid;
-        grid-template-columns: auto auto 1fr;
+        grid-template-columns: max-content auto 1fr;
         grid-template-rows: minmax(0, 1fr);
 
         height: 100%;
@@ -39,40 +39,113 @@
           display: none;
         }
 
+        span.icon {
+          box-sizing: border-box;
+
+          width: 100%;
+          height: 100%;
+          background-color: var(--icon);
+
+          mask-repeat: no-repeat;
+          mask-position: center;
+          mask-size: contain;
+
+          -webkit-mask-repeat: no-repeat;
+          -webkit-mask-size: contain;
+        }
+
+        span.icon.hidden {
+          display: none;
+        }
+
+        span.icon-stave {
+          grid-column: 1 / 4;
+          grid-row: 1;        
+
+          mask-image: url('/images/time-signatures/stave.svg');
+        }
+
+        span.icon-clef {
+          grid-column: 1;
+          grid-row: 1;        
+
+          mask-image: url('/images/time-signatures/clef.svg');
+        }
+
+        span.icon-tactus {
+          grid-column: 2;
+          grid-row: 1;
+
+          mask-image: url('/images/time-signatures/tactus/4.svg');
+        }
+
+        span.icon-figura {
+          grid-column: 2;
+          grid-row: 1;
+
+          mask-image: url('/images/time-signatures/figura/4.svg');
+        }
+
+        span.icon-common {
+          grid-column: 2;
+          grid-row: 1;
+
+          mask-image: url('/images/time-signatures/common.svg');
+        }
+
+        span.icon-cut {
+          grid-column: 2;
+          grid-row: 1;
+
+          mask-image: url('/images/time-signatures/cut.svg');
+        }
+
+        // NTS: hack to get the stave span sized correctly
         img.stave {
           grid-column: 1 / 4;
           grid-row: 1;
+
+          visibility: hidden; 
         }
 
+        // NTS: hack to get the clef span sized correctly
         img.clef {
           grid-column: 1;
           grid-row: 1;
+          visiblity: hidden;
         }
 
+        // NTS: hack to get the tactus span sized correctly
         img.tactus {
           grid-column: 2;
           grid-row: 1;
           justify-self: center;
+          visiblity: hidden;
         }
 
+        // NTS: hack to get the figure span sized correctly
         img.figura {
           grid-column: 2;
           grid-row: 1;
           justify-self: center;
+          visiblity: hidden;
         }
 
+        // NTS: hack to get the common span sized correctly
         img.common {
           grid-column: 2;
           grid-row: 1;
           justify-self: center;
+          visiblity: hidden;
         }
 
+        // NTS: hack to get the cut span sized correctly
         img.cut {
           grid-column: 2;
           grid-row: 1;
           justify-self: center;
+          visiblity: hidden;
         }
-
       }
     }
 

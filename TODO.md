@@ -18,7 +18,7 @@
     - [x] settings page
     - [x] unsupported page
     - [x] toolbar theme icon: light/dark faces
-    - [ ] time signature
+    - [x] time signature
     - [ ] pulse
     - [ ] BPM
     - [ ] loops

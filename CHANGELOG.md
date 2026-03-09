@@ -5,6 +5,8 @@
 ### Updated
 1. Fixed BPM cascade update bug in editor sections.
 2. Fixed loop not enabled after editing track.
+3. Fixed deleted tracks visible in _add-tracks_.
+4. Fixed _click_outside_ for _add-tracks_ in landscape.
 
 
 ## [0.1.0](https://github.com/transcriptaze/yam/releases/tag/v0.0.0) - 2026-02-16

@@ -5,7 +5,7 @@
 - [x] deleted tracks show up in 'add tracks' list https://github.com/transcriptaze/yam/issues/51
 - [x] landscape: can't delete bottom-most track on playlist track list
 - [x] landscape: can't add 'new track'
-- [ ] new tracks show up as 'new track' instead of the generated name
+- [x] new tracks show up in add-tracks as 'new track' instead of the generated name
 
 - [ ] dark mode (cf. https://github.com/transcriptaze/yam/issues/48)
     - [x] background
@@ -17,9 +17,13 @@
     - [x] about page
     - [x] settings page
     - [x] unsupported page
-    - [ ] toolbar theme icon
-        - light/dark faces
-
+    - [x] toolbar theme icon: light/dark faces
+    - [ ] time signature
+    - [ ] pulse
+    - [ ] BPM
+    - [ ] loops
+    - [ ] dings
+    - [ ] logo
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [x] Rework clock as generator

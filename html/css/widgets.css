@@ -158,10 +158,25 @@
   height: 100%;
   width: 104px;
 }
+:host(.component-mm) div.MM span.icon {
+  box-sizing: border-box;
+  background-color: var(--icon);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+}
+:host(.component-mm) div.MM span.icon-pulse {
+  mask-image: url("/images/MM/quarter-equals.svg");
+}
 :host(.component-mm) div.MM button.pulse {
   grid-column: 1;
   grid-row: 1;
   justify-self: end;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
   width: fit-content;
   height: 100%;
   background: none;
@@ -172,15 +187,25 @@
   margin: 0;
   line-height: 0;
 }
+:host(.component-mm) div.MM button.pulse span.icon {
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  height: 100%;
+}
 :host(.component-mm) div.MM button.pulse img {
+  grid-column: 1;
+  grid-row: 1;
   box-sizing: border-box;
   height: 100%;
+  visibility: hidden;
 }
 :host(.component-mm) div.MM input {
   grid-column: 2;
   grid-row: 1;
   justify-self: start;
   anchor-name: --text;
+  color: var(--text);
 }
 :host(.component-mm) div.MM #mirror {
   box-sizing: border-box;
@@ -307,6 +332,9 @@
 }
 :host(.component-mm) div.MM.locked button img {
   filter: brightness(0) saturate(100%) invert(22%) sepia(45%) saturate(3580%) hue-rotate(357deg) brightness(101%) contrast(95%);
+}
+:host(.component-mm) div.MM.locked span.icon {
+  background-color: #dc322f;
 }
 :host(.component-mm) div.MM.locked input {
   color: #dc322f;

@@ -45,8 +45,10 @@
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
+  --loop-enabled: #c63800;
   --text: #222222;
   --icon: #222222;
+  --icon-disabled: #999999;
 }
 
 [data-theme=dark] {
@@ -58,8 +60,10 @@
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
+  --loop-enabled: #c63800;
   --text: #b8c3c7;
   --icon: #b8c3c7;
+  --icon-disabled: #ffffff76;
 }
 
 main {

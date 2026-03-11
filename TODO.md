@@ -21,7 +21,7 @@
     - [x] time signature
     - [x] pulse
     - [x] BPM
-    - [ ] loops
+    - [x] loops
     - [ ] dings
     - [ ] logo
 

@@ -18,11 +18,23 @@
     - [x] settings page
     - [x] unsupported page
     - [x] toolbar theme icon: light/dark faces
-    - [x] time signature
+    - [ ] time signature
+        - [ ] disabled
+        - [ ] locked
+        - [ ] none
     - [x] pulse
+        - [ ] disabled
+        - [ ] locked
+        - [ ] none
     - [x] BPM
+        - [ ] disabled
+        - [ ] locked
+        - [ ] none
     - [x] loops
-    - [ ] dings
+    - [x] dings
+    - [ ] pads
+    - [ ] knob
+    - [ ] info
     - [ ] logo
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)

@@ -46,6 +46,7 @@
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
   --loop-enabled: #c63800;
+  --ding-enabled: #c63800;
   --text: #222222;
   --icon: #222222;
   --icon-disabled: #999999;
@@ -61,6 +62,7 @@
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
   --loop-enabled: #c63800;
+  --ding-enabled: #c63800;
   --text: #b8c3c7;
   --icon: #b8c3c7;
   --icon-disabled: #ffffff76;
@@ -1189,9 +1191,13 @@ div.beat.on div.shape {
   grid-row: 1;
   width: 48px;
   height: 40px;
-  background: url("/images/ding.svg") no-repeat center/contain;
-  background-size: 70% 70%;
-  filter: invert(25%) sepia(25%) saturate(8%) hue-rotate(3deg) brightness(99%) contrast(99%);
+  background-color: var(--icon);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 70% 70%;
+  mask-image: url("/images/ding.svg");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 70% 70%;
 }
 :host(.component-ding) div.ding input[type=checkbox] {
   box-sizing: border-box;
@@ -1202,11 +1208,10 @@ div.beat.on div.shape {
   height: 0;
 }
 :host(.component-ding) div.ding input[type=checkbox]:checked + label {
-  filter: invert(22%) sepia(45%) saturate(3580%) hue-rotate(357deg) brightness(101%) contrast(95%);
+  background-color: var(--ding-enabled);
 }
 :host(.component-ding) div.ding input[type=checkbox]:disabled + label {
-  filter: grayscale(40%) opacity(40%);
-  background-image: url("/images/ding.svg");
+  background-color: var(--icon-disabled);
 }
 :host(.component-ding) div.ding input[type=checkbox] {
   opacity: 0;

@@ -168,7 +168,8 @@ export class MM extends HTMLElement {
 
   set pulse(v) {
     const shadow = this.shadowRoot
-    const img = shadow.querySelector('#pulse')
+    const span = shadow.querySelector('#pulse span.icon-pulse')
+    const img = shadow.querySelector('#pulse img')
 
     if (v == null || v === '') {
       this.#pulse = 'quarter'
@@ -176,11 +177,9 @@ export class MM extends HTMLElement {
       this.#pulse = parsePulse(v)
     }
 
-    if (PULSES.has(this.#pulse)) {
-      img.src = PULSES.get(this.#pulse)
-    } else {
-      img.src = NONE
-    }
+    const src = PULSES.get(this.#pulse) ?? NONE
+    span.style.maskImage = `url('${src}')`
+    img.src = src
   }
 
   get BPM() {

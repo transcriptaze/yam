@@ -16,9 +16,15 @@
 
       width: 48px;
       height: 40px;
-      background: url('/images/ding.svg') no-repeat center / contain;
-      background-size: 70% 70%;
-      filter: invert(25%) sepia(25%) saturate(8%) hue-rotate(3deg) brightness(99%) contrast(99%);
+      background-color: var(--icon);
+
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-size: 70% 70%;
+      mask-image: url('/images/ding.svg');
+
+      -webkit-mask-repeat: no-repeat;
+      -webkit-mask-size: 70% 70%;      
     }
 
     input[type="checkbox"] {
@@ -32,12 +38,11 @@
     }
 
     input[type="checkbox"]:checked + label {
-      filter: invert(22%) sepia(45%) saturate(3580%) hue-rotate(357deg) brightness(101%) contrast(95%);
+      background-color: var(--ding-enabled);
     }
 
     input[type="checkbox"]:disabled + label {
-      filter: grayscale(40%) opacity(40%);
-      background-image: url('/images/ding.svg');
+      background-color: var(--icon-disabled);
     }
 
     input[type="checkbox"] {

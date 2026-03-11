@@ -18,6 +18,10 @@ $grey: colours.$grey;
   --track-colour-deleting: #{$grey};
   --playlist-colour-deleting: #{$grey};
 
+  --loop-enabled: #c63800;
+  --ding-enabled: #c63800;
+
   --text: #{$black};
   --icon: #{$black};
+  --icon-disabled: #999999;
 }

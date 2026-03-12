@@ -42,14 +42,22 @@
   --metronome-button-enabled: #222222;
   --toolbar-button-disabled: #ffffff76;
   --toolbar-button-enabled: #222222;
+  --toolbar-button-active: #b24a2c;
+  --toolbar-button-hover: #c00000;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
+  --beat-off: black;
+  --beat-on: red;
+  --info-title: #222222;
+  --time-signature-none: #bfbfbf;
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;
   --text: #222222;
+  --text-locked: #dc322f;
   --icon: #222222;
   --icon-disabled: #999999;
+  --icon-locked: #dc322f;
 }
 
 [data-theme=dark] {
@@ -58,14 +66,21 @@
   --metronome-button-enabled: #0099FF;
   --toolbar-button-disabled: #ffffff76;
   --toolbar-button-enabled: #b8c3c7;
+  --toolbar-button-active: #b24a2c;
+  --toolbar-button-hover: #d00000;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
+  --beat-off: rgba(184, 195, 199, 0.45);
+  --beat-on: rgba(255, 0, 0, 0.9);
+  --info-title: #b8c3c7;
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;
   --text: #b8c3c7;
+  --text-locked: #dc322f;
   --icon: #b8c3c7;
   --icon-disabled: #ffffff76;
+  --icon-locked: #dc322f;
 }
 
 main {
@@ -225,9 +240,6 @@ html.settings main h2 {
 html.settings main img {
   user-select: none;
   -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -o-user-select: none;
 }
 html.settings main div.settings {
   min-width: 200px;
@@ -284,7 +296,7 @@ html.settings main div.volume input[type=text] {
 }
 
 @media (max-width: 768px) and (orientation: portrait) {
-  html.settings maint {
+  html.settings main {
     height: calc(100% - 48px);
     margin-left: 0px;
     margin-right: 0px;
@@ -293,7 +305,7 @@ html.settings main div.volume input[type=text] {
     padding-left: 16px;
     padding-right: 24px;
   }
-  html.settings maint h1 {
+  html.settings main h1 {
     font-size: 1.2em;
   }
 }
@@ -387,9 +399,6 @@ main.about span.icon-github {
 main.about img {
   user-select: none;
   -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -o-user-select: none;
 }
 main.about a {
   font-size: 0.9em;
@@ -630,7 +639,7 @@ toolbar a {
   padding-right: 6px;
 }
 toolbar #reset:hover {
-  filter: invert(10%) sepia(99%) saturate(5774%) hue-rotate(14deg) brightness(90%) contrast(121%);
+  background-color: var(--toolbar-button-hover);
 }
 toolbar #settings {
   display: none;
@@ -638,8 +647,8 @@ toolbar #settings {
 toolbar #bug {
   display: none;
 }
-toolbar #wakelock.active img {
-  filter: invert(10%) sepia(99%) saturate(5774%) hue-rotate(14deg) brightness(90%) contrast(121%);
+toolbar #wakelock.active {
+  background-color: var(--toolbar-button-active);
 }
 
 toolbar.metronome #metronome {
@@ -1046,7 +1055,6 @@ body {
 }
 body div.content {
   min-width: max-content;
-  display: flex;
   overflow: hidden;
   display: grid;
   grid-template-columns: 1fr auto;
@@ -1076,7 +1084,7 @@ dialog.import div {
   padding-left: 12px;
   padding-right: 12px;
   display: grid;
-  grid-template-columns: 1f 1fr;
+  grid-template-columns: 1fr 1fr;
   grid-template-rows: auto auto;
   column-gap: 16px;
   row-gap: 12px;

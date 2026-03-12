@@ -181,8 +181,8 @@
   }
 
   button:disabled {
-    img {
-      filter: grayscale(100%) opacity(50%);    
+    span.icon {
+      background-color: var(--icon-disabled);
     }
   } 
 
@@ -237,19 +237,12 @@
   }
 
   div.MM.locked {
-    button {
-      cursor: auto;    
-      img {
-        filter: brightness(0) saturate(100%) invert(22%) sepia(45%) saturate(3580%) hue-rotate(357deg) brightness(101%) contrast(95%);
-      }
-    }
-
     span.icon {
-      background-color: #dc322f;
+      background-color: var(--icon-locked);
     }
 
     input {
-      color: #dc322f;
+      color:  var(--text-locked)
     }
 
     div.overlay {

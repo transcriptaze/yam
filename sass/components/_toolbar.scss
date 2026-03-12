@@ -152,7 +152,7 @@ toolbar {
   }
 
   #reset:hover {
-    filter: invert(10%) sepia(99%) saturate(5774%) hue-rotate(14deg) brightness(90%) contrast(121%);
+    background-color: var(--toolbar-button-hover);
   }
 
   #settings {
@@ -164,9 +164,7 @@ toolbar {
   }
 
   #wakelock.active {
-    img {
-      filter: invert(10%) sepia(99%) saturate(5774%) hue-rotate(14deg) brightness(90%) contrast(121%);
-    }
+    background-color: var(--toolbar-button-active);
   }
 }
 

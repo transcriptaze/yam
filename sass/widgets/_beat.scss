@@ -9,7 +9,7 @@ div.beat {
     box-sizing: border-box;
 
     aspect-ratio: 1 / 1;
-    background-color: black;
+    background-color: var(--beat-off);
 
     width: 100%;
     margin-left: 10%;
@@ -18,9 +18,6 @@ div.beat {
 }
 
 :host(.block) div.beat{
-  // container-type: inline-size;
-  // container-name: beat;     
-
   div.shape {
     border-radius: 16%;
     clip-path: inset(0 round 16%); 
@@ -54,13 +51,6 @@ div.beat {
 
 div.beat.on {
   div.shape {
-    background-color: red;  
+    background-color: var(--beat-on);  
   }
 }
-
-// @container beat (max-width: 32px) {
-//   :host(.block) div.beat div.shape {
-//     border-radius: 12.5%;
-//     clip-path: inset(0 round 12.5%); 
-//   }
-// }

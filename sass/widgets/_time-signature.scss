@@ -33,10 +33,7 @@
 
         img {
           height: 100%;
-        }
-
-        img.hidden {
-          display: none;
+          visibility: hidden;
         }
 
         span.icon {
@@ -104,15 +101,12 @@
         img.stave {
           grid-column: 1 / 4;
           grid-row: 1;
-
-          visibility: hidden; 
         }
 
         // NTS: hack to get the clef span sized correctly
         img.clef {
           grid-column: 1;
           grid-row: 1;
-          visiblity: hidden;
         }
 
         // NTS: hack to get the tactus span sized correctly
@@ -120,7 +114,6 @@
           grid-column: 2;
           grid-row: 1;
           justify-self: center;
-          visiblity: hidden;
         }
 
         // NTS: hack to get the figure span sized correctly
@@ -128,7 +121,6 @@
           grid-column: 2;
           grid-row: 1;
           justify-self: center;
-          visiblity: hidden;
         }
 
         // NTS: hack to get the common span sized correctly
@@ -136,7 +128,6 @@
           grid-column: 2;
           grid-row: 1;
           justify-self: center;
-          visiblity: hidden;
         }
 
         // NTS: hack to get the cut span sized correctly
@@ -144,15 +135,15 @@
           grid-column: 2;
           grid-row: 1;
           justify-self: center;
-          visiblity: hidden;
         }
       }
     }
 
     button:disabled {
-      img {
-        filter: grayscale(100%) opacity(50%);
-        cursor: auto;
+      div {
+        span.icon {
+          background-color: var(--icon-disabled);
+        }
       }
     }
 
@@ -279,26 +270,32 @@
 
   div.time-signature.none {
     button{
-      img {
-        filter: grayscale(100%) opacity(25%);
+      div {
+        span.icon {
+          background-color: var(--time-signature-none);
+        }
       }
     }
   }
  
   div.time-signature.disabled {
     button{
-      img {
-        filter: grayscale(100%) opacity(50%);
+      div {
+        span.icon {
+          background-color: var(--icon-disabled);
+        }
       }
     }
   }
 
   div.time-signature.locked {
     button {
-      cursor: auto;    
-      img {
-        filter: brightness(0) saturate(100%) invert(22%) sepia(45%) saturate(3580%) hue-rotate(357deg) brightness(101%) contrast(95%);
+      div {
+        span.icon {
+          background-color: var(--icon-locked);
+        }      
       }
+      cursor: auto;    
     }
 
     div.overlay {
@@ -311,16 +308,6 @@
       animation: tapped 3.5s ease-in-out forwards;
     }
   }
-
-//  @-moz-document url-prefix() {
-//    img.tactus {
-//      margin-left: 0px;
-//    }
-//    
-//    img.figura {
-//      margin-left: 0px;
-//    }
-//  }
 
   @keyframes tapped {
     0%   { opacity: 0; }

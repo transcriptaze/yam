@@ -47,11 +47,14 @@
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
+  --time-signature-none: #bfbfbf;
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;
   --text: #222222;
+  --text-locked: #dc322f;
   --icon: #222222;
   --icon-disabled: #999999;
+  --icon-locked: #dc322f;
 }
 
 [data-theme=dark] {
@@ -68,8 +71,10 @@
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;
   --text: #b8c3c7;
+  --text-locked: #dc322f;
   --icon: #b8c3c7;
   --icon-disabled: #ffffff76;
+  --icon-locked: #dc322f;
 }
 
 main {

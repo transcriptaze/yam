@@ -47,11 +47,14 @@
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
+  --time-signature-none: #bfbfbf;
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;
   --text: #222222;
+  --text-locked: #dc322f;
   --icon: #222222;
   --icon-disabled: #999999;
+  --icon-locked: #dc322f;
 }
 
 [data-theme=dark] {
@@ -68,8 +71,10 @@
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;
   --text: #b8c3c7;
+  --text-locked: #dc322f;
   --icon: #b8c3c7;
   --icon-disabled: #ffffff76;
+  --icon-locked: #dc322f;
 }
 
 :host(.component-metronome) div.metronome {
@@ -296,8 +301,8 @@
   padding-left: 2px;
   padding-right: 2px;
 }
-:host(.component-mm) button:disabled img {
-  filter: grayscale(100%) opacity(50%);
+:host(.component-mm) button:disabled span.icon {
+  background-color: var(--icon-disabled);
 }
 :host(.component-mm) input {
   box-sizing: border-box;
@@ -337,17 +342,11 @@
   font-size: 20px;
   font-weight: 800;
 }
-:host(.component-mm) div.MM.locked button {
-  cursor: auto;
-}
-:host(.component-mm) div.MM.locked button img {
-  filter: brightness(0) saturate(100%) invert(22%) sepia(45%) saturate(3580%) hue-rotate(357deg) brightness(101%) contrast(95%);
-}
 :host(.component-mm) div.MM.locked span.icon {
-  background-color: #dc322f;
+  background-color: var(--icon-locked);
 }
 :host(.component-mm) div.MM.locked input {
-  color: #dc322f;
+  color: var(--text-locked);
 }
 :host(.component-mm) div.MM.locked div.overlay {
   pointer-events: auto;
@@ -407,9 +406,7 @@
 }
 :host(.component-time-signature) div.time-signature button div img {
   height: 100%;
-}
-:host(.component-time-signature) div.time-signature button div img.hidden {
-  display: none;
+  visibility: hidden;
 }
 :host(.component-time-signature) div.time-signature button div span.icon {
   box-sizing: border-box;
@@ -458,40 +455,33 @@
 :host(.component-time-signature) div.time-signature button div img.stave {
   grid-column: 1/4;
   grid-row: 1;
-  visibility: hidden;
 }
 :host(.component-time-signature) div.time-signature button div img.clef {
   grid-column: 1;
   grid-row: 1;
-  visiblity: hidden;
 }
 :host(.component-time-signature) div.time-signature button div img.tactus {
   grid-column: 2;
   grid-row: 1;
   justify-self: center;
-  visiblity: hidden;
 }
 :host(.component-time-signature) div.time-signature button div img.figura {
   grid-column: 2;
   grid-row: 1;
   justify-self: center;
-  visiblity: hidden;
 }
 :host(.component-time-signature) div.time-signature button div img.common {
   grid-column: 2;
   grid-row: 1;
   justify-self: center;
-  visiblity: hidden;
 }
 :host(.component-time-signature) div.time-signature button div img.cut {
   grid-column: 2;
   grid-row: 1;
   justify-self: center;
-  visiblity: hidden;
 }
-:host(.component-time-signature) div.time-signature button:disabled img {
-  filter: grayscale(100%) opacity(50%);
-  cursor: auto;
+:host(.component-time-signature) div.time-signature button:disabled div span.icon {
+  background-color: var(--icon-disabled);
 }
 :host(.component-time-signature) div.time-signature div.overlay {
   grid-row: 1;
@@ -588,17 +578,17 @@
 :host(.component-time-signature) div.time-signature div#list div.content div.custom yam-figura {
   width: 172px;
 }
-:host(.component-time-signature) div.time-signature.none button img {
-  filter: grayscale(100%) opacity(25%);
+:host(.component-time-signature) div.time-signature.none button div span.icon {
+  background-color: var(--time-signature-none);
 }
-:host(.component-time-signature) div.time-signature.disabled button img {
-  filter: grayscale(100%) opacity(50%);
+:host(.component-time-signature) div.time-signature.disabled button div span.icon {
+  background-color: var(--icon-disabled);
 }
 :host(.component-time-signature) div.time-signature.locked button {
   cursor: auto;
 }
-:host(.component-time-signature) div.time-signature.locked button img {
-  filter: brightness(0) saturate(100%) invert(22%) sepia(45%) saturate(3580%) hue-rotate(357deg) brightness(101%) contrast(95%);
+:host(.component-time-signature) div.time-signature.locked button div span.icon {
+  background-color: var(--icon-locked);
 }
 :host(.component-time-signature) div.time-signature.locked div.overlay {
   pointer-events: auto;

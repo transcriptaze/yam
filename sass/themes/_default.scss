@@ -21,10 +21,14 @@ $grey: colours.$grey;
   --track-colour-deleting: #{$grey};
   --playlist-colour-deleting: #{$grey};
 
+  --time-signature-none: #bfbfbf;
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;
 
   --text: #{$black};
+  --text-locked: #dc322f;
+
   --icon: #{$black};
   --icon-disabled: #999999;
+  --icon-locked: #dc322f;
 }

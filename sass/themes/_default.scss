@@ -13,13 +13,17 @@ $grey: colours.$grey;
 
   --toolbar-button-disabled: #ffffff76;
   --toolbar-button-enabled: #222222;
+  --toolbar-button-active: #b24a2c;
+  --toolbar-button-hover: #c00000;
 
-  --beat-off: black;
-  --beat-on: red;
-  
   --track-colour-muted: #{$grey};
   --track-colour-deleting: #{$grey};
   --playlist-colour-deleting: #{$grey};
+
+  --beat-off: black;
+  --beat-on: red;
+
+  --info-title: #222222;  
 
   --time-signature-none: #bfbfbf;
   --loop-enabled: #c63800;

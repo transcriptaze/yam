@@ -18,13 +18,17 @@ $deep-eucalyptus: #b8c3c7;
 
   --toolbar-button-disabled: #ffffff76;
   --toolbar-button-enabled: #{$deep-eucalyptus};
-
-  --beat-off: #{color.change($deep-eucalyptus, $alpha: 0.45)};
-  --beat-on: #{color.change(red, $alpha: 0.9)};
+  --toolbar-button-active: #b24a2c;
+  --toolbar-button-hover: #d00000;
 
   --track-colour-muted: #{$grey};
   --track-colour-deleting: #{$grey};
   --playlist-colour-deleting: #{$grey};
+
+  --beat-off: #{color.change($deep-eucalyptus, $alpha: 0.45)};
+  --beat-on: #{color.change(red, $alpha: 0.9)};
+
+  --info-title: #{$deep-eucalyptus};  
 
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;

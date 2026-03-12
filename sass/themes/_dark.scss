@@ -19,6 +19,9 @@ $deep-eucalyptus: #b8c3c7;
   --toolbar-button-disabled: #ffffff76;
   --toolbar-button-enabled: #{$deep-eucalyptus};
 
+  --beat-off: #{color.change($deep-eucalyptus, $alpha: 0.45)};
+  --beat-on: #{color.change(red, $alpha: 0.9)};
+
   --track-colour-muted: #{$grey};
   --track-colour-deleting: #{$grey};
   --playlist-colour-deleting: #{$grey};

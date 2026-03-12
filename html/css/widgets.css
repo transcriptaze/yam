@@ -42,6 +42,8 @@
   --metronome-button-enabled: #222222;
   --toolbar-button-disabled: #ffffff76;
   --toolbar-button-enabled: #222222;
+  --beat-off: black;
+  --beat-on: red;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
@@ -58,6 +60,8 @@
   --metronome-button-enabled: #0099FF;
   --toolbar-button-disabled: #ffffff76;
   --toolbar-button-enabled: #b8c3c7;
+  --beat-off: rgba(184, 195, 199, 0.45);
+  --beat-on: rgba(255, 0, 0, 0.9);
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
@@ -664,7 +668,7 @@ div.beat {
 div.beat div.shape {
   box-sizing: border-box;
   aspect-ratio: 1/1;
-  background-color: black;
+  background-color: var(--beat-off);
   width: 100%;
   margin-left: 10%;
   margin-right: 10%;
@@ -690,7 +694,7 @@ div.beat div.shape {
 }
 
 div.beat.on div.shape {
-  background-color: red;
+  background-color: var(--beat-on);
 }
 
 :host(.component-knob) .knob {

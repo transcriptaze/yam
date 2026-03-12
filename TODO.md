@@ -32,7 +32,7 @@
         - [ ] none
     - [x] loops
     - [x] dings
-    - [ ] pads
+    - [x] pads
     - [ ] knob
     - [ ] info
     - [ ] logo

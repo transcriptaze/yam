@@ -23,11 +23,16 @@ $grey: colours.$grey;
   --beat-off: black;
   --beat-on: red;
 
-  --info-title: #222222;  
+  --info-title-text: #222222;
+  --info-detail-text: #222222;
 
   --time-signature-none: #bfbfbf;
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;
+
+  --knob-background-opacity: 40%;
+  --knob-ticks: #222222;
+  --knob-labels: #222222;
 
   --text: #{$black};
   --text-locked: #dc322f;

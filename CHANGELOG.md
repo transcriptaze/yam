@@ -2,6 +2,9 @@
 
 ## [0.1.0](https://github.com/transcriptaze/yam/releases/tag/v0.0.0) - 2026-02-16
 
+### Added
+1. Dark mode.
+
 ### Updated
 1. Fixed BPM cascade update bug in editor sections.
 2. Fixed loop not enabled after editing track.

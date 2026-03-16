@@ -49,10 +49,14 @@
   --playlist-colour-deleting: #a0a0a0;
   --beat-off: black;
   --beat-on: red;
-  --info-title: #222222;
+  --info-title-text: #222222;
+  --info-detail-text: #222222;
   --time-signature-none: #bfbfbf;
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;
+  --knob-background-opacity: 40%;
+  --knob-ticks: #222222;
+  --knob-labels: #222222;
   --text: #222222;
   --text-locked: #dc322f;
   --icon: #222222;
@@ -73,7 +77,11 @@
   --playlist-colour-deleting: #a0a0a0;
   --beat-off: rgba(184, 195, 199, 0.45);
   --beat-on: rgba(255, 0, 0, 0.9);
-  --info-title: #b8c3c7;
+  --info-title-text: #b8c3c7;
+  --info-detail-text: #b8c3c7;
+  --knob-background-opacity: 0%;
+  --knob-ticks: #b8c3c7;
+  --knob-labels: rgba(184, 195, 199, 0.7);
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;
   --text: #b8c3c7;

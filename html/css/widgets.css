@@ -49,10 +49,14 @@
   --playlist-colour-deleting: #a0a0a0;
   --beat-off: black;
   --beat-on: red;
-  --info-title: #222222;
+  --info-title-text: #222222;
+  --info-detail-text: #222222;
   --time-signature-none: #bfbfbf;
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;
+  --knob-background-opacity: 40%;
+  --knob-ticks: #222222;
+  --knob-labels: #222222;
   --text: #222222;
   --text-locked: #dc322f;
   --icon: #222222;
@@ -73,7 +77,11 @@
   --playlist-colour-deleting: #a0a0a0;
   --beat-off: rgba(184, 195, 199, 0.45);
   --beat-on: rgba(255, 0, 0, 0.9);
-  --info-title: #b8c3c7;
+  --info-title-text: #b8c3c7;
+  --info-detail-text: #b8c3c7;
+  --knob-background-opacity: 0%;
+  --knob-ticks: #b8c3c7;
+  --knob-labels: rgba(184, 195, 199, 0.7);
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;
   --text: #b8c3c7;
@@ -718,7 +726,7 @@ div.beat.on div.shape {
   overflow: hidden;
   background: radial-gradient(circle at 50% 50%, #000000, rgba(192, 192, 192, 0));
   filter: contrast(200%) brightness(500%);
-  opacity: 40%;
+  opacity: var(--knob-background-opacity);
 }
 :host(.component-knob) .knob div.background svg {
   mix-blend-mode: multiply;
@@ -733,6 +741,13 @@ div.beat.on div.shape {
   margin: 20px;
   overflow: visible;
   z-index: 2;
+}
+:host(.component-knob) .knob svg .ticks {
+  stroke: var(--knob-ticks);
+  fill: var(--knob-ticks);
+}
+:host(.component-knob) .knob svg .labels {
+  fill: var(--knob-labels);
 }
 :host(.component-knob) .knob div.overlay {
   grid-column: 1;
@@ -877,7 +892,6 @@ div.beat.on div.shape {
 
 :host(.component-info) {
   --accent-color: #71a9a0;
-  --text: #222222;
 }
 :host(.component-info) div.info {
   box-sizing: border-box;
@@ -932,7 +946,7 @@ div.beat.on div.shape {
   padding-bottom: 8px;
   padding-left: 12px;
   padding-right: 12px;
-  color: var(--info-title);
+  color: var(--info-title-text);
   font-size: 0.9em;
   font-weight: 500;
   text-overflow: ellipsis;
@@ -972,10 +986,10 @@ div.beat.on div.shape {
   padding-right: 8px;
   padding-top: 2px;
   padding-bottom: 2px;
+  color: var(--info-detail-text);
   font-size: 0.8em;
   font-style: italic;
   font-weight: normal;
-  color: #222222;
   line-height: 16px;
   vertical-align: middle;
   z-index: 2;
@@ -983,7 +997,7 @@ div.beat.on div.shape {
 :host(.component-info) div.info div.detail div.text.playing {
   font-style: normal;
   font-weight: bold;
-  color: var(--text-color);
+  color: var(--text);
 }
 :host(.component-info) div.info button {
   background: rgba(192, 192, 192, 0.2509803922);
@@ -1032,17 +1046,12 @@ div.beat.on div.shape {
   width: 100%;
   height: 100%;
   appearance: none;
-  -moz-appearance: none;
   -webkit-appearance: none;
 }
 :host(.component-info) div.info progress::-webkit-progress-bar {
   background: none;
 }
 :host(.component-info) div.info progress::-webkit-progress-value {
-  background: var(--accent-color);
-  opacity: 90%;
-}
-:host(.component-info) div.info progress::-moz-progress-bar {
   background: var(--accent-color);
   opacity: 90%;
 }

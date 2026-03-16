@@ -1,7 +1,6 @@
 :host(.component-info) {
 
   --accent-color: #71a9a0;
-  --text: #222222;
 
   div.info {
     box-sizing: border-box;
@@ -70,7 +69,7 @@
         padding-left: 12px;
         padding-right: 12px;
 
-        color: var(--info-title);
+        color: var(--info-title-text);
         font-size: 0.9em;
         font-weight: 500;
         text-overflow: ellipsis;
@@ -122,10 +121,10 @@
         padding-top: 2px;
         padding-bottom: 2px;
 
+        color: var(--info-detail-text);
         font-size: 0.8em;
         font-style: italic;
         font-weight: normal;
-        color: #222222;
 
         line-height: 16px;
         vertical-align: middle;
@@ -136,7 +135,7 @@
       div.text.playing {
         font-style: normal;
         font-weight: bold;
-        color: var(--text-color);
+        color: var(--text);
       }
     }
 
@@ -160,6 +159,22 @@
         filter: grayscale(100%) opacity(50%);
       }
     }
+
+    // button.icon {
+    //   background-color: var(--icon);
+    // 
+    //   mask-repeat: no-repeat;
+    //   mask-position: center;
+    //   mask-size: contain;
+    //   mask-image: url('/images/save.svg');
+    // 
+    //   -webkit-mask-repeat: no-repeat;
+    //   -webkit-mask-size: contain;
+    // 
+    //   img {
+    //     visibility: hidden;
+    //   }
+    // }
 
     span.infinity {
       font-family: "YAM", "Lato", sans;
@@ -202,7 +217,6 @@
       height: 100%;
 
       appearance: none;
-      -moz-appearance: none;
       -webkit-appearance: none;
 
       &::-webkit-progress-bar {
@@ -210,11 +224,6 @@
       }
 
       &::-webkit-progress-value {
-        background: var(--accent-color);
-        opacity: 90%;
-      }
-
-      &::-moz-progress-bar {
         background: var(--accent-color);
         opacity: 90%;
       }

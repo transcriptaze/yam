@@ -31,6 +31,10 @@ $deep-eucalyptus: #b8c3c7;
   --info-title-text: #{$deep-eucalyptus};
   --info-detail-text: #{$deep-eucalyptus};
 
+  --knob-background-opacity: 0%;
+  --knob-ticks:  #{$deep-eucalyptus};
+  --knob-labels:  #{rgba($deep-eucalyptus, 0.7)};
+
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;
 

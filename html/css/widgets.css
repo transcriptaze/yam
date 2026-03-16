@@ -54,6 +54,9 @@
   --time-signature-none: #bfbfbf;
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;
+  --knob-background-opacity: 40%;
+  --knob-ticks: #222222;
+  --knob-labels: #222222;
   --text: #222222;
   --text-locked: #dc322f;
   --icon: #222222;
@@ -76,6 +79,9 @@
   --beat-on: rgba(255, 0, 0, 0.9);
   --info-title-text: #b8c3c7;
   --info-detail-text: #b8c3c7;
+  --knob-background-opacity: 0%;
+  --knob-ticks: #b8c3c7;
+  --knob-labels: rgba(184, 195, 199, 0.7);
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;
   --text: #b8c3c7;
@@ -720,7 +726,7 @@ div.beat.on div.shape {
   overflow: hidden;
   background: radial-gradient(circle at 50% 50%, #000000, rgba(192, 192, 192, 0));
   filter: contrast(200%) brightness(500%);
-  opacity: 40%;
+  opacity: var(--knob-background-opacity);
 }
 :host(.component-knob) .knob div.background svg {
   mix-blend-mode: multiply;
@@ -735,6 +741,13 @@ div.beat.on div.shape {
   margin: 20px;
   overflow: visible;
   z-index: 2;
+}
+:host(.component-knob) .knob svg .ticks {
+  stroke: var(--knob-ticks);
+  fill: var(--knob-ticks);
+}
+:host(.component-knob) .knob svg .labels {
+  fill: var(--knob-labels);
 }
 :host(.component-knob) .knob div.overlay {
   grid-column: 1;

@@ -30,7 +30,7 @@
 
       background: radial-gradient(circle at 50% 50%, #000000, rgba(192,192,192,0));
       filter: contrast(200%) brightness(500%);
-      opacity: 40%;
+      opacity: var(--knob-background-opacity);
 
       svg {
          mix-blend-mode: multiply;
@@ -48,7 +48,16 @@
       margin: 20px;
 
       overflow: visible;
-      z-index: 2
+      z-index: 2;
+
+      .ticks {
+         stroke:  var(--knob-ticks);
+         fill:  var(--knob-ticks);
+      }
+
+      .labels {
+         fill:  var(--knob-labels);
+      }
     }
 
     div.overlay {

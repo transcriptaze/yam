@@ -24,10 +24,10 @@
     - [x] loops
     - [x] dings
     - [x] pads
+    - [x] knob
     - [ ] info
        - [ ] details border
        - [ ] missing border-radius somewhere
-    - [ ] knob
     - [ ] logo
     - [ ] panel border
     - [ ] panel backgrounds

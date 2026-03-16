@@ -28,7 +28,8 @@ $deep-eucalyptus: #b8c3c7;
   --beat-off: #{color.change($deep-eucalyptus, $alpha: 0.45)};
   --beat-on: #{color.change(red, $alpha: 0.9)};
 
-  --info-title: #{$deep-eucalyptus};  
+  --info-title-text: #{$deep-eucalyptus};
+  --info-detail-text: #{$deep-eucalyptus};
 
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;

@@ -25,8 +25,12 @@
     - [x] dings
     - [x] pads
     - [ ] info
+       - [ ] details border
+       - [ ] missing border-radius somewhere
     - [ ] knob
     - [ ] logo
+    - [ ] panel border
+    - [ ] panel backgrounds
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [x] Rework clock as generator

@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Added
+1. Dark mode.
+
 ### Updated
 1. Fixed BPM cascade update bug in editor sections.
 2. Fixed loop not enabled after editing track.

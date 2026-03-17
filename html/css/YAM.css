@@ -63,6 +63,10 @@
   --icon: #222222;
   --icon-disabled: #999999;
   --icon-locked: #dc322f;
+  --playlist-title-background: rgba(255, 128, 0, 0.2509803922);
+  --playlist-title-text: #804000;
+  --playlist-tracks-background: #fefefe40;
+  --playlist-tracks-text: #444444;
 }
 
 [data-theme=dark] {
@@ -91,6 +95,10 @@
   --icon: #b8c3c7;
   --icon-disabled: #ffffff76;
   --icon-locked: #dc322f;
+  --playlist-title-background: #9e5d4d;
+  --playlist-title-text: #cfc1b9;
+  --playlist-tracks-background: #8a5049;
+  --playlist-tracks-text: #b8a39a;
 }
 
 main {

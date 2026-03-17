@@ -63,6 +63,10 @@
   --icon: #222222;
   --icon-disabled: #999999;
   --icon-locked: #dc322f;
+  --playlist-title-background: rgba(255, 128, 0, 0.2509803922);
+  --playlist-title-text: #804000;
+  --playlist-tracks-background: #fefefe40;
+  --playlist-tracks-text: #444444;
 }
 
 [data-theme=dark] {
@@ -91,6 +95,10 @@
   --icon: #b8c3c7;
   --icon-disabled: #ffffff76;
   --icon-locked: #dc322f;
+  --playlist-title-background: #9e5d4d;
+  --playlist-title-text: #cfc1b9;
+  --playlist-tracks-background: #8a5049;
+  --playlist-tracks-text: #b8a39a;
 }
 
 :host(.component-metronome) div.metronome {
@@ -1374,7 +1382,7 @@ div.beat.on div.shape {
   display: grid;
   grid-template-columns: 36px 1fr auto;
   grid-template-rows: auto;
-  background: rgba(255, 128, 0, 0.2509803922);
+  background: var(--playlist-title-background);
   color: #804000;
   overflow: hidden;
   outline: none;
@@ -1485,6 +1493,7 @@ div.beat.on div.shape {
   border-radius: 4px;
   outline: none;
   background: none;
+  color: var(--playlist-title-text);
   font-weight: 500;
   text-align: center;
   text-overflow: ellipsis;
@@ -1509,7 +1518,7 @@ div.beat.on div.shape {
   display: flex;
   flex-direction: column;
   justify-items: start;
-  background: rgba(254, 254, 254, 0.2509803922);
+  background: var(--playlist-tracks-background);
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
@@ -1816,7 +1825,7 @@ div.playlist-track {
   grid-template-rows: auto;
   align-items: center;
   column-gap: 4px;
-  color: #444444;
+  color: var(--playlist-tracks-text);
   font-size: 0.9em;
   border-bottom: 1px solid #aaaaaa;
 }

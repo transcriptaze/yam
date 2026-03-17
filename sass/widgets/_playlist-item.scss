@@ -10,7 +10,7 @@ div.playlist-track {
   align-items: center;
   column-gap: 4px;
 
-  color: #444444;
+  color: var(--playlist-tracks-text);
   font-size: 0.9em;
 
   border-bottom: 1px solid #aaaaaa;

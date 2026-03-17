@@ -5,11 +5,18 @@
 - [x] ~~'All Tracks' should not display tracklist~~
 
 - [ ] dark mode (cf. https://github.com/transcriptaze/yam/issues/48)
+    - [x] panel border
     - [x] knob
     - [ ] wheel
-    - [x] panel border
     - [ ] playlist
-       - [ ] background
+       - [x] title
+       - [x] tracks
+       - [ ] menu dots
+       - [ ] icons
+       - [ ] add button 
+       - [ ] '+' button
+       - [ ] add-tracks
+
     - [ ] editor
        - [ ] background
     - [ ] info

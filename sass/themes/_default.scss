@@ -5,8 +5,11 @@ $white: colours.$white;
 $black: colours.$black;
 $grey: colours.$grey;
 
+$amber: #ff800040;
+
 :root {
   --background: #{$white} url("../images/textures/ricepaper_v3.png");
+  --panel-border: 1px solid red;
 
   --metronome-button-disabled: #c0c0c0;
   --metronome-button-enabled: #222222;
@@ -40,4 +43,9 @@ $grey: colours.$grey;
   --icon: #{$black};
   --icon-disabled: #999999;
   --icon-locked: #dc322f;
+
+  --playlist-title-background: #{$amber};
+  --playlist-title-text: #804000;
+  --playlist-tracks-background: #fefefe40;
+  --playlist-tracks-text: #444444;
 }

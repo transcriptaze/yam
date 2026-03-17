@@ -4,14 +4,21 @@
 $white: colours.$white;
 $black: colours.$black;
 $grey: colours.$grey;
+$deep-eucalyptus: #b8c3c7;
 
 $warm-beige: #f5e8d8;
 $light-gray: #e4e4e4;
+$rusty-blue: #5b8fb9;
+$muted-cyan-slate: #4f7c82;
 
-$deep-eucalyptus: #b8c3c7;
+$muted-terracotta: #9e5d4d;
+$subtle-warm-gray: #cfc1b9;
+$burnt-clay: #8a5049;
+$muted-warm-gray: #b8a39a;
 
 [data-theme="dark"] {
   --background: #{$black};
+  --panel-border: 1px solid #{$rusty-blue};
 
   --metronome-button-disabled: #50638F;
   --metronome-button-enabled: #0099FF;
@@ -44,4 +51,9 @@ $deep-eucalyptus: #b8c3c7;
   --icon: #{$deep-eucalyptus};
   --icon-disabled: #ffffff76;
   --icon-locked: #dc322f;
+
+  --playlist-title-background: #{$muted-terracotta};
+  --playlist-title-text: #{$subtle-warm-gray};
+  --playlist-tracks-background: #{$burnt-clay};
+  --playlist-tracks-text: #{$muted-warm-gray};
 }

@@ -38,6 +38,7 @@
 }
 :root {
   --background: #ffffff url("../images/textures/ricepaper_v3.png");
+  --panel-border: 1px solid red;
   --metronome-button-disabled: #c0c0c0;
   --metronome-button-enabled: #222222;
   --toolbar-button-disabled: #ffffff76;
@@ -62,10 +63,15 @@
   --icon: #222222;
   --icon-disabled: #999999;
   --icon-locked: #dc322f;
+  --playlist-title-background: rgba(255, 128, 0, 0.2509803922);
+  --playlist-title-text: #804000;
+  --playlist-tracks-background: #fefefe40;
+  --playlist-tracks-text: #444444;
 }
 
 [data-theme=dark] {
   --background: #222222;
+  --panel-border: 1px solid #5b8fb9;
   --metronome-button-disabled: #50638F;
   --metronome-button-enabled: #0099FF;
   --toolbar-button-disabled: #ffffff76;
@@ -89,6 +95,10 @@
   --icon: #b8c3c7;
   --icon-disabled: #ffffff76;
   --icon-locked: #dc322f;
+  --playlist-title-background: #9e5d4d;
+  --playlist-title-text: #cfc1b9;
+  --playlist-tracks-background: #8a5049;
+  --playlist-tracks-text: #b8a39a;
 }
 
 main {
@@ -115,7 +125,7 @@ main {
 
 div.panel {
   width: 353px;
-  border: 1px solid red;
+  border: var(--panel-border);
   border-radius: 16px;
 }
 

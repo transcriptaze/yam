@@ -2,35 +2,21 @@
 
 ## In Progress
 
-- [x] deleted tracks show up in 'add tracks' list https://github.com/transcriptaze/yam/issues/51
-- [x] landscape: can't delete bottom-most track on playlist track list
-- [x] landscape: can't add 'new track'
-- [x] new tracks show up in add-tracks as 'new track' instead of the generated name
+- [x] ~~'All Tracks' should not display tracklist~~
 
 - [ ] dark mode (cf. https://github.com/transcriptaze/yam/issues/48)
-    - [x] background
-    - [x] play
-    - [x] stop
-    - [x] back
-    - [x] next
-    - [x] toolbar icons
-    - [x] about page
-    - [x] settings page
-    - [x] unsupported page
-    - [x] toolbar theme icon: light/dark faces
-    - [x] time signature
-    - [x] pulse
-    - [x] BPM
-    - [x] loops
-    - [x] dings
-    - [x] pads
     - [x] knob
+    - [ ] wheel
+    - [x] panel border
+    - [ ] playlist
+       - [ ] background
+    - [ ] editor
+       - [ ] background
     - [ ] info
        - [ ] details border
        - [ ] missing border-radius somewhere
+       - [ ] rework progress bar to use CSS/themes
     - [ ] logo
-    - [ ] panel border
-    - [ ] panel backgrounds
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [x] Rework clock as generator
@@ -77,7 +63,6 @@
 - [ ] use async getters for nested web components
 - [ ] URL - use ?UUID= or ?title= 
 - [ ] URL match on track if playlist not found
-- [ ] 'All Tracks' should not display tracklist
 - [ ] (?) move spacebar toggle into metronome widget
 - [ ] different grip icon
 - [ ] onSave should only update editor title, BPM, etc

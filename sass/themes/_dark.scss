@@ -7,11 +7,14 @@ $grey: colours.$grey;
 
 $warm-beige: #f5e8d8;
 $light-gray: #e4e4e4;
+$rusty-blue: #5b8fb9;
+$muted-cyan-slate: #4f7c82;
 
 $deep-eucalyptus: #b8c3c7;
 
 [data-theme="dark"] {
   --background: #{$black};
+  --panel-border: 1px solid #{$rusty-blue};
 
   --metronome-button-disabled: #50638F;
   --metronome-button-enabled: #0099FF;

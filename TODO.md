@@ -5,6 +5,7 @@
 - [x] ~~'All Tracks' should not display tracklist~~
 
 - [ ] dark mode (cf. https://github.com/transcriptaze/yam/issues/48)
+    - https://colorhero.io/blog/dark-mode-color-palettes-2025
     - [x] panel border
     - [x] knob
     - [ ] wheel

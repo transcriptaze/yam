@@ -26,6 +26,7 @@ main {
 div.panel {
   width: 353px;
 
+  background: var(--panel-background);
   border: var(--panel-border);  
   border-radius: 16px;
 }

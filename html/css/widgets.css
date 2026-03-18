@@ -53,6 +53,8 @@
   --beat-on: red;
   --info-title-text: #222222;
   --info-detail-text: #222222;
+  --info-icon: url("../images/save.svg");
+  --info-icon-disabled: url("../images/save-disabled.svg");
   --time-signature-none: #bfbfbf;
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;
@@ -87,6 +89,8 @@
   --beat-on: rgba(220, 50, 47, 0.9);
   --info-title-text: #839496;
   --info-detail-text: #839496;
+  --info-icon: url("../images/dark/save.svg");
+  --info-icon-disabled: url("../images/dark/save-disabled.svg");
   --knob-background-opacity: 0%;
   --knob-ticks: #839496;
   --knob-labels: rgba(131, 148, 150, 0.9);
@@ -1012,7 +1016,13 @@ div.beat.on div.shape {
   color: var(--text);
 }
 :host(.component-info) div.info button {
-  background: rgba(192, 192, 192, 0.2509803922);
+  background-color: rgba(192, 192, 192, 0.2509803922);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: auto 28px;
+  background-image: var(--info-icon);
+  width: 40px;
+  height: 100%;
   margin: 0px;
   padding-left: 6px;
   padding-right: 6px;
@@ -1021,11 +1031,8 @@ div.beat.on div.shape {
   border-radius: 0px 4px 4px 0px;
   outline: none;
 }
-:host(.component-info) div.info button img {
-  height: 28px;
-}
-:host(.component-info) div.info button:disabled img {
-  filter: grayscale(100%) opacity(50%);
+:host(.component-info) div.info button:disabled {
+  background-image: var(--info-icon-disabled);
 }
 :host(.component-info) div.info span.infinity {
   font-family: "YAM", "Lato", sans;

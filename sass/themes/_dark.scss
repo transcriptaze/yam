@@ -23,6 +23,8 @@
 
   --info-title-text: #{solarized.$base0};
   --info-detail-text: #{solarized.$base0};
+  --info-icon: url('../images/dark/save.svg'); 
+  --info-icon-disabled: url('../images/dark/save-disabled.svg'); 
 
   --knob-background-opacity: 0%;
   --knob-ticks: #{solarized.$base0};

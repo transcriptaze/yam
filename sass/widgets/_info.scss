@@ -140,41 +140,28 @@
     }
 
     button {
-      background: #c0c0c040;
+      background-color: #c0c0c040;
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: auto 28px;;
+      background-image: var(--info-icon); 
+
+      width: 40px;
+      height: 100%;
+
       margin: 0px;
       padding-left: 6px;
       padding-right: 6px;
       line-height: 0;
+
       border: none;
       border-radius: 0px 4px 4px 0px;
       outline: none;
-
-      img {
-        height: 28px;
-      }
     }
 
     button:disabled {
-      img {
-        filter: grayscale(100%) opacity(50%);
-      }
+      background-image: var(--info-icon-disabled);
     }
-
-    // button.icon {
-    //   background-color: var(--icon);
-    // 
-    //   mask-repeat: no-repeat;
-    //   mask-position: center;
-    //   mask-size: contain;
-    //   mask-image: url('/images/save.svg');
-    // 
-    //   -webkit-mask-repeat: no-repeat;
-    //   -webkit-mask-size: contain;
-    // 
-    //   img {
-    //     visibility: hidden;
-    //   }
-    // }
 
     span.infinity {
       font-family: "YAM", "Lato", sans;

@@ -53,6 +53,8 @@
   --beat-on: red;
   --info-title-text: #222222;
   --info-detail-text: #222222;
+  --info-icon: url("../images/save.svg");
+  --info-icon-disabled: url("../images/save-disabled.svg");
   --time-signature-none: #bfbfbf;
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;
@@ -87,6 +89,8 @@
   --beat-on: rgba(220, 50, 47, 0.9);
   --info-title-text: #839496;
   --info-detail-text: #839496;
+  --info-icon: url("../images/dark/save.svg");
+  --info-icon-disabled: url("../images/dark/save-disabled.svg");
   --knob-background-opacity: 0%;
   --knob-ticks: #839496;
   --knob-labels: rgba(131, 148, 150, 0.9);

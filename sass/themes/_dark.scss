@@ -1,59 +1,47 @@
-@use '../palettes/default' as colours;
+@use '../palettes/solarized' as solarized;
 @use 'sass:color';
 
-$white: colours.$white;
-$black: colours.$black;
-$grey: colours.$grey;
-$deep-eucalyptus: #b8c3c7;
-
-$warm-beige: #f5e8d8;
-$light-gray: #e4e4e4;
-$rusty-blue: #5b8fb9;
-$muted-cyan-slate: #4f7c82;
-
-$muted-terracotta: #9e5d4d;
-$subtle-warm-gray: #cfc1b9;
-$burnt-clay: #8a5049;
-$muted-warm-gray: #b8a39a;
-
 [data-theme="dark"] {
-  --background: #{$black};
-  --panel-border: 1px solid #{$rusty-blue};
+  --background: #{solarized.$base03};
+  --panel-background: #{solarized.$base03};
+  --panel-border: 1px solid #{solarized.$blue};
 
-  --metronome-button-disabled: #50638F;
-  --metronome-button-enabled: #0099FF;
+  --metronome-button-disabled: #{solarized.$base01};
+  --metronome-button-enabled: #{solarized.$blue};
 
-  --toolbar-button-disabled: #ffffff76;
-  --toolbar-button-enabled: #{$deep-eucalyptus};
-  --toolbar-button-active: #b24a2c;
-  --toolbar-button-hover: #d00000;
+  --toolbar-button-disabled: #{solarized.$base01};
+  --toolbar-button-enabled: #{solarized.$base0};
+  --toolbar-button-active: #{solarized.$orange};
+  --toolbar-button-hover: #{solarized.$violet};
 
-  --track-colour-muted: #{$grey};
-  --track-colour-deleting: #{$grey};
-  --playlist-colour-deleting: #{$grey};
+  --track-colour-muted: #{solarized.$base01};
+  --track-colour-deleting: #{solarized.$base01};
+  --playlist-colour-deleting: #{solarized.$base01};
 
-  --beat-off: #{color.change($deep-eucalyptus, $alpha: 0.45)};
-  --beat-on: #{color.change(red, $alpha: 0.9)};
+  --beat-off: #{color.change(solarized.$base0, $alpha: 0.45)};
+  --beat-on: #{color.change(solarized.$red, $alpha: 0.9)};
 
-  --info-title-text: #{$deep-eucalyptus};
-  --info-detail-text: #{$deep-eucalyptus};
+  --info-title-text: #{solarized.$base0};
+  --info-detail-text: #{solarized.$base0};
+  --info-icon: url('../images/dark/save.svg'); 
+  --info-icon-disabled: url('../images/dark/save-disabled.svg'); 
 
   --knob-background-opacity: 0%;
-  --knob-ticks:  #{$deep-eucalyptus};
-  --knob-labels:  #{rgba($deep-eucalyptus, 0.7)};
+  --knob-ticks: #{solarized.$base0};
+  --knob-labels:  #{rgba(solarized.$base0, 0.9)};
 
-  --loop-enabled: #c63800;
-  --ding-enabled: #c63800;
+  --loop-enabled: #{solarized.$red};
+  --ding-enabled: #{solarized.$red};
 
-  --text: #{$deep-eucalyptus};
-  --text-locked: #dc322f;
+  --text: #{solarized.$base0};
+  --text-locked: #{color.change(solarized.$red, $alpha: 0.8)};
 
-  --icon: #{$deep-eucalyptus};
-  --icon-disabled: #ffffff76;
-  --icon-locked: #dc322f;
+  --icon: #{solarized.$base0};
+  --icon-disabled: #{solarized.$base01};
+  --icon-locked: #{color.change(solarized.$red, $alpha: 0.8)};
 
-  --playlist-title-background: #{$muted-terracotta};
-  --playlist-title-text: #{$subtle-warm-gray};
-  --playlist-tracks-background: #{$burnt-clay};
-  --playlist-tracks-text: #{$muted-warm-gray};
+  --playlist-title-background: #{solarized.$base01};
+  --playlist-title-text: #{solarized.$base1};
+  --playlist-tracks-background: #{solarized.$base02};
+  --playlist-tracks-text: #{solarized.$base0};
 }

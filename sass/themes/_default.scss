@@ -9,6 +9,7 @@ $amber: #ff800040;
 
 :root {
   --background: #{$white} url("../images/textures/ricepaper_v3.png");
+  --panel-background: transparent;
   --panel-border: 1px solid red;
 
   --metronome-button-disabled: #c0c0c0;
@@ -28,6 +29,8 @@ $amber: #ff800040;
 
   --info-title-text: #222222;
   --info-detail-text: #222222;
+  --info-icon: url('../images/save.svg'); 
+  --info-icon-disabled: url('../images/save-disabled.svg'); 
 
   --time-signature-none: #bfbfbf;
   --loop-enabled: #c63800;

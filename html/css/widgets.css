@@ -38,6 +38,7 @@
 }
 :root {
   --background: #ffffff url("../images/textures/ricepaper_v3.png");
+  --panel-background: transparent;
   --panel-border: 1px solid red;
   --metronome-button-disabled: #c0c0c0;
   --metronome-button-enabled: #222222;
@@ -52,6 +53,8 @@
   --beat-on: red;
   --info-title-text: #222222;
   --info-detail-text: #222222;
+  --info-icon: url("../images/save.svg");
+  --info-icon-disabled: url("../images/save-disabled.svg");
   --time-signature-none: #bfbfbf;
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;
@@ -70,35 +73,38 @@
 }
 
 [data-theme=dark] {
-  --background: #222222;
-  --panel-border: 1px solid #5b8fb9;
-  --metronome-button-disabled: #50638F;
-  --metronome-button-enabled: #0099FF;
-  --toolbar-button-disabled: #ffffff76;
-  --toolbar-button-enabled: #b8c3c7;
-  --toolbar-button-active: #b24a2c;
-  --toolbar-button-hover: #d00000;
-  --track-colour-muted: #a0a0a0;
-  --track-colour-deleting: #a0a0a0;
-  --playlist-colour-deleting: #a0a0a0;
-  --beat-off: rgba(184, 195, 199, 0.45);
-  --beat-on: rgba(255, 0, 0, 0.9);
-  --info-title-text: #b8c3c7;
-  --info-detail-text: #b8c3c7;
+  --background: #002b36;
+  --panel-background: #002b36;
+  --panel-border: 1px solid #268bd2;
+  --metronome-button-disabled: #586e75;
+  --metronome-button-enabled: #268bd2;
+  --toolbar-button-disabled: #586e75;
+  --toolbar-button-enabled: #839496;
+  --toolbar-button-active: #cb4b16;
+  --toolbar-button-hover: #6c71c4;
+  --track-colour-muted: #586e75;
+  --track-colour-deleting: #586e75;
+  --playlist-colour-deleting: #586e75;
+  --beat-off: rgba(131, 148, 150, 0.45);
+  --beat-on: rgba(220, 50, 47, 0.9);
+  --info-title-text: #839496;
+  --info-detail-text: #839496;
+  --info-icon: url("../images/dark/save.svg");
+  --info-icon-disabled: url("../images/dark/save-disabled.svg");
   --knob-background-opacity: 0%;
-  --knob-ticks: #b8c3c7;
-  --knob-labels: rgba(184, 195, 199, 0.7);
-  --loop-enabled: #c63800;
-  --ding-enabled: #c63800;
-  --text: #b8c3c7;
-  --text-locked: #dc322f;
-  --icon: #b8c3c7;
-  --icon-disabled: #ffffff76;
-  --icon-locked: #dc322f;
-  --playlist-title-background: #9e5d4d;
-  --playlist-title-text: #cfc1b9;
-  --playlist-tracks-background: #8a5049;
-  --playlist-tracks-text: #b8a39a;
+  --knob-ticks: #839496;
+  --knob-labels: rgba(131, 148, 150, 0.9);
+  --loop-enabled: #dc322f;
+  --ding-enabled: #dc322f;
+  --text: #839496;
+  --text-locked: rgba(220, 50, 47, 0.8);
+  --icon: #839496;
+  --icon-disabled: #586e75;
+  --icon-locked: rgba(220, 50, 47, 0.8);
+  --playlist-title-background: #586e75;
+  --playlist-title-text: #93a1a1;
+  --playlist-tracks-background: #073642;
+  --playlist-tracks-text: #839496;
 }
 
 :host(.component-metronome) div.metronome {
@@ -1010,7 +1016,13 @@ div.beat.on div.shape {
   color: var(--text);
 }
 :host(.component-info) div.info button {
-  background: rgba(192, 192, 192, 0.2509803922);
+  background-color: rgba(192, 192, 192, 0.2509803922);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: auto 28px;
+  background-image: var(--info-icon);
+  width: 40px;
+  height: 100%;
   margin: 0px;
   padding-left: 6px;
   padding-right: 6px;
@@ -1019,11 +1031,8 @@ div.beat.on div.shape {
   border-radius: 0px 4px 4px 0px;
   outline: none;
 }
-:host(.component-info) div.info button img {
-  height: 28px;
-}
-:host(.component-info) div.info button:disabled img {
-  filter: grayscale(100%) opacity(50%);
+:host(.component-info) div.info button:disabled {
+  background-image: var(--info-icon-disabled);
 }
 :host(.component-info) div.info span.infinity {
   font-family: "YAM", "Lato", sans;

@@ -1,47 +1,49 @@
-@use '../palettes/solarized' as solarized;
+@use '../palettes/charcoal' as charcoal;
 @use 'sass:color';
 
+$border: #58585f;
+
 [data-theme="dark"] {
-  --background: #{solarized.$base03};
-  --panel-background: #{solarized.$base03};
-  --panel-border: 1px solid #{solarized.$blue};
+  --background: #{charcoal.$background} url("../images/textures/45degreee_fabric.webp");
+  --panel-background: #{charcoal.$background};
+  --panel-border: 1px solid #{$border};
 
-  --metronome-button-disabled: #{solarized.$base01};
-  --metronome-button-enabled: #{solarized.$blue};
+  --metronome-button-disabled: #{color.change(charcoal.$blue, $alpha: 0.6)};
+  --metronome-button-enabled: #{charcoal.$blue};
 
-  --toolbar-button-disabled: #{solarized.$base01};
-  --toolbar-button-enabled: #{solarized.$base0};
-  --toolbar-button-active: #{solarized.$orange};
-  --toolbar-button-hover: #{solarized.$violet};
+  --toolbar-button-disabled: #{charcoal.$fg-4};
+  --toolbar-button-enabled: #{charcoal.$fg-3};
+  --toolbar-button-active: #{charcoal.$fg-2};
+  --toolbar-button-hover: #{charcoal.$red};
 
-  --track-colour-muted: #{solarized.$base01};
-  --track-colour-deleting: #{solarized.$base01};
-  --playlist-colour-deleting: #{solarized.$base01};
+  --track-colour-muted: #{charcoal.$fg-4};
+  --track-colour-deleting: #{charcoal.$fg-4};
+  --playlist-colour-deleting: #{charcoal.$fg-4};
 
-  --beat-off: #{color.change(solarized.$base0, $alpha: 0.45)};
-  --beat-on: #{color.change(solarized.$red, $alpha: 0.9)};
+  --beat-off: #{color.change(charcoal.$fg-4, $alpha: 0.45)};
+  --beat-on: #{color.change(charcoal.$red, $alpha: 0.9)};
 
-  --info-title-text: #{solarized.$base0};
-  --info-detail-text: #{solarized.$base0};
+  --info-title-text: #{charcoal.$fg-1};
+  --info-detail-text: #{charcoal.$fg-1};
   --info-icon: url('../images/dark/save.svg'); 
   --info-icon-disabled: url('../images/dark/save-disabled.svg'); 
 
   --knob-background-opacity: 0%;
-  --knob-ticks: #{solarized.$base0};
-  --knob-labels:  #{rgba(solarized.$base0, 0.9)};
+  --knob-ticks: #{charcoal.$fg-2};
+  --knob-labels:  #{rgba(charcoal.$fg-2, 0.9)};
 
-  --loop-enabled: #{solarized.$red};
-  --ding-enabled: #{solarized.$red};
+  --loop-enabled: #{charcoal.$red};
+  --ding-enabled: #{charcoal.$red};
 
-  --text: #{solarized.$base0};
-  --text-locked: #{color.change(solarized.$red, $alpha: 0.8)};
+  --text: #{charcoal.$fg-2};
+  --text-locked: #{color.change(charcoal.$red, $alpha: 0.9)};
 
-  --icon: #{solarized.$base0};
-  --icon-disabled: #{solarized.$base01};
-  --icon-locked: #{color.change(solarized.$red, $alpha: 0.8)};
+  --icon: #{charcoal.$fg-2};
+  --icon-disabled: #{charcoal.$fg-4};
+  --icon-locked: #{color.change(charcoal.$red, $alpha: 0.9)};
 
-  --playlist-title-background: #{solarized.$base01};
-  --playlist-title-text: #{solarized.$base1};
-  --playlist-tracks-background: #{solarized.$base02};
-  --playlist-tracks-text: #{solarized.$base0};
+  --playlist-title-background: #{charcoal.$bg-4};
+  --playlist-title-text: #{charcoal.$fg-3};
+  --playlist-tracks-background: #{charcoal.$bg-3};
+  --playlist-tracks-text: #{charcoal.$fg-2};
 }

@@ -129,3 +129,48 @@
 ### Packaging
 - https://www.npmjs.com/package/rollup-plugin-web-worker-loader
 - https://github.com/hughrawlinson/rollup-audio-worklet-demo
+
+
+## Fun stuff
+
+### Halloween theme
+      - black and purple
+      - little pumpkin beats
+          - bats
+          - skulls
+          - tombstones
+      - full moon + witch knob
+      - cobwebs
+      - screams
+      - zombies
+
+### April 1st 
+      - weird theme, weird BPM
+      - googley eyes/eye rolls
+      - dog barks
+      - farmyard noises
+      - Dali 'Persistence of Memory'
+      - hiccoughs
+      - squeaky hamster wheel
+      - reversed/mirrored/upside-down
+      - wind up clock spring before you can use it
+      - 3D printed with layer lines + dimensionally inaccurate controls
+      - left-handed day (everything reversed including ticks i.e. tock-tock-tock-tick)
+      - https://www.youtube.com/watch?v=-OG87X6XSWU
+
+### Pi day
+      - 3.1418:4 time
+      - pie beats
+      - geometry knob
+      - https://www.youtube.com/watch?v=-OG87X6XSWU&pp=ugUEEgJlbg%3D%3D
+
+### Other
+      - Footrot Flats (dog chasing sheep - or vice versa, barking)
+      - WIP (half erased pencil sketch, coffee stains)
+      - PPC (pink pony club theme)
+      - Steampunk!!!
+      - Canada Day (maple leaf pads)
+      - "3D" red/green or the dots thing
+      - Industrial theme
+          - https://hackaday.com/wp-content/uploads/2025/05/industrial-design-keeb.webp
+      - https://www.youtube.com/watch?v=q3OuCR0EpGo

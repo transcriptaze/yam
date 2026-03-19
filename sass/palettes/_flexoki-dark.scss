@@ -1,0 +1,33 @@
+$bg:        #100f0f;
+$bg-2:      #1c1b1a;
+$ui:        #282726;
+$ui-2:      #343331;
+$ui-3:      #403e3c;
+
+$tx-3:      #575653;
+$tx-2:      #6f6e69;
+$tx:        #cecdc3;
+$tx-1:      #b7b5ac;
+
+$red:       #d14d41;
+$orange:    #da702c;
+$yellow:    #d0a215;
+$green:     #879a39;
+$cyan:      #3aa99f;
+$blue:      #4385be;
+$purple:    #8b7ec8;
+$magenta:   #ce5d97;
+
+$background: $bg;
+$surface:    $bg-2;
+$border:     $ui;
+
+$text-primary:   $tx;
+$text-secondary: $tx-1;
+$text-muted:     $tx-2;
+$text-faint:     $tx-3;
+
+$success: $green;
+$warning: $yellow;
+$error:   $red;
+$info:    $blue;

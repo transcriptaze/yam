@@ -67,44 +67,44 @@
   --icon-disabled: #999999;
   --icon-locked: #dc322f;
   --playlist-title-background: rgba(255, 128, 0, 0.2509803922);
-  --playlist-title-text: #804000;
+  --playlist-title-text: #222222;
   --playlist-tracks-background: #fefefe40;
   --playlist-tracks-text: #444444;
 }
 
 [data-theme=dark] {
-  --background: #002b36;
-  --panel-background: #002b36;
-  --panel-border: 1px solid #268bd2;
-  --metronome-button-disabled: #586e75;
+  --background: #0f0f10 url("../images/textures/45degreee_fabric.webp");
+  --panel-background: #0f0f10;
+  --panel-border: 1px solid #58585f;
+  --metronome-button-disabled: rgba(38, 139, 210, 0.6);
   --metronome-button-enabled: #268bd2;
-  --toolbar-button-disabled: #586e75;
-  --toolbar-button-enabled: #839496;
-  --toolbar-button-active: #cb4b16;
-  --toolbar-button-hover: #6c71c4;
-  --track-colour-muted: #586e75;
-  --track-colour-deleting: #586e75;
-  --playlist-colour-deleting: #586e75;
-  --beat-off: rgba(131, 148, 150, 0.45);
+  --toolbar-button-disabled: #7a7a7f;
+  --toolbar-button-enabled: #9a9a9e;
+  --toolbar-button-active: #b9b9bc;
+  --toolbar-button-hover: #dc322f;
+  --track-colour-muted: #7a7a7f;
+  --track-colour-deleting: #7a7a7f;
+  --playlist-colour-deleting: #7a7a7f;
+  --beat-off: rgba(122, 122, 127, 0.45);
   --beat-on: rgba(220, 50, 47, 0.9);
-  --info-title-text: #839496;
-  --info-detail-text: #839496;
+  --info-title-text: #d6d6d8;
+  --info-detail-text: #d6d6d8;
   --info-icon: url("../images/dark/save.svg");
   --info-icon-disabled: url("../images/dark/save-disabled.svg");
   --knob-background-opacity: 0%;
-  --knob-ticks: #839496;
-  --knob-labels: rgba(131, 148, 150, 0.9);
+  --knob-ticks: #b9b9bc;
+  --knob-labels: rgba(185, 185, 188, 0.9);
   --loop-enabled: #dc322f;
   --ding-enabled: #dc322f;
-  --text: #839496;
-  --text-locked: rgba(220, 50, 47, 0.8);
-  --icon: #839496;
-  --icon-disabled: #586e75;
-  --icon-locked: rgba(220, 50, 47, 0.8);
-  --playlist-title-background: #586e75;
-  --playlist-title-text: #93a1a1;
-  --playlist-tracks-background: #073642;
-  --playlist-tracks-text: #839496;
+  --text: #b9b9bc;
+  --text-locked: rgba(220, 50, 47, 0.9);
+  --icon: #b9b9bc;
+  --icon-disabled: #7a7a7f;
+  --icon-locked: rgba(220, 50, 47, 0.9);
+  --playlist-title-background: #343438;
+  --playlist-title-text: #9a9a9e;
+  --playlist-tracks-background: #2a2a2d;
+  --playlist-tracks-text: #b9b9bc;
 }
 
 :host(.component-metronome) div.metronome {
@@ -1305,6 +1305,11 @@ div.beat.on div.shape {
   grid-column: 1/3;
   grid-row: 1;
   align-self: start;
+  background-color: var(--icon);
+  mask-image: url("/images/grip.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 16px 16px;
 }
 :host(.component-playlists) div.playlists div.list ul li yam-playlist {
   grid-column: 1/3;
@@ -1419,9 +1424,13 @@ div.beat.on div.shape {
 :host(.component-playlist) div.playlist div.summary div.menu #menu {
   grid-column: 1;
   grid-row: 1;
-}
-:host(.component-playlist) div.playlist div.summary div.menu #menu img {
-  width: 16px;
+  width: 24px;
+  height: 100%;
+  background-color: var(--icon);
+  mask-image: url("/images/menu.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 16px auto;
 }
 :host(.component-playlist) div.playlist div.summary div.menu #save {
   grid-column: 1;

@@ -235,19 +235,14 @@ export class Playlists extends HTMLElement {
   #create(playlist) {
     const li = document.createElement('li')
     const grip = document.createElement('div')
-    const img = document.createElement('img')
     const e = document.createElement('yam-playlist')
 
     li.setAttribute('draggable', false)
-
-    img.setAttribute('src', './images/grip.svg')
-    img.setAttribute('draggable', false)
 
     grip.setAttribute('draggable', false)
     grip.classList.add('grip')
     grip.addEventListener('pointerdown', this.#onPointerDown)
     grip.addEventListener('pointerup', this.#onPointerUp)
-    grip.appendChild(img)
 
     e.playlist = {
       playlist: playlist,

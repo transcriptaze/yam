@@ -1305,6 +1305,11 @@ div.beat.on div.shape {
   grid-column: 1/3;
   grid-row: 1;
   align-self: start;
+  background-color: var(--icon);
+  mask-image: url("/images/grip.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 16px 16px;
 }
 :host(.component-playlists) div.playlists div.list ul li yam-playlist {
   grid-column: 1/3;
@@ -1419,9 +1424,13 @@ div.beat.on div.shape {
 :host(.component-playlist) div.playlist div.summary div.menu #menu {
   grid-column: 1;
   grid-row: 1;
-}
-:host(.component-playlist) div.playlist div.summary div.menu #menu img {
-  width: 16px;
+  width: 24px;
+  height: 100%;
+  background-color: var(--icon);
+  mask-image: url("/images/menu.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 16px auto;
 }
 :host(.component-playlist) div.playlist div.summary div.menu #save {
   grid-column: 1;

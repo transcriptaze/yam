@@ -10,8 +10,10 @@
     - [ ] playlist
        - [x] title
        - [x] tracks
-       - [ ] menu dots
-       - [ ] icons
+       - [x] grip
+       - [x] menu dots
+       - [ ] menu icons
+       - [ ] edit title
        - [ ] add button 
        - [ ] '+' button
        - [ ] add-tracks

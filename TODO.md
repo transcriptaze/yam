@@ -2,6 +2,9 @@
 
 ## In Progress
 
+- [ ] editor - default reverted to 4:4 instead of continuing with 6:4
+- [x] bigger 'expand' buttons in editor
+
 - [ ] dark mode (cf. https://github.com/transcriptaze/yam/issues/48)
     - https://colorhero.io/blog/dark-mode-color-palettes-2025
     - [x] panel border

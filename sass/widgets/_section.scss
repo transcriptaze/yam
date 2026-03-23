@@ -29,9 +29,22 @@
 
     #arrow {
       grid-column: 1;
-      grid-row: 1;    
+      grid-row: 1;   
 
-      transform: rotate(90deg);
+      background: none; 
+      width: 32px;
+      height: 100%;
+      padding-left: 8px;
+      border: none;
+      outline: none;
+
+      display: flex;
+      flex-direction: row;
+      justify-content: start;
+
+      img {
+        transform: rotate(90deg);      
+      }
     }
 
     #name {
@@ -53,7 +66,9 @@
     }
 
     #arrow {
-      width: 16px;
+      img {
+        width: 16px;      
+      }
     }
 
     input {
@@ -124,11 +139,23 @@
     }
 
     #arrow {
-      transform: rotate(0deg);
+      img {
+        transform: rotate(0deg);      
+      }
     }
 
     #measures {
       visibility: visible;
+    }
+  }
+}
+
+@media (max-width: 768px) and (orientation:portrait) {
+  :host(.component-section) {
+    div.section {
+      #arrow {
+        width: 48px;
+      }
     }
   }
 }
@@ -140,6 +167,10 @@
       grid-template-columns: auto auto;
       grid-template-rows: auto;
       column-gap: 1px;
-   }
+
+      #arrow {
+        width: 48px;
+      }
+    }
   }
 }

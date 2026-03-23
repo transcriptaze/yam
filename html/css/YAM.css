@@ -62,10 +62,13 @@
   --knob-ticks: #222222;
   --knob-labels: #222222;
   --text: #222222;
+  --text-editing: #222222;
   --text-locked: #dc322f;
   --icon: #222222;
   --icon-disabled: #999999;
   --icon-locked: #dc322f;
+  --button-background: rgba(255, 255, 255, 0.9);
+  --button-background-transparent: rgba(255, 255, 255, 0.1);
   --playlist-title-background: rgba(255, 128, 0, 0.2509803922);
   --playlist-title-text: #222222;
   --playlist-tracks-background: #fefefe40;
@@ -75,7 +78,7 @@
 [data-theme=dark] {
   --background: #0f0f10 url("../images/textures/45degreee_fabric.webp");
   --panel-background: #0f0f10;
-  --panel-border: 1px solid #58585f;
+  --panel-border: 1px solid #7a7a7f;
   --metronome-button-disabled: rgba(38, 139, 210, 0.6);
   --metronome-button-enabled: #268bd2;
   --toolbar-button-disabled: #7a7a7f;
@@ -97,10 +100,13 @@
   --loop-enabled: #dc322f;
   --ding-enabled: #dc322f;
   --text: #b9b9bc;
+  --text-editing: #1f1f21;
   --text-locked: rgba(220, 50, 47, 0.9);
   --icon: #b9b9bc;
   --icon-disabled: #7a7a7f;
   --icon-locked: rgba(220, 50, 47, 0.9);
+  --button-background: #9a9a9e;
+  --button-background-transparent: rgba(154, 154, 158, 0.1);
   --playlist-title-background: #343438;
   --playlist-title-text: #9a9a9e;
   --playlist-tracks-background: #2a2a2d;

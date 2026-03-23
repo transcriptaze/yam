@@ -236,6 +236,7 @@
         margin-top: 8px;
         margin-bottom: 8px;
 
+        background: var(--button-background);
         border: 1px solid #222222;
         border-radius: 8px;
 
@@ -281,6 +282,7 @@
 
       input {
         background: #fcfcfc80;
+        color: var(--text-editing);
         text-align: left;
         pointer-events: auto;
         user-select: text;

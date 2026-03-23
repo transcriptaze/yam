@@ -15,9 +15,9 @@
        - [x] tracks
        - [x] grip
        - [x] menu dots
-       - [ ] menu icons
-       - [ ] edit title
-       - [ ] add button 
+       - [x] menu icons
+       - [x] edit title
+       - [x] add button 
        - [ ] '+' button
        - [ ] add-tracks
 

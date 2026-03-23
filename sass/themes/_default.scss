@@ -41,11 +41,16 @@ $amber: #ff800040;
   --knob-labels: #222222;
 
   --text: #{$black};
+  --text-editing: #{$black};
   --text-locked: #dc322f;
 
   --icon: #{$black};
   --icon-disabled: #999999;
   --icon-locked: #dc322f;
+
+  --button-background: rgba(255, 255, 255, 0.9);
+  --button-background-transparent: rgba(255, 255, 255, 0.1);
+
 
   --playlist-title-background: #{$amber};
   --playlist-title-text: #222222;

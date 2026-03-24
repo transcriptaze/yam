@@ -276,7 +276,9 @@ export class Editor extends HTMLElement {
     }
 
     this.#track = track
-    this.#defaults = {}
+    // FIXME sets the defaults before the widgets have been initialised by the track (because Promises ? something else?)
+    //        cf. https://github.com/transcriptaze/yam/issues/54
+    // this.#defaults = {}
   }
 
   update(track) {

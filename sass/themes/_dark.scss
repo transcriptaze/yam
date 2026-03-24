@@ -36,6 +36,7 @@ $border: #58585f;
   --ding-enabled: #{charcoal.$red};
 
   --text: #{charcoal.$fg-2};
+  --text-muted: #{charcoal.$fg-4};
   --text-editing: #{charcoal.$bg-2};
   --text-locked: #{color.change(charcoal.$red, $alpha: 0.9)};
 
@@ -43,8 +44,13 @@ $border: #58585f;
   --icon-disabled: #{charcoal.$fg-4};
   --icon-locked: #{color.change(charcoal.$red, $alpha: 0.9)};
 
+  --button-text: #{charcoal.$fg-2};
   --button-background: #{charcoal.$fg-3};
+  --button-background-translucent: #{charcoal.$fg-3};
   --button-background-transparent: #{color.change(charcoal.$fg-3, $alpha: 0.1)};
+
+  --checkbox-background-unchecked: url('/images/dark/checkbox-unchecked.svg') no-repeat center / contain;
+  --checkbox-background-checked: url('/images/dark/checkbox-checked.svg') no-repeat center / contain;
 
   --playlist-title-background: #{charcoal.$bg-4};
   --playlist-title-text: #{charcoal.$fg-3};

@@ -2,7 +2,7 @@
 
 ## In Progress
 
-- [ ] editor - default reverted to 4:4 instead of continuing with 6:4
+- [ ] editor - default reverted to 4:4 instead of continuing with 6:4 (cf. https://github.com/transcriptaze/yam/issues/54)
 - [x] bigger 'expand' buttons in editor
 
 - [ ] dark mode (cf. https://github.com/transcriptaze/yam/issues/48)
@@ -18,8 +18,9 @@
        - [x] menu icons
        - [x] edit title
        - [x] add button 
-       - [ ] '+' button
-       - [ ] add-tracks
+       - [x] '+' button
+       - [x] add-tracks
+       - [ ] landscape tracks
 
     - [ ] editor
        - [ ] background

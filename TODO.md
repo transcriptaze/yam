@@ -19,7 +19,8 @@
        - [x] edit title
        - [x] add button 
        - [x] '+' button
-       - [ ] add-tracks
+       - [x] add-tracks
+       - [ ] landscape tracks
 
     - [ ] editor
        - [ ] background

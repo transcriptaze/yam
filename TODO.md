@@ -18,7 +18,7 @@
        - [x] menu icons
        - [x] edit title
        - [x] add button 
-       - [ ] '+' button
+       - [x] '+' button
        - [ ] add-tracks
 
     - [ ] editor

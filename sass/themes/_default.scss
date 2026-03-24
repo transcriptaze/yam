@@ -49,8 +49,8 @@ $amber: #ff800040;
   --icon-locked: #dc322f;
 
   --button-background: rgba(255, 255, 255, 0.9);
-  --button-background-transparent: rgba(255, 255, 255, 0.1);
-
+  --button-background-translucent: #666666;
+  --button-background-transparent: rgba(192, 192, 192, 0.1);
 
   --playlist-title-background: #{$amber};
   --playlist-title-text: #222222;

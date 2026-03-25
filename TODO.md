@@ -7,8 +7,6 @@
 
 - [ ] dark mode (cf. https://github.com/transcriptaze/yam/issues/48)
     - https://colorhero.io/blog/dark-mode-color-palettes-2025
-    - [x] panel border
-    - [x] knob
     - [ ] wheel
     - [ ] playlist
        - [x] title
@@ -20,14 +18,17 @@
        - [x] add button 
        - [x] '+' button
        - [x] add-tracks
-       - [ ] landscape tracks
+       - [x] track grip
+       - [x] track menu
+       - [ ] landscape
 
-    - [ ] editor
-       - [ ] background
     - [ ] info
        - [ ] details border
        - [ ] missing border-radius somewhere
        - [ ] rework progress bar to use CSS/themes
+       - [ ] playing text colour
+
+    - [ ] editor
     - [ ] logo
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)

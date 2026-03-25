@@ -2239,8 +2239,9 @@ div.playlist-track.random div#title {
   overflow: hidden;
 }
 :host(.component-editor) div.track-editor div.sections ul li {
-  height: auto;
+  height: fit-content;
   margin-top: 2px;
+  margin-bottom: 0px;
 }
 :host(.component-editor) div.track-editor div.sections ul li:first-child {
   border-top-left-radius: 8px;
@@ -2421,6 +2422,7 @@ div.playlist-track.random div#title {
   display: flex;
   flex-direction: row;
   justify-content: start;
+  align-items: center;
 }
 :host(.component-section) div.section #arrow img {
   transform: rotate(90deg);
@@ -2439,6 +2441,7 @@ div.playlist-track.random div#title {
 }
 :host(.component-section) div.section #arrow img {
   width: 16px;
+  height: 16px;
 }
 :host(.component-section) div.section input {
   box-sizing: border-box;

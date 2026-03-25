@@ -41,6 +41,7 @@
       display: flex;
       flex-direction: row;
       justify-content: start;
+      align-items: center;
 
       img {
         transform: rotate(90deg);      
@@ -67,7 +68,8 @@
 
     #arrow {
       img {
-        width: 16px;      
+        width: 16px;
+        height: 16px;
       }
     }
 

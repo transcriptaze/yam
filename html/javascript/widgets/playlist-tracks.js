@@ -206,7 +206,6 @@ export class PlaylistTracks extends HTMLElement {
   #add(ul, v) {
     const li = document.createElement('li')
     const grip = document.createElement('div')
-    const img = document.createElement('img')
     const item = document.createElement('yam-playlist-item')
 
     li.setAttribute('draggable', false)
@@ -216,13 +215,9 @@ export class PlaylistTracks extends HTMLElement {
     li.ondragleave = this.#dragleave
     li.ondrop = this.#drop
 
-    img.setAttribute('src', './images/grip.svg')
-    img.setAttribute('draggable', false)
-
     grip.setAttribute('draggable', false)
     grip.classList.add('grip')
     grip.addEventListener('pointerdown', this.#onPointerDown)
-    grip.appendChild(img)
 
     item.track = {
       UUID: v.UUID,

@@ -715,7 +715,7 @@
         </div>
         <yam-add-tracks></yam-add-tracks>
         <button id="plus">
-          <img src="./images/circle-plus.svg" draggable="false" />
+          <div class="blur"></div>
         </button>
         <button id="save">
           <img src="./images/save.svg" draggable="false" />
@@ -726,12 +726,9 @@
     <template id="template-playlist-item">
       <div class="playlist-track">
         <div id="title"></div>
-        <button id="menu" popovertarget="actions"><img src="./images/menu.svg" /></button>
+        <button id="menu" popovertarget="actions"></button>
         <div id="actions" popover>
-          <button id="mute">
-            <img class="muted" src="./images/mute.svg"   />
-            <img class="unmuted" src="./images/unmute.svg" />
-          </button>
+          <button id="mute"></button>
           <img id="trash" src="./images/trash.svg" />
         </div>
       </div>

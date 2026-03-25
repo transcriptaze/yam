@@ -1768,7 +1768,7 @@ div.beat.on div.shape {
   display: flex;
   flex-direction: column;
   justify-items: start;
-  background: rgba(254, 254, 254, 0.2509803922);
+  background: var(--playlist-tracks-background);
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
@@ -1792,6 +1792,13 @@ div.beat.on div.shape {
 :host(.component-playlist-tracks) div.playlist-tracks div.list ul li div.grip {
   grid-column: 1/3;
   grid-row: 1;
+  width: 40px;
+  height: 100%;
+  background-color: var(--icon);
+  mask-image: url("/images/grip.svg");
+  mask-repeat: no-repeat;
+  mask-position: left;
+  mask-size: 16px 16px;
 }
 :host(.component-playlist-tracks) div.playlist-tracks div.list ul li yam-playlist-item {
   grid-column: 1/3;
@@ -1806,23 +1813,32 @@ div.beat.on div.shape {
   display: none;
 }
 :host(.component-playlist-tracks) div.playlist-tracks #plus {
+  width: 48px;
+  height: 48px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(255, 255, 255, 0.1); /* semi-transparent */
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(0.5px);
+  background: var(--button-background-transparent);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   margin: 8px;
-  padding: 4px;
   border: none;
   border-radius: 50%;
   z-index: 2;
 }
-:host(.component-playlist-tracks) div.playlist-tracks #plus img {
+:host(.component-playlist-tracks) div.playlist-tracks #plus div.blur {
+  background: var(--button-background-translucent);
   width: 40px;
-  filter: invert(24%) sepia(7%) saturate(6%) hue-rotate(314deg) brightness(97%) contrast(88%);
+  height: 100%;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  mask-image: url("/images/circle-plus.svg");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
 }
 :host(.component-playlist-tracks) div.playlist-tracks #save {
+  width: 40px;
   display: none;
   justify-content: center;
   align-items: center;
@@ -1836,7 +1852,7 @@ div.beat.on div.shape {
   z-index: 2;
 }
 :host(.component-playlist-tracks) div.playlist-tracks #save img {
-  width: 40px;
+  width: 100%;
 }
 :host(.component-playlist-tracks) div.playlist-tracks.adding div.list {
   display: none;

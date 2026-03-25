@@ -8,7 +8,7 @@
 - [ ] dark mode (cf. https://github.com/transcriptaze/yam/issues/48)
     - https://colorhero.io/blog/dark-mode-color-palettes-2025
     - [ ] wheel
-    - [ ] playlist
+    - [x] playlist
        - [x] title
        - [x] tracks
        - [x] grip
@@ -20,7 +20,7 @@
        - [x] add-tracks
        - [x] track grip
        - [x] track menu
-       - [ ] landscape
+       - [x] landscape
 
     - [ ] info
        - [ ] details border

@@ -44,8 +44,8 @@
   --metronome-button-enabled: #222222;
   --toolbar-button-disabled: #ffffff76;
   --toolbar-button-enabled: #222222;
-  --toolbar-button-active: #b24a2c;
   --toolbar-button-hover: #c00000;
+  --toolbar-wakelock-active: #b24a2c;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
@@ -88,8 +88,8 @@
   --metronome-button-enabled: #268bd2;
   --toolbar-button-disabled: #7a7a7f;
   --toolbar-button-enabled: #9a9a9e;
-  --toolbar-button-active: #b9b9bc;
   --toolbar-button-hover: #dc322f;
+  --toolbar-wakelock-active: #b24a2c;
   --track-colour-muted: #7a7a7f;
   --track-colour-deleting: #7a7a7f;
   --playlist-colour-deleting: #7a7a7f;

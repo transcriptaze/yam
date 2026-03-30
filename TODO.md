@@ -4,32 +4,21 @@
 
 - [ ] editor - default reverted to 4:4 instead of continuing with 6:4 (cf. https://github.com/transcriptaze/yam/issues/54)
 - [x] bigger 'expand' buttons in editor
+- [x] wakelock - red
+- [x] toolbar - metronome 'dark mode' icon is dark grey on playlists
 
 - [ ] dark mode (cf. https://github.com/transcriptaze/yam/issues/48)
     - https://colorhero.io/blog/dark-mode-color-palettes-2025
-    - [ ] wheel
     - [x] playlist
-       - [x] title
-       - [x] tracks
-       - [x] grip
-       - [x] menu dots
-       - [x] menu icons
-       - [x] edit title
-       - [x] add button 
-       - [x] '+' button
-       - [x] add-tracks
-       - [x] track grip
-       - [x] track menu
-       - [x] landscape
-
+    - [ ] editor
+    - [ ] wheel
+    - [ ] logo
     - [ ] info
        - [ ] details border
        - [ ] missing border-radius somewhere
        - [ ] rework progress bar to use CSS/themes
        - [ ] playing text colour
 
-    - [ ] editor
-    - [ ] logo
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [x] Rework clock as generator

@@ -44,8 +44,8 @@
   --metronome-button-enabled: #222222;
   --toolbar-button-disabled: #ffffff76;
   --toolbar-button-enabled: #222222;
-  --toolbar-button-active: #b24a2c;
   --toolbar-button-hover: #c00000;
+  --toolbar-wakelock-active: #b24a2c;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
@@ -62,6 +62,7 @@
   --knob-ticks: #222222;
   --knob-labels: #222222;
   --text: #222222;
+  --text-label: #666666;
   --text-muted: #666666;
   --text-editing: #222222;
   --text-locked: #dc322f;
@@ -72,12 +73,16 @@
   --button-background: rgba(255, 255, 255, 0.9);
   --button-background-translucent: #666666;
   --button-background-transparent: rgba(192, 192, 192, 0.1);
+  --button-border: 1px solid #222222;
   --checkbox-background-unchecked: url("/images/checkbox-unchecked.svg") no-repeat center / contain;
   --checkbox-background-checked: url("/images/checkbox-checked.svg") no-repeat center / contain;
+  --input-background: #ffffff;
+  --select-background: #ffffff;
   --playlist-title-background: rgba(255, 128, 0, 0.2509803922);
   --playlist-title-text: #222222;
   --playlist-tracks-background: #fefefe40;
   --playlist-tracks-text: #444444;
+  --editor-section-background: #c0c0c040;
 }
 
 [data-theme=dark] {
@@ -88,8 +93,8 @@
   --metronome-button-enabled: #268bd2;
   --toolbar-button-disabled: #7a7a7f;
   --toolbar-button-enabled: #9a9a9e;
-  --toolbar-button-active: #b9b9bc;
   --toolbar-button-hover: #dc322f;
+  --toolbar-wakelock-active: #b24a2c;
   --track-colour-muted: #7a7a7f;
   --track-colour-deleting: #7a7a7f;
   --playlist-colour-deleting: #7a7a7f;
@@ -105,6 +110,7 @@
   --loop-enabled: #dc322f;
   --ding-enabled: #dc322f;
   --text: #b9b9bc;
+  --text-label: #9a9a9e;
   --text-muted: #7a7a7f;
   --text-editing: #1f1f21;
   --text-locked: rgba(220, 50, 47, 0.9);
@@ -115,12 +121,16 @@
   --button-background: #9a9a9e;
   --button-background-translucent: #9a9a9e;
   --button-background-transparent: rgba(154, 154, 158, 0.1);
+  --button-border: 1px solid #b9b9bc;
   --checkbox-background-unchecked: url("/images/dark/checkbox-unchecked.svg") no-repeat center / contain;
   --checkbox-background-checked: url("/images/dark/checkbox-checked.svg") no-repeat center / contain;
+  --input-background: #b9b9bc;
+  --select-background: #b9b9bc;
   --playlist-title-background: #343438;
   --playlist-title-text: #9a9a9e;
   --playlist-tracks-background: #2a2a2d;
   --playlist-tracks-text: #b9b9bc;
+  --editor-section-background: #2a2a2d;
 }
 
 main {
@@ -689,7 +699,7 @@ toolbar #bug {
   display: none;
 }
 toolbar #wakelock.active {
-  background-color: var(--toolbar-button-active);
+  background-color: var(--toolbar-wakelock-active);
 }
 
 toolbar.metronome #metronome {

@@ -34,7 +34,7 @@
     div.track {
       box-sizing: border-box;
 
-      background: #c0c0c040;
+      background: var(--editor-section-background);
       width: 100%;
       height: fit-content;
       padding-top: 12px;
@@ -63,7 +63,7 @@
     div.metrics {
       box-sizing: border-box;
 
-      background: #c0c0c040;
+      background: var(--editor-section-background);
       width: 100%;
       height: fit-content;
       padding-top: 8px;
@@ -90,7 +90,7 @@
     div.metronome {
       box-sizing: border-box;
 
-      background: #c0c0c040;
+      background: var(--editor-section-background);
       width: 100%;
       height: fit-content;
       padding-top: 8px;
@@ -109,6 +109,7 @@
         grid-row: 1;
 
         margin-right: 8px;
+        color: var(--text-label);
       }
 
       #BPM {
@@ -140,7 +141,7 @@
 
       width: 100%;
       height: 100%;
-      background: #c0c0c040;
+      background: var(--editor-section-background);
 
       padding-top: 12px;
       padding-left: 8px;
@@ -167,16 +168,26 @@
         padding-bottom: 2px;
         padding-right: 48px;
 
+        color: var(--text-label);
+
         display: flex;
         flex-direction: horizontal;
         align-items: center;
 
-        img {
-           width: 16px;
-           height: 16px;
-        }
+        div.arrow {
+          width: 16px;
+          height: 16px;
 
-        img.expanded {
+          background-color: var(--icon);
+          mask-image: url('/images/expand.svg');
+          mask-repeat: no-repeat;
+          mask-position: center;
+          mask-size: 16xpx 16px;
+        }
+      }
+
+      div.header.expanded {
+        div.arrow {
           transform: rotate(90deg);
         }
       }
@@ -244,20 +255,27 @@
 
       #plus {
         width: 90%;
+        height: 32px;
         margin-top: 8px;
         margin-bottom: 8px;
 
-        border: 1px solid #222222;
+        border: var(--button-border);
         border-radius: 8px;
 
-        img {
-          width: 32px;
+        div {
+          width: 100%;
+          height: 100%;
+          background-color: var(--icon);
+          mask-image: url('/images/plus.svg');
+          mask-repeat: no-repeat;
+          mask-position: center;
+          mask-size: 32px auto;        
         }
       }
     }
 
     input {
-      background: #ffffff;
+      background: var(--input-background);
       border: none;
       border-radius: 4px;
 
@@ -340,6 +358,7 @@
       font-weight: bold;
 
       outline: none;
+      background: var(--select-background);
 
       &, &::picker(select) {
         appearance: base-select;    
@@ -349,7 +368,6 @@
         font-size: 0.85em;      
       }
     }
-
 
     #save {
       box-sizing: border-box;

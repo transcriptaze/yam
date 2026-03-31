@@ -6,12 +6,12 @@
 - [x] bigger 'expand' buttons in editor
 - [x] wakelock - red
 - [x] toolbar - metronome 'dark mode' icon is dark grey on playlists
-- [ ] bigger toolbar margin in landscape
+- [x] bigger toolbar margin in landscape
 
 - [ ] dark mode (cf. https://github.com/transcriptaze/yam/issues/48)
     - https://colorhero.io/blog/dark-mode-color-palettes-2025
     - [x] playlist
-    - [ ] editor
+    - [x] editor
     - [ ] wheel
     - [ ] logo
     - [ ] info

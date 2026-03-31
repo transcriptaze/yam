@@ -244,9 +244,11 @@ div.editor yam-editor {
     column-gap: 0px;
   }
   div.panel {
+    box-sizing: border-box;
     width: 100%;
     padding-top: 0px;
     padding-bottom: 0px;
+    padding-right: 8px;
     border: none;
     border-radius: 0px;
   }

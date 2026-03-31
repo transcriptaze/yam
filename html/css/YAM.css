@@ -64,6 +64,8 @@
   --text: #222222;
   --text-label: #666666;
   --text-muted: #666666;
+  --text-placeholder: #b0b0b0;
+  --text-disabled: #a0a0a0;
   --text-editing: #222222;
   --text-locked: #dc322f;
   --icon: #222222;
@@ -82,7 +84,11 @@
   --playlist-title-text: #222222;
   --playlist-tracks-background: #fefefe40;
   --playlist-tracks-text: #444444;
-  --editor-section-background: #c0c0c040;
+  --editor-background: #c0c0c040;
+  --editor-section-background: #ffffff;
+  --editor-subsection-background: #fcfcfc;
+  --editor-subsection-img-none: grayscale(100%) opacity(25%);
+  --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
 }
 
 [data-theme=dark] {
@@ -112,6 +118,8 @@
   --text: #b9b9bc;
   --text-label: #9a9a9e;
   --text-muted: #7a7a7f;
+  --text-disabled: #343438;
+  --text-placeholder: #7a7a7f;
   --text-editing: #1f1f21;
   --text-locked: rgba(220, 50, 47, 0.9);
   --icon: #b9b9bc;
@@ -130,7 +138,11 @@
   --playlist-title-text: #9a9a9e;
   --playlist-tracks-background: #2a2a2d;
   --playlist-tracks-text: #b9b9bc;
-  --editor-section-background: #2a2a2d;
+  --editor-background: #2a2a2d;
+  --editor-section-background: #b9b9bc;
+  --editor-subsection-background: #b9b9bc;
+  --editor-subsection-img-none: grayscale(100%) opacity(35%);
+  --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
 }
 
 main {
@@ -232,9 +244,11 @@ div.editor yam-editor {
     column-gap: 0px;
   }
   div.panel {
+    box-sizing: border-box;
     width: 100%;
     padding-top: 0px;
     padding-bottom: 0px;
+    padding-right: 8px;
     border: none;
     border-radius: 0px;
   }

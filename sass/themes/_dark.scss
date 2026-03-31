@@ -38,6 +38,8 @@ $border: #58585f;
   --text: #{charcoal.$fg-2};
   --text-label: #{charcoal.$fg-3};
   --text-muted: #{charcoal.$fg-4};
+  --text-disabled: #{charcoal.$bg-4};
+  --text-placeholder: #{charcoal.$fg-4};
   --text-editing: #{charcoal.$bg-2};
   --text-locked: #{color.change(charcoal.$red, $alpha: 0.9)};
 
@@ -62,5 +64,9 @@ $border: #58585f;
   --playlist-tracks-background: #{charcoal.$bg-3};
   --playlist-tracks-text: #{charcoal.$fg-2};
 
-  --editor-section-background: #{charcoal.$bg-3};
+  --editor-background: #{charcoal.$bg-3};
+  --editor-section-background:  #{charcoal.$fg-2};
+  --editor-subsection-background: #{charcoal.$fg-2};
+  --editor-subsection-img-none: grayscale(100%) opacity(35%);
+  --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
 }

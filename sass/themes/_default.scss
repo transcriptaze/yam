@@ -43,6 +43,8 @@ $amber: #ff800040;
   --text: #{$black};
   --text-label: #666666;
   --text-muted: #666666;
+  --text-placeholder: #b0b0b0;
+  --text-disabled: #a0a0a0;
   --text-editing: #{$black};
   --text-locked: #dc322f;
 
@@ -67,5 +69,9 @@ $amber: #ff800040;
   --playlist-tracks-background: #fefefe40;
   --playlist-tracks-text: #444444;
 
-  --editor-section-background: #c0c0c040;
+  --editor-background: #c0c0c040;
+  --editor-section-background: #ffffff;
+  --editor-subsection-background: #fcfcfc;
+  --editor-subsection-img-none: grayscale(100%) opacity(25%);
+  --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
 }

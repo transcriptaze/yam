@@ -162,7 +162,7 @@
           padding-right: 4px;
 
           input {
-            background: #e0e0e0;
+            background: var(--editor-subsection-background);
 
             padding-top: 4px;
             padding-bottom: 4px;
@@ -201,7 +201,7 @@
   div.time-signature.none {
     button{
       img {
-        filter: grayscale(100%) opacity(25%);
+        filter: var(--editor-subsection-img-none);
       }
     }
   }
@@ -209,19 +209,8 @@
   div.time-signature.disabled {
     button{
       img {
-        filter: grayscale(100%) opacity(50%);
+        filter: var(--editor-subsection-img-disabled);
       }
     }
   }
-
-//  @-moz-document url-prefix() {
-//    img.tactus {
-//      margin-left: 8px;
-//    }
-//    
-//    img.figura {
-//      margin-left: 8px;
-//    }
-//  }
-
 }

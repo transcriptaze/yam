@@ -1,6 +1,6 @@
 :host(.component-subsection) {
   div.subsection {
-    background: #fcfcfc;
+    background: var(--editor-subsection-background);
     width: 100%;
     height: fit-content;
 
@@ -35,6 +35,8 @@
     input {
       box-sizing: border-box;
 
+      background: var(--editor-subsection-background);
+
       padding-top: 6px;
       padding-bottom: 6px;
       padding-left: 6px;
@@ -53,11 +55,11 @@
 
     input::placeholder {
       font-style: italic;
-      color: #a0a0a0;
+      color: var(--text-placeholder);
     }
 
     input[readonly] {
-      color: gray;
+      color: var(--text-muted);
       font-style: italic;
       font-weight: normal;
     }
@@ -81,7 +83,6 @@
       width: 3em;
       font-family: "YAM", "Lato", sans;
     }
-
   }
 }
 

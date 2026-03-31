@@ -64,6 +64,8 @@
   --text: #222222;
   --text-label: #666666;
   --text-muted: #666666;
+  --text-placeholder: #b0b0b0;
+  --text-disabled: #a0a0a0;
   --text-editing: #222222;
   --text-locked: #dc322f;
   --icon: #222222;
@@ -82,7 +84,11 @@
   --playlist-title-text: #222222;
   --playlist-tracks-background: #fefefe40;
   --playlist-tracks-text: #444444;
-  --editor-section-background: #c0c0c040;
+  --editor-background: #c0c0c040;
+  --editor-section-background: #ffffff;
+  --editor-subsection-background: #fcfcfc;
+  --editor-subsection-img-none: grayscale(100%) opacity(25%);
+  --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
 }
 
 [data-theme=dark] {
@@ -112,6 +118,8 @@
   --text: #b9b9bc;
   --text-label: #9a9a9e;
   --text-muted: #7a7a7f;
+  --text-disabled: #343438;
+  --text-placeholder: #7a7a7f;
   --text-editing: #1f1f21;
   --text-locked: rgba(220, 50, 47, 0.9);
   --icon: #b9b9bc;
@@ -130,7 +138,11 @@
   --playlist-title-text: #9a9a9e;
   --playlist-tracks-background: #2a2a2d;
   --playlist-tracks-text: #b9b9bc;
-  --editor-section-background: #2a2a2d;
+  --editor-background: #2a2a2d;
+  --editor-section-background: #b9b9bc;
+  --editor-subsection-background: #b9b9bc;
+  --editor-subsection-img-none: grayscale(100%) opacity(35%);
+  --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
 }
 
 :host(.component-metronome) div.metronome {
@@ -385,13 +397,13 @@
 }
 :host(.component-mm) input::placeholder {
   font-style: italic;
-  color: #b0b0b0;
+  color: var(--text-placeholder);
 }
 :host(.component-mm) input:invalid {
   color: red;
 }
 :host(.component-mm) input:disabled {
-  color: #a0a0a0;
+  color: var(--text-disabled);
 }
 :host(.component-mm) #mirror span {
   font-family: Lato;
@@ -2124,7 +2136,7 @@ div.playlist-track.random div#title {
 }
 :host(.component-editor) div.track-editor div.track {
   box-sizing: border-box;
-  background: var(--editor-section-background);
+  background: var(--editor-background);
   width: 100%;
   height: fit-content;
   padding-top: 12px;
@@ -2148,7 +2160,7 @@ div.playlist-track.random div#title {
 }
 :host(.component-editor) div.track-editor div.metrics {
   box-sizing: border-box;
-  background: var(--editor-section-background);
+  background: var(--editor-background);
   width: 100%;
   height: fit-content;
   padding-top: 8px;
@@ -2170,7 +2182,7 @@ div.playlist-track.random div#title {
 }
 :host(.component-editor) div.track-editor div.metronome {
   box-sizing: border-box;
-  background: var(--editor-section-background);
+  background: var(--editor-background);
   width: 100%;
   height: fit-content;
   padding-top: 8px;
@@ -2210,7 +2222,7 @@ div.playlist-track.random div#title {
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  background: var(--editor-section-background);
+  background: var(--editor-background);
   padding-top: 12px;
   padding-left: 8px;
   padding-right: 8px;
@@ -2426,7 +2438,7 @@ div.playlist-track.random div#title {
   grid-template-rows: auto auto;
 }
 :host(.component-section) div.section div.summary {
-  background: #ffffff;
+  background: var(--editor-section-background);
   width: 100%;
   display: grid;
   grid-template-columns: auto auto 1fr auto auto;
@@ -2476,6 +2488,7 @@ div.playlist-track.random div#title {
 }
 :host(.component-section) div.section input {
   box-sizing: border-box;
+  background: var(--editor-section-background);
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 6px;
@@ -2490,10 +2503,10 @@ div.playlist-track.random div#title {
 }
 :host(.component-section) div.section input::placeholder {
   font-style: italic;
-  color: #a0a0a0;
+  color: var(-text-placeholder);
 }
 :host(.component-section) div.section input[readonly] {
-  color: gray;
+  color: var(-text-muted);
   font-style: italic;
   font-weight: 300;
 }
@@ -2549,7 +2562,7 @@ div.playlist-track.random div#title {
   }
 }
 :host(.component-subsection) div.subsection {
-  background: #fcfcfc;
+  background: var(--editor-subsection-background);
   width: 100%;
   height: fit-content;
   display: grid;
@@ -2577,6 +2590,7 @@ div.playlist-track.random div#title {
 }
 :host(.component-subsection) div.subsection input {
   box-sizing: border-box;
+  background: var(--editor-subsection-background);
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 6px;
@@ -2591,10 +2605,10 @@ div.playlist-track.random div#title {
 }
 :host(.component-subsection) div.subsection input::placeholder {
   font-style: italic;
-  color: #a0a0a0;
+  color: var(--text-placeholder);
 }
 :host(.component-subsection) div.subsection input[readonly] {
-  color: gray;
+  color: var(--text-muted);
   font-style: italic;
   font-weight: normal;
 }
@@ -2743,7 +2757,7 @@ div.playlist-track.random div#title {
   padding-right: 4px;
 }
 :host(.component-section-time-signature) div.time-signature div#list div.content div.custom input {
-  background: #e0e0e0;
+  background: var(--editor-subsection-background);
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 8px;
@@ -2768,10 +2782,10 @@ div.playlist-track.random div#title {
   width: 172px;
 }
 :host(.component-section-time-signature) div.time-signature.none button img {
-  filter: grayscale(100%) opacity(25%);
+  filter: var(--editor-subsection-img-none);
 }
 :host(.component-section-time-signature) div.time-signature.disabled button img {
-  filter: grayscale(100%) opacity(50%);
+  filter: var(--editor-subsection-img-disabled);
 }
 
 :host(.component-section-mm) {
@@ -2861,10 +2875,10 @@ div.playlist-track.random div#title {
   display: none;
 }
 :host(.component-section-mm) button.none img {
-  filter: grayscale(100%) opacity(25%);
+  filter: var(--editor-subsection-img-none);
 }
 :host(.component-section-mm) button:disabled img {
-  filter: grayscale(100%) opacity(50%);
+  filter: var(--editor-subsection-img-disabled);
 }
 :host(.component-section-mm) input {
   box-sizing: border-box;
@@ -2878,17 +2892,17 @@ div.playlist-track.random div#title {
 }
 :host(.component-section-mm) input::placeholder {
   font-style: italic;
-  color: #b0b0b0;
+  color: var(--text-placeholder);
 }
 :host(.component-section-mm) input:disabled {
-  color: #a0a0a0;
+  color: var(--text-disabled);
 }
 :host(.component-section-mm) input#BPM {
   min-width: 2em;
   field-sizing: content;
   height: fit-content;
   padding-right: 4px;
-  color: #444444;
+  color: var(--text);
   font-size: 14px;
   font-weight: normal;
   text-align: left;
@@ -2907,10 +2921,10 @@ div.playlist-track.random div#title {
   text-align: left;
 }
 :host(.component-section-mm) #BPM:invalid + #bpm {
-  color: #b0b0b0;
+  color: var(--text-placeholder);
 }
 :host(.component-section-mm) #BPM:placeholder-shown + #bpm {
-  color: #b0b0b0;
+  color: var(--text-placeholder);
 }
 
 :host(.component-section-mm:not([figura=eighth])) #list > div > li[data-pulse=eighth] {

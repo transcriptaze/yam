@@ -106,13 +106,13 @@
 
   button.none {
     img {
-      filter: grayscale(100%) opacity(25%);
+      filter: var(--editor-subsection-img-none);
     }
   }
 
   button:disabled {
     img {
-      filter: grayscale(100%) opacity(50%);    
+      filter: var(--editor-subsection-img-disabled);
     }
   } 
 
@@ -131,11 +131,11 @@
 
   input::placeholder {
     font-style: italic;
-    color: #b0b0b0;
+    color: var(--text-placeholder);
   }
 
   input:disabled {
-    color: #a0a0a0;
+    color: var(--text-disabled)
   } 
 
   input#BPM {
@@ -144,7 +144,7 @@
       height: fit-content;
       padding-right: 4px;
 
-      color: #444444;
+      color: var(--text);
       font-size: 14px;
       font-weight: normal;
       text-align: left;
@@ -167,11 +167,11 @@
   }
 
   #BPM:invalid + #bpm {
-    color: #b0b0b0;
+    color: var(--text-placeholder);
   }
 
   #BPM:placeholder-shown + #bpm {
-    color: #b0b0b0;
+    color: var(--text-placeholder);
   }
 }
 

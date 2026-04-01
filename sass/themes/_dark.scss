@@ -32,6 +32,8 @@ $border: #58585f;
   --knob-ticks: #{charcoal.$fg-2};
   --knob-labels:  #{rgba(charcoal.$fg-2, 0.9)};
 
+  --wheel-border: #{charcoal.$fg-4};
+
   --loop-enabled: #{charcoal.$red};
   --ding-enabled: #{charcoal.$red};
 

@@ -61,6 +61,7 @@
   --knob-background-opacity: 40%;
   --knob-ticks: #222222;
   --knob-labels: #222222;
+  --wheel-border: #22222220;
   --text: #222222;
   --text-label: #666666;
   --text-muted: #666666;
@@ -113,6 +114,7 @@
   --knob-background-opacity: 0%;
   --knob-ticks: #b9b9bc;
   --knob-labels: rgba(185, 185, 188, 0.9);
+  --wheel-border: #7a7a7f;
   --loop-enabled: #dc322f;
   --ding-enabled: #dc322f;
   --text: #b9b9bc;
@@ -837,6 +839,9 @@ div.beat.on div.shape {
   width: 100%;
   overflow: visible;
   z-index: 2;
+}
+.wheel svg .border {
+  stroke: var(--wheel-border);
 }
 .wheel div.overlay {
   grid-column: 1;

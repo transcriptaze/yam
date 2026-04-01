@@ -3,16 +3,12 @@
 ## In Progress
 
 - [ ] editor - default reverted to 4:4 instead of continuing with 6:4 (cf. https://github.com/transcriptaze/yam/issues/54)
-- [x] bigger 'expand' buttons in editor
-- [x] wakelock - red
-- [x] toolbar - metronome 'dark mode' icon is dark grey on playlists
-- [x] bigger toolbar margin in landscape
 
 - [ ] dark mode (cf. https://github.com/transcriptaze/yam/issues/48)
     - https://colorhero.io/blog/dark-mode-color-palettes-2025
     - [x] playlist
     - [x] editor
-    - [ ] wheel
+    - [x] wheel
     - [ ] logo
     - [ ] info
        - [ ] details border

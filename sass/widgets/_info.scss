@@ -135,7 +135,7 @@
       div.text.playing {
         font-style: normal;
         font-weight: bold;
-        color: var(--text);
+        color: var(--text-contrast);
       }
     }
 
@@ -283,6 +283,10 @@
 
           visibility: hidden;
           font-size: 0.95em;
+        }
+      
+        div.text.playing {
+          color: var(--info-detail-text);
         }
       }
 

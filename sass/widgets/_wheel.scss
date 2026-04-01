@@ -23,7 +23,11 @@
     width:  100%;
 
     overflow: visible;
-    z-index: 2
+    z-index: 2;
+
+    .border {
+      stroke: var(--wheel-border);
+    }
   }
 
   div.overlay {

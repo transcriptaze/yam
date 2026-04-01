@@ -61,8 +61,9 @@
   --knob-background-opacity: 40%;
   --knob-ticks: #222222;
   --knob-labels: #222222;
+  --wheel-border: #22222220;
   --text: #222222;
-  --text-label: #666666;
+  --text-contrast: #222222;
   --text-muted: #666666;
   --text-placeholder: #b0b0b0;
   --text-disabled: #a0a0a0;
@@ -113,9 +114,11 @@
   --knob-background-opacity: 0%;
   --knob-ticks: #b9b9bc;
   --knob-labels: rgba(185, 185, 188, 0.9);
+  --wheel-border: #7a7a7f;
   --loop-enabled: #dc322f;
   --ding-enabled: #dc322f;
   --text: #b9b9bc;
+  --text-contrast: #1f1f21;
   --text-label: #9a9a9e;
   --text-muted: #7a7a7f;
   --text-disabled: #343438;

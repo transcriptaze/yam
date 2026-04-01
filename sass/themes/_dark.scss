@@ -38,6 +38,7 @@ $border: #58585f;
   --ding-enabled: #{charcoal.$red};
 
   --text: #{charcoal.$fg-2};
+  --text-contrast: #{charcoal.$bg-2};
   --text-label: #{charcoal.$fg-3};
   --text-muted: #{charcoal.$fg-4};
   --text-disabled: #{charcoal.$bg-4};

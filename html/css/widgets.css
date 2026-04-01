@@ -63,7 +63,7 @@
   --knob-labels: #222222;
   --wheel-border: #22222220;
   --text: #222222;
-  --text-label: #666666;
+  --text-contrast: #222222;
   --text-muted: #666666;
   --text-placeholder: #b0b0b0;
   --text-disabled: #a0a0a0;
@@ -118,6 +118,7 @@
   --loop-enabled: #dc322f;
   --ding-enabled: #dc322f;
   --text: #b9b9bc;
+  --text-contrast: #1f1f21;
   --text-label: #9a9a9e;
   --text-muted: #7a7a7f;
   --text-disabled: #343438;
@@ -1056,7 +1057,7 @@ div.beat.on div.shape {
 :host(.component-info) div.info div.detail div.text.playing {
   font-style: normal;
   font-weight: bold;
-  color: var(--text);
+  color: var(--text-contrast);
 }
 :host(.component-info) div.info button {
   background-color: rgba(192, 192, 192, 0.2509803922);
@@ -1169,6 +1170,9 @@ div.beat.on div.shape {
     grid-row: 1;
     visibility: hidden;
     font-size: 0.95em;
+  }
+  :host(.component-info) div.info div.detail div.text.playing {
+    color: var(--info-detail-text);
   }
   :host(.component-info) div.info div.overlay {
     grid-column: 1/4;

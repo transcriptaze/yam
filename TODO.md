@@ -11,10 +11,12 @@
     - [x] wheel
     - [ ] logo
     - [ ] info
-       - [ ] details border
-       - [ ] missing border-radius somewhere
+       - [x] playing text colour
+       - [ ] move overlay to progress bar canvas
+           - Fix whole --accent-color thing
        - [ ] rework progress bar to use CSS/themes
-       - [ ] playing text colour
+       - [ ] missing border-radius somewhere
+       - [ ] details border
 
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)

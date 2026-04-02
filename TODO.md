@@ -12,8 +12,7 @@
     - [ ] logo
     - [ ] info
        - [x] playing text colour
-       - [ ] move overlay to progress bar canvas
-           - Fix whole --accent-color thing
+       - [x] move overlay to progress bar canvas
        - [ ] rework progress bar to use CSS/themes
        - [ ] missing border-radius somewhere
        - [ ] details border
@@ -67,7 +66,7 @@
 - [ ] (?) move spacebar toggle into metronome widget
 - [ ] different grip icon
 - [ ] onSave should only update editor title, BPM, etc
-- [ ] playlists loaded from file include deleted playlists
+- [x] ~~playlists loaded from file include deleted playlists~~
 - [ ] editor: metronome div vertical alignment
 - [ ] editor: role drop down list
 - [ ] portrait/fullscreen: put something (title? logo? yams?) in the 'safe area' at the top

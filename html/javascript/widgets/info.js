@@ -1,4 +1,4 @@
-import { COLOURS, INF } from '../constants.js'
+import { INF } from '../constants.js'
 import * as datastore from '../datastore/datastore.js'
 
 export class Info extends HTMLElement {
@@ -89,7 +89,6 @@ export class Info extends HTMLElement {
         playing: false,
       }
 
-      this.style.setProperty('--text-color', '#222222')
       this.style.setProperty('--accent-color', `#00000000`)
     } else {
       this.#container.classList.remove('details')
@@ -133,15 +132,13 @@ export class Info extends HTMLElement {
 
       const name = section?.name ?? ''
       const colour = section?.colour ?? '#00000000'
-      const text = COLOURS.get(section?.colour ?? '') ?? '#222222'
 
       // NB set the colour/subsections before setting the progress bar head/bars
       if (!playing) {
-        this.style.setProperty('--accent-color', `#c0c0c040`)
+        this.style.setProperty('--accent-color', 'transparent')
         this.#text.classList.remove('playing')
         this.#section.textContent = name
       } else if (playing) {
-        this.style.setProperty('--text-color', text)
         this.style.setProperty('--accent-color', colour)
         this.#text.classList.add('playing')
         this.#section.textContent = name

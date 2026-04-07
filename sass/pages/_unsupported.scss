@@ -11,6 +11,15 @@ main.unsupported {
 
   color: var(--text);
 
+  div.logo {
+    width: 64px;
+    height: 64px;
+
+    background-color: transparent;
+    background-image: var(--logo);
+    background-size: contain;
+  }
+
   h1 {
     display: flex;
     align-items: center;

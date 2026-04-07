@@ -37,6 +37,7 @@
   size-adjust: 120%;
 }
 :root {
+  --logo: url("/images/logo.png");
   --background: #ffffff url("../images/textures/ricepaper_v3.png");
   --panel-background: transparent;
   --panel-border: 1px solid red;
@@ -93,6 +94,7 @@
 }
 
 [data-theme=dark] {
+  --logo: url("/images/dark/logo.png");
   --background: #0f0f10 url("../images/textures/45degreee_fabric.webp");
   --panel-background: #0f0f10;
   --panel-border: 1px solid #7a7a7f;
@@ -291,6 +293,13 @@ html.settings main {
   margin-right: 64px;
   color: var(--text);
 }
+html.settings main div.logo {
+  width: 64px;
+  height: 64px;
+  background-color: transparent;
+  background-image: var(--logo);
+  background-size: contain;
+}
 html.settings main h1 {
   display: flex;
   align-items: center;
@@ -402,6 +411,13 @@ main.about {
   flex-direction: column;
   justify-content: flex-start;
   color: var(--text);
+}
+main.about div.logo {
+  width: 64px;
+  height: 64px;
+  background-color: transparent;
+  background-image: var(--logo);
+  background-size: contain;
 }
 main.about h1 {
   display: flex;
@@ -556,6 +572,13 @@ main.unsupported {
   justify-content: flex-start;
   align-items: center;
   color: var(--text);
+}
+main.unsupported div.logo {
+  width: 64px;
+  height: 64px;
+  background-color: transparent;
+  background-image: var(--logo);
+  background-size: contain;
 }
 main.unsupported h1 {
   display: flex;

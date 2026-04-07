@@ -4,6 +4,7 @@
 $border: #58585f;
 
 [data-theme="dark"] {
+  --logo: url('/images/dark/logo.png');
   --background: #{charcoal.$bg-0} url("../images/textures/45degreee_fabric.webp");
   --panel-background: #{charcoal.$bg-0};
   --panel-border: 1px solid #{charcoal.$fg-4};

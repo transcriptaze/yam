@@ -37,6 +37,7 @@
   size-adjust: 120%;
 }
 :root {
+  --logo: url("/images/logo.png");
   --background: #ffffff url("../images/textures/ricepaper_v3.png");
   --panel-background: transparent;
   --panel-border: 1px solid red;
@@ -93,6 +94,7 @@
 }
 
 [data-theme=dark] {
+  --logo: url("/images/dark/logo.png");
   --background: #0f0f10 url("../images/textures/45degreee_fabric.webp");
   --panel-background: #0f0f10;
   --panel-border: 1px solid #7a7a7f;

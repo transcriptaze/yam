@@ -164,24 +164,24 @@ describe('tests section colour generator', function () {
   it('colour generator', function () {
     // prettier-ignore
     const sections = [
-      { role: 'count-in',                 expected: '#d69574' },
-      { role: 'anacrusis',                expected: '#cbb469' },
-      { role: 'intro',                    expected: '#df8880' },
-      { role: 'verse',                    expected: '#b3bc69' },
-      { role: 'verse',                    expected: '#64aa6f' },
-      { role: 'chorus',                   expected: '#84b5d2' },
-      { role: 'verse',                    expected: '#b3bc69' },
-      { role: 'verse', colour: '#ff0000', expected: '#ff0000' },
-      { role: 'chorus',                   expected: '#3e7eb3' },
-      { role: 'bridge',                   expected: '#a7a8cb' },
-      { role: 'turnaround',               expected: '#da8aaa' },
-      { role: 'verse',                    expected: '#b3bc69' },
-      { role: 'outro',                    expected: '#86c0b5' },
-      { role: '',                         expected: '#cb96b2' },
-      { role: '',                         expected: '#71a9a0' },
-      { role: '',                         expected: '#b29f69' },
-      { role: '',                         expected: '#7197b8' },
-      { role: '',                         expected: '#cb96b2' },
+      { role: 'count-in',                 expected: '--role-count-in'   },
+      { role: 'anacrusis',                expected: '--role-anacrusis'  },
+      { role: 'intro',                    expected: '--role-intro'      },
+      { role: 'verse',                    expected: '--role-verse'      },
+      { role: 'verse',                    expected: '--role-verse1'     },
+      { role: 'chorus',                   expected: '--role-chorus'     },
+      { role: 'verse',                    expected: '--role-verse'      },
+      { role: 'verse', colour: '#ff0000', expected: '#ff0000'           },
+      { role: 'chorus',                   expected: '--role-chorus1'    },
+      { role: 'bridge',                   expected: '--role-bridge'     },
+      { role: 'turnaround',               expected: '--role-turnaround' },
+      { role: 'verse',                    expected: '--role-verse'      },
+      { role: 'outro',                    expected: '--role-outro'      },
+      { role: '',                         expected: '--role-other'      },
+      { role: '',                         expected: '--role-other1'     },
+      { role: '',                         expected: '--role-other2'     },
+      { role: '',                         expected: '--role-other3'     },
+      { role: '',                         expected: '--role-other'      },
     ]
 
     const g = generators.colours()
@@ -216,12 +216,12 @@ describe('tests track sections transmogrify', function () {
 
     // prettier-ignore
     const expected = [
-      { ID: 1, role: 'intro',   name: 'Intro',      colour: '#df8880', measures: 4,   start: 1,   timeSignature: '4:4', dings:[],    subsections: [ { measures: 4,   start:1,   tempo:120, timeSignature:'4:4', pulse:'quarter', clicks:null    }] },
-      { ID: 2, role: 'verse',   name: 'Verse 1',    colour: '#b3bc69', measures: 8,   start: 5,   timeSignature: '4:4', dings:[],    subsections: [ { measures: 8,   start:5,   tempo:90,  timeSignature:'4:4', pulse:'quarter', clicks:null    }] },
-      { ID: 3, role: 'chorus',  name: 'Chorus 1',   colour: '#84b5d2', measures: 12,  start: 13,  timeSignature: '4:4', dings:[1.2], subsections: [ { measures: 12,  start:13,  tempo:90,  timeSignature:'4:4', pulse:'quarter', clicks:[ 1,3 ] }] },
-      { ID: 4, role: 'role #1', name: 'Section #4', colour: '#cb96b2', measures: 1,   start: 25,  timeSignature: '6:8', dings:[],    subsections: [ { measures: 1,   start:25,  tempo:60,  timeSignature:'6:8', pulse:'quarter', colour: '#ff00ff', clicks:[ 1,4 ], dings:[]     }] },
-      { ID: 5, role: 'role #2', name: 'Section #5', colour: '#71a9a0', measures: INF, start: 26,  timeSignature: '3:4', dings:[],    subsections: [ { measures: INF, start:26,  tempo:80,  timeSignature:'3:4', pulse:'eighth',  clicks:null,    dings:[ 1.1 ]}] },
-      { ID: 6, role: 'outro',   name: 'Outro',      colour: '#ff0000', measures: INF, start: INF, timeSignature: '3:4', dings:[],    subsections: [ { measures: INF, start:INF, tempo:80,  timeSignature:'3:4', pulse:'eighth',  clicks:null }] },
+      { ID: 1, role: 'intro',   name: 'Intro',      colour: '--role-intro',  measures: 4,   start: 1,   timeSignature: '4:4', dings:[],    subsections: [ { measures: 4,   start:1,   tempo:120, timeSignature:'4:4', pulse:'quarter', clicks:null    }] },
+      { ID: 2, role: 'verse',   name: 'Verse 1',    colour: '--role-verse',  measures: 8,   start: 5,   timeSignature: '4:4', dings:[],    subsections: [ { measures: 8,   start:5,   tempo:90,  timeSignature:'4:4', pulse:'quarter', clicks:null    }] },
+      { ID: 3, role: 'chorus',  name: 'Chorus 1',   colour: '--role-chorus', measures: 12,  start: 13,  timeSignature: '4:4', dings:[1.2], subsections: [ { measures: 12,  start:13,  tempo:90,  timeSignature:'4:4', pulse:'quarter', clicks:[ 1,3 ] }] },
+      { ID: 4, role: 'role #1', name: 'Section #4', colour: '--role-other',  measures: 1,   start: 25,  timeSignature: '6:8', dings:[],    subsections: [ { measures: 1,   start:25,  tempo:60,  timeSignature:'6:8', pulse:'quarter', colour: '#ff00ff', clicks:[ 1,4 ], dings:[]     }] },
+      { ID: 5, role: 'role #2', name: 'Section #5', colour: '--role-other1', measures: INF, start: 26,  timeSignature: '3:4', dings:[],    subsections: [ { measures: INF, start:26,  tempo:80,  timeSignature:'3:4', pulse:'eighth',  clicks:null,    dings:[ 1.1 ]}] },
+      { ID: 6, role: 'outro',   name: 'Outro',      colour: '#ff0000',       measures: INF, start: INF, timeSignature: '3:4', dings:[],    subsections: [ { measures: INF, start:INF, tempo:80,  timeSignature:'3:4', pulse:'eighth',  clicks:null }] },
     ]
 
     const sections = [...generators.transmogrify(track)]

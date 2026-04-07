@@ -91,6 +91,34 @@
   --editor-subsection-background: #fcfcfc;
   --editor-subsection-img-none: grayscale(100%) opacity(25%);
   --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
+  --role-count-in-colour: #d69574;
+  --role-anacrusis-colour: #cbb469;
+  --role-intro-colour: #df8880;
+  --role-verse-colour: #b3bc69;
+  --role-verse1-colour: #64aa6f;
+  --role-chorus-colour: #84b5d2;
+  --role-chorus1-colour: #3e7eb3;
+  --role-bridge-colour: #a7a8cb;
+  --role-turnaround-colour: #da8aaa;
+  --role-outro-colour: #86c0b5;
+  --role-other-colour: #cb96b2;
+  --role-other1-colour: #71a9a0;
+  --role-other2-colour: #b29f69;
+  --role-other3-colour: #7197b8;
+  --role-count-in-text: #1d4b63;
+  --role-anacrusis-text: #21305f;
+  --role-intro-text: #1a5f66;
+  --role-verse-text: #2c2758;
+  --role-verse1-text: #2c2758;
+  --role-chorus-text: #5d3822;
+  --role-chorus1-text: #5d3822;
+  --role-bridge-text: #504f2f;
+  --role-turnaround-text: #1e6147;
+  --role-outro-text: #542c33;
+  --role-other-text: #2a553e;
+  --role-other1-text: #4f3035;
+  --role-other2-text: #2b3654;
+  --role-other3-text: #553e2a;
 }
 
 [data-theme=dark] {
@@ -954,6 +982,20 @@ div.beat.on div.shape {
 
 :host(.component-info) {
   --accent-color: #71a9a0;
+  --role-count-in: var(--role-count-in-colour);
+  --role-anacrusis: var(--role-anacrusis-colour);
+  --role-intro: var(--role-intro-colour);
+  --role-verse: var(--role-verse-colour);
+  --role-verse1: var(--role-verse1-colour);
+  --role-chorus: var(--role-chorus-colour);
+  --role-chorus1: var(--role-chorus1-colour);
+  --role-bridge: var(--role-bridge-colour);
+  --role-turnaround: var(--role-turnaround-colour);
+  --role-outro: var(--role-outro-colour);
+  --role-other: var(--role-other-colour);
+  --role-other1: var(--role-other1-colour);
+  --role-other2: var(--role-other2-colour);
+  --role-other3: var(--role-other3-colour);
 }
 :host(.component-info) div.info {
   box-sizing: border-box;

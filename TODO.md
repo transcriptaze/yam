@@ -5,6 +5,7 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 ## In Progress
 
 - [ ] editor - default reverted to 4:4 instead of continuing with 6:4 (cf. https://github.com/transcriptaze/yam/issues/54)
+- [ ] keeps playing when changing playlists
 
 - [ ] dark mode (cf. https://github.com/transcriptaze/yam/issues/48)
     - https://colorhero.io/blog/dark-mode-color-palettes-2025
@@ -13,7 +14,7 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
     - [ ] info
        - [x] playing text colour
        - [x] move overlay to progress bar canvas
-       - [ ] rework progress bar to use CSS/themes
+       - [x] rework progress bar to use CSS/themes
        - [ ] missing border-radius somewhere
        - [ ] details border
 

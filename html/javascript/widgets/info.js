@@ -89,7 +89,7 @@ export class Info extends HTMLElement {
         playing: false,
       }
 
-      this.style.setProperty('--accent-color', `#00000000`)
+      this.style.setProperty('--accent-color', `transparent`)
     } else {
       this.#container.classList.remove('details')
     }
@@ -131,15 +131,22 @@ export class Info extends HTMLElement {
       this.#cache.stopped = stopped
 
       const name = section?.name ?? ''
-      const colour = section?.colour ?? '#00000000'
+      const style = getComputedStyle(this)
 
-      // NB set the colour/subsections before setting the progress bar head/bars
+      // NB. set the colour/subsections before setting the progress bar head/bars
       if (!playing) {
         this.style.setProperty('--accent-color', 'transparent')
         this.#text.classList.remove('playing')
         this.#section.textContent = name
       } else if (playing) {
-        this.style.setProperty('--accent-color', colour)
+        const colour = section?.colour ?? 'transparent'
+
+        if (colour === 'transparent') {
+          this.style.setProperty('--accent-color', 'transparent')
+        } else {
+          this.style.setProperty('--accent-color', style.getPropertyValue(`${colour}`))
+        }
+
         this.#text.classList.add('playing')
         this.#section.textContent = name
       }

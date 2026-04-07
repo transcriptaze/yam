@@ -1,6 +1,22 @@
 :host(.component-info) {
 
-  --accent-color: #71a9a0;
+  --accent-color:    #71a9a0;
+
+  --role-count-in:   var(--role-count-in-colour);
+  --role-anacrusis:  var(--role-anacrusis-colour);
+  --role-intro:      var(--role-intro-colour);
+  --role-verse:      var(--role-verse-colour);
+  --role-verse1:     var(--role-verse1-colour);
+  --role-chorus:     var(--role-chorus-colour);
+  --role-chorus1:    var(--role-chorus1-colour);
+  --role-bridge:     var(--role-bridge-colour);
+  --role-turnaround: var(--role-turnaround-colour);
+  --role-outro:      var(--role-outro-colour);
+
+  --role-other:  var(--role-other-colour);
+  --role-other1: var(--role-other1-colour);
+  --role-other2: var(--role-other2-colour);
+  --role-other3: var(--role-other3-colour);
 
   div.info {
     box-sizing: border-box;

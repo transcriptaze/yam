@@ -29,6 +29,10 @@ export function realize(track) {
       }
     }
 
+    if (sections.length > 0 && sections[0].role == 'anacrusis') {
+      return sections[0].measures
+    }
+
     return 0
   }
 

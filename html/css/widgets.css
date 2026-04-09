@@ -1003,6 +1003,8 @@ div.beat.on div.shape {
   grid-template-columns: 1fr auto;
   grid-template-rows: auto auto;
   column-gap: 0px;
+  border-radius: 4px 4px 4px 4px;
+  overflow: clip;
 }
 :host(.component-info) div.info div.title {
   grid-column: 1;
@@ -1034,7 +1036,7 @@ div.beat.on div.shape {
   padding-left: 0px;
   padding-right: 0px;
   border: none;
-  border-radius: 4px 0px 0px 4px;
+  border-bottom-left-radius: 4px;
 }
 :host(.component-info) div.info div.title input {
   box-sizing: border-box;
@@ -1068,7 +1070,6 @@ div.beat.on div.shape {
   background: rgba(192, 192, 192, 0.2509803922);
   margin-top: 2px;
   border: none;
-  border-radius: 0px 0px 4px 4px;
   overflow: hidden;
   padding-top: 0px;
   padding-bottom: 0px;
@@ -1112,7 +1113,8 @@ div.beat.on div.shape {
   padding-right: 6px;
   line-height: 0;
   border: none;
-  border-radius: 0px 4px 4px 0px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
   outline: none;
 }
 :host(.component-info) div.info button:disabled {
@@ -1127,7 +1129,6 @@ div.beat.on div.shape {
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  border-radius: 0px 0px 4px 4px;
   visibility: hidden;
 }
 :host(.component-info) div.info yam-progress {
@@ -1152,13 +1153,13 @@ div.beat.on div.shape {
   opacity: 90%;
 }
 :host(.component-info) div.info.details div.title {
-  border-radius: 4px 0px 0px 0px;
+  border-bottom-left-radius: 0px;
 }
 :host(.component-info) div.info.details div.detail {
   visibility: visible;
 }
 :host(.component-info) div.info.details button {
-  border-radius: 0px 4px 0px 0px;
+  border-bottom-right-radius: 0px;
 }
 :host(.component-info) div.info.details div.progress {
   visibility: visible;
@@ -1178,7 +1179,6 @@ div.beat.on div.shape {
     padding-bottom: 0px;
     padding-left: 0px;
     padding-right: 0px;
-    border-radius: 4px 0px 0px 4px;
   }
   :host(.component-info) div.info div.title input {
     font-size: 1.1em;
@@ -1188,7 +1188,6 @@ div.beat.on div.shape {
     grid-row: 1;
     height: 100%;
     margin-top: 0px;
-    border-radius: 0px 0px 0px 0px;
     visibility: visible;
     display: grid;
     grid-template-columns: 1fr;

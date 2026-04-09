@@ -16,8 +16,8 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
        - [x] playing text colour
        - [x] move overlay to progress bar canvas
        - [x] rework progress bar to use CSS/themes
+       - [x] missing border-radius somewhere
        - [ ] details border
-       - [ ] missing border-radius somewhere
 
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)

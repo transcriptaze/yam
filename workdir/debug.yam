@@ -670,13 +670,68 @@
       "UUID": "f9534f96-0893-4d7a-ac2a-bbd774734d1b",
       "version": 0,
       "title": "Greensleeves",
-      "tempo": 60,
+      "tempo": 69,
       "timeSignature": "3:4",
       "pulse": "eighth-doublet",
-      "sections": [],
+      "sections": [
+        {
+          "role": "anacrusis",
+          "measures": 1,
+          "clicks": [
+            3,
+            3.5
+          ],
+          "subsections": [
+            {
+              "measures": 1
+            }
+          ]
+        },
+        {
+          "name": "Verse 1",
+          "role": "verse",
+          "measures": 8,
+          "subsections": [
+            {
+              "measures": 8
+            }
+          ]
+        },
+        {
+          "name": "Verse 2",
+          "role": "verse",
+          "measures": 8,
+          "subsections": [
+            {
+              "measures": 8
+            }
+          ]
+        },
+        {
+          "name": "Chorus 1",
+          "role": "chorus",
+          "measures": 8,
+          "subsections": [
+            {
+              "measures": 8
+            }
+          ]
+        },
+        {
+          "name": "Chorus 2",
+          "role": "chorus",
+          "measures": 8,
+          "subsections": [
+            {
+              "measures": 8
+            }
+          ]
+        }
+      ],
       "metronome": {
-        "BPM": 45,
-        "loop": false,
+        "BPM": 54,
+        "loop": true,
+        "loops": 3,
         "ding": false
       }
     },

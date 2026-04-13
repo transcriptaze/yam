@@ -39,7 +39,7 @@ export function parsePulse(v) {
 
 export function durationToMS(v) {
   const value = `${v}`.replace(/\s+/g, '')
-  const match = /^([\d.]+)(ms|s)?$/.exec(value)
+  const match = /^([\d.]+)(?:\s*(ms|s))$/.exec(value)
 
   if (match) {
     const [, nn, unit] = match
@@ -47,18 +47,14 @@ export function durationToMS(v) {
 
     if (!Number.isNaN(dt)) {
       if (unit === 's') {
-        return clamp(1000 * dt, 0, 5000)
+        return Math.max(0, 1000 * dt)
       }
 
       if (unit === 'ms') {
-        return clamp(dt, 0, 5000)
+        return Math.max(0, dt)
       }
 
-      if (dt >= 0.1 && dt < 5.0) {
-        return clamp(1000 * dt, 0, 5000)
-      }
-
-      return clamp(dt, 0, 5000)
+      return Math.max(0, dt)
     }
   }
 

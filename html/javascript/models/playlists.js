@@ -29,7 +29,7 @@ class Playlists extends EventTarget {
     })
 
     playlists.forEach((v) => {
-      v.addEventListener('selected', this.#forward)
+      v.addEventListener(EVENTS.PLAYLIST_SELECTED, this.#forward)
       v.addEventListener(EVENTS.PLAYLIST_CHANGED, this.#forward)
       v.addEventListener(EVENTS.PLAYLIST_TRACK_DELETED, this.#forward)
       v.addEventListener(EVENTS.PLAYLIST_TRACK_MUTED, this.#forward)
@@ -55,7 +55,7 @@ class Playlists extends EventTarget {
       title: title,
     })
 
-    playlist.addEventListener('selected', this.#forward)
+    playlist.addEventListener(EVENTS.PLAYLIST_SELECTED, this.#forward)
     playlist.addEventListener(EVENTS.PLAYLIST_CHANGED, this.#forward)
     playlist.addEventListener(EVENTS.PLAYLIST_TRACK_DELETED, this.#forward)
     playlist.addEventListener(EVENTS.PLAYLIST_TRACK_MUTED, this.#forward)

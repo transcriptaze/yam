@@ -12,6 +12,7 @@ const STATE = {
 }
 
 const INF = Number.POSITIVE_INFINITY
+const MAX_DELAY = 30000 // ms
 
 export class MetronomeNode extends AudioWorkletNode {
   #loops = INF
@@ -303,7 +304,7 @@ function transmogrify(track) {
     clicks: generators.clicks(track.clicks),
     ding: track.ding ?? false,
     dings: dings.map((v) => `${v}`),
-    delay: clamp(durationToMS(delay), 0, 5000),
+    delay: clamp(durationToMS(delay), 0, MAX_DELAY),
 
     bars: bars,
     beats: parseTimeSignature(track.timeSignature).beats,

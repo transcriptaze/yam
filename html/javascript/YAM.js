@@ -404,7 +404,7 @@ function rewire() {
 
   widgets.playlists.addEventListener('new', (e) => onPlaylistNew(e))
   widgets.playlists.addEventListener(EVENTS.SHUFFLE_PLAYLISTS, (e) => onPlaylistsShuffled(e))
-  widgets.playlists.addEventListener(EVENTS.SELECT_PLAYLIST, (e) => onPlaylistSelected(e))
+  widgets.playlists.addEventListener(EVENTS.SELECT_PLAYLIST, (e) => onPlaylistSelect(e))
   widgets.playlists.addEventListener(EVENTS.DELETE_PLAYLIST, (e) => onPlaylistDelete(e))
   widgets.playlists.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
 
@@ -422,7 +422,7 @@ function rewire() {
 
   state.addEventListener('change', (e) => onStateModified(e))
 
-  models.playlists.addEventListener('selected', (e) => onSelected(e))
+  models.playlists.addEventListener(EVENTS.PLAYLIST_SELECTED, (e) => onPlaylistSelected(e))
   models.playlists.addEventListener(EVENTS.PLAYLIST_CHANGED, (e) => onPlaylistChanged(e))
   models.playlists.addEventListener(EVENTS.PLAYLIST_TRACK_DELETED, (e) => onPlaylistTrackDeleted(e))
   models.playlists.addEventListener(EVENTS.PLAYLIST_TRACK_MUTED, (e) => onMuted(e, true))
@@ -585,11 +585,9 @@ function onMuted(e, muted) {
 
   widgets.playlists.mute(playlist, track, muted)
   widgets.tracks.update(playlist)
-
-  // playlist?.save()
 }
 
-function onSelected(event) {
+function onPlaylistSelected(event) {
   const playlist = models.playlists.playlist(event.detail.playlist)
   const track = models.tracks.track(event.detail.track)
   const toolbar = document.querySelector('toolbar')
@@ -866,7 +864,7 @@ function onPlaylistAdded(event) {
   playlist.select(null)
 }
 
-function onPlaylistSelected(event) {
+function onPlaylistSelect(event) {
   const playlist = models.playlists.playlist(event.detail.playlist)
 
   if (playlist?.UUID !== state.playlist) {

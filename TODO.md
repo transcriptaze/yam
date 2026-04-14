@@ -4,9 +4,9 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 
 ## In Progress
 
-- [x] Greensleeves: 33 instead of 1+32
-- [x] dark mode (cf. https://github.com/transcriptaze/yam/issues/48)
-- [x] keeps playing when changing playlists
+- [ ] statistics (cf. https://github.com/transcriptaze/yam/issues/11)
+
+
 
 - [ ] editor - default reverted to 4:4 instead of continuing with 6:4 (cf. https://github.com/transcriptaze/yam/issues/54)
 

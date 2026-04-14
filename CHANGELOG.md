@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## [0.1.0](https://github.com/transcriptaze/yam/releases/tag/v0.2.0) - 2026-04-14
+## [0.2.0](https://github.com/transcriptaze/yam/releases/tag/v0.2.0) - 2026-04-14
 
 ### Added
 1. Dark mode.

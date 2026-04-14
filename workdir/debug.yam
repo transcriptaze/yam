@@ -670,13 +670,68 @@
       "UUID": "f9534f96-0893-4d7a-ac2a-bbd774734d1b",
       "version": 0,
       "title": "Greensleeves",
-      "tempo": 60,
+      "tempo": 69,
       "timeSignature": "3:4",
       "pulse": "eighth-doublet",
-      "sections": [],
+      "sections": [
+        {
+          "role": "anacrusis",
+          "measures": 1,
+          "clicks": [
+            3,
+            3.5
+          ],
+          "subsections": [
+            {
+              "measures": 1
+            }
+          ]
+        },
+        {
+          "name": "Verse 1",
+          "role": "verse",
+          "measures": 8,
+          "subsections": [
+            {
+              "measures": 8
+            }
+          ]
+        },
+        {
+          "name": "Verse 2",
+          "role": "verse",
+          "measures": 8,
+          "subsections": [
+            {
+              "measures": 8
+            }
+          ]
+        },
+        {
+          "name": "Chorus 1",
+          "role": "chorus",
+          "measures": 8,
+          "subsections": [
+            {
+              "measures": 8
+            }
+          ]
+        },
+        {
+          "name": "Chorus 2",
+          "role": "chorus",
+          "measures": 8,
+          "subsections": [
+            {
+              "measures": 8
+            }
+          ]
+        }
+      ],
       "metronome": {
-        "BPM": 45,
-        "loop": false,
+        "BPM": 54,
+        "loop": true,
+        "loops": 3,
         "ding": false
       }
     },
@@ -749,6 +804,165 @@
         "loop": false,
         "ding": false
       }
-    }
+    },
+    {
+      "UUID": "e26d0fdd-3383-4cb1-90a7-b2e4eae03cb0",
+      "version": 0,
+      "title": "Awakening",
+      "tempo": 114,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "Count-In",
+          "role": "count-in",
+          "measures": 1,
+          "subsections": [
+            {
+              "measures": 1
+            }
+          ]
+        },
+        {
+          "name": "Verse 1A",
+          "role": "verse",
+          "measures": 16,
+          "subsections": [
+            {
+              "measures": 16
+            }
+          ]
+        },
+        {
+          "role": "verse",
+          "measures": 7,
+          "name": "Verse 1B",
+          "subsections": [
+            {
+              "measures": 6
+            }
+          ]
+        },
+        {
+          "role": "verse",
+          "measures": 1,
+          "timeSignature": "6:4",
+          "name": "Riff 1",
+          "subsections": [
+            {
+              "measures": 1,
+              "timeSignature": "6:4"
+            }
+          ]
+        },
+        {
+          "name": "Verse 2A",
+          "role": "verse",
+          "measures": 2,
+          "timeSignature": "4:4",
+          "subsections": [
+            {
+              "measures": 16,
+              "timeSignature": "4:4"
+            }
+          ]
+        },
+        {
+          "name": "Verse 2B",
+          "role": "verse",
+          "measures": 6,
+          "subsections": [
+            {
+              "measures": 6
+            }
+          ]
+        },
+        {
+          "name": "Riff 2",
+          "role": "verse",
+          "measures": 1,
+          "timeSignature": "6:4",
+          "subsections": [
+            {
+              "measures": 1,
+              "timeSignature": "6:4"
+            }
+          ]
+        },
+        {
+          "name": "Turnaround",
+          "role": "turnaround",
+          "measures": 1,
+          "timeSignature": "4:4",
+          "subsections": [
+            {
+              "measures": 2,
+              "timeSignature": "4:4"
+            }
+          ]
+        },
+        {
+          "name": "Verse 3",
+          "role": "verse",
+          "measures": 8,
+          "subsections": [
+            {
+              "measures": 4
+            },
+            {
+              "measures": 4
+            },
+            {
+              "measures": 4
+            },
+            {
+              "measures": 4
+            }
+          ]
+        },
+        {
+          "name": "Bridge",
+          "role": "bridge",
+          "measures": 2,
+          "subsections": [
+            {
+              "measures": 2
+            },
+            {
+              "measures": 1,
+              "timeSignature": "6:4"
+            }
+          ]
+        },
+        {
+          "name": "Mid Eight",
+          "role": "mid-eight",
+          "measures": 2,
+          "dings": [
+            1.1
+          ],
+          "subsections": [
+            {
+              "measures": 2
+            },
+            {
+              "measures": 2
+            },
+            {
+              "measures": 2
+            },
+            {
+              "measures": 1
+            }
+          ],
+          "timeSignature": "4:4"
+        }
+      ],
+      "metronome": {
+        "BPM": 80,
+        "loop": false,
+        "ding": false
+      }
+    }    
   ]
 }

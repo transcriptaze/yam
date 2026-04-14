@@ -52,6 +52,12 @@
             grid-column: 1 / 3;
             grid-row: 1;
             align-self: start;
+
+            background-color: var(--icon);
+            mask-image: url('/images/grip.svg');
+            mask-repeat: no-repeat;
+            mask-position: center;
+            mask-size: 16px 16px;
           }
 
           yam-playlist {
@@ -97,19 +103,31 @@
       justify-content: center;
       align-items: center;
 
-      background: rgba(255, 255, 255, 0.1);   /* semi-transparent */
-      backdrop-filter: blur(5px);
-      -webkit-backdrop-filter: blur(0.5px);
-
+      width: 48px;
+      height: 48px;
       margin: 8px;
       padding: 4px;
       border: none;
       border-radius: 50%;
       z-index: 2;
 
-      img {
-        width: 40px;
-        filter: invert(24%) sepia(7%) saturate(6%) hue-rotate(314deg) brightness(97%) contrast(88%);
+      background: var(--button-background-transparent);
+      backdrop-filter: blur(2px);
+
+      -webkit-backdrop-filter: blur(2px);
+
+      div.blur {
+        background: var(--button-background-translucent);
+        width: 100%;
+        height: 100%;
+
+        mask-repeat: no-repeat;
+        mask-position: center;
+        mask-size: contain;
+        mask-image: url('/images/circle-plus.svg');
+
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-size: contain;
       }
     }
   }

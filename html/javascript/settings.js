@@ -64,7 +64,9 @@ class Settings {
     return this.#theme
   }
 
-  set theme(v) {}
+  set theme(v) {
+    this.#theme = v ?? 'default'
+  }
 
   get soundset() {
     return this.#soundset

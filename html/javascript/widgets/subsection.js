@@ -137,9 +137,9 @@ export class Subsection extends HTMLElement {
   }
 
   get tempo() {
-    const e = this.shadowRoot?.querySelector('yam-section-mm')
+    const mm = this.shadowRoot?.querySelector('yam-section-mm')
 
-    return e?.tempo ?? this.#subsection.tempo
+    return mm?.tempo ?? this.#subsection.tempo
   }
 
   get #timeSignature() {

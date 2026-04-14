@@ -5,6 +5,21 @@
     <link rel="icon"       href="/favicon.png" type="image/png" />
     <link rel="stylesheet" href="./css/YAM.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <script>
+      (function() {
+        try {
+           const json = localStorage.getItem('YAM')
+           const object = JSON.parse(json)
+           const theme = object?.settings.theme ?? 'default'
+
+           console.log({theme})
+
+           document.documentElement.setAttribute('data-theme', theme);
+        } catch (err) {
+           console.log(err)
+        }
+       })()
+    </script>    
   </head>
 
   <body>
@@ -45,27 +60,21 @@
       <toolbar class="metronome">
         <div class="menu">
           <div class="left-menu">
-            <button id="reset"><img src="./images/reset.svg"         draggable="false" /></button>
-            <button id="metronome"><img src="./images/metronome.svg" draggable="false" /></button>
-            <button id="playlist"><img src="./images/playlist.svg"   draggable="false" /></button>
-            <button id="edit"><img src="./images/edit.svg"           draggable="false" /></button>
-            <button id="load"><img src="./images/import.svg"         draggable="false" /></button>
-            <button id="save"><img src="./images/export.svg"         draggable="false" /></button>
+            <button id="reset"     class="icon-reset"     aria-label="Reset"></button>
+            <button id="metronome" class="icon-metronome" aria-label="Metronome"></button>
+            <button id="playlist"  class="icon-playlist"  aria-label="Playlist"></button>
+            <button id="edit"      class="icon-edit"      aria-label="Edit"></button>
+            <button id="load"      class="icon-load"      aria-label="Load"></button>
+            <button id="save"      class="icon-save"      aria-label="Save"></button>
           </div>
 
           <div class="right-menu">
-            <a id="settings" href="./settings.html" draggable="false">
-              <img src="./images/settings.svg" draggable="false" />
-            </a>
-            <button id="fullscreen"><img src="./images/fullscreen.svg"       draggable="false" /></button>
-            <button id="wakelock"  disabled><img src="./images/wakelock.svg" draggable="false" /></button>
-            <button id="bug"       ><img src="./images/bug.svg"              draggable="false" /></button>
-            <div id="about" class="about">
-              <a href="./about.html" draggable="false">
-                <img class="visible" src="./images/about.svg" draggable="false" />
-              </a>
-              <img id="oops" class="warning" src="./images/warning.svg" draggable="false" />
-            </div>
+            <button id="settings"   class="icon-settings"    aria-label="Settings"></button>
+            <button id="fullscreen" class="icon-fullscreen"  aria-label="Fullscreen"></button>
+            <button id="wakelock"   class="icon-wakelock"    aria-label="Wakelock"></button>
+            <button id="theme"      class="icon-theme"       aria-label="Theme"></button>
+            <button id="about"      class="icon-about"       aria-label="About"></button>
+            <button id="oops"       class="icon-oops hidden" aria-label="Ooops"></button>
           </div>
         </div>
       </toolbar>
@@ -87,12 +96,10 @@
     <!-- TEMPLATES -->
     <template id="template-metronome">
       <div class="metronome">
-        <button id="back" disabled><img src="./images/controls/skip-backwards.svg"  class="visible" draggable="false" /></button>
-        <button id="play" disabled>
-          <img src="./images/controls/play.svg" class="play"        draggable="false" />
-          <img src="./images/controls/stop.svg" class="stop hidden" draggable="false" />
-        </button>
-        <button id="next" disabled><img src="./images/controls/skip-forwards.svg"   class="visible" draggable="false" /></button>
+        <button id="back" class="icon-back" aria-label="Back" disabled></button>
+        <button id="play" class="icon-play" aria-label="Play" disabled></button>
+        <button id="stop" class="icon-stop" aria-label="Play" disabled></button>
+        <button id="next" class="icon-next" aria-label="Next" disabled></button>
       </div>
     </template>
 
@@ -115,6 +122,13 @@
       <div class="time-signature">
         <button popovertarget="list">
           <div>
+            <span class="icon icon-stave"  aria-hidden="true"></span>
+            <span class="icon icon-clef"   aria-hidden="true"></span>
+            <span class="icon icon-tactus" aria-hidden="true"></span>
+            <span class="icon icon-figura" aria-hidden="true"></span>
+            <span class="icon icon-common hidden" aria-hidden="true"></span>
+            <span class="icon icon-cut    hidden" aria-hidden="true"></span>
+
             <img class="stave"         src="./images/time-signatures/stave.svg" />
             <img class="clef"          src="./images/time-signatures/clef.svg" />
             <img class="tactus"        src="./images/time-signatures/tactus/4.svg" />
@@ -171,8 +185,9 @@
 
     <template id="template-mm">
       <div class="MM">
-        <button class="pulse" popovertarget="list">
-          <img id="pulse" src="./images/MM/quarter-equals.svg"/>
+        <button id="pulse" class="pulse" popovertarget="list">
+          <span class="icon icon-pulse"></span>
+          <img src="./images/MM/quarter-equals.svg"/>
         </button>
         <div id="list" popover>
           <div class="content">
@@ -257,7 +272,7 @@
             <path   class="red"          d=""                 fill="none" stroke="#ff0000" stroke-width="0.5" />
           </g>
 
-          <g stroke="#222222" stroke-width="0.1" transform="scale(0.925)">
+          <g class="ticks" stroke="#222222" stroke-width="0.2" transform="scale(0.925)">
             <path d="M-6.470,24.148 a25,25,0,1,1,12.941,0 M-6.470,24.148" fill="none" />
               <use href="#marker" transform="rotate(-165)    translate(0,-25)" />
               <use href="#marker" transform="rotate(-123.75) translate(0,-25)" />
@@ -269,7 +284,7 @@
               <use href="#marker" transform="rotate(123.75)  translate(0,-25)" />
               <use href="#marker" transform="rotate(165)     translate(0,-25)" />
 
-              <g class="small" stroke-width="0.1">
+              <g class="small labels" stroke-width="0.1">
                 <text x="0" y="0" text-anchor="middle" alignment-baseline="middle" transform="rotate(-165)    translate(0,-29) rotate(165)">40</text>
                 <text x="0" y="0" text-anchor="middle" alignment-baseline="middle" transform="rotate(-123.75) translate(0,-29) rotate(123.75)">60</text>
                 <text x="0" y="0" text-anchor="middle" alignment-baseline="middle" transform="rotate(-82.5)   translate(0,-29) rotate(82.5)">80</text>
@@ -320,7 +335,7 @@
           </defs>
 
           <g>
-            <rect x="-51.5" y="-18" width="103%" height="100%" stroke="#22222220" fill="#22222220" />
+            <rect class="border" x="-51.5" y="-18" width="103%" height="100%" rx="2%" stroke="#22222220" fill="#22222220" />
           </g>
 
           <g id="wheel" transform="translate(0,0)">
@@ -636,8 +651,7 @@
             <div data-ref="bars"></div>
           </div>
         </div>
-        <button data-ref="save" disabled><img src="./images/save.svg" draggable="false"/></button>
-        <div class="overlay"></div>
+        <button data-ref="save" disabled></button>
         <div class="progress">
           <slot name="progress"><progress max="100" value="0"></progress></slot>
         </div>
@@ -659,8 +673,8 @@
           <ul></ul>
         </div>
         <button id="plus">
-          <img src="./images/circle-plus.svg" draggable="false" />
-        </div>
+          <div class="blur"></div>
+        </button>
       </div>
     </template>
 
@@ -672,7 +686,7 @@
             <input type="text" disabled />
           </div>
           <div class="menu">
-            <button id="menu" popovertarget="actions"><img src="./images/menu.svg" /></button>
+            <button id="menu" popovertarget="actions"></button>
             <button id="save"><img src="./images/save.svg" draggable="false"/></button>
           </div>
           <div id="actions" popover>
@@ -700,7 +714,7 @@
         </div>
         <yam-add-tracks></yam-add-tracks>
         <button id="plus">
-          <img src="./images/circle-plus.svg" draggable="false" />
+          <div class="blur"></div>
         </button>
         <button id="save">
           <img src="./images/save.svg" draggable="false" />
@@ -711,12 +725,9 @@
     <template id="template-playlist-item">
       <div class="playlist-track">
         <div id="title"></div>
-        <button id="menu" popovertarget="actions"><img src="./images/menu.svg" /></button>
+        <button id="menu" popovertarget="actions"></button>
         <div id="actions" popover>
-          <button id="mute">
-            <img class="muted" src="./images/mute.svg"   />
-            <img class="unmuted" src="./images/unmute.svg" />
-          </button>
+          <button id="mute"></button>
           <img id="trash" src="./images/trash.svg" />
         </div>
       </div>
@@ -764,10 +775,10 @@
           </select>
         </div>
         <div class="sections disabled">
-          <div class="header"><img src="./images/expand.svg" />Sections</div>
+          <div class="header"><div class="arrow"></div>Sections</div>
           <ul></ul>
           <div class="footer">
-            <button id="plus" disabled><img src="./images/plus.svg" draggable="false" /></button>
+            <button id="plus" disabled><div></div></button>
           </div>
         </div>
       </div>
@@ -777,7 +788,7 @@
       <div class="track-section">
         <div class="section collapsed">
           <div class="summary">
-            <img id="arrow" src="./images/section-expand.svg" />
+            <button id="arrow"><img src="./images/section-expand.svg" /></button>
             <input  id="name"     type="text"   autocomplete="off" />
             <input  id="role"     type="text"   list="roles" />
             <input  id="measures" type="number" min="0" step="1" readonly />
@@ -905,7 +916,7 @@
   <!-- SCRIPTS -->
   <script type="module">
     import "./javascript/widgets/widgets.js"
-    import { initialise, reset, show, load, save, requestWakeLock, toggleWakeLock, onError, showError, debug } from './javascript/YAM.js'
+    import { initialise, reset, show, load, save, requestWakeLock, toggleWakeLock, onError, showError, toggleTheme } from './javascript/YAM.js'
 
     const toolbar = {
       reset: document.querySelector('toolbar #reset'),
@@ -914,10 +925,12 @@
       edit: document.querySelector('toolbar #edit'),
       save: document.querySelector('toolbar #save'),
       load: document.querySelector('toolbar #load'),
+      settings : document.querySelector('toolbar #settings'),
       fullscreen : document.querySelector('toolbar #fullscreen'),
       wakelock: document.querySelector('toolbar #wakelock'),
-      bug: document.querySelector('#bug'),
-      oops: document.querySelector('#oops'),
+      theme: document.querySelector('toolbar #theme'),
+      about: document.querySelector('toolbar #about'),
+      oops: document.querySelector('toolbar #oops'),
     }
 
     // ... attach event handlers (because .. Safari)
@@ -928,7 +941,7 @@
     toolbar.save.onclick = () => save()
     toolbar.load.onclick = () => load()
     toolbar.wakelock.onclick = () => toggleWakeLock()
-    toolbar.bug.onclick = () =>  debug()
+    toolbar.theme.onclick = () =>  toggleTheme()
     toolbar.oops.onclick = () => showError()
 
     toolbar.fullscreen.addEventListener('click', (event) => {
@@ -939,6 +952,14 @@
             document.exitFullscreen()
          }
       }
+    })
+
+    toolbar.settings.addEventListener('click', (event) => {
+      window.location.href = "./settings.html"
+    })
+
+    toolbar.about.addEventListener('click', (event) => {
+      window.location.href = "./about.html"
     })
 
     document.addEventListener('contextmenu', (event) => {

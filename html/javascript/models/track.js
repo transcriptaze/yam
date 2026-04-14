@@ -73,10 +73,6 @@ export class Track {
     }
   }
 
-  addEventListener() {
-    throw new Error('no longer supported')
-  }
-
   get object() {
     const object = {
       UUID: this.UUID,
@@ -134,7 +130,6 @@ export class Track {
   set timeSignature(v) {
     const notify = () => {
       this.#modified = this.title != ''
-      // this.dispatchEvent(new Event('modified'))
     }
 
     if (`${v}` === 'common') {

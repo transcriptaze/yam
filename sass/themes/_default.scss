@@ -5,10 +5,108 @@ $white: colours.$white;
 $black: colours.$black;
 $grey: colours.$grey;
 
+$amber: #ff800040;
+
 :root {
+  --logo: url('/images/logo.png');
   --background: #{$white} url("../images/textures/ricepaper_v3.png");
+  --panel-background: transparent;
+  --panel-border: 1px solid red;
+
+  --metronome-button-disabled: #c0c0c0;
+  --metronome-button-enabled: #222222;
+
+  --toolbar-button-disabled: #ffffff76;
+  --toolbar-button-enabled: #222222;
+  --toolbar-button-hover: #c00000;
+  --toolbar-wakelock-active: #b24a2c;
 
   --track-colour-muted: #{$grey};
   --track-colour-deleting: #{$grey};
   --playlist-colour-deleting: #{$grey};
+
+  --beat-off: black;
+  --beat-on: red;
+
+  --info-title-text: #222222;
+  --info-detail-text: #222222;
+  --info-icon: url('../images/save.svg'); 
+  --info-icon-disabled: url('../images/save-disabled.svg'); 
+
+  --time-signature-none: #bfbfbf;
+  --loop-enabled: #c63800;
+  --ding-enabled: #c63800;
+
+  --knob-background-opacity: 40%;
+  --knob-ticks: #222222;
+  --knob-labels: #222222;
+
+  --wheel-border: #22222220;
+
+  --text: #{$black};
+  --text-contrast: #{$black};
+  --text-muted: #666666;
+  --text-placeholder: #b0b0b0;
+  --text-disabled: #a0a0a0;
+  --text-editing: #{$black};
+  --text-locked: #dc322f;
+
+  --icon: #{$black};
+  --icon-disabled: #999999;
+  --icon-locked: #dc322f;
+
+  --button-text: #666666;
+  --button-background: rgba(255, 255, 255, 0.9);
+  --button-background-translucent: #666666;
+  --button-background-transparent: rgba(192, 192, 192, 0.1);
+  --button-border: 1px solid #222222;
+
+  --checkbox-background-unchecked: url('/images/checkbox-unchecked.svg') no-repeat center / contain;
+  --checkbox-background-checked: url('/images/checkbox-checked.svg') no-repeat center / contain;
+
+  --input-background: #{$white};
+  --select-background: #{$white};
+  
+  --playlist-title-background: #{$amber};
+  --playlist-title-text: #222222;
+  --playlist-tracks-background: #fefefe40;
+  --playlist-tracks-text: #444444;
+
+  --editor-background: #c0c0c040;
+  --editor-section-background: #ffffff;
+  --editor-subsection-background: #fcfcfc;
+  --editor-subsection-img-none: grayscale(100%) opacity(25%);
+  --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
+
+  --role-count-in-colour:   #d69574;
+  --role-anacrusis-colour:  #cbb469;
+  --role-intro-colour:      #df8880;
+  --role-verse-colour:      #b3bc69;
+  --role-verse1-colour:     #64aa6f;
+  --role-chorus-colour:     #84b5d2;
+  --role-chorus1-colour:    #3e7eb3;
+  --role-bridge-colour:     #a7a8cb;
+  --role-turnaround-colour: #da8aaa;
+  --role-outro-colour:      #86c0b5;
+
+  --role-other-colour:  #cb96b2;
+  --role-other1-colour: #71a9a0;
+  --role-other2-colour: #b29f69;
+  --role-other3-colour: #7197b8;
+
+  --role-count-in-text:   #1d4b63;
+  --role-anacrusis-text:  #21305f;
+  --role-intro-text:      #1a5f66;
+  --role-verse-text:      #2c2758;
+  --role-verse1-text:     #2c2758;
+  --role-chorus-text:     #5d3822;
+  --role-chorus1-text:    #5d3822;
+  --role-bridge-text:     #504f2f;
+  --role-turnaround-text: #1e6147;
+  --role-outro-text:      #542c33;
+
+  --role-other-text:  #2a553e;
+  --role-other1-text: #4f3035;
+  --role-other2-text: #2b3654;
+  --role-other3-text: #553e2a;
 }

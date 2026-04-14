@@ -152,22 +152,25 @@ export class Playlists extends HTMLElement {
   }
 
   update(playlist, tracks) {
-    const all = this.shadowRoot.getElementById('all')
-    const ul = this.shadowRoot.querySelector('ul')
-    const children = Array.from(ul.children).map((v) => v.querySelector('yam-playlist'))
-    const lists = [all, ...children]
-    const p = transmogrify(playlist, tracks)
+    if (playlist != null) {
+      const all = this.shadowRoot.getElementById('all')
+      const ul = this.shadowRoot.querySelector('ul')
+      const children = Array.from(ul.children).map((v) => v.querySelector('yam-playlist'))
+      const lists = [all, ...children]
 
-    this.#playlists = this.#playlists.map((v) => (v.UUID === playlist.UUID ? p : v))
+      const p = transmogrify(playlist, tracks)
 
-    lists
-      .filter((v) => v.UUID === playlist.UUID)
-      .forEach((e) => {
-        e.playlist = {
-          playlist: p,
-          selected: p.UUID === this.#selected,
-        }
-      })
+      this.#playlists = this.#playlists.map((v) => (v.UUID === playlist.UUID ? p : v))
+
+      lists
+        .filter((v) => v.UUID === playlist.UUID)
+        .forEach((e) => {
+          e.playlist = {
+            playlist: p,
+            selected: p.UUID === this.#selected,
+          }
+        })
+    }
   }
 
   updated(playlist, track) {
@@ -232,19 +235,14 @@ export class Playlists extends HTMLElement {
   #create(playlist) {
     const li = document.createElement('li')
     const grip = document.createElement('div')
-    const img = document.createElement('img')
     const e = document.createElement('yam-playlist')
 
     li.setAttribute('draggable', false)
-
-    img.setAttribute('src', './images/grip.svg')
-    img.setAttribute('draggable', false)
 
     grip.setAttribute('draggable', false)
     grip.classList.add('grip')
     grip.addEventListener('pointerdown', this.#onPointerDown)
     grip.addEventListener('pointerup', this.#onPointerUp)
-    grip.appendChild(img)
 
     e.playlist = {
       playlist: playlist,

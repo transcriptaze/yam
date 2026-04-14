@@ -29,8 +29,20 @@ export function onError(err) {
   document.querySelector('#about')?.classList.add('error')
 }
 
-function onTheme(event) {
-  console.log(event)
+function onTheme(_event) {
+  const theme = widgets.theme?.value ?? 'default'
+
+  switch (theme) {
+    case 'dark':
+      settings.theme = 'dark'
+      settings.save()
+      break
+
+    case 'default':
+      settings.theme = 'default'
+      settings.save()
+      break
+  }
 }
 
 function onSoundset(event) {

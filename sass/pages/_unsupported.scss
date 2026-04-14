@@ -8,25 +8,53 @@ main.unsupported {
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
-}
 
-div#unsupported {
-  margin-top: 128px;
+  color: var(--text);
 
-  padding-top: 12px;
-  padding-bottom: 12px;
-  padding-left: 12px;
-  padding-right: 12px;
+  div.logo {
+    width: 64px;
+    height: 64px;
 
-  border: 1px solid grey;
-  border-radius: 4px;
-
-  div {
-    margin-bottom: 32px;
+    background-color: transparent;
+    background-image: var(--logo);
+    background-size: contain;
   }
 
-  ul {
-    margin-top: 8px;
-    list-style: inside;
+  h1 {
+    display: flex;
+    align-items: center;
+    column-gap: 12px;
+    font-size: 1.5em; 
+
+    img {
+      width: 64px;
+    }
+  }
+
+  a {
+    font-size: 0.9em;
+    text-decoration: none;
+    color: steelblue;
+  }
+
+  div#unsupported {
+    margin-top: 128px;
+  
+    padding-top: 12px;
+    padding-bottom: 12px;
+    padding-left: 12px;
+    padding-right: 12px;
+  
+    border: 1px solid grey;
+    border-radius: 4px;
+  
+    div {
+      margin-bottom: 32px;
+    }
+  
+    ul {
+      margin-top: 8px;
+      list-style: inside;
+    }
   }
 }

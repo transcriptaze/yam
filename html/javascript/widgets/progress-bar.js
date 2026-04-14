@@ -101,6 +101,13 @@ export class ProgressBar extends HTMLElement {
 
     ctx.clearRect(0, 0, width, height)
 
+    // ... fill with accent colour
+    const underlay = style.getPropertyValue('--accent-color')
+    if (underlay !== 'transparent') {
+      ctx.fillStyle = faded(style.getPropertyValue('--accent-color'), 0.5)
+      ctx.fillRect(0, 0, width, height)
+    }
+
     // ... gradient function
     const g = (colour, x, xʼ) => {
       const startColour = faded(colour, 0)

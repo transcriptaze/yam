@@ -214,7 +214,7 @@ export class Editor extends HTMLElement {
     const container = shadow.querySelector('div.track-editor')
     const save = container.querySelector('#save')
     const ul = this.#sections.querySelector('ul')
-    const icon = this.#sections.querySelector('div.header img')
+    const header = this.#sections.querySelector('div.header')
 
     save.disabled = true
 
@@ -243,7 +243,7 @@ export class Editor extends HTMLElement {
       this.#sections.removeAttribute('open')
       this.#expanded = false
 
-      icon.classList.remove('expanded')
+      header.classList.remove('expanded')
       ul.replaceChildren()
     } else {
       this.#sections.classList.remove('disabled')
@@ -264,7 +264,7 @@ export class Editor extends HTMLElement {
         children.push(li)
       })
 
-      icon.classList.remove('expanded')
+      header.classList.remove('expanded')
 
       ul.style.opacity = 0
       ul.replaceChildren(...children)
@@ -276,7 +276,9 @@ export class Editor extends HTMLElement {
     }
 
     this.#track = track
-    this.#defaults = {}
+    // FIXME sets the defaults before the widgets have been initialised by the track (because Promises ? something else?)
+    //        cf. https://github.com/transcriptaze/yam/issues/54
+    // this.#defaults = {}
   }
 
   update(track) {
@@ -386,17 +388,17 @@ export class Editor extends HTMLElement {
   }
 
   #toggle() {
-    const icon = this.#sections.querySelector('div.header img')
+    const header = this.#sections.querySelector('div.header')
     const ul = this.#sections.querySelector('ul')
     const sections = Array.from(ul.querySelectorAll('yam-section'))
 
     this.#expanded = !this.#expanded
 
     if (this.#expanded) {
-      icon.classList.add('expanded')
+      header.classList.add('expanded')
       sections.forEach((v) => v.setAttribute('expanded', ''))
     } else {
-      icon.classList.remove('expanded')
+      header.classList.remove('expanded')
       sections.forEach((v) => v.removeAttribute('expanded'))
     }
   }

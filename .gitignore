@@ -4,6 +4,6 @@ workdir/*
 bin
 dist
 assets/screenshots
-NOTES.md
-TODO.md
-TODO.org
+assets/Bravura.svg
+assets/logo-2.svg
+assets/logo.png

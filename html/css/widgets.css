@@ -37,27 +37,148 @@
   size-adjust: 120%;
 }
 :root {
+  --logo: url("/images/logo.png");
   --background: #ffffff url("../images/textures/ricepaper_v3.png");
+  --panel-background: transparent;
+  --panel-border: 1px solid red;
+  --metronome-button-disabled: #c0c0c0;
+  --metronome-button-enabled: #222222;
+  --toolbar-button-disabled: #ffffff76;
+  --toolbar-button-enabled: #222222;
+  --toolbar-button-hover: #c00000;
+  --toolbar-wakelock-active: #b24a2c;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
   --playlist-colour-deleting: #a0a0a0;
-}
-
-[data-theme=light] {
-  --background: #ffffff url("../images/textures/ricepaper_v3.png");
-  --track-colour-muted: #a0a0a0;
-  --track-colour-deleting: #a0a0a0;
-  --playlist-colour-deleting: #a0a0a0;
+  --beat-off: black;
+  --beat-on: red;
+  --info-title-text: #222222;
+  --info-detail-text: #222222;
+  --info-icon: url("../images/save.svg");
+  --info-icon-disabled: url("../images/save-disabled.svg");
+  --time-signature-none: #bfbfbf;
+  --loop-enabled: #c63800;
+  --ding-enabled: #c63800;
+  --knob-background-opacity: 40%;
+  --knob-ticks: #222222;
+  --knob-labels: #222222;
+  --wheel-border: #22222220;
+  --text: #222222;
+  --text-contrast: #222222;
+  --text-muted: #666666;
+  --text-placeholder: #b0b0b0;
+  --text-disabled: #a0a0a0;
+  --text-editing: #222222;
+  --text-locked: #dc322f;
+  --icon: #222222;
+  --icon-disabled: #999999;
+  --icon-locked: #dc322f;
+  --button-text: #666666;
+  --button-background: rgba(255, 255, 255, 0.9);
+  --button-background-translucent: #666666;
+  --button-background-transparent: rgba(192, 192, 192, 0.1);
+  --button-border: 1px solid #222222;
+  --checkbox-background-unchecked: url("/images/checkbox-unchecked.svg") no-repeat center / contain;
+  --checkbox-background-checked: url("/images/checkbox-checked.svg") no-repeat center / contain;
+  --input-background: #ffffff;
+  --select-background: #ffffff;
+  --playlist-title-background: rgba(255, 128, 0, 0.2509803922);
+  --playlist-title-text: #222222;
+  --playlist-tracks-background: #fefefe40;
+  --playlist-tracks-text: #444444;
+  --editor-background: #c0c0c040;
+  --editor-section-background: #ffffff;
+  --editor-subsection-background: #fcfcfc;
+  --editor-subsection-img-none: grayscale(100%) opacity(25%);
+  --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
+  --role-count-in-colour: #d69574;
+  --role-anacrusis-colour: #cbb469;
+  --role-intro-colour: #df8880;
+  --role-verse-colour: #b3bc69;
+  --role-verse1-colour: #64aa6f;
+  --role-chorus-colour: #84b5d2;
+  --role-chorus1-colour: #3e7eb3;
+  --role-bridge-colour: #a7a8cb;
+  --role-turnaround-colour: #da8aaa;
+  --role-outro-colour: #86c0b5;
+  --role-other-colour: #cb96b2;
+  --role-other1-colour: #71a9a0;
+  --role-other2-colour: #b29f69;
+  --role-other3-colour: #7197b8;
+  --role-count-in-text: #1d4b63;
+  --role-anacrusis-text: #21305f;
+  --role-intro-text: #1a5f66;
+  --role-verse-text: #2c2758;
+  --role-verse1-text: #2c2758;
+  --role-chorus-text: #5d3822;
+  --role-chorus1-text: #5d3822;
+  --role-bridge-text: #504f2f;
+  --role-turnaround-text: #1e6147;
+  --role-outro-text: #542c33;
+  --role-other-text: #2a553e;
+  --role-other1-text: #4f3035;
+  --role-other2-text: #2b3654;
+  --role-other3-text: #553e2a;
 }
 
 [data-theme=dark] {
-  --background: #222222;
-  --track-colour-muted: #a0a0a0;
-  --track-colour-deleting: #a0a0a0;
-  --playlist-colour-deleting: #a0a0a0;
+  --logo: url("/images/dark/logo.png");
+  --background: #0f0f10 url("../images/textures/45degreee_fabric.webp");
+  --panel-background: #0f0f10;
+  --panel-border: 1px solid #7a7a7f;
+  --metronome-button-disabled: rgba(38, 139, 210, 0.6);
+  --metronome-button-enabled: #268bd2;
+  --toolbar-button-disabled: #7a7a7f;
+  --toolbar-button-enabled: #9a9a9e;
+  --toolbar-button-hover: #dc322f;
+  --toolbar-wakelock-active: #b24a2c;
+  --track-colour-muted: #7a7a7f;
+  --track-colour-deleting: #7a7a7f;
+  --playlist-colour-deleting: #7a7a7f;
+  --beat-off: rgba(122, 122, 127, 0.45);
+  --beat-on: rgba(220, 50, 47, 0.9);
+  --info-title-text: #d6d6d8;
+  --info-detail-text: #d6d6d8;
+  --info-icon: url("../images/dark/save.svg");
+  --info-icon-disabled: url("../images/dark/save-disabled.svg");
+  --knob-background-opacity: 0%;
+  --knob-ticks: #b9b9bc;
+  --knob-labels: rgba(185, 185, 188, 0.9);
+  --wheel-border: #7a7a7f;
+  --loop-enabled: #dc322f;
+  --ding-enabled: #dc322f;
+  --text: #b9b9bc;
+  --text-contrast: #1f1f21;
+  --text-label: #9a9a9e;
+  --text-muted: #7a7a7f;
+  --text-disabled: #343438;
+  --text-placeholder: #7a7a7f;
+  --text-editing: #1f1f21;
+  --text-locked: rgba(220, 50, 47, 0.9);
+  --icon: #b9b9bc;
+  --icon-disabled: #7a7a7f;
+  --icon-locked: rgba(220, 50, 47, 0.9);
+  --button-text: #b9b9bc;
+  --button-background: #9a9a9e;
+  --button-background-translucent: #9a9a9e;
+  --button-background-transparent: rgba(154, 154, 158, 0.1);
+  --button-border: 1px solid #b9b9bc;
+  --checkbox-background-unchecked: url("/images/dark/checkbox-unchecked.svg") no-repeat center / contain;
+  --checkbox-background-checked: url("/images/dark/checkbox-checked.svg") no-repeat center / contain;
+  --input-background: #b9b9bc;
+  --select-background: #b9b9bc;
+  --playlist-title-background: #343438;
+  --playlist-title-text: #9a9a9e;
+  --playlist-tracks-background: #2a2a2d;
+  --playlist-tracks-text: #b9b9bc;
+  --editor-background: #2a2a2d;
+  --editor-section-background: #b9b9bc;
+  --editor-subsection-background: #b9b9bc;
+  --editor-subsection-img-none: grayscale(100%) opacity(35%);
+  --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
 }
 
-div.metronome {
+:host(.component-metronome) div.metronome {
   padding-left: 32px;
   padding-right: 32px;
   display: grid;
@@ -70,80 +191,71 @@ div.metronome {
   border: none;
   outline: none;
 }
-div.metronome button {
+:host(.component-metronome) div.metronome button {
   box-sizing: border-box;
-  background: none;
+  display: inline-block;
+  background-color: var(--metronome-button-disabled);
+  height: 90px;
   border: none;
   outline: none;
-}
-div.metronome button img {
-  filter: invert(69%) sepia(59%) saturate(1%) hue-rotate(21deg) brightness(100%) contrast(91%);
+  aspect-ratio: 1;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
   transition: opacity 0.125s ease-in-out, transform 0.2s ease-in-out;
 }
-div.metronome button:enabled img {
-  filter: none;
+:host(.component-metronome) div.metronome button:enabled {
+  background-color: var(--metronome-button-enabled);
 }
-div.metronome #play {
-  grid-column: 2;
-  grid-row: 1;
-  display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: auto;
-}
-div.metronome #play img {
-  grid-row: 1;
-  grid-column: 1;
-  width: 64px;
-}
-div.metronome #play img.hidden {
-  visibility: hidden;
-}
-div.metronome #play img.play {
-  opacity: 1;
-  transform: scale(1.25);
-}
-div.metronome #play img.stop {
-  opacity: 0;
-  transform: scale(0.75);
-}
-div.metronome #back {
+:host(.component-metronome) div.metronome #back {
   grid-column: 1;
   grid-row: 1;
   justify-self: start;
+  mask-image: url("/images/controls/skip-backwards.svg");
 }
-div.metronome #back img {
-  width: 48px;
-}
-div.metronome #next {
+:host(.component-metronome) div.metronome #next {
   grid-column: 3;
   grid-row: 1;
   justify-self: end;
+  mask-image: url("/images/controls/skip-forwards.svg");
 }
-div.metronome #next img {
-  width: 48px;
+:host(.component-metronome) div.metronome #play {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  mask-image: url("/images/controls/play.svg");
+  opacity: 1;
+  transform: scale(1.25);
 }
-
-div.metronome.playing #play img.play {
+:host(.component-metronome) div.metronome #stop {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: center;
+  mask-image: url("/images/controls/stop.svg");
   opacity: 0;
   transform: scale(0.75);
 }
-div.metronome.playing #play img.stop {
-  visibility: visible;
+:host(.component-metronome) div.metronome.playing #play {
+  opacity: 0;
+  transform: scale(0.75);
+}
+:host(.component-metronome) div.metronome.playing #stop {
   opacity: 1;
   transform: scale(1);
 }
-
 @media (max-width: 1024px) and (orientation: landscape) {
-  div.metronome {
+  :host(.component-metronome) div.metronome {
     column-gap: 12px;
   }
-  div.metronome #back {
+  :host(.component-metronome) div.metronome #back {
     justify-self: end;
   }
-  div.metronome #next {
+  :host(.component-metronome) div.metronome #next {
     justify-self: start;
   }
 }
+
 :host(.component-mm) {
   box-sizing: border-box;
   display: inline-block;
@@ -162,10 +274,25 @@ div.metronome.playing #play img.stop {
   height: 100%;
   width: 104px;
 }
+:host(.component-mm) div.MM span.icon {
+  box-sizing: border-box;
+  background-color: var(--icon);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+}
+:host(.component-mm) div.MM span.icon-pulse {
+  mask-image: url("/images/MM/quarter-equals.svg");
+}
 :host(.component-mm) div.MM button.pulse {
   grid-column: 1;
   grid-row: 1;
   justify-self: end;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
   width: fit-content;
   height: 100%;
   background: none;
@@ -176,15 +303,25 @@ div.metronome.playing #play img.stop {
   margin: 0;
   line-height: 0;
 }
+:host(.component-mm) div.MM button.pulse span.icon {
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  height: 100%;
+}
 :host(.component-mm) div.MM button.pulse img {
+  grid-column: 1;
+  grid-row: 1;
   box-sizing: border-box;
   height: 100%;
+  visibility: hidden;
 }
 :host(.component-mm) div.MM input {
   grid-column: 2;
   grid-row: 1;
   justify-self: start;
   anchor-name: --text;
+  color: var(--text);
 }
 :host(.component-mm) div.MM #mirror {
   box-sizing: border-box;
@@ -265,8 +402,8 @@ div.metronome.playing #play img.stop {
   padding-left: 2px;
   padding-right: 2px;
 }
-:host(.component-mm) button:disabled img {
-  filter: grayscale(100%) opacity(50%);
+:host(.component-mm) button:disabled span.icon {
+  background-color: var(--icon-disabled);
 }
 :host(.component-mm) input {
   box-sizing: border-box;
@@ -293,27 +430,24 @@ div.metronome.playing #play img.stop {
 }
 :host(.component-mm) input::placeholder {
   font-style: italic;
-  color: #b0b0b0;
+  color: var(--text-placeholder);
 }
 :host(.component-mm) input:invalid {
   color: red;
 }
 :host(.component-mm) input:disabled {
-  color: #a0a0a0;
+  color: var(--text-disabled);
 }
 :host(.component-mm) #mirror span {
   font-family: Lato;
   font-size: 20px;
   font-weight: 800;
 }
-:host(.component-mm) div.MM.locked button {
-  cursor: auto;
-}
-:host(.component-mm) div.MM.locked button img {
-  filter: brightness(0) saturate(100%) invert(22%) sepia(45%) saturate(3580%) hue-rotate(357deg) brightness(101%) contrast(95%);
+:host(.component-mm) div.MM.locked span.icon {
+  background-color: var(--icon-locked);
 }
 :host(.component-mm) div.MM.locked input {
-  color: #dc322f;
+  color: var(--text-locked);
 }
 :host(.component-mm) div.MM.locked div.overlay {
   pointer-events: auto;
@@ -367,15 +501,57 @@ div.metronome.playing #play img.stop {
 :host(.component-time-signature) div.time-signature button div {
   box-sizing: border-box;
   display: grid;
-  grid-template-columns: auto auto 1fr;
+  grid-template-columns: max-content auto 1fr;
   grid-template-rows: minmax(0, 1fr);
   height: 100%;
 }
 :host(.component-time-signature) div.time-signature button div img {
   height: 100%;
+  visibility: hidden;
 }
-:host(.component-time-signature) div.time-signature button div img.hidden {
+:host(.component-time-signature) div.time-signature button div span.icon {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background-color: var(--icon);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+}
+:host(.component-time-signature) div.time-signature button div span.icon.hidden {
   display: none;
+}
+:host(.component-time-signature) div.time-signature button div span.icon-stave {
+  grid-column: 1/4;
+  grid-row: 1;
+  mask-image: url("/images/time-signatures/stave.svg");
+}
+:host(.component-time-signature) div.time-signature button div span.icon-clef {
+  grid-column: 1;
+  grid-row: 1;
+  mask-image: url("/images/time-signatures/clef.svg");
+}
+:host(.component-time-signature) div.time-signature button div span.icon-tactus {
+  grid-column: 2;
+  grid-row: 1;
+  mask-image: url("/images/time-signatures/tactus/4.svg");
+}
+:host(.component-time-signature) div.time-signature button div span.icon-figura {
+  grid-column: 2;
+  grid-row: 1;
+  mask-image: url("/images/time-signatures/figura/4.svg");
+}
+:host(.component-time-signature) div.time-signature button div span.icon-common {
+  grid-column: 2;
+  grid-row: 1;
+  mask-image: url("/images/time-signatures/common.svg");
+}
+:host(.component-time-signature) div.time-signature button div span.icon-cut {
+  grid-column: 2;
+  grid-row: 1;
+  mask-image: url("/images/time-signatures/cut.svg");
 }
 :host(.component-time-signature) div.time-signature button div img.stave {
   grid-column: 1/4;
@@ -405,9 +581,8 @@ div.metronome.playing #play img.stop {
   grid-row: 1;
   justify-self: center;
 }
-:host(.component-time-signature) div.time-signature button:disabled img {
-  filter: grayscale(100%) opacity(50%);
-  cursor: auto;
+:host(.component-time-signature) div.time-signature button:disabled div span.icon {
+  background-color: var(--icon-disabled);
 }
 :host(.component-time-signature) div.time-signature div.overlay {
   grid-row: 1;
@@ -504,17 +679,17 @@ div.metronome.playing #play img.stop {
 :host(.component-time-signature) div.time-signature div#list div.content div.custom yam-figura {
   width: 172px;
 }
-:host(.component-time-signature) div.time-signature.none button img {
-  filter: grayscale(100%) opacity(25%);
+:host(.component-time-signature) div.time-signature.none button div span.icon {
+  background-color: var(--time-signature-none);
 }
-:host(.component-time-signature) div.time-signature.disabled button img {
-  filter: grayscale(100%) opacity(50%);
+:host(.component-time-signature) div.time-signature.disabled button div span.icon {
+  background-color: var(--icon-disabled);
 }
 :host(.component-time-signature) div.time-signature.locked button {
   cursor: auto;
 }
-:host(.component-time-signature) div.time-signature.locked button img {
-  filter: brightness(0) saturate(100%) invert(22%) sepia(45%) saturate(3580%) hue-rotate(357deg) brightness(101%) contrast(95%);
+:host(.component-time-signature) div.time-signature.locked button div span.icon {
+  background-color: var(--icon-locked);
 }
 :host(.component-time-signature) div.time-signature.locked div.overlay {
   pointer-events: auto;
@@ -584,7 +759,7 @@ div.beat {
 div.beat div.shape {
   box-sizing: border-box;
   aspect-ratio: 1/1;
-  background-color: black;
+  background-color: var(--beat-off);
   width: 100%;
   margin-left: 10%;
   margin-right: 10%;
@@ -610,7 +785,7 @@ div.beat div.shape {
 }
 
 div.beat.on div.shape {
-  background-color: red;
+  background-color: var(--beat-on);
 }
 
 :host(.component-knob) .knob {
@@ -638,7 +813,7 @@ div.beat.on div.shape {
   overflow: hidden;
   background: radial-gradient(circle at 50% 50%, #000000, rgba(192, 192, 192, 0));
   filter: contrast(200%) brightness(500%);
-  opacity: 40%;
+  opacity: var(--knob-background-opacity);
 }
 :host(.component-knob) .knob div.background svg {
   mix-blend-mode: multiply;
@@ -653,6 +828,13 @@ div.beat.on div.shape {
   margin: 20px;
   overflow: visible;
   z-index: 2;
+}
+:host(.component-knob) .knob svg .ticks {
+  stroke: var(--knob-ticks);
+  fill: var(--knob-ticks);
+}
+:host(.component-knob) .knob svg .labels {
+  fill: var(--knob-labels);
 }
 :host(.component-knob) .knob div.overlay {
   grid-column: 1;
@@ -688,6 +870,9 @@ div.beat.on div.shape {
   width: 100%;
   overflow: visible;
   z-index: 2;
+}
+.wheel svg .border {
+  stroke: var(--wheel-border);
 }
 .wheel div.overlay {
   grid-column: 1;
@@ -792,12 +977,26 @@ div.beat.on div.shape {
   height: 100%;
   margin: 0;
   padding: 0;
-  border: 1px solid rgba(224, 224, 224, 0.2509803922);
+  border: none;
+  border-radius: 0px 0px 4px 4px;
 }
 
 :host(.component-info) {
   --accent-color: #71a9a0;
-  --text: #222222;
+  --role-count-in: var(--role-count-in-colour);
+  --role-anacrusis: var(--role-anacrusis-colour);
+  --role-intro: var(--role-intro-colour);
+  --role-verse: var(--role-verse-colour);
+  --role-verse1: var(--role-verse1-colour);
+  --role-chorus: var(--role-chorus-colour);
+  --role-chorus1: var(--role-chorus1-colour);
+  --role-bridge: var(--role-bridge-colour);
+  --role-turnaround: var(--role-turnaround-colour);
+  --role-outro: var(--role-outro-colour);
+  --role-other: var(--role-other-colour);
+  --role-other1: var(--role-other1-colour);
+  --role-other2: var(--role-other2-colour);
+  --role-other3: var(--role-other3-colour);
 }
 :host(.component-info) div.info {
   box-sizing: border-box;
@@ -805,6 +1004,9 @@ div.beat.on div.shape {
   grid-template-columns: 1fr auto;
   grid-template-rows: auto auto;
   column-gap: 0px;
+  row-gap: 2px;
+  border-radius: 4px 4px 4px 4px;
+  overflow: hidden;
 }
 :host(.component-info) div.info div.title {
   grid-column: 1;
@@ -817,10 +1019,6 @@ div.beat.on div.shape {
 :host(.component-info) div.info button {
   grid-column: 2;
   grid-row: 1;
-}
-:host(.component-info) div.info div.overlay {
-  grid-column: 1/3;
-  grid-row: 2;
 }
 :host(.component-info) div.info div.progress {
   grid-column: 1/3;
@@ -840,7 +1038,7 @@ div.beat.on div.shape {
   padding-left: 0px;
   padding-right: 0px;
   border: none;
-  border-radius: 4px 0px 0px 4px;
+  border-bottom-left-radius: 4px;
 }
 :host(.component-info) div.info div.title input {
   box-sizing: border-box;
@@ -852,6 +1050,7 @@ div.beat.on div.shape {
   padding-bottom: 8px;
   padding-left: 12px;
   padding-right: 12px;
+  color: var(--info-title-text);
   font-size: 0.9em;
   font-weight: 500;
   text-overflow: ellipsis;
@@ -871,9 +1070,7 @@ div.beat.on div.shape {
   align-items: center;
   height: fit-content;
   background: rgba(192, 192, 192, 0.2509803922);
-  margin-top: 2px;
   border: none;
-  border-radius: 0px 0px 4px 4px;
   overflow: hidden;
   padding-top: 0px;
   padding-bottom: 0px;
@@ -891,10 +1088,10 @@ div.beat.on div.shape {
   padding-right: 8px;
   padding-top: 2px;
   padding-bottom: 2px;
+  color: var(--info-detail-text);
   font-size: 0.8em;
   font-style: italic;
   font-weight: normal;
-  color: #222222;
   line-height: 16px;
   vertical-align: middle;
   z-index: 2;
@@ -902,41 +1099,37 @@ div.beat.on div.shape {
 :host(.component-info) div.info div.detail div.text.playing {
   font-style: normal;
   font-weight: bold;
-  color: var(--text-color);
+  color: var(--text-contrast);
 }
 :host(.component-info) div.info button {
-  background: rgba(192, 192, 192, 0.2509803922);
+  background-color: rgba(192, 192, 192, 0.2509803922);
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: auto 28px;
+  background-image: var(--info-icon);
+  width: 40px;
+  height: 100%;
   margin: 0px;
   padding-left: 6px;
   padding-right: 6px;
   line-height: 0;
   border: none;
-  border-radius: 0px 4px 4px 0px;
+  border-top-right-radius: 4px;
+  border-bottom-right-radius: 4px;
   outline: none;
 }
-:host(.component-info) div.info button img {
-  height: 28px;
-}
-:host(.component-info) div.info button:disabled img {
-  filter: grayscale(100%) opacity(50%);
+:host(.component-info) div.info button:disabled {
+  background-image: var(--info-icon-disabled);
 }
 :host(.component-info) div.info span.infinity {
   font-family: "YAM", "Lato", sans;
   font-size: 1.4em;
   vertical-align: -0.08em;
 }
-:host(.component-info) div.info div.overlay {
-  height: 100%;
-  background: var(--accent-color);
-  border-radius: 0px 0px 4px 4px;
-  opacity: 60%;
-  visibility: hidden;
-}
 :host(.component-info) div.info div.progress {
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  border-radius: 0px 0px 4px 4px;
   visibility: hidden;
 }
 :host(.component-info) div.info yam-progress {
@@ -951,7 +1144,6 @@ div.beat.on div.shape {
   width: 100%;
   height: 100%;
   appearance: none;
-  -moz-appearance: none;
   -webkit-appearance: none;
 }
 :host(.component-info) div.info progress::-webkit-progress-bar {
@@ -961,21 +1153,14 @@ div.beat.on div.shape {
   background: var(--accent-color);
   opacity: 90%;
 }
-:host(.component-info) div.info progress::-moz-progress-bar {
-  background: var(--accent-color);
-  opacity: 90%;
-}
 :host(.component-info) div.info.details div.title {
-  border-radius: 4px 0px 0px 0px;
+  border-bottom-left-radius: 0px;
 }
 :host(.component-info) div.info.details div.detail {
   visibility: visible;
 }
 :host(.component-info) div.info.details button {
-  border-radius: 0px 4px 0px 0px;
-}
-:host(.component-info) div.info.details div.overlay {
-  visibility: visible;
+  border-bottom-right-radius: 0px;
 }
 :host(.component-info) div.info.details div.progress {
   visibility: visible;
@@ -995,7 +1180,6 @@ div.beat.on div.shape {
     padding-bottom: 0px;
     padding-left: 0px;
     padding-right: 0px;
-    border-radius: 4px 0px 0px 4px;
   }
   :host(.component-info) div.info div.title input {
     font-size: 1.1em;
@@ -1005,7 +1189,6 @@ div.beat.on div.shape {
     grid-row: 1;
     height: 100%;
     margin-top: 0px;
-    border-radius: 0px 0px 0px 0px;
     visibility: visible;
     display: grid;
     grid-template-columns: 1fr;
@@ -1018,9 +1201,8 @@ div.beat.on div.shape {
     visibility: hidden;
     font-size: 0.95em;
   }
-  :host(.component-info) div.info div.overlay {
-    grid-column: 1/4;
-    grid-row: 2;
+  :host(.component-info) div.info div.detail div.text.playing {
+    color: var(--info-detail-text);
   }
   :host(.component-info) div.info div.progress {
     grid-column: 1/4;
@@ -1052,8 +1234,13 @@ div.beat.on div.shape {
   grid-row: 1;
   width: 64px;
   height: 40px;
-  background: url("/images/loop.svg") no-repeat center center/contain;
-  filter: invert(25%) sepia(25%) saturate(8%) hue-rotate(3deg) brightness(99%) contrast(99%);
+  background-color: var(--icon);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  mask-image: url("/images/loop.svg");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
 }
 :host(.component-loop) div.loop input[type=checkbox] {
   box-sizing: border-box;
@@ -1064,26 +1251,26 @@ div.beat.on div.shape {
   height: 0;
 }
 :host(.component-loop) div.loop input[type=checkbox][data-loops="1"]:checked + label {
-  background-image: url("/images/loop-1.svg");
+  mask-image: url("/images/loop-1.svg");
 }
 :host(.component-loop) div.loop input[type=checkbox][data-loops="2"]:checked + label {
-  background-image: url("/images/loop-2.svg");
+  mask-image: url("/images/loop-2.svg");
 }
 :host(.component-loop) div.loop input[type=checkbox][data-loops="3"]:checked + label {
-  background-image: url("/images/loop-3.svg");
+  mask-image: url("/images/loop-3.svg");
 }
 :host(.component-loop) div.loop input[type=checkbox][data-loops="4"]:checked + label {
-  background-image: url("/images/loop-4.svg");
+  mask-image: url("/images/loop-4.svg");
 }
 :host(.component-loop) div.loop input[type=checkbox][data-loops="5"]:checked + label {
-  background-image: url("/images/loop-5.svg");
+  mask-image: url("/images/loop-5.svg");
 }
 :host(.component-loop) div.loop input[type=checkbox]:checked + label {
-  filter: invert(22%) sepia(45%) saturate(3580%) hue-rotate(357deg) brightness(101%) contrast(95%);
+  background-color: var(--loop-enabled);
 }
 :host(.component-loop) div.loop input[type=checkbox]:disabled + label {
-  filter: grayscale(40%) opacity(40%);
-  background-iamge: url("/images/loop.svg");
+  background-color: var(--icon-disabled);
+  mask-image: url("/images/loop.svg");
 }
 :host(.component-loop) div.loop input[type=checkbox] {
   opacity: 0;
@@ -1106,9 +1293,13 @@ div.beat.on div.shape {
   grid-row: 1;
   width: 48px;
   height: 40px;
-  background: url("/images/ding.svg") no-repeat center/contain;
-  background-size: 70% 70%;
-  filter: invert(25%) sepia(25%) saturate(8%) hue-rotate(3deg) brightness(99%) contrast(99%);
+  background-color: var(--icon);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 70% 70%;
+  mask-image: url("/images/ding.svg");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: 70% 70%;
 }
 :host(.component-ding) div.ding input[type=checkbox] {
   box-sizing: border-box;
@@ -1119,11 +1310,10 @@ div.beat.on div.shape {
   height: 0;
 }
 :host(.component-ding) div.ding input[type=checkbox]:checked + label {
-  filter: invert(22%) sepia(45%) saturate(3580%) hue-rotate(357deg) brightness(101%) contrast(95%);
+  background-color: var(--ding-enabled);
 }
 :host(.component-ding) div.ding input[type=checkbox]:disabled + label {
-  filter: grayscale(40%) opacity(40%);
-  background-image: url("/images/ding.svg");
+  background-color: var(--icon-disabled);
 }
 :host(.component-ding) div.ding input[type=checkbox] {
   opacity: 0;
@@ -1188,6 +1378,11 @@ div.beat.on div.shape {
   grid-column: 1/3;
   grid-row: 1;
   align-self: start;
+  background-color: var(--icon);
+  mask-image: url("/images/grip.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 16px 16px;
 }
 :host(.component-playlists) div.playlists div.list ul li yam-playlist {
   grid-column: 1/3;
@@ -1221,18 +1416,27 @@ div.beat.on div.shape {
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(255, 255, 255, 0.1); /* semi-transparent */
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(0.5px);
+  width: 48px;
+  height: 48px;
   margin: 8px;
   padding: 4px;
   border: none;
   border-radius: 50%;
   z-index: 2;
+  background: var(--button-background-transparent);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
 }
-:host(.component-playlists) div.playlists #plus img {
-  width: 40px;
-  filter: invert(24%) sepia(7%) saturate(6%) hue-rotate(314deg) brightness(97%) contrast(88%);
+:host(.component-playlists) div.playlists #plus div.blur {
+  background: var(--button-background-translucent);
+  width: 100%;
+  height: 100%;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  mask-image: url("/images/circle-plus.svg");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
 }
 :host(.component-playlists) div.playlists.unsortable div.grip {
   display: none;
@@ -1274,7 +1478,7 @@ div.beat.on div.shape {
   display: grid;
   grid-template-columns: 36px 1fr auto;
   grid-template-rows: auto;
-  background: rgba(255, 128, 0, 0.2509803922);
+  background: var(--playlist-title-background);
   color: #804000;
   overflow: hidden;
   outline: none;
@@ -1302,9 +1506,13 @@ div.beat.on div.shape {
 :host(.component-playlist) div.playlist div.summary div.menu #menu {
   grid-column: 1;
   grid-row: 1;
-}
-:host(.component-playlist) div.playlist div.summary div.menu #menu img {
-  width: 16px;
+  width: 24px;
+  height: 100%;
+  background-color: var(--icon);
+  mask-image: url("/images/menu.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 16px auto;
 }
 :host(.component-playlist) div.playlist div.summary div.menu #save {
   grid-column: 1;
@@ -1385,6 +1593,7 @@ div.beat.on div.shape {
   border-radius: 4px;
   outline: none;
   background: none;
+  color: var(--playlist-title-text);
   font-weight: 500;
   text-align: center;
   text-overflow: ellipsis;
@@ -1409,7 +1618,7 @@ div.beat.on div.shape {
   display: flex;
   flex-direction: column;
   justify-items: start;
-  background: rgba(254, 254, 254, 0.2509803922);
+  background: var(--playlist-tracks-background);
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
@@ -1432,6 +1641,13 @@ div.beat.on div.shape {
 :host(.component-playlist) div.playlist div.list ul li div.grip {
   grid-column: 1/3;
   grid-row: 1;
+  width: 40px;
+  height: 100%;
+  background-color: var(--icon);
+  mask-image: url("/images/grip.svg");
+  mask-repeat: no-repeat;
+  mask-position: left;
+  mask-size: 16px 16px;
 }
 :host(.component-playlist) div.playlist div.list ul li yam-playlist-item {
   grid-column: 1/3;
@@ -1447,6 +1663,7 @@ div.beat.on div.shape {
   width: 80%;
   margin-top: 8px;
   margin-bottom: 8px;
+  background: var(--button-background);
   border: 1px solid #222222;
   border-radius: 8px;
 }
@@ -1474,6 +1691,7 @@ div.beat.on div.shape {
 }
 :host(.component-playlist) div.playlist.editing div.title input {
   background: rgba(252, 252, 252, 0.5019607843);
+  color: var(--text-editing);
   text-align: left;
   pointer-events: auto;
   user-select: text;
@@ -1504,9 +1722,6 @@ div.beat.on div.shape {
     width: 48px;
     padding-left: 12px;
   }
-  :host(.component-playlist) div.playlist div.grip img {
-    width: 20px;
-  }
   :host(.component-playlist) div.playlist div.menu button {
     padding-right: 12px;
   }
@@ -1518,9 +1733,6 @@ div.beat.on div.shape {
   :host(.component-playlist) div.playlist div.grip {
     width: 36px;
     padding-left: 8px;
-  }
-  :host(.component-playlist) div.playlist div.grip img {
-    width: 20px;
   }
   :host(.component-playlist) div.playlist div.menu button {
     padding-right: 12px;
@@ -1613,7 +1825,7 @@ div.beat.on div.shape {
   display: flex;
   flex-direction: column;
   justify-items: start;
-  background: rgba(254, 254, 254, 0.2509803922);
+  background: var(--playlist-tracks-background);
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
 }
@@ -1624,6 +1836,7 @@ div.beat.on div.shape {
   margin-bottom: 8px;
   padding-left: 8px;
   padding-right: 8px;
+  padding-bottom: 64px;
   list-style: none;
 }
 :host(.component-playlist-tracks) div.playlist-tracks div.list ul li {
@@ -1636,6 +1849,13 @@ div.beat.on div.shape {
 :host(.component-playlist-tracks) div.playlist-tracks div.list ul li div.grip {
   grid-column: 1/3;
   grid-row: 1;
+  width: 40px;
+  height: 100%;
+  background-color: var(--icon);
+  mask-image: url("/images/grip.svg");
+  mask-repeat: no-repeat;
+  mask-position: left;
+  mask-size: 16px 16px;
 }
 :host(.component-playlist-tracks) div.playlist-tracks div.list ul li yam-playlist-item {
   grid-column: 1/3;
@@ -1650,23 +1870,32 @@ div.beat.on div.shape {
   display: none;
 }
 :host(.component-playlist-tracks) div.playlist-tracks #plus {
+  width: 48px;
+  height: 48px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background: rgba(255, 255, 255, 0.1); /* semi-transparent */
-  backdrop-filter: blur(5px);
-  -webkit-backdrop-filter: blur(0.5px);
+  background: var(--button-background-transparent);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
   margin: 8px;
-  padding: 4px;
   border: none;
   border-radius: 50%;
   z-index: 2;
 }
-:host(.component-playlist-tracks) div.playlist-tracks #plus img {
+:host(.component-playlist-tracks) div.playlist-tracks #plus div.blur {
+  background: var(--button-background-translucent);
   width: 40px;
-  filter: invert(24%) sepia(7%) saturate(6%) hue-rotate(314deg) brightness(97%) contrast(88%);
+  height: 100%;
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  mask-image: url("/images/circle-plus.svg");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
 }
 :host(.component-playlist-tracks) div.playlist-tracks #save {
+  width: 40px;
   display: none;
   justify-content: center;
   align-items: center;
@@ -1680,7 +1909,7 @@ div.beat.on div.shape {
   z-index: 2;
 }
 :host(.component-playlist-tracks) div.playlist-tracks #save img {
-  width: 40px;
+  width: 100%;
 }
 :host(.component-playlist-tracks) div.playlist-tracks.adding div.list {
   display: none;
@@ -1715,7 +1944,7 @@ div.playlist-track {
   grid-template-rows: auto;
   align-items: center;
   column-gap: 4px;
-  color: #444444;
+  color: var(--playlist-tracks-text);
   font-size: 0.9em;
   border-bottom: 1px solid #aaaaaa;
 }
@@ -1724,21 +1953,16 @@ div.playlist-track #title {
   text-wrap: nowrap;
   text-overflow: ellipsis;
 }
-div.playlist-track button {
-  background: none;
+div.playlist-track #menu {
+  width: 40px;
+  height: 100%;
   border: none;
   outline: none;
-  display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: auto;
-  align-items: center;
-  padding-top: 3px;
-  padding-bottom: 3px;
-  padding-left: 20px;
-  padding-right: 0px;
-}
-div.playlist-track button img {
-  width: 16px;
+  background-color: var(--icon);
+  mask-image: url("/images/menu.svg");
+  mask-repeat: no-repeat;
+  mask-position: right;
+  mask-size: auto 16px;
 }
 div.playlist-track [popover] {
   top: calc(anchor(bottom) + 12px);
@@ -1757,37 +1981,34 @@ div.playlist-track [popover] {
   height: fit-content;
 }
 div.playlist-track [popover] button {
+  background: none;
+  width: 40px;
+  height: 100%;
+  border: none;
+  outline: none;
+}
+div.playlist-track [popover] #mute {
+  height: 28px;
+  background-color: #222222;
+  mask-image: url("/images/mute.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: auto 24px;
+}
+div.playlist-track [popover] #trash {
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto;
-  padding-top: 0px;
-  padding-bottom: 0px;
-  padding-left: 0px;
-  padding-right: 0px;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
 }
-div.playlist-track [popover] button img {
+div.playlist-track [popover] #trash img {
   grid-column: 1;
   grid-row: 1;
-  height: 28px;
+  height: 100%;
   width: auto;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-div.playlist-track [popover] button img.muted {
-  visibility: visible;
-}
-div.playlist-track [popover] button img.unmuted {
-  visibility: hidden;
-}
-div.playlist-track [popover] img {
-  height: 24px;
-  width: auto;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  padding-left: 4px;
-  padding-right: 4px;
 }
 div.playlist-track [popover]:popover-open {
   display: flex;
@@ -1818,11 +2039,8 @@ div.playlist-track.random div#title {
   color: var(--track-colour-muted);
   font-style: italic;
 }
-:host(.muted) div.playlist-track img.muted {
-  visibility: hidden;
-}
-:host(.muted) div.playlist-track img.unmuted {
-  visibility: visible;
+:host(.muted) div.playlist-track #mute {
+  mask-image: url("/images/unmute.svg");
 }
 
 :host(.deleting) div.playlist-track #title {
@@ -1870,7 +2088,7 @@ div.playlist-track.random div#title {
   border: none;
   outline: none;
   overflow: hidden;
-  color: #666666;
+  color: var(--button-text);
   font-size: 0.9em;
   font-style: italic;
   margin-left: 32px;
@@ -1895,7 +2113,7 @@ div.playlist-track.random div#title {
 :host(.component-add-tracks-item) div.tracklist-item .checkbox {
   width: 20px;
   height: 20px;
-  background: url("/images/checkbox-unchecked.svg") no-repeat center/contain;
+  background: var(--checkbox-background-unchecked);
   display: inline-block;
   margin-right: 8px;
 }
@@ -1904,7 +2122,7 @@ div.playlist-track.random div#title {
   display: grid;
   grid-template-columns: auto 1fr;
   grid-template-rows: auto;
-  color: #666666;
+  color: var(--text-muted);
   font-size: 0.9em;
   font-style: normal;
   overflow: hidden;
@@ -1917,12 +2135,12 @@ div.playlist-track.random div#title {
   text-overflow: ellipsis;
 }
 :host(.component-add-tracks-item) div.tracklist-item input[type=checkbox]:checked ~ label {
-  color: #222222;
+  color: var(--text);
   font-style: normal;
   font-weight: 500;
 }
 :host(.component-add-tracks-item) div.tracklist-item input[type=checkbox]:checked ~ label .checkbox {
-  background: url("/images/checkbox-checked.svg") no-repeat center/contain;
+  background: var(--checkbox-background-checked);
 }
 
 :host(.component-editor) div.track-editor {
@@ -1953,7 +2171,7 @@ div.playlist-track.random div#title {
 }
 :host(.component-editor) div.track-editor div.track {
   box-sizing: border-box;
-  background: rgba(192, 192, 192, 0.2509803922);
+  background: var(--editor-background);
   width: 100%;
   height: fit-content;
   padding-top: 12px;
@@ -1977,7 +2195,7 @@ div.playlist-track.random div#title {
 }
 :host(.component-editor) div.track-editor div.metrics {
   box-sizing: border-box;
-  background: rgba(192, 192, 192, 0.2509803922);
+  background: var(--editor-background);
   width: 100%;
   height: fit-content;
   padding-top: 8px;
@@ -1999,7 +2217,7 @@ div.playlist-track.random div#title {
 }
 :host(.component-editor) div.track-editor div.metronome {
   box-sizing: border-box;
-  background: rgba(192, 192, 192, 0.2509803922);
+  background: var(--editor-background);
   width: 100%;
   height: fit-content;
   padding-top: 8px;
@@ -2016,6 +2234,7 @@ div.playlist-track.random div#title {
   grid-column: 1;
   grid-row: 1;
   margin-right: 8px;
+  color: var(--text-label);
 }
 :host(.component-editor) div.track-editor div.metronome #BPM {
   grid-columns: 2;
@@ -2038,7 +2257,7 @@ div.playlist-track.random div#title {
   box-sizing: border-box;
   width: 100%;
   height: 100%;
-  background: rgba(192, 192, 192, 0.2509803922);
+  background: var(--editor-background);
   padding-top: 12px;
   padding-left: 8px;
   padding-right: 8px;
@@ -2059,15 +2278,21 @@ div.playlist-track.random div#title {
   padding-top: 2px;
   padding-bottom: 2px;
   padding-right: 48px;
+  color: var(--text-label);
   display: flex;
   flex-direction: horizontal;
   align-items: center;
 }
-:host(.component-editor) div.track-editor div.sections div.header img {
+:host(.component-editor) div.track-editor div.sections div.header div.arrow {
   width: 16px;
   height: 16px;
+  background-color: var(--icon);
+  mask-image: url("/images/expand.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 16xpx 16px;
 }
-:host(.component-editor) div.track-editor div.sections div.header img.expanded {
+:host(.component-editor) div.track-editor div.sections div.header.expanded div.arrow {
   transform: rotate(90deg);
 }
 :host(.component-editor) div.track-editor div.sections ul {
@@ -2084,8 +2309,9 @@ div.playlist-track.random div#title {
   overflow: hidden;
 }
 :host(.component-editor) div.track-editor div.sections ul li {
-  height: auto;
+  height: fit-content;
   margin-top: 2px;
+  margin-bottom: 0px;
 }
 :host(.component-editor) div.track-editor div.sections ul li:first-child {
   border-top-left-radius: 8px;
@@ -2119,16 +2345,23 @@ div.playlist-track.random div#title {
 }
 :host(.component-editor) div.track-editor div.sections #plus {
   width: 90%;
+  height: 32px;
   margin-top: 8px;
   margin-bottom: 8px;
-  border: 1px solid #222222;
+  border: var(--button-border);
   border-radius: 8px;
 }
-:host(.component-editor) div.track-editor div.sections #plus img {
-  width: 32px;
+:host(.component-editor) div.track-editor div.sections #plus div {
+  width: 100%;
+  height: 100%;
+  background-color: var(--icon);
+  mask-image: url("/images/plus.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: 32px auto;
 }
 :host(.component-editor) div.track-editor input {
-  background: #ffffff;
+  background: var(--input-background);
   border: none;
   border-radius: 4px;
   padding-top: 8px;
@@ -2192,6 +2425,7 @@ div.playlist-track.random div#title {
   font-size: 1em;
   font-weight: bold;
   outline: none;
+  background: var(--select-background);
 }
 :host(.component-editor) div.track-editor select, :host(.component-editor) div.track-editor select::picker(select) {
   appearance: base-select;
@@ -2239,7 +2473,7 @@ div.playlist-track.random div#title {
   grid-template-rows: auto auto;
 }
 :host(.component-section) div.section div.summary {
-  background: #ffffff;
+  background: var(--editor-section-background);
   width: 100%;
   display: grid;
   grid-template-columns: auto auto 1fr auto auto;
@@ -2257,10 +2491,22 @@ div.playlist-track.random div#title {
 :host(.component-section) div.section #arrow {
   grid-column: 1;
   grid-row: 1;
+  background: none;
+  width: 32px;
+  height: 100%;
+  padding-left: 8px;
+  border: none;
+  outline: none;
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+}
+:host(.component-section) div.section #arrow img {
   transform: rotate(90deg);
 }
 :host(.component-section) div.section #name {
-  grid-column: 2/3;
+  grid-column: 2/4;
   grid-row: 1;
 }
 :host(.component-section) div.section #role {
@@ -2271,11 +2517,13 @@ div.playlist-track.random div#title {
   grid-column: 5;
   grid-row: 1;
 }
-:host(.component-section) div.section #arrow {
+:host(.component-section) div.section #arrow img {
   width: 16px;
+  height: 16px;
 }
 :host(.component-section) div.section input {
   box-sizing: border-box;
+  background: var(--editor-section-background);
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 6px;
@@ -2290,10 +2538,10 @@ div.playlist-track.random div#title {
 }
 :host(.component-section) div.section input::placeholder {
   font-style: italic;
-  color: #a0a0a0;
+  color: var(-text-placeholder);
 }
 :host(.component-section) div.section input[readonly] {
-  color: gray;
+  color: var(-text-muted);
   font-style: italic;
   font-weight: 300;
 }
@@ -2325,13 +2573,18 @@ div.playlist-track.random div#title {
 :host(.component-section) div.section.collapsed div.subsections {
   display: none;
 }
-:host(.component-section) div.section.collapsed #arrow {
+:host(.component-section) div.section.collapsed #arrow img {
   transform: rotate(0deg);
 }
 :host(.component-section) div.section.collapsed #measures {
   visibility: visible;
 }
 
+@media (max-width: 768px) and (orientation: portrait) {
+  :host(.component-section) div.section #arrow {
+    width: 48px;
+  }
+}
 @media (max-width: 1024px) and (orientation: landscape) {
   :host(.component-section) div.section {
     display: grid;
@@ -2339,9 +2592,12 @@ div.playlist-track.random div#title {
     grid-template-rows: auto;
     column-gap: 1px;
   }
+  :host(.component-section) div.section #arrow {
+    width: 48px;
+  }
 }
 :host(.component-subsection) div.subsection {
-  background: #fcfcfc;
+  background: var(--editor-subsection-background);
   width: 100%;
   height: fit-content;
   display: grid;
@@ -2369,6 +2625,7 @@ div.playlist-track.random div#title {
 }
 :host(.component-subsection) div.subsection input {
   box-sizing: border-box;
+  background: var(--editor-subsection-background);
   padding-top: 6px;
   padding-bottom: 6px;
   padding-left: 6px;
@@ -2383,10 +2640,10 @@ div.playlist-track.random div#title {
 }
 :host(.component-subsection) div.subsection input::placeholder {
   font-style: italic;
-  color: #a0a0a0;
+  color: var(--text-placeholder);
 }
 :host(.component-subsection) div.subsection input[readonly] {
-  color: gray;
+  color: var(--text-muted);
   font-style: italic;
   font-weight: normal;
 }
@@ -2535,7 +2792,7 @@ div.playlist-track.random div#title {
   padding-right: 4px;
 }
 :host(.component-section-time-signature) div.time-signature div#list div.content div.custom input {
-  background: #e0e0e0;
+  background: var(--editor-subsection-background);
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 8px;
@@ -2560,10 +2817,10 @@ div.playlist-track.random div#title {
   width: 172px;
 }
 :host(.component-section-time-signature) div.time-signature.none button img {
-  filter: grayscale(100%) opacity(25%);
+  filter: var(--editor-subsection-img-none);
 }
 :host(.component-section-time-signature) div.time-signature.disabled button img {
-  filter: grayscale(100%) opacity(50%);
+  filter: var(--editor-subsection-img-disabled);
 }
 
 :host(.component-section-mm) {
@@ -2653,10 +2910,10 @@ div.playlist-track.random div#title {
   display: none;
 }
 :host(.component-section-mm) button.none img {
-  filter: grayscale(100%) opacity(25%);
+  filter: var(--editor-subsection-img-none);
 }
 :host(.component-section-mm) button:disabled img {
-  filter: grayscale(100%) opacity(50%);
+  filter: var(--editor-subsection-img-disabled);
 }
 :host(.component-section-mm) input {
   box-sizing: border-box;
@@ -2670,17 +2927,17 @@ div.playlist-track.random div#title {
 }
 :host(.component-section-mm) input::placeholder {
   font-style: italic;
-  color: #b0b0b0;
+  color: var(--text-placeholder);
 }
 :host(.component-section-mm) input:disabled {
-  color: #a0a0a0;
+  color: var(--text-disabled);
 }
 :host(.component-section-mm) input#BPM {
   min-width: 2em;
   field-sizing: content;
   height: fit-content;
   padding-right: 4px;
-  color: #444444;
+  color: var(--text);
   font-size: 14px;
   font-weight: normal;
   text-align: left;
@@ -2699,10 +2956,10 @@ div.playlist-track.random div#title {
   text-align: left;
 }
 :host(.component-section-mm) #BPM:invalid + #bpm {
-  color: #b0b0b0;
+  color: var(--text-placeholder);
 }
 :host(.component-section-mm) #BPM:placeholder-shown + #bpm {
-  color: #b0b0b0;
+  color: var(--text-placeholder);
 }
 
 :host(.component-section-mm:not([figura=eighth])) #list > div > li[data-pulse=eighth] {

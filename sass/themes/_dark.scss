@@ -1,14 +1,76 @@
-@use '../palettes/default' as colours;
+@use '../palettes/charcoal' as charcoal;
 @use 'sass:color';
 
-$white: colours.$white;
-$black: colours.$black;
-$grey: colours.$grey;
+$border: #58585f;
 
 [data-theme="dark"] {
-  --background: #{$black};
+  --logo: url('/images/dark/logo.png');
+  --background: #{charcoal.$bg-0} url("../images/textures/45degreee_fabric.webp");
+  --panel-background: #{charcoal.$bg-0};
+  --panel-border: 1px solid #{charcoal.$fg-4};
 
-  --track-colour-muted: #{$grey};
-  --track-colour-deleting: #{$grey};
-  --playlist-colour-deleting: #{$grey};
+  --metronome-button-disabled: #{color.change(charcoal.$blue, $alpha: 0.6)};
+  --metronome-button-enabled: #{charcoal.$blue};
+
+  --toolbar-button-disabled: #{charcoal.$fg-4};
+  --toolbar-button-enabled: #{charcoal.$fg-3};
+  --toolbar-button-hover: #{charcoal.$red};
+  --toolbar-wakelock-active: #b24a2c;
+
+  --track-colour-muted: #{charcoal.$fg-4};
+  --track-colour-deleting: #{charcoal.$fg-4};
+  --playlist-colour-deleting: #{charcoal.$fg-4};
+
+  --beat-off: #{color.change(charcoal.$fg-4, $alpha: 0.45)};
+  --beat-on: #{color.change(charcoal.$red, $alpha: 0.9)};
+
+  --info-title-text: #{charcoal.$fg-1};
+  --info-detail-text: #{charcoal.$fg-1};
+  --info-icon: url('../images/dark/save.svg'); 
+  --info-icon-disabled: url('../images/dark/save-disabled.svg'); 
+
+  --knob-background-opacity: 0%;
+  --knob-ticks: #{charcoal.$fg-2};
+  --knob-labels:  #{rgba(charcoal.$fg-2, 0.9)};
+
+  --wheel-border: #{charcoal.$fg-4};
+
+  --loop-enabled: #{charcoal.$red};
+  --ding-enabled: #{charcoal.$red};
+
+  --text: #{charcoal.$fg-2};
+  --text-contrast: #{charcoal.$bg-2};
+  --text-label: #{charcoal.$fg-3};
+  --text-muted: #{charcoal.$fg-4};
+  --text-disabled: #{charcoal.$bg-4};
+  --text-placeholder: #{charcoal.$fg-4};
+  --text-editing: #{charcoal.$bg-2};
+  --text-locked: #{color.change(charcoal.$red, $alpha: 0.9)};
+
+  --icon: #{charcoal.$fg-2};
+  --icon-disabled: #{charcoal.$fg-4};
+  --icon-locked: #{color.change(charcoal.$red, $alpha: 0.9)};
+
+  --button-text: #{charcoal.$fg-2};
+  --button-background: #{charcoal.$fg-3};
+  --button-background-translucent: #{charcoal.$fg-3};
+  --button-background-transparent: #{color.change(charcoal.$fg-3, $alpha: 0.1)};
+  --button-border: 1px solid #{charcoal.$fg-2};
+
+  --checkbox-background-unchecked: url('/images/dark/checkbox-unchecked.svg') no-repeat center / contain;
+  --checkbox-background-checked: url('/images/dark/checkbox-checked.svg') no-repeat center / contain;
+
+  --input-background: #{charcoal.$fg-2};
+  --select-background: #{charcoal.$fg-2};
+  
+  --playlist-title-background: #{charcoal.$bg-4};
+  --playlist-title-text: #{charcoal.$fg-3};
+  --playlist-tracks-background: #{charcoal.$bg-3};
+  --playlist-tracks-text: #{charcoal.$fg-2};
+
+  --editor-background: #{charcoal.$bg-3};
+  --editor-section-background:  #{charcoal.$fg-2};
+  --editor-subsection-background: #{charcoal.$fg-2};
+  --editor-subsection-img-none: grayscale(100%) opacity(35%);
+  --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
 }

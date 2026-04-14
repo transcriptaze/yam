@@ -16,6 +16,7 @@
 html {
   height: 100%;
   background: var(--background);
+  background-blend-mode: multiply;
   font-family: "Lato";
   box-sizing: border-box;
 
@@ -30,7 +31,6 @@ body {
 
   div.content {  
     min-width: max-content;
-    display: flex;
     overflow: hidden;
 
     display: grid;
@@ -64,7 +64,7 @@ dialog.import {
     padding-right: 12px;
 
     display: grid;
-    grid-template-columns: 1f 1fr;
+    grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto;
     column-gap: 16px;
     row-gap: 12px;

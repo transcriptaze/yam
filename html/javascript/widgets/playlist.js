@@ -409,7 +409,7 @@ export class Playlist extends HTMLElement {
     const container = this.shadowRoot.querySelector('div.playlist')
 
     if (this.#add_tracks != null) {
-      this.#add_tracks.selected = this.#tracks
+      this.#add_tracks.playlist = this.UUID
     }
 
     container.classList.add('adding')
@@ -539,7 +539,6 @@ export class Playlist extends HTMLElement {
   #add(ul, v) {
     const li = document.createElement('li')
     const grip = document.createElement('div')
-    const img = document.createElement('img')
     const item = document.createElement('yam-playlist-item')
 
     li.setAttribute('draggable', false)
@@ -549,13 +548,9 @@ export class Playlist extends HTMLElement {
     li.ondragleave = this.#dragleave
     li.ondrop = this.#drop
 
-    img.setAttribute('src', './images/grip.svg')
-    img.setAttribute('draggable', false)
-
     grip.setAttribute('draggable', false)
     grip.classList.add('grip')
     grip.addEventListener('pointerdown', this.#onPointerDown)
-    grip.appendChild(img)
 
     item.track = {
       UUID: v.UUID,

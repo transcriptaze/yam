@@ -338,12 +338,27 @@ export async function toggleWakeLock() {
   state.toggleWakeLock(button)
 }
 
+export async function toggleTheme() {
+  const theme = document.documentElement.getAttribute('data-theme')
+
+  if (theme === 'default') {
+    document.documentElement.setAttribute('data-theme', 'dark')
+    settings.theme = 'dark'
+  } else {
+    document.documentElement.setAttribute('data-theme', 'default')
+    settings.theme = 'default'
+  }
+
+  settings.save()
+}
+
 export function onError(err) {
   console.error('ERROR', err)
 
   ERROR = err
 
-  document.querySelector('#about')?.classList.add('error')
+  document.querySelector('#about').classList.add('hidden')
+  document.querySelector('#oops').classList.remove('hidden')
   document.querySelector('#oops').title = `${err.message}`
 }
 
@@ -359,7 +374,8 @@ export async function showError() {
     }
   }
 
-  document.querySelector('#about')?.classList.remove('error')
+  document.querySelector('#about').classList.remove('hidden')
+  document.querySelector('#oops').classList.add('hidden')
 }
 
 export function debug() {
@@ -388,7 +404,7 @@ function rewire() {
 
   widgets.playlists.addEventListener('new', (e) => onPlaylistNew(e))
   widgets.playlists.addEventListener(EVENTS.SHUFFLE_PLAYLISTS, (e) => onPlaylistsShuffled(e))
-  widgets.playlists.addEventListener(EVENTS.SELECT_PLAYLIST, (e) => onPlaylistSelected(e))
+  widgets.playlists.addEventListener(EVENTS.SELECT_PLAYLIST, (e) => onPlaylistSelect(e))
   widgets.playlists.addEventListener(EVENTS.DELETE_PLAYLIST, (e) => onPlaylistDelete(e))
   widgets.playlists.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
 
@@ -406,7 +422,7 @@ function rewire() {
 
   state.addEventListener('change', (e) => onStateModified(e))
 
-  models.playlists.addEventListener('selected', (e) => onSelected(e))
+  models.playlists.addEventListener(EVENTS.PLAYLIST_SELECTED, (e) => onPlaylistSelected(e))
   models.playlists.addEventListener(EVENTS.PLAYLIST_CHANGED, (e) => onPlaylistChanged(e))
   models.playlists.addEventListener(EVENTS.PLAYLIST_TRACK_DELETED, (e) => onPlaylistTrackDeleted(e))
   models.playlists.addEventListener(EVENTS.PLAYLIST_TRACK_MUTED, (e) => onMuted(e, true))
@@ -569,11 +585,9 @@ function onMuted(e, muted) {
 
   widgets.playlists.mute(playlist, track, muted)
   widgets.tracks.update(playlist)
-
-  // playlist?.save()
 }
 
-function onSelected(event) {
+function onPlaylistSelected(event) {
   const playlist = models.playlists.playlist(event.detail.playlist)
   const track = models.tracks.track(event.detail.track)
   const toolbar = document.querySelector('toolbar')
@@ -794,11 +808,13 @@ function onEdited(_event) {
         widgets.mm.track = track
 
         widgets.info.modified = state.modified
-        widgets.loop.loop = track.loop
         widgets.knob.BPM = track.BPM
         widgets.knob.tempo = track.tempo
         widgets.wheel.BPM = track.BPM
         widgets.wheel.tempo = track.tempo
+
+        widgets.loop.enabled = track.loopable ?? false
+        widgets.loop.loop = track.loop
         widgets.loop.loops = track.loops
 
         // ... update engine
@@ -848,7 +864,7 @@ function onPlaylistAdded(event) {
   playlist.select(null)
 }
 
-function onPlaylistSelected(event) {
+function onPlaylistSelect(event) {
   const playlist = models.playlists.playlist(event.detail.playlist)
 
   if (playlist?.UUID !== state.playlist) {

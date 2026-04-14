@@ -1,20 +1,36 @@
 <!DOCTYPE html>
-<html class="settings">
+<html class="settings" data-theme="default">
   <head>
     <title>Yet Another Metronome - Settings</title>
     <link rel="icon"       href="./images/favicon.png" />
     <link rel="stylesheet" href="./css/YAM.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <script>
+      (function() {
+        try {
+           const json = localStorage.getItem('YAM')
+           const object = JSON.parse(json)
+           const theme = object?.settings.theme ?? 'default'
+
+           console.log({theme})
+
+           document.documentElement.setAttribute('data-theme', theme);
+        } catch (err) {
+           console.log(err)
+        }
+       })()
+    </script>    
   </head>
 
   <body>
     <div class="content">
       <main>
-        <h1><img src="./images/logo.png" />Settings</h1>
+        <h1><div class="logo"></div>Yet Another Metronome</h1>
         <div class="settings">
           <label for="theme">Theme</label>
           <select id="theme">
             <option value="default">Default</option>
+            <option value="dark">Dark</option>
           </select>
 
           <label for="soundset">Soundset</label>
@@ -41,23 +57,16 @@
       </main>
 
       <toolbar class="settings">
-         <div class="menu">
-           <div class="left-menu">
-             <a href="./index.html#metronome">
-                <img id="metronome" class="visible" src="./images/metronome.svg" draggable="false" />
-             </a>
-             <a href="./index.html#playlist">
-               <img id="playlist" class="visible" src="./images/playlist.svg" draggable="false" />
-             </a>
-            <!-- <button id="load"><img src="./images/import.svg"         draggable="false" /></button> -->
-            <!-- <button id="save"><img src="./images/export.svg"         draggable="false" /></button> -->
-           </div>
-           <div class="right-menu">
-             <a href="./about.html">
-               <img id="about" class="visible" src="./images/about.svg" draggable="false" />
-             </a>
-           </div>
-         </div>
+        <div class="menu">
+          <div class="left-menu">
+            <button id="metronome" class="icon-metronome" aria-label="Metronome"></button>
+            <button id="playlist"  class="icon-playlist"  aria-label="Playlist"></button>
+          </div>
+          <div class="right-menu">
+            <button id="theme" class="icon-theme" aria-label="Theme"></button>
+            <button id="about" class="icon-about" aria-label="About"></button>
+          </div>
+        </div>
       </toolbar>
 
     </div>
@@ -66,15 +75,28 @@
   <!-- SCRIPTS -->
   <script type="module">
     import { initialise, onError } from './javascript/pages/settings.js'
+    import { toggleTheme } from './javascript/YAM.js'
 
     const toolbar = {
-      // save: document.querySelector('toolbar #save'),
-      // load: document.querySelector('toolbar #load'),
+      metronome: document.querySelector('toolbar #metronome'),
+      playlist: document.querySelector('toolbar #playlist'),
+      theme: document.querySelector('toolbar #theme'),
+      about: document.querySelector('toolbar #about'),
     }
 
-    // ... attach event handlers (because .. Safari)
-    // toolbar.save.onclick = () => save()
-    // toolbar.load.onclick = () => load()
+    toolbar.metronome.onclick = () => {
+      window.location.href = './index.html'
+    }
+    
+    toolbar.playlist.onclick = () => {
+      window.location.href = './index.html#playlist'
+    }
+
+    toolbar.theme.onclick = () =>  toggleTheme()
+
+    toolbar.about.onclick = () => {
+      window.location.href = './about.html'
+    }
 
     document.addEventListener('contextmenu', (event) => {
       event.preventDefault()

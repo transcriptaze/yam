@@ -5,8 +5,15 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 ## In Progress
 
 - [ ] statistics (cf. https://github.com/transcriptaze/yam/issues/11)
-
-
+   - [ ] ignore if track not defined
+   - [ ] capture start/stop/loop datetime
+   - [ ] capture track info
+      - UUID
+      - title
+      - count-in/pickup/bars
+   - [ ] capture BPM/bars
+   - (?) rework engine onPlaying/onStopped as signals
+   - (?) rework widgets.metronome to subscribe to engine
 
 - [ ] editor - default reverted to 4:4 instead of continuing with 6:4 (cf. https://github.com/transcriptaze/yam/issues/54)
 

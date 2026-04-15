@@ -53,15 +53,11 @@ export class MetronomeNode extends AudioWorkletNode {
   onMessage(event) {
     switch (event.data.message) {
       case 'playing':
-        this.subscribers.dispatchEvent(new CustomEvent(EVENTS.PLAYING, { detail: {} }))
-        break
-
-      case 'paused':
-        this.subscribers.dispatchEvent(new CustomEvent(EVENTS.PAUSED, { detail: {} }))
+        this.subscribers.dispatchEvent(new CustomEvent(EVENTS.PLAYING, { detail: { track: event.data.track } }))
         break
 
       case 'stopped':
-        this.subscribers.dispatchEvent(new CustomEvent(EVENTS.STOPPED, { detail: {} }))
+        this.subscribers.dispatchEvent(new CustomEvent(EVENTS.STOPPED, { detail: { track: event.data.track } }))
         break
 
       case 'flipped':
@@ -140,7 +136,7 @@ export class MetronomeNode extends AudioWorkletNode {
 
   set track(v) {
     if (v == null) {
-      this.port.postMessage({ message: 'stop' })
+      this.port.postMessage({ message: 'reset' })
     } else {
       this.timeSignature = v?.timeSignature ?? this.timeSignature
       this.pulse = v?.pulse ?? this.pulse
@@ -148,6 +144,7 @@ export class MetronomeNode extends AudioWorkletNode {
       this.#loops = v?.loops ?? INF
 
       const track = transmogrify({
+        UUID: v?.UUID,
         tempo: v?.tempo,
         timeSignature: v?.timeSignature ?? this.#timeSignature,
         pulse: v?.pulse ?? this.#pulse,
@@ -290,6 +287,7 @@ function transmogrify(track) {
 
   // ... playable section
   return {
+    UUID: track.UUID,
     tempo: track.tempo ?? 120,
     timeSignature: track.timeSignature ?? '',
     pulse: PULSE.pulseToInt(track.pulse ?? ''),

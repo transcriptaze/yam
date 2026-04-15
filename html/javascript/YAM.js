@@ -3,6 +3,7 @@ import * as models from './models/models.js'
 import * as fs from './fs.js'
 import { state } from './state.js'
 import { settings } from './settings.js'
+import * as statistics from './statistics/statistics.js'
 import * as log from './log.js'
 import { DEFAULT, EVENTS, INF } from './constants.js'
 
@@ -105,6 +106,9 @@ export function initialise() {
       models.tracks.prune(models.playlists)
     })
     .catch((err) => warnf(err))
+
+  // ... initialise statistics
+  statistics.initialise()
 
   // ... setup audio engine
   engine.addEventListener(EVENTS.PLAYING, (event) => onPlaying(event), false)

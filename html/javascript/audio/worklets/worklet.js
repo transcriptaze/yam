@@ -87,6 +87,11 @@ export class Metronome extends AudioWorkletProcessor {
         this.initialise(event)
         break
 
+      case 'reset':
+        this.stop()
+        this.#track.UUID = null
+        break
+
       case 'play':
         this.play()
         break
@@ -156,6 +161,7 @@ export class Metronome extends AudioWorkletProcessor {
     if (this.FSM.onStop()) {
       this.port.postMessage({
         message: 'stopped',
+        track: this.#track?.UUID ?? '',
       })
     }
   }
@@ -240,6 +246,7 @@ export class Metronome extends AudioWorkletProcessor {
           this.flip({ state: FSM.STATE.PLAYING, bar: 0, beat: 0, loops: this.#loops })
           this.port.postMessage({
             message: 'playing',
+            track: this.#track?.UUID ?? '',
           })
 
           // ... start delay?
@@ -288,6 +295,7 @@ export class Metronome extends AudioWorkletProcessor {
             this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
             this.port.postMessage({
               message: 'stopped',
+              track: this.#track?.UUID ?? '',
             })
           }
         } else {

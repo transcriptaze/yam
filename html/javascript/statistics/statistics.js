@@ -6,32 +6,41 @@ class Statistics {
     track: null,
     start: null,
     end: null,
+    loops: 0,
   }
 
   onStart(e) {
-    this.#clear()
+    if (e.detail.track != null && e.detail.track !== '' && e.detail.track === this.#record.track) {
+      this.#record.loops = event.detail.loops
+    } else if (e.detail.track != null && e.detail.track !== '') {
+      this.#clear()
 
-    if (e.detail.track != null && e.detail.track !== '') {
       this.#record.track = e.detail.track
       this.#record.start = new Date()
+      this.#record.loops = event.detail.loops
     }
   }
 
   onStop(e) {
     if (e.detail.track == null || e.detail.track === '' || e.detail.track !== this.#record.track) {
       this.#clear()
-    } else {
-      this.#record.end = new Date()
+      return
     }
 
+    this.#record.end = new Date()
+    this.#record.loops = event.detail.loops
     this.#save()
-    this.#clear()
+
+    if (event.detail.done) {
+      this.#clear()
+    }
   }
 
   #clear() {
     this.#record.track = null
     this.#record.start = null
     this.#record.end = null
+    this.#record.loops = 0
   }
 
   #save() {

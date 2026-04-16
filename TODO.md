@@ -4,14 +4,23 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 
 ## In Progress
 
+- [ ] clicking loop before playing a track is overriden by the track loop setting
+      i.e. it doesn't loop :-(
+
+- [ ] partially playing a looping track, stop, select another track but don't play it and go back
+      to the partially looped doesn't reset the displayed loop count until it plays
+
 - [ ] statistics (cf. https://github.com/transcriptaze/yam/issues/11)
-   - [ ] ignore if track not defined
-   - [ ] capture start/stop/loop datetime
+   - [x] ignore if track not defined
+   - [x] capture start/stop/loops
    - [ ] capture track info
       - UUID
       - title
       - count-in/pickup/bars
    - [ ] capture BPM/bars
+   - [ ] save
+   - [ ] export
+   - [ ] visualiser
    - (?) rework engine onPlaying/onStopped as signals
    - (?) rework widgets.metronome to subscribe to engine
 

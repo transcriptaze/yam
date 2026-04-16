@@ -162,6 +162,8 @@ export class Metronome extends AudioWorkletProcessor {
       this.port.postMessage({
         message: 'stopped',
         track: this.#track?.UUID ?? '',
+        loops: this.#loops,
+        done: false,
       })
     }
   }
@@ -202,14 +204,11 @@ export class Metronome extends AudioWorkletProcessor {
     const playing = this.playing
 
     this.FSM.onStop()
-
-    // NTS: always reset loop count on loading a track
-    this.#loops = 0
+    this.#loops = 0 // NTS: always reset loop count on loading a track
 
     if (playing) {
       if (this.FSM.onPlay()) {
         this.section = null
-        // this.#loops = 0
         this.clock.reset()
       }
     }
@@ -247,6 +246,7 @@ export class Metronome extends AudioWorkletProcessor {
           this.port.postMessage({
             message: 'playing',
             track: this.#track?.UUID ?? '',
+            loops: this.#loops,
           })
 
           // ... start delay?
@@ -289,13 +289,15 @@ export class Metronome extends AudioWorkletProcessor {
             this.section = null
             this.clock.reset()
           } else {
-            // NTS: reset internal loop count
-            this.#loops = 0
+            const loops = this.#loops
+            this.#loops = 0 // NTS: done, reset loop count
 
             this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
             this.port.postMessage({
               message: 'stopped',
               track: this.#track?.UUID ?? '',
+              loops: loops,
+              done: true,
             })
           }
         } else {

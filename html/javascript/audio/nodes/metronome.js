@@ -53,11 +53,26 @@ export class MetronomeNode extends AudioWorkletNode {
   onMessage(event) {
     switch (event.data.message) {
       case 'playing':
-        this.subscribers.dispatchEvent(new CustomEvent(EVENTS.PLAYING, { detail: { track: event.data.track } }))
+        this.subscribers.dispatchEvent(
+          new CustomEvent(EVENTS.PLAYING, {
+            detail: {
+              track: event.data.track,
+              loops: event.data.loops,
+            },
+          }),
+        )
         break
 
       case 'stopped':
-        this.subscribers.dispatchEvent(new CustomEvent(EVENTS.STOPPED, { detail: { track: event.data.track } }))
+        this.subscribers.dispatchEvent(
+          new CustomEvent(EVENTS.STOPPED, {
+            detail: {
+              track: event.data.track,
+              loops: event.data.loops,
+              done: event.data.done,
+            },
+          }),
+        )
         break
 
       case 'flipped':

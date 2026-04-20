@@ -9,6 +9,7 @@ class Statistics {
     end: null,
     bar: 0,
     loops: 0,
+    BPM: 0,
   }
 
   onStart(e) {
@@ -20,6 +21,7 @@ class Statistics {
       this.#record.track = e.detail.track
       this.#record.start = new Date()
       this.#record.loops = event.detail.loops
+      this.#record.BPM = event.detail.BPM
     }
   }
 
@@ -53,6 +55,7 @@ class Statistics {
     this.#record.end = null
     this.#record.bar = 0
     this.#record.loops = 0
+    this.#record.BPM = 0
   }
 }
 
@@ -75,6 +78,7 @@ function save(v) {
         countIn: track.countIn,
         pickup: track.pickup,
         measures: track.bars,
+        tempo: track.tempo,
       }
 
       console.log('statistics::stop', record)

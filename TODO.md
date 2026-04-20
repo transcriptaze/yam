@@ -4,6 +4,8 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 
 ## In Progress
 
+- [ ] changing BPM before playing track doesn't work
+
 - [ ] clicking loop before playing a track is overriden by the track loop setting
       i.e. it doesn't loop :-(
 
@@ -14,7 +16,7 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
    - [x] ignore if track not defined
    - [x] capture start/stop/loops/bar
    - [x] capture track info
-   - [ ] capture BPM/tempo
+   - [x] capture BPM/tempo
    - [ ] save
    - [ ] export
    - [ ] visualiser

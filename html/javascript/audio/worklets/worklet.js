@@ -247,6 +247,7 @@ export class Metronome extends AudioWorkletProcessor {
             message: 'playing',
             track: this.#track?.UUID ?? '',
             loops: this.#loops,
+            BPM: Math.round(clamp(parameters.BPM[0], 40, 200)),
           })
 
           // ... start delay?

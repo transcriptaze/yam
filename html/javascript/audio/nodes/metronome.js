@@ -59,6 +59,7 @@ export class MetronomeNode extends AudioWorkletNode {
             detail: {
               track: event.data.track,
               loops: event.data.loops,
+              BPM: event.data.BPM,
             },
           }),
         )

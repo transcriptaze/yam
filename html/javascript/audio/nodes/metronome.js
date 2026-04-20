@@ -20,6 +20,7 @@ export class MetronomeNode extends AudioWorkletNode {
   #pulse = ''
 
   #cache = {
+    track: '',
     playing: false,
     stopped: false,
     bar: 0,
@@ -81,6 +82,7 @@ export class MetronomeNode extends AudioWorkletNode {
         this.subscribers.dispatchEvent(
           new CustomEvent(EVENTS.CLICK, {
             detail: {
+              track: event.data.track,
               playing: this.playing,
               stopped: this.stopped,
               bar: this.bar,
@@ -224,6 +226,7 @@ export class MetronomeNode extends AudioWorkletNode {
   }
 
   #flipped(msg) {
+    this.#cache.track = msg.track
     this.#cache.playing = msg.state === STATE.PLAYING
     this.#cache.stopped = msg.state === STATE.STOPPED
     this.#cache.bar = msg.bar

@@ -12,15 +12,14 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 
 - [ ] statistics (cf. https://github.com/transcriptaze/yam/issues/11)
    - [x] ignore if track not defined
-   - [x] capture start/stop/loops
-   - [ ] capture track info
-      - UUID
-      - title
-      - count-in/pickup/bars
-   - [ ] capture BPM/bars
+   - [x] capture start/stop/loops/bar
+   - [x] capture track info
+   - [ ] capture BPM/tempo
    - [ ] save
    - [ ] export
    - [ ] visualiser
+      - (?) https://opensource.posit.co/blog/2026-04-20_ggsql_alpha_release/
+      - (?) https://ggplot2.tidyverse.org/
    - (?) rework engine onPlaying/onStopped as signals
    - (?) rework widgets.metronome to subscribe to engine
 

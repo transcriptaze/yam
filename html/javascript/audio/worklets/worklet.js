@@ -455,6 +455,7 @@ export class Metronome extends AudioWorkletProcessor {
     this.port.postMessage({
       message: 'flipped',
 
+      track: this.#track?.UUID ?? '',
       state: state,
       bar: bar,
       beat: beat,

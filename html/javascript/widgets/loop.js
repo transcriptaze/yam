@@ -85,9 +85,11 @@ export class Loop extends HTMLElement {
   set loops(v) {
     const shadow = this.shadowRoot
     const loop = shadow.querySelector('input')
-    const N = parseInt(`${v}`)
+    const N = parseInt(`${v.loops}`)
+    const M = parseInt(`${v.count}`)
 
-    this.#loops.loops = !Number.isNaN(N) ? N : INF
+    this.#loops.loops = Number.isNaN(N) ? INF : N
+    this.#loops.count = Number.isNaN(M) ? 0 : M
 
     const remaining = this.#loops.loops - this.#loops.count
 

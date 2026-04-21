@@ -32,12 +32,14 @@ class Engine {
         .get(ctx, this.#soundset)
         .then((sounds) => metronome(ctx, sounds, this.#subscribers))
         .then((metronome) => {
-          metronome.BPM = this.#BPM
           metronome.timeSignature = this.#timeSignature
+          metronome.track = this.#track // NB: MUST come after the standalone parameters, otherwise it gets overriden
+
+          // NTS: expects set::track to also set pulse, BPM, loop and ding
           metronome.pulse = this.#pulse
+          metronome.BPM = this.#BPM
           metronome.loop = this.#loop
           metronome.ding = this.#ding
-          metronome.track = this.#track // NB: MUST come after the standalone parameters, otherwise it gets overriden
 
           const gain = audioContext.createGain()
 
@@ -128,6 +130,13 @@ class Engine {
 
   set track(track) {
     this.#track = track
+
+    if (track != null) {
+      this.pulse = track.pulse
+      this.BPM = track.BPM
+      this.loop = track.loop
+      this.ding = track.ding
+    }
 
     if (this.initialised) {
       this.#metronome.track = track

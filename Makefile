@@ -1,6 +1,6 @@
 BUILD := $(shell git rev-parse --short HEAD)
 UNAME := $(shell uname)
-VERSION ?= v0.2.0
+VERSION ?= v0.3.0
 
 ifeq ($(UNAME),Darwin)
    SED := sed -i ''
@@ -12,7 +12,7 @@ endif
 .PHONY: sass
 
 all: test      \
-	 benchmark \
+	  benchmark \
      coverage
 
 clean:
@@ -24,8 +24,8 @@ format:
 	find test            -name "*.js" -exec npx prettier --write {} +
 
 build: format
-	find html/javascript -name "*.js" -exec npx eslint   --fix {} +
 	npx sass sass:html/css --no-source-map --style=expanded
+	find html/javascript -name "*.js" -exec npx eslint   --fix {} +
 
 test: build
 	find test -name "*.js" -exec npx eslint   --fix {} +

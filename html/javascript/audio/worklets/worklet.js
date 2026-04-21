@@ -268,11 +268,6 @@ export class Metronome extends AudioWorkletProcessor {
         const measure = cluck.bar
         const section = this.#track.sections.find((v) => measure >= v.start && measure <= v.end)
 
-        // const id = this.section?.ID ?? 0
-        // if (section != null && section.ID != id) {
-        //   console.log({ measure }, section)
-        // }
-
         if (section != null) {
           this.section = section
         }
@@ -314,6 +309,7 @@ export class Metronome extends AudioWorkletProcessor {
 
           this.cue(cluck.beat, pulse)
           this.flip({ state: FSM.STATE.PLAYING, bar: cluck.bar, beat: cluck.beat, loops: this.#loops })
+
           log('PLAY', clock.t, clock.time, BPM, cluck.bar, cluck.beat, tactus, figura, pulse)
         }
       } else if (cluck.tock.click) {

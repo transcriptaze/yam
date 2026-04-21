@@ -123,7 +123,11 @@ export class MetronomeNode extends AudioWorkletNode {
 
   set BPM(bpm) {
     if (bpm != null) {
-      this.parameters.get('BPM').linearRampToValueAtTime(bpm, this.context.currentTime + 0.5)
+      if (this.playing) {
+        this.parameters.get('BPM').linearRampToValueAtTime(bpm, this.context.currentTime + 0.5)
+      } else {
+        this.parameters.get('BPM').setValueAtTime(bpm, this.context.currentTime)
+      }
     }
   }
 

@@ -4,13 +4,14 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 
 ## In Progress
 
-- [ ] changing BPM before playing track doesn't work
-
-- [ ] clicking loop before playing a track is overriden by the track loop setting
-      i.e. it doesn't loop :-(
+- [x] changing BPM before playing track doesn't work
+- [x] clicking loop before playing a track is overriden by the track loop setting
+- [x] changing pulse before playing track doesn't work
 
 - [ ] partially playing a looping track, stop, select another track but don't play it and go back
       to the partially looped doesn't reset the displayed loop count until it plays
+
+- [ ] changing time signatures does not take effect
 
 - [ ] statistics (cf. https://github.com/transcriptaze/yam/issues/11)
    - [x] ignore if track not defined

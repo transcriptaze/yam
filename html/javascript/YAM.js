@@ -61,7 +61,10 @@ export function initialise() {
   widgets.mm.track = null
 
   widgets.loop.loop = state.loop
-  widgets.loop.loops = INF
+  widgets.loop.loops = {
+    loops: INF,
+    count: 0,
+  }
 
   widgets.ding.ding = state.ding
   widgets.ding.track = null
@@ -618,7 +621,10 @@ function onPlaylistSelected(event) {
 
   widgets.loop.enabled = track?.loopable ?? false
   widgets.loop.loop = track?.loop ?? false
-  widgets.loop.loops = track?.loops ?? INF
+  widgets.loop.loops = {
+    loops: track?.loops ?? INF,
+    count: 0,
+  }
 
   widgets.ding.track = track
 
@@ -672,9 +678,14 @@ function onPlaylistTrackDeleted(e) {
     widgets.info.track = null
     widgets.timeSignature.track = null
     widgets.mm.track = null
+
     widgets.loop.enabled = false
     widgets.loop.loop = false
-    widgets.loop.loops = INF
+    widgets.loop.loops = {
+      loops: INF,
+      count: 0,
+    }
+
     widgets.ding.track = null
 
     widgets.metronome.bof = playlist?.BOF ?? true
@@ -756,9 +767,14 @@ function onSave() {
     widgets.info.track = track
     widgets.timeSignature.track = track
     widgets.mm.track = track
+
     widgets.loop.enabled = track?.loopable ?? false
     widgets.loop.loop = track?.loop ?? false
-    widgets.loop.loops = track?.loops ?? INF
+    widgets.loop.loops = {
+      loops: track?.loops ?? INF,
+      count: 0,
+    }
+
     widgets.ding.track = track
     widgets.knob.tempo = track?.tempo
     widgets.knob.BPM = track?.BPM
@@ -819,7 +835,10 @@ function onEdited(_event) {
 
         widgets.loop.enabled = track.loopable ?? false
         widgets.loop.loop = track.loop
-        widgets.loop.loops = track.loops
+        widgets.loop.loops = {
+          loops: track.loops,
+          count: 0,
+        }
 
         // ... update engine
         engine.track = track

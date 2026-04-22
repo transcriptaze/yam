@@ -4,7 +4,7 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 
 ## In Progress
 
-- [ ] changing time signatures does not take effect
+- [x] Fix time signature override logic
 - [ ] simplify UUIDv4
 
 - [ ] statistics (cf. https://github.com/transcriptaze/yam/issues/11)

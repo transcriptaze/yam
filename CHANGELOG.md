@@ -5,7 +5,8 @@
 ### Added
 
 ### Updated
-1. Fixed BPM, loop, ding and pulse initialisation from track.
+1. Fixed BPM, loop, ding, pulse initialisation from track.
+2. Fixed time signature override for tracks.
 
 
 ## [0.2.0](https://github.com/transcriptaze/yam/releases/tag/v0.2.0) - 2026-04-14

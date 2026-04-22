@@ -260,7 +260,10 @@ export class TimeSignature extends HTMLElement {
       this.#bar = bar
 
       if (!playing && stopped) {
-        this.#redraw(track.timeSignature)
+        // NTS: use this.#timeSignature - tracks without sections/subsections allow the
+        //      time signature to be set from the UI
+        this.#redraw(this.#timeSignature)
+        // this.#redraw(track.timeSignature)
       }
 
       if (playing && !stopped) {
@@ -274,7 +277,10 @@ export class TimeSignature extends HTMLElement {
         } else if (section != null) {
           this.#redraw(section.timeSignature)
         } else {
-          this.#redraw(track.timeSignature)
+          // NTS: use this.#timeSignature - tracks without sections/subsections allow the
+          //      time signature to be set from the UI
+          this.#redraw(this.#timeSignature)
+          // this.#redraw(track.timeSignature)
         }
       }
     }

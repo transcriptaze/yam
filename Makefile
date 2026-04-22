@@ -25,10 +25,10 @@ format:
 
 build: format
 	npx sass sass:html/css --no-source-map --style=expanded
-	find html/javascript -name "*.js" -exec npx eslint   --fix {} +
+	find html/javascript -name "*.js" -exec npx eslint --fix {} +
 
 test: build
-	find test -name "*.js" -exec npx eslint   --fix {} +
+	find test -name "*.js" -exec npx eslint --fix {} +
 	npm test
 
 benchmark: build

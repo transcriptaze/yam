@@ -20,6 +20,7 @@ export class Metronome extends AudioWorkletProcessor {
 
   #section = null
   #loops = 0
+  #looping = false
   #cued = []
   #delay = 0
 
@@ -159,11 +160,14 @@ export class Metronome extends AudioWorkletProcessor {
 
   stop() {
     if (this.FSM.onStop()) {
+      const loops = this.#track?.loops ?? 0
+      const looping = this.#looping && loops > 0
+
       this.port.postMessage({
         message: 'stopped',
         track: this.#track?.UUID ?? '',
         loops: this.#loops,
-        done: false,
+        done: looping ? false : true,
       })
     }
   }
@@ -235,6 +239,8 @@ export class Metronome extends AudioWorkletProcessor {
     const ding = parameters.ding[0] === 1.0
     const gain = this.playing ? this.level.fadeIn() : this.level.fadeOut()
     let clock = this.clock
+
+    this.#looping = loop
 
     if (this.starting) {
       clock.tick(BPM, tactus, figura, pulse, N)

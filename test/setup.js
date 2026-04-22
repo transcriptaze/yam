@@ -1,4 +1,5 @@
 import { JSDOM } from 'jsdom'
+import { webcrypto } from 'crypto'
 
 const dom = new JSDOM(`<!DOCTYPE html><html><body></body></html>`, {
   url: 'http://localhost/',
@@ -12,6 +13,12 @@ global.HTMLElement = dom.window.HTMLElement
 global.Node = dom.window.Node
 global.customElements = dom.window.customElements
 global.getComputedStyle = dom.window.getComputedStyle
+
+if (!globalThis.crypto) {
+  globalThis.crypto = webcrypto
+}
+
+global.self = global.window ?? globalThis
 
 // safely redefine navigator
 Object.defineProperty(global, 'navigator', {

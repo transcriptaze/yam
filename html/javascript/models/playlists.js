@@ -1,7 +1,7 @@
 import * as DB from '../db/db.js'
 import { Playlist } from './playlist.js'
 import { warnf } from '../log.js'
-import { UUIDv4, reserve } from '../uuid.js'
+import { UUIDv4 } from '../uuid.js'
 import { DEFAULT, EVENTS } from '../constants.js'
 
 const LOGTAG = 'playlists'
@@ -112,8 +112,6 @@ class Playlists extends EventTarget {
     deflist.tracks = [...new Set(deflist.tracks).union(tracks)]
 
     this.playlists = [deflist, ...playlists.filter((v) => v.UUID !== DEFAULT.UUID)]
-
-    reserve(this.#playlists.map((v) => v.UUID))
   }
 
   save() {

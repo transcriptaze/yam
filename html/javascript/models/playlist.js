@@ -1,5 +1,5 @@
 import * as DB from '../db/db.js'
-import { UUIDv4, reserve } from '../uuid.js'
+import { UUIDv4 } from '../uuid.js'
 import { infof } from '../log.js'
 import { EVENTS, RANDOM } from '../constants.js'
 import * as models from './models.js'
@@ -41,8 +41,6 @@ export class Playlist extends EventTarget {
     this.#tracks = object.tracks == null ? [] : object.tracks
     this.#random = object.random == null ? [] : object.random
     this.#muted = object.muted == null ? new Set() : new Set([...object.muted])
-
-    reserve(this.#random.map((v) => v.UUID))
   }
 
   get object() {

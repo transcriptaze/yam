@@ -1,5 +1,5 @@
 import * as DB from '../db/db.js'
-import { UUIDv4, reserve } from '../uuid.js'
+import { UUIDv4 } from '../uuid.js'
 import { Track } from './track.js'
 import * as generators from '../generators.js'
 
@@ -41,8 +41,6 @@ class Tracks extends EventTarget {
     }
 
     this.#tracks = list.map((o) => f(o)).filter((t) => t != null)
-
-    reserve(this.#tracks.map((v) => v.UUID))
   }
 
   create(object) {

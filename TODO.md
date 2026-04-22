@@ -5,7 +5,7 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 ## In Progress
 
 - [x] Fix time signature override logic
-- [ ] simplify UUIDv4
+- [x] Simplify UUIDv4
 
 - [ ] statistics (cf. https://github.com/transcriptaze/yam/issues/11)
    - [x] ignore if track not defined

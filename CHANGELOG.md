@@ -1,6 +1,13 @@
 # CHANGELOG
 
-### Unreleased
+## Unreleased
+
+### Added
+
+### Updated
+1. Fixed BPM, loop, ding, pulse initialisation from track.
+2. Fixed time signature override for tracks.
+3. Simplified UUIDv4 generator.
 
 
 ## [0.2.0](https://github.com/transcriptaze/yam/releases/tag/v0.2.0) - 2026-04-14

@@ -2,7 +2,7 @@ import * as log from '../log.js'
 
 const LOGTAG = 'DB'
 const DB = 'yam'
-const VERSION = 2
+const VERSION = 3
 
 export function clean() {
   indexedDB.deleteDatabase(DB)
@@ -127,6 +127,10 @@ function upgrade(db, from, to) {
 
     if (version === 1) {
       db.createObjectStore('playlists', { keyPath: 'UUID' })
+    }
+
+    if (version === 2) {
+      db.createObjectStore('statistics', { keyPath: 'UUID' })
     }
   }
 }

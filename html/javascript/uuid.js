@@ -1,32 +1,23 @@
-const UUIDs = new Set()
-
-export function reserve(set) {
-  set.forEach((v) => UUIDs.add(v))
-}
-
 export function* UUIDv4() {
   const f = () => {
-    if (self.crypto?.randomUUID) {
-      return self.crypto.randomUUID()
+    const uuidFn = self.crypto?.randomUUID
+    if (typeof uuidFn === 'function') {
+      return uuidFn.call(self.crypto)
     }
 
-    return '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, (c) => (c ^ ((Math.random() * 16) >> (c / 4))).toString(16))
-  }
+    const bytes = new Uint8Array(16)
 
-  let count = 0
-
-  while (count < 16) {
-    count++
-    const uuid = f()
-
-    if (!UUIDs.has(uuid)) {
-      UUIDs.add(uuid)
-      yield uuid
-      return
+    if (typeof self.crypto?.getRandomValues === 'function') {
+      self.crypto.getRandomValues(bytes)
+    } else {
+      bytes.forEach((_, i) => (bytes[i] = Math.floor(Math.random() * 256)))
     }
 
-    console.log(`>>> WARNING: duplicate UUID {uuid}`)
+    let i = 0
+    return '10000000-1000-4000-8000-100000000000'.replace(/[018]/g, (c) => (c ^ (bytes[i++] & (15 >> (c / 4)))).toString(16))
   }
 
-  throw new Error('not enough UUIDs left in the universe')
+  while (true) {
+    yield f()
+  }
 }

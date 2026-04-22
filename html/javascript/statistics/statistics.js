@@ -1,9 +1,12 @@
 import { engine } from '../audio/engine.js'
-import { EVENTS } from '../constants.js'
+import { UUIDv4 } from '../uuid.js'
 import * as datastore from '../datastore/datastore.js'
+import * as DB from '../db/db.js'
+import { EVENTS } from '../constants.js'
 
 class Statistics {
   #record = {
+    UUID: null,
     track: null,
     start: null,
     end: null,
@@ -18,6 +21,7 @@ class Statistics {
     } else if (e.detail.track != null && e.detail.track !== '') {
       this.#clear()
 
+      this.#record.UUID = UUIDv4().next().value
       this.#record.track = e.detail.track
       this.#record.start = new Date()
       this.#record.loops = event.detail.loops
@@ -50,6 +54,7 @@ class Statistics {
   }
 
   #clear() {
+    this.#record.UUID = null
     this.#record.track = null
     this.#record.start = null
     this.#record.end = null
@@ -65,6 +70,10 @@ export function initialise() {
   engine.addEventListener(EVENTS.PLAYING, (event) => statistics.onStart(event), false)
   engine.addEventListener(EVENTS.STOPPED, (event) => statistics.onStop(event), false)
   engine.addEventListener(EVENTS.CLICK, (event) => statistics.onClick(event), false)
+
+  DB.statistics().then((list) => {
+    console.log(`statistics records:${list.length}`)
+  })
 }
 
 function save(v) {
@@ -81,7 +90,11 @@ function save(v) {
         tempo: track.tempo,
       }
 
-      console.log('statistics::stop', record)
+      try {
+        DB.putStatistic(record)
+      } catch (err) {
+        console.error(err)
+      }
     }
   })
 }

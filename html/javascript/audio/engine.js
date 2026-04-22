@@ -32,10 +32,10 @@ class Engine {
         .get(ctx, this.#soundset)
         .then((sounds) => metronome(ctx, sounds, this.#subscribers))
         .then((metronome) => {
-          metronome.timeSignature = this.#timeSignature
-          metronome.track = this.#track // NB: MUST come after the standalone parameters, otherwise it gets overriden
+          metronome.track = this.#track
 
           // NTS: expects set::track to also set pulse, BPM, loop and ding
+          metronome.timeSignature = this.#timeSignature
           metronome.pulse = this.#pulse
           metronome.BPM = this.#BPM
           metronome.loop = this.#loop
@@ -132,6 +132,7 @@ class Engine {
     this.#track = track
 
     if (track != null) {
+      this.timeSignature = track.timeSignature
       this.pulse = track.pulse
       this.BPM = track.BPM
       this.loop = track.loop

@@ -4,20 +4,15 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 
 ## In Progress
 
-- [x] changing BPM before playing track doesn't work
-- [x] clicking loop before playing a track is overriden by the track loop setting
-- [x] changing pulse before playing track doesn't work
-- [x] partially playing a looping track, stop, select another track but don't play it and go back
-      to the partially looped doesn't reset the displayed loop count until it plays
-
-- [ ] changing time signatures does not take effect
+- [x] Fix time signature override logic
+- [x] Simplify UUIDv4
 
 - [ ] statistics (cf. https://github.com/transcriptaze/yam/issues/11)
    - [x] ignore if track not defined
    - [x] capture start/stop/loops/bar
    - [x] capture track info
    - [x] capture BPM/tempo
-   - [ ] save
+   - [x] save
    - [ ] export
    - [ ] visualiser
       - (?) https://opensource.posit.co/blog/2026-04-20_ggsql_alpha_release/
@@ -361,3 +356,24 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
    1. https://medium.com/@utkuaydogdu01/playing-audio-by-processing-raw-pcm-audio-data-in-flutter-practical-guide-and-best-audio-packages-455dedcd129e
 
 
+
+```
+export function getUUID() {
+  // 1. The modern standard (Available in all secure contexts/PWAs)
+  if (typeof self.crypto?.randomUUID === 'function') {
+    return self.crypto.randomUUID();
+  }
+
+  // 2. The robust fallback (Uses high-entropy hardware random if available)
+  const getRandomByte = () => {
+    if (self.crypto?.getRandomValues) {
+      return self.crypto.getRandomValues(new Uint8Array(1))[0];
+    }
+    return Math.floor(Math.random() * 256);
+  };
+
+  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+    (c ^ (getRandomByte() & (15 >> (c / 4)))).toString(16)
+  );
+}
+```

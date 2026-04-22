@@ -95,7 +95,10 @@ export class Pads extends HTMLElement {
       } else if (section != null) {
         this.#redraw(beat, section.timeSignature, section.pulse)
       } else {
-        this.#redraw(beat, track.timeSignature, track.pulse)
+        // NTS: use this.#timeSignature - tracks without sections/subsections allow the
+        //      time signature to be set from the UI
+        this.#redraw(beat, this.#timeSignature, track.pulse)
+        // this.#redraw(beat, track.timeSignature, track.pulse)
       }
       return
     }

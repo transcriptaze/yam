@@ -1987,6 +1987,14 @@ div.playlist-track [popover] button {
   border: none;
   outline: none;
 }
+div.playlist-track [popover] #statistics {
+  height: 28px;
+  background-color: #222222;
+  mask-image: url("/images/statistics.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: auto 24px;
+}
 div.playlist-track [popover] #mute {
   height: 28px;
   background-color: #222222;

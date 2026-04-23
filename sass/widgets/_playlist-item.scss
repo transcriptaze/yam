@@ -60,6 +60,16 @@ div.playlist-track {
       outline: none;
     }
 
+    #statistics {
+      height: 28px;
+
+      background-color: #222222;
+      mask-image: url('/images/statistics.svg');
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-size: auto 24px;
+    }
+
     #mute {
       height: 28px;
 

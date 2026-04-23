@@ -790,6 +790,10 @@ toolbar.playlist #edit {
   display: none;
 }
 
+toolbar.statistics #save {
+  display: block;
+}
+
 @media (max-width: 768px) and (orientation: portrait) {
   toolbar {
     width: calc(100vw - 4px);

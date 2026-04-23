@@ -388,7 +388,6 @@ export async function showError() {
 export function debug() {
   DEBUG = !DEBUG
 
-  // engine.debug = DEBUG
   throw new Error('ooops')
 }
 
@@ -413,9 +412,11 @@ function rewire() {
   widgets.playlists.addEventListener(EVENTS.SHUFFLE_PLAYLISTS, (e) => onPlaylistsShuffled(e))
   widgets.playlists.addEventListener(EVENTS.SELECT_PLAYLIST, (e) => onPlaylistSelect(e))
   widgets.playlists.addEventListener(EVENTS.DELETE_PLAYLIST, (e) => onPlaylistDelete(e))
-  widgets.playlists.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
+  widgets.playlists.addEventListener(EVENTS.TRACK_SELECT, (e) => onTrackSelect(e))
+  widgets.playlists.addEventListener(EVENTS.TRACK_STATISTICS, (e) => onTrackStatistics(e))
+  widgets.playlists.addEventListener(EVENTS.PLAYLIST_STATISTICS, (e) => onPlaylistStatistics(e))
 
-  widgets.tracks.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
+  widgets.tracks.addEventListener(EVENTS.TRACK_SELECT, (e) => onTrackSelect(e))
 
   widgets.editor.addEventListener(EVENTS.EDIT_SAVE, (e) => onEdited(e))
 
@@ -594,6 +595,10 @@ function onMuted(e, muted) {
   widgets.tracks.update(playlist)
 }
 
+function onTrackStatistics(event) {
+  window.location.href = `./statistics.html?track=${event.detail.track}`
+}
+
 function onPlaylistSelected(event) {
   const playlist = models.playlists.playlist(event.detail.playlist)
   const track = models.tracks.track(event.detail.track)
@@ -701,6 +706,11 @@ function onPlaylistDelete(event) {
   const playlist = event.detail.playlist
 
   models.playlists.delete(playlist)
+}
+
+function onPlaylistStatistics(event) {
+  console.log('--- onPlaylistStatistics')
+  window.location.href = `./statistics.html?playlist=${event.detail.playlist}`
 }
 
 // NTS: state/track conflict => either need to update only changed fields here

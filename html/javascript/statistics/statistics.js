@@ -76,6 +76,10 @@ export function initialise() {
   })
 }
 
+export function get() {
+  return DB.statistics()
+}
+
 function save(v) {
   new Promise(() => {
     const track = datastore.tracks.get(v.track)

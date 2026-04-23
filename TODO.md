@@ -6,6 +6,7 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 
 - [x] Fix time signature override logic
 - [x] Simplify UUIDv4
+- [ ] 2:2 time
 
 - [ ] statistics (cf. https://github.com/transcriptaze/yam/issues/11)
    - [x] ignore if track not defined
@@ -13,7 +14,9 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
    - [x] capture track info
    - [x] capture BPM/tempo
    - [x] save
-   - [ ] export
+   - [x] export
+   - [x] track menu
+   - [x] playlist menu
    - [ ] visualiser
       - (?) https://opensource.posit.co/blog/2026-04-20_ggsql_alpha_release/
       - (?) https://ggplot2.tidyverse.org/

@@ -15,6 +15,18 @@ class Statistics {
     BPM: 0,
   }
 
+  load(list) {
+    console.log(`statistics records:${list.length}`)
+  }
+
+  summarize(track) {
+    return {
+      track: track,
+      played: 37,
+      lastPlayed: '2026-04-26',
+    }
+  }
+
   onStart(e) {
     if (e.detail.track != null && e.detail.track !== '' && e.detail.track === this.#record.track) {
       this.#record.loops = event.detail.loops
@@ -66,13 +78,15 @@ class Statistics {
 
 const statistics = new Statistics()
 
-export function initialise() {
+export function restore() {
   engine.addEventListener(EVENTS.PLAYING, (event) => statistics.onStart(event), false)
   engine.addEventListener(EVENTS.STOPPED, (event) => statistics.onStop(event), false)
   engine.addEventListener(EVENTS.CLICK, (event) => statistics.onClick(event), false)
 
-  DB.statistics().then((list) => {
-    console.log(`statistics records:${list.length}`)
+  return DB.statistics().then((list) => {
+    statistics.load(list)
+
+    return statistics
   })
 }
 

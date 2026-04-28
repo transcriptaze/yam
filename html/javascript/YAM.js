@@ -75,9 +75,9 @@ export function initialise() {
   widgets.wheel.BPM = state.BPM
   widgets.wheel.tempo = null
 
-  // ... initialise playlists
-  Promise.all([models.playlists.restore(), models.tracks.restore()])
-    .then(([playlists, tracks]) => {
+  // ... initialise playlists, tracks and statistics
+  Promise.all([models.playlists.restore(), models.tracks.restore(), statistics.restore()])
+    .then(([playlists, tracks, _statistics]) => {
       widgets.playlists.initialise(playlists, tracks)
 
       // ... playlist in URL?
@@ -109,9 +109,6 @@ export function initialise() {
       models.tracks.prune(models.playlists)
     })
     .catch((err) => warnf(err))
-
-  // ... initialise statistics
-  statistics.initialise()
 
   // ... setup audio engine
   engine.addEventListener(EVENTS.PLAYING, (event) => onPlaying(event), false)

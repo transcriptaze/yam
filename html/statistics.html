@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="settings" data-theme="default">
+<html class="statistics" data-theme="default">
   <head>
     <title>Yet Another Metronome - Statistics</title>
     <link rel="icon"       href="./images/favicon.png" />
@@ -27,7 +27,31 @@
       <main>
         <h1><div class="logo"></div>Yet Another Metronome</h1>
         <div class="statistics">
-          <em>-- statistics go here --</em>
+          <div id="playlist" class="hidden">
+          </div>
+
+          <div id="track" class="hidden">
+            <div class="header">
+              <div id="title">----</div>
+              <div id="time-signature"></div>
+              <div id="tempo"></div>
+              <div id="bars"></div>
+            </div>
+
+            <hr/>
+            <div class="summary">
+              <h2>Summary</h2>
+              <label for="played">Played:</label><input id="played" readonly/>
+              <label for="last-played">Last played:</label><input id="last-played" readonly/>
+              <label for="BPM">BPM:</label><input id="BPM" readonly/>
+            </div>
+
+            <hr/>
+            <div class="last-week">
+              <h2>Last week</h2>
+              <label for="played">Played:</label><input id="played" readonly/>
+            </div>
+          </div>
         </div>
       </main>
 

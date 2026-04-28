@@ -1,0 +1,109 @@
+html.statistics main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+
+  margin-top: 16px;
+  margin-bottom: 16px;
+  margin-left: 64px;
+  margin-right: 64px;
+
+  color: var(--text);
+
+  div.logo {
+    width: 64px;
+    height: 64px;
+
+    background-color: transparent;
+    background-image: var(--logo);
+    background-size: contain;
+  }
+
+  h1 {
+    display: flex;
+    align-items: center;
+    column-gap: 12px;
+    font-size: 1.5em; 
+
+    img {
+      width: 64px;
+    }
+  }
+
+  h2 {
+     font-size: 1em;
+     margin-top: 4px;
+     margin-bottom: 8px;
+  }
+
+  img {
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  div.statistics {
+  }
+
+  #playlist {
+
+  }
+
+  #playlist.hidden {
+    display: none;
+  }
+
+  #track {
+  }
+
+  #track.hidden {
+    display: none;
+  }
+
+  div.header {
+  }
+
+  div.summary {
+    display: grid;
+    grid-template-columns: auto auto;
+
+    label {
+      grid-column: 1;
+    }
+
+    input {
+      grid-column: 2;
+    }
+  }
+}
+
+
+@media (max-width: 768px) and (orientation:portrait) {
+  html.statistics main {
+    height: calc(100% - 48px);
+    margin-left: 0px;
+    margin-right: 0px;
+
+    padding-top: 16px;
+    padding-bottom: 0px;
+    padding-left: 16px;
+    padding-right: 24px;
+
+    h1 {
+      font-size: 1.2em; 
+    }
+  }
+}
+
+@media (max-width: 1024px) and (orientation: landscape) {
+  html.statistics main {
+    width: calc(100% - 48px);
+    height: calc(100% - 48px);
+
+    margin-top: 16px;
+    margin-bottom: 32px;
+    margin-left: 24px;
+    margin-right: 24px;
+
+    overflow-y: scroll;
+  }
+}

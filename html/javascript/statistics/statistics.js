@@ -127,7 +127,6 @@ export function get() {
 
 function save(v) {
   new Promise(() => {
-    console.log(v)
     const track = datastore.tracks.get(v.track)
 
     if (track != null) {

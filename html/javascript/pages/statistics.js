@@ -73,6 +73,8 @@ function showTrack(track, statistics) {
     played.value = `- never -`
   } else if (summary.played == 1) {
     played.value = `- once -`
+  } else if (summary.played == 2) {
+    played.value = `- twice -`
   } else {
     played.value = `${summary.played} times`
   }
@@ -86,9 +88,9 @@ function showTrack(track, statistics) {
     const days = Math.max(0, Math.floor((today - played) / MS_PER_DAY))
 
     if (days == 0) {
-      lastPlayed.value = `today`
+      lastPlayed.value = `- today -`
     } else if (days == 1) {
-      lastPlayed.value = `yesterday`
+      lastPlayed.value = `- yesterday -`
     } else if (days < 7) {
       lastPlayed.value = `${days} days ago`
     } else if (days < 14) {

@@ -9,11 +9,14 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 - [ ] 2:2 time
 
 - [ ] statistics (cf. https://github.com/transcriptaze/yam/issues/11)
-   - [ ] record per play
+   - [x] record per play
    - [ ] track statistics
+      - [ ] display time signature properly
+      - [ ] display infinity bars
+
    - [ ] playlist statistics
-      - (?) https://opensource.posit.co/blog/2026-04-20_ggsql_alpha_release/
-      - (?) https://ggplot2.tidyverse.org/
+   - (?) https://opensource.posit.co/blog/2026-04-20_ggsql_alpha_release/
+   - (?) https://ggplot2.tidyverse.org/
 
 
 - [ ] editor - default reverted to 4:4 instead of continuing with 6:4 (cf. https://github.com/transcriptaze/yam/issues/54)

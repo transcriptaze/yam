@@ -81,6 +81,7 @@ export const EVENTS = {
   PLAYING: 'playing',
   STOPPED: 'stopped',
   CLICK: 'click',
+  DONE: 'done',
 
   SHUFFLE_PLAYLISTS: 'shuffle-playlists',
 

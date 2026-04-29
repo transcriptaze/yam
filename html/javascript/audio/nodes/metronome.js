@@ -93,6 +93,16 @@ export class MetronomeNode extends AudioWorkletNode {
           }),
         )
         break
+
+      case 'done':
+        this.subscribers.dispatchEvent(
+          new CustomEvent(EVENTS.DONE, {
+            detail: {
+              track: event.data.track,
+            },
+          }),
+        )
+        break
     }
   }
 

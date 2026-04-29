@@ -425,6 +425,83 @@ html.settings main div.volume input[type=text] {
     overflow-y: scroll;
   }
 }
+html.statistics main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  margin-left: 64px;
+  margin-right: 64px;
+  color: var(--text);
+}
+html.statistics main div.logo {
+  width: 64px;
+  height: 64px;
+  background-color: transparent;
+  background-image: var(--logo);
+  background-size: contain;
+}
+html.statistics main h1 {
+  display: flex;
+  align-items: center;
+  column-gap: 12px;
+  font-size: 1.5em;
+}
+html.statistics main h1 img {
+  width: 64px;
+}
+html.statistics main h2 {
+  font-size: 1em;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+html.statistics main img {
+  user-select: none;
+  -webkit-user-select: none;
+}
+html.statistics main #playlist.hidden {
+  display: none;
+}
+html.statistics main #track.hidden {
+  display: none;
+}
+html.statistics main div.summary {
+  display: grid;
+  grid-template-columns: auto auto;
+}
+html.statistics main div.summary label {
+  grid-column: 1;
+}
+html.statistics main div.summary input {
+  grid-column: 2;
+}
+
+@media (max-width: 768px) and (orientation: portrait) {
+  html.statistics main {
+    height: calc(100% - 48px);
+    margin-left: 0px;
+    margin-right: 0px;
+    padding-top: 16px;
+    padding-bottom: 0px;
+    padding-left: 16px;
+    padding-right: 24px;
+  }
+  html.statistics main h1 {
+    font-size: 1.2em;
+  }
+}
+@media (max-width: 1024px) and (orientation: landscape) {
+  html.statistics main {
+    width: calc(100% - 48px);
+    height: calc(100% - 48px);
+    margin-top: 16px;
+    margin-bottom: 32px;
+    margin-left: 24px;
+    margin-right: 24px;
+    overflow-y: scroll;
+  }
+}
 main.about {
   box-sizing: border-box;
   height: 100%;
@@ -788,6 +865,10 @@ toolbar.playlist #playlist {
 }
 toolbar.playlist #edit {
   display: none;
+}
+
+toolbar.statistics #save {
+  display: block;
 }
 
 @media (max-width: 768px) and (orientation: portrait) {

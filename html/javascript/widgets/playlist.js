@@ -78,7 +78,7 @@ export class Playlist extends HTMLElement {
         if (event.target.UUID != null) {
           event.preventDefault()
           this.dispatchEvent(
-            new CustomEvent(EVENTS.SELECT_TRACK, {
+            new CustomEvent(EVENTS.TRACK_SELECT, {
               bubbles: true,
               composed: true,
               detail: { playlist: this.UUID, track: event.target.UUID },
@@ -177,6 +177,23 @@ export class Playlist extends HTMLElement {
       },
     },
 
+    statistics: {
+      click: (event) => {
+        this.shadowRoot.querySelector('[popover]').hidePopover()
+
+        event.preventDefault()
+        event.stopPropagation()
+
+        this.dispatchEvent(
+          new CustomEvent(EVENTS.PLAYLIST_STATISTICS, {
+            bubbles: true,
+            composed: true,
+            detail: { playlist: this.UUID },
+          }),
+        )
+      },
+    },
+
     plus: {
       click: (event) => {
         event.preventDefault()
@@ -216,6 +233,7 @@ export class Playlist extends HTMLElement {
     const edit = shadow.querySelector('#edit')
     const trash = shadow.querySelector('#trash')
     const save = shadow.querySelector('#save')
+    const statistics = shadow.querySelector('#statistics')
 
     summary.addEventListener('click', this.#handlers.summary.click)
     menu.addEventListener('click', this.#handlers.menu.click)
@@ -223,6 +241,7 @@ export class Playlist extends HTMLElement {
     ul.addEventListener('click', this.#handlers.ul.click)
     edit.addEventListener('click', this.#handlers.edit.click)
     save.addEventListener('click', this.#handlers.save.click)
+    statistics.addEventListener('click', this.#handlers.statistics.click)
 
     title.addEventListener('click', this.#handlers.title.click)
     title.addEventListener('keydown', this.#handlers.title.keydown)
@@ -560,8 +579,8 @@ export class Playlist extends HTMLElement {
       random: v.random === true ? true : false,
     }
 
-    item.addEventListener(EVENTS.MUTE_TRACK, this.#mute)
-    item.addEventListener(EVENTS.DELETE_TRACK, this.#trash)
+    item.addEventListener(EVENTS.TRACK_MUTE, this.#mute)
+    item.addEventListener(EVENTS.TRACK_DELETE, this.#trash)
 
     li.appendChild(grip)
     li.appendChild(item)

@@ -37,7 +37,7 @@ export class PlaylistItem extends HTMLElement {
 
         event.stopPropagation()
         this.dispatchEvent(
-          new CustomEvent(EVENTS.MUTE_TRACK, {
+          new CustomEvent(EVENTS.TRACK_MUTE, {
             bubbles: true,
             composed: true,
             detail: { UUID: this.UUID, mute: !this.muted },
@@ -58,7 +58,7 @@ export class PlaylistItem extends HTMLElement {
           popover.hidePopover()
 
           this.dispatchEvent(
-            new CustomEvent(EVENTS.DELETE_TRACK, {
+            new CustomEvent(EVENTS.TRACK_DELETE, {
               bubbles: true,
               composed: true,
               detail: { track: this.UUID },
@@ -76,6 +76,22 @@ export class PlaylistItem extends HTMLElement {
         if (event.propertyName === 'filter') {
           trash.classList.remove('locked')
         }
+      },
+    },
+
+    statistics: {
+      click: (event) => {
+        const popover = this.shadowRoot.querySelector('div [popover]')
+
+        event.stopPropagation()
+        this.dispatchEvent(
+          new CustomEvent(EVENTS.TRACK_STATISTICS, {
+            bubbles: true,
+            composed: true,
+            detail: { track: this.UUID },
+          }),
+        )
+        popover.hidePopover()
       },
     },
   }
@@ -102,6 +118,7 @@ export class PlaylistItem extends HTMLElement {
     const menu = shadow.getElementById('menu')
     const mute = shadow.getElementById('mute')
     const trash = shadow.getElementById('trash')
+    const statistics = shadow.getElementById('statistics')
     const popover = shadow.querySelector('div [popover]')
 
     title.textContent = this.#title
@@ -109,6 +126,7 @@ export class PlaylistItem extends HTMLElement {
     menu.addEventListener('click', this.#handlers.menu.click)
     popover.addEventListener('toggle', this.#handlers.popover.toggle)
     mute.addEventListener('click', this.#handlers.mute.click)
+    statistics.addEventListener('click', this.#handlers.statistics.click)
 
     trash.addEventListener('click', this.#handlers.trash.click)
     trash.addEventListener('transitionend', this.#handlers.trash.transitionEnd)

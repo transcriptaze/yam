@@ -27,13 +27,40 @@ export function save(object) {
   }
 }
 
+export function saveStatistics(object) {
+  const now = new Date()
+  const year = now.getFullYear().toString().padStart(4, '0')
+  const month = (now.getMonth() + 1).toString().padStart(2, '0')
+  const day = now.getDate().toString().padStart(2, '0')
+  const hour = now.getHours().toString().padStart(2, '0')
+  const minute = now.getMinutes().toString().padStart(2, '0')
+  const second = now.getSeconds().toString().padStart(2, '0')
+  const filename = `YAM ${year}-${month}-${day} ${hour}${minute}${second}.statistics`
+
+  const replacer = (k, v) => (v == null || (typeof v === 'number' && !Number.isFinite(v)) ? undefined : v)
+  const json = JSON.stringify(object, replacer, '  ')
+  const blob = new Blob([json], { type: 'application/x-yam-statistics' })
+
+  if (window.showSaveFilePicker) {
+    saveWithPicker(blob, filename)
+  } else {
+    saveWithChooser(blob, filename)
+  }
+}
+
 async function saveWithPicker(blob, filename) {
+  let accepts = { 'application/x-yam': ['.yam'] }
+
+  if (blob.type === 'application/x-yam-statistics') {
+    accepts = { 'application/x-yam-statistics': ['.statistics', '.json'] }
+  }
+
   const options = {
     suggestedName: filename,
     types: [
       {
         description: 'YAM file',
-        accept: { 'application/x-yam': ['.yam'] },
+        accept: accepts,
       },
     ],
   }

@@ -15,16 +15,36 @@ class Statistics {
     BPM: 0,
   }
 
+  #rs = []
+
   load(list) {
-    console.log(`statistics records:${list.length}`)
+    this.#rs = list
   }
 
   summarize(track) {
-    return {
+    const summary = {
       track: track,
-      played: 37,
-      lastPlayed: '2026-04-26',
+      played: 0,
+      lastPlayed: null,
     }
+
+    const records = this.#rs.filter((v) => v.track === track)
+
+    summary.played += records.length
+
+    for (const record of records) {
+      const ms = record.start.getMilliseconds()
+
+      if (!Number.isNaN(ms)) {
+        if (summary.lastPlayed == null) {
+          summary.lastPlayed = record.start
+        } else if (ms > summary.lastPlayed.getMilliseconds) {
+          summary.lastPlayed = record.start
+        }
+      }
+    }
+
+    return summary
   }
 
   onStart(e) {

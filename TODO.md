@@ -6,8 +6,6 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 
 ## In Progress
 
-- [x] Fix time signature override logic
-- [x] Simplify UUIDv4
 - [ ] 2:2 time
 
 - [ ] statistics (cf. https://github.com/transcriptaze/yam/issues/11)

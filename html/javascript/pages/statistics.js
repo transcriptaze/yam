@@ -5,6 +5,7 @@ import * as log from '../log.js'
 import * as fs from '../fs.js'
 
 const LOGTAG = 'statistics'
+const MS_PER_DAY = 24 * 60 * 60 * 1000
 
 export function initialise() {
   const params = new URLSearchParams(`${window.location.search}`)
@@ -63,13 +64,48 @@ function showTrack(track, statistics) {
   }
 
   // ... summary
-  const summary = statistics.summarize(track)
+  const summary = statistics.summarize(track.UUID)
   const played = section.querySelector('div.summary #played')
   const lastPlayed = section.querySelector('div.summary #last-played')
   const BPM = section.querySelector('div.summary #BPM')
 
-  played.value = summary.played
-  lastPlayed.value = summary.lastPlayed
+  if (summary.played == 0) {
+    played.value = `- never -`
+  } else if (summary.played == 1) {
+    played.value = `- once -`
+  } else {
+    played.value = `${summary.played} times`
+  }
+
+  if (summary.lastPlayed == null) {
+    lastPlayed.value = '- never -'
+  } else {
+    const now = new Date()
+    const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())
+    const played = Date.UTC(summary.lastPlayed.getFullYear(), summary.lastPlayed.getMonth(), summary.lastPlayed.getDate())
+    const days = Math.max(0, Math.floor((today - played) / MS_PER_DAY))
+
+    if (days == 0) {
+      lastPlayed.value = `today`
+    } else if (days == 1) {
+      lastPlayed.value = `yesterday`
+    } else if (days < 7) {
+      lastPlayed.value = `${days} days ago`
+    } else if (days < 14) {
+      lastPlayed.value = `1–2 weeks ago`
+    } else if (days <= 31) {
+      lastPlayed.value = `sometime in the last month`
+    } else {
+      lastPlayed.value = `not for a good long while`
+    }
+
+    const year = `${summary.lastPlayed.getFullYear()}`.padStart(4, '0')
+    const month = `${summary.lastPlayed.getMonth() + 1}`.padStart(2, '0')
+    const day = `${summary.lastPlayed.getDate()}`.padStart(2, '0')
+
+    lastPlayed.title = `${year}-${month}-${day}`
+  }
+
   BPM.value = track.BPM
 }
 

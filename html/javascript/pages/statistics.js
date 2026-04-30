@@ -3,6 +3,7 @@ import * as statistics from '../statistics/statistics.js'
 import * as datastore from '../datastore/datastore.js'
 import * as log from '../log.js'
 import * as fs from '../fs.js'
+import { INF } from '../constants.js'
 
 const LOGTAG = 'statistics'
 const MS_PER_DAY = 24 * 60 * 60 * 1000
@@ -53,14 +54,24 @@ function showTrack(track, statistics) {
   timeSignature.innerText = track.timeSignature
   tempo.innerText = `${track.tempo} BPM`
 
-  if (track.countIn > 0 && track.pickup > 0) {
+  if (track.countIn > 0 && track.pickup > 0 && track.bars > 0 && track.bars === INF) {
+    bars.innerHTML = `Bars: ${track.countIn}+${track.pickup}+<span class="infinity">&infin;</span>`
+  } else if (track.countIn > 0 && track.pickup > 0 && track.bars > 0) {
     bars.innerText = `Bars: ${track.countIn}+${track.pickup}+${track.bars - track.countIn - track.pickup}`
+  } else if (track.countIn > 0 && track.bars === INF) {
+    bars.innerHTML = `Bars: ${track.countIn}+<span class="infinity">&infin;</span>`
   } else if (track.countIn > 0) {
     bars.innerText = `Bars: ${track.countIn}+${track.bars - track.countIn}`
+  } else if (track.pickup > 0 && track.bars === INF) {
+    bars.innerHTML = `Bars: ${track.pickup}+<span class="infinity">&infin;</span>`
   } else if (track.pickup > 0) {
     bars.innerText = `Bars: ${track.pickup}+${track.bars - track.pickup}`
-  } else {
+  } else if (bars === INF) {
+    bars.innerHTML = `Bars: <span class="infinity">&infin;</span>`
+  } else if (bars > 0) {
     bars.innerText = `Bars: ${track.bars}`
+  } else {
+    bars.innerText = `Bars: -`
   }
 
   // ... summary

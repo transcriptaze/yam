@@ -13,6 +13,8 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
    - [ ] track statistics
       - [x] display infinity bars
       - [ ] display time signature properly
+      - [ ] only count complete plays
+            - if infinite bars ????
 
    - [ ] playlist statistics
    - (?) https://opensource.posit.co/blog/2026-04-20_ggsql_alpha_release/

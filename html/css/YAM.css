@@ -469,12 +469,29 @@ html.statistics main #track.hidden {
 html.statistics main div.summary {
   display: grid;
   grid-template-columns: auto auto;
+  row-gap: 4px;
 }
 html.statistics main div.summary label {
   grid-column: 1;
 }
 html.statistics main div.summary input {
   grid-column: 2;
+}
+html.statistics main div.last-week {
+  display: grid;
+  grid-template-columns: auto auto;
+  row-gap: 8px;
+}
+html.statistics main div.last-week label {
+  grid-column: 1;
+}
+html.statistics main div.last-week input {
+  grid-column: 2;
+}
+html.statistics main div.last-week yam-bar-graph {
+  grid-column: 2;
+  height: 32px;
+  background: white;
 }
 
 @media (max-width: 768px) and (orientation: portrait) {

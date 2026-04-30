@@ -65,6 +65,7 @@ html.statistics main {
   div.summary {
     display: grid;
     grid-template-columns: auto auto;
+    row-gap: 4px;
 
     label {
       grid-column: 1;
@@ -72,6 +73,27 @@ html.statistics main {
 
     input {
       grid-column: 2;
+    }
+  }
+
+  div.last-week {
+    display: grid;
+    grid-template-columns: auto auto;
+    row-gap: 8px;
+
+    label {
+      grid-column: 1;
+    }
+
+    input {
+      grid-column: 2;
+    }
+
+    yam-bar-graph {
+      grid-column: 2;
+
+      height: 32px;
+      background: white;
     }
   }
 }

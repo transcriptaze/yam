@@ -50,6 +50,7 @@
             <div class="last-week">
               <h2>Last week</h2>
               <label for="last-week-played">Played:</label><input id="last-week-played" readonly/>
+              <yam-bar-graph></yam-bar-graph>
             </div>
           </div>
         </div>
@@ -70,10 +71,19 @@
       </toolbar>
 
     </div>
+
+    <!-- TEMPLATES -->
+    <template id="template-bar-graph">
+      <div>
+        <canvas width="1" height="1"></canvas>
+      </div>
+    </template>
+
   </body>
 
   <!-- SCRIPTS -->
   <script type="module">
+    import "./javascript/widgets/widgets.js"
     import { initialise, onSave, onError } from './javascript/pages/statistics.js'
     import { toggleTheme } from './javascript/YAM.js'
 

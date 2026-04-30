@@ -44,7 +44,12 @@ function showTrack(track, statistics) {
 
   section.classList.remove('hidden')
 
-  // ... header
+  trackHeader(section, track, statistics)
+  trackSummary(section, track, statistics)
+  trackLastWeek(section, track, statistics)
+}
+
+function trackHeader(section, track, _statistics) {
   const title = section.querySelector('div.header #title')
   const timeSignature = section.querySelector('div.header #time-signature')
   const tempo = section.querySelector('div.header #tempo')
@@ -73,29 +78,30 @@ function showTrack(track, statistics) {
   } else {
     bars.innerText = `Bars: -`
   }
+}
 
-  // ... summary
-  const summary = statistics.summarize(track.UUID)
+function trackSummary(section, track, statistics) {
+  const stats = statistics.summarize(track.UUID)
   const played = section.querySelector('div.summary #played')
   const lastPlayed = section.querySelector('div.summary #last-played')
   const BPM = section.querySelector('div.summary #BPM')
 
-  if (summary.played == 0) {
+  if (stats.played == 0) {
     played.value = `- never -`
-  } else if (summary.played == 1) {
+  } else if (stats.played == 1) {
     played.value = `- once -`
-  } else if (summary.played == 2) {
+  } else if (stats.played == 2) {
     played.value = `- twice -`
   } else {
-    played.value = `${summary.played} times`
+    played.value = `${stats.played} times`
   }
 
-  if (summary.lastPlayed == null) {
+  if (stats.lastPlayed == null) {
     lastPlayed.value = '- never -'
   } else {
     const now = new Date()
     const today = Date.UTC(now.getFullYear(), now.getMonth(), now.getDate())
-    const played = Date.UTC(summary.lastPlayed.getFullYear(), summary.lastPlayed.getMonth(), summary.lastPlayed.getDate())
+    const played = Date.UTC(stats.lastPlayed.getFullYear(), stats.lastPlayed.getMonth(), stats.lastPlayed.getDate())
     const days = Math.max(0, Math.floor((today - played) / MS_PER_DAY))
 
     if (days == 0) {
@@ -112,14 +118,32 @@ function showTrack(track, statistics) {
       lastPlayed.value = `not for a good long while`
     }
 
-    const year = `${summary.lastPlayed.getFullYear()}`.padStart(4, '0')
-    const month = `${summary.lastPlayed.getMonth() + 1}`.padStart(2, '0')
-    const day = `${summary.lastPlayed.getDate()}`.padStart(2, '0')
+    const year = `${stats.lastPlayed.getFullYear()}`.padStart(4, '0')
+    const month = `${stats.lastPlayed.getMonth() + 1}`.padStart(2, '0')
+    const day = `${stats.lastPlayed.getDate()}`.padStart(2, '0')
 
     lastPlayed.title = `${year}-${month}-${day}`
   }
 
   BPM.value = track.BPM
+}
+
+function trackLastWeek(section, track, statistics) {
+  const stats = statistics.previousWeek(track.UUID)
+  const played = section.querySelector('div.last-week #last-week-played')
+  const graph = section.querySelector('div.last-week yam-bar-graph')
+
+  if (stats.played == 0) {
+    played.value = `- not even once -`
+  } else if (stats.played == 1) {
+    played.value = `- once -`
+  } else if (stats.played == 2) {
+    played.value = `- twice -`
+  } else {
+    played.value = `${stats.played} times`
+  }
+
+  graph.redraw()
 }
 
 function warnf(err) {

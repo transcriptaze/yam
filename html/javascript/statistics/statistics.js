@@ -22,7 +22,7 @@ class Statistics {
   }
 
   summarize(track) {
-    const summary = {
+    const stats = {
       track: track,
       played: 0,
       lastPlayed: null,
@@ -30,21 +30,50 @@ class Statistics {
 
     const records = this.#rs.filter((v) => v.track === track)
 
-    summary.played += records.length
+    stats.played += records.length
 
     for (const record of records) {
       const ms = record.start.getMilliseconds()
 
       if (!Number.isNaN(ms)) {
-        if (summary.lastPlayed == null) {
-          summary.lastPlayed = record.start
-        } else if (ms > summary.lastPlayed.getMilliseconds) {
-          summary.lastPlayed = record.start
+        if (stats.lastPlayed == null) {
+          stats.lastPlayed = record.start
+        } else if (ms > stats.lastPlayed.getMilliseconds) {
+          stats.lastPlayed = record.start
         }
       }
     }
 
-    return summary
+    return stats
+  }
+
+  previousWeek(track) {
+    const stats = {
+      track: track,
+      played: 0,
+    }
+
+    const date = new Date()
+    date.setHours(0, 0, 0, 0)
+    date.setDate(date.getDate() - 7)
+
+    const records = this.#rs.filter((v) => v.track === track && v.start >= date)
+
+    stats.played += records.length
+
+    // for (const record of records) {
+    //   const ms = record.start.getMilliseconds()
+    //
+    //   if (!Number.isNaN(ms)) {
+    //     if (stats.lastPlayed == null) {
+    //       stats.lastPlayed = record.start
+    //     } else if (ms > summary.lastPlayed.getMilliseconds) {
+    //       stats.lastPlayed = record.start
+    //     }
+    //   }
+    // }
+
+    return stats
   }
 
   onStart(e) {

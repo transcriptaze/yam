@@ -3,6 +3,8 @@ export class BarGraph extends HTMLElement {
     return []
   }
 
+  #played = []
+
   constructor() {
     super()
 
@@ -22,10 +24,8 @@ export class BarGraph extends HTMLElement {
   connectedCallback() {
     this.classList.add('component-bar-graph')
 
-    this.resizeObserver = new ResizeObserver((entries) => {
-      for (const entry of entries) {
-        this.redraw()
-      }
+    this.resizeObserver = new ResizeObserver(() => {
+      this.#redraw()
     })
 
     this.resizeObserver.observe(this)
@@ -39,7 +39,12 @@ export class BarGraph extends HTMLElement {
 
   attributeChangedCallback(_name, _from, _to) {}
 
-  redraw() {
+  set played(v) {
+    this.#played = v
+    this.#redraw()
+  }
+
+  #redraw() {
     const canvas = this.shadowRoot.querySelector('canvas')
     const ctx = canvas.getContext('2d')
 
@@ -53,21 +58,32 @@ export class BarGraph extends HTMLElement {
 
     const width = canvas.width
     const height = canvas.height
-    const dw = Math.ceil(width / 7)
+    const dw = width / 7
+    const colours = [
+      '#6B8E8D', // muted teal
+      '#A3B18A', // soft sage green
+      '#D4A5A5', // dusty rose
+      '#8FAADC', // gentle blue
+      '#E6C79C', // warm sand
+      '#BFA2DB', // light lavender
+      '#F2B5A7', // soft coral
+    ]
 
-    console.log('redraw', width, height, canvas.clientWidth, dw)
+    const max = 1.2 * this.#played.reduce((a, v) => (v.played > a ? v.played : a), 0)
 
     ctx.clearRect(0, 0, width, height)
 
     let x = 0
+    let ix = 0
     while (x < width) {
-      ctx.fillStyle = '#ff0000ff'
-      ctx.fillRect(x, 0, dw, height)
-      x += dw
+      const record = ix < this.#played.length ? this.#played[ix] : { date: null, played: 0 }
+      const h = Math.ceil((height * record.played) / max)
 
-      ctx.fillStyle = '#00ff00ff'
-      ctx.fillRect(x, 0, dw, height)
+      ctx.fillStyle = colours[ix % colours.length]
+      ctx.fillRect(Math.floor(x + 6), height - h, Math.ceil(dw - 12), height)
+
       x += dw
+      ix += 1
     }
   }
 }

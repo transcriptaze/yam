@@ -48,30 +48,41 @@ class Statistics {
   }
 
   previousWeek(track) {
+    const now = new Date()
+    const year = now.getFullYear()
+    const month = now.getMonth()
+    const day = now.getDate()
+
     const stats = {
       track: track,
-      played: 0,
+      total: 0,
+      played: [
+        { date: new Date(year, month, day), played: 0 },
+        { date: new Date(year, month, day - 1), played: 0 },
+        { date: new Date(year, month, day - 2), played: 0 },
+        { date: new Date(year, month, day - 3), played: 0 },
+        { date: new Date(year, month, day - 4), played: 0 },
+        { date: new Date(year, month, day - 5), played: 0 },
+        { date: new Date(year, month, day - 6), played: 0 },
+      ],
     }
 
-    const date = new Date()
-    date.setHours(0, 0, 0, 0)
-    date.setDate(date.getDate() - 7)
+    const cutoff = new Date(year, month, day - 7)
+    const records = this.#rs.filter((v) => v.track === track && v.start >= cutoff)
 
-    const records = this.#rs.filter((v) => v.track === track && v.start >= date)
+    stats.played.forEach((p) => {
+      const yyyy = p.date.getFullYear()
+      const mm = p.date.getMonth()
+      const dd = p.date.getDate()
 
-    stats.played += records.length
+      const list = records.filter((v) => {
+        return v.start.getFullYear() === yyyy && v.start.getMonth() === mm && v.start.getDate() === dd
+      })
 
-    // for (const record of records) {
-    //   const ms = record.start.getMilliseconds()
-    //
-    //   if (!Number.isNaN(ms)) {
-    //     if (stats.lastPlayed == null) {
-    //       stats.lastPlayed = record.start
-    //     } else if (ms > summary.lastPlayed.getMilliseconds) {
-    //       stats.lastPlayed = record.start
-    //     }
-    //   }
-    // }
+      p.played = list.length
+    })
+
+    stats.total = stats.played.reduce((N, v) => N + v.played, 0)
 
     return stats
   }

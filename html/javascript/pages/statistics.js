@@ -133,17 +133,17 @@ function trackLastWeek(section, track, statistics) {
   const played = section.querySelector('div.last-week #last-week-played')
   const graph = section.querySelector('div.last-week yam-bar-graph')
 
-  if (stats.played == 0) {
+  if (stats.total == 0) {
     played.value = `- not even once -`
-  } else if (stats.played == 1) {
+  } else if (stats.total == 1) {
     played.value = `- once -`
-  } else if (stats.played == 2) {
+  } else if (stats.total == 2) {
     played.value = `- twice -`
   } else {
-    played.value = `${stats.played} times`
+    played.value = `${stats.total} times`
   }
 
-  graph.redraw()
+  graph.played = stats.played
 }
 
 function warnf(err) {

@@ -454,7 +454,7 @@ html.statistics main h1 img {
 html.statistics main h2 {
   font-size: 1em;
   margin-top: 4px;
-  margin-bottom: 8px;
+  margin-bottom: 4px;
 }
 html.statistics main img {
   user-select: none;
@@ -465,6 +465,46 @@ html.statistics main #playlist.hidden {
 }
 html.statistics main #track.hidden {
   display: none;
+}
+html.statistics main div.header {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: auto auto;
+  align-items: center;
+  row-gap: 4px;
+}
+html.statistics main div.header #title {
+  grid-row: 1;
+  grid-column: 1/4;
+  font-style: italic;
+}
+html.statistics main div.header #time-signature {
+  grid-row: 2;
+  grid-column: 1;
+  justify-self: start;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  justify-items: center;
+  height: 48px;
+}
+html.statistics main div.header #time-signature img {
+  grid-column: 1;
+  grid-row: 1;
+  height: 100%;
+}
+html.statistics main div.header #time-signature img.hidden {
+  display: none;
+}
+html.statistics main div.header #tempo {
+  grid-row: 2;
+  grid-column: 2;
+  justify-self: center;
+}
+html.statistics main div.header #bars {
+  grid-row: 2;
+  grid-column: 3;
+  justify-self: end;
 }
 html.statistics main div.summary {
   display: grid;

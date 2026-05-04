@@ -12,7 +12,7 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
    - [x] record per play
    - [ ] track statistics
       - [x] display infinity bars
-      - [ ] display time signature properly
+      - [x] display time signature properly
       - [ ] only count complete plays
             - if infinite bars ????
 

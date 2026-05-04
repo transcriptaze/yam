@@ -57,13 +57,13 @@ class Statistics {
       track: track,
       total: 0,
       played: [
-        { date: new Date(year, month, day), played: 0 },
-        { date: new Date(year, month, day - 1), played: 0 },
-        { date: new Date(year, month, day - 2), played: 0 },
-        { date: new Date(year, month, day - 3), played: 0 },
+        { date: new Date(year, month, day - 6), played: 0 },
         { date: new Date(year, month, day - 4), played: 0 },
         { date: new Date(year, month, day - 5), played: 0 },
-        { date: new Date(year, month, day - 6), played: 0 },
+        { date: new Date(year, month, day - 3), played: 0 },
+        { date: new Date(year, month, day - 2), played: 0 },
+        { date: new Date(year, month, day - 1), played: 0 },
+        { date: new Date(year, month, day), played: 0 },
       ],
     }
 

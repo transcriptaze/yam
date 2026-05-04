@@ -60,16 +60,16 @@ export class BarGraph extends HTMLElement {
     const height = canvas.height
     const dw = width / 7
     const colours = [
-      '#6B8E8D', // muted teal
-      '#A3B18A', // soft sage green
-      '#D4A5A5', // dusty rose
-      '#8FAADC', // gentle blue
-      '#E6C79C', // warm sand
-      '#BFA2DB', // light lavender
       '#F2B5A7', // soft coral
+      '#BFA2DB', // light lavender
+      '#E6C79C', // warm sand
+      '#8FAADC', // gentle blue
+      '#D4A5A5', // dusty rose
+      '#A3B18A', // soft sage green
+      '#6B8E8D', // muted teal
     ]
 
-    const max = 1.2 * this.#played.reduce((a, v) => (v.played > a ? v.played : a), 0)
+    const max = this.#played.reduce((a, v) => (v.played > a ? v.played : a), 0)
 
     ctx.clearRect(0, 0, width, height)
 
@@ -77,7 +77,7 @@ export class BarGraph extends HTMLElement {
     let ix = 0
     while (x < width) {
       const record = ix < this.#played.length ? this.#played[ix] : { date: null, played: 0 }
-      const h = Math.ceil((height * record.played) / max)
+      const h = 0.9 * Math.ceil((height * record.played) / max)
 
       ctx.fillStyle = colours[ix % colours.length]
       ctx.fillRect(Math.floor(x + 6), height - h, Math.ceil(dw - 12), height)

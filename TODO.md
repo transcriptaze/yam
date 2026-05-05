@@ -11,8 +11,10 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 - [ ] statistics (cf. https://github.com/transcriptaze/yam/issues/11)
    - [x] record per play
    - [ ] track statistics
-      - [ ] display time signature properly
-      - [ ] display infinity bars
+      - [x] display infinity bars
+      - [x] display time signature properly
+      - [x] only count complete plays
+      - [ ] previous month
 
    - [ ] playlist statistics
    - (?) https://opensource.posit.co/blog/2026-04-20_ggsql_alpha_release/

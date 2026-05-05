@@ -2,7 +2,7 @@ import { engine } from '../audio/engine.js'
 import { UUIDv4 } from '../uuid.js'
 import * as datastore from '../datastore/datastore.js'
 import * as DB from '../db/db.js'
-import { EVENTS } from '../constants.js'
+import { EVENTS, INF } from '../constants.js'
 
 class Statistics {
   #record = {
@@ -22,7 +22,7 @@ class Statistics {
   }
 
   summarize(track) {
-    const summary = {
+    const stats = {
       track: track,
       played: 0,
       lastPlayed: null,
@@ -30,21 +30,83 @@ class Statistics {
 
     const records = this.#rs.filter((v) => v.track === track)
 
-    summary.played += records.length
+    stats.played = records.reduce((a, v) => {
+      if (v.measures === INF && v.bars > v.countIn + v.pickup) {
+        return a + 1
+      }
 
-    for (const record of records) {
-      const ms = record.start.getMilliseconds()
+      if (v.measures !== INF && v.complete) {
+        return a + 1
+      }
 
-      if (!Number.isNaN(ms)) {
-        if (summary.lastPlayed == null) {
-          summary.lastPlayed = record.start
-        } else if (ms > summary.lastPlayed.getMilliseconds) {
-          summary.lastPlayed = record.start
+      return a
+    }, 0)
+
+    if (stats.played > 0) {
+      for (const record of records) {
+        const ms = record.start.getMilliseconds()
+
+        if (!Number.isNaN(ms)) {
+          if (stats.lastPlayed == null) {
+            stats.lastPlayed = record.start
+          } else if (ms > stats.lastPlayed.getMilliseconds()) {
+            stats.lastPlayed = record.start
+          }
         }
       }
     }
 
-    return summary
+    return stats
+  }
+
+  previousWeek(track) {
+    const now = new Date()
+    const year = now.getFullYear()
+    const month = now.getMonth()
+    const day = now.getDate()
+
+    const stats = {
+      track: track,
+      total: 0,
+      played: [
+        { date: new Date(year, month, day - 6), played: 0 },
+        { date: new Date(year, month, day - 5), played: 0 },
+        { date: new Date(year, month, day - 4), played: 0 },
+        { date: new Date(year, month, day - 3), played: 0 },
+        { date: new Date(year, month, day - 2), played: 0 },
+        { date: new Date(year, month, day - 1), played: 0 },
+        { date: new Date(year, month, day), played: 0 },
+      ],
+    }
+
+    const cutoff = new Date(year, month, day - 7)
+    const records = this.#rs.filter((v) => v.track === track && v.start >= cutoff)
+
+    stats.played.forEach((p) => {
+      const yyyy = p.date.getFullYear()
+      const mm = p.date.getMonth()
+      const dd = p.date.getDate()
+
+      const list = records.filter((v) => {
+        return v.start.getFullYear() === yyyy && v.start.getMonth() === mm && v.start.getDate() === dd
+      })
+
+      p.played = list.reduce((a, v) => {
+        if (v.measures === INF && v.bars > v.countIn + v.pickup) {
+          return a + 1
+        }
+
+        if (v.measures !== INF && v.complete) {
+          return a + 1
+        }
+
+        return a
+      }, 0)
+    })
+
+    stats.total = stats.played.reduce((N, v) => N + v.played, 0)
+
+    return stats
   }
 
   onStart(e) {

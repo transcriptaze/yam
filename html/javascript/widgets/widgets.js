@@ -22,3 +22,5 @@ export { Section } from './section.js'
 export { Subsection } from './subsection.js'
 export { SectionTimeSignature } from './section-time-signature.js'
 export { SectionMM } from './section-mm.js'
+
+export { BarGraph } from './bar-graph.js'

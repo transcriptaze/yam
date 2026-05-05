@@ -2,7 +2,7 @@ import { engine } from '../audio/engine.js'
 import { UUIDv4 } from '../uuid.js'
 import * as datastore from '../datastore/datastore.js'
 import * as DB from '../db/db.js'
-import { EVENTS } from '../constants.js'
+import { EVENTS, INF } from '../constants.js'
 
 class Statistics {
   #record = {
@@ -30,16 +30,28 @@ class Statistics {
 
     const records = this.#rs.filter((v) => v.track === track)
 
-    stats.played += records.length
+    stats.played = records.reduce((a, v) => {
+      if (v.measures === INF && v.bars > v.countIn + v.pickup) {
+        return a + 1
+      }
 
-    for (const record of records) {
-      const ms = record.start.getMilliseconds()
+      if (v.measures !== INF && v.complete) {
+        return a + 1
+      }
 
-      if (!Number.isNaN(ms)) {
-        if (stats.lastPlayed == null) {
-          stats.lastPlayed = record.start
-        } else if (ms > stats.lastPlayed.getMilliseconds()) {
-          stats.lastPlayed = record.start
+      return a
+    }, 0)
+
+    if (stats.played > 0) {
+      for (const record of records) {
+        const ms = record.start.getMilliseconds()
+
+        if (!Number.isNaN(ms)) {
+          if (stats.lastPlayed == null) {
+            stats.lastPlayed = record.start
+          } else if (ms > stats.lastPlayed.getMilliseconds()) {
+            stats.lastPlayed = record.start
+          }
         }
       }
     }
@@ -79,7 +91,17 @@ class Statistics {
         return v.start.getFullYear() === yyyy && v.start.getMonth() === mm && v.start.getDate() === dd
       })
 
-      p.played = list.length
+      p.played = list.reduce((a, v) => {
+        if (v.measures === INF && v.bars > v.countIn + v.pickup) {
+          return a + 1
+        }
+
+        if (v.measures !== INF && v.complete) {
+          return a + 1
+        }
+
+        return a
+      }, 0)
     })
 
     stats.total = stats.played.reduce((N, v) => N + v.played, 0)

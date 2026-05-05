@@ -212,8 +212,8 @@ function trackSummary(section, track, statistics) {
 
 function trackLastWeek(section, track, statistics) {
   const stats = statistics.previousWeek(track.UUID)
-  const played = section.querySelector('div.last-week #last-week-played')
-  const graph = section.querySelector('div.last-week yam-bar-graph')
+  const played = section.querySelector('div.history.week input')
+  const graph = section.querySelector('div.history.week yam-bar-graph')
 
   if (stats.total == 0) {
     played.value = `- not even once -`

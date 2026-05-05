@@ -123,7 +123,7 @@ html.statistics main {
     }
   }
 
-  div.last-week {
+  div.history{
     display: grid;
     grid-template-columns: auto auto;
     row-gap: 8px;
@@ -144,7 +144,6 @@ html.statistics main {
     }
   }
 }
-
 
 @media (max-width: 768px) and (orientation:portrait) {
   html.statistics main {

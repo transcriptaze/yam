@@ -38,7 +38,7 @@ class Statistics {
       if (!Number.isNaN(ms)) {
         if (stats.lastPlayed == null) {
           stats.lastPlayed = record.start
-        } else if (ms > stats.lastPlayed.getMilliseconds) {
+        } else if (ms > stats.lastPlayed.getMilliseconds()) {
           stats.lastPlayed = record.start
         }
       }
@@ -58,8 +58,8 @@ class Statistics {
       total: 0,
       played: [
         { date: new Date(year, month, day - 6), played: 0 },
-        { date: new Date(year, month, day - 4), played: 0 },
         { date: new Date(year, month, day - 5), played: 0 },
+        { date: new Date(year, month, day - 4), played: 0 },
         { date: new Date(year, month, day - 3), played: 0 },
         { date: new Date(year, month, day - 2), played: 0 },
         { date: new Date(year, month, day - 1), played: 0 },

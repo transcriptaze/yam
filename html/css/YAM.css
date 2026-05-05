@@ -517,18 +517,18 @@ html.statistics main div.summary label {
 html.statistics main div.summary input {
   grid-column: 2;
 }
-html.statistics main div.last-week {
+html.statistics main div.history {
   display: grid;
   grid-template-columns: auto auto;
   row-gap: 8px;
 }
-html.statistics main div.last-week label {
+html.statistics main div.history label {
   grid-column: 1;
 }
-html.statistics main div.last-week input {
+html.statistics main div.history input {
   grid-column: 2;
 }
-html.statistics main div.last-week yam-bar-graph {
+html.statistics main div.history yam-bar-graph {
   grid-column: 2;
   height: 32px;
   background: white;

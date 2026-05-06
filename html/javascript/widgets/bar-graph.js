@@ -74,43 +74,50 @@ export class BarGraph extends HTMLElement {
 
     const width = canvas.width
     const height = canvas.height
-    const dw = Math.floor(width / 14)
-
-    const max = this.#played.reduce((a, v) => (v.played > a ? v.played : a), 0)
-
-    const now = new Date()
-    const year = now.getFullYear()
-    const month = now.getMonth()
-    const day = now.getDate()
-
-    const days = [
-      WEEKDAYS[new Date(year, month, day - 6).getDay()],
-      WEEKDAYS[new Date(year, month, day - 5).getDay()],
-      WEEKDAYS[new Date(year, month, day - 4).getDay()],
-      WEEKDAYS[new Date(year, month, day - 3).getDay()],
-      WEEKDAYS[new Date(year, month, day - 2).getDay()],
-      WEEKDAYS[new Date(year, month, day - 1).getDay()],
-      WEEKDAYS[new Date(year, month, day).getDay()],
-    ]
 
     ctx.clearRect(0, 0, width, height)
 
-    this.#played.forEach((record, ix) => {
-      const x = (2 * ix + 1) * dw
-      const h = 0.9 * Math.ceil((height * record.played) / max)
+    if (this.#played.length > 0) {
+      const N = this.#played.length
+      const dw = Math.floor(width / (N * 2))
+      const w = Math.min(28, dw)
 
-      ctx.fillStyle = COLOURS[ix % COLOURS.length]
-      ctx.fillRect(Math.ceil(x - 14), height - h - 2, 28, h)
-    })
+      const max = this.#played.reduce((a, v) => (v.played > a ? v.played : a), 0)
 
-    days.forEach((day, ix) => {
-      const x = (2 * ix + 1) * dw
+      this.#played.forEach((record, ix) => {
+        const x = (2 * ix + 1) * dw
+        const h = 0.9 * Math.ceil((height * record.played) / max)
 
-      ctx.font = '20px sans-serif'
-      ctx.textAlign = 'center'
-      ctx.fillStyle = '#000000'
-      ctx.fillText(day, x, height - 2)
-    })
+        ctx.fillStyle = COLOURS[ix % COLOURS.length]
+        ctx.fillRect(Math.ceil(x - w / 2), height - h - 2, w, h)
+      })
+
+      if (N == 7) {
+        const now = new Date()
+        const year = now.getFullYear()
+        const month = now.getMonth()
+        const day = now.getDate()
+
+        const days = [
+          WEEKDAYS[new Date(year, month, day - 6).getDay()],
+          WEEKDAYS[new Date(year, month, day - 5).getDay()],
+          WEEKDAYS[new Date(year, month, day - 4).getDay()],
+          WEEKDAYS[new Date(year, month, day - 3).getDay()],
+          WEEKDAYS[new Date(year, month, day - 2).getDay()],
+          WEEKDAYS[new Date(year, month, day - 1).getDay()],
+          WEEKDAYS[new Date(year, month, day).getDay()],
+        ]
+
+        days.forEach((day, ix) => {
+          const x = (2 * ix + 1) * dw
+
+          ctx.font = '20px sans-serif'
+          ctx.textAlign = 'center'
+          ctx.fillStyle = '#000000'
+          ctx.fillText(day, x, height - 2)
+        })
+      }
+    }
   }
 }
 

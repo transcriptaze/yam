@@ -232,6 +232,7 @@ function trackLastWeek(section, track, statistics) {
 function trackLastMonth(section, track, statistics) {
   const stats = statistics.previousMonth(track.UUID)
   const played = section.querySelector('div.history.month input')
+  const graph = section.querySelector('div.history.month yam-bar-graph')
 
   if (stats.total == 0) {
     played.value = `- not even once -`
@@ -243,7 +244,7 @@ function trackLastMonth(section, track, statistics) {
     played.value = `${stats.total} times`
   }
 
-  console.log(stats)
+  graph.played = stats.played
 }
 
 function warnf(err) {

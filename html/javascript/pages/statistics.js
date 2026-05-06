@@ -92,6 +92,7 @@ function showTrack(track, statistics) {
   trackHeader(section, track, statistics)
   trackSummary(section, track, statistics)
   trackLastWeek(section, track, statistics)
+  trackLastMonth(section, track, statistics)
 }
 
 function trackHeader(section, track, _statistics) {
@@ -226,6 +227,23 @@ function trackLastWeek(section, track, statistics) {
   }
 
   graph.played = stats.played
+}
+
+function trackLastMonth(section, track, statistics) {
+  const stats = statistics.previousMonth(track.UUID)
+  const played = section.querySelector('div.history.month input')
+
+  if (stats.total == 0) {
+    played.value = `- not even once -`
+  } else if (stats.total == 1) {
+    played.value = `- once -`
+  } else if (stats.total == 2) {
+    played.value = `- twice -`
+  } else {
+    played.value = `${stats.total} times`
+  }
+
+  console.log(stats)
 }
 
 function warnf(err) {

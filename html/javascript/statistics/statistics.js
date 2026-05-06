@@ -64,49 +64,27 @@ class Statistics {
     const year = now.getFullYear()
     const month = now.getMonth()
     const day = now.getDate()
-
-    const stats = {
-      track: track,
-      total: 0,
-      played: [
-        { date: new Date(year, month, day - 6), played: 0 },
-        { date: new Date(year, month, day - 5), played: 0 },
-        { date: new Date(year, month, day - 4), played: 0 },
-        { date: new Date(year, month, day - 3), played: 0 },
-        { date: new Date(year, month, day - 2), played: 0 },
-        { date: new Date(year, month, day - 1), played: 0 },
-        { date: new Date(year, month, day), played: 0 },
-      ],
-    }
-
     const cutoff = new Date(year, month, day - 7)
+
     const records = this.#rs.filter((v) => v.track === track && v.start >= cutoff)
+    const played = [...query(cutoff, records)]
+    const total = played.reduce((N, v) => N + v.played, 0)
 
-    stats.played.forEach((p) => {
-      const yyyy = p.date.getFullYear()
-      const mm = p.date.getMonth()
-      const dd = p.date.getDate()
+    return { track, total, played }
+  }
 
-      const list = records.filter((v) => {
-        return v.start.getFullYear() === yyyy && v.start.getMonth() === mm && v.start.getDate() === dd
-      })
+  previousMonth(track) {
+    const now = new Date()
+    const year = now.getFullYear()
+    const month = now.getMonth()
+    const day = now.getDate()
+    const cutoff = new Date(year, month - 1, day)
 
-      p.played = list.reduce((a, v) => {
-        if (v.measures === INF && v.bars > v.countIn + v.pickup) {
-          return a + 1
-        }
+    const records = this.#rs.filter((v) => v.track === track && v.start >= cutoff)
+    const played = [...query(cutoff, records)]
+    const total = played.reduce((N, v) => N + v.played, 0)
 
-        if (v.measures !== INF && v.complete) {
-          return a + 1
-        }
-
-        return a
-      }, 0)
-    })
-
-    stats.total = stats.played.reduce((N, v) => N + v.played, 0)
-
-    return stats
+    return { track, total, played }
   }
 
   onStart(e) {
@@ -185,6 +163,38 @@ export function restore() {
 
 export function get() {
   return DB.statistics()
+}
+
+function* query(start, records) {
+  const now = new Date()
+  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+  let date = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 1)
+
+  while (date <= today) {
+    const yyyy = date.getFullYear()
+    const mm = date.getMonth()
+    const dd = date.getDate()
+
+    const rs = records.filter((v) => {
+      return v.start.getFullYear() === yyyy && v.start.getMonth() === mm && v.start.getDate() === dd
+    })
+
+    const played = rs.reduce((a, v) => {
+      if (v.measures === INF && v.bars > v.countIn + v.pickup) {
+        return a + 1
+      }
+
+      if (v.measures !== INF && v.complete) {
+        return a + 1
+      }
+
+      return a
+    }, 0)
+
+    yield { date: new Date(date), played: played }
+
+    date.setDate(date.getDate() + 1)
+  }
 }
 
 function save(v) {

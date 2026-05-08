@@ -10,12 +10,15 @@ const COLOURS = [
   '#6B8E8D', // muted teal
 ]
 
+const BACKGROUNDS = ['#e4e4e4', '#ececec']
+
 export class BarGraph extends HTMLElement {
   static get observedAttributes() {
-    return []
+    return ['week', 'month']
   }
 
   #played = []
+  #style = ''
 
   constructor() {
     super()
@@ -49,7 +52,16 @@ export class BarGraph extends HTMLElement {
 
   adoptedCallback() {}
 
-  attributeChangedCallback(_name, _from, _to) {}
+  attributeChangedCallback(name, _from, _to) {
+    console.log('>>>>', name)
+    if (name === 'week') {
+      this.#style = 'week'
+    }
+
+    if (name === 'month') {
+      this.#style = 'month'
+    }
+  }
 
   set played(v) {
     this.#played = v
@@ -75,41 +87,48 @@ export class BarGraph extends HTMLElement {
     const width = canvas.width
     const height = canvas.height
 
+    ctx.fillStyle = 'red'
     ctx.clearRect(0, 0, width, height)
 
     if (this.#played.length > 0) {
       const N = this.#played.length
       const dw = Math.floor(width / (N * 2))
       const w = Math.min(28, dw)
-
+      const dx = width - 2 * N * dw
       const max = this.#played.reduce((a, v) => (v.played > a ? v.played : a), 0)
 
+      // ... month backgrounds
+      const backgrounds = new Map()
+      if (this.#style === 'month') {
+        const months = this.#played.reduce((set, v) => set.add(v.date.getMonth()), new Set())
+        let ix = 0
+
+        months.forEach((v) => {
+          backgrounds.set(v, BACKGROUNDS[ix % BACKGROUNDS.length])
+          ix++
+        })
+      }
+
+      // ... bars
       this.#played.forEach((record, ix) => {
-        const x = (2 * ix + 1) * dw
+        const x = dx / 2 + (2 * ix + 1) * dw
         const h = 0.9 * Math.ceil((height * record.played) / max)
+        const month = record.date.getMonth()
+        const background = backgrounds.get(month) ?? '#ffffff'
+
+        ctx.fillStyle = background
+        ctx.fillRect(Math.ceil(x - dw), 0, 2 * dw, height)
 
         ctx.fillStyle = COLOURS[ix % COLOURS.length]
         ctx.fillRect(Math.ceil(x - w / 2), height - h - 2, w, h)
       })
 
-      if (N == 7) {
-        const now = new Date()
-        const year = now.getFullYear()
-        const month = now.getMonth()
-        const day = now.getDate()
-
-        const days = [
-          WEEKDAYS[new Date(year, month, day - 6).getDay()],
-          WEEKDAYS[new Date(year, month, day - 5).getDay()],
-          WEEKDAYS[new Date(year, month, day - 4).getDay()],
-          WEEKDAYS[new Date(year, month, day - 3).getDay()],
-          WEEKDAYS[new Date(year, month, day - 2).getDay()],
-          WEEKDAYS[new Date(year, month, day - 1).getDay()],
-          WEEKDAYS[new Date(year, month, day).getDay()],
-        ]
+      // ... day labels
+      if (this.#style === 'week') {
+        const days = this.#played.map((v) => WEEKDAYS[v.date.getDay()])
 
         days.forEach((day, ix) => {
-          const x = (2 * ix + 1) * dw
+          const x = dx / 2 + (2 * ix + 1) * dw
 
           ctx.font = '20px sans-serif'
           ctx.textAlign = 'center'

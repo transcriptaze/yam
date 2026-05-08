@@ -531,7 +531,7 @@ html.statistics main div.history input {
 html.statistics main div.history yam-bar-graph {
   grid-column: 2;
   height: 32px;
-  background: white;
+  background: transparent;
 }
 html.statistics main div.history.month yam-bar-graph {
   grid-column: 1/3;

@@ -10,11 +10,10 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 
 - [ ] statistics (cf. https://github.com/transcriptaze/yam/issues/11)
    - [x] record per play
-   - [ ] dark mode
-   - [ ] track statistics
-      - [ ] previous month
-
+   - [x] track statistics: previous month
    - [ ] playlist statistics
+   - [ ] dark mode
+
    - (?) https://opensource.posit.co/blog/2026-04-20_ggsql_alpha_release/
    - (?) https://ggplot2.tidyverse.org/
 

@@ -28,6 +28,14 @@
         <h1><div class="logo"></div>Yet Another Metronome</h1>
         <div class="statistics">
           <div id="playlist" class="hidden">
+            <div class="header">
+              <div id="title">----</div>
+            </div>
+            <hr/>
+            <div class="history week">
+              <ul class="tracks">
+              </ul>
+            </div>            
           </div>
 
           <div id="track" class="hidden">
@@ -89,6 +97,13 @@
     <template id="template-bar-graph">
       <div>
         <canvas width="1" height="1"></canvas>
+      </div>
+    </template>
+
+    <template id="template-track">
+      <div class="track">
+        <span class="title"></span>
+        <yam-bar-graph week></yam-bar-graph>
       </div>
     </template>
 

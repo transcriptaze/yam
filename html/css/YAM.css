@@ -460,6 +460,39 @@ html.statistics main img {
   user-select: none;
   -webkit-user-select: none;
 }
+html.statistics main #playlist div.history ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+html.statistics main #playlist div.history ul li {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+html.statistics main #playlist div.history ul li div.track {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto;
+  align-items: center;
+  column-gap: 8px;
+}
+html.statistics main #playlist div.history ul li div.track .title {
+  grid-column: 1;
+  grid-row: 1;
+  display: inline-block;
+  max-width: 256px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: none;
+  background: none;
+}
+html.statistics main #playlist div.history ul li div.track yam-bar-graph {
+  grid-column: 2;
+  grid-row: 1;
+  width: 256px;
+  height: 32px;
+}
 html.statistics main #playlist.hidden {
   display: none;
 }

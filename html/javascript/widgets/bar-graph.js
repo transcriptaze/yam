@@ -53,7 +53,6 @@ export class BarGraph extends HTMLElement {
   adoptedCallback() {}
 
   attributeChangedCallback(name, _from, _to) {
-    console.log('>>>>', name)
     if (name === 'week') {
       this.#style = 'week'
     }

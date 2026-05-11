@@ -59,7 +59,15 @@ export function initialise() {
   // ... load playlists, tracks and statistics
   Promise.all([models.playlists.restore(), models.tracks.restore(), statistics.restore()])
     .then(([_playlists, _tracks, statistics]) => {
-      if (params.has('track')) {
+      if (params.has('playlist')) {
+        const UUID = params.get('playlist')
+
+        if (UUID != null && UUID !== '') {
+          const playlist = datastore.playlists.get(UUID)
+
+          showPlaylist(playlist, statistics)
+        }
+      } else if (params.has('track')) {
         const UUID = params.get('track')
 
         if (UUID != null && UUID !== '') {
@@ -84,15 +92,59 @@ export function onError(err) {
   document.querySelector('#about')?.classList.add('error')
 }
 
-function showTrack(track, statistics) {
-  const section = document.querySelector('#track')
+function showPlaylist(playlist, statistics) {
+  document.querySelector('#playlist').classList.remove('hidden')
+  document.querySelector('#track').classList.add('hidden')
 
-  section.classList.remove('hidden')
+  const section = document.querySelector('#playlist')
+
+  playlistHeader(section, playlist, statistics)
+  playlistSummary(section, playlist, statistics)
+  playlistHistory(section, playlist, statistics)
+}
+
+function showTrack(track, statistics) {
+  document.querySelector('#playlist').classList.add('hidden')
+  document.querySelector('#track').classList.remove('hidden')
+
+  const section = document.querySelector('#track')
 
   trackHeader(section, track, statistics)
   trackSummary(section, track, statistics)
   trackLastWeek(section, track, statistics)
   trackLastMonth(section, track, statistics)
+}
+
+function playlistHeader(section, playlist, _statistics) {
+  const title = section.querySelector('div.header #title')
+
+  title.innerText = playlist.title
+}
+
+function playlistSummary(_section, _playlist, _statistics) {}
+
+function playlistHistory(section, playlist, statistics) {
+  const template = document.querySelector('#template-track')
+  const tracks = section.querySelector('div.history ul.tracks')
+  const list = []
+
+  playlist.tracks.forEach((v) => {
+    const li = document.createElement('li')
+    const div = document.importNode(template.content, true)
+    const title = div.querySelector('.title')
+    const graph = div.querySelector('yam-bar-graph')
+    const stats = statistics.previousWeek(v.UUID)
+
+    title.innerText = v.title
+    graph.played = stats.played
+
+    li.setAttribute('draggable', false)
+    li.appendChild(div)
+
+    list.push(li)
+  })
+
+  tracks.replaceChildren(...list)
 }
 
 function trackHeader(section, track, _statistics) {

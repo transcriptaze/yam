@@ -59,33 +59,48 @@ class Statistics {
     return stats
   }
 
-  previousWeek(track) {
-    const now = new Date()
-    const year = now.getFullYear()
-    const month = now.getMonth()
-    const day = now.getDate()
-    const cutoff = new Date(year, month, day - 7)
+  query(track, from, to) {
+    const start = new Date(from.getFullYear(), from.getMonth(), from.getDate())
+    const end = new Date(to.getFullYear(), to.getMonth(), to.getDate() + 1)
 
-    const records = this.#rs.filter((v) => v.track === track && v.start >= cutoff)
-    const played = [...query(cutoff, records)]
+    const records = this.#rs.filter((v) => v.track === track && v.start >= start && v.start < end)
+    const played = [...query(start, end, records)]
     const total = played.reduce((N, v) => N + v.played, 0)
 
     return { track, total, played }
   }
 
-  previousMonth(track) {
-    const now = new Date()
-    const year = now.getFullYear()
-    const month = now.getMonth()
-    const day = now.getDate()
-    const cutoff = new Date(year, month - 1, day)
+  // previousWeek(track) {
+  //   const now = new Date()
+  //   const year = now.getFullYear()
+  //   const month = now.getMonth()
+  //   const day = now.getDate()
+  //
+  //   const from = new Date(year, month, day - 7)
+  //   const to = new Date(year, month, day + 1)
+  //
+  //   const records = this.#rs.filter((v) => v.track === track && v.start >= from)
+  //   const played = [...query(from, to, records)]
+  //   const total = played.reduce((N, v) => N + v.played, 0)
+  //
+  //   return { track, total, played }
+  // }
 
-    const records = this.#rs.filter((v) => v.track === track && v.start >= cutoff)
-    const played = [...query(cutoff, records)]
-    const total = played.reduce((N, v) => N + v.played, 0)
-
-    return { track, total, played }
-  }
+  // previousMonth(track) {
+  //   const now = new Date()
+  //   const year = now.getFullYear()
+  //   const month = now.getMonth()
+  //   const day = now.getDate()
+  //
+  //   const from = new Date(year, month - 1, day)
+  //   const to = new Date(year, month, day + 1)
+  //
+  //   const records = this.#rs.filter((v) => v.track === track && v.start >= from)
+  //   const played = [...query(from, to, records)]
+  //   const total = played.reduce((N, v) => N + v.played, 0)
+  //
+  //   return { track, total, played }
+  // }
 
   onStart(e) {
     if (e.detail.track != null && e.detail.track !== '' && e.detail.track === this.#record.track) {
@@ -165,12 +180,10 @@ export function get() {
   return DB.statistics()
 }
 
-function* query(start, records) {
-  const now = new Date()
-  const today = new Date(now.getFullYear(), now.getMonth(), now.getDate())
+function* query(start, end, records) {
   let date = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 1)
 
-  while (date <= today) {
+  while (date < end) {
     const yyyy = date.getFullYear()
     const mm = date.getMonth()
     const dd = date.getDate()

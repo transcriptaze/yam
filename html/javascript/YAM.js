@@ -706,7 +706,6 @@ function onPlaylistDelete(event) {
 }
 
 function onPlaylistStatistics(event) {
-  console.log('--- onPlaylistStatistics')
   window.location.href = `./statistics.html?playlist=${event.detail.playlist}`
 }
 

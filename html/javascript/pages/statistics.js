@@ -124,6 +124,12 @@ function playlistHeader(section, playlist, _statistics) {
 function playlistSummary(_section, _playlist, _statistics) {}
 
 function playlistHistory(section, playlist, statistics) {
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = now.getMonth()
+  const day = now.getDate()
+  const from = new Date(year, month, day - 14)
+
   const template = document.querySelector('#template-track')
   const tracks = section.querySelector('div.history ul.tracks')
   const list = []
@@ -133,7 +139,7 @@ function playlistHistory(section, playlist, statistics) {
     const div = document.importNode(template.content, true)
     const title = div.querySelector('.title')
     const graph = div.querySelector('yam-bar-graph')
-    const stats = statistics.previousWeek(v.UUID)
+    const stats = statistics.query(v.UUID, from, now)
 
     title.innerText = v.title
     graph.played = stats.played
@@ -264,7 +270,13 @@ function trackSummary(section, track, statistics) {
 }
 
 function trackLastWeek(section, track, statistics) {
-  const stats = statistics.previousWeek(track.UUID)
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = now.getMonth()
+  const day = now.getDate()
+  const from = new Date(year, month, day - 7)
+
+  const stats = statistics.query(track.UUID, from, now)
   const played = section.querySelector('div.history.week input')
   const graph = section.querySelector('div.history.week yam-bar-graph')
 
@@ -282,7 +294,13 @@ function trackLastWeek(section, track, statistics) {
 }
 
 function trackLastMonth(section, track, statistics) {
-  const stats = statistics.previousMonth(track.UUID)
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = now.getMonth()
+  const day = now.getDate()
+  const from = new Date(year, month - 1, day)
+
+  const stats = statistics.query(track.UUID, from, now)
   const played = section.querySelector('div.history.month input')
   const graph = section.querySelector('div.history.month yam-bar-graph')
 

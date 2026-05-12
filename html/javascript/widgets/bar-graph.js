@@ -14,11 +14,14 @@ const BACKGROUNDS = ['#e4e4e4', '#ececec']
 
 export class BarGraph extends HTMLElement {
   static get observedAttributes() {
-    return ['week', 'month']
+    return ['background', 'labels']
   }
 
   #played = []
-  #style = ''
+  #style = {
+    labels: '',
+    background: null,
+  }
 
   constructor() {
     super()
@@ -52,13 +55,13 @@ export class BarGraph extends HTMLElement {
 
   adoptedCallback() {}
 
-  attributeChangedCallback(name, _from, _to) {
-    if (name === 'week') {
-      this.#style = 'week'
+  attributeChangedCallback(name, _from, to) {
+    if (name === 'labels') {
+      this.#style.labels = to
     }
 
-    if (name === 'month') {
-      this.#style = 'month'
+    if (name === 'backgrounds') {
+      this.#style.background = to
     }
   }
 
@@ -98,7 +101,7 @@ export class BarGraph extends HTMLElement {
 
       // ... month backgrounds
       const backgrounds = new Map()
-      if (this.#style === 'month') {
+      if (this.#style.background === 'months') {
         const months = this.#played.reduce((set, v) => set.add(v.date.getMonth()), new Set())
         let ix = 0
 
@@ -122,8 +125,8 @@ export class BarGraph extends HTMLElement {
         ctx.fillRect(Math.ceil(x - w / 2), height - h - 2, w, h)
       })
 
-      // ... day labels
-      if (this.#style === 'week') {
+      // ... weekdays labels
+      if (this.#style.labels === 'weekdays') {
         const days = this.#played.map((v) => WEEKDAYS[v.date.getDay()])
 
         days.forEach((day, ix) => {

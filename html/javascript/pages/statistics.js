@@ -53,6 +53,8 @@ const FIGURA = new Map([
   ['32', './images/time-signatures/figura/32.svg'],
 ])
 
+let ERROR = null
+
 export function initialise() {
   const params = new URLSearchParams(`${window.location.search}`)
 
@@ -89,7 +91,27 @@ export function onSave() {
 export function onError(err) {
   console.error('ERROR', err)
 
-  document.querySelector('#about')?.classList.add('error')
+  ERROR = err
+
+  document.querySelector('#about').classList.add('hidden')
+  document.querySelector('#oops').classList.remove('hidden')
+  document.querySelector('#oops').title = `${err.message}`
+}
+
+export async function showError() {
+  if (ERROR != null) {
+    try {
+      const msg = JSON.stringify(ERROR, null, '  ')
+
+      alert(msg)
+      await navigator.clipboard.writeText(msg)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  document.querySelector('#about').classList.remove('hidden')
+  document.querySelector('#oops').classList.add('hidden')
 }
 
 function showPlaylist(playlist, statistics) {

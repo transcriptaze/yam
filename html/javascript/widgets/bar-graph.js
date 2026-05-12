@@ -151,7 +151,6 @@ export class BarGraph extends HTMLElement {
           ctx.fillText(day, x, height - 2)
         })
       }
-
     }
   }
 }

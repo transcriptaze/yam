@@ -94,11 +94,27 @@
           <div class="right-menu">
             <button id="theme" class="icon-theme" aria-label="Theme"></button>
             <button id="about" class="icon-about" aria-label="About"></button>
+            <button id="oops"  class="icon-oops hidden" aria-label="Ooops"></button>
           </div>
         </div>
       </toolbar>
 
     </div>
+
+    <!-- file download/upload -->
+    <a id="export" href="" style="display:none" download></a>
+    <input id="picker" type="file" accept="application/x-yam-statistics, .statistics" style="display:none;" />
+
+    <!-- file import confirm -->
+<!-- 
+    <dialog class="import">
+      <div>
+        <p class="message">Load playlist from file ??</p>
+        <button value="cancel">Cancel</button>
+        <button value="ok">OK</button>
+      </div>
+    </dialog>
+ -->
 
     <!-- TEMPLATES -->
     <template id="template-bar-graph">
@@ -119,7 +135,7 @@
   <!-- SCRIPTS -->
   <script type="module">
     import "./javascript/widgets/widgets.js"
-    import { initialise, onSave, onError } from './javascript/pages/statistics.js'
+    import { initialise, onSave, onError, showError } from './javascript/pages/statistics.js'
     import { toggleTheme } from './javascript/YAM.js'
 
     const toolbar = {
@@ -128,6 +144,7 @@
       save: document.querySelector('toolbar #save'),
       theme: document.querySelector('toolbar #theme'),
       about: document.querySelector('toolbar #about'),
+      oops: document.querySelector('toolbar #oops'),
     }
 
     toolbar.metronome.onclick = () => {
@@ -147,6 +164,8 @@
     toolbar.about.onclick = () => {
       window.location.href = './about.html'
     }
+
+    toolbar.oops.onclick = () => showError()
 
     document.addEventListener('contextmenu', (event) => {
       event.preventDefault()

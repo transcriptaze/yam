@@ -138,6 +138,20 @@ export class BarGraph extends HTMLElement {
           ctx.fillText(day, x, height - 2)
         })
       }
+
+      if (this.#style.labels === 'weekdays-small') {
+        const days = this.#played.map((v) => WEEKDAYS[v.date.getDay()])
+
+        days.forEach((day, ix) => {
+          const x = dx / 2 + (2 * ix + 1) * dw
+
+          ctx.font = '16px sans-serif'
+          ctx.textAlign = 'center'
+          ctx.fillStyle = '#000000'
+          ctx.fillText(day, x, height - 2)
+        })
+      }
+
     }
   }
 }

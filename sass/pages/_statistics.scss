@@ -45,6 +45,31 @@ html.statistics main {
   }
 
   #playlist {
+    div.header {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      grid-template-rows: auto;
+      column-gap: 12px;
+
+      #title {
+        grid-column: 1;
+        grid-row: 1;
+
+        display: inline-block;
+        max-width: 256px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        border: none;
+        background: none;
+      }
+
+      #interval {
+        grid-column: 2;
+        grid-row: 1;
+      }
+    }
+
     div.history {
       ul {
         list-style-type: none;

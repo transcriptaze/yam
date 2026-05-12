@@ -70,38 +70,6 @@ class Statistics {
     return { track, total, played }
   }
 
-  // previousWeek(track) {
-  //   const now = new Date()
-  //   const year = now.getFullYear()
-  //   const month = now.getMonth()
-  //   const day = now.getDate()
-  //
-  //   const from = new Date(year, month, day - 7)
-  //   const to = new Date(year, month, day + 1)
-  //
-  //   const records = this.#rs.filter((v) => v.track === track && v.start >= from)
-  //   const played = [...query(from, to, records)]
-  //   const total = played.reduce((N, v) => N + v.played, 0)
-  //
-  //   return { track, total, played }
-  // }
-
-  // previousMonth(track) {
-  //   const now = new Date()
-  //   const year = now.getFullYear()
-  //   const month = now.getMonth()
-  //   const day = now.getDate()
-  //
-  //   const from = new Date(year, month - 1, day)
-  //   const to = new Date(year, month, day + 1)
-  //
-  //   const records = this.#rs.filter((v) => v.track === track && v.start >= from)
-  //   const played = [...query(from, to, records)]
-  //   const total = played.reduce((N, v) => N + v.played, 0)
-  //
-  //   return { track, total, played }
-  // }
-
   onStart(e) {
     if (e.detail.track != null && e.detail.track !== '' && e.detail.track === this.#record.track) {
       console.error('*** unexpectedly looping ***')

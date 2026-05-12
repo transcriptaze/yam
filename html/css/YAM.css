@@ -460,6 +460,60 @@ html.statistics main img {
   user-select: none;
   -webkit-user-select: none;
 }
+html.statistics main #playlist div.header {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto;
+  column-gap: 12px;
+}
+html.statistics main #playlist div.header #title {
+  grid-column: 1;
+  grid-row: 1;
+  display: inline-block;
+  max-width: 256px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: none;
+  background: none;
+}
+html.statistics main #playlist div.header #interval {
+  grid-column: 2;
+  grid-row: 1;
+}
+html.statistics main #playlist div.history ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+html.statistics main #playlist div.history ul li {
+  padding-top: 2px;
+  padding-bottom: 2px;
+}
+html.statistics main #playlist div.history ul li div.track {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto;
+  align-items: center;
+  column-gap: 8px;
+}
+html.statistics main #playlist div.history ul li div.track .title {
+  grid-column: 1;
+  grid-row: 1;
+  display: inline-block;
+  max-width: 256px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  border: none;
+  background: none;
+}
+html.statistics main #playlist div.history ul li div.track yam-bar-graph {
+  grid-column: 2;
+  grid-row: 1;
+  width: 256px;
+  height: 32px;
+}
 html.statistics main #playlist.hidden {
   display: none;
 }
@@ -531,7 +585,10 @@ html.statistics main div.history input {
 html.statistics main div.history yam-bar-graph {
   grid-column: 2;
   height: 32px;
-  background: white;
+  background: transparent;
+}
+html.statistics main div.history.month yam-bar-graph {
+  grid-column: 1/3;
 }
 
 @media (max-width: 768px) and (orientation: portrait) {

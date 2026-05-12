@@ -10,12 +10,18 @@ const COLOURS = [
   '#6B8E8D', // muted teal
 ]
 
+const BACKGROUNDS = ['#e4e4e4', '#ececec']
+
 export class BarGraph extends HTMLElement {
   static get observedAttributes() {
-    return []
+    return ['background', 'labels']
   }
 
   #played = []
+  #style = {
+    labels: '',
+    background: null,
+  }
 
   constructor() {
     super()
@@ -49,7 +55,15 @@ export class BarGraph extends HTMLElement {
 
   adoptedCallback() {}
 
-  attributeChangedCallback(_name, _from, _to) {}
+  attributeChangedCallback(name, _from, to) {
+    if (name === 'labels') {
+      this.#style.labels = to
+    }
+
+    if (name === 'backgrounds') {
+      this.#style.background = to
+    }
+  }
 
   set played(v) {
     this.#played = v
@@ -74,43 +88,70 @@ export class BarGraph extends HTMLElement {
 
     const width = canvas.width
     const height = canvas.height
-    const dw = Math.floor(width / 14)
 
-    const max = this.#played.reduce((a, v) => (v.played > a ? v.played : a), 0)
-
-    const now = new Date()
-    const year = now.getFullYear()
-    const month = now.getMonth()
-    const day = now.getDate()
-
-    const days = [
-      WEEKDAYS[new Date(year, month, day - 6).getDay()],
-      WEEKDAYS[new Date(year, month, day - 5).getDay()],
-      WEEKDAYS[new Date(year, month, day - 4).getDay()],
-      WEEKDAYS[new Date(year, month, day - 3).getDay()],
-      WEEKDAYS[new Date(year, month, day - 2).getDay()],
-      WEEKDAYS[new Date(year, month, day - 1).getDay()],
-      WEEKDAYS[new Date(year, month, day).getDay()],
-    ]
-
+    ctx.fillStyle = 'red'
     ctx.clearRect(0, 0, width, height)
 
-    this.#played.forEach((record, ix) => {
-      const x = (2 * ix + 1) * dw
-      const h = 0.9 * Math.ceil((height * record.played) / max)
+    if (this.#played.length > 0) {
+      const N = this.#played.length
+      const dw = Math.floor(width / (N * 2))
+      const w = Math.min(28, dw)
+      const dx = width - 2 * N * dw
+      const max = this.#played.reduce((a, v) => (v.played > a ? v.played : a), 0)
 
-      ctx.fillStyle = COLOURS[ix % COLOURS.length]
-      ctx.fillRect(Math.ceil(x - 14), height - h - 2, 28, h)
-    })
+      // ... month backgrounds
+      const backgrounds = new Map()
+      if (this.#style.background === 'months') {
+        const months = this.#played.reduce((set, v) => set.add(v.date.getMonth()), new Set())
+        let ix = 0
 
-    days.forEach((day, ix) => {
-      const x = (2 * ix + 1) * dw
+        months.forEach((v) => {
+          backgrounds.set(v, BACKGROUNDS[ix % BACKGROUNDS.length])
+          ix++
+        })
+      }
 
-      ctx.font = '20px sans-serif'
-      ctx.textAlign = 'center'
-      ctx.fillStyle = '#000000'
-      ctx.fillText(day, x, height - 2)
-    })
+      // ... bars
+      this.#played.forEach((record, ix) => {
+        const x = dx / 2 + (2 * ix + 1) * dw
+        const h = 0.9 * Math.ceil((height * record.played) / max)
+        const month = record.date.getMonth()
+        const background = backgrounds.get(month) ?? '#ffffff'
+
+        ctx.fillStyle = background
+        ctx.fillRect(Math.ceil(x - dw), 0, 2 * dw, height)
+
+        ctx.fillStyle = COLOURS[ix % COLOURS.length]
+        ctx.fillRect(Math.ceil(x - w / 2), height - h - 2, w, h)
+      })
+
+      // ... weekdays labels
+      if (this.#style.labels === 'weekdays') {
+        const days = this.#played.map((v) => WEEKDAYS[v.date.getDay()])
+
+        days.forEach((day, ix) => {
+          const x = dx / 2 + (2 * ix + 1) * dw
+
+          ctx.font = '20px sans-serif'
+          ctx.textAlign = 'center'
+          ctx.fillStyle = '#000000'
+          ctx.fillText(day, x, height - 2)
+        })
+      }
+
+      if (this.#style.labels === 'weekdays-small') {
+        const days = this.#played.map((v) => WEEKDAYS[v.date.getDay()])
+
+        days.forEach((day, ix) => {
+          const x = dx / 2 + (2 * ix + 1) * dw
+
+          ctx.font = '16px sans-serif'
+          ctx.textAlign = 'center'
+          ctx.fillStyle = '#000000'
+          ctx.fillText(day, x, height - 2)
+        })
+      }
+    }
   }
 }
 

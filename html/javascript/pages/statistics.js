@@ -53,13 +53,23 @@ const FIGURA = new Map([
   ['32', './images/time-signatures/figura/32.svg'],
 ])
 
+let ERROR = null
+
 export function initialise() {
   const params = new URLSearchParams(`${window.location.search}`)
 
   // ... load playlists, tracks and statistics
   Promise.all([models.playlists.restore(), models.tracks.restore(), statistics.restore()])
     .then(([_playlists, _tracks, statistics]) => {
-      if (params.has('track')) {
+      if (params.has('playlist')) {
+        const UUID = params.get('playlist')
+
+        if (UUID != null && UUID !== '') {
+          const playlist = datastore.playlists.get(UUID)
+
+          showPlaylist(playlist, statistics)
+        }
+      } else if (params.has('track')) {
         const UUID = params.get('track')
 
         if (UUID != null && UUID !== '') {
@@ -81,17 +91,88 @@ export function onSave() {
 export function onError(err) {
   console.error('ERROR', err)
 
-  document.querySelector('#about')?.classList.add('error')
+  ERROR = err
+
+  document.querySelector('#about').classList.add('hidden')
+  document.querySelector('#oops').classList.remove('hidden')
+  document.querySelector('#oops').title = `${err.message}`
+}
+
+export async function showError() {
+  if (ERROR != null) {
+    try {
+      const msg = JSON.stringify(ERROR, null, '  ')
+
+      alert(msg)
+      await navigator.clipboard.writeText(msg)
+    } catch (err) {
+      console.error(err)
+    }
+  }
+
+  document.querySelector('#about').classList.remove('hidden')
+  document.querySelector('#oops').classList.add('hidden')
+}
+
+function showPlaylist(playlist, statistics) {
+  document.querySelector('#playlist').classList.remove('hidden')
+  document.querySelector('#track').classList.add('hidden')
+
+  const section = document.querySelector('#playlist')
+
+  playlistHeader(section, playlist, statistics)
+  playlistSummary(section, playlist, statistics)
+  playlistHistory(section, playlist, statistics)
 }
 
 function showTrack(track, statistics) {
-  const section = document.querySelector('#track')
+  document.querySelector('#playlist').classList.add('hidden')
+  document.querySelector('#track').classList.remove('hidden')
 
-  section.classList.remove('hidden')
+  const section = document.querySelector('#track')
 
   trackHeader(section, track, statistics)
   trackSummary(section, track, statistics)
   trackLastWeek(section, track, statistics)
+  trackLastMonth(section, track, statistics)
+}
+
+function playlistHeader(section, playlist, _statistics) {
+  const title = section.querySelector('div.header #title')
+
+  title.innerText = playlist.title
+}
+
+function playlistSummary(_section, _playlist, _statistics) {}
+
+function playlistHistory(section, playlist, statistics) {
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = now.getMonth()
+  const day = now.getDate()
+  const from = new Date(year, month, day - 14)
+
+  const template = document.querySelector('#template-track')
+  const tracks = section.querySelector('div.history ul.tracks')
+  const list = []
+
+  playlist.tracks.forEach((v) => {
+    const li = document.createElement('li')
+    const div = document.importNode(template.content, true)
+    const title = div.querySelector('.title')
+    const graph = div.querySelector('yam-bar-graph')
+    const stats = statistics.query(v.UUID, from, now)
+
+    title.innerText = v.title
+    graph.played = stats.played
+
+    li.setAttribute('draggable', false)
+    li.appendChild(div)
+
+    list.push(li)
+  })
+
+  tracks.replaceChildren(...list)
 }
 
 function trackHeader(section, track, _statistics) {
@@ -211,9 +292,39 @@ function trackSummary(section, track, statistics) {
 }
 
 function trackLastWeek(section, track, statistics) {
-  const stats = statistics.previousWeek(track.UUID)
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = now.getMonth()
+  const day = now.getDate()
+  const from = new Date(year, month, day - 7)
+
+  const stats = statistics.query(track.UUID, from, now)
   const played = section.querySelector('div.history.week input')
   const graph = section.querySelector('div.history.week yam-bar-graph')
+
+  if (stats.total == 0) {
+    played.value = `- not even once -`
+  } else if (stats.total == 1) {
+    played.value = `- once -`
+  } else if (stats.total == 2) {
+    played.value = `- twice -`
+  } else {
+    played.value = `${stats.total} times`
+  }
+
+  graph.played = stats.played
+}
+
+function trackLastMonth(section, track, statistics) {
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = now.getMonth()
+  const day = now.getDate()
+  const from = new Date(year, month - 1, day)
+
+  const stats = statistics.query(track.UUID, from, now)
+  const played = section.querySelector('div.history.month input')
+  const graph = section.querySelector('div.history.month yam-bar-graph')
 
   if (stats.total == 0) {
     played.value = `- not even once -`

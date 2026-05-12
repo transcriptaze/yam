@@ -59,54 +59,15 @@ class Statistics {
     return stats
   }
 
-  previousWeek(track) {
-    const now = new Date()
-    const year = now.getFullYear()
-    const month = now.getMonth()
-    const day = now.getDate()
+  query(track, from, to) {
+    const start = new Date(from.getFullYear(), from.getMonth(), from.getDate())
+    const end = new Date(to.getFullYear(), to.getMonth(), to.getDate() + 1)
 
-    const stats = {
-      track: track,
-      total: 0,
-      played: [
-        { date: new Date(year, month, day - 6), played: 0 },
-        { date: new Date(year, month, day - 5), played: 0 },
-        { date: new Date(year, month, day - 4), played: 0 },
-        { date: new Date(year, month, day - 3), played: 0 },
-        { date: new Date(year, month, day - 2), played: 0 },
-        { date: new Date(year, month, day - 1), played: 0 },
-        { date: new Date(year, month, day), played: 0 },
-      ],
-    }
+    const records = this.#rs.filter((v) => v.track === track && v.start >= start && v.start < end)
+    const played = [...query(start, end, records)]
+    const total = played.reduce((N, v) => N + v.played, 0)
 
-    const cutoff = new Date(year, month, day - 7)
-    const records = this.#rs.filter((v) => v.track === track && v.start >= cutoff)
-
-    stats.played.forEach((p) => {
-      const yyyy = p.date.getFullYear()
-      const mm = p.date.getMonth()
-      const dd = p.date.getDate()
-
-      const list = records.filter((v) => {
-        return v.start.getFullYear() === yyyy && v.start.getMonth() === mm && v.start.getDate() === dd
-      })
-
-      p.played = list.reduce((a, v) => {
-        if (v.measures === INF && v.bars > v.countIn + v.pickup) {
-          return a + 1
-        }
-
-        if (v.measures !== INF && v.complete) {
-          return a + 1
-        }
-
-        return a
-      }, 0)
-    })
-
-    stats.total = stats.played.reduce((N, v) => N + v.played, 0)
-
-    return stats
+    return { track, total, played }
   }
 
   onStart(e) {
@@ -185,6 +146,36 @@ export function restore() {
 
 export function get() {
   return DB.statistics()
+}
+
+function* query(start, end, records) {
+  let date = new Date(start.getFullYear(), start.getMonth(), start.getDate() + 1)
+
+  while (date < end) {
+    const yyyy = date.getFullYear()
+    const mm = date.getMonth()
+    const dd = date.getDate()
+
+    const rs = records.filter((v) => {
+      return v.start.getFullYear() === yyyy && v.start.getMonth() === mm && v.start.getDate() === dd
+    })
+
+    const played = rs.reduce((a, v) => {
+      if (v.measures === INF && v.bars > v.countIn + v.pickup) {
+        return a + 1
+      }
+
+      if (v.measures !== INF && v.complete) {
+        return a + 1
+      }
+
+      return a
+    }, 0)
+
+    yield { date: new Date(date), played: played }
+
+    date.setDate(date.getDate() + 1)
+  }
 }
 
 function save(v) {

@@ -1537,7 +1537,7 @@ div.beat.on div.shape {
 }
 :host(.component-playlist) div.playlist div.summary [popover] {
   top: calc(anchor(bottom) + 4px);
-  left: calc(anchor(left) - 60px);
+  left: calc(anchor(left) - 108px);
   transform: translateX(0px);
   margin: 0px;
   padding-top: 4px;
@@ -1725,6 +1725,9 @@ div.beat.on div.shape {
   :host(.component-playlist) div.playlist div.menu button {
     padding-right: 12px;
   }
+  :host(.component-playlist) div.playlist div.summary [popover] {
+    left: calc(anchor(left) - 108px);
+  }
   :host(.component-playlist) div.playlist yam-playlist-item {
     margin-left: 40px;
   }
@@ -1736,6 +1739,9 @@ div.beat.on div.shape {
   }
   :host(.component-playlist) div.playlist div.menu button {
     padding-right: 12px;
+  }
+  :host(.component-playlist) div.playlist div.summary [popover] {
+    left: calc(anchor(left) - 108px);
   }
   :host(.component-playlist) div.playlist yam-playlist-item {
     margin-left: 36px;

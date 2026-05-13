@@ -53,6 +53,10 @@ const FIGURA = new Map([
   ['32', './images/time-signatures/figura/32.svg'],
 ])
 
+const widgets = {
+  intervals: document.querySelectorAll('input[name="interval"]'),
+}
+
 let ERROR = null
 
 export function initialise() {
@@ -68,6 +72,10 @@ export function initialise() {
           const playlist = datastore.playlists.get(UUID)
 
           showPlaylist(playlist, statistics)
+
+          widgets.intervals.forEach((v) => {
+            v.addEventListener('change', (e) => onInterval(playlist, statistics, e.target.value))
+          })
         }
       } else if (params.has('track')) {
         const UUID = params.get('track')
@@ -115,14 +123,17 @@ export async function showError() {
 }
 
 function showPlaylist(playlist, statistics) {
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = now.getMonth()
+  const day = now.getDate()
+
   document.querySelector('#playlist').classList.remove('hidden')
   document.querySelector('#track').classList.add('hidden')
 
-  const section = document.querySelector('#playlist')
-
-  playlistHeader(section, playlist, statistics)
-  playlistSummary(section, playlist, statistics)
-  playlistHistory(section, playlist, statistics)
+  playlistHeader(playlist, statistics)
+  playlistSummary(playlist, statistics)
+  playlistHistory(playlist, statistics, new Date(year, month, day - 14), 'weekdays-small')
 }
 
 function showTrack(track, statistics) {
@@ -137,23 +148,46 @@ function showTrack(track, statistics) {
   trackLastMonth(section, track, statistics)
 }
 
-function playlistHeader(section, playlist, _statistics) {
+function onInterval(playlist, statistics, interval) {
+  const now = new Date()
+  const year = now.getFullYear()
+  const month = now.getMonth()
+  const day = now.getDate()
+
+  switch (interval) {
+    case 'week':
+      playlistHistory(playlist, statistics, new Date(year, month, day - 7), 'weekdays')
+      break
+
+    case 'fortnight':
+      playlistHistory(playlist, statistics, new Date(year, month, day - 14), 'weekdays-small')
+      break
+
+    case 'month':
+      playlistHistory(playlist, statistics, new Date(year, month - 1, day), 'none')
+      break
+
+    case 'quarter':
+      playlistHistory(playlist, statistics, new Date(year, month - 3, day), 'none')
+      break
+  }
+}
+
+function playlistHeader(playlist, _statistics) {
+  const section = document.querySelector('#playlist')
   const title = section.querySelector('div.header #title')
 
   title.innerText = playlist.title
 }
 
-function playlistSummary(_section, _playlist, _statistics) {}
+function playlistSummary(_playlist, _statistics) {}
 
-function playlistHistory(section, playlist, statistics) {
-  const now = new Date()
-  const year = now.getFullYear()
-  const month = now.getMonth()
-  const day = now.getDate()
-  const from = new Date(year, month, day - 14)
-
-  const template = document.querySelector('#template-track')
+function playlistHistory(playlist, statistics, from, labels) {
+  const section = document.querySelector('#playlist')
   const tracks = section.querySelector('div.history ul.tracks')
+  const template = document.querySelector('#template-track')
+
+  const now = new Date()
   const list = []
 
   playlist.tracks.forEach((v) => {
@@ -164,6 +198,9 @@ function playlistHistory(section, playlist, statistics) {
     const stats = statistics.query(v.UUID, from, now)
 
     title.innerText = v.title
+
+    graph.setAttribute('background', 'months')
+    graph.setAttribute('labels', labels)
     graph.played = stats.played
 
     li.setAttribute('draggable', false)

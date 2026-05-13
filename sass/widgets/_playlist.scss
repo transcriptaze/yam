@@ -87,7 +87,7 @@
 
       [popover] {
         top: calc(anchor(bottom) + 4px);
-        left: calc(anchor(left) - 60px);
+        left: calc(anchor(left) - 108px);
         transform: translateX(0px);
 
         margin: 0px;
@@ -343,16 +343,17 @@
       div.grip {
         width: 48px;
         padding-left: 12px;
-
-        // TODO remove
-        // img {
-        //   width: 20px;        
-        // }
       }
 
       div.menu {
         button {
           padding-right: 12px;        
+        }
+      }
+
+      div.summary {
+        [popover] {
+          left: calc(anchor(left) - 108px);
         }
       }
 
@@ -367,16 +368,17 @@
       div.grip {
         width: 36px;
         padding-left: 8px;
-
-        // TODO remove
-        // img {
-        //   width: 20px;        
-        // }
       }
 
       div.menu {
         button {
           padding-right: 12px;        
+        }
+      }
+
+      div.summary {
+        [popover] {
+          left: calc(anchor(left) - 108px);
         }
       }
 

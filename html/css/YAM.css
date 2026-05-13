@@ -604,6 +604,12 @@ html.statistics main div.history.month yam-bar-graph {
   html.statistics main h1 {
     font-size: 1.2em;
   }
+  html.statistics main #playlist div.history ul li .title {
+    font-size: 0.8em;
+  }
+  html.statistics main #playlist div.history ul li div.track yam-bar-graph {
+    width: 192px;
+  }
 }
 @media (max-width: 1024px) and (orientation: landscape) {
   html.statistics main {

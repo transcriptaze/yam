@@ -13,9 +13,13 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
    - [x] track statistics
    - [x] save not working
    - [x] sometimes needs an extra refresh
+   - [x] mobile+portrait squished playlist menu
    - [ ] playlist statistics
-      - [ ] mobile+portrait layout
-      - [ ] mobile+portrait squished menu
+      - [x] mobile+portrait layout
+      - [ ] mobile+landscape layout
+      - [ ] fix bar graph for 'quarter' interval
+      - [ ] put an interval between weeks
+      - [ ] rethink months backgrounds
    - [ ] played 2 minutes ago showing up as played yesterday
          - time zone ?
    - [ ] dark mode

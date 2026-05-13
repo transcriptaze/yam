@@ -199,6 +199,7 @@ function playlistHistory(playlist, statistics, from, labels) {
 
     title.innerText = v.title
 
+    graph.setAttribute('background', 'months')
     graph.setAttribute('labels', labels)
     graph.played = stats.played
 

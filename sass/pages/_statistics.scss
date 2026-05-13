@@ -230,6 +230,24 @@ html.statistics main {
     h1 {
       font-size: 1.2em; 
     }
+
+    #playlist {
+      div.history {
+        ul {
+          li {
+            .title {
+              font-size: 0.8em;
+            }
+
+            div.track {
+              yam-bar-graph {
+                width: 192px;  
+              }                                    
+            }
+          }
+        }
+      }
+    }
   }
 }
 

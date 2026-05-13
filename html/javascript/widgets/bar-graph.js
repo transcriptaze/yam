@@ -71,7 +71,7 @@ export class BarGraph extends HTMLElement {
       this.#style.labels = to
     }
 
-    if (name === 'backgrounds') {
+    if (name === 'background') {
       this.#style.background = to
     }
   }

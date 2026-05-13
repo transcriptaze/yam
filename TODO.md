@@ -11,12 +11,14 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 - [ ] statistics (cf. https://github.com/transcriptaze/yam/issues/11)
    - [x] record per play
    - [x] track statistics
+   - [x] save not working
+   - [x] sometimes needs an extra refresh
    - [ ] playlist statistics
-   - [ ] save not working
+      - [ ] mobile+portrait layout
+      - [ ] mobile+portrait squished menu
    - [ ] played 2 minutes ago showing up as played yesterday
          - time zone ?
    - [ ] dark mode
-   - [ ] sometimes needs an extra refresh - wait on Promise ??
 
    - (?) https://opensource.posit.co/blog/2026-04-20_ggsql_alpha_release/
    - (?) https://ggplot2.tidyverse.org/

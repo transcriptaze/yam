@@ -42,7 +42,18 @@ export class BarGraph extends HTMLElement {
   connectedCallback() {
     this.classList.add('component-bar-graph')
 
-    this.resizeObserver = new ResizeObserver(() => {
+    this.resizeObserver = new ResizeObserver(([entry]) => {
+      const { width, height } = entry.contentRect
+      const canvas = this.shadowRoot.querySelector('canvas')
+      const ctx = canvas.getContext('2d')
+      const dpr = window.devicePixelRatio || 1
+
+      canvas.width = Math.round(width * dpr)
+      canvas.height = Math.round(height * dpr)
+
+      ctx.setTransform(1, 0, 0, 1, 0, 0)
+      ctx.imageSmoothingEnabled = false
+
       this.#redraw()
     })
 
@@ -73,23 +84,11 @@ export class BarGraph extends HTMLElement {
   #redraw() {
     const canvas = this.shadowRoot.querySelector('canvas')
     const ctx = canvas.getContext('2d')
-    const dpr = window.devicePixelRatio || 1
-
-    ctx.scale(dpr, dpr)
-    ctx.imageSmoothingEnabled = false
-
-    if (canvas.width != canvas.clientWidth) {
-      canvas.width = dpr * canvas.clientWidth
-    }
-
-    if (canvas.height != canvas.clientHeight) {
-      canvas.height = dpr * canvas.clientHeight
-    }
 
     const width = canvas.width
     const height = canvas.height
 
-    ctx.fillStyle = 'red'
+    ctx.fillStyle = 'none'
     ctx.clearRect(0, 0, width, height)
 
     if (this.#played.length > 0) {

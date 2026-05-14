@@ -9,7 +9,7 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 - [ ] 2:2 time
 
 - [ ] statistics (cf. https://github.com/transcriptaze/yam/issues/11)
-   - [ ] played 2 minutes ago showing up as played yesterday/never on Android
+   - [x] played 2 minutes ago showing up as played yesterday/never on Android
    - [ ] playlist statistics
       - [x] scrolling
       - [x] mobile+portrait layout

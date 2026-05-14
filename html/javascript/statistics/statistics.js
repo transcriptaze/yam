@@ -28,7 +28,7 @@ class Statistics {
       lastPlayed: null,
     }
 
-    const records = this.#rs.filter((v) => v.track === track)
+    const records = this.#rs.filter((v) => v.track === track && v.complete)
 
     stats.played = records.reduce((a, v) => {
       if (v.measures === INF && v.bars > v.countIn + v.pickup) {
@@ -42,19 +42,41 @@ class Statistics {
       return a
     }, 0)
 
+    // if (stats.played > 0) {
+    //   for (const record of records) {
+    //     const ms = record.start.getMilliseconds()
+    //
+    //     if (!Number.isNaN(ms)) {
+    //       if (stats.lastPlayed == null) {
+    //         stats.lastPlayed = record.start
+    //       } else if (ms > stats.lastPlayed.getMilliseconds()) {
+    //         stats.lastPlayed = record.start
+    //       }
+    //     }
+    //   }
+    // }
+
     if (stats.played > 0) {
       for (const record of records) {
-        const ms = record.start.getMilliseconds()
+        const date = new Date(record.start)
 
-        if (!Number.isNaN(ms)) {
+        if (!Number.isNaN(date.getTime())) {
           if (stats.lastPlayed == null) {
-            stats.lastPlayed = record.start
-          } else if (ms > stats.lastPlayed.getMilliseconds()) {
-            stats.lastPlayed = record.start
+            stats.lastPlayed = date
+          } else if (date > stats.lastPlayed) {
+            stats.lastPlayed = date
           }
         }
       }
     }
+
+    // if (records.length > 0) {
+    //   stats.lastPlayed = records.reduce((latest, record) => {
+    //     const current = new Date(record.start);
+    //     if (isNaN(current.getTime())) return latest;
+    //     return (!latest || current > latest) ? current : latest;
+    //   }, null);
+    // }
 
     return stats
   }

@@ -88,8 +88,9 @@ export class BarGraph extends HTMLElement {
     const width = canvas.width
     const height = canvas.height
 
-    ctx.fillStyle = 'none'
+    ctx.fillStyle = '#ececec'
     ctx.clearRect(0, 0, width, height)
+    ctx.fillRect(0, 0, width, height)
 
     if (this.#played.length > 0) {
       const N = this.#played.length

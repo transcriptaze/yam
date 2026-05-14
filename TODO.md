@@ -9,19 +9,15 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 - [ ] 2:2 time
 
 - [ ] statistics (cf. https://github.com/transcriptaze/yam/issues/11)
-   - [x] record per play
-   - [x] track statistics
-   - [x] save not working
-   - [x] sometimes needs an extra refresh
-   - [x] mobile+portrait squished playlist menu
+   - [x] played 2 minutes ago showing up as played yesterday/never on Android
    - [ ] playlist statistics
+      - [x] scrolling
       - [x] mobile+portrait layout
-      - [ ] mobile+landscape layout
-      - [ ] fix bar graph for 'quarter' interval
-      - [ ] put an interval between weeks
-      - [ ] rethink months backgrounds
-   - [ ] played 2 minutes ago showing up as played yesterday
-         - time zone ?
+      - [x] mobile+landscape layout
+      - [ ] put a gap between weeks
+      - [ ] fix bar graph for quarter interval
+      - [ ] rework months backgrounds
+      - [ ] replace the readonly inputs with spans
    - [ ] dark mode
 
    - (?) https://opensource.posit.co/blog/2026-04-20_ggsql_alpha_release/

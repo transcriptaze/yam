@@ -414,6 +414,7 @@ function rewire() {
   widgets.playlists.addEventListener(EVENTS.PLAYLIST_STATISTICS, (e) => onPlaylistStatistics(e))
 
   widgets.tracks.addEventListener(EVENTS.TRACK_SELECT, (e) => onTrackSelect(e))
+  widgets.tracks.addEventListener(EVENTS.TRACK_STATISTICS, (e) => onTrackStatistics(e))
 
   widgets.editor.addEventListener(EVENTS.EDIT_SAVE, (e) => onEdited(e))
 

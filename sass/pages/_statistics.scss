@@ -1,7 +1,7 @@
 html.statistics main {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto;
 
   margin-top: 16px;
   margin-bottom: 16px;
@@ -20,6 +20,9 @@ html.statistics main {
   }
 
   h1 {
+    grid-column: 1;
+    grid-row: 1;
+
     display: flex;
     align-items: center;
     column-gap: 12px;
@@ -42,10 +45,21 @@ html.statistics main {
   }
 
   div.statistics {
+    grid-column: 1;
+    grid-row: 2;
+    min-height: 0;
   }
 
   #playlist {
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: auto minmax(0, 1fr);
+
     div.header {
+      grid-column: 1;
+      grid-row: 1;
+
       display: grid;
       grid-template-columns: 1fr auto;
       grid-template-rows: auto;
@@ -71,6 +85,17 @@ html.statistics main {
     }
 
     div.history {
+      grid-column: 1;
+      grid-row: 2;
+
+      overflow: hidden;
+      overflow-y: auto;
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar { 
+        display: none;
+      }
+
       ul {
         list-style-type: none;
         padding: 0;

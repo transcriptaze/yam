@@ -9,13 +9,9 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 - [ ] 2:2 time
 
 - [ ] statistics (cf. https://github.com/transcriptaze/yam/issues/11)
-   - [x] record per play
-   - [x] track statistics
-   - [x] save not working
-   - [x] sometimes needs an extra refresh
-   - [x] mobile+portrait squished playlist menu
    - [ ] playlist statistics
-      - [x] mobile+portrait layout
+      - [x] scrolling
+      - [ ] mobile+portrait layout
       - [ ] mobile+landscape layout
       - [ ] fix bar graph for 'quarter' interval
       - [ ] put an interval between weeks

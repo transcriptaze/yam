@@ -428,7 +428,7 @@ html.settings main div.volume input[type=text] {
 html.statistics main {
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: auto auto;
+  grid-template-rows: auto 1fr;
   margin-top: 16px;
   margin-bottom: 16px;
   margin-left: 64px;
@@ -633,7 +633,7 @@ html.statistics main div.history.month yam-bar-graph {
     font-size: 0.8em;
   }
   html.statistics main #playlist div.history ul li div.track yam-bar-graph {
-    width: 192px;
+    width: 208px;
   }
 }
 @media (max-width: 1024px) and (orientation: landscape) {

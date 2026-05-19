@@ -15,8 +15,8 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
       - [x] mobile+portrait layout
       - [x] mobile+landscape layout
       - [x] put a gap between weeks
-      - [ ] fix bar graph for quarter interval
-      - [ ] rework months backgrounds
+      - [x] rework months backgrounds
+      - [x] fix bar graph for quarter interval
       - [ ] replace the readonly inputs with spans
    - [ ] dark mode
 

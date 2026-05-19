@@ -32,10 +32,17 @@
             <div class="header">
               <div id="title">----</div>
               <div id="interval">
-                 <input type="radio" name="interval" value="quarter" />
-                 <input type="radio" name="interval" value="month" />
-                 <input type="radio" name="interval" value="fortnight" checked/>
-                 <input type="radio" name="interval" value="week" />
+                 <input id="quarter" type="radio" name="interval" value="quarter" />
+                 <label for="quarter">3 months</label>
+
+                 <input id="month" type="radio" name="interval" value="month" />
+                 <label for="month">1 month</label>
+
+                 <input id="fortnight" type="radio" name="interval" value="fortnight" checked/>
+                 <label for="fortnight">2 weeks</label>
+
+                 <input id="week" type="radio" name="interval" value="week" />
+                 <label for="week">1 week</label>
               </div>
             </div>
             <hr/>

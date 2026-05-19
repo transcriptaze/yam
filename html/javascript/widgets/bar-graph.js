@@ -10,7 +10,7 @@ const COLOURS = [
   '#6B8E8D', // muted teal
 ]
 
-const BACKGROUNDS = ['#e4e4e4', '#ececec']
+// const BACKGROUNDS = ['#e4e4e4', '#ececec']
 
 export class BarGraph extends HTMLElement {
   static get observedAttributes() {
@@ -93,36 +93,58 @@ export class BarGraph extends HTMLElement {
     ctx.fillRect(0, 0, width, height)
 
     if (this.#played.length > 0) {
-      const N = this.#played.length
-      const dw = Math.floor(width / (N * 2))
-      const w = Math.min(28, dw)
-      const dx = width - 2 * N * dw
-      const max = this.#played.reduce((a, v) => (v.played > a ? v.played : a), 0)
+      // ... layout
+      let N = this.#played.length * 2
+      let gaps = 0
 
-      // ... month backgrounds
-      const backgrounds = new Map()
-      if (this.#style.background === 'months') {
-        const months = this.#played.reduce((set, v) => set.add(v.date.getMonth()), new Set())
-        let ix = 0
-
-        months.forEach((v) => {
-          backgrounds.set(v, BACKGROUNDS[ix % BACKGROUNDS.length])
-          ix++
+      if (this.#played.length > 7) {
+        this.#played.slice(1).forEach((record) => {
+          if (record.date.getDay() === 1) {
+            gaps += 1
+          }
         })
       }
 
-      // ... bars
-      this.#played.forEach((record, ix) => {
-        const x = dx / 2 + (2 * ix + 1) * dw
-        const h = 0.9 * Math.ceil((height * record.played) / max)
-        const month = record.date.getMonth()
-        const background = backgrounds.get(month) ?? '#ffffff'
+      const dw = width / (N + gaps)
+      const cw = Math.min(28, dw * 0.9)
+      const columns = [1 * dw]
 
-        ctx.fillStyle = background
-        ctx.fillRect(Math.ceil(x - dw), 0, 2 * dw, height)
+      this.#played.slice(1).reduce((a, record) => {
+        a += 2
+        if (this.#played.length > 7 && record.date.getDay() === 1) {
+          a += 1
+        }
+
+        columns.push(a * dw)
+
+        return a
+      }, 1)
+
+      // console.log(this.#played.length, { N }, { gaps }, { dw }, { cw })
+      // console.log(columns)
+      // console.log(this.#style)
+
+      // // ... month backgrounds
+      // const backgrounds = new Map()
+      // if (this.#style.background === 'months') {
+      //   const months = this.#played.reduce((set, v) => set.add(v.date.getMonth()), new Set())
+      //   let ix = 0
+      //
+      //   months.forEach((v) => {
+      //     backgrounds.set(v, BACKGROUNDS[ix % BACKGROUNDS.length])
+      //     ix++
+      //   })
+      // }
+
+      // ... bars
+      const max = this.#played.reduce((a, v) => (v.played > a ? v.played : a), 0)
+
+      this.#played.forEach((record, ix) => {
+        const x = columns[ix]
+        const h = 0.9 * Math.ceil((height * record.played) / max)
 
         ctx.fillStyle = COLOURS[ix % COLOURS.length]
-        ctx.fillRect(Math.ceil(x - w / 2), height - h - 2, w, h)
+        ctx.fillRect(Math.ceil(x - cw / 2), height - h - 2, cw, h)
       })
 
       // ... weekdays labels
@@ -130,7 +152,7 @@ export class BarGraph extends HTMLElement {
         const days = this.#played.map((v) => WEEKDAYS[v.date.getDay()])
 
         days.forEach((day, ix) => {
-          const x = dx / 2 + (2 * ix + 1) * dw
+          const x = columns[ix]
 
           ctx.font = '20px sans-serif'
           ctx.textAlign = 'center'
@@ -143,7 +165,7 @@ export class BarGraph extends HTMLElement {
         const days = this.#played.map((v) => WEEKDAYS[v.date.getDay()])
 
         days.forEach((day, ix) => {
-          const x = dx / 2 + (2 * ix + 1) * dw
+          const x = columns[ix]
 
           ctx.font = '16px sans-serif'
           ctx.textAlign = 'center'

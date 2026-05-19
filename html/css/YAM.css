@@ -495,6 +495,22 @@ html.statistics main #playlist div.header #title {
 html.statistics main #playlist div.header #interval {
   grid-column: 2;
   grid-row: 1;
+  display: grid;
+  grid-template-columns: auto auto auto auto;
+  grid-template-rows: auto;
+  column-gap: 8px;
+}
+html.statistics main #playlist div.header #interval label {
+  font-size: 0.9em;
+  color: #a0a0a0;
+  cursor: pointer;
+}
+html.statistics main #playlist div.header #interval input[type=radio] {
+  display: none;
+}
+html.statistics main #playlist div.header #interval input[type=radio]:checked + label {
+  font-weight: bold;
+  color: black;
 }
 html.statistics main #playlist div.history {
   grid-column: 1;

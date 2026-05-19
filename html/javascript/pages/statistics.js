@@ -287,13 +287,13 @@ function trackSummary(section, track, statistics) {
   const BPM = section.querySelector('div.summary #BPM')
 
   if (stats.played == 0) {
-    played.value = `- never -`
+    played.innerText = `- never -`
   } else if (stats.played == 1) {
-    played.value = `- once -`
+    played.innerText = `- once -`
   } else if (stats.played == 2) {
-    played.value = `- twice -`
+    played.innerText = `- twice -`
   } else {
-    played.value = `${stats.played} times`
+    played.innerText = `${stats.played} times`
   }
 
   if (stats.lastPlayed == null) {
@@ -305,17 +305,17 @@ function trackSummary(section, track, statistics) {
     const days = Math.max(0, Math.floor((today - played) / MS_PER_DAY))
 
     if (days == 0) {
-      lastPlayed.value = `- today -`
+      lastPlayed.innerText = `- today -`
     } else if (days == 1) {
-      lastPlayed.value = `- yesterday -`
+      lastPlayed.innerText = `- yesterday -`
     } else if (days < 7) {
-      lastPlayed.value = `${days} days ago`
+      lastPlayed.innerText = `${days} days ago`
     } else if (days < 14) {
-      lastPlayed.value = `1–2 weeks ago`
+      lastPlayed.innerText = `1–2 weeks ago`
     } else if (days <= 31) {
-      lastPlayed.value = `sometime in the last month`
+      lastPlayed.innerText = `sometime in the last month`
     } else {
-      lastPlayed.value = `not for a good long while`
+      lastPlayed.innerText = `not for a good long while`
     }
 
     const year = `${stats.lastPlayed.getFullYear()}`.padStart(4, '0')
@@ -325,7 +325,7 @@ function trackSummary(section, track, statistics) {
     lastPlayed.title = `${year}-${month}-${day}`
   }
 
-  BPM.value = track.BPM
+  BPM.innerText = track.BPM
 }
 
 function trackLastWeek(section, track, statistics) {
@@ -336,17 +336,17 @@ function trackLastWeek(section, track, statistics) {
   const from = new Date(year, month, day - 7)
 
   const stats = statistics.query(track.UUID, from, now)
-  const played = section.querySelector('div.history.week input')
+  const played = section.querySelector('div.history.week span')
   const graph = section.querySelector('div.history.week yam-bar-graph')
 
   if (stats.total == 0) {
-    played.value = `- not even once -`
+    played.innerText = `- not even once -`
   } else if (stats.total == 1) {
-    played.value = `- once -`
+    played.innerText = `- once -`
   } else if (stats.total == 2) {
-    played.value = `- twice -`
+    played.innerText = `- twice -`
   } else {
-    played.value = `${stats.total} times`
+    played.innerText = `${stats.total} times`
   }
 
   graph.played = stats.played
@@ -360,17 +360,17 @@ function trackLastMonth(section, track, statistics) {
   const from = new Date(year, month - 1, day)
 
   const stats = statistics.query(track.UUID, from, now)
-  const played = section.querySelector('div.history.month input')
+  const played = section.querySelector('div.history.month span')
   const graph = section.querySelector('div.history.month yam-bar-graph')
 
   if (stats.total == 0) {
-    played.value = `- not even once -`
+    played.innerText = `- not even once -`
   } else if (stats.total == 1) {
-    played.value = `- once -`
+    played.innerText = `- once -`
   } else if (stats.total == 2) {
-    played.value = `- twice -`
+    played.innerText = `- twice -`
   } else {
-    played.value = `${stats.total} times`
+    played.innerText = `${stats.total} times`
   }
 
   graph.played = stats.played

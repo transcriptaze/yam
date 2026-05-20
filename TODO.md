@@ -11,15 +11,8 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 - [ ] statistics (cf. https://github.com/transcriptaze/yam/issues/11)
    - [x] played 2 minutes ago showing up as played yesterday/never on Android
    - [x] playlist statistics
-      - [x] scrolling
-      - [x] mobile+portrait layout
-      - [x] mobile+landscape layout
-      - [x] put a gap between weeks
-      - [x] rework months backgrounds
-      - [x] fix bar graph for quarter interval
-      - [x] replace the readonly inputs with spans
+   - [x] jukskei bridge stats not working
    - [ ] dark mode
-   - [ ] jukskei bridge stats not working
 
    - (?) https://opensource.posit.co/blog/2026-04-20_ggsql_alpha_release/
    - (?) https://ggplot2.tidyverse.org/

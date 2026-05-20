@@ -28,8 +28,7 @@ class Statistics {
       lastPlayed: null,
     }
 
-    const records = this.#rs.filter((v) => v.track === track && v.complete)
-
+    const records = this.#rs.filter((v) => v.track === track && (v.complete || v.measures === INF))
     stats.played = records.reduce((a, v) => {
       if (v.measures === INF && v.bars > v.countIn + v.pickup) {
         return a + 1
@@ -41,20 +40,6 @@ class Statistics {
 
       return a
     }, 0)
-
-    // if (stats.played > 0) {
-    //   for (const record of records) {
-    //     const ms = record.start.getMilliseconds()
-    //
-    //     if (!Number.isNaN(ms)) {
-    //       if (stats.lastPlayed == null) {
-    //         stats.lastPlayed = record.start
-    //       } else if (ms > stats.lastPlayed.getMilliseconds()) {
-    //         stats.lastPlayed = record.start
-    //       }
-    //     }
-    //   }
-    // }
 
     if (stats.played > 0) {
       for (const record of records) {
@@ -69,14 +54,6 @@ class Statistics {
         }
       }
     }
-
-    // if (records.length > 0) {
-    //   stats.lastPlayed = records.reduce((latest, record) => {
-    //     const current = new Date(record.start);
-    //     if (isNaN(current.getTime())) return latest;
-    //     return (!latest || current > latest) ? current : latest;
-    //   }, null);
-    // }
 
     return stats
   }
@@ -205,6 +182,12 @@ function save(v) {
     const track = datastore.tracks.get(v.track)
 
     if (track != null) {
+      // let measures = INF
+
+      // if (track.sections?.length > 0) {
+      //   measures = track.bars
+      // }
+
       const record = {
         ...v,
         title: track.title,

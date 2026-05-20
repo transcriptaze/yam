@@ -1,13 +1,23 @@
 const WEEKDAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
+// const COLOURS = [
+//   '#F2B5A7', // soft coral
+//   '#BFA2DB', // light lavender
+//   '#E6C79C', // warm sand
+//   '#8FAADC', // gentle blue
+//   '#D4A5A5', // dusty rose
+//   '#A3B18A', // soft sage green
+//   '#6B8E8D', // muted teal
+// ]
+
 const COLOURS = [
-  '#F2B5A7', // soft coral
-  '#BFA2DB', // light lavender
-  '#E6C79C', // warm sand
-  '#8FAADC', // gentle blue
-  '#D4A5A5', // dusty rose
-  '#A3B18A', // soft sage green
-  '#6B8E8D', // muted teal
+  '#D96C5F', // stronger coral
+  '#8E6BBE', // richer lavender
+  '#C7924A', // deeper sand/gold
+  '#4F7FC1', // clearer blue
+  '#B86B77', // darker dusty rose
+  '#6E8F52', // stronger sage
+  '#4F7775', // darker teal
 ]
 
 const BACKGROUNDS = ['#ececec', '#e4e4e4']
@@ -21,6 +31,10 @@ export class BarGraph extends HTMLElement {
   #style = {
     labels: '',
     background: null,
+    fonts: {
+      normal: '20px sans-serif',
+      small: '16px sans-serif',
+    },
   }
 
   constructor() {
@@ -41,6 +55,11 @@ export class BarGraph extends HTMLElement {
 
   connectedCallback() {
     this.classList.add('component-bar-graph')
+
+    const style = getComputedStyle(this)
+
+    this.#style.fonts.normal = style.getPropertyValue('--weekdays-font').trim() || '20px sans-serif'
+    this.#style.fonts.small = style.getPropertyValue('--weekdays-small-font').trim() || '16px sans-serif'
 
     this.resizeObserver = new ResizeObserver(([entry]) => {
       const { width, height } = entry.contentRect
@@ -173,7 +192,7 @@ export class BarGraph extends HTMLElement {
         days.forEach((day, ix) => {
           const x = bars[ix]
 
-          ctx.font = '20px sans-serif'
+          ctx.font = this.#style.fonts.normal
           ctx.textAlign = 'center'
           ctx.fillStyle = '#000000'
           ctx.fillText(day, x, height - 2)
@@ -186,7 +205,7 @@ export class BarGraph extends HTMLElement {
         days.forEach((day, ix) => {
           const x = bars[ix]
 
-          ctx.font = '16px sans-serif'
+          ctx.font = this.#style.fonts.small
           ctx.textAlign = 'center'
           ctx.fillStyle = '#000000'
           ctx.fillText(day, x, height - 2)

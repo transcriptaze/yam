@@ -11,7 +11,11 @@ export function realize(track) {
   const sections = transmogrify(track)
 
   const bars = () => {
-    return sections.reduce((measures, section) => measures + section.measures, 0)
+    if (sections.length > 0) {
+      return sections.reduce((measures, section) => measures + section.measures, 0)
+    }
+
+    return Number.POSITIVE_INFINITY
   }
 
   const countIn = () => {

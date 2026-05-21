@@ -70,6 +70,7 @@
   --text-disabled: #a0a0a0;
   --text-editing: #222222;
   --text-locked: #dc322f;
+  --text-selected: #222222;
   --icon: #222222;
   --icon-disabled: #999999;
   --icon-locked: #dc322f;
@@ -91,6 +92,7 @@
   --editor-subsection-background: #fcfcfc;
   --editor-subsection-img-none: grayscale(100%) opacity(25%);
   --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
+  --statistics-history-background: transparent;
   --role-count-in-colour: #d69574;
   --role-anacrusis-colour: #cbb469;
   --role-intro-colour: #df8880;
@@ -155,6 +157,7 @@
   --text-placeholder: #7a7a7f;
   --text-editing: #1f1f21;
   --text-locked: rgba(220, 50, 47, 0.9);
+  --text-selected: #f2f2f3;
   --icon: #b9b9bc;
   --icon-disabled: #7a7a7f;
   --icon-locked: rgba(220, 50, 47, 0.9);
@@ -176,6 +179,7 @@
   --editor-subsection-background: #b9b9bc;
   --editor-subsection-img-none: grayscale(100%) opacity(35%);
   --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
+  --statistics-history-background: #1f1f21;
 }
 
 :host(.component-metronome) div.metronome {

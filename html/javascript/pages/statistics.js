@@ -215,47 +215,81 @@ function playlistHistory(playlist, statistics, from, labels) {
 function trackHeader(section, track, _statistics) {
   const title = section.querySelector('div.header #title')
   const timeSignature = section.querySelector('div.header #time-signature')
-  const tactus = timeSignature.querySelector('.tactus')
-  const figura = timeSignature.querySelector('.figura')
-  const common = timeSignature.querySelector('.common')
-  const cut = timeSignature.querySelector('.cut')
   const tempo = section.querySelector('div.header #tempo')
   const bars = section.querySelector('div.header #bars')
+
+  const tactus = {
+    span: timeSignature.querySelector('span.icon-tactus'),
+    img: timeSignature.querySelector('img.tactus'),
+  }
+
+  const figura = {
+    span: timeSignature.querySelector('span.icon-figura'),
+    img: timeSignature.querySelector('img.figura'),
+  }
+
+  const common = {
+    span: timeSignature.querySelector('span.icon-common'),
+    img: timeSignature.querySelector('img.common'),
+  }
+
+  const cut = {
+    span: timeSignature.querySelector('span.icon-cut'),
+    img: timeSignature.querySelector('img.cut'),
+  }
 
   title.innerText = track.title
   tempo.innerText = `${track.tempo} BPM`
 
+  console.log(tactus)
+
   // ... time signature
-  if (track.timeSignature === 'cut') {
-    tactus.classList.add('hidden')
-    figura.classList.add('hidden')
-    common.classList.add('hidden')
-    cut.classList.remove('hidden')
-  } else if (track.timeSignature === 'common') {
-    tactus.classList.add('hidden')
-    figura.classList.add('hidden')
-    common.classList.remove('hidden')
-    cut.classList.add('hidden')
-  } else {
-    const { beats, divisions } = parseTimeSignature(track.timeSignature)
+  const { beats, divisions } = parseTimeSignature(track.timeSignature)
 
-    if (TACTUS.has(`${beats}`)) {
-      tactus.classList.remove('hidden')
-      tactus.src = TACTUS.get(`${beats}`)
-    } else {
-      tactus.classList.add('hidden')
-    }
+  switch (true) {
+    case timeSignature === '':
+      tactus.span.classList.add('hidden')
+      figura.span.classList.add('hidden')
+      common.span.classList.add('hidden')
+      cut.span.classList.add('hidden')
+      cut.img.classList.add('hidden')
+      break
 
-    if (FIGURA.has(`${divisions}`)) {
-      figura.classList.remove('hidden')
-      figura.src = FIGURA.get(`${divisions}`)
-    } else {
-      figura.classList.add('hidden')
-    }
+    case timeSignature === 'common':
+      tactus.span.classList.add('hidden')
+      figura.span.classList.add('hidden')
+      common.span.classList.remove('hidden')
+      cut.span.classList.add('hidden')
+      break
 
-    figura.classList.remove('hidden')
-    common.classList.add('hidden')
-    cut.classList.add('hidden')
+    case timeSignature === 'cut':
+      tactus.span.classList.add('hidden')
+      figura.span.classList.add('hidden')
+      common.span.classList.add('hidden')
+      cut.span.classList.remove('hidden')
+      break
+
+    default:
+      tactus.span.classList.remove('hidden')
+      figura.span.classList.remove('hidden')
+      common.span.classList.add('hidden')
+      cut.span.classList.add('hidden')
+
+      if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
+        if (TACTUS.has(`${beats}`)) {
+          const img = TACTUS.get(`${beats}`)
+
+          tactus.span.style.maskImage = `url('${img}')`
+          tactus.img.src = img
+        }
+
+        if (FIGURA.has(`${divisions}`)) {
+          const img = FIGURA.get(`${divisions}`)
+
+          figura.span.style.maskImage = `url('${img}')`
+          figura.img.src = img
+        }
+      }
   }
 
   // ... bars

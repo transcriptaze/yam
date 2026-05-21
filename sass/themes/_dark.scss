@@ -46,7 +46,8 @@ $border: #58585f;
   --text-placeholder: #{charcoal.$fg-4};
   --text-editing: #{charcoal.$bg-2};
   --text-locked: #{color.change(charcoal.$red, $alpha: 0.9)};
-
+  --text-selected: #{charcoal.$text-selected};
+  
   --icon: #{charcoal.$fg-2};
   --icon-disabled: #{charcoal.$fg-4};
   --icon-locked: #{color.change(charcoal.$red, $alpha: 0.9)};
@@ -73,4 +74,6 @@ $border: #58585f;
   --editor-subsection-background: #{charcoal.$fg-2};
   --editor-subsection-img-none: grayscale(100%) opacity(35%);
   --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
+
+  --statistics-history-background: #{charcoal.$bg-2};
 }

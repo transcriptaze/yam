@@ -70,6 +70,7 @@
   --text-disabled: #a0a0a0;
   --text-editing: #222222;
   --text-locked: #dc322f;
+  --text-selected: #222222;
   --icon: #222222;
   --icon-disabled: #999999;
   --icon-locked: #dc322f;
@@ -91,6 +92,7 @@
   --editor-subsection-background: #fcfcfc;
   --editor-subsection-img-none: grayscale(100%) opacity(25%);
   --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
+  --statistics-history-background: transparent;
   --role-count-in-colour: #d69574;
   --role-anacrusis-colour: #cbb469;
   --role-intro-colour: #df8880;
@@ -155,6 +157,7 @@
   --text-placeholder: #7a7a7f;
   --text-editing: #1f1f21;
   --text-locked: rgba(220, 50, 47, 0.9);
+  --text-selected: #f2f2f3;
   --icon: #b9b9bc;
   --icon-disabled: #7a7a7f;
   --icon-locked: rgba(220, 50, 47, 0.9);
@@ -176,6 +179,7 @@
   --editor-subsection-background: #b9b9bc;
   --editor-subsection-img-none: grayscale(100%) opacity(35%);
   --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
+  --statistics-history-background: #1f1f21;
 }
 
 main {
@@ -480,6 +484,7 @@ html.statistics main #playlist div.header {
   grid-template-columns: 1fr auto;
   grid-template-rows: auto;
   column-gap: 12px;
+  margin-bottom: 4px;
 }
 html.statistics main #playlist div.header #title {
   grid-column: 1;
@@ -491,10 +496,14 @@ html.statistics main #playlist div.header #title {
   text-overflow: ellipsis;
   border: none;
   background: none;
+  font-size: 1em;
+  font-weight: bold;
 }
 html.statistics main #playlist div.header #interval {
   grid-column: 2;
   grid-row: 1;
+  padding-left: 4px;
+  padding-right: 4px;
   display: grid;
   grid-template-columns: auto auto auto auto;
   grid-template-rows: auto;
@@ -510,11 +519,17 @@ html.statistics main #playlist div.header #interval input[type=radio] {
 }
 html.statistics main #playlist div.header #interval input[type=radio]:checked + label {
   font-weight: bold;
-  color: black;
+  color: var(--text-selected);
 }
 html.statistics main #playlist div.history {
   grid-column: 1;
   grid-row: 2;
+  padding-top: 4px;
+  padding-bottom: 4px;
+  padding-left: 4px;
+  padding-right: 4px;
+  border-radius: 4px;
+  background: var(--statistics-history-background);
   overflow: hidden;
   overflow-y: auto;
   scrollbar-width: none;
@@ -549,6 +564,7 @@ html.statistics main #playlist div.history ul li div.track .title {
   text-overflow: ellipsis;
   border: none;
   background: none;
+  font-size: 0.9em;
 }
 html.statistics main #playlist div.history ul li div.track yam-bar-graph {
   grid-column: 2;
@@ -585,9 +601,46 @@ html.statistics main #track div.header #time-signature img {
   grid-column: 1;
   grid-row: 1;
   height: 100%;
+  visibility: hidden;
 }
-html.statistics main #track div.header #time-signature img.hidden {
+html.statistics main #track div.header #time-signature span.icon {
+  box-sizing: border-box;
+  width: 100%;
+  height: 100%;
+  background-color: var(--icon);
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: contain;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
+}
+html.statistics main #track div.header #time-signature span.icon.hidden {
   display: none;
+}
+html.statistics main #track div.header #time-signature span.icon-stave {
+  grid-column: 1;
+  grid-row: 1;
+  mask-image: url("/images/time-signatures/stave.svg");
+}
+html.statistics main #track div.header #time-signature span.icon-tactus {
+  grid-column: 1;
+  grid-row: 1;
+  mask-image: url("/images/time-signatures/tactus/4.svg");
+}
+html.statistics main #track div.header #time-signature span.icon-figura {
+  grid-column: 1;
+  grid-row: 1;
+  mask-image: url("/images/time-signatures/figura/4.svg");
+}
+html.statistics main #track div.header #time-signature span.icon-common {
+  grid-column: 1;
+  grid-row: 1;
+  mask-image: url("/images/time-signatures/common.svg");
+}
+html.statistics main #track div.header #time-signature span.icon-cut {
+  grid-column: 1;
+  grid-row: 1;
+  mask-image: url("/images/time-signatures/cut.svg");
 }
 html.statistics main #track div.header #tempo {
   grid-row: 2;

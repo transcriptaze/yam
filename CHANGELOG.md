@@ -1,8 +1,9 @@
 # CHANGELOG
 
-## Unreleased
+## [0.3.0](https://github.com/transcriptaze/yam/releases/tag/v0.3.0) - 2026-05-26
 
 ### Added
+1. Captured, stored and displayed statistics for tracks and playlists.
 
 ### Updated
 1. Fixed BPM, loop, ding, pulse initialisation from track.

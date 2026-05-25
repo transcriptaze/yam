@@ -248,6 +248,7 @@ export class Playlists extends HTMLElement {
       playlist: playlist,
       selected: playlist.UUID === this.#selected,
     }
+
     e.addEventListener(EVENTS.TOGGLE_PLAYLIST, this.#toggle)
 
     li.appendChild(e)

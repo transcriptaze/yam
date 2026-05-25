@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html class="statistics" data-theme="default">
+  <head>
+    <title>Yet Another Metronome - Statistics</title>
+    <link rel="icon"       href="./images/favicon.png" />
+    <link rel="stylesheet" href="./css/YAM.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+    <script>
+      (function() {
+        try {
+           const json = localStorage.getItem('YAM')
+           const object = JSON.parse(json)
+           const theme = object?.settings.theme ?? 'default'
+
+           console.log({theme})
+
+           document.documentElement.setAttribute('data-theme', theme);
+        } catch (err) {
+           console.log(err)
+        }
+       })()
+    </script>    
+  </head>
+
+  <body>
+    <div class="content">
+      <main>
+        <h1><div class="logo"></div>Yet Another Metronome</h1>
+        <div class="statistics">
+
+          <div id="playlist" class="hidden">
+            <div class="header">
+              <div id="title">----</div>
+              <div id="interval">
+                 <input id="quarter" type="radio" name="interval" value="quarter" />
+                 <label for="quarter">3 months</label>
+
+                 <input id="month" type="radio" name="interval" value="month" />
+                 <label for="month">1 month</label>
+
+                 <input id="fortnight" type="radio" name="interval" value="fortnight" checked/>
+                 <label for="fortnight">2 weeks</label>
+
+                 <input id="week" type="radio" name="interval" value="week" />
+                 <label for="week">1 week</label>
+              </div>
+            </div>
+            <div class="history week">
+              <ul class="tracks">
+              </ul>
+            </div>            
+          </div>
+
+          <div id="track" class="hidden">
+            <div class="header">
+              <div id="title">----</div>
+              <div id="time-signature">
+                <span class="icon icon-stave"         aria-hidden="true"></span>                
+                <span class="icon icon-tactus"        aria-hidden="true"></span>
+                <span class="icon icon-figura"        aria-hidden="true"></span>
+                <span class="icon icon-common hidden" aria-hidden="true"></span>
+                <span class="icon icon-cut    hidden" aria-hidden="true"></span>
+
+                <img class="stave"  src="./images/time-signatures/stave.svg" />
+                <img class="tactus" src="./images/time-signatures/tactus/4.svg" />
+                <img class="figura" src="./images/time-signatures/figura/4.svg" />
+                <img class="common" src="./images/time-signatures/common.svg" />
+                <img class="cut"    src="./images/time-signatures/cut.svg" />
+              </div>
+              <div id="tempo"></div>
+              <div id="bars"></div>
+            </div>
+
+            <hr/>
+            <div class="summary">
+              <h2>Summary</h2>
+              <label for="played">Played:</label><span id="played"></span>
+              <label for="last-played">Last played:</label><span id="last-played"></span>
+              <label for="BPM">BPM:</label><span id="BPM"></span>
+            </div>
+
+            <hr/>
+            <div class="history week">
+              <h2>Previous week</h2>
+              <label>Played:</label><span></span>
+              <yam-bar-graph labels="weekdays"></yam-bar-graph>
+            </div>
+
+            <hr/>
+            <div class="history month">
+              <h2>Previous month</h2>
+              <label>Played:</label><span></span>
+              <yam-bar-graph background="months"></yam-bar-graph>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <toolbar class="statistics">
+        <div class="menu">
+          <div class="left-menu">
+            <button id="metronome" class="icon-metronome" aria-label="Metronome"></button>
+            <button id="playlist"  class="icon-playlist"  aria-label="Playlist"></button>
+            <button id="save"      class="icon-save"      aria-label="Save"></button>
+          </div>
+          <div class="right-menu">
+            <button id="theme" class="icon-theme" aria-label="Theme"></button>
+            <button id="about" class="icon-about" aria-label="About"></button>
+            <button id="oops"  class="icon-oops hidden" aria-label="Ooops"></button>
+          </div>
+        </div>
+      </toolbar>
+
+    </div>
+
+    <!-- file download/upload -->
+    <a id="export" href="" style="display:none" download></a>
+    <input id="picker" type="file" accept="application/x-yam-statistics, .statistics" style="display:none;" />
+
+    <!-- file import confirm -->
+<!-- 
+    <dialog class="import">
+      <div>
+        <p class="message">Load playlist from file ??</p>
+        <button value="cancel">Cancel</button>
+        <button value="ok">OK</button>
+      </div>
+    </dialog>
+ -->
+
+    <!-- TEMPLATES -->
+    <template id="template-bar-graph">
+      <div>
+        <canvas width="1" height="1"></canvas>
+      </div>
+    </template>
+
+    <template id="template-track">
+      <div class="track">
+        <span class="title"></span>
+        <yam-bar-graph background="weeks" background="months" labels="weekdays-small"></yam-bar-graph>
+      </div>
+    </template>
+
+  </body>
+
+  <!-- SCRIPTS -->
+  <script type="module">
+    import "./javascript/widgets/widgets.js"
+    import { initialise, onSave, onError, showError } from './javascript/pages/statistics.js'
+    import { toggleTheme } from './javascript/YAM.js'
+
+    const toolbar = {
+      metronome: document.querySelector('toolbar #metronome'),
+      playlist: document.querySelector('toolbar #playlist'),
+      save: document.querySelector('toolbar #save'),
+      theme: document.querySelector('toolbar #theme'),
+      about: document.querySelector('toolbar #about'),
+      oops: document.querySelector('toolbar #oops'),
+    }
+
+    toolbar.metronome.onclick = () => {
+      window.location.href = './index.html'
+    }
+    
+    toolbar.playlist.onclick = () => {
+      window.location.href = './index.html#playlist'
+    }
+
+    toolbar.save.onclick = () => {
+      onSave()
+    }
+
+    toolbar.theme.onclick = () =>  toggleTheme()
+
+    toolbar.about.onclick = () => {
+      window.location.href = './about.html'
+    }
+
+    toolbar.oops.onclick = () => showError()
+
+    document.addEventListener('contextmenu', (event) => {
+      event.preventDefault()
+    })
+
+    // Android Chrome: set viewport height in CSS variable because the viewport height for a
+    //                 PWA app loaded from the home page is incorrect
+    window.addEventListener('load', () => {
+      setTimeout(() => {
+        const vh = window.visualViewport?.height || window.innerHeight
+
+        document.documentElement.style.setProperty('--vh', `${vh}px`)
+      }, 100)
+    })
+
+    window.onerror = (message, source, lineno, colno, error) => {
+      onError({ message, source, lineno, colno, error })
+      return true
+    }
+
+    window.addEventListener("unhandledrejection", (event) => {
+      onError(event.reason)
+      event.preventDefault()
+    })
+
+    // ... good to go!
+    initialise()
+
+  </script>
+
+</html>

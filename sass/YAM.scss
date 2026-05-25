@@ -3,6 +3,7 @@
 
 @use 'pages/main'; 
 @use 'pages/settings'; 
+@use 'pages/statistics'; 
 @use 'pages/about'; 
 @use 'pages/unsupported'; 
 @use 'components/toolbar'; 
@@ -11,6 +12,18 @@
 @use 'components/editor'; 
 
 :root {
+  --weekdays-font: 20px sans-serif;
+  --weekdays-small-font: 16px sans-serif;
+
+  @media (max-width: 768px) and (orientation:portrait) {
+    --weekdays-font: bold 20px sans-serif;
+    --weekdays-small-font: bold 16px sans-serif;
+  }
+
+  @media (max-width: 1024px) and (orientation: landscape) {
+    --weekdays-font: bold 20px sans-serif;
+    --weekdays-small-font: bold 16px sans-serif;
+  }
 }
 
 html {

@@ -27,7 +27,7 @@ export class PlaylistTracks extends HTMLElement {
         if (event.target.UUID != null) {
           event.preventDefault()
           this.dispatchEvent(
-            new CustomEvent(EVENTS.SELECT_TRACK, {
+            new CustomEvent(EVENTS.TRACK_SELECT, {
               bubbles: true,
               composed: true,
               detail: { playlist: this.#playlist, track: event.target.UUID },
@@ -227,8 +227,8 @@ export class PlaylistTracks extends HTMLElement {
       random: v.random === true ? true : false,
     }
 
-    item.addEventListener(EVENTS.MUTE_TRACK, this.#mute)
-    item.addEventListener(EVENTS.DELETE_TRACK, this.#trash)
+    item.addEventListener(EVENTS.TRACK_MUTE, this.#mute)
+    item.addEventListener(EVENTS.TRACK_DELETE, this.#trash)
 
     li.appendChild(grip)
     li.appendChild(item)

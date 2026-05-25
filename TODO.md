@@ -1,12 +1,16 @@
 # TODO
 
 NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
+- (?) rework engine onPlaying/onStopped as signals
+- (?) rework widgets.metronome to subscribe to engine
 
 ## In Progress
 
-- [x] Greensleeves: 33 instead of 1+32
-- [x] dark mode (cf. https://github.com/transcriptaze/yam/issues/48)
-- [x] keeps playing when changing playlists
+- [ ] 2:2 time
+
+- [x] statistics (cf. https://github.com/transcriptaze/yam/issues/11)
+   - (?) https://opensource.posit.co/blog/2026-04-20_ggsql_alpha_release/
+   - (?) https://ggplot2.tidyverse.org/
 
 - [ ] editor - default reverted to 4:4 instead of continuing with 6:4 (cf. https://github.com/transcriptaze/yam/issues/54)
 
@@ -312,6 +316,7 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
       - (?) cue sheets
             - https://wiki.hydrogenaudio.org/index.php?title=Cue_sheet
       - (?) https://docs.swmansion.com/TypeGPU/examples
+      - (?) https://music.stackexchange.com/questions/143557/whats-the-best-way-to-create-mn-tuplets-where-the-m-and-n-values-are-quite-lar
 
 ## Notes
   1.  https://music.stackexchange.com/questions/91171/bar-counting-metronome  
@@ -344,3 +349,24 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
    1. https://medium.com/@utkuaydogdu01/playing-audio-by-processing-raw-pcm-audio-data-in-flutter-practical-guide-and-best-audio-packages-455dedcd129e
 
 
+
+```
+export function getUUID() {
+  // 1. The modern standard (Available in all secure contexts/PWAs)
+  if (typeof self.crypto?.randomUUID === 'function') {
+    return self.crypto.randomUUID();
+  }
+
+  // 2. The robust fallback (Uses high-entropy hardware random if available)
+  const getRandomByte = () => {
+    if (self.crypto?.getRandomValues) {
+      return self.crypto.getRandomValues(new Uint8Array(1))[0];
+    }
+    return Math.floor(Math.random() * 256);
+  };
+
+  return ([1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, c =>
+    (c ^ (getRandomByte() & (15 >> (c / 4)))).toString(16)
+  );
+}
+```

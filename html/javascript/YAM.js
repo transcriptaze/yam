@@ -3,6 +3,7 @@ import * as models from './models/models.js'
 import * as fs from './fs.js'
 import { state } from './state.js'
 import { settings } from './settings.js'
+import * as statistics from './statistics/statistics.js'
 import * as log from './log.js'
 import { DEFAULT, EVENTS, INF } from './constants.js'
 
@@ -60,7 +61,10 @@ export function initialise() {
   widgets.mm.track = null
 
   widgets.loop.loop = state.loop
-  widgets.loop.loops = INF
+  widgets.loop.loops = {
+    loops: INF,
+    count: 0,
+  }
 
   widgets.ding.ding = state.ding
   widgets.ding.track = null
@@ -71,9 +75,9 @@ export function initialise() {
   widgets.wheel.BPM = state.BPM
   widgets.wheel.tempo = null
 
-  // ... initialise playlists
-  Promise.all([models.playlists.restore(), models.tracks.restore()])
-    .then(([playlists, tracks]) => {
+  // ... initialise playlists, tracks and statistics
+  Promise.all([models.playlists.restore(), models.tracks.restore(), statistics.restore()])
+    .then(([playlists, tracks, _statistics]) => {
       widgets.playlists.initialise(playlists, tracks)
 
       // ... playlist in URL?
@@ -381,7 +385,6 @@ export async function showError() {
 export function debug() {
   DEBUG = !DEBUG
 
-  // engine.debug = DEBUG
   throw new Error('ooops')
 }
 
@@ -406,9 +409,12 @@ function rewire() {
   widgets.playlists.addEventListener(EVENTS.SHUFFLE_PLAYLISTS, (e) => onPlaylistsShuffled(e))
   widgets.playlists.addEventListener(EVENTS.SELECT_PLAYLIST, (e) => onPlaylistSelect(e))
   widgets.playlists.addEventListener(EVENTS.DELETE_PLAYLIST, (e) => onPlaylistDelete(e))
-  widgets.playlists.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
+  widgets.playlists.addEventListener(EVENTS.TRACK_SELECT, (e) => onTrackSelect(e))
+  widgets.playlists.addEventListener(EVENTS.TRACK_STATISTICS, (e) => onTrackStatistics(e))
+  widgets.playlists.addEventListener(EVENTS.PLAYLIST_STATISTICS, (e) => onPlaylistStatistics(e))
 
-  widgets.tracks.addEventListener(EVENTS.SELECT_TRACK, (e) => onTrackSelect(e))
+  widgets.tracks.addEventListener(EVENTS.TRACK_SELECT, (e) => onTrackSelect(e))
+  widgets.tracks.addEventListener(EVENTS.TRACK_STATISTICS, (e) => onTrackStatistics(e))
 
   widgets.editor.addEventListener(EVENTS.EDIT_SAVE, (e) => onEdited(e))
 
@@ -587,6 +593,10 @@ function onMuted(e, muted) {
   widgets.tracks.update(playlist)
 }
 
+function onTrackStatistics(event) {
+  window.location.href = `./statistics.html?track=${event.detail.track}`
+}
+
 function onPlaylistSelected(event) {
   const playlist = models.playlists.playlist(event.detail.playlist)
   const track = models.tracks.track(event.detail.track)
@@ -614,7 +624,10 @@ function onPlaylistSelected(event) {
 
   widgets.loop.enabled = track?.loopable ?? false
   widgets.loop.loop = track?.loop ?? false
-  widgets.loop.loops = track?.loops ?? INF
+  widgets.loop.loops = {
+    loops: track?.loops ?? INF,
+    count: 0,
+  }
 
   widgets.ding.track = track
 
@@ -668,9 +681,14 @@ function onPlaylistTrackDeleted(e) {
     widgets.info.track = null
     widgets.timeSignature.track = null
     widgets.mm.track = null
+
     widgets.loop.enabled = false
     widgets.loop.loop = false
-    widgets.loop.loops = INF
+    widgets.loop.loops = {
+      loops: INF,
+      count: 0,
+    }
+
     widgets.ding.track = null
 
     widgets.metronome.bof = playlist?.BOF ?? true
@@ -686,6 +704,10 @@ function onPlaylistDelete(event) {
   const playlist = event.detail.playlist
 
   models.playlists.delete(playlist)
+}
+
+function onPlaylistStatistics(event) {
+  window.location.href = `./statistics.html?playlist=${event.detail.playlist}`
 }
 
 // NTS: state/track conflict => either need to update only changed fields here
@@ -752,9 +774,14 @@ function onSave() {
     widgets.info.track = track
     widgets.timeSignature.track = track
     widgets.mm.track = track
+
     widgets.loop.enabled = track?.loopable ?? false
     widgets.loop.loop = track?.loop ?? false
-    widgets.loop.loops = track?.loops ?? INF
+    widgets.loop.loops = {
+      loops: track?.loops ?? INF,
+      count: 0,
+    }
+
     widgets.ding.track = track
     widgets.knob.tempo = track?.tempo
     widgets.knob.BPM = track?.BPM
@@ -815,7 +842,10 @@ function onEdited(_event) {
 
         widgets.loop.enabled = track.loopable ?? false
         widgets.loop.loop = track.loop
-        widgets.loop.loops = track.loops
+        widgets.loop.loops = {
+          loops: track.loops,
+          count: 0,
+        }
 
         // ... update engine
         engine.track = track

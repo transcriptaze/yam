@@ -79,9 +79,9 @@ export const EVENTS = {
   NEXT: 'next',
 
   PLAYING: 'playing',
-  PAUSED: 'paused',
   STOPPED: 'stopped',
   CLICK: 'click',
+  DONE: 'done',
 
   SHUFFLE_PLAYLISTS: 'shuffle-playlists',
 
@@ -95,10 +95,12 @@ export const EVENTS = {
   PLAYLIST_TRACK_DELETED: 'playlist-track-deleted',
   PLAYLIST_TRACK_MUTED: 'muted',
   PLAYLIST_TRACK_UNMUTED: 'unmuted',
+  PLAYLIST_STATISTICS: 'playlist-statistics',
 
-  SELECT_TRACK: 'select-track',
-  MUTE_TRACK: 'mute-track',
-  DELETE_TRACK: 'delete-track',
+  TRACK_SELECT: 'select-track',
+  TRACK_MUTE: 'mute-track',
+  TRACK_DELETE: 'delete-track',
+  TRACK_STATISTICS: 'track-statistics',
 
   EDIT_SAVE: 'edit-save',
   SECTION_TIME_SIGNATURE_CHANGE: 'section-time-signature-change',

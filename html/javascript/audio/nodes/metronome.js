@@ -20,6 +20,7 @@ export class MetronomeNode extends AudioWorkletNode {
   #pulse = ''
 
   #cache = {
+    track: '',
     playing: false,
     stopped: false,
     bar: 0,
@@ -53,15 +54,27 @@ export class MetronomeNode extends AudioWorkletNode {
   onMessage(event) {
     switch (event.data.message) {
       case 'playing':
-        this.subscribers.dispatchEvent(new CustomEvent(EVENTS.PLAYING, { detail: {} }))
-        break
-
-      case 'paused':
-        this.subscribers.dispatchEvent(new CustomEvent(EVENTS.PAUSED, { detail: {} }))
+        this.subscribers.dispatchEvent(
+          new CustomEvent(EVENTS.PLAYING, {
+            detail: {
+              track: event.data.track,
+              loops: event.data.loops,
+              BPM: event.data.BPM,
+            },
+          }),
+        )
         break
 
       case 'stopped':
-        this.subscribers.dispatchEvent(new CustomEvent(EVENTS.STOPPED, { detail: {} }))
+        this.subscribers.dispatchEvent(
+          new CustomEvent(EVENTS.STOPPED, {
+            detail: {
+              track: event.data.track,
+              loops: event.data.loops,
+              done: event.data.done,
+            },
+          }),
+        )
         break
 
       case 'flipped':
@@ -70,11 +83,22 @@ export class MetronomeNode extends AudioWorkletNode {
         this.subscribers.dispatchEvent(
           new CustomEvent(EVENTS.CLICK, {
             detail: {
+              track: event.data.track,
               playing: this.playing,
               stopped: this.stopped,
               bar: this.bar,
               beat: this.beat,
               loops: this.loops,
+            },
+          }),
+        )
+        break
+
+      case 'done':
+        this.subscribers.dispatchEvent(
+          new CustomEvent(EVENTS.DONE, {
+            detail: {
+              track: event.data.track,
             },
           }),
         )
@@ -109,7 +133,11 @@ export class MetronomeNode extends AudioWorkletNode {
 
   set BPM(bpm) {
     if (bpm != null) {
-      this.parameters.get('BPM').linearRampToValueAtTime(bpm, this.context.currentTime + 0.5)
+      if (this.playing) {
+        this.parameters.get('BPM').linearRampToValueAtTime(bpm, this.context.currentTime + 0.5)
+      } else {
+        this.parameters.get('BPM').setValueAtTime(bpm, this.context.currentTime)
+      }
     }
   }
 
@@ -140,7 +168,7 @@ export class MetronomeNode extends AudioWorkletNode {
 
   set track(v) {
     if (v == null) {
-      this.port.postMessage({ message: 'stop' })
+      this.port.postMessage({ message: 'reset' })
     } else {
       this.timeSignature = v?.timeSignature ?? this.timeSignature
       this.pulse = v?.pulse ?? this.pulse
@@ -148,6 +176,7 @@ export class MetronomeNode extends AudioWorkletNode {
       this.#loops = v?.loops ?? INF
 
       const track = transmogrify({
+        UUID: v?.UUID,
         tempo: v?.tempo,
         timeSignature: v?.timeSignature ?? this.#timeSignature,
         pulse: v?.pulse ?? this.#pulse,
@@ -212,6 +241,7 @@ export class MetronomeNode extends AudioWorkletNode {
   }
 
   #flipped(msg) {
+    this.#cache.track = msg.track
     this.#cache.playing = msg.state === STATE.PLAYING
     this.#cache.stopped = msg.state === STATE.STOPPED
     this.#cache.bar = msg.bar
@@ -290,6 +320,7 @@ function transmogrify(track) {
 
   // ... playable section
   return {
+    UUID: track.UUID,
     tempo: track.tempo ?? 120,
     timeSignature: track.timeSignature ?? '',
     pulse: PULSE.pulseToInt(track.pulse ?? ''),

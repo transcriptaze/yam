@@ -22,7 +22,7 @@
         "watch": "sass --watch sass:httpd/css --no-source-map --style=expanded",
         "test": "mocha --require test/setup.js 'test/**/*_spec.js'",
         "klock": "mocha --require test/setup.js 'test/audio/clock/klock_spec.js'",
-        "debug": "mocha --require test/setup.js 'test/widgets/wheel_spec.js'",
+        "debug": "mocha --require test/setup.js 'test/audio/vm/vm_spec.js'",
         "package": "rollup --c yam.config.js",
         "cloudflare": "rollup --config cloudflare.config.js"
     },

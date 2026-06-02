@@ -54,30 +54,10 @@ div.playlist-track {
 
     button {
       background: none;
-      width: 40px;
+      width: 32px;
       height: 100%;
       border: none;
       outline: none;
-    }
-
-    #statistics {
-      height: 28px;
-
-      background-color: #222222;
-      mask-image: url('/images/statistics.svg');
-      mask-repeat: no-repeat;
-      mask-position: center;
-      mask-size: auto 24px;
-    }
-
-    #mute {
-      height: 28px;
-
-      background-color: #222222;
-      mask-image: url('/images/mute.svg');
-      mask-repeat: no-repeat;
-      mask-position: center;
-      mask-size: auto 24px;
     }
 
     #trash {
@@ -97,6 +77,36 @@ div.playlist-track {
         height: 100%;
         width: auto;
       }    
+    }
+
+    #mute {
+      height: 28px;
+
+      background-color: #222222;
+      mask-image: url('/images/mute.svg');
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-size: auto 24px;
+    }
+
+    #statistics {
+      height: 28px;
+
+      background-color: #222222;
+      mask-image: url('/images/statistics.svg');
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-size: auto 24px;
+    }
+
+    #ogg {
+      height: 28px;
+
+      background-color: #222222;
+      mask-image: url('/images/ogg.svg');
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-size: auto 24px;
     }
   }
 

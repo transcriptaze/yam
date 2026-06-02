@@ -94,6 +94,22 @@ export class PlaylistItem extends HTMLElement {
         popover.hidePopover()
       },
     },
+
+    ogg: {
+      click: (event) => {
+        const popover = this.shadowRoot.querySelector('div [popover]')
+
+        event.stopPropagation()
+        this.dispatchEvent(
+          new CustomEvent(EVENTS.TRACK_OGG, {
+            bubbles: true,
+            composed: true,
+            detail: { track: this.UUID },
+          }),
+        )
+        popover.hidePopover()
+      },
+    },
   }
 
   constructor() {
@@ -119,6 +135,7 @@ export class PlaylistItem extends HTMLElement {
     const mute = shadow.getElementById('mute')
     const trash = shadow.getElementById('trash')
     const statistics = shadow.getElementById('statistics')
+    const ogg = shadow.getElementById('ogg')
     const popover = shadow.querySelector('div [popover]')
 
     title.textContent = this.#title
@@ -127,6 +144,7 @@ export class PlaylistItem extends HTMLElement {
     popover.addEventListener('toggle', this.#handlers.popover.toggle)
     mute.addEventListener('click', this.#handlers.mute.click)
     statistics.addEventListener('click', this.#handlers.statistics.click)
+    ogg.addEventListener('click', this.#handlers.ogg.click)
 
     trash.addEventListener('click', this.#handlers.trash.click)
     trash.addEventListener('transitionend', this.#handlers.trash.transitionEnd)

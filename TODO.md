@@ -8,6 +8,15 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 
 - [ ] wrangler CLI
 
+- [ ] export click track (cf. https://github.com/transcriptaze/yam/issues/53)
+   - [ ] RECORD button 
+   - [ ] RECORD -> SAVE on done
+   - [ ] cleanup recorder on done
+   - [ ] offline rendering
+   - [ ] only render fixed length tracks
+   - [ ] only enable OGG for fixed length tracks
+   - https://stackoverflow.com/questions/22560413/html5-web-audio-convert-audio-buffer-into-wav-file
+
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM
     - [ ] 2:2 time
@@ -92,6 +101,10 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 - [ ] landscape+mobile
 
 ## Todo
+
+### VST
+- JUCE
+- https://github.com/talaviram/TICK
 
 ### Reset
     - [ ] red if next tap will reset to defaults

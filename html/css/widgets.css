@@ -1992,26 +1992,10 @@ div.playlist-track [popover] {
 }
 div.playlist-track [popover] button {
   background: none;
-  width: 40px;
+  width: 32px;
   height: 100%;
   border: none;
   outline: none;
-}
-div.playlist-track [popover] #statistics {
-  height: 28px;
-  background-color: #222222;
-  mask-image: url("/images/statistics.svg");
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: auto 24px;
-}
-div.playlist-track [popover] #mute {
-  height: 28px;
-  background-color: #222222;
-  mask-image: url("/images/mute.svg");
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: auto 24px;
 }
 div.playlist-track [popover] #trash {
   display: grid;
@@ -2027,6 +2011,30 @@ div.playlist-track [popover] #trash img {
   grid-row: 1;
   height: 100%;
   width: auto;
+}
+div.playlist-track [popover] #mute {
+  height: 28px;
+  background-color: #222222;
+  mask-image: url("/images/mute.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: auto 24px;
+}
+div.playlist-track [popover] #statistics {
+  height: 28px;
+  background-color: #222222;
+  mask-image: url("/images/statistics.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: auto 24px;
+}
+div.playlist-track [popover] #ogg {
+  height: 28px;
+  background-color: #222222;
+  mask-image: url("/images/ogg.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: auto 24px;
 }
 div.playlist-track [popover]:popover-open {
   display: flex;

@@ -1,5 +1,6 @@
 import { engine } from './audio/engine.js'
-import { recorder } from './audio/recorder.js'
+// import { recorder } from './audio/recorder.js'
+import { Offline } from './audio/offline.js'
 import * as models from './models/models.js'
 import * as fs from './fs.js'
 import { state } from './state.js'
@@ -602,20 +603,25 @@ function onTrackStatistics(event) {
 
 function onTrackOGG(event) {
   const track = models.tracks.track(event.detail.track)
+  const engine = new Offline()
 
-  const callback = (blob) => {
-    const filename = `${track.title}.webm`
-    const url = URL.createObjectURL(blob)
-    const anchor = document.querySelector('a#export')
+  engine.render(track).then((v) => {
+    console.log(v)
+  })
 
-    anchor.href = url
-    anchor.download = filename
-    anchor.click()
-
-    URL.revokeObjectURL(url)
-  }
-
-  recorder.render(track, callback)
+  // const callback = (blob) => {
+  //   const filename = `${track.title}.webm`
+  //   const url = URL.createObjectURL(blob)
+  //   const anchor = document.querySelector('a#export')
+  //
+  //   anchor.href = url
+  //   anchor.download = filename
+  //   anchor.click()
+  //
+  //   URL.revokeObjectURL(url)
+  // }
+  //
+  // recorder.render(track, callback)
 }
 
 function onPlaylistSelected(event) {

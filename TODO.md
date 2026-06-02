@@ -11,6 +11,7 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 - [ ] export click track (cf. https://github.com/transcriptaze/yam/issues/53)
    - [ ] RECORD button 
    - [ ] RECORD -> SAVE on done
+   - [ ] Attach recorder to engine.ctx
    - [ ] cleanup recorder on done
    - [ ] offline rendering
    - [ ] only render fixed length tracks

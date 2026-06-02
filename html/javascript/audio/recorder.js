@@ -2,7 +2,7 @@ import * as nodes from './nodes/nodes.js'
 import * as soundsets from './soundsets.js'
 import { EVENTS } from '../constants.js'
 
-// const AudioContext = window.AudioContext || window.webkitAudioContext
+const AudioContext = window.AudioContext || window.webkitAudioContext
 
 let audioContext
 
@@ -52,8 +52,6 @@ export class AudioRecorder {
           metronome.BPM = this.#BPM
           metronome.loop = false
           metronome.ding = this.#ding
-
-          console.log(ctx)
 
           const stream = ctx.createMediaStreamDestination()
           const recorder = new MediaRecorder(stream.stream)

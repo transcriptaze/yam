@@ -39,7 +39,7 @@ export class Offline {
   }
 
   render(track) {
-    const ctx = new OfflineAudioContext(2, 30 * 48000, 48000)
+    const ctx = new OfflineAudioContext(2, 5 * 48000, 48000)
 
     return soundsets
       .get(ctx, this.#soundset)

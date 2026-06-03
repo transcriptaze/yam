@@ -79,7 +79,7 @@ export const EVENTS = {
   TRACK_MUTE: 'mute-track',
   TRACK_DELETE: 'delete-track',
   TRACK_STATISTICS: 'track-statistics',
-  TRACK_OGG: 'track-ogg',
+  TRACK_WAV: 'track-wav',
 
   EDIT_SAVE: 'edit-save',
   SECTION_TIME_SIGNATURE_CHANGE: 'section-time-signature-change',

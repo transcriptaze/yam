@@ -9,13 +9,16 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 - [ ] wrangler CLI
 
 - [ ] export click track (cf. https://github.com/transcriptaze/yam/issues/53)
+   - [ ] offline rendering
+      - [ ] add samples to 'done'
+      - [ ] only render fixed length tracks
+      - [ ] only enable WAV for fixed length tracks
+      - [ ] cleanup
+
    - [ ] RECORD button 
    - [ ] RECORD -> SAVE on done
    - [ ] Attach recorder to engine.ctx
    - [ ] cleanup recorder on done
-   - [ ] offline rendering
-   - [ ] only render fixed length tracks
-   - [ ] only enable OGG for fixed length tracks
    - https://stackoverflow.com/questions/22560413/html5-web-audio-convert-audio-buffer-into-wav-file
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)

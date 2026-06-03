@@ -414,11 +414,11 @@ function rewire() {
   widgets.playlists.addEventListener(EVENTS.PLAYLIST_STATISTICS, (e) => onPlaylistStatistics(e))
   widgets.playlists.addEventListener(EVENTS.TRACK_SELECT, (e) => onTrackSelect(e))
   widgets.playlists.addEventListener(EVENTS.TRACK_STATISTICS, (e) => onTrackStatistics(e))
-  widgets.playlists.addEventListener(EVENTS.TRACK_OGG, (e) => onTrackOGG(e))
+  widgets.playlists.addEventListener(EVENTS.TRACK_WAV, (e) => onTrackWAV(e))
 
   widgets.tracks.addEventListener(EVENTS.TRACK_SELECT, (e) => onTrackSelect(e))
   widgets.tracks.addEventListener(EVENTS.TRACK_STATISTICS, (e) => onTrackStatistics(e))
-  widgets.tracks.addEventListener(EVENTS.TRACK_OGG, (e) => onTrackOGG(e))
+  widgets.tracks.addEventListener(EVENTS.TRACK_WAV, (e) => onTrackWAV(e))
 
   widgets.editor.addEventListener(EVENTS.EDIT_SAVE, (e) => onEdited(e))
 
@@ -601,16 +601,16 @@ function onTrackStatistics(event) {
   window.location.href = `./statistics.html?track=${event.detail.track}`
 }
 
-function onTrackOGG(event) {
+function onTrackWAV(event) {
   const track = models.tracks.track(event.detail.track)
   const engine = new Offline()
 
-  engine.render(track).then((v) => {
-    console.log(v)
+  engine.render(track).then((buffer) => {
+    fs.saveWavFile(`${track.title}.wav`, buffer)
   })
 
   // const callback = (blob) => {
-  //   const filename = `${track.title}.webm`
+  //   const filename = `${track.title}.wav`
   //   const url = URL.createObjectURL(blob)
   //   const anchor = document.querySelector('a#export')
   //

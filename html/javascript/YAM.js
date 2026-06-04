@@ -1,4 +1,6 @@
 import { engine } from './audio/engine.js'
+// import { recorder } from './audio/recorder.js'
+import { Offline } from './audio/offline.js'
 import * as models from './models/models.js'
 import * as fs from './fs.js'
 import { state } from './state.js'
@@ -409,12 +411,14 @@ function rewire() {
   widgets.playlists.addEventListener(EVENTS.SHUFFLE_PLAYLISTS, (e) => onPlaylistsShuffled(e))
   widgets.playlists.addEventListener(EVENTS.SELECT_PLAYLIST, (e) => onPlaylistSelect(e))
   widgets.playlists.addEventListener(EVENTS.DELETE_PLAYLIST, (e) => onPlaylistDelete(e))
+  widgets.playlists.addEventListener(EVENTS.PLAYLIST_STATISTICS, (e) => onPlaylistStatistics(e))
   widgets.playlists.addEventListener(EVENTS.TRACK_SELECT, (e) => onTrackSelect(e))
   widgets.playlists.addEventListener(EVENTS.TRACK_STATISTICS, (e) => onTrackStatistics(e))
-  widgets.playlists.addEventListener(EVENTS.PLAYLIST_STATISTICS, (e) => onPlaylistStatistics(e))
+  widgets.playlists.addEventListener(EVENTS.TRACK_WAV, (e) => onTrackWAV(e))
 
   widgets.tracks.addEventListener(EVENTS.TRACK_SELECT, (e) => onTrackSelect(e))
   widgets.tracks.addEventListener(EVENTS.TRACK_STATISTICS, (e) => onTrackStatistics(e))
+  widgets.tracks.addEventListener(EVENTS.TRACK_WAV, (e) => onTrackWAV(e))
 
   widgets.editor.addEventListener(EVENTS.EDIT_SAVE, (e) => onEdited(e))
 
@@ -595,6 +599,15 @@ function onMuted(e, muted) {
 
 function onTrackStatistics(event) {
   window.location.href = `./statistics.html?track=${event.detail.track}`
+}
+
+function onTrackWAV(event) {
+  const track = models.tracks.track(event.detail.track)
+  const engine = new Offline()
+
+  engine.render(track).then(({ buffer, samples, duration }) => {
+    fs.saveWavFile(`${track.title}.wav`, buffer, samples, duration)
+  })
 }
 
 function onPlaylistSelected(event) {

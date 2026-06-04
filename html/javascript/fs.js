@@ -48,11 +48,91 @@ export function saveStatistics(object) {
   }
 }
 
+export function saveWavFile(filename, buffer, samples, _duration) {
+  const length = Math.min(samples + 0.25 * buffer.sampleRate, buffer.length) * buffer.numberOfChannels * 2 + 44
+  const bytes = new ArrayBuffer(length)
+  const view = new DataView(bytes)
+  let offset = 0
+
+  const setUint16 = (data) => {
+    view.setUint16(offset, data, true)
+    offset += 2
+  }
+  const setUint32 = (data) => {
+    view.setUint32(offset, data, true)
+    offset += 4
+  }
+
+  const clamp = (v, min, max) => {
+    return Math.min(Math.max(v, min), max)
+  }
+
+  // Conversion formula: sample = (isample * 2 + 1)/65535
+  //
+  // e.g.:
+  //   ( 0*2     + 1)/65535 =  0.0000152590219
+  //   (-1*2     + 1)/65535 = -0.0000152590219
+  //   ( 32767*2 + 1)/65535 =  1
+  //   (-32768*2 + 1)/65535 = -1
+  const pcm16 = (sample) => {
+    return Math.floor((65535 * clamp(sample, -1.0, +1.0) - 1) / 2)
+  }
+
+  // ... WAV header
+  // prettier-ignore
+  {
+    setUint32(0x46464952)                                      // "RIFF"
+    setUint32(length - 8)                                      // file length - 8
+    setUint32(0x45564157)                                      // "WAVE"
+    setUint32(0x20746d66)                                      // "fmt " chunk
+    setUint32(16)                                              // chunk length
+    setUint16(1)                                               // sample format (raw)
+    setUint16(buffer.numberOfChannels)                         // channel count
+    setUint32(buffer.sampleRate)                               // sample rate
+    setUint32(buffer.sampleRate * buffer.numberOfChannels * 2) // byte rate
+    setUint16(buffer.numberOfChannels * 2)                     // block align
+    setUint16(16)                                              // bits per sample
+    setUint32(0x61746164)                                      // "data" chunk
+    setUint32(length - offset - 4)                             // chunk length    
+  }
+
+  // ... interleaved audio data
+  const channels = []
+  for (let channel = 0; channel < buffer.numberOfChannels; channel++) {
+    channels.push(buffer.getChannelData(channel))
+  }
+
+  let ix = 0
+  while (offset < length) {
+    for (let channel = 0; channel < buffer.numberOfChannels; channel++) {
+      const sample = channels[channel][ix]
+      const isample = pcm16(sample)
+
+      view.setInt16(offset, isample, true)
+      offset += 2
+    }
+
+    ix++
+  }
+
+  const blob = new Blob([bytes], { type: 'audio/wav' })
+
+  if (window.showSaveFilePicker) {
+    saveWithPicker(blob, filename)
+  } else {
+    saveWithChooser(blob, filename)
+  }
+}
+
 async function saveWithPicker(blob, filename) {
   let accepts = { 'application/x-yam': ['.yam'] }
 
   if (blob.type === 'application/x-yam-statistics') {
     accepts = { 'application/x-yam-statistics': ['.statistics', '.json'] }
+  }
+
+  if (blob.type === 'audio/wav') {
+    accepts = { 'audio/wav': ['.wav'] }
   }
 
   const options = {

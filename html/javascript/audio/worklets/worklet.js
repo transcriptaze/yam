@@ -8,6 +8,7 @@ const INF = Number.POSITIVE_INFINITY
 let DEBUG = false
 
 export class Metronome extends AudioWorkletProcessor {
+  #fs = 44100
   #track = {
     BPM: null,
     beats: null,
@@ -22,6 +23,7 @@ export class Metronome extends AudioWorkletProcessor {
   #loops = 0
   #cued = []
   #delay = 0
+  #samples = 0
 
   constructor() {
     super()
@@ -127,7 +129,7 @@ export class Metronome extends AudioWorkletProcessor {
     const sticks = event.data.stick
     const ding = event.data.ding
 
-    this.fs = event.data.fs
+    this.#fs = event.data.fs
     this.clock.fs = event.data.fs
     this.level.sampleRate = event.data.fs
     this.clicks = new Map([
@@ -153,7 +155,13 @@ export class Metronome extends AudioWorkletProcessor {
       // this.#loops = 0
 
       this.section = null
+      this.samples = 0
       this.clock.reset()
+
+      this.port.postMessage({
+        message: 'ready',
+        track: this.#track?.UUID ?? '',
+      })
     }
   }
 
@@ -205,6 +213,7 @@ export class Metronome extends AudioWorkletProcessor {
 
     this.FSM.onStop()
     this.#loops = 0 // NTS: always reset loop count on loading a track
+    this.#samples = 0
 
     if (playing) {
       if (this.FSM.onPlay()) {
@@ -235,6 +244,8 @@ export class Metronome extends AudioWorkletProcessor {
     const ding = parameters.ding[0] === 1.0
     const gain = this.playing ? this.level.fadeIn() : this.level.fadeOut()
     let clock = this.clock
+
+    this.#samples += N > 0 ? N : 0
 
     if (this.starting) {
       clock.tick(BPM, tactus, figura, pulse, N)
@@ -298,6 +309,8 @@ export class Metronome extends AudioWorkletProcessor {
               message: 'stopped',
               track: this.#track?.UUID ?? '',
               loops: loops,
+              samples: this.#samples,
+              duration: this.#samples / this.#fs,
             })
           }
         } else {

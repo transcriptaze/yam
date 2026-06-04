@@ -19,7 +19,6 @@ clean:
 	rm -rf dist
 
 format: 
-# 	find html -name "*.html"          -exec npx prettier --write {} +
 	find html/javascript -name "*.js" -exec npx prettier --write {} +
 	find test            -name "*.js" -exec npx prettier --write {} +
 
@@ -106,7 +105,6 @@ cloudflare-dev:  build
 	cd dist/cloudflare && zip --recurse-paths -FS ../cloudflare.zip . -x ".DS_Store"
 
 debug:
-	find html/javascript -name "*.js" -exec npx eslint   --fix {} +
 	npm run debug
 
 sass: 

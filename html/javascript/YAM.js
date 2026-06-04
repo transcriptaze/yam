@@ -605,23 +605,9 @@ function onTrackWAV(event) {
   const track = models.tracks.track(event.detail.track)
   const engine = new Offline()
 
-  engine.render(track).then((buffer) => {
-    fs.saveWavFile(`${track.title}.wav`, buffer)
+  engine.render(track).then(({ buffer, samples, duration }) => {
+    fs.saveWavFile(`${track.title}.wav`, buffer, samples, duration)
   })
-
-  // const callback = (blob) => {
-  //   const filename = `${track.title}.wav`
-  //   const url = URL.createObjectURL(blob)
-  //   const anchor = document.querySelector('a#export')
-  //
-  //   anchor.href = url
-  //   anchor.download = filename
-  //   anchor.click()
-  //
-  //   URL.revokeObjectURL(url)
-  // }
-  //
-  // recorder.render(track, callback)
 }
 
 function onPlaylistSelected(event) {

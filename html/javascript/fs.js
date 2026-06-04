@@ -48,8 +48,8 @@ export function saveStatistics(object) {
   }
 }
 
-export function saveWavFile(filename, buffer) {
-  const length = buffer.length * buffer.numberOfChannels * 2 + 44
+export function saveWavFile(filename, buffer, samples, _duration) {
+  const length = Math.min(samples + 0.25 * buffer.sampleRate, buffer.length) * buffer.numberOfChannels * 2 + 44
   const bytes = new ArrayBuffer(length)
   const view = new DataView(bytes)
   let offset = 0
@@ -117,7 +117,11 @@ export function saveWavFile(filename, buffer) {
 
   const blob = new Blob([bytes], { type: 'audio/wav' })
 
-  saveWithChooser(blob, filename)
+  if (window.showSaveFilePicker) {
+    saveWithPicker(blob, filename)
+  } else {
+    saveWithChooser(blob, filename)
+  }
 }
 
 async function saveWithPicker(blob, filename) {
@@ -125,6 +129,10 @@ async function saveWithPicker(blob, filename) {
 
   if (blob.type === 'application/x-yam-statistics') {
     accepts = { 'application/x-yam-statistics': ['.statistics', '.json'] }
+  }
+
+  if (blob.type === 'audio/wav') {
+    accepts = { 'audio/wav': ['.wav'] }
   }
 
   const options = {

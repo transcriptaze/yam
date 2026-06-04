@@ -10,9 +10,11 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 
 - [ ] export click track (cf. https://github.com/transcriptaze/yam/issues/53)
    - [ ] offline rendering
-      - [ ] add samples to 'done'
+      - [x] add samples to 'done'
       - [ ] only render fixed length tracks
       - [ ] only enable WAV for fixed length tracks
+      - [ ] add postamble padding to settings
+      - [ ] block concurrent renders
       - [ ] cleanup
 
    - [ ] RECORD button 

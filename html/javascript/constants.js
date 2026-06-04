@@ -56,6 +56,7 @@ export const EVENTS = {
   BACK: 'back',
   NEXT: 'next',
 
+  READY: 'ready',
   PLAYING: 'playing',
   STOPPED: 'stopped',
   CLICK: 'click',

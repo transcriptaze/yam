@@ -1,7 +1,7 @@
 import { engine } from './audio/engine.js'
-// import { recorder } from './audio/recorder.js'
 import { Offline } from './audio/offline.js'
 import * as models from './models/models.js'
+import * as datastore from './datastore/datastore.js'
 import * as fs from './fs.js'
 import { state } from './state.js'
 import { settings } from './settings.js'
@@ -602,11 +602,11 @@ function onTrackStatistics(event) {
 }
 
 function onTrackWAV(event) {
-  const track = models.tracks.track(event.detail.track)
+  const track = datastore.tracks.get(event.detail.track)
   const engine = new Offline()
 
-  engine.render(track).then(({ buffer, samples, duration }) => {
-    fs.saveWavFile(`${track.title}.wav`, buffer, samples, duration)
+  engine.render(track).then(({ buffer }) => {
+    fs.saveWavFile(`${track.title}.wav`, buffer)
   })
 }
 

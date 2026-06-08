@@ -48,8 +48,9 @@ export function saveStatistics(object) {
   }
 }
 
-export function saveWavFile(filename, buffer, samples, _duration) {
-  const length = Math.min(samples + 0.25 * buffer.sampleRate, buffer.length) * buffer.numberOfChannels * 2 + 44
+export function saveWavFile(filename, buffer) {
+  console.log(buffer)
+  const length = buffer.length * buffer.numberOfChannels * 2 + 44
   const bytes = new ArrayBuffer(length)
   const view = new DataView(bytes)
   let offset = 0

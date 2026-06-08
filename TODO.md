@@ -11,11 +11,12 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 - [ ] export click track (cf. https://github.com/transcriptaze/yam/issues/53)
    - [ ] offline rendering
       - [x] add samples to 'done'
-      - [ ] only render fixed length tracks
-      - [ ] only enable WAV for fixed length tracks
-      - [ ] add postamble padding to settings
-      - [ ] block concurrent renders
-      - [ ] cleanup
+      - [x] cleanup
+      - [x] use track duration
+      - [ ] fix track duration for Jukskei (bridge)
+      - [ ] default to settings.duration for infinite tracks
+      - [ ] add preamble/postamble padding to settings
+      - (?) busy/unbusy windmill around render?
 
    - [ ] RECORD button 
    - [ ] RECORD -> SAVE on done

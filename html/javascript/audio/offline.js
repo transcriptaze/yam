@@ -36,6 +36,7 @@ export class Offline {
       .then((sounds) => metronome(ctx, sounds, subscribers))
       .then((metronome) => {
         metronome.connect(ctx.destination)
+        metronome.offline = true
         metronome.track = track
         metronome.play()
       })

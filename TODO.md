@@ -14,7 +14,7 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
       - [x] cleanup
       - [x] use track duration
       - [x] not rendering custom clicks
-      - [ ] fix volume ramp up
+      - [x] fix volume ramp up
       - [ ] fix track duration for Jukskei (bridge)
       - [ ] default to settings.duration for infinite tracks
       - [ ] add preamble/postamble padding to settings

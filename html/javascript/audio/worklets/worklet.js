@@ -80,6 +80,13 @@ export class Metronome extends AudioWorkletProcessor {
         maxValue: 1,
         automationRate: 'k-rate',
       },
+      {
+        name: 'offline',
+        defaultValue: 0,
+        minValue: 0,
+        maxValue: 1,
+        automationRate: 'k-rate',
+      },
     ]
   }
 
@@ -242,7 +249,8 @@ export class Metronome extends AudioWorkletProcessor {
     const pulse = this.section?.pulse ?? parameters.pulse[0]
     const loop = parameters.loop[0] === 1.0
     const ding = parameters.ding[0] === 1.0
-    const gain = this.playing ? this.level.fadeIn() : this.level.fadeOut()
+    const offline = parameters.offline[0] === 1.0
+    const gain = offline ? 1 : this.playing ? this.level.fadeIn() : this.level.fadeOut()
     let clock = this.clock
 
     this.#samples += N > 0 ? N : 0

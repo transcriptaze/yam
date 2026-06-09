@@ -85,6 +85,10 @@ export function clicks(v) {
     return v
   }
 
+  if (v != null && v instanceof Map) {
+    return v
+  }
+
   if (v != null && v instanceof Object) {
     return new Map(Object.entries(v))
   }

@@ -362,6 +362,9 @@ html.settings main div.settings label {
   width: fit-content;
   align-self: center;
 }
+html.settings main div.settings label[for=click-track] {
+  align-self: start;
+}
 html.settings main div.settings select {
   width: fit-content;
   min-width: 128px;
@@ -402,6 +405,22 @@ html.settings main div.volume input[type=text] {
   outline: none;
   width: 3em;
   color: var(--text);
+}
+html.settings main div.click-track {
+  display: grid;
+  grid-template-columns: auto auto;
+  row-gap: 4px;
+  column-gap: 4px;
+}
+html.settings main div.click-track label {
+  font-style: italic;
+}
+html.settings main div.click-track input::-webkit-outer-spin-button, html.settings main div.click-track input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+html.settings main div.click-track input[type=number] {
+  -moz-appearance: textfield;
 }
 
 @media (max-width: 768px) and (orientation: portrait) {

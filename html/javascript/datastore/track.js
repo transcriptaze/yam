@@ -42,6 +42,10 @@ export function realize(track) {
   }
 
   const duration = () => {
+    if (sections.length == 0) {
+      return INF
+    }
+
     return sections.reduce((duration, v) => {
       if (!Number.isNaN(duration) && !Number.isNaN(v.duration)) {
         return duration + v.duration

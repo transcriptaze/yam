@@ -15,9 +15,14 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
       - [x] use track duration
       - [x] not rendering custom clicks
       - [x] fix volume ramp up
-      - [ ] fix track duration for Jukskei (bridge)
-      - [ ] default to settings.duration for infinite tracks
-      - [ ] add preamble/postamble padding to settings
+      - [x] fix track duration for Jukskei (bridge)
+      - [x] default to settings.duration for infinite tracks
+      - [x] add preamble/postamble padding to settings
+      - [ ] offline node/worklet
+         - no FSM250
+         - wait for ready in node
+         - no set::BPM, etc
+      - (?) loops
       - (?) busy/unbusy windmill around render?
 
    - [ ] RECORD button 

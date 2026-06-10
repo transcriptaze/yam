@@ -605,7 +605,8 @@ function onTrackWAV(event) {
   const track = datastore.tracks.get(event.detail.track)
   const engine = new Offline()
 
-  engine.render(track).then(({ buffer }) => {
+  console.log({ settings })
+  engine.render(track, settings).then(({ buffer }) => {
     fs.saveWavFile(`${track.title}.wav`, buffer)
   })
 }

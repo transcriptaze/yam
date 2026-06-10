@@ -42,17 +42,36 @@
           <div class="volume">
             <input id="volume" type="range" min="-3" max="3" step="0.1" value="0"   list="markers" />
             <input             type="text"                              value="1.0" readonly />
+            <datalist id="markers">
+              <option value="-3"></option>
+              <option value="-2"></option>
+              <option value="-1"></option>
+              <option value="0"></option>
+              <option value="1"></option>
+              <option value="2"></option>
+              <option value="3"></option>
+            </datalist>
           </div>
 
-          <datalist id="markers">
-            <option value="-3"></option>
-            <option value="-2"></option>
-            <option value="-1"></option>
-            <option value="0"></option>
-            <option value="1"></option>
-            <option value="2"></option>
-            <option value="3"></option>
-          </datalist>
+          <label for="click-track">Click track</label>
+          <div id="click-track" class="click-track">
+            <label for="fs">Sample rate</label>
+            <input id="fs" type="number" min="0" value="48000" list="sample-rates" />
+            <label for="preamble">Pre-amble</label>
+            <input id="preamble" type="number" min="0" max="5" step="0.001" value="0.25" />
+            <label for="postamble">Post-amble</label>
+            <input id="postamble" type="number" min="0" max="5" step="0.001" value="0.25" />
+            <label for="duration">Default duration</label>
+            <input id="duration" type="number" min="0" max="900" step="1" value="300" />
+            <label for="max">Max. duration</label>
+            <input id="max" type="number" min="0" max="1800" step="1" value="600" />
+
+            <datalist id="sample-rates">
+              <option value="44100"></option>
+              <option value="48000"></option>
+            </datalist>
+
+          </div>
         </div>
       </main>
 

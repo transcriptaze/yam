@@ -54,6 +54,10 @@ html.settings main {
       align-self: center;
     }
 
+    label[for="click-track"] {
+      align-self: start;
+    }
+
     select {
       width: fit-content;
       min-width: 128px;
@@ -102,6 +106,26 @@ html.settings main {
       width: 3em;
 
       color: var(--text);
+    }
+  }
+
+  div.click-track {
+    display: grid;
+    grid-template-columns: auto auto;
+    row-gap: 4px;
+    column-gap: 4px;
+
+    label {
+      font-style: italic;
+    }
+
+    input::-webkit-outer-spin-button, input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+
+    input[type=number] {
+      -moz-appearance: textfield;
     }
   }
 }

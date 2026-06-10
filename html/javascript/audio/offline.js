@@ -3,17 +3,18 @@ import * as soundsets from './soundsets.js'
 import { EVENTS, INF } from '../constants.js'
 
 const FS = 48000
+const PREAMBLE = 0.25
+const POSTAMBLE = 0.25
+const MAX = 5 * 60
 
 export class Offline {
   #soundset = 'default'
 
-  render(track) {
-    const preamble = 0.15
-    const postamble = 0.25
-    const duration = track.duration === INF ? 30 : Math.min(track.duration, 5 * 60)
-    const samples = (preamble + duration + postamble) * FS
-    const ctx = new OfflineAudioContext(2, samples, FS)
+  render(track, settings) {
     const subscribers = new EventTarget()
+    const fs = settings?.sampleRate ?? FS
+    const samples = bufferSize(track, settings, fs)
+    const ctx = new OfflineAudioContext(2, samples, fs)
 
     const wait = () => {
       return new Promise((resolve, reject) => {
@@ -48,6 +49,23 @@ export class Offline {
         }
       })
   }
+}
+
+function bufferSize(track, settings, fs) {
+  const preamble = settings?.preamble ?? PREAMBLE
+  const postamble = settings?.postamble ?? POSTAMBLE
+  const max = settings?.max ?? MAX
+  const duration = settings?.duration ?? max
+
+  if (track.duration !== INF) {
+    return (preamble + clamp(track.duration, 0, max) + postamble) * fs
+  }
+
+  return (preamble + duration + postamble) * fs
+}
+
+function clamp(v, min, max) {
+  return Math.min(Math.max(v, min), max)
 }
 
 function metronome(ctx, sounds, subscribers) {

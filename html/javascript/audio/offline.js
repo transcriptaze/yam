@@ -3,7 +3,7 @@ import * as soundsets from './soundsets.js'
 import { EVENTS, INF } from '../constants.js'
 
 const FS = 48000
-const PREAMBLE = 0.25
+const _PREAMBLE = 0.0
 const POSTAMBLE = 0.25
 const MAX = 5 * 60
 
@@ -34,12 +34,11 @@ export class Offline {
 
     return soundsets
       .get(ctx, this.#soundset)
-      .then((sounds) => metronome(ctx, sounds, subscribers))
+      .then((sounds) => offline(ctx, sounds, subscribers))
       .then((metronome) => {
         metronome.connect(ctx.destination)
         metronome.offline = true
-        metronome.track = track
-        metronome.play()
+        metronome.render(track)
       })
       .then(() => wait())
       .then(() => ctx.startRendering())
@@ -52,7 +51,7 @@ export class Offline {
 }
 
 function bufferSize(track, settings, fs) {
-  const preamble = settings?.preamble ?? PREAMBLE
+  const preamble = 0 // settings?.preamble ?? PREAMBLE
   const postamble = settings?.postamble ?? POSTAMBLE
   const max = settings?.max ?? MAX
   const duration = settings?.duration ?? max
@@ -68,6 +67,6 @@ function clamp(v, min, max) {
   return Math.min(Math.max(v, min), max)
 }
 
-function metronome(ctx, sounds, subscribers) {
-  return ctx.audioWorklet.addModule('./javascript/audio/worklets/worklet.js').then(() => new nodes.MetronomeNode(ctx, sounds, subscribers))
+function offline(ctx, sounds, subscribers) {
+  return ctx.audioWorklet.addModule('./javascript/audio/worklets/offline.js').then(() => new nodes.OfflineNode(ctx, sounds, subscribers))
 }

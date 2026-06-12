@@ -14,7 +14,7 @@ const STATE = {
 const INF = Number.POSITIVE_INFINITY
 const MAX_DELAY = 30000 // ms
 
-export class MetronomeNode extends AudioWorkletNode {
+export class OfflineNode extends AudioWorkletNode {
   #loops = INF
   #timeSignature = ''
   #pulse = ''
@@ -29,7 +29,7 @@ export class MetronomeNode extends AudioWorkletNode {
   }
 
   constructor(context, { tick, tock, tack, stick, ding }, subscribers) {
-    super(context, 'metronome', {
+    super(context, 'offline', {
       numberOfInputs: 0,
       numberOfOutputs: 1,
       outputChannelCount: [2],
@@ -91,19 +91,6 @@ export class MetronomeNode extends AudioWorkletNode {
 
       case 'flipped':
         this.#flipped(event.data)
-
-        this.subscribers.dispatchEvent(
-          new CustomEvent(EVENTS.CLICK, {
-            detail: {
-              track: event.data.track,
-              playing: this.playing,
-              stopped: this.stopped,
-              bar: this.bar,
-              beat: this.beat,
-              loops: this.loops,
-            },
-          }),
-        )
         break
 
       case 'done':
@@ -118,28 +105,9 @@ export class MetronomeNode extends AudioWorkletNode {
     }
   }
 
-  play() {
-    this.port.postMessage({
-      message: 'play',
-    })
-  }
-
   stop() {
     this.port.postMessage({
       message: 'stop',
-    })
-  }
-
-  toggle() {
-    this.port.postMessage({
-      message: 'toggle',
-    })
-  }
-
-  set debug(dbg) {
-    this.port.postMessage({
-      message: 'debug',
-      debug: dbg,
     })
   }
 
@@ -178,43 +146,44 @@ export class MetronomeNode extends AudioWorkletNode {
     }
   }
 
-  set track(v) {
-    if (v == null) {
-      this.port.postMessage({ message: 'reset' })
-    } else {
-      this.timeSignature = v?.timeSignature ?? this.timeSignature
-      this.pulse = v?.pulse ?? this.pulse
-      this.BPM = v?.BPM ?? this.BPM
-      this.#loops = v?.loops ?? INF
+  render(v) {
+    this.timeSignature = v.timeSignature ?? this.timeSignature
+    this.pulse = v.pulse ?? this.pulse
+    this.BPM = v.BPM ?? this.BPM
+    this.#loops = v.loops ?? INF
 
-      const track = transmogrify({
-        UUID: v?.UUID,
-        tempo: v?.tempo,
-        timeSignature: v?.timeSignature ?? this.#timeSignature,
-        pulse: v?.pulse ?? this.#pulse,
-        BPM: v?.BPM,
-        loops: v?.loops ?? INF,
-        clicks: v?.clicks ?? null,
-        ding: v?.ding ?? false,
-        dings: v?.dings ?? [],
-        sections: v?.sections ?? [],
-      })
+    const track = transmogrify({
+      UUID: v.UUID,
+      tempo: v.tempo,
+      timeSignature: v.timeSignature ?? this.#timeSignature,
+      pulse: v.pulse ?? this.#pulse,
+      BPM: v.BPM,
+      loops: v.loops ?? INF,
+      clicks: v.clicks ?? null,
+      ding: v.ding ?? false,
+      dings: v.dings ?? [],
+      sections: v.sections ?? [],
+    })
 
-      this.port.postMessage({
-        message: 'track',
-        track: track,
-      })
+    this.port.postMessage({
+      message: 'track',
+      track: track,
+    })
 
-      // ... loop ?
-      const ctx = this.context
-      const loopable = v?.loopable ?? false
-      const loop = v?.loop ?? false
-      const dings = track.dings ?? []
-      const ding = track.ding ?? false
+    // ... loop ?
+    const ctx = this.context
+    const loopable = v.loopable ?? false
+    const loop = v.loop ?? false
+    const dings = track.dings ?? []
+    const ding = track.ding ?? false
 
-      this.parameters.get('loop').setValueAtTime(loopable && loop ? 1 : 0, ctx.currentTime)
-      this.parameters.get('ding').setValueAtTime(dings.length > 0 && ding ? 1 : 0, ctx.currentTime)
-    }
+    this.parameters.get('loop').setValueAtTime(loopable && loop ? 1 : 0, ctx.currentTime)
+    this.parameters.get('ding').setValueAtTime(dings.length > 0 && ding ? 1 : 0, ctx.currentTime)
+
+    // ... play
+    this.port.postMessage({
+      message: 'play',
+    })
   }
 
   set loop(loop) {

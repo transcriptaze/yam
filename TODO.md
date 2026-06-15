@@ -6,7 +6,7 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 
 ## In Progress
 
-- [ ] wrangler CLI
+- [x] wrangler CLI
 
 - [ ] export click track (cf. https://github.com/transcriptaze/yam/issues/53)
    - [ ] offline rendering

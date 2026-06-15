@@ -1,5 +1,4 @@
 import * as FSM from './FSM.js'
-import * as level from './level.js'
 import { Clock } from './clock.js'
 import { DOTTED_QUARTER } from '../shared/constants.js'
 
@@ -7,8 +6,10 @@ const INF = Number.POSITIVE_INFINITY
 
 let DEBUG = false
 
-export class Metronome extends AudioWorkletProcessor {
+export class OfflineWorklet extends AudioWorkletProcessor {
   #fs = 44100
+  #preamble = 0
+
   #track = {
     BPM: null,
     beats: null,
@@ -29,7 +30,6 @@ export class Metronome extends AudioWorkletProcessor {
     super()
 
     this.FSM = new FSM.FSM()
-    this.level = new level.Level()
     this.clicks = new Map()
     this.clock = new Clock()
 
@@ -80,6 +80,13 @@ export class Metronome extends AudioWorkletProcessor {
         maxValue: 1,
         automationRate: 'k-rate',
       },
+      {
+        name: 'offline',
+        defaultValue: 0,
+        minValue: 0,
+        maxValue: 1,
+        automationRate: 'k-rate',
+      },
     ]
   }
 
@@ -102,22 +109,9 @@ export class Metronome extends AudioWorkletProcessor {
         this.stop()
         break
 
-      case 'toggle':
-        if (this.playing) {
-          this.stop()
-        } else {
-          this.play()
-        }
-        break
-
       case 'track':
         this.#track = transmogrify(event.data.track)
         this.restart()
-        break
-
-      case 'debug':
-        DEBUG = event.data.debug === true
-        this.clock.debug = event.data.debug === true
         break
     }
   }
@@ -131,7 +125,6 @@ export class Metronome extends AudioWorkletProcessor {
 
     this.#fs = event.data.fs
     this.clock.fs = event.data.fs
-    this.level.sampleRate = event.data.fs
     this.clicks = new Map([
       ['default', tock],
       ['count-in', sticks],
@@ -242,7 +235,7 @@ export class Metronome extends AudioWorkletProcessor {
     const pulse = this.section?.pulse ?? parameters.pulse[0]
     const loop = parameters.loop[0] === 1.0
     const ding = parameters.ding[0] === 1.0
-    const gain = this.playing ? this.level.fadeIn() : this.level.fadeOut()
+    const gain = 1
     let clock = this.clock
 
     this.#samples += N > 0 ? N : 0
@@ -250,7 +243,7 @@ export class Metronome extends AudioWorkletProcessor {
     if (this.starting) {
       clock.tick(BPM, tactus, figura, pulse, N)
 
-      if (clock.time >= 250) {
+      if (clock.time >= this.#preamble) {
         if (this.FSM.on250ms()) {
           clock.reset()
           this.flip({ state: FSM.STATE.PLAYING, bar: 0, beat: 0, loops: this.#loops })
@@ -553,4 +546,4 @@ function log(tag, tick, time, bpm, bar, beat, tactus, figura, pulsus) {
   }
 }
 
-registerProcessor('metronome', Metronome)
+registerProcessor('offline', OfflineWorklet)

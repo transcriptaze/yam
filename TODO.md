@@ -19,9 +19,12 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
       - [x] default to settings.duration for infinite tracks
       - [x] add preamble/postamble padding to settings
       - [ ] offline node/worklet
-         - no FSM250
-         - wait for ready in node
-         - no set::BPM, etc
+         - [x] gain: 1
+         - [x] remove 250ms start delay
+         - [x] wait for ready in node
+         - [ ] remove BPM
+         - [ ] #preamble
+         - [ ] remove beats/divisions
       - (?) loops
       - (?) busy/unbusy windmill around render?
 

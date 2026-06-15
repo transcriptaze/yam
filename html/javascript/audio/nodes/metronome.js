@@ -136,14 +136,6 @@ export class MetronomeNode extends AudioWorkletNode {
     })
   }
 
-  set offline(v) {
-    if (v === true) {
-      this.parameters.get('offline').setValueAtTime(1.0, this.context.currentTime)
-    } else if (v === false) {
-      this.parameters.get('offline').setValueAtTime(0.0, this.context.currentTime)
-    }
-  }
-
   set debug(dbg) {
     this.port.postMessage({
       message: 'debug',

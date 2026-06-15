@@ -1,42 +1,23 @@
 import * as PULSE from '../shared/constants.js'
 import { parseTimeSignature, durationToMS, clamp } from '../../util.js'
 import * as generators from '../../generators.js'
-import { EVENTS } from '../../constants.js'
+import { EVENTS, INF } from '../../constants.js'
 
-const STATE = {
-  START: 0,
-  STOPPED: 1,
-  STARTING: 2,
-  PLAYING: 3,
-  STOPPING: 4,
-}
-
-const INF = Number.POSITIVE_INFINITY
 const MAX_DELAY = 30000 // ms
 
 export class OfflineNode extends AudioWorkletNode {
-  #loops = INF
   #timeSignature = ''
   #pulse = ''
+  #subscribers = new EventTarget()
 
-  #cache = {
-    track: '',
-    playing: false,
-    stopped: false,
-    bar: 0,
-    beat: 0,
-    loops: 0,
-  }
-
-  constructor(context, { tick, tock, tack, stick, ding }, subscribers) {
+  constructor(context, { tick, tock, tack, stick, ding }) {
     super(context, 'offline', {
       numberOfInputs: 0,
       numberOfOutputs: 1,
       outputChannelCount: [2],
     })
 
-    this.subscribers = subscribers
-    this.port.onmessage = this.onMessage.bind(this)
+    this.port.onmessage = this.#onMessage.bind(this)
 
     // ... initialise worklet
     this.port.postMessage({
@@ -51,73 +32,15 @@ export class OfflineNode extends AudioWorkletNode {
     })
   }
 
-  onMessage(event) {
-    switch (event.data.message) {
-      case 'ready':
-        this.subscribers.dispatchEvent(
-          new CustomEvent(EVENTS.READY, {
-            detail: {
-              track: event.data.track,
-            },
-          }),
-        )
-        break
-
-      case 'playing':
-        this.subscribers.dispatchEvent(
-          new CustomEvent(EVENTS.PLAYING, {
-            detail: {
-              track: event.data.track,
-              loops: event.data.loops,
-              BPM: event.data.BPM,
-            },
-          }),
-        )
-        break
-
-      case 'stopped':
-        this.subscribers.dispatchEvent(
-          new CustomEvent(EVENTS.STOPPED, {
-            detail: {
-              track: event.data.track,
-              loops: event.data.loops,
-              done: event.data.done,
-              samples: event.data.samples,
-              duration: event.data.duration,
-            },
-          }),
-        )
-        break
-
-      case 'flipped':
-        this.#flipped(event.data)
-        break
-
-      case 'done':
-        this.subscribers.dispatchEvent(
-          new CustomEvent(EVENTS.DONE, {
-            detail: {
-              track: event.data.track,
-            },
-          }),
-        )
-        break
-    }
-  }
-
-  stop() {
-    this.port.postMessage({
-      message: 'stop',
-    })
-  }
-
-  set BPM(bpm) {
-    if (bpm != null) {
-      if (this.playing) {
-        this.parameters.get('BPM').linearRampToValueAtTime(bpm, this.context.currentTime + 0.5)
-      } else {
-        this.parameters.get('BPM').setValueAtTime(bpm, this.context.currentTime)
-      }
+  #onMessage(event) {
+    if (event.data.message === 'ready') {
+      this.#subscribers.dispatchEvent(
+        new CustomEvent(EVENTS.READY, {
+          detail: {
+            track: event.data.track,
+          },
+        }),
+      )
     }
   }
 
@@ -147,87 +70,69 @@ export class OfflineNode extends AudioWorkletNode {
   }
 
   render(v) {
-    this.timeSignature = v.timeSignature ?? this.timeSignature
-    this.pulse = v.pulse ?? this.pulse
-    this.BPM = v.BPM ?? this.BPM
-    this.#loops = v.loops ?? INF
-
-    const track = transmogrify({
-      UUID: v.UUID,
-      tempo: v.tempo,
-      timeSignature: v.timeSignature ?? this.#timeSignature,
-      pulse: v.pulse ?? this.#pulse,
-      BPM: v.BPM,
-      loops: v.loops ?? INF,
-      clicks: v.clicks ?? null,
-      ding: v.ding ?? false,
-      dings: v.dings ?? [],
-      sections: v.sections ?? [],
-    })
-
-    this.port.postMessage({
-      message: 'track',
-      track: track,
-    })
-
-    // ... loop ?
-    const ctx = this.context
-    const loopable = v.loopable ?? false
-    const loop = v.loop ?? false
-    const dings = track.dings ?? []
-    const ding = track.ding ?? false
-
-    this.parameters.get('loop').setValueAtTime(loopable && loop ? 1 : 0, ctx.currentTime)
-    this.parameters.get('ding').setValueAtTime(dings.length > 0 && ding ? 1 : 0, ctx.currentTime)
-
-    // ... play
-    this.port.postMessage({
-      message: 'play',
-    })
-  }
-
-  set loop(loop) {
     const ctx = this.context
 
-    this.parameters.get('loop').setValueAtTime(loop ? 1 : 0, ctx.currentTime)
-  }
+    this.connect(ctx.destination)
 
-  set ding(ding) {
-    const ctx = this.context
+    const wait = () => {
+      return new Promise((resolve, reject) => {
+        const onReady = () => {
+          clearTimeout(timer)
+          resolve()
+        }
 
-    this.parameters.get('ding').setValueAtTime(ding ? 1 : 0, ctx.currentTime)
-  }
+        const timer = setTimeout(() => {
+          this.#subscribers.removeEventListener(EVENTS.READY, onReady)
+          reject('Offline AudioWorklet failed to initialise')
+        }, 500)
 
-  get playing() {
-    return this.#cache.playing
-  }
-
-  get stopped() {
-    return this.#cache.stopped
-  }
-
-  get bar() {
-    return this.#cache.bar
-  }
-
-  get beat() {
-    return this.#cache.beat
-  }
-
-  get loops() {
-    return {
-      loops: this.#loops,
-      count: this.#cache.loops,
+        this.#subscribers.addEventListener(EVENTS.READY, onReady, { once: true })
+      })
     }
-  }
 
-  #flipped(msg) {
-    this.#cache.track = msg.track
-    this.#cache.playing = msg.state === STATE.PLAYING
-    this.#cache.stopped = msg.state === STATE.STOPPED
-    this.#cache.bar = msg.bar
-    this.#cache.beat = msg.beat
-    this.#cache.loops = msg.loops
+    return new Promise((resolve) => {
+      this.timeSignature = v.timeSignature ?? this.timeSignature
+      this.pulse = v.pulse ?? this.pulse
+      this.BPM = v.BPM ?? this.BPM
+
+      const track = transmogrify({
+        UUID: v.UUID,
+        tempo: v.tempo,
+        timeSignature: v.timeSignature ?? this.#timeSignature,
+        pulse: v.pulse ?? this.#pulse,
+        BPM: v.BPM,
+        loops: v.loops ?? INF,
+        clicks: v.clicks ?? null,
+        ding: v.ding ?? false,
+        dings: v.dings ?? [],
+        sections: v.sections ?? [],
+      })
+
+      this.port.postMessage({
+        message: 'track',
+        track: track,
+      })
+
+      // ... loop ?
+      const bpm = v.BPM ?? 120
+      const loopable = v.loopable ?? false
+      const loop = v.loop ?? false
+      const dings = track.dings ?? []
+      const ding = track.ding ?? false
+
+      this.parameters.get('BPM').setValueAtTime(bpm, this.context.currentTime)
+      this.parameters.get('loop').setValueAtTime(loopable && loop ? 1 : 0, ctx.currentTime)
+      this.parameters.get('ding').setValueAtTime(dings.length > 0 && ding ? 1 : 0, ctx.currentTime)
+
+      // ... play
+      this.port.postMessage({
+        message: 'play',
+      })
+
+      resolve()
+    })
+      .then(() => wait())
+      .then(() => ctx.startRendering())
   }
 }
 

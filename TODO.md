@@ -21,9 +21,10 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
       - [ ] offline node/worklet
          - [x] gain: 1
          - [x] remove 250ms start delay
-         - [ ] wait for ready in node
+         - [x] wait for ready in node
+         - [ ] remove BPM
          - [ ] #preamble
-         - [ ] remove BPM/beats/divisions
+         - [ ] remove beats/divisions
       - (?) loops
       - (?) busy/unbusy windmill around render?
 

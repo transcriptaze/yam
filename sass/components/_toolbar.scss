@@ -8,6 +8,7 @@ toolbar {
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
+    row-gap: 32px;
 
     div.left-menu {
       display: flex;
@@ -91,6 +92,11 @@ toolbar {
 
   #save {
       mask-image: url('/images/export.svg');
+      mask-size: 30px;
+  }
+
+  #record {
+      mask-image: url('/images/record.svg');
       mask-size: 30px;
   }
 

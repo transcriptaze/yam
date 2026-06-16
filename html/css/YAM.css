@@ -977,6 +977,7 @@ toolbar div.menu {
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
+  row-gap: 32px;
 }
 toolbar div.menu div.left-menu {
   display: flex;
@@ -1037,6 +1038,10 @@ toolbar #load {
 }
 toolbar #save {
   mask-image: url("/images/export.svg");
+  mask-size: 30px;
+}
+toolbar #record {
+  mask-image: url("/images/record.svg");
   mask-size: 30px;
 }
 toolbar #settings {

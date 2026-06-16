@@ -66,6 +66,7 @@
             <button id="edit"      class="icon-edit"      aria-label="Edit"></button>
             <button id="load"      class="icon-load"      aria-label="Load"></button>
             <button id="save"      class="icon-save"      aria-label="Save"></button>
+            <button id="record"    class="icon-record"    aria-label="Record"></button>
           </div>
 
           <div class="right-menu">
@@ -919,7 +920,7 @@
   <!-- SCRIPTS -->
   <script type="module">
     import "./javascript/widgets/widgets.js"
-    import { initialise, reset, show, load, save, requestWakeLock, toggleWakeLock, onError, showError, toggleTheme } from './javascript/YAM.js'
+    import { initialise, reset, show, load, save, record, requestWakeLock, toggleWakeLock, onError, showError, toggleTheme } from './javascript/YAM.js'
 
     const toolbar = {
       reset: document.querySelector('toolbar #reset'),
@@ -928,6 +929,7 @@
       edit: document.querySelector('toolbar #edit'),
       save: document.querySelector('toolbar #save'),
       load: document.querySelector('toolbar #load'),
+      record: document.querySelector('toolbar #record'),
       settings : document.querySelector('toolbar #settings'),
       fullscreen : document.querySelector('toolbar #fullscreen'),
       wakelock: document.querySelector('toolbar #wakelock'),
@@ -943,6 +945,7 @@
     toolbar.edit.onclick = () => show('editor')
     toolbar.save.onclick = () => save()
     toolbar.load.onclick = () => load()
+    toolbar.record.onclick = () => record()
     toolbar.wakelock.onclick = () => toggleWakeLock()
     toolbar.theme.onclick = () =>  toggleTheme()
     toolbar.oops.onclick = () => showError()

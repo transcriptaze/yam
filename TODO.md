@@ -10,21 +10,14 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 
 - [ ] export click track (cf. https://github.com/transcriptaze/yam/issues/53)
    - [ ] offline rendering
-      - [x] add samples to 'done'
-      - [x] cleanup
-      - [x] use track duration
-      - [x] not rendering custom clicks
-      - [x] fix volume ramp up
-      - [x] fix track duration for Jukskei (bridge)
-      - [x] default to settings.duration for infinite tracks
-      - [x] add preamble/postamble padding to settings
       - [ ] offline node/worklet
          - [x] gain: 1
          - [x] remove 250ms start delay
          - [x] wait for ready in node
-         - [ ] remove BPM
-         - [ ] #preamble
+         - [x] remove BPM
          - [ ] remove beats/divisions
+         - [ ] #preamble
+         - [ ] section markers
       - (?) loops
       - (?) busy/unbusy windmill around render?
 

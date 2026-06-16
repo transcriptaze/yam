@@ -3,8 +3,7 @@ import { Clock } from './clock.js'
 import { DOTTED_QUARTER } from '../shared/constants.js'
 
 const INF = Number.POSITIVE_INFINITY
-
-let DEBUG = false
+const DEBUG = false
 
 export class OfflineWorklet extends AudioWorkletProcessor {
   #fs = 44100
@@ -38,13 +37,6 @@ export class OfflineWorklet extends AudioWorkletProcessor {
 
   static get parameterDescriptors() {
     return [
-      {
-        name: 'BPM',
-        defaultValue: 120,
-        minValue: 40,
-        maxValue: 240,
-        automationRate: 'k-rate',
-      },
       {
         name: 'beats',
         defaultValue: 4,
@@ -216,20 +208,17 @@ export class OfflineWorklet extends AudioWorkletProcessor {
     }
   }
 
-  #bpm(BPM) {
-    const tempo = this.#track?.tempo ?? null
+  #bpm() {
+    const tempo = this.#track?.tempo ?? BPM
+    const BPM = this.#track.BPM ?? tempo
     const bpm = this.section?.tempo ?? null
 
-    if (tempo != null && bpm != null) {
-      return (bpm * BPM) / tempo
-    }
-
-    return this.section?.tempo ?? BPM
+    return bpm != null ? (bpm * BPM) / tempo : BPM
   }
 
   process(_inputs, outputs, parameters) {
     const N = outputs?.[0]?.[0]?.length ?? -3
-    const BPM = this.#bpm(clamp(parameters.BPM[0], 40, 200))
+    const BPM = this.#bpm()
     const tactus = this.section?.beats ?? clamp(parameters.beats[0], 1, 32)
     const figura = this.section?.divisions ?? clamp(parameters.divisions[0], 1, 32)
     const pulse = this.section?.pulse ?? parameters.pulse[0]
@@ -251,7 +240,7 @@ export class OfflineWorklet extends AudioWorkletProcessor {
             message: 'playing',
             track: this.#track?.UUID ?? '',
             loops: this.#loops,
-            BPM: Math.round(clamp(parameters.BPM[0], 40, 200)),
+            BPM: this.#bpm(),
           })
 
           // ... start delay?

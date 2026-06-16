@@ -225,15 +225,6 @@ export function show(page) {
   }
 }
 
-export function save() {
-  const object = {
-    playlists: models.playlists.object,
-    tracks: models.tracks.object,
-  }
-
-  fs.save(object)
-}
-
 export function load() {
   const store = (object) => {
     if (object != null) {
@@ -324,6 +315,19 @@ export function load() {
   }
 
   fs.load(callback)
+}
+
+export function save() {
+  const object = {
+    playlists: models.playlists.object,
+    tracks: models.tracks.object,
+  }
+
+  fs.save(object)
+}
+
+export function record() {
+  console.log('>>>>>>> RECORD')
 }
 
 export async function requestWakeLock() {

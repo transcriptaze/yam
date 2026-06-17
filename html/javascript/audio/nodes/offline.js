@@ -6,8 +6,8 @@ import { EVENTS, INF } from '../../constants.js'
 const MAX_DELAY = 30000 // ms
 
 export class OfflineNode extends AudioWorkletNode {
-  #timeSignature = ''
-  #pulse = ''
+  #timeSignature = '4:4'
+  #pulse = 'quarter'
   #subscribers = new EventTarget()
 
   constructor(context, { tick, tock, tack, stick, ding }) {
@@ -63,7 +63,6 @@ export class OfflineNode extends AudioWorkletNode {
       const { beats, divisions } = parseTimeSignature(timeSignature)
 
       if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
-        this.parameters.get('beats').setValueAtTime(beats, this.context.currentTime)
         this.parameters.get('divisions').setValueAtTime(divisions, this.context.currentTime)
       }
     }

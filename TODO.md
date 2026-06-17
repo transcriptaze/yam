@@ -15,7 +15,8 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
          - [x] remove 250ms start delay
          - [x] wait for ready in node
          - [x] remove BPM
-         - [ ] remove beats/divisions
+         - [x] remove beats
+         - [ ] remove divisions
          - [ ] #preamble
          - [ ] section markers
       - (?) loops

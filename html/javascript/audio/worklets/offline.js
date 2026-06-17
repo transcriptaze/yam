@@ -219,7 +219,7 @@ export class OfflineWorklet extends AudioWorkletProcessor {
   process(_inputs, outputs, parameters) {
     const N = outputs?.[0]?.[0]?.length ?? -3
     const BPM = this.#bpm()
-    const tactus = this.section?.beats ?? clamp(parameters.beats[0], 1, 32)
+    const tactus = this.section?.beats ?? this.#track.beats
     const figura = this.section?.divisions ?? clamp(parameters.divisions[0], 1, 32)
     const pulse = this.section?.pulse ?? parameters.pulse[0]
     const loop = parameters.loop[0] === 1.0

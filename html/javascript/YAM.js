@@ -327,7 +327,10 @@ export function save() {
 }
 
 export function record() {
-  console.log('>>>>>>> RECORD')
+  const button = document.querySelector('#record')
+
+  button.classList.toggle('armed')
+  engine.record(button.classList.contains('armed'))
 }
 
 export async function requestWakeLock() {

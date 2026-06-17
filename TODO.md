@@ -22,10 +22,14 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
       - (?) loops
       - (?) busy/unbusy windmill around render?
 
+   - [x] Attach recorder to engine.ctx
+   - [x] start
+   - [x] stop
+   - [ ] toggle
    - [ ] RECORD button 
+       - [x] arm
+       - [ ] recording
    - [ ] RECORD -> SAVE on done
-   - [ ] Attach recorder to engine.ctx
-   - [ ] cleanup recorder on done
    - https://stackoverflow.com/questions/22560413/html5-web-audio-convert-audio-buffer-into-wav-file
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)

@@ -10,7 +10,9 @@ class Engine {
   #ctx = null
   #metronome = null
   #gain = null
+  #recorder = null
   #initialised = false
+  #armed = false
 
   #BPM = 120
   #timeSignature = '4:4'
@@ -42,16 +44,47 @@ class Engine {
           metronome.loop = this.#loop
           metronome.ding = this.#ding
 
+          // ... recorder
+          const stream = ctx.createMediaStreamDestination()
+          const recorder = new MediaRecorder(stream.stream)
+
+          recorder.addEventListener('start', (e) => {
+            console.log('recorder:start', e)
+          })
+
+          recorder.addEventListener('stop', (e) => {
+            console.log('recorder:stop', e)
+          })
+
+          recorder.addEventListener('pause', (e) => {
+            console.log('recorder:pause', e)
+          })
+
+          recorder.addEventListener('resume', (e) => {
+            console.log('recorder:resume', e)
+          })
+
+          recorder.addEventListener('dataavailable', (e) => {
+            console.log('recorder:dataavailable', e)
+          })
+
+          recorder.addEventListener('error', (e) => {
+            console.error('recorder', e)
+          })
+
+          // ... volume
           const gain = audioContext.createGain()
 
           gain.gain.value = this.#volume
 
           metronome.connect(gain)
           gain.connect(ctx.destination)
+          gain.connect(stream)
 
           this.#ctx = ctx
           this.#metronome = metronome
           this.#gain = gain
+          this.#recorder = recorder
           this.#initialised = true
         })
     }
@@ -84,15 +117,31 @@ class Engine {
   }
 
   play() {
-    this.#exec(() => this.#metronome.play())
+    this.#exec(() => {
+      if (this.#armed) {
+        this.#recorder.start()
+      }
+
+      this.#metronome.play()
+    })
   }
 
   stop() {
-    this.#exec(() => this.#metronome.stop())
+    this.#exec(() => {
+      this.#metronome.stop()
+
+      if (this.#armed) {
+        this.#recorder.stop()
+      }
+    })
   }
 
   toggle() {
     this.#exec(() => this.#metronome.toggle())
+  }
+
+  record(armed) {
+    this.#armed = armed === true
   }
 
   set BPM(v) {

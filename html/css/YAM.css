@@ -1049,6 +1049,9 @@ toolbar #record {
 toolbar #record.armed {
   background-color: var(--toolbar-record-armed);
 }
+toolbar #record.recording {
+  animation: recording 2s infinite;
+}
 toolbar #settings {
   grid-area: settings;
   mask-image: url("/images/settings.svg");
@@ -1288,6 +1291,14 @@ toolbar.statistics #save {
   }
   toolbar.editor #wakelock {
     display: none;
+  }
+}
+@keyframes recording {
+  0%, 100% {
+    background-color: #ff0000;
+  }
+  50% {
+    background-color: #400000;
   }
 }
 div.metronome {

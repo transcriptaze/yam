@@ -1,6 +1,7 @@
 import * as nodes from './nodes/nodes.js'
 import * as soundsets from './soundsets.js'
 import { parsePulse } from '../util.js'
+import { EVENTS } from '../constants.js'
 
 const AudioContext = window.AudioContext || window.webkitAudioContext
 
@@ -48,20 +49,20 @@ class Engine {
           const stream = ctx.createMediaStreamDestination()
           const recorder = new MediaRecorder(stream.stream)
 
-          recorder.addEventListener('start', (e) => {
-            console.log('recorder:start', e)
+          recorder.addEventListener('start', () => {
+            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { recording: true } }))
           })
 
-          recorder.addEventListener('stop', (e) => {
-            console.log('recorder:stop', e)
+          recorder.addEventListener('stop', () => {
+            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { recording: false } }))
           })
 
-          recorder.addEventListener('pause', (e) => {
-            console.log('recorder:pause', e)
+          recorder.addEventListener('pause', () => {
+            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { recording: false } }))
           })
 
-          recorder.addEventListener('resume', (e) => {
-            console.log('recorder:resume', e)
+          recorder.addEventListener('resume', () => {
+            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { recording: true } }))
           })
 
           recorder.addEventListener('dataavailable', (e) => {

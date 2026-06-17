@@ -116,6 +116,7 @@ export function initialise() {
   engine.addEventListener(EVENTS.PLAYING, (event) => onPlaying(event), false)
   engine.addEventListener(EVENTS.STOPPED, (event) => onStopped(event), false)
   engine.addEventListener(EVENTS.CLICK, (event) => onClick(event.detail), false)
+  engine.addEventListener(EVENTS.RECORDING, (event) => onRecording(event.detail), false)
 
   widgets.metronome.enabled = true
 
@@ -466,6 +467,18 @@ function onClick(state) {
   widgets.knob.redraw(state)
   widgets.wheel.redraw(state)
   widgets.loop.redraw(state)
+}
+
+function onRecording(e) {
+  const button = document.querySelector('#record')
+
+  if (e.recording === true) {
+    button.classList.add('recording')
+  }
+
+  if (e.recording === false) {
+    button.classList.remove('recording')
+  }
 }
 
 function onKeyDown(event) {

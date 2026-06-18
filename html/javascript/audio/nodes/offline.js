@@ -56,18 +56,6 @@ export class OfflineNode extends AudioWorkletNode {
     }
   }
 
-  set timeSignature(timeSignature) {
-    this.#timeSignature = timeSignature
-
-    if (timeSignature != null) {
-      const { beats, divisions } = parseTimeSignature(timeSignature)
-
-      if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
-        this.parameters.get('divisions').setValueAtTime(divisions, this.context.currentTime)
-      }
-    }
-  }
-
   render(v) {
     const ctx = this.context
 
@@ -90,7 +78,6 @@ export class OfflineNode extends AudioWorkletNode {
     }
 
     return new Promise((resolve) => {
-      this.timeSignature = v.timeSignature ?? this.timeSignature
       this.pulse = v.pulse ?? this.pulse
       this.BPM = v.BPM ?? this.BPM
 

@@ -14,11 +14,16 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
          - [x] gain: 1
          - [x] remove 250ms start delay
          - [x] wait for ready in node
-         - [x] remove BPM
-         - [x] remove beats
-         - [ ] remove divisions
+         - [x] remove BPM parameter
+         - [x] remove beats parameter
+         - [x] remove divisions parameter
+         - [ ] remove loops parameter
+         - [ ] remove dings parameter
          - [ ] #preamble
-         - [ ] section markers
+         - [ ] metadata 
+            - [ ] section markers
+            - [ ] time signature
+            - [ ] BPM
       - (?) loops
       - (?) busy/unbusy windmill around render?
 

@@ -38,20 +38,6 @@ export class OfflineWorklet extends AudioWorkletProcessor {
   static get parameterDescriptors() {
     return [
       {
-        name: 'beats',
-        defaultValue: 4,
-        minValue: 1,
-        maxValue: 32,
-        automationRate: 'k-rate',
-      },
-      {
-        name: 'divisions',
-        defaultValue: 4,
-        minValue: 1,
-        maxValue: 32,
-        automationRate: 'k-rate',
-      },
-      {
         name: 'pulse',
         defaultValue: 3,
         minValue: 1,
@@ -67,13 +53,6 @@ export class OfflineWorklet extends AudioWorkletProcessor {
       },
       {
         name: 'ding',
-        defaultValue: 0,
-        minValue: 0,
-        maxValue: 1,
-        automationRate: 'k-rate',
-      },
-      {
-        name: 'offline',
         defaultValue: 0,
         minValue: 0,
         maxValue: 1,
@@ -103,6 +82,7 @@ export class OfflineWorklet extends AudioWorkletProcessor {
 
       case 'track':
         this.#track = transmogrify(event.data.track)
+        console.log(this.#track)
         this.restart()
         break
     }
@@ -136,9 +116,6 @@ export class OfflineWorklet extends AudioWorkletProcessor {
 
   play() {
     if (this.FSM.onPlay()) {
-      // NTS: dont't reset loop count on play/stop so that you can restart without "losing your place"
-      // this.#loops = 0
-
       this.section = null
       this.samples = 0
       this.clock.reset()
@@ -220,7 +197,7 @@ export class OfflineWorklet extends AudioWorkletProcessor {
     const N = outputs?.[0]?.[0]?.length ?? -3
     const BPM = this.#bpm()
     const tactus = this.section?.beats ?? this.#track.beats
-    const figura = this.section?.divisions ?? clamp(parameters.divisions[0], 1, 32)
+    const figura = this.section?.divisions ?? this.#track.divisions
     const pulse = this.section?.pulse ?? parameters.pulse[0]
     const loop = parameters.loop[0] === 1.0
     const ding = parameters.ding[0] === 1.0
@@ -515,10 +492,6 @@ function sample(object) {
       return !l && !r
     },
   }
-}
-
-function clamp(v, min, max) {
-  return Math.min(Math.max(v, min), max)
 }
 
 function log(tag, tick, time, bpm, bar, beat, tactus, figura, pulsus) {

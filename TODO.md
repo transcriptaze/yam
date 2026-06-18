@@ -9,6 +9,7 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 - [x] wrangler CLI
 
 - [ ] export click track (cf. https://github.com/transcriptaze/yam/issues/53)
+   - https://stackoverflow.com/questions/22560413/html5-web-audio-convert-audio-buffer-into-wav-file
    - [ ] offline rendering
       - [ ] offline node/worklet
          - [x] gain: 1
@@ -27,17 +28,17 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
       - (?) loops
       - (?) busy/unbusy windmill around render?
 
-   - [x] RECORD button 
-       - [x] arm
-       - [x] recording
-   - [x] Attach recorder to engine.ctx
-   - [x] start
-   - [x] stop
-   - [ ] stop if disarm while playing
-   - [ ] start if arm while playing
-   - [ ] toggle
-   - [ ] RECORD -> SAVE on done
-   - https://stackoverflow.com/questions/22560413/html5-web-audio-convert-audio-buffer-into-wav-file
+   - [ ] recording
+       - [x] RECORD button 
+       - [ ] remove 'recording' class on disarm
+       - [ ] save on done
+           - popup (security)
+       - (?) timeslice and accumulate blobs
+       - (?) requestData on pause() and accumulate blobs
+       - [ ] disarm on done
+       - [ ] pause if disarm while playing
+       - [ ] resume if arm while playing
+       - [ ] play/stop toggle
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM

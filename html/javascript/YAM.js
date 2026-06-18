@@ -331,6 +331,11 @@ export function record() {
   const button = document.querySelector('#record')
 
   button.classList.toggle('armed')
+
+  if (!button.classList.contains('armed')) {
+    button.classList.remove('recording')
+  }
+
   engine.record(button.classList.contains('armed'))
 }
 
@@ -472,12 +477,20 @@ function onClick(state) {
 function onRecording(e) {
   const button = document.querySelector('#record')
 
-  if (e.recording === true) {
+  if (e.state === 'recording') {
     button.classList.add('recording')
+  } else {
+    button.classList.remove('recording')
   }
 
-  if (e.recording === false) {
-    button.classList.remove('recording')
+  if (e.state === 'done') {
+    const track = models.tracks.track(state.track)
+
+    if (track == null) {
+      fs.saveRecording(`YAM`, e.audio)
+    } else {
+      fs.saveRecording(track.title, e.audio)
+    }
   }
 }
 
@@ -626,7 +639,7 @@ function onTrackWAV(event) {
   const engine = new Offline()
 
   engine.render(track, settings).then((buffer) => {
-    fs.saveWavFile(`${track.title}.wav`, buffer)
+    fs.saveWavFile(`${track.title}`, buffer)
   })
 }
 

@@ -50,28 +50,30 @@ class Engine {
           const recorder = new MediaRecorder(stream.stream)
 
           recorder.addEventListener('start', () => {
-            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { recording: true } }))
+            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'recording' } }))
           })
 
           recorder.addEventListener('stop', () => {
-            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { recording: false } }))
+            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'recording' } }))
           })
 
           recorder.addEventListener('pause', () => {
-            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { recording: false } }))
+            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'recording' } }))
           })
 
           recorder.addEventListener('resume', () => {
-            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { recording: true } }))
+            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'recording' } }))
           })
 
           recorder.addEventListener('dataavailable', (e) => {
-            console.log('recorder:dataavailable', e)
+            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'done', audio: e.data } }))
           })
 
           recorder.addEventListener('error', (e) => {
             console.error('recorder', e)
           })
+
+          this.#subscribers.addEventListener(EVENTS.STOPPED, () => recorder.stop(), false)
 
           // ... volume
           const gain = audioContext.createGain()

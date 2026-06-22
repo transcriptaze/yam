@@ -140,7 +140,13 @@ class Engine {
   }
 
   toggle() {
-    this.#exec(() => this.#metronome.toggle())
+    this.#exec(() => {
+      if (this.#armed && !this.#metronome.playing) {
+        this.#recorder.start()
+      }
+
+      this.#metronome.toggle()
+    })
   }
 
   record(armed) {

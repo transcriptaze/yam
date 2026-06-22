@@ -54,16 +54,16 @@ class Engine {
           })
 
           recorder.addEventListener('stop', () => {
-            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'recording' } }))
+            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'stop' } }))
           })
 
-          recorder.addEventListener('pause', () => {
-            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'recording' } }))
-          })
+          // recorder.addEventListener('pause', () => {
+          //   this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'pause' } }))
+          // })
 
-          recorder.addEventListener('resume', () => {
-            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'recording' } }))
-          })
+          // recorder.addEventListener('resume', () => {
+          //   this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'resume' } }))
+          // })
 
           recorder.addEventListener('dataavailable', (e) => {
             this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'done', audio: e.data } }))

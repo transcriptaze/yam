@@ -484,6 +484,11 @@ function onRecording(e) {
   }
 
   if (e.state === 'done') {
+    // ... disarm
+    button.classList.remove('armed')
+    engine.record(false)
+
+    // ... save
     const track = models.tracks.track(state.track)
     const dialog = document.querySelector('dialog.save')
     const ok = dialog.querySelector('button[value="ok"]')

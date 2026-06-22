@@ -34,10 +34,10 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
        - [x] remove 'recording' class on disarm
        - [x] save on done
        - [x] update user manual (about.html)
-       - [ ] disarm on done
-       - [ ] pause if disarm while playing
-       - [ ] resume if arm while playing
+       - [x] disarm on done
        - [ ] play/stop toggle
+       - [ ] pause/stop if disarm while playing
+       - [ ] resume/restart if arm while playing
        - (?) timeslice and accumulate blobs
        - (?) requestData on pause() and accumulate blobs
 

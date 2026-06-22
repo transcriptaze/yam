@@ -20,6 +20,7 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
          - [x] remove divisions parameter
          - [x] remove loops parameter
          - [ ] remove dings parameter
+         - [ ] remove pulse parameter
          - [ ] #preamble
          - [ ] metadata 
             - [ ] section markers
@@ -32,7 +33,7 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
        - [x] RECORD button 
        - [x] remove 'recording' class on disarm
        - [x] save on done
-       - [ ] update user manual (about.html)
+       - [x] update user manual (about.html)
        - [ ] disarm on done
        - [ ] pause if disarm while playing
        - [ ] resume if arm while playing

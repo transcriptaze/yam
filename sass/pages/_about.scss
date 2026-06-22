@@ -72,6 +72,11 @@ main.about {
       mask-size: 32px;
   }
 
+  span.icon-record {
+      mask-image: url('/images/record.svg');
+      mask-size: 32px;
+  }
+
   span.icon-import {
       mask-image: url('/images/import.svg');
       mask-size: 32px;

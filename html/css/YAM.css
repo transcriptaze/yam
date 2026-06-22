@@ -813,6 +813,10 @@ main.about span.icon-edit {
   mask-image: url("/images/edit.svg");
   mask-size: 32px;
 }
+main.about span.icon-record {
+  mask-image: url("/images/record.svg");
+  mask-size: 32px;
+}
 main.about span.icon-import {
   mask-image: url("/images/import.svg");
   mask-size: 32px;

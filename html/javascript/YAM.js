@@ -116,6 +116,7 @@ export function initialise() {
   engine.addEventListener(EVENTS.PLAYING, (event) => onPlaying(event), false)
   engine.addEventListener(EVENTS.STOPPED, (event) => onStopped(event), false)
   engine.addEventListener(EVENTS.CLICK, (event) => onClick(event.detail), false)
+  engine.addEventListener(EVENTS.RECORDING, (event) => onRecording(event.detail), false)
 
   widgets.metronome.enabled = true
 
@@ -273,7 +274,7 @@ export function load() {
   }
 
   const callback = (filename, object, err) => {
-    const dialog = document.querySelector('dialog')
+    const dialog = document.querySelector('dialog.import')
     const msg = dialog.querySelector('p.message')
     const ok = dialog.querySelector('button[value="ok"]')
     const cancel = dialog.querySelector('button[value="cancel"]')
@@ -327,7 +328,15 @@ export function save() {
 }
 
 export function record() {
-  console.log('>>>>>>> RECORD')
+  const button = document.querySelector('#record')
+
+  button.classList.toggle('armed')
+
+  if (!button.classList.contains('armed')) {
+    button.classList.remove('recording')
+  }
+
+  engine.record(button.classList.contains('armed'))
 }
 
 export async function requestWakeLock() {
@@ -463,6 +472,62 @@ function onClick(state) {
   widgets.knob.redraw(state)
   widgets.wheel.redraw(state)
   widgets.loop.redraw(state)
+}
+
+function onRecording(e) {
+  const button = document.querySelector('#record')
+
+  if (e.state === 'recording') {
+    button.classList.add('recording')
+  } else {
+    button.classList.remove('recording')
+  }
+
+  if (e.state === 'done') {
+    // ... disarm
+    button.classList.remove('armed')
+    engine.record(false)
+
+    // ... save
+    const track = models.tracks.track(state.track)
+    const dialog = document.querySelector('dialog.save')
+    const ok = dialog.querySelector('button[value="ok"]')
+    const cancel = dialog.querySelector('button[value="cancel"]')
+
+    const onOk = (event) => {
+      event.preventDefault()
+      dialog.close('ok')
+    }
+
+    const onCancel = (event) => {
+      event.preventDefault()
+      dialog.close('cancel')
+    }
+
+    ok.addEventListener('click', onOk, { once: true })
+    cancel.addEventListener('click', onCancel, { once: true })
+
+    dialog.addEventListener(
+      'close',
+      () => {
+        if (dialog.returnValue === 'ok') {
+          if (track == null) {
+            fs.saveRecording(`YAM`, e.audio)
+          } else {
+            fs.saveRecording(track.title, e.audio)
+          }
+        }
+
+        ok.removeEventListener('click', onOk)
+        cancel.removeEventListener('click', onCancel)
+
+        return true
+      },
+      { once: true },
+    )
+
+    dialog.showModal()
+  }
 }
 
 function onKeyDown(event) {
@@ -610,7 +675,7 @@ function onTrackWAV(event) {
   const engine = new Offline()
 
   engine.render(track, settings).then((buffer) => {
-    fs.saveWavFile(`${track.title}.wav`, buffer)
+    fs.saveWavFile(`${track.title}`, buffer)
   })
 }
 

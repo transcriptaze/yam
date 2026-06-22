@@ -46,6 +46,7 @@
   --toolbar-button-disabled: #ffffff76;
   --toolbar-button-enabled: #222222;
   --toolbar-button-hover: #c00000;
+  --toolbar-record-armed: #ff0000;
   --toolbar-wakelock-active: #b24a2c;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
@@ -133,6 +134,7 @@
   --toolbar-button-disabled: #7a7a7f;
   --toolbar-button-enabled: #9a9a9e;
   --toolbar-button-hover: #dc322f;
+  --toolbar-record-armed: #ff0000;
   --toolbar-wakelock-active: #b24a2c;
   --track-colour-muted: #7a7a7f;
   --track-colour-deleting: #7a7a7f;
@@ -811,6 +813,10 @@ main.about span.icon-edit {
   mask-image: url("/images/edit.svg");
   mask-size: 32px;
 }
+main.about span.icon-record {
+  mask-image: url("/images/record.svg");
+  mask-size: 32px;
+}
 main.about span.icon-import {
   mask-image: url("/images/import.svg");
   mask-size: 32px;
@@ -1043,6 +1049,12 @@ toolbar #save {
 toolbar #record {
   mask-image: url("/images/record.svg");
   mask-size: 30px;
+}
+toolbar #record.armed {
+  background-color: var(--toolbar-record-armed);
+}
+toolbar #record.recording {
+  animation: recording 2s infinite;
 }
 toolbar #settings {
   grid-area: settings;
@@ -1283,6 +1295,14 @@ toolbar.statistics #save {
   }
   toolbar.editor #wakelock {
     display: none;
+  }
+}
+@keyframes recording {
+  0%, 100% {
+    background-color: #ff0000;
+  }
+  50% {
+    background-color: #400000;
   }
 }
 div.metronome {
@@ -1581,6 +1601,46 @@ dialog.import div button[value=cancel] {
   color: #a00000;
 }
 dialog.import div button[value=ok] {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+dialog.save {
+  margin-top: 128px;
+  padding: 8px;
+  outline: none;
+  border: none;
+  border-radius: 8px;
+}
+dialog.save div {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 12px;
+  padding-right: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 16px;
+  row-gap: 12px;
+  justify-items: center;
+  align-items: center;
+}
+dialog.save div p.message {
+  grid-column: 1/3;
+  grid-row: 1;
+  font-size: 0.9em;
+  text-align: center;
+}
+dialog.save div button {
+  width: 80px;
+  height: 32px;
+}
+dialog.save div button[value=cancel] {
+  grid-column: 1;
+  grid-row: 2;
+  color: #a00000;
+}
+dialog.save div button[value=ok] {
   grid-column: 2;
   grid-row: 2;
 }

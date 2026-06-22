@@ -6,8 +6,8 @@ import { EVENTS, INF } from '../../constants.js'
 const MAX_DELAY = 30000 // ms
 
 export class OfflineNode extends AudioWorkletNode {
-  #timeSignature = ''
-  #pulse = ''
+  #timeSignature = '4:4'
+  #pulse = 'quarter'
   #subscribers = new EventTarget()
 
   constructor(context, { tick, tock, tack, stick, ding }) {
@@ -56,19 +56,6 @@ export class OfflineNode extends AudioWorkletNode {
     }
   }
 
-  set timeSignature(timeSignature) {
-    this.#timeSignature = timeSignature
-
-    if (timeSignature != null) {
-      const { beats, divisions } = parseTimeSignature(timeSignature)
-
-      if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
-        this.parameters.get('beats').setValueAtTime(beats, this.context.currentTime)
-        this.parameters.get('divisions').setValueAtTime(divisions, this.context.currentTime)
-      }
-    }
-  }
-
   render(v) {
     const ctx = this.context
 
@@ -91,7 +78,6 @@ export class OfflineNode extends AudioWorkletNode {
     }
 
     return new Promise((resolve) => {
-      this.timeSignature = v.timeSignature ?? this.timeSignature
       this.pulse = v.pulse ?? this.pulse
       this.BPM = v.BPM ?? this.BPM
 
@@ -114,12 +100,9 @@ export class OfflineNode extends AudioWorkletNode {
       })
 
       // ... loop ?
-      const loopable = v.loopable ?? false
-      const loop = v.loop ?? false
       const dings = track.dings ?? []
       const ding = track.ding ?? false
 
-      this.parameters.get('loop').setValueAtTime(loopable && loop ? 1 : 0, ctx.currentTime)
       this.parameters.get('ding').setValueAtTime(dings.length > 0 && ding ? 1 : 0, ctx.currentTime)
 
       // ... play

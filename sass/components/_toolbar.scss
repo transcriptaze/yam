@@ -100,34 +100,42 @@ toolbar {
       mask-size: 30px;
   }
 
+  #record.armed {
+    background-color: var(--toolbar-record-armed);
+  }
+
+  #record.recording {
+    animation: recording 2s infinite;
+  }
+
   #settings {
-      grid-area: settings;
-      mask-image: url('/images/settings.svg');
-      mask-size: 30px;
+    grid-area: settings;
+    mask-image: url('/images/settings.svg');
+    mask-size: 30px;
   }
 
   #fullscreen {
-      grid-area: fullscreen;
-      mask-image: url('/images/fullscreen.svg');
-      mask-size: 30px;
+    grid-area: fullscreen;
+    mask-image: url('/images/fullscreen.svg');
+    mask-size: 30px;
   }
 
   #wakelock {
-      grid-area: wakelock;
-      mask-image: url('/images/wakelock.svg');
-      mask-size: 30px;
+    grid-area: wakelock;
+    mask-image: url('/images/wakelock.svg');
+    mask-size: 30px;
   }
 
   #theme {
-      grid-area: theme;
-      mask-image: url('/images/theme.svg');
-      mask-size: 30px;
+    grid-area: theme;
+    mask-image: url('/images/theme.svg');
+    mask-size: 30px;
   }
   
   #about {
-      grid-area: about;
-      mask-image: url('/images/about.svg');
-      mask-size: 30px;
+    grid-area: about;
+    mask-image: url('/images/about.svg');
+    mask-size: 30px;
   }
 
   #about.hidden {
@@ -434,5 +442,15 @@ toolbar.statistics {
     #wakelock {
       display: none;
     }
+  }
+}
+
+@keyframes recording {
+  0%, 100% {
+    background-color: #ff0000;
+  }
+ 
+  50% {
+    background-color: #400000;
   }
 }

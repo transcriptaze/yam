@@ -1,6 +1,7 @@
 import * as nodes from './nodes/nodes.js'
 import * as soundsets from './soundsets.js'
 import { parsePulse } from '../util.js'
+import { EVENTS } from '../constants.js'
 
 const AudioContext = window.AudioContext || window.webkitAudioContext
 
@@ -10,7 +11,9 @@ class Engine {
   #ctx = null
   #metronome = null
   #gain = null
+  #recorder = null
   #initialised = false
+  #armed = false
 
   #BPM = 120
   #timeSignature = '4:4'
@@ -42,16 +45,49 @@ class Engine {
           metronome.loop = this.#loop
           metronome.ding = this.#ding
 
+          // ... recorder
+          const stream = ctx.createMediaStreamDestination()
+          const recorder = new MediaRecorder(stream.stream)
+
+          recorder.addEventListener('start', () => {
+            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'recording' } }))
+          })
+
+          recorder.addEventListener('stop', () => {
+            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'stop' } }))
+          })
+
+          // recorder.addEventListener('pause', () => {
+          //   this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'pause' } }))
+          // })
+
+          // recorder.addEventListener('resume', () => {
+          //   this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'resume' } }))
+          // })
+
+          recorder.addEventListener('dataavailable', (e) => {
+            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'done', audio: e.data } }))
+          })
+
+          recorder.addEventListener('error', (e) => {
+            console.error('recorder', e)
+          })
+
+          this.#subscribers.addEventListener(EVENTS.STOPPED, () => recorder.stop(), false)
+
+          // ... volume
           const gain = audioContext.createGain()
 
           gain.gain.value = this.#volume
 
           metronome.connect(gain)
           gain.connect(ctx.destination)
+          gain.connect(stream)
 
           this.#ctx = ctx
           this.#metronome = metronome
           this.#gain = gain
+          this.#recorder = recorder
           this.#initialised = true
         })
     }
@@ -84,15 +120,37 @@ class Engine {
   }
 
   play() {
-    this.#exec(() => this.#metronome.play())
+    this.#exec(() => {
+      if (this.#armed) {
+        this.#recorder.start()
+      }
+
+      this.#metronome.play()
+    })
   }
 
   stop() {
-    this.#exec(() => this.#metronome.stop())
+    this.#exec(() => {
+      this.#metronome.stop()
+
+      if (this.#armed) {
+        this.#recorder.stop()
+      }
+    })
   }
 
   toggle() {
-    this.#exec(() => this.#metronome.toggle())
+    this.#exec(() => {
+      if (this.#armed && !this.#metronome.playing) {
+        this.#recorder.start()
+      }
+
+      this.#metronome.toggle()
+    })
+  }
+
+  record(armed) {
+    this.#armed = armed === true
   }
 
   set BPM(v) {

@@ -48,8 +48,8 @@ export function saveStatistics(object) {
   }
 }
 
-export function saveWavFile(filename, buffer) {
-  console.log(buffer)
+export function saveWavFile(title, buffer) {
+  const filename = `${title}.wav`
   const length = buffer.length * buffer.numberOfChannels * 2 + 44
   const bytes = new ArrayBuffer(length)
   const view = new DataView(bytes)
@@ -125,22 +125,54 @@ export function saveWavFile(filename, buffer) {
   }
 }
 
+export function saveRecording(title, blob) {
+  let filename = `${title}`
+
+  if (`${blob.type}`.startsWith('audio/webm')) {
+    filename = `${title}.webm`
+  }
+
+  if (window.showSaveFilePicker) {
+    saveWithPicker(blob, filename)
+  } else {
+    saveWithChooser(blob, filename)
+  }
+}
+
 async function saveWithPicker(blob, filename) {
   let accepts = { 'application/x-yam': ['.yam'] }
+  let description = 'YAM file'
 
   if (blob.type === 'application/x-yam-statistics') {
     accepts = { 'application/x-yam-statistics': ['.statistics', '.json'] }
+    description = 'YAM statistics'
   }
 
-  if (blob.type === 'audio/wav') {
+  if (`${blob.type}`.startsWith('audio/wav')) {
     accepts = { 'audio/wav': ['.wav'] }
+    description = 'WAV audio'
+  }
+
+  if (`${blob.type}`.startsWith('audio/webm')) {
+    accepts = { 'audio/webm': ['.webm'] }
+    description = 'webm audio'
+  }
+
+  if (`${blob.type}`.startsWith('audio/ogg')) {
+    accepts = { 'audio/webm': ['.ogg'] }
+    description = 'OGG audio'
+  }
+
+  if (`${blob.type}`.startsWith('audio/mp4')) {
+    accepts = { 'audio/mp4': ['.mp4'] }
+    description = 'MP4 audio'
   }
 
   const options = {
     suggestedName: filename,
     types: [
       {
-        description: 'YAM file',
+        description: description,
         accept: accepts,
       },
     ],

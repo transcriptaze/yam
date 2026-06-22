@@ -30,15 +30,15 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 
    - [ ] recording
        - [x] RECORD button 
-       - [ ] remove 'recording' class on disarm
-       - [ ] save on done
-           - popup (security)
-       - (?) timeslice and accumulate blobs
-       - (?) requestData on pause() and accumulate blobs
+       - [x] remove 'recording' class on disarm
+       - [x] save on done
+       - [ ] update user manual (about.html)
        - [ ] disarm on done
        - [ ] pause if disarm while playing
        - [ ] resume if arm while playing
        - [ ] play/stop toggle
+       - (?) timeslice and accumulate blobs
+       - (?) requestData on pause() and accumulate blobs
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM

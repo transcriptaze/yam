@@ -274,7 +274,7 @@ export function load() {
   }
 
   const callback = (filename, object, err) => {
-    const dialog = document.querySelector('dialog')
+    const dialog = document.querySelector('dialog.import')
     const msg = dialog.querySelector('p.message')
     const ok = dialog.querySelector('button[value="ok"]')
     const cancel = dialog.querySelector('button[value="cancel"]')
@@ -485,12 +485,43 @@ function onRecording(e) {
 
   if (e.state === 'done') {
     const track = models.tracks.track(state.track)
+    const dialog = document.querySelector('dialog.save')
+    const ok = dialog.querySelector('button[value="ok"]')
+    const cancel = dialog.querySelector('button[value="cancel"]')
 
-    if (track == null) {
-      fs.saveRecording(`YAM`, e.audio)
-    } else {
-      fs.saveRecording(track.title, e.audio)
+    const onOk = (event) => {
+      event.preventDefault()
+      dialog.close('ok')
     }
+
+    const onCancel = (event) => {
+      event.preventDefault()
+      dialog.close('cancel')
+    }
+
+    ok.addEventListener('click', onOk, { once: true })
+    cancel.addEventListener('click', onCancel, { once: true })
+
+    dialog.addEventListener(
+      'close',
+      () => {
+        if (dialog.returnValue === 'ok') {
+          if (track == null) {
+            fs.saveRecording(`YAM`, e.audio)
+          } else {
+            fs.saveRecording(track.title, e.audio)
+          }
+        }
+
+        ok.removeEventListener('click', onOk)
+        cancel.removeEventListener('click', onCancel)
+
+        return true
+      },
+      { once: true },
+    )
+
+    dialog.showModal()
   }
 }
 

@@ -1601,6 +1601,46 @@ dialog.import div button[value=ok] {
   grid-row: 2;
 }
 
+dialog.save {
+  margin-top: 128px;
+  padding: 8px;
+  outline: none;
+  border: none;
+  border-radius: 8px;
+}
+dialog.save div {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  padding-left: 12px;
+  padding-right: 12px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: auto auto;
+  column-gap: 16px;
+  row-gap: 12px;
+  justify-items: center;
+  align-items: center;
+}
+dialog.save div p.message {
+  grid-column: 1/3;
+  grid-row: 1;
+  font-size: 0.9em;
+  text-align: center;
+}
+dialog.save div button {
+  width: 80px;
+  height: 32px;
+}
+dialog.save div button[value=cancel] {
+  grid-column: 1;
+  grid-row: 2;
+  color: #a00000;
+}
+dialog.save div button[value=ok] {
+  grid-column: 2;
+  grid-row: 2;
+}
+
 dialog.error p.message {
   color: #ff0000;
 }

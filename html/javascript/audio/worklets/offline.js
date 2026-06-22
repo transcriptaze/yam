@@ -45,13 +45,6 @@ export class OfflineWorklet extends AudioWorkletProcessor {
         automationRate: 'k-rate',
       },
       {
-        name: 'loop',
-        defaultValue: 0,
-        minValue: 0,
-        maxValue: 1,
-        automationRate: 'k-rate',
-      },
-      {
         name: 'ding',
         defaultValue: 0,
         minValue: 0,
@@ -199,7 +192,7 @@ export class OfflineWorklet extends AudioWorkletProcessor {
     const tactus = this.section?.beats ?? this.#track.beats
     const figura = this.section?.divisions ?? this.#track.divisions
     const pulse = this.section?.pulse ?? parameters.pulse[0]
-    const loop = parameters.loop[0] === 1.0
+    const loop = false
     const ding = parameters.ding[0] === 1.0
     const gain = 1
     let clock = this.clock
@@ -302,7 +295,6 @@ export class OfflineWorklet extends AudioWorkletProcessor {
       }
     } else if (this.stopping) {
       this.FSM.onStopped()
-      // NTS: send current loops - doesn't reset loop count on stop anymore
       this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
 
       log('STOP', clock.t, clock.time, BPM, Number.NaN, Number.NaN, tactus, figura, pulse)

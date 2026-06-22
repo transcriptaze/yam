@@ -100,12 +100,9 @@ export class OfflineNode extends AudioWorkletNode {
       })
 
       // ... loop ?
-      const loopable = v.loopable ?? false
-      const loop = v.loop ?? false
       const dings = track.dings ?? []
       const ding = track.ding ?? false
 
-      this.parameters.get('loop').setValueAtTime(loopable && loop ? 1 : 0, ctx.currentTime)
       this.parameters.get('ding').setValueAtTime(dings.length > 0 && ding ? 1 : 0, ctx.currentTime)
 
       // ... play

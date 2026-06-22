@@ -18,7 +18,7 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
          - [x] remove BPM parameter
          - [x] remove beats parameter
          - [x] remove divisions parameter
-         - [ ] remove loops parameter
+         - [x] remove loops parameter
          - [ ] remove dings parameter
          - [ ] #preamble
          - [ ] metadata 

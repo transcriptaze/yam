@@ -61,7 +61,7 @@ export class FSM {
     return false
   }
 
-  on250ms() {
+  onPreamble() {
     switch (this.state) {
       case STATE.STARTING:
         this.state = STATE.PLAYING

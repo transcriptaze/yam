@@ -57,16 +57,10 @@ class Engine {
             this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'stop' } }))
           })
 
-          // recorder.addEventListener('pause', () => {
-          //   this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'pause' } }))
-          // })
-
-          // recorder.addEventListener('resume', () => {
-          //   this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'resume' } }))
-          // })
-
           recorder.addEventListener('dataavailable', (e) => {
-            this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'done', audio: e.data } }))
+            if (this.#armed) {
+              this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'done', audio: e.data } }))
+            }
           })
 
           recorder.addEventListener('error', (e) => {
@@ -150,7 +144,22 @@ class Engine {
   }
 
   record(armed) {
-    this.#armed = armed === true
+    if (!this.#armed && armed === true) {
+      this.#exec(() => {
+        this.#armed = true
+
+        if (this.playing) {
+          this.#recorder.start()
+        }
+      })
+    }
+
+    if (this.#armed && armed === false) {
+      this.#exec(() => {
+        this.#recorder.stop()
+        this.#armed = false
+      })
+    }
   }
 
   set BPM(v) {

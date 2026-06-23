@@ -34,8 +34,8 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
        - [x] update user manual (about.html)
        - [x] disarm on done
        - [x] play/stop toggle
-       - [ ] cancel if disarm while playing
-       - [ ] start if arm while playing
+       - [x] cancel if disarm while playing
+       - [x] start if arm while playing
        - (?) timeslice and accumulate blobs
        - (?) requestData on pause() and accumulate blobs
 

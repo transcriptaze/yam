@@ -68,7 +68,7 @@ export class OfflineWorklet extends AudioWorkletProcessor {
 
       case 'track':
         this.#track = transmogrify(event.data.track)
-        console.log(this.#track)
+        this.#preamble = 1000 * (event.data.preamble ?? 0.0) // ms
         this.restart()
         break
     }
@@ -196,7 +196,7 @@ export class OfflineWorklet extends AudioWorkletProcessor {
       clock.tick(BPM, tactus, figura, pulse, N)
 
       if (clock.time >= this.#preamble) {
-        if (this.FSM.on250ms()) {
+        if (this.FSM.onPreamble()) {
           clock.reset()
           this.flip({ state: FSM.STATE.PLAYING, bar: 0, beat: 0, loops: this.#loops })
           this.port.postMessage({

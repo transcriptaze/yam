@@ -251,7 +251,7 @@ export class Metronome extends AudioWorkletProcessor {
       clock.tick(BPM, tactus, figura, pulse, N)
 
       if (clock.time >= 250) {
-        if (this.FSM.on250ms()) {
+        if (this.FSM.onPreamble()) {
           clock.reset()
           this.flip({ state: FSM.STATE.PLAYING, bar: 0, beat: 0, loops: this.#loops })
           this.port.postMessage({

@@ -56,7 +56,7 @@ export class OfflineNode extends AudioWorkletNode {
     }
   }
 
-  render(v) {
+  render(v, preamble) {
     const ctx = this.context
 
     this.connect(ctx.destination)
@@ -97,6 +97,7 @@ export class OfflineNode extends AudioWorkletNode {
       this.port.postMessage({
         message: 'track',
         track: track,
+        preamble: preamble,
       })
 
       this.port.postMessage({

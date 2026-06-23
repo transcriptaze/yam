@@ -3,7 +3,7 @@ import * as soundsets from './soundsets.js'
 import { INF } from '../constants.js'
 
 const FS = 48000
-const _PREAMBLE = 0.0
+const PREAMBLE = 0.0
 const POSTAMBLE = 0.25
 const MAX = 5 * 60
 
@@ -12,22 +12,22 @@ export class Offline {
 
   render(track, settings) {
     const fs = settings?.sampleRate ?? FS
-    const samples = bufferSize(track, settings, fs)
+    const preamble = settings?.clickTrack?.preamble ?? PREAMBLE
+    const postamble = settings?.clickTrack?.postamble ?? POSTAMBLE
+    const max = settings?.clickTrack?.max ?? MAX
+    const duration = settings?.clickTrack?.duration ?? max
+
+    const samples = bufferSize(track, fs, preamble, postamble, max, duration)
     const ctx = new OfflineAudioContext(2, samples, fs)
 
     return soundsets
       .get(ctx, this.#soundset)
       .then((sounds) => offline(ctx, sounds))
-      .then((node) => node.render(track))
+      .then((node) => node.render(track, preamble))
   }
 }
 
-function bufferSize(track, settings, fs) {
-  const preamble = 0 // settings?.preamble ?? PREAMBLE
-  const postamble = settings?.postamble ?? POSTAMBLE
-  const max = settings?.max ?? MAX
-  const duration = settings?.duration ?? max
-
+function bufferSize(track, fs, preamble, postamble, max, duration) {
   if (track.duration !== INF) {
     return (preamble + clamp(track.duration, 0, max) + postamble) * fs
   }

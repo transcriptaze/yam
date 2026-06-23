@@ -10,16 +10,8 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
    - https://stackoverflow.com/questions/22560413/html5-web-audio-convert-audio-buffer-into-wav-file
    - [ ] offline rendering
       - [ ] offline node/worklet
-         - [x] gain: 1
-         - [x] remove 250ms start delay
-         - [x] wait for ready in node
-         - [x] remove BPM parameter
-         - [x] remove beats parameter
-         - [x] remove divisions parameter
-         - [x] remove loop parameter
-         - [x] remove ding parameter
          - [ ] remove pulse parameter
-         - [ ] #preamble
+         - [x] #preamble
          - [ ] metadata 
             - [ ] section markers
             - [ ] time signature
@@ -28,14 +20,6 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
       - (?) busy/unbusy windmill around render?
 
    - [ ] recording
-       - [x] RECORD button 
-       - [x] remove 'recording' class on disarm
-       - [x] save on done
-       - [x] update user manual (about.html)
-       - [x] disarm on done
-       - [x] play/stop toggle
-       - [x] cancel if disarm while playing
-       - [x] start if arm while playing
        - (?) timeslice and accumulate blobs
        - (?) requestData on pause() and accumulate blobs
 

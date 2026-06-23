@@ -44,13 +44,6 @@ export class OfflineWorklet extends AudioWorkletProcessor {
         maxValue: 6,
         automationRate: 'k-rate',
       },
-      {
-        name: 'ding',
-        defaultValue: 0,
-        minValue: 0,
-        maxValue: 1,
-        automationRate: 'k-rate',
-      },
     ]
   }
 
@@ -193,7 +186,7 @@ export class OfflineWorklet extends AudioWorkletProcessor {
     const figura = this.section?.divisions ?? this.#track.divisions
     const pulse = this.section?.pulse ?? parameters.pulse[0]
     const loop = false
-    const ding = parameters.ding[0] === 1.0
+    const ding = this.#track.ding
     const gain = 1
     let clock = this.clock
 

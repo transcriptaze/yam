@@ -99,13 +99,6 @@ export class OfflineNode extends AudioWorkletNode {
         track: track,
       })
 
-      // ... loop ?
-      const dings = track.dings ?? []
-      const ding = track.ding ?? false
-
-      this.parameters.get('ding').setValueAtTime(dings.length > 0 && ding ? 1 : 0, ctx.currentTime)
-
-      // ... play
       this.port.postMessage({
         message: 'play',
       })

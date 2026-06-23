@@ -6,8 +6,6 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 
 ## In Progress
 
-- [x] wrangler CLI
-
 - [ ] export click track (cf. https://github.com/transcriptaze/yam/issues/53)
    - https://stackoverflow.com/questions/22560413/html5-web-audio-convert-audio-buffer-into-wav-file
    - [ ] offline rendering
@@ -18,8 +16,8 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
          - [x] remove BPM parameter
          - [x] remove beats parameter
          - [x] remove divisions parameter
-         - [x] remove loops parameter
-         - [ ] remove dings parameter
+         - [x] remove loop parameter
+         - [x] remove ding parameter
          - [ ] remove pulse parameter
          - [ ] #preamble
          - [ ] metadata 

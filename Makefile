@@ -1,6 +1,6 @@
 BUILD := $(shell git rev-parse --short HEAD)
 UNAME := $(shell uname)
-VERSION ?= v0.3.0
+VERSION ?= v0.3.1
 
 ifeq ($(UNAME),Darwin)
    SED := sed -i ''

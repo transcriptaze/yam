@@ -6,15 +6,12 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 
 ## In Progress
 
-- [ ] export click track (cf. https://github.com/transcriptaze/yam/issues/53)
-   - https://stackoverflow.com/questions/22560413/html5-web-audio-convert-audio-buffer-into-wav-file
+- [x] export click track (cf. https://github.com/transcriptaze/yam/issues/53)
+   - [x] recording
    - [x] offline rendering
        - [x] remove pulse parameter
        - [x] #preamble
-       - (?) busy/unbusy windmill around render?
-
-   - [ ] recording
-       - (?) timeslice and accumulate blobs
+       - [x] busy/unbusy windmill
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM

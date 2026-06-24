@@ -8,20 +8,13 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 
 - [ ] export click track (cf. https://github.com/transcriptaze/yam/issues/53)
    - https://stackoverflow.com/questions/22560413/html5-web-audio-convert-audio-buffer-into-wav-file
-   - [ ] offline rendering
-      - [ ] offline node/worklet
-         - [ ] remove pulse parameter
-         - [x] #preamble
-         - [ ] metadata 
-            - [ ] section markers
-            - [ ] time signature
-            - [ ] BPM
-      - (?) loops
-      - (?) busy/unbusy windmill around render?
+   - [x] offline rendering
+       - [x] remove pulse parameter
+       - [x] #preamble
+       - (?) busy/unbusy windmill around render?
 
    - [ ] recording
        - (?) timeslice and accumulate blobs
-       - (?) requestData on pause() and accumulate blobs
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM
@@ -226,6 +219,13 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
      - use ligatures e.g timeSig2over4
      - https://www.w3.org/2019/03/smufl13/tables/time-signatures.html
      - https://torinak.com/font/lsfont.html
+
+### Click track
+- [ ] offline loops
+- [ ] metadata 
+    - [ ] section markers
+    - [ ] time signature
+    - [ ] BPM
 
 - [ ] control knob
       - [ ] slide-y

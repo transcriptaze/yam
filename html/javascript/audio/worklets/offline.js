@@ -36,15 +36,7 @@ export class OfflineWorklet extends AudioWorkletProcessor {
   }
 
   static get parameterDescriptors() {
-    return [
-      {
-        name: 'pulse',
-        defaultValue: 3,
-        minValue: 1,
-        maxValue: 6,
-        automationRate: 'k-rate',
-      },
-    ]
+    return []
   }
 
   onMessage(event) {
@@ -69,6 +61,8 @@ export class OfflineWorklet extends AudioWorkletProcessor {
       case 'track':
         this.#track = transmogrify(event.data.track)
         this.#preamble = 1000 * (event.data.preamble ?? 0.0) // ms
+
+        console.log(this.#track)
         this.restart()
         break
     }
@@ -179,12 +173,12 @@ export class OfflineWorklet extends AudioWorkletProcessor {
     return bpm != null ? (bpm * BPM) / tempo : BPM
   }
 
-  process(_inputs, outputs, parameters) {
+  process(_inputs, outputs, _parameters) {
     const N = outputs?.[0]?.[0]?.length ?? -3
     const BPM = this.#bpm()
     const tactus = this.section?.beats ?? this.#track.beats
     const figura = this.section?.divisions ?? this.#track.divisions
-    const pulse = this.section?.pulse ?? parameters.pulse[0]
+    const pulse = this.section?.pulse ?? this.#track.pulse
     const loop = false
     const ding = this.#track.ding
     const gain = 1

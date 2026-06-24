@@ -73,23 +73,6 @@ release: package
 	tar --directory=dist/yam/darwin-arm64 --exclude=".DS_Store" -cvzf dist/yam-$(VERSION)-darwin-arm64.tar.gz .
 	cd dist/yam/windows && zip --recurse-paths ../../yam-$(VERSION)-windows-x64.zip . -x ".DS_Store"
 
-# cloudflare: build
-# 	rm -rf dist/cloudflare
-# 	npm run cloudflare
-# 	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/cloudflare/about.html
-
-# cloudflare:  build
-# 	rm -rf dist/cloudflare
-# 	mkdir -p dist/cloudflare
-# 
-# 	cp -r html/*       dist/cloudflare/
-# 	cp -r cloudflare/* dist/cloudflare/
-# 	rm -f dist/cloudflare/.gitignore
-# 	rm -f dist/cloudflare/LICENSE
-# 	rm -f dist/cloudflare/package.json
-# 	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/cloudflare/about.html
-# 	find dist/cloudflare -name ".DS_Store" -delete
-
 cloudflare-build:  build
 	rm -rf dist/cloudflare.zip
 	rm -rf dist/cloudflare

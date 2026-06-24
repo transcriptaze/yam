@@ -44,18 +44,6 @@ export class OfflineNode extends AudioWorkletNode {
     }
   }
 
-  set pulse(pulse) {
-    this.#pulse = pulse
-
-    if (pulse != null) {
-      const k = PULSE.pulseToInt(pulse)
-
-      if (!Number.isNaN(k)) {
-        this.parameters.get('pulse').setValueAtTime(k, this.context.currentTime)
-      }
-    }
-  }
-
   render(v, preamble) {
     const ctx = this.context
 
@@ -78,9 +66,6 @@ export class OfflineNode extends AudioWorkletNode {
     }
 
     return new Promise((resolve) => {
-      this.pulse = v.pulse ?? this.pulse
-      this.BPM = v.BPM ?? this.BPM
-
       const track = transmogrify({
         UUID: v.UUID,
         tempo: v.tempo,

@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## [0.3.1](https://github.com/transcriptaze/yam/releases/tag/v0.3.1) - 2026-06-24
+
+### Added
+1. Added ability to export to a click-track.
+
+
 ## [0.3.0](https://github.com/transcriptaze/yam/releases/tag/v0.3.0) - 2026-05-26
 
 ### Added

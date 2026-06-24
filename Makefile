@@ -34,7 +34,7 @@ benchmark: build
 	@echo "benchmark: nothing to do"
 
 coverage: build
-	@echo "coverage: nothincg to do"
+	@echo "coverage: nothing to do"
 
 vet: 
 	@echo "vet:  nothing to do"

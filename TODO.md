@@ -1,17 +1,13 @@
 # TODO
 
-NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
-- (?) rework engine onPlaying/onStopped as signals
-- (?) rework widgets.metronome to subscribe to engine
+- [x] export click track (cf. https://github.com/transcriptaze/yam/issues/53)
+
 
 ## In Progress
 
-- [x] export click track (cf. https://github.com/transcriptaze/yam/issues/53)
-   - [x] recording
-   - [x] offline rendering
-       - [x] remove pulse parameter
-       - [x] #preamble
-       - [x] busy/unbusy windmill
+NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
+- (?) rework engine onPlaying/onStopped as signals
+- (?) rework widgets.metronome to subscribe to engine
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM

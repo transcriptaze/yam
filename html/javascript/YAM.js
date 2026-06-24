@@ -26,6 +26,7 @@ const widgets = {
   playlists: document.querySelector('yam-playlists'),
   tracks: document.querySelector('yam-playlist-tracks'),
   editor: document.querySelector('yam-editor'),
+  windmill: document.querySelector('div.windmill'),
 }
 
 export function initialise() {
@@ -674,9 +675,11 @@ function onTrackWAV(event) {
   const track = datastore.tracks.get(event.detail.track)
   const engine = new Offline()
 
-  engine.render(track, settings).then((buffer) => {
-    fs.saveWavFile(`${track.title}`, buffer)
-  })
+  busy()
+  engine
+    .render(track, settings)
+    .then((buffer) => fs.saveWavFile(`${track.title}`, buffer))
+    .then(() => unbusy())
 }
 
 function onPlaylistSelected(event) {
@@ -1025,6 +1028,14 @@ function onPlaylistDeleted(event) {
 
     engine.track = null
   }
+}
+
+function busy() {
+  widgets.windmill.classList.remove('hidden')
+}
+
+function unbusy() {
+  widgets.windmill.classList.add('hidden')
 }
 
 function warnf(err) {

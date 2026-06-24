@@ -234,6 +234,34 @@ div.editor yam-editor {
   padding: 0;
 }
 
+div.windmill {
+  grid-column: 2;
+  grid-row: 1;
+  z-index: 2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+div.windmill.hidden {
+  display: none;
+}
+
+div.windmill::before {
+  content: "";
+  width: 96px;
+  height: 96px;
+  border-radius: 50%;
+  border-top: 8px solid rgba(255, 128, 0, 0.6274509804);
+  border-right: 2px solid transparent;
+  animation: windmill 0.8s linear infinite;
+}
+
+@keyframes windmill {
+  to {
+    transform: rotate(360deg);
+  }
+}
 @media (max-width: 768px) and (orientation: portrait) {
   main {
     width: 100%;
@@ -269,6 +297,9 @@ div.editor yam-editor {
   }
   div.editor.hidden {
     display: none;
+  }
+  div.windmill {
+    grid-column: 1;
   }
 }
 @media (max-width: 1024px) and (orientation: landscape) {
@@ -315,6 +346,9 @@ div.editor yam-editor {
   }
   div.editor.hidden {
     display: none;
+  }
+  div.windmill {
+    grid-column: 1;
   }
 }
 html.settings main {

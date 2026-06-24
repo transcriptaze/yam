@@ -1,6 +1,6 @@
 BUILD := $(shell git rev-parse --short HEAD)
 UNAME := $(shell uname)
-VERSION ?= v0.3.0
+VERSION ?= v0.3.1
 
 ifeq ($(UNAME),Darwin)
    SED := sed -i ''
@@ -72,23 +72,6 @@ release: package
 	tar --directory=dist/yam/darwin-x64   --exclude=".DS_Store" -cvzf dist/yam-$(VERSION)-darwin-x64.tar.gz   .
 	tar --directory=dist/yam/darwin-arm64 --exclude=".DS_Store" -cvzf dist/yam-$(VERSION)-darwin-arm64.tar.gz .
 	cd dist/yam/windows && zip --recurse-paths ../../yam-$(VERSION)-windows-x64.zip . -x ".DS_Store"
-
-# cloudflare: build
-# 	rm -rf dist/cloudflare
-# 	npm run cloudflare
-# 	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/cloudflare/about.html
-
-# cloudflare:  build
-# 	rm -rf dist/cloudflare
-# 	mkdir -p dist/cloudflare
-# 
-# 	cp -r html/*       dist/cloudflare/
-# 	cp -r cloudflare/* dist/cloudflare/
-# 	rm -f dist/cloudflare/.gitignore
-# 	rm -f dist/cloudflare/LICENSE
-# 	rm -f dist/cloudflare/package.json
-# 	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/cloudflare/about.html
-# 	find dist/cloudflare -name ".DS_Store" -delete
 
 cloudflare-build:  build
 	rm -rf dist/cloudflare.zip

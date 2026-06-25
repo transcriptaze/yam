@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## Unreleased
+
+
 ## [0.3.1](https://github.com/transcriptaze/yam/releases/tag/v0.3.1) - 2026-06-25
 
 ### Added

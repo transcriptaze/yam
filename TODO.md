@@ -1,8 +1,5 @@
 # TODO
 
-- [x] export click track (cf. https://github.com/transcriptaze/yam/issues/53)
-
-
 ## In Progress
 
 NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm

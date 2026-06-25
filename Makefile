@@ -59,8 +59,9 @@ build-all: test vet lint go
 	env GOOS=windows GOARCH=amd64         GOWORK=off go build -trimpath -o dist/yam/windows      ./...
 
 package: build-all
+	mkdir -p dist/yam
 	rm -rf dist/yam/html
-	npm run package
+	cp -r html dist/yam/
 	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/yam/html/about.html
 
 release: package

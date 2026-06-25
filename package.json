@@ -1,7 +1,7 @@
 {
     "type": "module",
     "name": "yam",
-    "version": "0.3.1",
+    "version": "0.3.2",
     "description": "WebAudio Metronome",
     "author": "transcriptaze",
     "license": "GPL-3.0",

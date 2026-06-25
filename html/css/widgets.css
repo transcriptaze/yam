@@ -46,6 +46,7 @@
   --toolbar-button-disabled: #ffffff76;
   --toolbar-button-enabled: #222222;
   --toolbar-button-hover: #c00000;
+  --toolbar-record-armed: #ff0000;
   --toolbar-wakelock-active: #b24a2c;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
@@ -133,6 +134,7 @@
   --toolbar-button-disabled: #7a7a7f;
   --toolbar-button-enabled: #9a9a9e;
   --toolbar-button-hover: #dc322f;
+  --toolbar-record-armed: #ff0000;
   --toolbar-wakelock-active: #b24a2c;
   --track-colour-muted: #7a7a7f;
   --track-colour-deleting: #7a7a7f;
@@ -1992,26 +1994,10 @@ div.playlist-track [popover] {
 }
 div.playlist-track [popover] button {
   background: none;
-  width: 40px;
+  width: 32px;
   height: 100%;
   border: none;
   outline: none;
-}
-div.playlist-track [popover] #statistics {
-  height: 28px;
-  background-color: #222222;
-  mask-image: url("/images/statistics.svg");
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: auto 24px;
-}
-div.playlist-track [popover] #mute {
-  height: 28px;
-  background-color: #222222;
-  mask-image: url("/images/mute.svg");
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: auto 24px;
 }
 div.playlist-track [popover] #trash {
   display: grid;
@@ -2027,6 +2013,30 @@ div.playlist-track [popover] #trash img {
   grid-row: 1;
   height: 100%;
   width: auto;
+}
+div.playlist-track [popover] #mute {
+  height: 28px;
+  background-color: #222222;
+  mask-image: url("/images/mute.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: auto 24px;
+}
+div.playlist-track [popover] #statistics {
+  height: 28px;
+  background-color: #222222;
+  mask-image: url("/images/statistics.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: auto 24px;
+}
+div.playlist-track [popover] #wav {
+  height: 28px;
+  background-color: #222222;
+  mask-image: url("/images/wav.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: auto 24px;
 }
 div.playlist-track [popover]:popover-open {
   display: flex;

@@ -1,6 +1,6 @@
 BUILD := $(shell git rev-parse --short HEAD)
 UNAME := $(shell uname)
-VERSION ?= v0.3.0
+VERSION ?= v0.3.1
 
 ifeq ($(UNAME),Darwin)
    SED := sed -i ''
@@ -19,7 +19,6 @@ clean:
 	rm -rf dist
 
 format: 
-# 	find html -name "*.html"          -exec npx prettier --write {} +
 	find html/javascript -name "*.js" -exec npx prettier --write {} +
 	find test            -name "*.js" -exec npx prettier --write {} +
 
@@ -35,7 +34,7 @@ benchmark: build
 	@echo "benchmark: nothing to do"
 
 coverage: build
-	@echo "coverage: nothincg to do"
+	@echo "coverage: nothing to do"
 
 vet: 
 	@echo "vet:  nothing to do"
@@ -60,8 +59,9 @@ build-all: test vet lint go
 	env GOOS=windows GOARCH=amd64         GOWORK=off go build -trimpath -o dist/yam/windows      ./...
 
 package: build-all
+	mkdir -p dist/yam
 	rm -rf dist/yam/html
-	npm run package
+	cp -r html dist/yam/
 	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/yam/html/about.html
 
 release: package
@@ -74,24 +74,7 @@ release: package
 	tar --directory=dist/yam/darwin-arm64 --exclude=".DS_Store" -cvzf dist/yam-$(VERSION)-darwin-arm64.tar.gz .
 	cd dist/yam/windows && zip --recurse-paths ../../yam-$(VERSION)-windows-x64.zip . -x ".DS_Store"
 
-# cloudflare: build
-# 	rm -rf dist/cloudflare
-# 	npm run cloudflare
-# 	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/cloudflare/about.html
-
-cloudflare:  build
-	rm -rf dist/cloudflare
-	mkdir -p dist/cloudflare
-
-	cp -r html/*       dist/cloudflare/
-	cp -r cloudflare/* dist/cloudflare/
-	rm -f dist/cloudflare/.gitignore
-	rm -f dist/cloudflare/LICENSE
-	rm -f dist/cloudflare/package.json
-	$(SED) 's|content="__BUILD_NUMBER__"|content="$(BUILD)"|' dist/cloudflare/about.html
-	find dist/cloudflare -name ".DS_Store" -delete
-
-cloudflare-dev:  build
+cloudflare-build:  build
 	rm -rf dist/cloudflare.zip
 	rm -rf dist/cloudflare
 	mkdir -p dist/cloudflare
@@ -105,8 +88,10 @@ cloudflare-dev:  build
 	find dist/cloudflare -name ".DS_Store" -delete
 	cd dist/cloudflare && zip --recurse-paths -FS ../cloudflare.zip . -x ".DS_Store"
 
+cloudflare: cloudflare-build
+	npx wrangler pages deploy --project-name yam dist/cloudflare
+
 debug:
-	find html/javascript -name "*.js" -exec npx eslint   --fix {} +
 	npm run debug
 
 sass: 

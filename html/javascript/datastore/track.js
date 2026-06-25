@@ -1,4 +1,5 @@
 import * as generators from '../generators.js'
+import { INF } from '../constants.js'
 
 // Transmogrifies the track into an object with all valid fields:
 // - 'missing' values are replaced by the equivalent default values
@@ -40,6 +41,20 @@ export function realize(track) {
     return 0
   }
 
+  const duration = () => {
+    if (sections.length == 0) {
+      return INF
+    }
+
+    return sections.reduce((duration, v) => {
+      if (!Number.isNaN(duration) && !Number.isNaN(v.duration)) {
+        return duration + v.duration
+      }
+
+      return INF
+    }, 0)
+  }
+
   return {
     UUID: track.UUID,
 
@@ -48,6 +63,7 @@ export function realize(track) {
     pulse: track.pulse,
     tempo: track.tempo,
     BPM: track.BPM,
+    duration: duration(),
 
     bars: bars(),
     countIn: countIn(),
@@ -66,6 +82,7 @@ function transmogrify(track) {
       name: v.name,
       start: v.start,
       measures: v.measures,
+      duration: v.duration,
       role: v.role,
       colour: v.colour,
       dings: v.dings,

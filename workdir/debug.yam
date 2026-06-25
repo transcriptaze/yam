@@ -299,12 +299,176 @@
           ]
         },
         {
-          "name": "Verse",
-          "role": "verse"
+          "name": "Intro",
+          "role": "intro",
+          "subsections": [
+            {
+              "measures": 8
+            }
+          ]
+        },
+        {
+          "name": "Verse 1",
+          "role": "verse",
+          "subsections": [
+            {
+              "name": "lead-in",
+              "measures": 8
+            },
+            {
+              "name": "verse",
+              "measures": 16
+            }
+          ]
+        },
+        {
+          "name": "Chorus 1",
+          "role": "chorus",
+          "subsections": [
+            {
+              "measures": 8
+            }
+          ]
+        },
+        {
+          "name": "Verse 2",
+          "role": "verse",
+          "subsections": [
+            {
+              "name": "lead-in",
+              "measures": 8
+            },
+            {
+              "name": "verse",
+              "measures": 16
+            }
+          ]
+        },
+        {
+          "name": "Chorus 2",
+          "role": "chorus",
+          "subsections": [
+            {
+              "measures": 8
+            }
+          ]
+        },
+        {
+          "name": "(fermata)",
+          "role": "fermata",
+          "dings": [],
+          "subsections": [
+            {
+              "measures": 1,
+              "timeSignature": "5:4",
+              "clicks": {
+                "1": "sticks",
+                "2": "sticks",
+                "3": "sticks",
+                "4": "sticks",
+                "5": "tack"
+              },
+              "colour": "red"
+            }
+          ],
+          "timeSignature": "5:4"
+        },
+        {
+          "name": "Mid-Eight",
+          "role": "mid-eight",
+          "subsections": [
+            {
+              "measures": 8,
+              "timeSignature": "4:4"
+            },
+            {
+              "measures": 8
+            }
+          ],
+          "timeSignature": "4:4"
+        },
+        {
+          "name": "Bridge",
+          "role": "bridge",
+          "subsections": [
+            {
+              "measures": 12
+            },
+            {
+              "measures": 12
+            }
+          ]
+        },
+        {
+          "name": "Chorus X",
+          "role": "chorus",
+          "subsections": [
+            {
+              "measures": 8
+            }
+          ]
+        },
+        {
+          "name": "Last Verse",
+          "role": "verse",
+          "subsections": [
+            {
+              "name": "lead-in",
+              "measures": 8
+            },
+            {
+              "name": "verse",
+              "measures": 16
+            }
+          ]
+        },
+        {
+          "name": "Last Chorus",
+          "role": "chorus",
+          "subsections": [
+            {
+              "measures": 8
+            },
+            {
+              "measures": 8
+            }
+          ]
+        },
+        {
+          "name": "Outro",
+          "role": "outro",
+          "subsections": [
+            {
+              "measures": 2
+            },
+            {
+              "measures": 1,
+              "tempo": 80,
+              "pulse": "eighth-doublet",
+              "clicks": {
+                "1": "tick",
+                "2": "sticks",
+                "3": "sticks",
+                "4": "sticks",
+                "4.5": "tack"
+              }
+            },
+            {
+              "measures": 2,
+              "tempo": 160,
+              "pulse": "quarter",
+              "clicks": {
+                "1": "sticks",
+                "2": "sticks",
+                "3": "sticks",
+                "4": "sticks"
+              }
+            }
+          ]
         }
       ],
       "metronome": {
-        "BPM": 149,
+        "BPM": 161,
         "loop": false,
         "ding": false
       }

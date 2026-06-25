@@ -55,6 +55,8 @@
         <div class="panel editor hidden">
           <yam-editor></yam-editor>
         </div>
+
+        <div class="windmill hidden"></div>
       </main>
 
       <toolbar class="metronome">
@@ -66,6 +68,7 @@
             <button id="edit"      class="icon-edit"      aria-label="Edit"></button>
             <button id="load"      class="icon-load"      aria-label="Load"></button>
             <button id="save"      class="icon-save"      aria-label="Save"></button>
+            <button id="record"    class="icon-record"    aria-label="Record"></button>
           </div>
 
           <div class="right-menu">
@@ -87,7 +90,16 @@
     <!-- file import confirm -->
     <dialog class="import">
       <div>
-        <p class="message">Load playlist from file ??</p>
+        <p class="message">Load playlist from file ?</p>
+        <button value="cancel">Cancel</button>
+        <button value="ok">OK</button>
+      </div>
+    </dialog>
+
+    <!-- save confirm -->
+    <dialog class="save">
+      <div>
+        <p class="message">Save click track to file ?</p>
         <button value="cancel">Cancel</button>
         <button value="ok">OK</button>
       </div>
@@ -728,6 +740,7 @@
         <div id="title"></div>
         <button id="menu" popovertarget="actions"></button>
         <div id="actions" popover>
+          <button id="wav"></button>
           <button id="statistics"></button>
           <button id="mute"></button>
           <img id="trash" src="./images/trash.svg" />
@@ -918,7 +931,7 @@
   <!-- SCRIPTS -->
   <script type="module">
     import "./javascript/widgets/widgets.js"
-    import { initialise, reset, show, load, save, requestWakeLock, toggleWakeLock, onError, showError, toggleTheme } from './javascript/YAM.js'
+    import { initialise, reset, show, load, save, record, requestWakeLock, toggleWakeLock, onError, showError, toggleTheme } from './javascript/YAM.js'
 
     const toolbar = {
       reset: document.querySelector('toolbar #reset'),
@@ -927,6 +940,7 @@
       edit: document.querySelector('toolbar #edit'),
       save: document.querySelector('toolbar #save'),
       load: document.querySelector('toolbar #load'),
+      record: document.querySelector('toolbar #record'),
       settings : document.querySelector('toolbar #settings'),
       fullscreen : document.querySelector('toolbar #fullscreen'),
       wakelock: document.querySelector('toolbar #wakelock'),
@@ -942,6 +956,7 @@
     toolbar.edit.onclick = () => show('editor')
     toolbar.save.onclick = () => save()
     toolbar.load.onclick = () => load()
+    toolbar.record.onclick = () => record()
     toolbar.wakelock.onclick = () => toggleWakeLock()
     toolbar.theme.onclick = () =>  toggleTheme()
     toolbar.oops.onclick = () => showError()

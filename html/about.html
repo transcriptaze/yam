@@ -34,6 +34,7 @@
             <li><span class="icon icon-metronome" aria-hidden="true"></span>Displays the metronome</li>
             <li><span class="icon icon-playlist"  aria-hidden="true"></span>Displays the playlists</li>
             <li><span class="icon icon-edit"      aria-hidden="true"></span>Displays the track editor</li>
+            <li><span class="icon icon-record"    aria-hidden="true"></span>Records a click track</li>
           </ul>
           <ul class="menu">
             <li><span class="icon icon-import" aria-hidden="true"></span>Imports the playlists from a file</li>
@@ -133,9 +134,9 @@
     const build = document.querySelector('meta[name="build"]').content
 
     if (build != null && `${build}` !== '__BUILD_NUMBER__') {
-      document.getElementById('build-number').textContent = `v0.0.${build}`
+      document.getElementById('build-number').textContent = `v0.3.1.${build}`
     } else {
-      document.getElementById('build-number').textContent = `v0.0`
+      document.getElementById('build-number').textContent = `v0.3.1`
     }
 
   </script>

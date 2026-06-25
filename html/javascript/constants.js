@@ -23,28 +23,6 @@ export const BRIDGE = 'bridge'
 export const TURNAROUND = 'turnaround'
 export const OUTRO = 'outro'
 
-// // prettier-ignore
-// export const ROLES = new Map([
-//   [COUNT_IN,   { name:'Count In',   colour: [ '#d69574' ] ,            contrast: '#1d4b63' }],  // warm apricot
-//   [ANACRUSIS,  { name:'Pickup',     colour: [ '#cbb469' ] ,            contrast: '#21305f' }],  // golden olive
-//   [INTRO,      { name:'Intro',      colour: [ '#df8880' ] ,            contrast: '#1a5f66' }],  // coral blush
-//   [VERSE,      { name:'Verse',      colour: [ '#b3bc69', '#64aa6f' ] , contrast: '#2c2758' }],  // moss green
-//   [CHORUS,     { name:'Chorus',     colour: [ '#84b5d2', '#3e7eb3' ] , contrast: '#5d3822' }],  // sky steel blue
-//   [BRIDGE,     { name:'Bridge',     colour: [ '#a7a8cb' ] ,            contrast: '#504f2f' }],  // lavender gray
-//   [TURNAROUND, { name:'Turnaround', colour: [ '#da8aaa' ] ,            contrast: '#1e6147' }],  // rose plum
-//   [OUTRO,      { name:'Outro',      colour: [ '#86c0b5' ] ,            contrast: '#542c33' }],  // mint teal
-// ])
-//
-// // prettier-ignore
-// export const OTHER = {
-//   COLOURS: [
-//     { colour:  '#cb96b2' , contrast: '#2a553e' }, // plum
-//     { colour:  '#71a9a0' , contrast: '#4f3035' }, // teal
-//     { colour:  '#b29f69' , contrast: '#2b3654' }, // ochre
-//     { colour:  '#7197b8' , contrast: '#553e2a' }, // blue
-//   ]
-// }
-
 // prettier-ignore
 export const ROLES = new Map([
   [COUNT_IN,   { name:'Count In',   colour: [ '--role-count-in'  ] ,               contrast: '--role-count-in-text'   }],
@@ -78,8 +56,10 @@ export const EVENTS = {
   BACK: 'back',
   NEXT: 'next',
 
+  READY: 'ready',
   PLAYING: 'playing',
   STOPPED: 'stopped',
+  RECORDING: 'recording',
   CLICK: 'click',
   DONE: 'done',
 
@@ -101,6 +81,7 @@ export const EVENTS = {
   TRACK_MUTE: 'mute-track',
   TRACK_DELETE: 'delete-track',
   TRACK_STATISTICS: 'track-statistics',
+  TRACK_WAV: 'track-wav',
 
   EDIT_SAVE: 'edit-save',
   SECTION_TIME_SIGNATURE_CHANGE: 'section-time-signature-change',

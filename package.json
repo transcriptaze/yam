@@ -1,7 +1,7 @@
 {
     "type": "module",
     "name": "yam",
-    "version": "0.0.0",
+    "version": "0.3.1",
     "description": "WebAudio Metronome",
     "author": "transcriptaze",
     "license": "GPL-3.0",
@@ -13,21 +13,21 @@
     "bugs": {
         "url": "https://github.com/transcriptaze/yam/issues"
     },
+
     "repository": {
         "type": "git",
         "url": "git+https://github.com/transcriptaze/yam.git"
     },
+
     "scripts": {
         "css": "sass sass:httpd/css --no-source-map --style=expanded",
         "watch": "sass --watch sass:httpd/css --no-source-map --style=expanded",
         "test": "mocha --require test/setup.js 'test/**/*_spec.js'",
         "klock": "mocha --require test/setup.js 'test/audio/clock/klock_spec.js'",
-        "debug": "mocha --require test/setup.js 'test/widgets/wheel_spec.js'",
-        "package": "rollup --c yam.config.js",
-        "cloudflare": "rollup --config cloudflare.config.js"
+        "debug": "mocha --require test/setup.js 'test/audio/vm/vm_spec.js'"
     },
+
     "devDependencies": {
-        "@biomejs/biome": "1.9.4",
         "@eslint/js": "^9.20.0",
         "chai": "^5.2.0",
         "eslint": "^9.20.0",
@@ -35,8 +35,7 @@
         "jsdom": "^26.1.0",
         "mocha": "^11.1.0",
         "prettier": "^3.7.1",
-        "rollup": "^4.52.4",
-        "rollup-plugin-copy": "^3.5.0",
-        "sass": "^1.87.0"
+        "sass": "^1.87.0",
+        "wrangler": "^4.100.0"
     }
 }

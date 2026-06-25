@@ -1,27 +1,24 @@
 # TODO
 
+- [x] export click track (cf. https://github.com/transcriptaze/yam/issues/53)
+
+
+## In Progress
+
 NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 - (?) rework engine onPlaying/onStopped as signals
 - (?) rework widgets.metronome to subscribe to engine
 
-## In Progress
-
-- [ ] 2:2 time
-
-- [x] statistics (cf. https://github.com/transcriptaze/yam/issues/11)
-   - (?) https://opensource.posit.co/blog/2026-04-20_ggsql_alpha_release/
-   - (?) https://ggplot2.tidyverse.org/
-
-- [ ] editor - default reverted to 4:4 instead of continuing with 6:4 (cf. https://github.com/transcriptaze/yam/issues/54)
-
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
-    - [x] Rework clock as generator
+    - [ ] Rework clock as VM
+    - [ ] 2:2 time
     - [ ] unit test: BPM change
     - [ ] unit test: tactus change
     - [ ] Tick on on sixteenths
     - [ ] Tick on triplets
     - [ ] 'cue' generator
-        - what to do about infinite sections ???
+
+- [ ] editor - default reverted to 4:4 instead of continuing with 6:4 (cf. https://github.com/transcriptaze/yam/issues/54)
 
 - [ ] Fix toolbar overlap on desktop when developer tools is open and expanded (cf. https://github.com/transcriptaze/yam/issues/42)
    - [x] Fixed overlap
@@ -62,7 +59,6 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 - [ ] (?) move spacebar toggle into metronome widget
 - [ ] different grip icon
 - [ ] onSave should only update editor title, BPM, etc
-- [x] ~~playlists loaded from file include deleted playlists~~
 - [ ] editor: metronome div vertical alignment
 - [ ] editor: role drop down list
 - [ ] portrait/fullscreen: put something (title? logo? yams?) in the 'safe area' at the top
@@ -97,6 +93,10 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 - [ ] landscape+mobile
 
 ## Todo
+
+### VST
+- JUCE
+- https://github.com/talaviram/TICK
 
 ### Reset
     - [ ] red if next tap will reset to defaults
@@ -212,6 +212,13 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
      - use ligatures e.g timeSig2over4
      - https://www.w3.org/2019/03/smufl13/tables/time-signatures.html
      - https://torinak.com/font/lsfont.html
+
+### Click track
+- [ ] offline loops
+- [ ] metadata 
+    - [ ] section markers
+    - [ ] time signature
+    - [ ] BPM
 
 - [ ] control knob
       - [ ] slide-y
@@ -332,6 +339,11 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
   11. https://stackoverflow.com/questions/2635423/way-to-reduce-size-of-ttf-fonts
   12. https://developer.chrome.com/blog/a-customizable-select
   13. https://tauri.app
+  14. gg
+     - (?) https://opensource.posit.co/blog/2026-04-20_ggsql_alpha_release/
+     - (?) https://ggplot2.tidyverse.org/
+
+
 
   - https://webgpufundamentals.org/webgpu/lessons/webgpu-resizing-the-canvas.html
   - https://graphicdesign.stackexchange.com/questions/115225/where-to-find-more-to-4-combo-colors-generator

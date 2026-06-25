@@ -1,14 +1,14 @@
 import * as FSM from './FSM.js'
-import * as level from './level.js'
 import { Clock } from './clock.js'
 import { DOTTED_QUARTER } from '../shared/constants.js'
 
 const INF = Number.POSITIVE_INFINITY
+const DEBUG = false
 
-let DEBUG = false
-
-export class Metronome extends AudioWorkletProcessor {
+export class OfflineWorklet extends AudioWorkletProcessor {
   #fs = 44100
+  #preamble = 0
+
   #track = {
     BPM: null,
     beats: null,
@@ -29,7 +29,6 @@ export class Metronome extends AudioWorkletProcessor {
     super()
 
     this.FSM = new FSM.FSM()
-    this.level = new level.Level()
     this.clicks = new Map()
     this.clock = new Clock()
 
@@ -37,50 +36,7 @@ export class Metronome extends AudioWorkletProcessor {
   }
 
   static get parameterDescriptors() {
-    return [
-      {
-        name: 'BPM',
-        defaultValue: 120,
-        minValue: 40,
-        maxValue: 240,
-        automationRate: 'k-rate',
-      },
-      {
-        name: 'beats',
-        defaultValue: 4,
-        minValue: 1,
-        maxValue: 32,
-        automationRate: 'k-rate',
-      },
-      {
-        name: 'divisions',
-        defaultValue: 4,
-        minValue: 1,
-        maxValue: 32,
-        automationRate: 'k-rate',
-      },
-      {
-        name: 'pulse',
-        defaultValue: 3,
-        minValue: 1,
-        maxValue: 6,
-        automationRate: 'k-rate',
-      },
-      {
-        name: 'loop',
-        defaultValue: 0,
-        minValue: 0,
-        maxValue: 1,
-        automationRate: 'k-rate',
-      },
-      {
-        name: 'ding',
-        defaultValue: 0,
-        minValue: 0,
-        maxValue: 1,
-        automationRate: 'k-rate',
-      },
-    ]
+    return []
   }
 
   onMessage(event) {
@@ -102,22 +58,12 @@ export class Metronome extends AudioWorkletProcessor {
         this.stop()
         break
 
-      case 'toggle':
-        if (this.playing) {
-          this.stop()
-        } else {
-          this.play()
-        }
-        break
-
       case 'track':
         this.#track = transmogrify(event.data.track)
-        this.restart()
-        break
+        this.#preamble = 1000 * (event.data.preamble ?? 0.0) // ms
 
-      case 'debug':
-        DEBUG = event.data.debug === true
-        this.clock.debug = event.data.debug === true
+        console.log(this.#track)
+        this.restart()
         break
     }
   }
@@ -131,7 +77,6 @@ export class Metronome extends AudioWorkletProcessor {
 
     this.#fs = event.data.fs
     this.clock.fs = event.data.fs
-    this.level.sampleRate = event.data.fs
     this.clicks = new Map([
       ['default', tock],
       ['count-in', sticks],
@@ -151,9 +96,6 @@ export class Metronome extends AudioWorkletProcessor {
 
   play() {
     if (this.FSM.onPlay()) {
-      // NTS: dont't reset loop count on play/stop so that you can restart without "losing your place"
-      // this.#loops = 0
-
       this.section = null
       this.samples = 0
       this.clock.reset()
@@ -223,26 +165,23 @@ export class Metronome extends AudioWorkletProcessor {
     }
   }
 
-  #bpm(BPM) {
-    const tempo = this.#track?.tempo ?? null
+  #bpm() {
+    const tempo = this.#track?.tempo ?? BPM
+    const BPM = this.#track.BPM ?? tempo
     const bpm = this.section?.tempo ?? null
 
-    if (tempo != null && bpm != null) {
-      return (bpm * BPM) / tempo
-    }
-
-    return this.section?.tempo ?? BPM
+    return bpm != null ? (bpm * BPM) / tempo : BPM
   }
 
-  process(_inputs, outputs, parameters) {
+  process(_inputs, outputs, _parameters) {
     const N = outputs?.[0]?.[0]?.length ?? -3
-    const BPM = this.#bpm(clamp(parameters.BPM[0], 40, 200))
-    const tactus = this.section?.beats ?? clamp(parameters.beats[0], 1, 32)
-    const figura = this.section?.divisions ?? clamp(parameters.divisions[0], 1, 32)
-    const pulse = this.section?.pulse ?? parameters.pulse[0]
-    const loop = parameters.loop[0] === 1.0
-    const ding = parameters.ding[0] === 1.0
-    const gain = this.playing ? this.level.fadeIn() : this.level.fadeOut()
+    const BPM = this.#bpm()
+    const tactus = this.section?.beats ?? this.#track.beats
+    const figura = this.section?.divisions ?? this.#track.divisions
+    const pulse = this.section?.pulse ?? this.#track.pulse
+    const loop = false
+    const ding = this.#track.ding
+    const gain = 1
     let clock = this.clock
 
     this.#samples += N > 0 ? N : 0
@@ -250,7 +189,7 @@ export class Metronome extends AudioWorkletProcessor {
     if (this.starting) {
       clock.tick(BPM, tactus, figura, pulse, N)
 
-      if (clock.time >= 250) {
+      if (clock.time >= this.#preamble) {
         if (this.FSM.onPreamble()) {
           clock.reset()
           this.flip({ state: FSM.STATE.PLAYING, bar: 0, beat: 0, loops: this.#loops })
@@ -258,7 +197,7 @@ export class Metronome extends AudioWorkletProcessor {
             message: 'playing',
             track: this.#track?.UUID ?? '',
             loops: this.#loops,
-            BPM: Math.round(clamp(parameters.BPM[0], 40, 200)),
+            BPM: this.#bpm(),
           })
 
           // ... start delay?
@@ -343,7 +282,6 @@ export class Metronome extends AudioWorkletProcessor {
       }
     } else if (this.stopping) {
       this.FSM.onStopped()
-      // NTS: send current loops - doesn't reset loop count on stop anymore
       this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
 
       log('STOP', clock.t, clock.time, BPM, Number.NaN, Number.NaN, tactus, figura, pulse)
@@ -535,10 +473,6 @@ function sample(object) {
   }
 }
 
-function clamp(v, min, max) {
-  return Math.min(Math.max(v, min), max)
-}
-
 function log(tag, tick, time, bpm, bar, beat, tactus, figura, pulsus) {
   if (DEBUG) {
     let msg = `>> ${tag}`
@@ -553,4 +487,4 @@ function log(tag, tick, time, bpm, bar, beat, tactus, figura, pulsus) {
   }
 }
 
-registerProcessor('metronome', Metronome)
+registerProcessor('offline', OfflineWorklet)

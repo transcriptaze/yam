@@ -1,5 +1,7 @@
 import { engine } from './audio/engine.js'
+import { Offline } from './audio/offline.js'
 import * as models from './models/models.js'
+import * as datastore from './datastore/datastore.js'
 import * as fs from './fs.js'
 import { state } from './state.js'
 import { settings } from './settings.js'
@@ -24,6 +26,7 @@ const widgets = {
   playlists: document.querySelector('yam-playlists'),
   tracks: document.querySelector('yam-playlist-tracks'),
   editor: document.querySelector('yam-editor'),
+  windmill: document.querySelector('div.windmill'),
 }
 
 export function initialise() {
@@ -114,6 +117,7 @@ export function initialise() {
   engine.addEventListener(EVENTS.PLAYING, (event) => onPlaying(event), false)
   engine.addEventListener(EVENTS.STOPPED, (event) => onStopped(event), false)
   engine.addEventListener(EVENTS.CLICK, (event) => onClick(event.detail), false)
+  engine.addEventListener(EVENTS.RECORDING, (event) => onRecording(event.detail), false)
 
   widgets.metronome.enabled = true
 
@@ -223,15 +227,6 @@ export function show(page) {
   }
 }
 
-export function save() {
-  const object = {
-    playlists: models.playlists.object,
-    tracks: models.tracks.object,
-  }
-
-  fs.save(object)
-}
-
 export function load() {
   const store = (object) => {
     if (object != null) {
@@ -280,7 +275,7 @@ export function load() {
   }
 
   const callback = (filename, object, err) => {
-    const dialog = document.querySelector('dialog')
+    const dialog = document.querySelector('dialog.import')
     const msg = dialog.querySelector('p.message')
     const ok = dialog.querySelector('button[value="ok"]')
     const cancel = dialog.querySelector('button[value="cancel"]')
@@ -322,6 +317,27 @@ export function load() {
   }
 
   fs.load(callback)
+}
+
+export function save() {
+  const object = {
+    playlists: models.playlists.object,
+    tracks: models.tracks.object,
+  }
+
+  fs.save(object)
+}
+
+export function record() {
+  const button = document.querySelector('#record')
+
+  button.classList.toggle('armed')
+
+  if (!button.classList.contains('armed')) {
+    button.classList.remove('recording')
+  }
+
+  engine.record(button.classList.contains('armed'))
 }
 
 export async function requestWakeLock() {
@@ -409,12 +425,14 @@ function rewire() {
   widgets.playlists.addEventListener(EVENTS.SHUFFLE_PLAYLISTS, (e) => onPlaylistsShuffled(e))
   widgets.playlists.addEventListener(EVENTS.SELECT_PLAYLIST, (e) => onPlaylistSelect(e))
   widgets.playlists.addEventListener(EVENTS.DELETE_PLAYLIST, (e) => onPlaylistDelete(e))
+  widgets.playlists.addEventListener(EVENTS.PLAYLIST_STATISTICS, (e) => onPlaylistStatistics(e))
   widgets.playlists.addEventListener(EVENTS.TRACK_SELECT, (e) => onTrackSelect(e))
   widgets.playlists.addEventListener(EVENTS.TRACK_STATISTICS, (e) => onTrackStatistics(e))
-  widgets.playlists.addEventListener(EVENTS.PLAYLIST_STATISTICS, (e) => onPlaylistStatistics(e))
+  widgets.playlists.addEventListener(EVENTS.TRACK_WAV, (e) => onTrackWAV(e))
 
   widgets.tracks.addEventListener(EVENTS.TRACK_SELECT, (e) => onTrackSelect(e))
   widgets.tracks.addEventListener(EVENTS.TRACK_STATISTICS, (e) => onTrackStatistics(e))
+  widgets.tracks.addEventListener(EVENTS.TRACK_WAV, (e) => onTrackWAV(e))
 
   widgets.editor.addEventListener(EVENTS.EDIT_SAVE, (e) => onEdited(e))
 
@@ -455,6 +473,62 @@ function onClick(state) {
   widgets.knob.redraw(state)
   widgets.wheel.redraw(state)
   widgets.loop.redraw(state)
+}
+
+function onRecording(e) {
+  const button = document.querySelector('#record')
+
+  if (e.state === 'recording') {
+    button.classList.add('recording')
+  } else {
+    button.classList.remove('recording')
+  }
+
+  if (e.state === 'done') {
+    // ... disarm
+    button.classList.remove('armed')
+    engine.record(false)
+
+    // ... save
+    const track = models.tracks.track(state.track)
+    const dialog = document.querySelector('dialog.save')
+    const ok = dialog.querySelector('button[value="ok"]')
+    const cancel = dialog.querySelector('button[value="cancel"]')
+
+    const onOk = (event) => {
+      event.preventDefault()
+      dialog.close('ok')
+    }
+
+    const onCancel = (event) => {
+      event.preventDefault()
+      dialog.close('cancel')
+    }
+
+    ok.addEventListener('click', onOk, { once: true })
+    cancel.addEventListener('click', onCancel, { once: true })
+
+    dialog.addEventListener(
+      'close',
+      () => {
+        if (dialog.returnValue === 'ok') {
+          if (track == null) {
+            fs.saveRecording(`YAM`, e.audio)
+          } else {
+            fs.saveRecording(track.title, e.audio)
+          }
+        }
+
+        ok.removeEventListener('click', onOk)
+        cancel.removeEventListener('click', onCancel)
+
+        return true
+      },
+      { once: true },
+    )
+
+    dialog.showModal()
+  }
 }
 
 function onKeyDown(event) {
@@ -595,6 +669,17 @@ function onMuted(e, muted) {
 
 function onTrackStatistics(event) {
   window.location.href = `./statistics.html?track=${event.detail.track}`
+}
+
+function onTrackWAV(event) {
+  const track = datastore.tracks.get(event.detail.track)
+  const engine = new Offline()
+
+  busy()
+  engine
+    .render(track, settings)
+    .then((buffer) => fs.saveWavFile(`${track.title}`, buffer))
+    .then(() => unbusy())
 }
 
 function onPlaylistSelected(event) {
@@ -943,6 +1028,14 @@ function onPlaylistDeleted(event) {
 
     engine.track = null
   }
+}
+
+function busy() {
+  widgets.windmill.classList.remove('hidden')
+}
+
+function unbusy() {
+  widgets.windmill.classList.add('hidden')
 }
 
 function warnf(err) {

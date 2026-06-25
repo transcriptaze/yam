@@ -1,4 +1,5 @@
-import { ROLES, OTHER, DEFAULT } from './constants.js'
+import { parseTimeSignature, durationToMS } from './util.js'
+import { ROLES, OTHER, DEFAULT, INF } from './constants.js'
 
 const SPECIAL = new Set(['count-in', 'anacrusis', 'intro', 'outro', 'turnaround'])
 
@@ -81,6 +82,10 @@ export function colours() {
 
 export function clicks(v) {
   if (v != null && Array.isArray(v)) {
+    return v
+  }
+
+  if (v != null && v instanceof Map) {
     return v
   }
 
@@ -188,7 +193,16 @@ export function* transmogrify(track) {
       }
     }
 
+    const delay = durationToMS(section.delay) / 1000
     const bars = subsections.reduce((measures, v) => measures + v.measures, 0)
+    const duration = subsections.reduce((duration, v) => {
+      const { _, divisions } = parseTimeSignature(v.timeSignature)
+      if (!Number.isNaN(duration) && !Number.isNaN(v.measures) && !Number.isNaN(v.tempo) && !Number.isNaN(divisions)) {
+        return duration + (v.measures * divisions * 60) / v.tempo
+      }
+
+      return INF
+    }, delay)
 
     yield {
       ID: ID,
@@ -198,6 +212,7 @@ export function* transmogrify(track) {
       timeSignature: subsections[0].timeSignature,
       subsections: subsections,
       measures: bars,
+      duration: Math.round(duration * 1000) / 1000,
       start: subsections[0].start,
       dings: section.dings ?? [],
     }

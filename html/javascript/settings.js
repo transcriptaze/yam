@@ -1,5 +1,11 @@
 import { parseTimeSignature, parsePulse } from './util.js'
 
+const FS = 48000 // samples/s
+const PREAMBLE = 0.25 // seconds
+const POSTAMBLE = 0.25 // seconds
+const DURATION = 3 * 60 // seconds
+const MAX = 5 * 60 // seconds
+
 class Settings {
   #BPM = 120
   #timeSignature = '4:4'
@@ -9,6 +15,14 @@ class Settings {
   #theme = 'default'
   #soundset = 'soundset'
   #volume = 1.0
+
+  #clickTrack = {
+    preamble: PREAMBLE,
+    postamble: POSTAMBLE,
+    duration: DURATION,
+    max: MAX,
+    sampleRate: FS,
+  }
 
   get BPM() {
     return this.#BPM
@@ -86,6 +100,25 @@ class Settings {
     }
   }
 
+  get clickTrack() {
+    return this.#clickTrack
+  }
+
+  set clickTrack(object) {
+    const merged = {
+      ...this.#clickTrack,
+      ...object,
+    }
+
+    this.#clickTrack = {
+      preamble: Math.max(merged.preamble, 0),
+      postamble: Math.max(merged.postamble, 0),
+      duration: Math.max(merged.duration, 0),
+      max: Math.max(merged.max, 0),
+      sampleRate: Math.max(merged.sampleRate, 0),
+    }
+  }
+
   save() {
     const object = {
       settings: {
@@ -97,6 +130,8 @@ class Settings {
         theme: this.#theme,
         soundset: this.#soundset,
         volume: this.#volume,
+
+        clickTrack: this.#clickTrack,
       },
     }
 
@@ -116,6 +151,8 @@ class Settings {
       this.theme = object?.settings.theme
       this.soundset = object?.settings.soundset
       this.volume = object?.settings.volume
+
+      this.clickTrack = object?.settings.clickTrack
     } catch (err) {
       console.log(err)
     }

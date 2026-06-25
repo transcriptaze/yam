@@ -3,6 +3,7 @@ node_modules
 workdir/*
 bin
 dist
+gemini
 assets/screenshots
 assets/Bravura.svg
 assets/logo-2.svg

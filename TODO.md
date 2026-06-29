@@ -2,7 +2,8 @@
 
 ## In Progress
 
-- [ ] reset doesn't clear track from engine
+- [x] reset doesn't clear track from engine
+
 - [ ] Tags (cf. https://github.com/transcriptaze/yam/issues/55)
     - [x] save/restore
     - [ ] display

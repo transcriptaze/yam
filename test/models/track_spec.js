@@ -17,7 +17,7 @@ describe('tests the Track model', function () {
   it('object constructor with tags', function () {
     const object = {
       UUID: 'fbadae70-a1a1-4093-be74-bb255ca5c7b2',
-      tags: ['ok', 'drop D']
+      tags: ['ok', 'drop D'],
     }
 
     const track = new Track(object)
@@ -29,7 +29,7 @@ describe('tests the Track model', function () {
   it('get::object property', function () {
     const object = {
       UUID: 'fbadae70-a1a1-4093-be74-bb255ca5c7b2',
-      tags: ['ok', 'drop D']
+      tags: ['ok', 'drop D'],
     }
 
     const track = new Track(object)
@@ -41,7 +41,7 @@ describe('tests the Track model', function () {
   it('copy(...)', function () {
     const object = {
       UUID: 'fbadae70-a1a1-4093-be74-bb255ca5c7b2',
-      tags: ['ok', 'drop D']
+      tags: ['ok', 'drop D'],
     }
 
     const track = new Track(object)
@@ -53,25 +53,25 @@ describe('tests the Track model', function () {
     clone.copy(track)
 
     expect(clone.UUID).to.equal('fbadae70-a1a1-4093-be74-bb255ca5c7b2')
-    expect(clone.tags).to.deep.equal([ 'ok', 'drop D' ])
+    expect(clone.tags).to.deep.equal(['ok', 'drop D'])
   })
 
   it('update(...)', function () {
     const object = {
       UUID: 'fbadae70-a1a1-4093-be74-bb255ca5c7b2',
-      tags: ['ok', 'drop D']
+      tags: ['ok', 'drop D'],
     }
 
     const track = new Track(object)
 
     expect(track.UUID).to.equal('fbadae70-a1a1-4093-be74-bb255ca5c7b2')
-    expect(track.tags).to.deep.equal([ 'ok', 'drop D' ])
+    expect(track.tags).to.deep.equal(['ok', 'drop D'])
 
     track.update({
       tags: ['archived'],
     })
 
     expect(track.UUID).to.equal('fbadae70-a1a1-4093-be74-bb255ca5c7b2')
-    expect(track.tags).to.deep.equal([ 'archived' ])
+    expect(track.tags).to.deep.equal(['archived'])
   })
 })

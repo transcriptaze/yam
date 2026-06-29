@@ -5,6 +5,7 @@
 2. https://stackoverflow.com/questions/4220416/can-i-specify-multiple-users-for-myself-in-gitconfig/43654115#43654115
 3. https://24ways.org/2013/keeping-parts-of-your-codebase-private-on-github/
 
+
 ## Bravura
 1. [BravuraText.otf (opentype) doesn't load in browsers](https://github.com/steinbergmedia/bravura/issues/72)
 2. [How to use the music font Bravura Text?](https://stackoverflow.com/questions/34559025/how-to-use-the-music-font-bravura-text)
@@ -36,6 +37,7 @@
 19. https://css-tricks.com/the-trick-to-viewport-units-on-mobile/
 20. https://www.joshwcomeau.com/snippets/css/full-height
 
+
 ## Control knob
 1. https://github.com/jherrm/knobs
 2. https://www.smashingmagazine.com/2022/03/guide-hover-pointer-media-queries/
@@ -45,12 +47,14 @@
 ## Thumbwheel
 1. https://www.betatronix.com/thumbwheels
 
+
 ## SoundBrenner
 1. https://play.google.com/store/apps/details?id=com.soundbrenner.pulse
 2. Intrusive nag screen
 3. Audio glitch
 4. Cost of subscription
 5. v1.31 redesign is awful
+
 
 ## Metronomerous
 1. https://play.google.com/store/apps/details?id=mh.knoedelbart.metronomerous
@@ -79,9 +83,11 @@
 5. Tap is usable but ..
 6. Usable - but short of being seduceware
 
+
 ## Strobe Tuner
 1. Tuner is **awesome**
 2. Metronome is **really** basic
+
 
 ## Metronome Online
 1. https://www.metronomeonline.com/
@@ -90,8 +96,12 @@
 
 
 ## Moises Metronome Online
-
 1. https://moises.ai/features/metronome-online/
+
+
+## [PolyNome](https://polynome.net)
+1. Drummer focused
+2. iOS only
 
 
 ## Other

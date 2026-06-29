@@ -2,9 +2,12 @@
 
 ## In Progress
 
-NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
-- (?) rework engine onPlaying/onStopped as signals
-- (?) rework widgets.metronome to subscribe to engine
+- [ ] reset doesn't clear track from engine
+- [ ] Tags (cf. https://github.com/transcriptaze/yam/issues/55)
+    - [x] save/restore
+    - [ ] display
+    - [ ] edit
+    - [ ] random track filter
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM
@@ -16,6 +19,11 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
     - [ ] 'cue' generator
 
 - [ ] editor - default reverted to 4:4 instead of continuing with 6:4 (cf. https://github.com/transcriptaze/yam/issues/54)
+
+- [ ] signals
+    - NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
+    - (?) rework engine onPlaying/onStopped as signals
+    - (?) rework widgets.metronome to subscribe to engine
 
 - [ ] Fix toolbar overlap on desktop when developer tools is open and expanded (cf. https://github.com/transcriptaze/yam/issues/42)
    - [x] Fixed overlap

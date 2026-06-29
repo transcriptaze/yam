@@ -180,7 +180,7 @@ export class MetronomeNode extends AudioWorkletNode {
 
   set track(v) {
     if (v == null) {
-      this.port.postMessage({ message: 'reset' })
+      this.port.postMessage({ message: 'clear' })
     } else {
       this.timeSignature = v?.timeSignature ?? this.timeSignature
       this.pulse = v?.pulse ?? this.pulse

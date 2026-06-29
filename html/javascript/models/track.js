@@ -26,6 +26,8 @@ export class Track {
   #timeSignature = '4:4'
   #pulse = 'quarter'
   #sections = []
+  #tags = []
+
   #metronome = {
     BPM: 120,
     loop: false,
@@ -42,6 +44,8 @@ export class Track {
       timeSignature: track.timeSignature,
       pulse: track.pulse ?? 'quarter',
       sections: [...track.sections],
+      tags: [...track.tags],
+
       metronome: {
         BPM: track.BPM,
         loop: track.loop ?? false,
@@ -63,6 +67,8 @@ export class Track {
     this.#timeSignature = object.timeSignature ?? '4:4'
     this.#pulse = object.pulse ?? 'quarter'
     this.#sections = object.sections ?? []
+    this.#tags = object.tags ?? []
+
     this.#metronome = {
       BPM: object.metronome?.BPM ?? 120,
       loop: object.metronome?.loop ?? false,
@@ -84,6 +90,7 @@ export class Track {
       timeSignature: this.timeSignature,
       pulse: this.pulse,
       sections: [...this.sections],
+      tags: [...this.tags],
 
       metronome: {
         BPM: this.BPM,
@@ -227,6 +234,14 @@ export class Track {
     this.#sections = v ?? []
   }
 
+  get tags() {
+    return this.#tags ?? []
+  }
+
+  set tags(v) {
+    this.#tags = v ?? []
+  }
+
   copy(track) {
     this.UUID = track.UUID
     this.#version = track.#version == null ? VERSION : track.#version
@@ -235,6 +250,8 @@ export class Track {
     this.#timeSignature = track.timeSignature
     this.#pulse = track.pulse
     this.#sections = [...track.sections]
+    this.#tags = [...track.tags]
+
     this.#metronome = {
       BPM: track.#metronome.BPM,
       loop: track.#metronome.loop,
@@ -278,6 +295,8 @@ export class Track {
     this.#timeSignature = object?.timeSignature ?? this.#timeSignature
     this.#pulse = object?.pulse ?? this.#pulse
     this.#tempo = object?.tempo ?? this.#tempo
+    this.#tags = object?.tags ?? this.#tags
+
     this.#metronome.BPM = object?.BPM ?? this.#metronome.BPM
     this.#metronome.loop = object?.loop ?? this.#metronome.loop
     this.#metronome.loops = object?.loops ?? this.#metronome.loops

@@ -89,9 +89,18 @@ export class Metronome extends AudioWorkletProcessor {
         this.initialise(event)
         break
 
-      case 'reset':
+      case 'clear':
         this.stop()
-        this.#track.UUID = null
+        this.#track = {
+          BPM: null,
+          beats: null,
+          divisions: null,
+          pulse: null,
+          sections: [],
+          loops: INF,
+          delay: 0,
+        }
+
         break
 
       case 'play':

@@ -776,10 +776,12 @@
         <div class="metrics">
           <yam-time-signature tabindex="-1" enterkeyhint="done" disabled></yam-time-signature>
           <yam-mm             tabindex="-1" enterkeyhint="done" disabled></yam-mm>
+          <label for="BPM">BPM</label>
+          <input  id="BPM" type="number" min="40" max="200" step="1" disabled />
         </div>
         <div class="metronome">
-          <input  id="BPM" type="number" min="40" max="200" step="1" disabled />
-          <label for="BPM">BPM</label>
+          <label for="tags">Tags:</label>
+          <input  id="tags" type="text" disabled />
           <yam-loop tabindex="-1" enterkeyhint="done" disabled></yam-loop>
           <select id="loops" disabled>
             <option value="-1">&infin;</option>

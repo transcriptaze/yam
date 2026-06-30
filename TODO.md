@@ -6,12 +6,22 @@
 
 - [ ] Tags (cf. https://github.com/transcriptaze/yam/issues/55)
     - [x] save/restore
-    - [ ] display
-    - [ ] edit
+    - [x] edit
     - [ ] random track filter
+    - [ ] tags <data> from all
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM
+       - compile to _sample:instruction_ using _fs_
+       - execute _instruction_ @ _sample_
+       - instruction:
+           - tick
+           - tock
+           - tack
+           - stick
+           - ding
+           - notify
+
     - [ ] 2:2 time
     - [ ] unit test: BPM change
     - [ ] unit test: tactus change

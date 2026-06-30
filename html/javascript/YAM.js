@@ -896,6 +896,7 @@ function onEdited(_event) {
         pulse: event.detail.pulse,
         tempo: event.detail.tempo,
         BPM: event.detail.BPM,
+        tags: event.detail.tags,
         loop: event.detail.loop,
         loops: event.detail.loops,
         sections: event.detail.sections,

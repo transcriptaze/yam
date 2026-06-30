@@ -2231,9 +2231,10 @@ div.playlist-track.random div#title {
   padding-right: 8px;
   padding-bottom: 8px;
   display: grid;
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto auto 1fr auto;
   grid-template-rows: auto;
   column-gap: 4px;
+  align-items: center;
 }
 :host(.component-editor) div.track-editor div.metrics yam-time-signature {
   grid-column: 1;
@@ -2242,6 +2243,22 @@ div.playlist-track.random div#title {
 :host(.component-editor) div.track-editor div.metrics yam-mm {
   grid-column: 2;
   grid-row: 1;
+}
+:host(.component-editor) div.track-editor div.metrics label[for=BPM] {
+  grid-column: 3;
+  grid-row: 1;
+  justify-self: end;
+  margin-right: 8px;
+  color: var(--text-label);
+}
+:host(.component-editor) div.track-editor div.metrics #BPM {
+  grid-column: 4;
+  grid-row: 1;
+  min-width: 2em;
+  -moz-appearance: textfield;
+}
+:host(.component-editor) div.track-editor div.metrics #BPM::-webkit-inner-spin-button {
+  -webkit-appearance: none;
 }
 :host(.component-editor) div.track-editor div.metronome {
   box-sizing: border-box;
@@ -2253,32 +2270,27 @@ div.playlist-track.random div#title {
   padding-right: 8px;
   padding-bottom: 8px;
   display: grid;
-  grid-template-columns: auto auto 1fr auto auto;
+  grid-template-columns: auto 1fr auto auto;
   grid-template-rows: auto;
   align-items: center;
   column-gap: 4px;
 }
-:host(.component-editor) div.track-editor div.metronome label[for=BPM] {
+:host(.component-editor) div.track-editor div.metronome label {
   grid-column: 1;
   grid-row: 1;
-  margin-right: 8px;
-  color: var(--text-label);
+  font-size: 0.9em;
 }
-:host(.component-editor) div.track-editor div.metronome #BPM {
-  grid-columns: 2;
+:host(.component-editor) div.track-editor div.metronome #tags {
+  grid-column: 2;
   grid-row: 1;
-  min-width: 2em;
-  -moz-appearance: textfield;
-}
-:host(.component-editor) div.track-editor div.metronome #BPM::-webkit-inner-spin-button {
-  -webkit-appearance: none;
+  font-size: 0.9em;
 }
 :host(.component-editor) div.track-editor div.metronome yam-loop {
-  grid-column: 4;
+  grid-column: 3;
   grid-row: 1;
 }
 :host(.component-editor) div.track-editor div.metronome #loops {
-  grid-column: 5;
+  grid-column: 4;
   grid-row: 1;
 }
 :host(.component-editor) div.track-editor div.sections {
@@ -2482,6 +2494,10 @@ div.playlist-track.random div#title {
   :host(.component-editor) div.track-editor div.metrics {
     grid-column: 1;
     grid-row: 2;
+    grid-template-columns: auto auto auto auto 1fr;
+  }
+  :host(.component-editor) div.track-editor div.metrics label[for=BPM] {
+    margin-left: 16px;
   }
   :host(.component-editor) div.track-editor div.metronome {
     grid-column: 2;

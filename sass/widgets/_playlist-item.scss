@@ -108,6 +108,18 @@ div.playlist-track {
       mask-position: center;
       mask-size: auto 24px;
     }
+
+    #filter {
+      height: 28px;
+
+      background-color: #222222;
+      mask-image: url('/images/filter.svg');
+      mask-repeat: no-repeat;
+      mask-position: center;
+      mask-size: auto 24px;
+
+      display: none;
+    }
   }
 
   [popover]:popover-open {
@@ -134,6 +146,20 @@ div.playlist-track {
 div.playlist-track.random {
   div#title {
     font-style: italic;
+  }
+
+  [popover] {
+    #statistics {
+      display: none;
+    }
+
+    #wav {
+      display: none;
+    }
+
+    #filter {
+      display: block;
+    }
   }
 }
 

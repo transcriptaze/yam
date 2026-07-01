@@ -19,6 +19,30 @@ class Tracks extends EventTarget {
     return this.#tracks.filter((v) => !v.deleted)
   }
 
+  get tags() {
+    // ... get all tags
+    const tags = this.#tracks.reduce((list, track) => {
+      if (track.tags) {
+        list.push(...track.tags)
+      }
+
+      return list
+    }, [])
+
+    // ... unique and count
+    const map = tags.reduce((m, t) => {
+      const key = t.trim().toLowerCase()
+      const tag = m.has(key) ? m.get(key) : { tag: t, count: 0 }
+
+      m.set(key, { tag: tag.tag, count: tag.count + 1 })
+
+      return m
+    }, new Map())
+
+    // ... sort by count (descending)
+    return [...map.values()].sort((p, q) => q.count - p.count).map((v) => v.tag)
+  }
+
   has(UUID) {
     return this.#tracks.findIndex((v) => `${v.UUID}` === `${UUID}` && !v.deleted) != -1
   }

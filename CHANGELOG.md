@@ -2,6 +2,9 @@
 
 ## Unreleased
 
+### Added
+1. Added user defined tags to tracks.
+
 ### Updated
 1. Fixed _reset_ bug that was not clearing the _WebAudio_ track.
 

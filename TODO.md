@@ -7,8 +7,8 @@
 - [ ] Tags (cf. https://github.com/transcriptaze/yam/issues/55)
     - [x] save/restore
     - [x] edit
-    - [ ] random track filter
     - [ ] tags <data> from all
+    - [ ] random track filter
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM

@@ -7,8 +7,12 @@
 - [ ] Tags (cf. https://github.com/transcriptaze/yam/issues/55)
     - [x] save/restore
     - [x] edit
-    - [ ] tags <data> from all
-    - [ ] random track filter
+    - [x] tracks::tags 
+    - [ ] random track
+        - [x] remove WAV option
+        - [x] remove statistics option
+        - [x] filter field
+        - [ ] filter menu option
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM

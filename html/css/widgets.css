@@ -2038,6 +2038,15 @@ div.playlist-track [popover] #wav {
   mask-position: center;
   mask-size: auto 24px;
 }
+div.playlist-track [popover] #filter {
+  height: 28px;
+  background-color: #222222;
+  mask-image: url("/images/filter.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: auto 24px;
+  display: none;
+}
 div.playlist-track [popover]:popover-open {
   display: flex;
   flex-direction: row;
@@ -2056,6 +2065,15 @@ div.playlist-track [popover]:popover-open::backdrop {
 
 div.playlist-track.random div#title {
   font-style: italic;
+}
+div.playlist-track.random [popover] #statistics {
+  display: none;
+}
+div.playlist-track.random [popover] #wav {
+  display: none;
+}
+div.playlist-track.random [popover] #filter {
+  display: block;
 }
 
 :host(.selected) div.playlist-track div#title {

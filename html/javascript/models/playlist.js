@@ -48,6 +48,10 @@ export class Playlist extends EventTarget {
       return {
         UUID: v.UUID,
         title: v.title,
+        filter: v.filter ?? {
+          include: [],
+          exclude: [],
+        },
       }
     })
 
@@ -108,6 +112,10 @@ export class Playlist extends EventTarget {
             const _track = {
               UUID: UUIDv4().next().value,
               title: '<< random >>',
+              filter: {
+                include: [],
+                exclude: [],
+              },
             }
 
             this.#random.push(_track)

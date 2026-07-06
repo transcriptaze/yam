@@ -16,7 +16,7 @@ export class PlaylistItem extends HTMLElement {
       },
     },
 
-    popover: {
+    actions: {
       toggle: (event) => {
         const trash = this.shadowRoot.getElementById('trash')
 
@@ -33,7 +33,7 @@ export class PlaylistItem extends HTMLElement {
 
     mute: {
       click: (event) => {
-        const popover = this.shadowRoot.querySelector('div [popover]')
+        const popover = this.shadowRoot.querySelector('#actions')
 
         event.stopPropagation()
         this.dispatchEvent(
@@ -43,6 +43,7 @@ export class PlaylistItem extends HTMLElement {
             detail: { UUID: this.UUID, mute: !this.muted },
           }),
         )
+
         popover.hidePopover()
       },
     },
@@ -50,7 +51,7 @@ export class PlaylistItem extends HTMLElement {
     trash: {
       click: (event) => {
         const trash = this.shadowRoot.getElementById('trash')
-        const popover = this.shadowRoot.querySelector('div [popover]')
+        const popover = this.shadowRoot.querySelector('#actions')
 
         event.stopPropagation()
 
@@ -81,7 +82,7 @@ export class PlaylistItem extends HTMLElement {
 
     statistics: {
       click: (event) => {
-        const popover = this.shadowRoot.querySelector('div [popover]')
+        const popover = this.shadowRoot.querySelector('#actions')
 
         event.stopPropagation()
         this.dispatchEvent(
@@ -97,7 +98,7 @@ export class PlaylistItem extends HTMLElement {
 
     wav: {
       click: (event) => {
-        const popover = this.shadowRoot.querySelector('div [popover]')
+        const popover = this.shadowRoot.querySelector('#actions')
 
         event.stopPropagation()
         this.dispatchEvent(
@@ -113,8 +114,7 @@ export class PlaylistItem extends HTMLElement {
 
     filter: {
       click: (event) => {
-        console.log('>> filter')
-        const popover = this.shadowRoot.querySelector('div [popover]')
+        const popover = this.shadowRoot.querySelector('#tags')
 
         event.stopPropagation()
         // this.dispatchEvent(
@@ -124,7 +124,7 @@ export class PlaylistItem extends HTMLElement {
         //     detail: { track: this.UUID },
         //   }),
         // )
-        popover.hidePopover()
+        // popover.hidePopover()
       },
     },
   }
@@ -154,12 +154,12 @@ export class PlaylistItem extends HTMLElement {
     const statistics = shadow.getElementById('statistics')
     const wav = shadow.getElementById('wav')
     const filter = shadow.getElementById('filter')
-    const popover = shadow.querySelector('div [popover]')
+    const actions = shadow.querySelector('#actions')
 
     title.textContent = this.#title
 
     menu.addEventListener('click', this.#handlers.menu.click)
-    popover.addEventListener('toggle', this.#handlers.popover.toggle)
+    actions.addEventListener('toggle', this.#handlers.actions.toggle)
     mute.addEventListener('click', this.#handlers.mute.click)
     statistics.addEventListener('click', this.#handlers.statistics.click)
     wav.addEventListener('click', this.#handlers.wav.click)
@@ -243,7 +243,7 @@ export class PlaylistItem extends HTMLElement {
 
   set deleting(v) {
     const shadow = this.shadowRoot
-    const popover = shadow.querySelector('div [popover]')
+    const popover = shadow.querySelector('#actions')
 
     if (v === true) {
       this.classList.add('deleting')

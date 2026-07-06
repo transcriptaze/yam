@@ -1992,61 +1992,6 @@ div.playlist-track [popover] {
   width: fit-content;
   height: fit-content;
 }
-div.playlist-track [popover] button {
-  background: none;
-  width: 32px;
-  height: 100%;
-  border: none;
-  outline: none;
-}
-div.playlist-track [popover] #trash {
-  display: grid;
-  grid-template-columns: auto;
-  grid-template-rows: auto;
-  padding-top: 2px;
-  padding-bottom: 2px;
-  padding-left: 4px;
-  padding-right: 4px;
-}
-div.playlist-track [popover] #trash img {
-  grid-column: 1;
-  grid-row: 1;
-  height: 100%;
-  width: auto;
-}
-div.playlist-track [popover] #mute {
-  height: 28px;
-  background-color: #222222;
-  mask-image: url("/images/mute.svg");
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: auto 24px;
-}
-div.playlist-track [popover] #statistics {
-  height: 28px;
-  background-color: #222222;
-  mask-image: url("/images/statistics.svg");
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: auto 24px;
-}
-div.playlist-track [popover] #wav {
-  height: 28px;
-  background-color: #222222;
-  mask-image: url("/images/wav.svg");
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: auto 24px;
-}
-div.playlist-track [popover] #filter {
-  height: 28px;
-  background-color: #222222;
-  mask-image: url("/images/filter.svg");
-  mask-repeat: no-repeat;
-  mask-position: center;
-  mask-size: auto 24px;
-  display: none;
-}
 div.playlist-track [popover]:popover-open {
   display: flex;
   flex-direction: row;
@@ -2062,17 +2007,108 @@ div.playlist-track [popover]:popover-open::backdrop {
     opacity: 0;
   }
 }
+div.playlist-track #actions button {
+  background: none;
+  width: 32px;
+  height: 100%;
+  border: none;
+  outline: none;
+}
+div.playlist-track #actions #trash {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+}
+div.playlist-track #actions #trash img {
+  grid-column: 1;
+  grid-row: 1;
+  height: 100%;
+  width: auto;
+}
+div.playlist-track #actions #mute {
+  height: 28px;
+  background-color: #222222;
+  mask-image: url("/images/mute.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: auto 24px;
+}
+div.playlist-track #actions #statistics {
+  height: 28px;
+  background-color: #222222;
+  mask-image: url("/images/statistics.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: auto 24px;
+}
+div.playlist-track #actions #wav {
+  height: 28px;
+  background-color: #222222;
+  mask-image: url("/images/wav.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: auto 24px;
+}
+div.playlist-track #actions #filter {
+  height: 28px;
+  background-color: #222222;
+  mask-image: url("/images/filter.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  mask-size: auto 24px;
+  display: none;
+}
+div.playlist-track #tags div {
+  display: flex;
+  flex-direction: column;
+  row-gap: 8px;
+}
+div.playlist-track #tags div label {
+  display: grid;
+  grid-template-columns: 16px auto;
+  grid-template-rows: auto;
+  column-gap: 8px;
+  align-items: center;
+  font-size: 1em;
+  font-style: normal;
+  text-decoration: none;
+}
+div.playlist-track #tags div label img {
+  grid-column: 1;
+  grid-row: 1;
+  height: 17px;
+}
+div.playlist-track #tags div label span {
+  grid-column: 2;
+  grid-row: 1;
+}
+div.playlist-track #tags div .tag:has(input[value=ignore]) label {
+  color: #c0c0c0;
+  font-style: italic;
+}
+div.playlist-track #tags div .tag:has(input[value=include]) label {
+  color: #155724;
+  font-weight: bold;
+}
+div.playlist-track #tags div .tag:has(input[value=exclude]) label {
+  color: #ff0000;
+  text-decoration: line-through;
+}
 
 div.playlist-track.random div#title {
   font-style: italic;
 }
-div.playlist-track.random [popover] #statistics {
+div.playlist-track.random #actions #statistics {
   display: none;
 }
-div.playlist-track.random [popover] #wav {
+div.playlist-track.random #actions #wav {
   display: none;
 }
-div.playlist-track.random [popover] #filter {
+div.playlist-track.random #actions #filter {
   display: block;
 }
 

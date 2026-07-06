@@ -51,7 +51,28 @@ div.playlist-track {
 
     width: fit-content;
     height: fit-content;
+  }
 
+  [popover]:popover-open {
+    display: flex;
+    flex-direction: row;
+    column-gap: 8px;
+
+     opacity: 1;
+     transition: opacity 150ms ease-in;
+  }
+
+  [popover]:popover-open::backdrop {
+     background-color: transparent;
+  }
+
+  @starting-style {
+    [popover]:popover-open {
+      opacity: 0;
+    }
+  }
+
+  #actions {
     button {
       background: none;
       width: 32px;
@@ -122,23 +143,49 @@ div.playlist-track {
     }
   }
 
-  [popover]:popover-open {
+  #tags div {
     display: flex;
-    flex-direction: row;
-    column-gap: 8px;
+    flex-direction: column;
+    row-gap: 8px;
 
-     opacity: 1;
-     transition: opacity 150ms ease-in;
-  }
+    label {
+      display: grid;
+      grid-template-columns: 16px auto;
+      grid-template-rows: auto;
+      column-gap: 8px;
+      align-items: center;
 
-  [popover]:popover-open::backdrop {
-     background-color: transparent;
-  }
+      img {
+        grid-column: 1;
+        grid-row: 1;
 
-  @starting-style {
-    [popover]:popover-open {
-      opacity: 0;
+        height: 17px;
+      }
+
+      span {
+        grid-column: 2;
+        grid-row: 1;
+      }
+
+      font-size: 1em;
+      font-style: normal;
+      text-decoration: none;
     }
+
+    .tag:has(input[value="ignore"]) label {
+      color: #c0c0c0;
+      font-style: italic;
+    }  
+
+    .tag:has(input[value="include"]) label {
+      color: #155724;
+      font-weight: bold;
+    }  
+
+    .tag:has(input[value="exclude"]) label {
+      color: #ff0000;
+      text-decoration: line-through;
+    }  
   }
 }
 
@@ -148,7 +195,7 @@ div.playlist-track.random {
     font-style: italic;
   }
 
-  [popover] {
+  #actions {
     #statistics {
       display: none;
     }

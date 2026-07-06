@@ -8,6 +8,9 @@
     - [x] save/restore
     - [x] edit
     - [x] tracks::tags 
+    - [x] normalise tag
+    - (?) editor: use/update global tags list
+
     - [ ] random track
         - [x] remove WAV option
         - [x] remove statistics option
@@ -113,6 +116,9 @@
 - [ ] landscape+mobile
 
 ## Todo
+
+- (?) use full bleed layout
+    - https://dbushell.com/2026/07/03/fixing-full-bleed-css/
 
 ### VST
 - JUCE

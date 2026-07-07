@@ -144,27 +144,43 @@ div.playlist-track {
   }
 
   #tags div {
+    box-sizing: border-box;
+    width: 80px; 
+
     display: flex;
     flex-direction: column;
     row-gap: 8px;
 
-    label {
+    div.tag {
       display: grid;
       grid-template-columns: 16px auto;
       grid-template-rows: auto;
-      column-gap: 8px;
+      column-gap: 4px;
       align-items: center;
 
-      img {
+      div.icon {
         grid-column: 1;
         grid-row: 1;
 
+        width: 17px;
         height: 17px;
+
+        background-color: black;
+        mask-image: url('/images/tag-ignored.svg');
+        mask-repeat: no-repeat;
+        mask-position: center;
+
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-size: contain;
       }
 
       span {
         grid-column: 2;
         grid-row: 1;
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
       }
 
       font-size: 1em;
@@ -172,19 +188,34 @@ div.playlist-track {
       text-decoration: none;
     }
 
-    .tag:has(input[value="ignore"]) label {
+    .tag[data-state="ignore"] {
       color: #c0c0c0;
       font-style: italic;
+
+      div.icon {
+        background-color: #c0c0c0;
+        mask-image: url('/images/tag-ignored.svg');
+      }  
     }  
 
-    .tag:has(input[value="include"]) label {
+    .tag[data-state="include"] {
       color: #155724;
       font-weight: bold;
+
+      div.icon {
+        background-color: #00c000;
+        mask-image: url('/images/tag-included.svg');
+      }  
     }  
 
-    .tag:has(input[value="exclude"]) label {
+    .tag[data-state="exclude"]  {
       color: #ff0000;
       text-decoration: line-through;
+
+      div.icon {
+        background-color: #ff0000;
+        mask-image: url('/images/tag-excluded.svg');
+      }  
     }  
   }
 }

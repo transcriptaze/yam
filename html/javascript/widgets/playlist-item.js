@@ -114,17 +114,25 @@ export class PlaylistItem extends HTMLElement {
 
     filter: {
       click: (event) => {
-        const popover = this.shadowRoot.querySelector('#tags')
-
         event.stopPropagation()
-        // this.dispatchEvent(
-        //   new CustomEvent(EVENTS.TRACK_FILTER, {
-        //     bubbles: true,
-        //     composed: true,
-        //     detail: { track: this.UUID },
-        //   }),
-        // )
-        // popover.hidePopover()
+      },
+    },
+
+    tags: {
+      click: (event) => {
+        event.stopPropagation()
+
+        const tag = event.target.closest('.tag')
+
+        const next = {
+          ignore: 'include',
+          include: 'exclude',
+          exclude: 'ignore',
+        }
+
+        if (tag) {
+          tag.dataset.state = next[tag.dataset.state] ?? 'ignore'
+        }
       },
     },
   }
@@ -155,6 +163,7 @@ export class PlaylistItem extends HTMLElement {
     const wav = shadow.getElementById('wav')
     const filter = shadow.getElementById('filter')
     const actions = shadow.querySelector('#actions')
+    const tags = shadow.querySelector('#tags')
 
     title.textContent = this.#title
 
@@ -164,6 +173,7 @@ export class PlaylistItem extends HTMLElement {
     statistics.addEventListener('click', this.#handlers.statistics.click)
     wav.addEventListener('click', this.#handlers.wav.click)
     filter.addEventListener('click', this.#handlers.filter.click)
+    tags.addEventListener('click', this.#handlers.tags.click)
 
     trash.addEventListener('click', this.#handlers.trash.click)
     trash.addEventListener('transitionend', this.#handlers.trash.transitionEnd)

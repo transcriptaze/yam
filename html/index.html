@@ -748,21 +748,17 @@
         </div>
         <div id="tags" popover>
           <div>
-            <div class="tag">
-              <input id="tag-ok"   type="hidden" value="ignore">
-              <label for="tag-ok"><img src="./images/tag-ignored.svg" /><span>ok</span></label>
+            <div class="tag" data-state="ignore">
+              <div class="icon"></div><span>ok</span>
             </div>            
-            <div class="tag">
-              <input id="tag-woot" type="hidden" value="include">
-              <label for="tag-woot"><img src="./images/tag-included.svg" /><span>woot</span></label>
+            <div class="tag" data-state="include">
+              <div class="icon"></div><span>woot</span>
             </div>
-            <div class="tag">
-              <input id="tag-toot" type="hidden" value="exclude">
-              <label for="tag-toot"><img src="./images/tag-excluded.svg" /><span>toot</span></label>
+            <div class="tag" data-state="exclude">
+              <div class="icon"></div><span>toot</span>
             </div>
-            <div class="tag">
-              <input id="tag-root" type="hidden" value="ignore">
-              <label for="tag-root"><img src="./images/tag-ignored.svg" /><span>root</span></label>
+            <div class="tag" data-state="ignore">
+              <div class="icon"></div><span>root</span>
             </div>
           </div>
         </div>

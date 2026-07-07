@@ -2063,40 +2063,64 @@ div.playlist-track #actions #filter {
   display: none;
 }
 div.playlist-track #tags div {
+  box-sizing: border-box;
+  width: 80px;
   display: flex;
   flex-direction: column;
   row-gap: 8px;
 }
-div.playlist-track #tags div label {
+div.playlist-track #tags div div.tag {
   display: grid;
   grid-template-columns: 16px auto;
   grid-template-rows: auto;
-  column-gap: 8px;
+  column-gap: 4px;
   align-items: center;
   font-size: 1em;
   font-style: normal;
   text-decoration: none;
 }
-div.playlist-track #tags div label img {
+div.playlist-track #tags div div.tag div.icon {
   grid-column: 1;
   grid-row: 1;
+  width: 17px;
   height: 17px;
+  background-color: black;
+  mask-image: url("/images/tag-ignored.svg");
+  mask-repeat: no-repeat;
+  mask-position: center;
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-size: contain;
 }
-div.playlist-track #tags div label span {
+div.playlist-track #tags div div.tag span {
   grid-column: 2;
   grid-row: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }
-div.playlist-track #tags div .tag:has(input[value=ignore]) label {
+div.playlist-track #tags div .tag[data-state=ignore] {
   color: #c0c0c0;
   font-style: italic;
 }
-div.playlist-track #tags div .tag:has(input[value=include]) label {
+div.playlist-track #tags div .tag[data-state=ignore] div.icon {
+  background-color: #c0c0c0;
+  mask-image: url("/images/tag-ignored.svg");
+}
+div.playlist-track #tags div .tag[data-state=include] {
   color: #155724;
   font-weight: bold;
 }
-div.playlist-track #tags div .tag:has(input[value=exclude]) label {
+div.playlist-track #tags div .tag[data-state=include] div.icon {
+  background-color: #00c000;
+  mask-image: url("/images/tag-included.svg");
+}
+div.playlist-track #tags div .tag[data-state=exclude] {
   color: #ff0000;
   text-decoration: line-through;
+}
+div.playlist-track #tags div .tag[data-state=exclude] div.icon {
+  background-color: #ff0000;
+  mask-image: url("/images/tag-excluded.svg");
 }
 
 div.playlist-track.random div#title {

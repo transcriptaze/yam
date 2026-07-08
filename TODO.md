@@ -15,8 +15,10 @@
         - [x] remove WAV option
         - [x] remove statistics option
         - [x] filter field
-        - [ ] filter menu option
+        - [x] filter menu option
+        - [ ] store
         - [ ] filter using tags
+        - [ ] FIX: // NB: CURRENTLY ONLY FOR RETRIEVING A RANDOM TRACK 
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM

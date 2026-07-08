@@ -41,8 +41,6 @@ export class Playlist extends EventTarget {
     this.#tracks = object.tracks == null ? [] : object.tracks
     this.#random = object.random == null ? [] : object.random
     this.#muted = object.muted == null ? new Set() : new Set([...object.muted])
-
-    console.log('......', this.#random)
   }
 
   get object() {
@@ -103,6 +101,11 @@ export class Playlist extends EventTarget {
     this.#tracks = v ?? []
 
     this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_CHANGED, { detail: { playlist: this.UUID } }))
+  }
+
+  // NB: CURRENTLY ONLY FOR RETRIEVING A RANDOM TRACK
+  find(track) {
+    return this.#random.find((v) => v.UUID === track)
   }
 
   add(...tracks) {

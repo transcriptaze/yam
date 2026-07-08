@@ -154,11 +154,23 @@ export const tags = {
     return [...models.tracks.tags]
   },
 
-  included(_track) {
-    return ['ok'].map((v) => normaliseTag(v))
+  // prettier-ignore
+  included(track) {
+    return models.playlists.playlists
+      .find((playlist) => playlist.has(track))
+      ?.find(track)
+      ?.filter
+      ?.include
+      ?.map(normaliseTag) ?? []
   },
 
-  excluded(_track) {
-    return ['toot'].map((v) => normaliseTag(v))
+  // prettier-ignore
+  excluded(track) {
+    return models.playlists.playlists
+      .find((playlist) => playlist.has(track))
+      ?.find(track)
+      ?.filter
+      ?.exclude
+      ?.map(normaliseTag) ?? []
   },
 }

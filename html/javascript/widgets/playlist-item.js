@@ -1,3 +1,5 @@
+import * as datastore from '../datastore/datastore.js'
+import { normaliseTag } from '../util.js'
 import { EVENTS } from '../constants.js'
 
 export class PlaylistItem extends HTMLElement {
@@ -204,6 +206,33 @@ export class PlaylistItem extends HTMLElement {
 
     if (random === true) {
       container.classList.add('random')
+
+      const popover = this.shadowRoot.querySelector('#tags div')
+      const all = datastore.tags.all
+      const included = datastore.tags.included(UUID)
+      const excluded = datastore.tags.excluded(UUID)
+      const children = []
+
+      for (const tag of all) {
+        const template = document.getElementById('template-tag')
+        const clone = document.importNode(template.content, true)
+        const div = clone.querySelector('div.tag')
+        const span = clone.querySelector('span')
+
+        span.innerText = `${tag}`
+
+        if (included.includes(normaliseTag(`${tag}`))) {
+          div.dataset.state = 'include'
+        } else if (excluded.includes(normaliseTag(`${tag}`))) {
+          div.dataset.state = 'exclude'
+        } else {
+          div.dataset.state = 'ignore'
+        }
+
+        children.push(clone)
+      }
+
+      popover.replaceChildren(...children)
     } else {
       container.classList.remove('random')
     }

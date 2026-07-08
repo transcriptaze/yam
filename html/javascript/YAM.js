@@ -110,8 +110,6 @@ export function initialise() {
 
       models.playlists.prune(models.tracks.tracks)
       models.tracks.prune(models.playlists)
-
-      console.log('>>>> TAGS', models.tracks.tags)
     })
     .catch((err) => warnf(err))
 

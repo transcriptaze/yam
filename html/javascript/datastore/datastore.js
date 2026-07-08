@@ -2,6 +2,7 @@ import * as models from '../models/models.js'
 import * as _playlist from './playlist.js'
 import * as _track from './track.js'
 import * as _tracks from './tracks.js'
+import { normaliseTag } from '../util.js'
 import { DEFAULT, RANDOM } from '../constants.js'
 
 export const playlists = {
@@ -145,5 +146,19 @@ export const tracks = {
     }
 
     return _track.realize(track)
+  },
+}
+
+export const tags = {
+  get all() {
+    return [...models.tracks.tags]
+  },
+
+  included(_track) {
+    return ['ok'].map((v) => normaliseTag(v))
+  },
+
+  excluded(_track) {
+    return ['toot'].map((v) => normaliseTag(v))
   },
 }

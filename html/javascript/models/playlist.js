@@ -41,6 +41,8 @@ export class Playlist extends EventTarget {
     this.#tracks = object.tracks == null ? [] : object.tracks
     this.#random = object.random == null ? [] : object.random
     this.#muted = object.muted == null ? new Set() : new Set([...object.muted])
+
+    console.log('......', this.#random)
   }
 
   get object() {

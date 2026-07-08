@@ -16,6 +16,7 @@
         - [x] remove statistics option
         - [x] filter field
         - [ ] filter menu option
+        - [ ] filter using tags
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM

@@ -147,6 +147,23 @@ export const tracks = {
 
     return _track.realize(track)
   },
+
+  filter(track, include, exclude) {
+    const playlist = models.playlists.playlists.find((playlist) => playlist.has(track))
+
+    if (playlist) {
+      const object = playlist.find(track)
+
+      if (object) {
+        object.filter = {
+          include: include,
+          exclude: exclude,
+        }
+
+        playlist.save()
+      }
+    }
+  },
 }
 
 export const tags = {

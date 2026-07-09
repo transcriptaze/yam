@@ -16,9 +16,15 @@
         - [x] remove statistics option
         - [x] filter field
         - [x] filter menu option
-        - [ ] store
-        - [ ] filter using tags
+        - [x] store
         - [ ] FIX: // NB: CURRENTLY ONLY FOR RETRIEVING A RANDOM TRACK 
+        - [ ] display selected random track
+            - (?) between << >>
+            - (?) coloured
+            - (?) italicized
+        - [ ] filter using tags
+        - [ ] re-randomize everytime playlist is selected
+        - (?) re-randomise menu option
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM

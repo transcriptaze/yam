@@ -134,6 +134,23 @@ export class PlaylistItem extends HTMLElement {
 
         if (tag) {
           tag.dataset.state = next[tag.dataset.state] ?? 'ignore'
+
+          // ... update track filter
+          const tags = this.shadowRoot.querySelectorAll('#tags div.tag')
+          const include = new Set()
+          const exclude = new Set()
+
+          ;[...tags].forEach((t) => {
+            if (t.dataset.state === 'include' && t.dataset.tag && t.dataset.tag !== '') {
+              include.add(t.dataset.tag)
+            }
+
+            if (t.dataset.state === 'exclude' && t.dataset.tag && t.dataset.tag !== '') {
+              exclude.add(t.dataset.tag)
+            }
+          })
+
+          datastore.tracks.filter(this.#UUID, [...include], [...exclude])
         }
       },
     },
@@ -219,7 +236,7 @@ export class PlaylistItem extends HTMLElement {
         const div = clone.querySelector('div.tag')
         const span = clone.querySelector('span')
 
-        span.innerText = `${tag}`
+        div.dataset.tag = `${tag}`
 
         if (included.includes(normaliseTag(`${tag}`))) {
           div.dataset.state = 'include'
@@ -228,6 +245,8 @@ export class PlaylistItem extends HTMLElement {
         } else {
           div.dataset.state = 'ignore'
         }
+
+        span.innerText = `${tag}`
 
         children.push(clone)
       }

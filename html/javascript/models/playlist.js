@@ -103,9 +103,16 @@ export class Playlist extends EventTarget {
     this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_CHANGED, { detail: { playlist: this.UUID } }))
   }
 
-  // NB: CURRENTLY ONLY FOR RETRIEVING A RANDOM TRACK
   find(track) {
-    return this.#random.find((v) => v.UUID === track)
+    const object = this.#random.find((v) => v.UUID === track)
+
+    if (object) {
+      return object
+    }
+
+    if (this.#tracks.includes(track)) {
+      return models.tracks.get(track)
+    }
   }
 
   add(...tracks) {

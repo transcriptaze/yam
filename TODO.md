@@ -17,7 +17,7 @@
         - [x] filter field
         - [x] filter menu option
         - [x] store
-        - [ ] FIX: // NB: CURRENTLY ONLY FOR RETRIEVING A RANDOM TRACK 
+        - [x] FIX: // NB: CURRENTLY ONLY FOR RETRIEVING A RANDOM TRACK 
         - [ ] display selected random track
             - (?) between << >>
             - (?) coloured

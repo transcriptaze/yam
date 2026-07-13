@@ -9,7 +9,7 @@ export function realize(playlist) {
     if (playlist.internal(v)) {
       tracks.push({
         UUID: v.UUID,
-        title: RANDOM.TITLE,
+        title: RANDOM.TITLE, // FIXME - check title first
         muted: v.muted,
         random: true,
       })

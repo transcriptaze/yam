@@ -19,9 +19,14 @@
         - [x] store
         - [x] FIX: // NB: CURRENTLY ONLY FOR RETRIEVING A RANDOM TRACK 
         - [ ] display selected random track
-            - (?) between << >>
-            - (?) coloured
-            - (?) italicized
+            - [x] between << >>
+            - [x] coloured
+            - [x] italicized
+            - [ ] remove constants::RANDOM.TITLE
+        - [ ] display new track
+            - [ ] between << >>
+            - [ ] coloured
+            - [ ] italicized
         - [ ] filter using tags
         - [ ] re-randomize everytime playlist is selected
         - (?) re-randomise menu option

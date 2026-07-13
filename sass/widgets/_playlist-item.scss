@@ -223,6 +223,7 @@ div.playlist-track {
 // NTS: must come before :host(.selected) div.playlist-track
 div.playlist-track.random {
   div#title {
+    color: var(--playlist-tracks-random);
     font-style: italic;
   }
 
@@ -243,8 +244,14 @@ div.playlist-track.random {
 
 :host(.selected) div.playlist-track {
   div#title {
-    font-style: normal;   // NTS for random tracks
+    font-style: normal;
     font-weight: bold;
+  }
+}
+
+:host(.selected) div.playlist-track.random{
+  div#title {
+    font-weight: 600;
   }
 }
 

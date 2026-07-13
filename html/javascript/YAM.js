@@ -81,6 +81,7 @@ export function initialise() {
   // ... initialise playlists, tracks and statistics
   Promise.all([models.playlists.restore(), models.tracks.restore(), statistics.restore()])
     .then(([playlists, tracks, _statistics]) => {
+      playlists.forEach((playlist) => playlist.initialise())
       widgets.playlists.initialise(playlists, tracks)
 
       // ... playlist in URL?

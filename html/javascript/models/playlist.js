@@ -2,6 +2,7 @@ import * as DB from '../db/db.js'
 import { UUIDv4 } from '../uuid.js'
 import { infof } from '../log.js'
 import { EVENTS, RANDOM } from '../constants.js'
+import { normaliseTag } from '../util.js'
 import * as models from './models.js'
 
 const LOGTAG = 'playlist'
@@ -45,8 +46,10 @@ export class Playlist extends EventTarget {
 
   initialise() {
     this.#random.forEach((v) => {
-      v.track ??= this.#pick()
-      v.title = `${models.tracks.track(v.track)?.title ?? 'random'}`
+      const picked = this.#pick(v)
+
+      v.track ??= picked?.UUID ?? null
+      v.title = `${picked?.title ?? 'random'}`
     })
   }
 
@@ -286,8 +289,13 @@ export class Playlist extends EventTarget {
 
     switch (true) {
       case random != null:
-        random.track ??= this.#pick()
-        random.title = `<< ${random.track?.title ?? 'random'} >>`
+        if (random.track == null) {
+          const picked = this.#pick(random)
+
+          random.track ??= picked?.UUID ?? null
+          random.title = `${picked?.title ?? 'random'}`
+        }
+
         this.#track = random.track
         break
 
@@ -300,8 +308,29 @@ export class Playlist extends EventTarget {
     return this.#track != null
   }
 
-  #pick() {
-    const tracks = new Set(models.tracks.tracks.map((v) => v.UUID))
+  #pick(random) {
+    const { include = [], exclude = [] } = random?.filter ?? {}
+
+    const filter = {
+      include: new Set(include.map((t) => normaliseTag(t))),
+      exclude: new Set(exclude.map((t) => normaliseTag(t))),
+    }
+
+    const filtered = models.tracks.tracks.filter((track) => {
+      const tags = (track.tags ?? []).map(normaliseTag)
+
+      if (tags.some((tag) => filter.exclude.has(tag))) {
+        return false
+      }
+
+      if (filter.include.size > 0) {
+        return tags.some((tag) => filter.include.has(tag))
+      }
+
+      return true
+    })
+
+    const tracks = new Set(filtered)
     const used = new Set(this.#random.filter((v) => v.track != null).map((v) => v.track))
     const playlist = new Set([...this.#tracks, ...used])
 

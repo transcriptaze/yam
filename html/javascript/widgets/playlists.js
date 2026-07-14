@@ -1,4 +1,4 @@
-import { DEFAULT, EVENTS, RANDOM } from '../constants.js'
+import { DEFAULT, EVENTS } from '../constants.js'
 
 export class Playlists extends HTMLElement {
   static get observedAttributes() {
@@ -433,12 +433,16 @@ function transmogrify(playlist, tracks) {
   const muted = playlist.muted
   const m = new Map(tracks.map((track) => [track.UUID, track]))
 
+  const title = (UUID) => {
+    return `« ${playlist.internal(UUID)?.title ?? 'random'} »` // eslint-disable-line no-irregular-whitespace
+  }
+
   return {
     UUID: playlist.UUID,
     title: playlist.title,
     tracks: playlist.tracks
       .filter((uuid) => m.has(uuid) || playlist.internal(uuid))
-      .map((uuid) => (m.has(uuid) ? m.get(uuid) : { UUID: uuid, title: RANDOM.TITLE, random: true }))
+      .map((uuid) => (m.has(uuid) ? m.get(uuid) : { UUID: uuid, title: title(uuid), random: true }))
       .map((v) => {
         return { UUID: `${v.UUID}`, title: `${v.title}`, muted: muted.includes(v.UUID), random: v.random }
       }),

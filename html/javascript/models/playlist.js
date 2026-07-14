@@ -2,6 +2,7 @@ import * as DB from '../db/db.js'
 import { UUIDv4 } from '../uuid.js'
 import { infof } from '../log.js'
 import { EVENTS, RANDOM } from '../constants.js'
+import { normaliseTag } from '../util.js'
 import * as models from './models.js'
 
 const LOGTAG = 'playlist'
@@ -41,6 +42,15 @@ export class Playlist extends EventTarget {
     this.#tracks = object.tracks == null ? [] : object.tracks
     this.#random = object.random == null ? [] : object.random
     this.#muted = object.muted == null ? new Set() : new Set([...object.muted])
+  }
+
+  initialise() {
+    this.#random.forEach((v) => {
+      const picked = this.#pick(v)
+
+      v.track ??= picked?.UUID ?? null
+      v.title = `${picked?.title ?? 'random'}`
+    })
   }
 
   get object() {
@@ -101,6 +111,18 @@ export class Playlist extends EventTarget {
     this.#tracks = v ?? []
 
     this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_CHANGED, { detail: { playlist: this.UUID } }))
+  }
+
+  find(track) {
+    const object = this.#random.find((v) => v.UUID === track)
+
+    if (object) {
+      return object
+    }
+
+    if (this.#tracks.includes(track)) {
+      return models.tracks.get(track)
+    }
   }
 
   add(...tracks) {
@@ -191,9 +213,9 @@ export class Playlist extends EventTarget {
     return this.#tracks.some((v) => v === track)
   }
 
-  // NTS: returns true if the uuid matches an internal 'random' track
+  // NTS: returns the corresponding internal 'random' track (if any)
   internal(uuid) {
-    return this.#random.some((v) => v.UUID === uuid)
+    return this.#random.find((v) => v.UUID === uuid)
   }
 
   shuffled(tracks) {
@@ -261,44 +283,63 @@ export class Playlist extends EventTarget {
   }
 
   select(item) {
-    let ok = true
-
-    const f = () => {
-      // ... random track ?
-      const random = this.#random.find((t) => t.UUID === item)
-
-      // ... already assigned ?
-      if (random != null && random.track != null) {
-        return random.track
-      }
-
-      // ... pick unused track
-      if (random != null) {
-        const tracks = new Set(models.tracks.tracks.map((v) => v.UUID))
-        const used = new Set(this.#random.filter((v) => v.track != null).map((v) => v.track))
-        const playlist = new Set([...this.#tracks, ...used])
-
-        const difference = Array.from(tracks.difference(playlist))
-        const N = difference.length
-        const ix = Math.floor(N * Math.random())
-        const track = N > 0 ? difference[ix] : this.#track
-
-        random.track = N > 0 ? track : null
-        ok = N > 0
-
-        return track
-      }
-
-      return item
-    }
-
-    // ... normal
     this.#selected = item
-    this.#track = f()
+
+    const random = this.#random.find((t) => t.UUID === item)
+
+    switch (true) {
+      case random != null:
+        if (random.track == null) {
+          const picked = this.#pick(random)
+
+          random.track ??= picked?.UUID ?? null
+          random.title = `${picked?.title ?? 'random'}`
+        }
+
+        this.#track = random.track
+        break
+
+      default:
+        this.#track = item
+    }
 
     this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_SELECTED, { detail: { playlist: this.UUID, item: item, track: this.#track } }))
 
-    return ok
+    return this.#track != null
+  }
+
+  #pick(random) {
+    const { include = [], exclude = [] } = random?.filter ?? {}
+
+    const filter = {
+      include: new Set(include.map((t) => normaliseTag(t))),
+      exclude: new Set(exclude.map((t) => normaliseTag(t))),
+    }
+
+    const filtered = models.tracks.tracks.filter((track) => {
+      const tags = (track.tags ?? []).map(normaliseTag)
+
+      if (tags.some((tag) => filter.exclude.has(tag))) {
+        return false
+      }
+
+      if (filter.include.size > 0) {
+        return tags.some((tag) => filter.include.has(tag))
+      }
+
+      return true
+    })
+
+    const tracks = new Set(filtered)
+    const used = new Set(this.#random.filter((v) => v.track != null).map((v) => v.track))
+    const playlist = new Set([...this.#tracks, ...used])
+
+    const difference = Array.from(tracks.difference(playlist))
+    const N = difference.length
+    const ix = Math.floor(N * Math.random())
+    const track = N > 0 ? difference[ix] : this.#track
+
+    return N > 0 ? track : null
   }
 
   back() {

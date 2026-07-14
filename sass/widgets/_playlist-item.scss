@@ -51,7 +51,28 @@ div.playlist-track {
 
     width: fit-content;
     height: fit-content;
+  }
 
+  [popover]:popover-open {
+    display: flex;
+    flex-direction: row;
+    column-gap: 8px;
+
+     opacity: 1;
+     transition: opacity 150ms ease-in;
+  }
+
+  [popover]:popover-open::backdrop {
+     background-color: transparent;
+  }
+
+  @starting-style {
+    [popover]:popover-open {
+      opacity: 0;
+    }
+  }
+
+  #actions {
     button {
       background: none;
       width: 32px;
@@ -122,33 +143,91 @@ div.playlist-track {
     }
   }
 
-  [popover]:popover-open {
+  #tags div {
+    box-sizing: border-box;
+    width: 80px; 
+
     display: flex;
-    flex-direction: row;
-    column-gap: 8px;
+    flex-direction: column;
+    row-gap: 8px;
 
-     opacity: 1;
-     transition: opacity 150ms ease-in;
-  }
+    div.tag {
+      display: grid;
+      grid-template-columns: 16px auto;
+      grid-template-rows: auto;
+      column-gap: 4px;
+      align-items: center;
 
-  [popover]:popover-open::backdrop {
-     background-color: transparent;
-  }
+      div.icon {
+        grid-column: 1;
+        grid-row: 1;
 
-  @starting-style {
-    [popover]:popover-open {
-      opacity: 0;
+        width: 17px;
+        height: 17px;
+
+        background-color: black;
+        mask-image: url('/images/tag-ignored.svg');
+        mask-repeat: no-repeat;
+        mask-position: center;
+
+        -webkit-mask-repeat: no-repeat;
+        -webkit-mask-size: contain;
+      }
+
+      span {
+        grid-column: 2;
+        grid-row: 1;
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+
+      font-size: 1em;
+      font-style: normal;
+      text-decoration: none;
     }
+
+    .tag[data-state="ignore"] {
+      color: #c0c0c0;
+      font-style: italic;
+
+      div.icon {
+        background-color: #c0c0c0;
+        mask-image: url('/images/tag-ignored.svg');
+      }  
+    }  
+
+    .tag[data-state="include"] {
+      color: #155724;
+      font-weight: bold;
+
+      div.icon {
+        background-color: #00c000;
+        mask-image: url('/images/tag-included.svg');
+      }  
+    }  
+
+    .tag[data-state="exclude"]  {
+      color: #ff0000;
+      text-decoration: line-through;
+
+      div.icon {
+        background-color: #ff0000;
+        mask-image: url('/images/tag-excluded.svg');
+      }  
+    }  
   }
 }
 
 // NTS: must come before :host(.selected) div.playlist-track
 div.playlist-track.random {
   div#title {
+    color: var(--playlist-tracks-random);
     font-style: italic;
   }
 
-  [popover] {
+  #actions {
     #statistics {
       display: none;
     }
@@ -165,8 +244,14 @@ div.playlist-track.random {
 
 :host(.selected) div.playlist-track {
   div#title {
-    font-style: normal;   // NTS for random tracks
+    font-style: normal;
     font-weight: bold;
+  }
+}
+
+:host(.selected) div.playlist-track.random{
+  div#title {
+    font-weight: 600;
   }
 }
 

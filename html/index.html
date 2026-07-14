@@ -740,12 +740,21 @@
         <div id="title"></div>
         <button id="menu" popovertarget="actions"></button>
         <div id="actions" popover>
-          <button id="filter"></button>
+          <button id="filter" popovertarget="tags"></button>
           <button id="wav"></button>
           <button id="statistics"></button>
           <button id="mute"></button>
           <img id="trash" src="./images/trash.svg" />
         </div>
+        <div id="tags" popover>
+          <div></div>
+        </div>
+      </div>
+    </template>
+
+    <template id="template-tag">
+      <div class="tag" data-state="ignore">
+        <div class="icon"></div><span>ok</span>
       </div>
     </template>
 

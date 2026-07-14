@@ -1,3 +1,5 @@
+import * as datastore from '../datastore/datastore.js'
+import { normaliseTag } from '../util.js'
 import { EVENTS } from '../constants.js'
 
 export class PlaylistItem extends HTMLElement {
@@ -16,7 +18,7 @@ export class PlaylistItem extends HTMLElement {
       },
     },
 
-    popover: {
+    actions: {
       toggle: (event) => {
         const trash = this.shadowRoot.getElementById('trash')
 
@@ -33,7 +35,7 @@ export class PlaylistItem extends HTMLElement {
 
     mute: {
       click: (event) => {
-        const popover = this.shadowRoot.querySelector('div [popover]')
+        const popover = this.shadowRoot.querySelector('#actions')
 
         event.stopPropagation()
         this.dispatchEvent(
@@ -43,6 +45,7 @@ export class PlaylistItem extends HTMLElement {
             detail: { UUID: this.UUID, mute: !this.muted },
           }),
         )
+
         popover.hidePopover()
       },
     },
@@ -50,7 +53,7 @@ export class PlaylistItem extends HTMLElement {
     trash: {
       click: (event) => {
         const trash = this.shadowRoot.getElementById('trash')
-        const popover = this.shadowRoot.querySelector('div [popover]')
+        const popover = this.shadowRoot.querySelector('#actions')
 
         event.stopPropagation()
 
@@ -81,7 +84,7 @@ export class PlaylistItem extends HTMLElement {
 
     statistics: {
       click: (event) => {
-        const popover = this.shadowRoot.querySelector('div [popover]')
+        const popover = this.shadowRoot.querySelector('#actions')
 
         event.stopPropagation()
         this.dispatchEvent(
@@ -97,7 +100,7 @@ export class PlaylistItem extends HTMLElement {
 
     wav: {
       click: (event) => {
-        const popover = this.shadowRoot.querySelector('div [popover]')
+        const popover = this.shadowRoot.querySelector('#actions')
 
         event.stopPropagation()
         this.dispatchEvent(
@@ -113,18 +116,42 @@ export class PlaylistItem extends HTMLElement {
 
     filter: {
       click: (event) => {
-        console.log('>> filter')
-        const popover = this.shadowRoot.querySelector('div [popover]')
-
         event.stopPropagation()
-        // this.dispatchEvent(
-        //   new CustomEvent(EVENTS.TRACK_FILTER, {
-        //     bubbles: true,
-        //     composed: true,
-        //     detail: { track: this.UUID },
-        //   }),
-        // )
-        popover.hidePopover()
+      },
+    },
+
+    tags: {
+      click: (event) => {
+        event.stopPropagation()
+
+        const tag = event.target.closest('.tag')
+
+        const next = {
+          ignore: 'include',
+          include: 'exclude',
+          exclude: 'ignore',
+        }
+
+        if (tag) {
+          tag.dataset.state = next[tag.dataset.state] ?? 'ignore'
+
+          // ... update track filter
+          const tags = this.shadowRoot.querySelectorAll('#tags div.tag')
+          const include = new Set()
+          const exclude = new Set()
+
+          ;[...tags].forEach((t) => {
+            if (t.dataset.state === 'include' && t.dataset.tag && t.dataset.tag !== '') {
+              include.add(t.dataset.tag)
+            }
+
+            if (t.dataset.state === 'exclude' && t.dataset.tag && t.dataset.tag !== '') {
+              exclude.add(t.dataset.tag)
+            }
+          })
+
+          datastore.tracks.filter(this.#UUID, [...include], [...exclude])
+        }
       },
     },
   }
@@ -154,16 +181,18 @@ export class PlaylistItem extends HTMLElement {
     const statistics = shadow.getElementById('statistics')
     const wav = shadow.getElementById('wav')
     const filter = shadow.getElementById('filter')
-    const popover = shadow.querySelector('div [popover]')
+    const actions = shadow.querySelector('#actions')
+    const tags = shadow.querySelector('#tags')
 
     title.textContent = this.#title
 
     menu.addEventListener('click', this.#handlers.menu.click)
-    popover.addEventListener('toggle', this.#handlers.popover.toggle)
+    actions.addEventListener('toggle', this.#handlers.actions.toggle)
     mute.addEventListener('click', this.#handlers.mute.click)
     statistics.addEventListener('click', this.#handlers.statistics.click)
     wav.addEventListener('click', this.#handlers.wav.click)
     filter.addEventListener('click', this.#handlers.filter.click)
+    tags.addEventListener('click', this.#handlers.tags.click)
 
     trash.addEventListener('click', this.#handlers.trash.click)
     trash.addEventListener('transitionend', this.#handlers.trash.transitionEnd)
@@ -194,6 +223,35 @@ export class PlaylistItem extends HTMLElement {
 
     if (random === true) {
       container.classList.add('random')
+
+      const popover = this.shadowRoot.querySelector('#tags div')
+      const all = datastore.tags.all
+      const included = datastore.tags.included(UUID)
+      const excluded = datastore.tags.excluded(UUID)
+      const children = []
+
+      for (const tag of all) {
+        const template = document.getElementById('template-tag')
+        const clone = document.importNode(template.content, true)
+        const div = clone.querySelector('div.tag')
+        const span = clone.querySelector('span')
+
+        div.dataset.tag = `${tag}`
+
+        if (included.includes(normaliseTag(`${tag}`))) {
+          div.dataset.state = 'include'
+        } else if (excluded.includes(normaliseTag(`${tag}`))) {
+          div.dataset.state = 'exclude'
+        } else {
+          div.dataset.state = 'ignore'
+        }
+
+        span.innerText = `${tag}`
+
+        children.push(clone)
+      }
+
+      popover.replaceChildren(...children)
     } else {
       container.classList.remove('random')
     }
@@ -243,7 +301,7 @@ export class PlaylistItem extends HTMLElement {
 
   set deleting(v) {
     const shadow = this.shadowRoot
-    const popover = shadow.querySelector('div [popover]')
+    const popover = shadow.querySelector('#actions')
 
     if (v === true) {
       this.classList.add('deleting')

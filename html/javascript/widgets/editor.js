@@ -1,6 +1,6 @@
 import { EVENTS, INF } from '../constants.js'
 import * as generators from '../generators.js'
-import { parseTimeSignature } from '../util.js'
+import { parseTimeSignature, normaliseTag } from '../util.js'
 
 export class Editor extends HTMLElement {
   static get observedAttributes() {
@@ -621,19 +621,22 @@ function* transmogrify(track) {
 function tags(v) {
   const set = new Set()
 
-  const tags = `${v}`
-    .split(/[;,]/)
-    .map((tag) => tag.trim())
-    .filter((tag) => tag !== '')
-
-  return tags.filter((tag) => {
+  const unique = (tag) => {
     const key = tag.toLowerCase()
     const ok = !set.has(key)
 
     set.add(key)
 
     return ok
-  })
+  }
+
+  const tags = `${v}`
+    .split(/[;,]/)
+    .map((tag) => normaliseTag(tag))
+    .filter((tag) => tag !== '')
+    .filter((tag) => unique(tag))
+
+  return tags
 }
 
 customElements.define('yam-editor', Editor)

@@ -1,4 +1,3 @@
-import { RANDOM } from '../constants.js'
 import * as models from '../models/models.js'
 
 export function realize(playlist) {
@@ -7,9 +6,13 @@ export function realize(playlist) {
 
   playlist.tracks.forEach((v) => {
     if (playlist.internal(v)) {
+      const title = () => {
+        return `« ${playlist.internal(v)?.title ?? 'random'} »` // eslint-disable-line no-irregular-whitespace
+      }
+
       tracks.push({
         UUID: v.UUID,
-        title: RANDOM.TITLE,
+        title: title(),
         muted: v.muted,
         random: true,
       })

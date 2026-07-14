@@ -619,8 +619,6 @@ export class Playlist extends HTMLElement {
     this.#drag.UUID = track.UUID
     this.#drag.list = this.#tracks?.slice(0) ?? []
     this.#drag.dropped = false
-
-    console.log('>>>> ', this.#drag.list)
   }
 
   #dragend = (_event) => {

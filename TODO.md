@@ -18,11 +18,11 @@
         - [x] filter menu option
         - [x] store
         - [x] FIX: // NB: CURRENTLY ONLY FOR RETRIEVING A RANDOM TRACK 
-        - [ ] display selected random track
+        - [x] display selected random track
             - [x] between << >>
             - [x] coloured
             - [x] italicized
-            - [ ] remove constants::RANDOM.TITLE
+            - [x] remove constants::RANDOM.TITLE
         - [ ] display new track
             - [ ] between << >>
             - [ ] coloured

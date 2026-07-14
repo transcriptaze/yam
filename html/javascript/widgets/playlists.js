@@ -434,8 +434,7 @@ function transmogrify(playlist, tracks) {
   const m = new Map(tracks.map((track) => [track.UUID, track]))
 
   const title = (UUID) => {
-    // eslint-disable-next-line no-irregular-whitespace
-    return `« ${playlist.internal(UUID)?.title ?? 'random'} »`
+    return `« ${playlist.internal(UUID)?.title ?? 'random'} »` // eslint-disable-line no-irregular-whitespace
   }
 
   return {

@@ -20,12 +20,15 @@
         - [x] FIX: // NB: CURRENTLY ONLY FOR RETRIEVING A RANDOM TRACK 
         - [x] display selected random track
         - [x] filter using tags
+        - [x] recursively filter to fill all random tracks
+        - [ ] make random tracks without a track not pickable
         - [ ] display new track
             - [ ] between -- --
             - [ ] coloured
             - [ ] italicized
-        - [ ] re-randomize everytime playlist is selected
+        - (?) re-randomize everytime playlist is selected
         - (?) re-randomise menu option
+        - (?) expire random selections
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM

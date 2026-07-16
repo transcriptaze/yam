@@ -656,8 +656,9 @@ function onTrackSelect(event) {
   const playlist = models.playlists.playlist(event.detail.playlist)
   const track = event.detail.track
 
-  playlist?.select(track)
-  show('metronome')
+  if (playlist?.select(track)) {
+    show('metronome')
+  }
 }
 
 function onMuted(e, muted) {

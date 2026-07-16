@@ -21,7 +21,8 @@
         - [x] display selected random track
         - [x] filter using tags
         - [x] recursively filter to fill all random tracks
-        - [ ] make random tracks without a track not pickable
+        - [x] make random tracks without a track not pickable
+        - [ ] reinitialise on random track change
         - [ ] display new track
             - [ ] between -- --
             - [ ] coloured

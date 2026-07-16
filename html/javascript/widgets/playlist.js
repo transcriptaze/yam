@@ -77,6 +77,7 @@ export class Playlist extends HTMLElement {
       click: (event) => {
         if (event.target.UUID != null) {
           event.preventDefault()
+
           this.dispatchEvent(
             new CustomEvent(EVENTS.TRACK_SELECT, {
               bubbles: true,

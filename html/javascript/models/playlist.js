@@ -332,16 +332,15 @@ export class Playlist extends EventTarget {
 
     const random = this.#random.find((t) => t.UUID === item)
 
-    switch (true) {
-      case random != null:
-        this.#track = random.track
-        break
-
-      default:
-        this.#track = item
+    if (random) {
+      this.#track = random.track
+    } else {
+      this.#track = item
     }
 
-    this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_SELECTED, { detail: { playlist: this.UUID, item: item, track: this.#track } }))
+    if (this.#track != null) {
+      this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_SELECTED, { detail: { playlist: this.UUID, item: item, track: this.#track } }))
+    }
 
     return this.#track != null
   }

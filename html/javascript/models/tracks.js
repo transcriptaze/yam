@@ -70,13 +70,15 @@ class Tracks extends EventTarget {
   create(object) {
     const track = new Track({
       UUID: object?.UUID ?? UUIDv4().next().value,
-      title: object?.title ?? this.#titles(),
+      title: object?.title ?? `⁓ ${this.#titles()} ⁓`,
       tempo: object?.BPM ?? 120,
       timeSignature: object?.timeSignature ?? '4:4',
       pulse: object?.pulse ?? 'quarter',
       metronome: {
         BPM: object?.BPM ?? 120,
       },
+
+      new: true,
     })
 
     DB.putTrack(track.object)

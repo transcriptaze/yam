@@ -242,6 +242,13 @@ div.playlist-track.random {
   }
 }
 
+div.playlist-track.new {
+  div#title {
+    color: var(--track-colour-new);
+    font-style: italic;
+  }
+}
+
 :host(.selected) div.playlist-track {
   div#title {
     font-style: normal;

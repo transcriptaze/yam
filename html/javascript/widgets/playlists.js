@@ -444,7 +444,13 @@ function transmogrify(playlist, tracks) {
       .filter((uuid) => m.has(uuid) || playlist.internal(uuid))
       .map((uuid) => (m.has(uuid) ? m.get(uuid) : { UUID: uuid, title: title(uuid), random: true }))
       .map((v) => {
-        return { UUID: `${v.UUID}`, title: `${v.title}`, muted: muted.includes(v.UUID), random: v.random }
+        return {
+          UUID: `${v.UUID}`,
+          title: `${v.title}`,
+          muted: muted.includes(v.UUID),
+          random: v.random,
+          isNew: v.new,
+        }
       }),
   }
 }

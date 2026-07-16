@@ -20,6 +20,7 @@ export class Track {
   #version = VERSION
   #deleted = null
   #modified = false
+  #new = false
 
   #title = ''
   #tempo = 120
@@ -54,6 +55,8 @@ export class Track {
         ding: track.ding ?? false,
         dings: track.dings,
       },
+
+      new: track.#new,
     })
   }
 
@@ -77,6 +80,8 @@ export class Track {
       ding: object?.metronome?.ding ?? false,
       dings: object?.metronome?.dings ?? null,
     }
+
+    this.#new = object?.new === true
   }
 
   get object() {
@@ -103,6 +108,10 @@ export class Track {
 
     if (this.clicks != null) {
       object.metronome.clicks = this.clicks
+    }
+
+    if (this.#new === true) {
+      object.new = true
     }
 
     return object
@@ -242,6 +251,16 @@ export class Track {
     this.#tags = v ?? []
   }
 
+  get new() {
+    return this.#new === true
+  }
+
+  set new(v) {
+    if (v === false) {
+      this.#new = false
+    }
+  }
+
   copy(track) {
     this.UUID = track.UUID
     this.#version = track.#version == null ? VERSION : track.#version
@@ -259,6 +278,8 @@ export class Track {
       clicks: track.#metronome.clicks,
       dings: track.#metronome.dings,
     }
+
+    this.#new = track.#new
   }
 
   save() {

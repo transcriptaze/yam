@@ -11,7 +11,7 @@ export function realize(playlist) {
       }
 
       tracks.push({
-        UUID: v.UUID,
+        UUID: v,
         title: title(),
         muted: v.muted,
         random: true,
@@ -25,6 +25,7 @@ export function realize(playlist) {
           title: track.title,
           muted: muted.includes(track.UUID),
           random: false,
+          new: track.new,
         })
       }
     }

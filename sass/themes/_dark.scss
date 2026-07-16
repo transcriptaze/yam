@@ -20,6 +20,7 @@ $border: #58585f;
 
   --track-colour-muted: #{charcoal.$fg-4};
   --track-colour-deleting: #{charcoal.$fg-4};
+  --track-colour-new: purple;
   --playlist-colour-deleting: #{charcoal.$fg-4};
 
   --beat-off: #{color.change(charcoal.$fg-4, $alpha: 0.45)};

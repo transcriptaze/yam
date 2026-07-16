@@ -225,6 +225,7 @@ export class PlaylistTracks extends HTMLElement {
       muted: v.muted,
       selected: v.UUID === this.#selected,
       random: v.random === true ? true : false,
+      isNew: v.new,
     }
 
     item.addEventListener(EVENTS.TRACK_MUTE, this.#mute)

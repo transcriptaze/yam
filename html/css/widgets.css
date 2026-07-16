@@ -50,6 +50,7 @@
   --toolbar-wakelock-active: #b24a2c;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
+  --track-colour-new: purple;
   --playlist-colour-deleting: #a0a0a0;
   --beat-off: black;
   --beat-on: red;
@@ -139,6 +140,7 @@
   --toolbar-wakelock-active: #b24a2c;
   --track-colour-muted: #7a7a7f;
   --track-colour-deleting: #7a7a7f;
+  --track-colour-new: purple;
   --playlist-colour-deleting: #7a7a7f;
   --beat-off: rgba(122, 122, 127, 0.45);
   --beat-on: rgba(220, 50, 47, 0.9);
@@ -2137,6 +2139,11 @@ div.playlist-track.random #actions #wav {
 }
 div.playlist-track.random #actions #filter {
   display: block;
+}
+
+div.playlist-track.new div#title {
+  color: var(--track-colour-new);
+  font-style: italic;
 }
 
 :host(.selected) div.playlist-track div#title {

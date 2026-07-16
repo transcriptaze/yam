@@ -837,6 +837,8 @@ function onSave() {
       widgets.editor.track = track
 
       document.querySelector('toolbar').classList.add('editable')
+    } else {
+      track.new = false
     }
 
     track.update(object)
@@ -892,6 +894,8 @@ function onEdited(_event) {
     const track = models.tracks.track(event.detail.track)
 
     if (track != null) {
+      track.new = false
+
       track.update({
         title: event.detail.title,
         timeSignature: event.detail.timeSignature,

@@ -24,9 +24,10 @@
         - [x] make random tracks without a track not pickable
         - [ ] reinitialise on random track change
         - [ ] display new track
-            - [ ] between -- --
-            - [ ] coloured
-            - [ ] italicized
+            - [x] between -- --
+            - [x] coloured
+            - [x] italicized
+            - [ ] update playlist on saved
         - (?) re-randomize everytime playlist is selected
         - (?) re-randomise menu option
         - (?) expire random selections

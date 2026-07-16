@@ -25,6 +25,7 @@ export function realize(playlist) {
           title: track.title,
           muted: muted.includes(track.UUID),
           random: false,
+          new: track.new,
         })
       }
     }

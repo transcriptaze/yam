@@ -212,7 +212,7 @@ export class PlaylistItem extends HTMLElement {
     }
   }
 
-  set track({ UUID, title, muted, selected, random }) {
+  set track({ UUID, title, muted, selected, random, isNew }) {
     const shadow = this.shadowRoot
     const container = shadow.querySelector('.playlist-track')
 
@@ -254,6 +254,12 @@ export class PlaylistItem extends HTMLElement {
       popover.replaceChildren(...children)
     } else {
       container.classList.remove('random')
+    }
+
+    if (isNew) {
+      container.classList.add('new')
+    } else {
+      container.classList.remove('new')
     }
   }
 

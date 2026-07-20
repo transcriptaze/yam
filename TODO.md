@@ -3,6 +3,7 @@
 ## In Progress
 
 - [x] reset doesn't clear track from engine
+- [x] don't display stats for random tracks
 
 - [ ] Tags (cf. https://github.com/transcriptaze/yam/issues/55)
     - [x] save/restore
@@ -22,15 +23,16 @@
         - [x] filter using tags
         - [x] recursively filter to fill all random tracks
         - [x] make random tracks without a track not pickable
-        - [ ] reinitialise on random track change
-        - [ ] display new track
+        - [x] reset logic is completely messed up
+        - [x] reinitialise on random track change
+        - [x] display new track
             - [x] between -- --
             - [x] coloured
             - [x] italicized
-            - [ ] update playlist on saved
+            - [x] update playlist on saved
         - (?) re-randomize everytime playlist is selected
-        - (?) re-randomise menu option
         - (?) expire random selections
+        - (?) re-randomise menu option
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM

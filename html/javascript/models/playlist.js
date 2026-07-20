@@ -45,6 +45,10 @@ export class Playlist extends EventTarget {
   }
 
   initialise() {
+    this.randomise()
+  }
+
+  randomise() {
     const all = models.tracks.tracks
     const reserved = new Set(this.#tracks)
     const used = new Set()
@@ -186,7 +190,7 @@ export class Playlist extends EventTarget {
 
             this.#random.push(_track)
             this.#tracks.push(_track.UUID)
-            this.initialise()
+            this.randomise()
           }
           break
 
@@ -338,9 +342,15 @@ export class Playlist extends EventTarget {
       this.#track = item
     }
 
-    if (this.#track != null) {
-      this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_SELECTED, { detail: { playlist: this.UUID, item: item, track: this.#track } }))
-    }
+    this.dispatchEvent(
+      new CustomEvent(EVENTS.PLAYLIST_SELECTED, {
+        detail: {
+          playlist: this.UUID,
+          item: item,
+          track: this.#track,
+        },
+      }),
+    )
 
     return this.#track != null
   }
@@ -452,5 +462,8 @@ export class Playlist extends EventTarget {
 
   save() {
     DB.putPlaylist(this.object)
+
+    this.randomise()
+    this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_CHANGED, { detail: { playlist: this.UUID } }))
   }
 }

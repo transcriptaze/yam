@@ -3,6 +3,7 @@
 ## In Progress
 
 - [x] reset doesn't clear track from engine
+- [ ] don't display stats for random tracks
 
 - [ ] Tags (cf. https://github.com/transcriptaze/yam/issues/55)
     - [x] save/restore
@@ -22,6 +23,7 @@
         - [x] filter using tags
         - [x] recursively filter to fill all random tracks
         - [x] make random tracks without a track not pickable
+        - [x] reset logic is completely messed up
         - [ ] reinitialise on random track change
         - [ ] display new track
             - [x] between -- --

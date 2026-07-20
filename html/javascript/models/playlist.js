@@ -338,9 +338,15 @@ export class Playlist extends EventTarget {
       this.#track = item
     }
 
-    if (this.#track != null) {
-      this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_SELECTED, { detail: { playlist: this.UUID, item: item, track: this.#track } }))
-    }
+    this.dispatchEvent(
+      new CustomEvent(EVENTS.PLAYLIST_SELECTED, {
+        detail: {
+          playlist: this.UUID,
+          item: item,
+          track: this.#track,
+        },
+      }),
+    )
 
     return this.#track != null
   }

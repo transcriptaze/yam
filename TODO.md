@@ -3,7 +3,7 @@
 ## In Progress
 
 - [x] reset doesn't clear track from engine
-- [ ] don't display stats for random tracks
+- [x] don't display stats for random tracks
 
 - [ ] Tags (cf. https://github.com/transcriptaze/yam/issues/55)
     - [x] save/restore

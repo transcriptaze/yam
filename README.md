@@ -12,7 +12,7 @@ organised into playlists — with support for features such as:
 
 An online version is available:
 
-https://yam-alpha.pages.dev
+https://yam-web.pages.dev
 
 (or follow the installation instructions [below](#installation) to run your own version).
 

@@ -4,7 +4,7 @@
 
 - [x] reset doesn't clear track from engine
 - [x] don't display stats for random tracks
-- [ ] change Cloudflare to yamm
+- [x] change Cloudflare to yamm
 
 - [ ] Tags (cf. https://github.com/transcriptaze/yam/issues/55)
     - [x] save/restore

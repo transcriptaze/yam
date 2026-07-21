@@ -689,6 +689,10 @@ function onPlaylistSelected(event) {
   const track = models.tracks.track(event.detail.track)
   const toolbar = document.querySelector('toolbar')
 
+  if (event.detail.item == null && event.detail.track == null) {
+    playlist?.randomise()
+  }
+
   state.selected = {
     playlist: playlist?.UUID,
     track: track,

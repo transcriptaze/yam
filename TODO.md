@@ -4,15 +4,16 @@
 
 - [x] reset doesn't clear track from engine
 - [x] don't display stats for random tracks
+- [ ] change Cloudflare to yamm
 
 - [ ] Tags (cf. https://github.com/transcriptaze/yam/issues/55)
     - [x] save/restore
     - [x] edit
     - [x] tracks::tags 
     - [x] normalise tag
-    - (?) editor: use/update global tags list
+    - [ ] editor: use/update global tags list
 
-    - [ ] random track
+    - [x] random track
         - [x] remove WAV option
         - [x] remove statistics option
         - [x] filter field
@@ -26,13 +27,8 @@
         - [x] reset logic is completely messed up
         - [x] reinitialise on random track change
         - [x] display new track
-            - [x] between -- --
-            - [x] coloured
-            - [x] italicized
-            - [x] update playlist on saved
-        - (?) re-randomize everytime playlist is selected
-        - (?) expire random selections
-        - (?) re-randomise menu option
+        - [x] randomize everytime playlist is selected
+        - [x] expire random selections
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM

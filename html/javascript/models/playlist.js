@@ -3,6 +3,7 @@ import { UUIDv4 } from '../uuid.js'
 import { infof } from '../log.js'
 import { EVENTS, RANDOM } from '../constants.js'
 import { normaliseTag } from '../util.js'
+import { settings } from '../settings.js'
 import * as models from './models.js'
 
 const LOGTAG = 'playlist'
@@ -20,6 +21,7 @@ export class Playlist extends EventTarget {
   #muted = new Set()
   #selected = null
   #track = null
+  #randomised = null
 
   static clone(playlist) {
     return new Playlist({
@@ -99,6 +101,8 @@ export class Playlist extends EventTarget {
         }
       }
     })
+
+    this.#randomised = Date.now()
   }
 
   get object() {
@@ -337,6 +341,14 @@ export class Playlist extends EventTarget {
     const random = this.#random.find((t) => t.UUID === item)
 
     if (random) {
+      const interval = Math.max(0, settings.randomise ?? 15)
+      const dt = Math.max(0, Math.floor(Date.now() - (this.#randomised ?? 0)) / 60000)
+
+      if (interval > 0 && dt > interval) {
+        infof(LOGTAG, `randomised playlist '${this.title}'`)
+        this.randomise()
+      }
+
       this.#track = random.track
     } else {
       this.#track = item

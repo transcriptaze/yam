@@ -109,6 +109,21 @@ html.settings main {
     }
   }
 
+  div.randomise {
+    display: flex;
+    align-items: center;
+    column-gap: 8px;
+
+    input[type="text"] {
+      background: none;
+      border: none;
+      outline: none;
+      width: 3em;
+
+      color: var(--text);
+    }
+  }
+
   div.click-track {
     display: grid;
     grid-template-columns: auto auto;

@@ -446,6 +446,18 @@ html.settings main div.volume input[type=text] {
   width: 3em;
   color: var(--text);
 }
+html.settings main div.randomise {
+  display: flex;
+  align-items: center;
+  column-gap: 8px;
+}
+html.settings main div.randomise input[type=text] {
+  background: none;
+  border: none;
+  outline: none;
+  width: 3em;
+  color: var(--text);
+}
 html.settings main div.click-track {
   display: grid;
   grid-template-columns: auto auto;

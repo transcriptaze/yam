@@ -11,9 +11,9 @@
     - [x] edit
     - [x] tracks::tags 
     - [x] normalise tag
-    - (?) editor: use/update global tags list
+    - [ ] editor: use/update global tags list
 
-    - [ ] random track
+    - [x] random track
         - [x] remove WAV option
         - [x] remove statistics option
         - [x] filter field
@@ -28,7 +28,7 @@
         - [x] reinitialise on random track change
         - [x] display new track
         - [x] randomize everytime playlist is selected
-        - [ ] expire random selections
+        - [x] expire random selections
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM

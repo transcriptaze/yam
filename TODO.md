@@ -11,7 +11,8 @@
     - [x] edit
     - [x] tracks::tags 
     - [x] normalise tag
-    - [ ] editor: use/update global tags list
+    - [x] editor: use/update global tags list
+        - [ ] custom widget
 
     - [x] random track
         - [x] remove WAV option

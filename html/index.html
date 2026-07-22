@@ -791,8 +791,9 @@
         </div>
         <div class="metronome">
           <label for="tags">Tags:</label>
-          <input  id="tags" type="text" disabled />
+          <input  id="tags" type="text" list="tagslist" disabled />
           <yam-loop tabindex="-1" enterkeyhint="done" disabled></yam-loop>
+          <datalist id="tagslist"></datalist>
           <select id="loops" disabled>
             <option value="-1">&infin;</option>
             <option value="2">2</option>

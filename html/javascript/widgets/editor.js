@@ -1,3 +1,4 @@
+import * as datastore from '../datastore/datastore.js'
 import { EVENTS, INF } from '../constants.js'
 import * as generators from '../generators.js'
 import { parseTimeSignature, normaliseTag } from '../util.js'
@@ -70,6 +71,31 @@ export class Editor extends HTMLElement {
 
     tags: {
       change: () => {
+        const input = this.shadowRoot.querySelector('div.track-editor div.metronome #tags')
+        const tagslist = this.shadowRoot.querySelector('div.track-editor div.metronome #tagslist')
+        const all = datastore.tags.all
+        const used = tags(input.value)
+
+        const unused = all.filter((tag) => {
+          const p = normaliseTag(tag)
+
+          return used.find((v) => p === normaliseTag(v)) == null
+        })
+
+        const options = []
+
+        unused.forEach((tag) => {
+          const option = document.createElement('option')
+          const value = used.concat(`${tag}`).join(', ')
+
+          option.value = value
+          option.innerText = value
+
+          options.push(option)
+        })
+
+        tagslist.replaceChildren(...options)
+
         this.#modified = true
       },
 
@@ -291,7 +317,35 @@ export class Editor extends HTMLElement {
       })
     }
 
+    // ... update tags datalist
+    const input = container.querySelector('div.metronome #tags')
+    const tagslist = container.querySelector('div.metronome #tagslist')
+    const all = datastore.tags.all
+    const used = tags(input.value)
+
+    const unused = all.filter((tag) => {
+      const p = normaliseTag(tag)
+
+      return used.find((v) => p === normaliseTag(v)) == null
+    })
+
+    const options = []
+
+    unused.forEach((tag) => {
+      const value = used.concat(`${tag}`).join(', ')
+      const option = document.createElement('option')
+
+      option.value = value
+      option.innerText = value
+
+      options.push(option)
+    })
+
+    tagslist.replaceChildren(...options)
+
+    // ... store track
     this.#track = track
+
     // FIXME sets the defaults before the widgets have been initialised by the track (because Promises ? something else?)
     //        cf. https://github.com/transcriptaze/yam/issues/54
     // this.#defaults = {}

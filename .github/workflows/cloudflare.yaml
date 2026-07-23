@@ -3,9 +3,9 @@ name: alpha
 on:
   workflow_dispatch:
   push:
-    branches: [ "alpha" ]
+    branches: [ "cloudflare" ]
   pull_request:
-    branches: [ "alpha" ]
+    branches: [ "cloudflare" ]
 
 jobs:
   build:

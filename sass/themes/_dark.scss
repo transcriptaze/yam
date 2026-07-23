@@ -20,6 +20,7 @@ $border: #58585f;
 
   --track-colour-muted: #{charcoal.$fg-4};
   --track-colour-deleting: #{charcoal.$fg-4};
+  --track-colour-new: purple;
   --playlist-colour-deleting: #{charcoal.$fg-4};
 
   --beat-off: #{color.change(charcoal.$fg-4, $alpha: 0.45)};
@@ -69,6 +70,7 @@ $border: #58585f;
   --playlist-title-text: #{charcoal.$fg-3};
   --playlist-tracks-background: #{charcoal.$bg-3};
   --playlist-tracks-text: #{charcoal.$fg-2};
+  --playlist-tracks-random: #{charcoal.$red};
 
   --editor-background: #{charcoal.$bg-3};
   --editor-section-background:  #{charcoal.$fg-2};

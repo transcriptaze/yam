@@ -190,24 +190,26 @@ function playlistHistory(playlist, statistics, from, labels) {
   const now = new Date()
   const list = []
 
-  playlist.tracks.forEach((v) => {
-    const li = document.createElement('li')
-    const div = document.importNode(template.content, true)
-    const title = div.querySelector('.title')
-    const graph = div.querySelector('yam-bar-graph')
-    const stats = statistics.query(v.UUID, from, now)
+  playlist.tracks
+    .filter((v) => v.random !== true)
+    .forEach((v) => {
+      const li = document.createElement('li')
+      const div = document.importNode(template.content, true)
+      const title = div.querySelector('.title')
+      const graph = div.querySelector('yam-bar-graph')
+      const stats = statistics.query(v.UUID, from, now)
 
-    title.innerText = v.title
+      title.innerText = v.title
 
-    graph.setAttribute('background', 'months')
-    graph.setAttribute('labels', labels)
-    graph.played = stats.played
+      graph.setAttribute('background', 'months')
+      graph.setAttribute('labels', labels)
+      graph.played = stats.played
 
-    li.setAttribute('draggable', false)
-    li.appendChild(div)
+      li.setAttribute('draggable', false)
+      li.appendChild(div)
 
-    list.push(li)
-  })
+      list.push(li)
+    })
 
   tracks.replaceChildren(...list)
 }

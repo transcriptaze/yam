@@ -2,6 +2,8 @@ import * as DB from '../db/db.js'
 import { UUIDv4 } from '../uuid.js'
 import { infof } from '../log.js'
 import { EVENTS, RANDOM } from '../constants.js'
+import { normaliseTag } from '../util.js'
+import { settings } from '../settings.js'
 import * as models from './models.js'
 
 const LOGTAG = 'playlist'
@@ -19,6 +21,7 @@ export class Playlist extends EventTarget {
   #muted = new Set()
   #selected = null
   #track = null
+  #randomised = null
 
   static clone(playlist) {
     return new Playlist({
@@ -43,11 +46,74 @@ export class Playlist extends EventTarget {
     this.#muted = object.muted == null ? new Set() : new Set([...object.muted])
   }
 
+  initialise() {
+    this.randomise()
+  }
+
+  randomise() {
+    const all = models.tracks.tracks
+    const reserved = new Set(this.#tracks)
+    const used = new Set()
+
+    const eligible = (v) => {
+      const { include = [], exclude = [] } = v.filter ?? {}
+      const includes = new Set(include.map(normaliseTag))
+      const excludes = new Set(exclude.map(normaliseTag))
+
+      const matches = (track) => {
+        const tags = (track.tags ?? []).map(normaliseTag)
+
+        if (tags.some((tag) => excludes.has(tag))) {
+          return false
+        }
+
+        if (![...includes].every((tag) => tags.includes(tag))) {
+          return false
+        }
+
+        return true
+      }
+
+      const filtered = new Set(all.filter(matches).map((track) => track.UUID))
+
+      return {
+        random: v,
+        pool: filtered.difference(reserved),
+      }
+    }
+
+    const list = this.#random.map(eligible).sort((p, q) => p.pool.size - q.pool.size)
+
+    list.forEach((v) => {
+      const available = Array.from(new Set(v.pool).difference(used))
+      const N = available.length
+
+      if (N > 0) {
+        const ix = Math.floor(N * Math.random())
+        const UUID = available[ix]
+        const track = models.tracks.track(UUID)
+
+        if (track) {
+          v.random.track = track.UUID
+          v.random.title = track.title
+
+          used.add(UUID)
+        }
+      }
+    })
+
+    this.#randomised = Date.now()
+  }
+
   get object() {
     const random = this.#random.map((v) => {
       return {
         UUID: v.UUID,
-        title: v.title,
+        title: 'random',
+        filter: v.filter ?? {
+          include: [],
+          exclude: [],
+        },
       }
     })
 
@@ -99,6 +165,18 @@ export class Playlist extends EventTarget {
     this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_CHANGED, { detail: { playlist: this.UUID } }))
   }
 
+  find(track) {
+    const object = this.#random.find((v) => v.UUID === track)
+
+    if (object) {
+      return object
+    }
+
+    if (this.#tracks.includes(track)) {
+      return models.tracks.get(track)
+    }
+  }
+
   add(...tracks) {
     for (const track of tracks) {
       switch (true) {
@@ -107,11 +185,16 @@ export class Playlist extends EventTarget {
           {
             const _track = {
               UUID: UUIDv4().next().value,
-              title: '<< random >>',
+              title: 'random',
+              filter: {
+                include: [],
+                exclude: [],
+              },
             }
 
             this.#random.push(_track)
             this.#tracks.push(_track.UUID)
+            this.randomise()
           }
           break
 
@@ -183,9 +266,9 @@ export class Playlist extends EventTarget {
     return this.#tracks.some((v) => v === track)
   }
 
-  // NTS: returns true if the uuid matches an internal 'random' track
+  // NTS: returns the corresponding internal 'random' track (if any)
   internal(uuid) {
-    return this.#random.some((v) => v.UUID === uuid)
+    return this.#random.find((v) => v.UUID === uuid)
   }
 
   shuffled(tracks) {
@@ -253,44 +336,35 @@ export class Playlist extends EventTarget {
   }
 
   select(item) {
-    let ok = true
+    this.#selected = item
 
-    const f = () => {
-      // ... random track ?
-      const random = this.#random.find((t) => t.UUID === item)
+    const random = this.#random.find((t) => t.UUID === item)
 
-      // ... already assigned ?
-      if (random != null && random.track != null) {
-        return random.track
+    if (random) {
+      const interval = Math.max(0, settings.randomise ?? 15)
+      const dt = Math.max(0, Math.floor(Date.now() - (this.#randomised ?? 0)) / 60000)
+
+      if (interval > 0 && dt > interval) {
+        infof(LOGTAG, `randomised playlist '${this.title}'`)
+        this.randomise()
       }
 
-      // ... pick unused track
-      if (random != null) {
-        const tracks = new Set(models.tracks.tracks.map((v) => v.UUID))
-        const used = new Set(this.#random.filter((v) => v.track != null).map((v) => v.track))
-        const playlist = new Set([...this.#tracks, ...used])
-
-        const difference = Array.from(tracks.difference(playlist))
-        const N = difference.length
-        const ix = Math.floor(N * Math.random())
-        const track = N > 0 ? difference[ix] : this.#track
-
-        random.track = N > 0 ? track : null
-        ok = N > 0
-
-        return track
-      }
-
-      return item
+      this.#track = random.track
+    } else {
+      this.#track = item
     }
 
-    // ... normal
-    this.#selected = item
-    this.#track = f()
+    this.dispatchEvent(
+      new CustomEvent(EVENTS.PLAYLIST_SELECTED, {
+        detail: {
+          playlist: this.UUID,
+          item: item,
+          track: this.#track,
+        },
+      }),
+    )
 
-    this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_SELECTED, { detail: { playlist: this.UUID, item: item, track: this.#track } }))
-
-    return ok
+    return this.#track != null
   }
 
   back() {
@@ -400,5 +474,8 @@ export class Playlist extends EventTarget {
 
   save() {
     DB.putPlaylist(this.object)
+
+    this.randomise()
+    this.dispatchEvent(new CustomEvent(EVENTS.PLAYLIST_CHANGED, { detail: { playlist: this.UUID } }))
   }
 }

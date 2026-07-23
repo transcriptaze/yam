@@ -1,6 +1,7 @@
+import * as datastore from '../datastore/datastore.js'
 import { EVENTS, INF } from '../constants.js'
 import * as generators from '../generators.js'
-import { parseTimeSignature } from '../util.js'
+import { parseTimeSignature, normaliseTag } from '../util.js'
 
 export class Editor extends HTMLElement {
   static get observedAttributes() {
@@ -65,6 +66,41 @@ export class Editor extends HTMLElement {
           this.#modified = true
           this.#defaults = {}
         }
+      },
+    },
+
+    tags: {
+      change: () => {
+        const input = this.shadowRoot.querySelector('div.track-editor div.metronome #tags')
+        const tagslist = this.shadowRoot.querySelector('div.track-editor div.metronome #tagslist')
+        const all = datastore.tags.all
+        const used = tags(input.value)
+
+        const unused = all.filter((tag) => {
+          const p = normaliseTag(tag)
+
+          return used.find((v) => p === normaliseTag(v)) == null
+        })
+
+        const options = []
+
+        unused.forEach((tag) => {
+          const option = document.createElement('option')
+          const value = used.concat(`${tag}`).join(', ')
+
+          option.value = value
+          option.innerText = value
+
+          options.push(option)
+        })
+
+        tagslist.replaceChildren(...options)
+
+        this.#modified = true
+      },
+
+      changed: () => {
+        this.#modified = true
       },
     },
 
@@ -164,6 +200,7 @@ export class Editor extends HTMLElement {
       timeSignature: container.querySelector('yam-time-signature'),
       mm: container.querySelector('yam-mm'),
       BPM: container.querySelector('#BPM'),
+      tags: container.querySelector('#tags'),
       loop: container.querySelector('yam-loop'),
       loops: container.querySelector('#loops'),
       sections: container.querySelector('div.sections'),
@@ -192,6 +229,8 @@ export class Editor extends HTMLElement {
 
     this.#fields.BPM.addEventListener('input', this.#handlers.BPM.change)
     this.#fields.BPM.addEventListener('change', this.#handlers.BPM.changed)
+    this.#fields.tags.addEventListener('input', this.#handlers.tags.change)
+    this.#fields.tags.addEventListener('change', this.#handlers.tags.changed)
     this.#fields.loop.addEventListener('change', this.#handlers.loop.change)
     this.#fields.loops.addEventListener('change', this.#handlers.loops.change)
 
@@ -229,6 +268,9 @@ export class Editor extends HTMLElement {
 
     this.#BPM.value = track?.BPM ?? track?.tempo ?? 120
     this.#BPM.disabled = track == null
+
+    this.#tags.value = this.#tags.value = track?.tags?.join(', ') ?? ''
+    this.#tags.disabled = track == null
 
     this.#loop.enabled = track?.loopable ?? false
     this.#loop.loop = track?.loop ?? false
@@ -275,7 +317,35 @@ export class Editor extends HTMLElement {
       })
     }
 
+    // ... update tags datalist
+    const input = container.querySelector('div.metronome #tags')
+    const tagslist = container.querySelector('div.metronome #tagslist')
+    const all = datastore.tags.all
+    const used = tags(input.value)
+
+    const unused = all.filter((tag) => {
+      const p = normaliseTag(tag)
+
+      return used.find((v) => p === normaliseTag(v)) == null
+    })
+
+    const options = []
+
+    unused.forEach((tag) => {
+      const value = used.concat(`${tag}`).join(', ')
+      const option = document.createElement('option')
+
+      option.value = value
+      option.innerText = value
+
+      options.push(option)
+    })
+
+    tagslist.replaceChildren(...options)
+
+    // ... store track
     this.#track = track
+
     // FIXME sets the defaults before the widgets have been initialised by the track (because Promises ? something else?)
     //        cf. https://github.com/transcriptaze/yam/issues/54
     // this.#defaults = {}
@@ -340,6 +410,7 @@ export class Editor extends HTMLElement {
           pulse: pulse,
           tempo: tempo,
           BPM: !Number.isNaN(BPM) && BPM >= 40 && BPM <= 200 ? BPM : null,
+          tags: tags(this.#tags.value),
           loop: loop,
           loops: ['2', '3', '4', '5'].includes(loops) ? Number.parseInt(loops) : INF,
           sections: [...sections],
@@ -417,6 +488,10 @@ export class Editor extends HTMLElement {
 
   get #BPM() {
     return this.#fields.BPM
+  }
+
+  get #tags() {
+    return this.#fields.tags
   }
 
   get #loop() {
@@ -594,6 +669,28 @@ function* transmogrify(track) {
       },
     }
   }
+}
+
+// convert comma/semicolon separated tags list to unique array
+function tags(v) {
+  const set = new Set()
+
+  const unique = (tag) => {
+    const key = tag.toLowerCase()
+    const ok = !set.has(key)
+
+    set.add(key)
+
+    return ok
+  }
+
+  const tags = `${v}`
+    .split(/[;,]/)
+    .map((tag) => normaliseTag(tag))
+    .filter((tag) => tag !== '')
+    .filter((tag) => unique(tag))
+
+  return tags
 }
 
 customElements.define('yam-editor', Editor)

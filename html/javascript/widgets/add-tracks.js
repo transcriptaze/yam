@@ -20,7 +20,7 @@ export class AddTracks extends HTMLElement {
         const UUID = UUIDv4().next().value
         const track = {
           UUID: UUID,
-          title: '<< new >>',
+          title: '« new »',
         }
 
         const ul = this.shadowRoot.querySelector('ul')
@@ -46,7 +46,7 @@ export class AddTracks extends HTMLElement {
         const UUID = UUIDv4().next().value
         const track = {
           UUID: RANDOM.UUID,
-          title: '<< random >>',
+          title: '« random »',
         }
 
         const ul = this.shadowRoot.querySelector('ul')

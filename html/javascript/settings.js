@@ -15,6 +15,7 @@ class Settings {
   #theme = 'default'
   #soundset = 'soundset'
   #volume = 1.0
+  #randomise = 15 // minutes
 
   #clickTrack = {
     preamble: PREAMBLE,
@@ -119,6 +120,18 @@ class Settings {
     }
   }
 
+  get randomise() {
+    return this.#randomise
+  }
+
+  set randomise(v) {
+    const t = parseInt(`${v}`)
+
+    if (!Number.isNaN(t) && t >= 0) {
+      this.#randomise = t
+    }
+  }
+
   save() {
     const object = {
       settings: {
@@ -130,6 +143,7 @@ class Settings {
         theme: this.#theme,
         soundset: this.#soundset,
         volume: this.#volume,
+        randomise: this.#randomise,
 
         clickTrack: this.#clickTrack,
       },
@@ -151,6 +165,7 @@ class Settings {
       this.theme = object?.settings.theme
       this.soundset = object?.settings.soundset
       this.volume = object?.settings.volume
+      this.randomise = object?.settings.randomise
 
       this.clickTrack = object?.settings.clickTrack
     } catch (err) {

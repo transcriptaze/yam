@@ -77,6 +77,7 @@ export class Playlist extends HTMLElement {
       click: (event) => {
         if (event.target.UUID != null) {
           event.preventDefault()
+
           this.dispatchEvent(
             new CustomEvent(EVENTS.TRACK_SELECT, {
               bubbles: true,
@@ -577,6 +578,7 @@ export class Playlist extends HTMLElement {
       muted: v.muted,
       selected: v.UUID === this.#selected,
       random: v.random === true ? true : false,
+      isNew: v.isNew,
     }
 
     item.addEventListener(EVENTS.TRACK_MUTE, this.#mute)
@@ -619,8 +621,6 @@ export class Playlist extends HTMLElement {
     this.#drag.UUID = track.UUID
     this.#drag.list = this.#tracks?.slice(0) ?? []
     this.#drag.dropped = false
-
-    console.log('>>>> ', this.#drag.list)
   }
 
   #dragend = (_event) => {

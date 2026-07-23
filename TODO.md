@@ -2,10 +2,7 @@
 
 ## In Progress
 
-- [x] reset doesn't clear track from engine
-- [x] don't display stats for random tracks
-- [x] change Cloudflare to yamm
-- [x] tags (cf. https://github.com/transcriptaze/yam/issues/55)
+- [x] Remove cloudflare branch and use alpha for deploys to yam-web.
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM

@@ -64,9 +64,10 @@ It's also in _alpha_ i.e. expect the code, design, architecture, everything to c
 
 ### Current Release
 
-**[v0.3.1](https://github.com/transcriptaze/yam/releases/tag/v0.3.1) - 2026-06-25**
-1. Click track export to WAV file.
-2. Click track recording to _.webm_ file.
+**[v0.3.2](https://github.com/transcriptaze/yam/releases/tag/v0.3.2) - 2026-07-23**
+1. Added user defined tags for tracks.
+2. Added filtering by tags to random tracks in playlists.
+3. Fixed _reset_ bug that was not clearing the _WebAudio_ track.
 
 
 ## Installation

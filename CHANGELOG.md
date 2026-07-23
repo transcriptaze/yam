@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## [0.3.2](https://github.com/transcriptaze/yam/releases/tag/v0.3.2) - 2026-07-23
 
 ### Added
 1. Added user defined tags to tracks.

@@ -72,9 +72,10 @@
       padding-bottom: 8px;
 
       display: grid;
-      grid-template-columns: auto 1fr;
+      grid-template-columns: auto auto 1fr auto;
       grid-template-rows: auto;
       column-gap: 4px;
+      align-items: center;
 
       yam-time-signature {
         grid-column: 1;
@@ -84,6 +85,28 @@
       yam-mm {
         grid-column: 2;
         grid-row: 1;
+      }
+
+      label[for="BPM"] {
+        grid-column: 3;
+        grid-row: 1;
+        justify-self: end;
+
+        margin-right: 8px;
+        color: var(--text-label);
+      }
+
+      #BPM {
+        grid-column: 4;
+        grid-row: 1;
+
+        min-width: 2em;
+
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+        }
+
+        -moz-appearance:textfield;
       }
     }
 
@@ -99,39 +122,31 @@
       padding-bottom: 8px;
 
       display: grid;
-      grid-template-columns: auto auto 1fr auto auto;
+      grid-template-columns: auto 1fr auto auto;
       grid-template-rows: auto;
       align-items: center;
       column-gap: 4px;
 
-      label[for="BPM"] {
+      label {
         grid-column: 1;
         grid-row: 1;
-
-        margin-right: 8px;
-        color: var(--text-label);
+        font-size: 0.9em;
       }
 
-      #BPM {
-        grid-columns: 2;
-        grid-row: 1;
+      #tags {
+        grid-column: 2;
+        grid-row: 1;     
 
-        min-width: 2em;
-
-        &::-webkit-inner-spin-button {
-          -webkit-appearance: none;
-        }
-
-        -moz-appearance:textfield;
+        font-size: 0.9em; 
       }
 
       yam-loop {
-        grid-column: 4;
+        grid-column: 3;
         grid-row: 1;
       }
 
       #loops {
-        grid-column: 5;
+        grid-column: 4;
         grid-row: 1;
       }
     }
@@ -400,7 +415,13 @@
       div.metrics {
         grid-column: 1;
         grid-row: 2;      
+ 
+        grid-template-columns: auto auto auto auto 1fr;
+ 
+        label[for="BPM"] {
+          margin-left: 16px;
       }
+    }
 
       div.metronome {
         grid-column: 2;

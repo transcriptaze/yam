@@ -19,6 +19,30 @@ class Tracks extends EventTarget {
     return this.#tracks.filter((v) => !v.deleted)
   }
 
+  get tags() {
+    // ... get all tags
+    const tags = this.#tracks.reduce((list, track) => {
+      if (track.tags) {
+        list.push(...track.tags)
+      }
+
+      return list
+    }, [])
+
+    // ... unique and count
+    const map = tags.reduce((m, t) => {
+      const key = t.trim().toLowerCase()
+      const tag = m.has(key) ? m.get(key) : { tag: t, count: 0 }
+
+      m.set(key, { tag: tag.tag, count: tag.count + 1 })
+
+      return m
+    }, new Map())
+
+    // ... sort by count (descending)
+    return [...map.values()].sort((p, q) => q.count - p.count).map((v) => v.tag)
+  }
+
   has(UUID) {
     return this.#tracks.findIndex((v) => `${v.UUID}` === `${UUID}` && !v.deleted) != -1
   }
@@ -46,13 +70,15 @@ class Tracks extends EventTarget {
   create(object) {
     const track = new Track({
       UUID: object?.UUID ?? UUIDv4().next().value,
-      title: object?.title ?? this.#titles(),
+      title: object?.title ?? `⁓ ${this.#titles()} ⁓`,
       tempo: object?.BPM ?? 120,
       timeSignature: object?.timeSignature ?? '4:4',
       pulse: object?.pulse ?? 'quarter',
       metronome: {
         BPM: object?.BPM ?? 120,
       },
+
+      new: true,
     })
 
     DB.putTrack(track.object)

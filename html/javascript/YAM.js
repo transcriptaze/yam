@@ -81,6 +81,7 @@ export function initialise() {
   // ... initialise playlists, tracks and statistics
   Promise.all([models.playlists.restore(), models.tracks.restore(), statistics.restore()])
     .then(([playlists, tracks, _statistics]) => {
+      playlists.forEach((playlist) => playlist.initialise())
       widgets.playlists.initialise(playlists, tracks)
 
       // ... playlist in URL?
@@ -655,8 +656,9 @@ function onTrackSelect(event) {
   const playlist = models.playlists.playlist(event.detail.playlist)
   const track = event.detail.track
 
-  playlist?.select(track)
-  show('metronome')
+  if (playlist?.select(track)) {
+    show('metronome')
+  }
 }
 
 function onMuted(e, muted) {
@@ -686,6 +688,10 @@ function onPlaylistSelected(event) {
   const playlist = models.playlists.playlist(event.detail.playlist)
   const track = models.tracks.track(event.detail.track)
   const toolbar = document.querySelector('toolbar')
+
+  if (event.detail.item == null && event.detail.track == null) {
+    playlist?.randomise()
+  }
 
   state.selected = {
     playlist: playlist?.UUID,
@@ -835,6 +841,8 @@ function onSave() {
       widgets.editor.track = track
 
       document.querySelector('toolbar').classList.add('editable')
+    } else {
+      track.new = false
     }
 
     track.update(object)
@@ -890,12 +898,15 @@ function onEdited(_event) {
     const track = models.tracks.track(event.detail.track)
 
     if (track != null) {
+      track.new = false
+
       track.update({
         title: event.detail.title,
         timeSignature: event.detail.timeSignature,
         pulse: event.detail.pulse,
         tempo: event.detail.tempo,
         BPM: event.detail.BPM,
+        tags: event.detail.tags,
         loop: event.detail.loop,
         loops: event.detail.loops,
         sections: event.detail.sections,

@@ -62,7 +62,6 @@ export class OfflineWorklet extends AudioWorkletProcessor {
         this.#track = transmogrify(event.data.track)
         this.#preamble = 1000 * (event.data.preamble ?? 0.0) // ms
 
-        console.log(this.#track)
         this.restart()
         break
     }

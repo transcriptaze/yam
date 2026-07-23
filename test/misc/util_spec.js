@@ -1,6 +1,6 @@
 import { describe, it } from 'mocha'
 import { expect } from 'chai'
-import { durationToMS } from '../../html/javascript/util.js'
+import * as util from '../../html/javascript/util.js'
 
 describe('tests utility functions', function () {
   it('durationToMS', function () {
@@ -22,9 +22,30 @@ describe('tests utility functions', function () {
     ]
 
     for (const test of tests) {
-      const ms = durationToMS(test.v)
+      const ms = util.durationToMS(test.v)
 
       expect(ms).to.equal(test.expected)
+    }
+  })
+
+  it('normaliseTag', function () {
+    // prettier-ignore
+    const tests = [
+      { tag: undefined,            normalised: '' },
+      { tag: null,                 normalised: '' },
+      { tag: '',                   normalised: '' },
+      { tag: '    ',               normalised: '' },
+      { tag: 'qwerty',             normalised: 'qwerty' },
+      { tag: 'qWerty',             normalised: 'qWerty' },
+      { tag: 'qwerty Uiop',        normalised: 'qwerty Uiop' },
+      { tag: 'qwerty  Uiop',       normalised: 'qwerty Uiop' },
+      { tag: 'qwe rty  Uio    p',  normalised: 'qwe rty Uio p' },
+    ]
+
+    for (const test of tests) {
+      const tag = util.normaliseTag(test.tag)
+
+      expect(tag).to.equal(test.normalised)
     }
   })
 })

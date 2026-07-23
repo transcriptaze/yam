@@ -7,7 +7,6 @@ export const DEFAULT = {
 
 export const RANDOM = {
   UUID: '00000000-0000-0000-0000-000000000001',
-  TITLE: '« random »',
 }
 
 export const DIVISIONS = [1, 2, 4, 8, 16, 32]

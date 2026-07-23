@@ -22,6 +22,7 @@ class Statistics {
   }
 
   summarize(track) {
+    console.log({ track })
     const stats = {
       track: track,
       played: 0,
@@ -29,6 +30,7 @@ class Statistics {
     }
 
     const records = this.#rs.filter((v) => v.track === track && (v.complete || v.measures === INF))
+
     stats.played = records.reduce((a, v) => {
       if (v.measures === INF && v.bars > v.countIn + v.pickup) {
         return a + 1

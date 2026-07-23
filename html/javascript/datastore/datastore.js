@@ -2,6 +2,7 @@ import * as models from '../models/models.js'
 import * as _playlist from './playlist.js'
 import * as _track from './track.js'
 import * as _tracks from './tracks.js'
+import { normaliseTag } from '../util.js'
 import { DEFAULT, RANDOM } from '../constants.js'
 
 export const playlists = {
@@ -145,5 +146,48 @@ export const tracks = {
     }
 
     return _track.realize(track)
+  },
+
+  filter(track, include, exclude) {
+    const playlist = models.playlists.playlists.find((playlist) => playlist.has(track))
+
+    if (playlist) {
+      const object = playlist.find(track)
+
+      if (object) {
+        object.filter = {
+          include: include,
+          exclude: exclude,
+        }
+
+        playlist.save()
+      }
+    }
+  },
+}
+
+export const tags = {
+  get all() {
+    return [...models.tracks.tags]
+  },
+
+  // prettier-ignore
+  included(track) {
+    return models.playlists.playlists
+      .find((playlist) => playlist.has(track))
+      ?.find(track)
+      ?.filter
+      ?.include
+      ?.map(normaliseTag) ?? []
+  },
+
+  // prettier-ignore
+  excluded(track) {
+    return models.playlists.playlists
+      .find((playlist) => playlist.has(track))
+      ?.find(track)
+      ?.filter
+      ?.exclude
+      ?.map(normaliseTag) ?? []
   },
 }

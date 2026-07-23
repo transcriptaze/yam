@@ -740,11 +740,21 @@
         <div id="title"></div>
         <button id="menu" popovertarget="actions"></button>
         <div id="actions" popover>
+          <button id="filter" popovertarget="tags"></button>
           <button id="wav"></button>
           <button id="statistics"></button>
           <button id="mute"></button>
           <img id="trash" src="./images/trash.svg" />
         </div>
+        <div id="tags" popover>
+          <div></div>
+        </div>
+      </div>
+    </template>
+
+    <template id="template-tag">
+      <div class="tag" data-state="ignore">
+        <div class="icon"></div><span>ok</span>
       </div>
     </template>
 
@@ -776,11 +786,14 @@
         <div class="metrics">
           <yam-time-signature tabindex="-1" enterkeyhint="done" disabled></yam-time-signature>
           <yam-mm             tabindex="-1" enterkeyhint="done" disabled></yam-mm>
+          <label for="BPM">BPM</label>
+          <input  id="BPM" type="number" min="40" max="200" step="1" disabled />
         </div>
         <div class="metronome">
-          <input  id="BPM" type="number" min="40" max="200" step="1" disabled />
-          <label for="BPM">BPM</label>
+          <label for="tags">Tags:</label>
+          <input  id="tags" type="text" list="tagslist" disabled />
           <yam-loop tabindex="-1" enterkeyhint="done" disabled></yam-loop>
+          <datalist id="tagslist"></datalist>
           <select id="loops" disabled>
             <option value="-1">&infin;</option>
             <option value="2">2</option>

@@ -2,12 +2,23 @@
 
 ## In Progress
 
-NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
-- (?) rework engine onPlaying/onStopped as signals
-- (?) rework widgets.metronome to subscribe to engine
+- [x] reset doesn't clear track from engine
+- [x] don't display stats for random tracks
+- [x] change Cloudflare to yamm
+- [x] tags (cf. https://github.com/transcriptaze/yam/issues/55)
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM
+       - compile to _sample:instruction_ using _fs_
+       - execute _instruction_ @ _sample_
+       - instruction:
+           - tick
+           - tock
+           - tack
+           - stick
+           - ding
+           - notify
+
     - [ ] 2:2 time
     - [ ] unit test: BPM change
     - [ ] unit test: tactus change
@@ -16,6 +27,11 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
     - [ ] 'cue' generator
 
 - [ ] editor - default reverted to 4:4 instead of continuing with 6:4 (cf. https://github.com/transcriptaze/yam/issues/54)
+
+- [ ] signals
+    - NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
+    - (?) rework engine onPlaying/onStopped as signals
+    - (?) rework widgets.metronome to subscribe to engine
 
 - [ ] Fix toolbar overlap on desktop when developer tools is open and expanded (cf. https://github.com/transcriptaze/yam/issues/42)
    - [x] Fixed overlap
@@ -91,66 +107,69 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 
 ## Todo
 
+- (?) use full bleed layout
+    - https://dbushell.com/2026/07/03/fixing-full-bleed-css/
+
 ### VST
 - JUCE
 - https://github.com/talaviram/TICK
 
 ### Reset
-    - [ ] red if next tap will reset to defaults
+- [ ] red if next tap will reset to defaults
 
 ### Toolbar
-    - [ ] move page logic to CSS
+- [ ] move page logic to CSS
 
 ### Control knob
-    - [ ] integrate along path (fit curve to points ? low pass filter points ?)
-    - [ ] rework rotation with matrix
-    - [ ] slide-x
-    - [ ] animate when BPM changed by input
-    - [ ] velocity sensitive
-    - [ ] openwc
+- [ ] integrate along path (fit curve to points ? low pass filter points ?)
+- [ ] rework rotation with matrix
+- [ ] slide-x
+- [ ] animate when BPM changed by input
+- [ ] velocity sensitive
+- [ ] openwc
 
 ### Thumbwheel
-    - [ ] indicator triangle
-    - [ ] edge gradient
-    - [ ] progress bar      
-    - [ ] velocity sensitive
-    - [ ] animate when BPM changed by input
+ - [ ] indicator triangle
+ - [ ] edge gradient
+ - [ ] progress bar      
+ - [ ] velocity sensitive
+ - [ ] animate when BPM changed by input
 
 ### Playlists
-    - [ ] autoplay
-      - announce track (TTS)
-    - [ ] save URL as bookmark
-    - [ ] flag modified tracks
-    - [ ] playlist indicator for back/next (e.g. dots below play controls)
-    - [ ] lock
-    - [ ] save/load zipped (.yamz)
-    - [ ] slots for <random> tracks
-        - weighted by last/least played
+- [ ] autoplay
+  - announce track (TTS)
+- [ ] save URL as bookmark
+- [ ] flag modified tracks
+- [ ] playlist indicator for back/next (e.g. dots below play controls)
+- [ ] lock
+- [ ] save/load zipped (.yamz)
+- [ ] slots for <random> tracks
+    - weighted by last/least played
 
 ### Other
-    - [ ] schedulable e.g. Mondays
-    - [ ] slide in/out
-    - (?) shuffle
-    - (?) sort
-    - (?) embed other playlist e.g. 'In Progress' in 'Monday'
-    - https://css-tricks.com/exploring-what-the-details-and-summary-elements-can-do/
-    - https://css-tricks.com/simple-swipe-with-vanilla-javascript
-    - https://stackoverflow.com/questions/9367279/can-i-do-a-swipe-left-or-right-in-chrome-pc-with-a-mouse
+- [ ] schedulable e.g. Mondays
+- [ ] slide in/out
+- (?) shuffle
+- (?) sort
+- (?) embed other playlist e.g. 'In Progress' in 'Monday'
+- https://css-tricks.com/exploring-what-the-details-and-summary-elements-can-do/
+- https://css-tricks.com/simple-swipe-with-vanilla-javascript
+- https://stackoverflow.com/questions/9367279/can-i-do-a-swipe-left-or-right-in-chrome-pc-with-a-mouse
 
 ### Track
-    - [ ] (?) tags
-    - [ ] hover styles
-    - [ ] lock
-    - [ ] clone
+- [ ] (?) tags
+- [ ] hover styles
+- [ ] lock
+- [ ] clone
 
 ### Pads
-    - [ ] fix janky pads change
-    - [ ] what to do about overflow
-            - (?) scroll into view
-            - (!) change presentation
-                  - dots for e.g 12+ beats
-                  - lines for e.g. 24+ beats
-                  - groups
+- [ ] fix janky pads change
+- [ ] what to do about overflow
+        - (?) scroll into view
+        - (!) change presentation
+              - dots for e.g 12+ beats
+              - lines for e.g. 24+ beats
+              - groups
 
       - [ ] 9 patch ???
             - https://w3.eleqtriq.com/2014/03/the-holy-grail-of-image-scaling
@@ -160,55 +179,56 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
       - https://developer.mozilla.org/en-US/docs/Web/CSS/basic-shape
 
 ### Settings 
-    - [ ] device e.g. Pixel4a (for per device CSS) 
-    - [ ] track retention time
-    - [ ] sound set
-    - [ ] preferred click patterns
-    - [ ] knob PID constants (?)
-    - https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Customizable_select
+- [ ] device e.g. Pixel4a (for per device CSS) 
+- [ ] track retention time
+- [ ] sound set
+- [ ] preferred click patterns
+- [ ] knob PID constants (?)
+- https://developer.mozilla.org/en-US/docs/Learn_web_development/Extensions/Forms/Customizable_select
 
 ### Figma
-    - [ ] portrait mockup
-    - [ ] landscape mockup
-    - [ ] desktop mockup
+- [ ] portrait mockup
+- [ ] landscape mockup
+- [ ] desktop mockup
 
 ### Misc
-    - [ ] TODO themes
-         - [ ] setttings
-         - [ ] setup on initial load
-         - https://piccalil.li/blog/a-pragmatic-guide-to-modern-css-colours-part-two/
-         - https://colorhunt.co/palette/f5ece05f99ae336d82693382
-         - https://colorhunt.co/palette/ffa725fff5e4c1d8c36a9c89
-         - https://colorhunt.co/palette/f6f0f0f2e2b1d5c7a3bdb395
-         - https://dribbble.com/shots/14685674-MetroPulse-Metronome-Screens-II
-         - https://dribbble.com/shots/21007853-Metronome-App-Device-Experiment
-    - [ ] register yam: protocol
+- [ ] TODO themes
+     - [ ] setttings
+     - [ ] setup on initial load
+     - https://alistairshepherd.uk/
+     - https://piccalil.li/blog/a-pragmatic-guide-to-modern-css-colours-part-two/
+     - https://colorhunt.co/palette/f5ece05f99ae336d82693382
+     - https://colorhunt.co/palette/ffa725fff5e4c1d8c36a9c89
+     - https://colorhunt.co/palette/f6f0f0f2e2b1d5c7a3bdb395
+     - https://dribbble.com/shots/14685674-MetroPulse-Metronome-Screens-II
+     - https://dribbble.com/shots/21007853-Metronome-App-Device-Experiment
+- [ ] register yam: protocol
 
 ### Metronome
-    - [ ] textured buttons
-      - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy
-      - https://kube.io/blog/liquid-glass-css-svg/
-      - [ ] dotted quarter
-      - [ ] Δt offset into buffer
-      - [ ] 'fix' sounds (they don't sound great - EQ? reverb?)
-      - [ ] rather wire up play/stop in YAM.js
+- [ ] textured buttons
+  - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy
+  - https://kube.io/blog/liquid-glass-css-svg/
+  - [ ] dotted quarter
+  - [ ] Δt offset into buffer
+  - [ ] 'fix' sounds (they don't sound great - EQ? reverb?)
+  - [ ] rather wire up play/stop in YAM.js
 
 ### MM
-    - [ ] what to do if pulse is set to eighth and time signature changes to e.g. 3:4 ????
-      - [ ] pulse
-            - [ ] engine
-      - [ ] ramp ease-in
-      - [ ] web component
-            - [ ] BPM parameter
-            - [ ] max/min parameters
-      - [ ] display as e.g. orange while transitioning
+- [ ] what to do if pulse is set to eighth and time signature changes to e.g. 3:4 ????
+  - [ ] pulse
+        - [ ] engine
+  - [ ] ramp ease-in
+  - [ ] web component
+        - [ ] BPM parameter
+        - [ ] max/min parameters
+  - [ ] display as e.g. orange while transitioning
 
 ### Time Signature
-    - [ ] setting tactus/figura triggers redraw + change event)
-    - [ ] presets
-     - use ligatures e.g timeSig2over4
-     - https://www.w3.org/2019/03/smufl13/tables/time-signatures.html
-     - https://torinak.com/font/lsfont.html
+- [ ] setting tactus/figura triggers redraw + change event)
+- [ ] presets
+ - use ligatures e.g timeSig2over4
+ - https://www.w3.org/2019/03/smufl13/tables/time-signatures.html
+ - https://torinak.com/font/lsfont.html
 
 ### Click track
 - [ ] offline loops
@@ -241,28 +261,28 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
       - https://graphicdesign.stackexchange.com/questions/97228/how-to-create-an-undulating-fabric-texture-using-inkscape/97234#97234
 
 ### Textures
-      - Master of Poisons (book cover)
-      - Penrose tiles
-      - 'hat' tiles
-      - Navaho weaves
-      - Ndebele patterns
-      - https://daniel.do/article/making-noisy-svgs
-      - https://kube.io/blog/liquid-glass-css-svg/
+- Master of Poisons (book cover)
+- Penrose tiles
+- 'hat' tiles
+- Navaho weaves
+- Ndebele patterns
+- https://daniel.do/article/making-noisy-svgs
+- https://kube.io/blog/liquid-glass-css-svg/
 
 ### Plugins
-      - statistics
-      - make-me-a-sandwich JSON editor pages
-      - MIDI file import/export
+- statistics
+- make-me-a-sandwich JSON editor pages
+- MIDI file import/export
 
 ### About
-      - https://webkit.org/blog/16547/better-typography-with-text-wrap-pretty
-      - (?) handwriting font
-         - https://chameth.com/making-a-font-of-my-handwriting
+- https://webkit.org/blog/16547/better-typography-with-text-wrap-pretty
+- (?) handwriting font
+   - https://chameth.com/making-a-font-of-my-handwriting
 
 ### TLA+
-      - send EVENT.STOPPED event on receiving EVENT.STOP  even if state is already STOPPED
-      - send EVENT.RUNNING event on receiving EVENT.START even if state is already RUNNING
-      - UI.thread queue + click events
+- send EVENT.STOPPED event on receiving EVENT.STOP  even if state is already STOPPED
+- send EVENT.RUNNING event on receiving EVENT.START even if state is already RUNNING
+- UI.thread queue + click events
 
 
 ## Features
@@ -310,17 +330,17 @@ NB. https://willybrauner.com/journal/signal-the-push-pull-based-algorithm
 12. CLI (?)
 
 ## Other
-      - (?) Processing
-            - https://processing.org/reference/libraries/sound/index.html
-            - https://code.compartmental.net/minim
-            - https://forum.processing.org/two/discussion/24743/how-to-create-a-traditional-metronome.html
-            - https://openprocessing.org/sketch/1514409
-            - https://github.com/vincentsijben/bpm-timings-for-processing
-      - (?) sox
-      - (?) cue sheets
-            - https://wiki.hydrogenaudio.org/index.php?title=Cue_sheet
-      - (?) https://docs.swmansion.com/TypeGPU/examples
-      - (?) https://music.stackexchange.com/questions/143557/whats-the-best-way-to-create-mn-tuplets-where-the-m-and-n-values-are-quite-lar
+- (?) Processing
+      - https://processing.org/reference/libraries/sound/index.html
+      - https://code.compartmental.net/minim
+      - https://forum.processing.org/two/discussion/24743/how-to-create-a-traditional-metronome.html
+      - https://openprocessing.org/sketch/1514409
+      - https://github.com/vincentsijben/bpm-timings-for-processing
+- (?) sox
+- (?) cue sheets
+      - https://wiki.hydrogenaudio.org/index.php?title=Cue_sheet
+- (?) https://docs.swmansion.com/TypeGPU/examples
+- (?) https://music.stackexchange.com/questions/143557/whats-the-best-way-to-create-mn-tuplets-where-the-m-and-n-values-are-quite-lar
 
 ## Notes
   1.  https://music.stackexchange.com/questions/91171/bar-counting-metronome  

@@ -5,6 +5,8 @@ const widgets = {
   soundset: document.querySelector('#soundset'),
   volume: document.querySelector('#volume'),
   volumex: document.querySelector('#volume + input[type="text"]'),
+  randomise: document.querySelector('#randomise'),
+  randomisex: document.querySelector('#randomise + input[type="text"]'),
 
   fs: document.querySelector('#fs'),
   preamble: document.querySelector('#preamble'),
@@ -19,6 +21,8 @@ export function initialise() {
   widgets.soundset.addEventListener('change', (event) => onSoundset(event))
   widgets.volume.addEventListener('input', (event) => onVolume(event))
   widgets.volume.addEventListener('change', (event) => onVolume(event))
+  widgets.randomise.addEventListener('input', (event) => onRandomise(event))
+  widgets.randomise.addEventListener('change', (event) => onRandomise(event))
 
   widgets.fs.addEventListener('change', (event) => onFS(event))
   widgets.preamble.addEventListener('change', (event) => onPreamble(event))
@@ -33,6 +37,8 @@ export function initialise() {
   widgets.soundset.value = settings.soundset
   widgets.volume.value = 10 * Math.log10(settings.volume)
   widgets.volumex.value = Math.round(20 * settings.volume) / 20
+  widgets.randomise.value = settings.randomise
+  widgets.randomisex.value = settings.randomise
 
   widgets.fs.value = settings.clickTrack.sampleRate
   widgets.preamble.value = settings.clickTrack.preamble
@@ -80,6 +86,23 @@ function onVolume(event) {
     widgets.volumex.value = Math.round(20 * volume) / 20
 
     settings.volume = Math.round(10 * volume) / 10
+    settings.save()
+  }
+}
+
+function onRandomise(event) {
+  if (event.type === 'input') {
+    const interval = widgets.randomise.value
+
+    widgets.randomisex.value = interval
+  }
+
+  if (event.type === 'change') {
+    const interval = widgets.randomise.value
+
+    widgets.randomisex.value = interval
+
+    settings.randomise = widgets.randomise.value
     settings.save()
   }
 }

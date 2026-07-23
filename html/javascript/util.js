@@ -64,3 +64,11 @@ export function durationToMS(v) {
 export function clamp(v, min, max) {
   return Math.min(Math.max(v, min), max)
 }
+
+export function normaliseTag(tag) {
+  if (tag == undefined || tag == null) {
+    return ''
+  }
+
+  return `${tag}`.trim().replaceAll(/\s+/g, ' ')
+}

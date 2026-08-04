@@ -92,7 +92,7 @@ cloudflare: cloudflare-build
 	npx wrangler pages deploy --project-name yam dist/cloudflare
 
 debug:
-	npm run debug
+	npm run compiler
 
 sass: 
 	npx sass --watch sass:html/css --no-source-map  --style=expanded

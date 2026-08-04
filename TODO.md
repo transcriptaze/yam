@@ -2,13 +2,13 @@
 
 ## In Progress
 
-- [x] Remove cloudflare branch and use alpha for deploys to yam-web.
+- [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM
-       - compile to _sample:instruction_ using _fs_
-       - execute _instruction_ @ _sample_
-       - instruction:
+       - [ ] compiler: basic metronome
+       - [ ] vm: execute _instruction_ @
+       - instructions:
            - tick
            - tock
            - tack

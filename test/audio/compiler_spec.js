@@ -1,6 +1,7 @@
 import { describe, it } from 'mocha'
 import { expect } from 'chai'
-import * as compiler from '../../html/javascript/audio/compiler.js'
+import * as compiler from '../../html/javascript/audio/vm/compiler.js'
+import { OPCODES } from '../../html/javascript/audio/vm/constants.js'
 
 describe('tests compiler.compile', function () {
   it('1:4, 120BPM, quarter notes', function () {
@@ -12,12 +13,10 @@ describe('tests compiler.compile', function () {
       pulse: 'quarter',
     })
 
-    // prettier-ignore
     const expected = [
-      `start:`, 
-      `   @1  tick`,
-      `   @2  tock`,
-      `   jmp start`]
+      { beat: 1, op: OPCODES.TICK },
+      { beat: 2, op: OPCODES.TOCK },
+    ]
 
     const script = compiler.compile(track)
 
@@ -33,12 +32,10 @@ describe('tests compiler.compile', function () {
       pulse: 'quarter',
     })
 
-    // prettier-ignore
     const expected = [
-      `start:`, 
-      `   @1  tick`,
-      `   @2  tock`,
-      `   jmp start`]
+      { beat: 1, op: OPCODES.TICK },
+      { beat: 2, op: OPCODES.TOCK },
+    ]
 
     const script = compiler.compile(track)
 
@@ -54,13 +51,11 @@ describe('tests compiler.compile', function () {
       pulse: 'quarter',
     })
 
-    // prettier-ignore
     const expected = [
-      `start:`, 
-      `   @1  tick`,
-      `   @2  tock`,
-      `   @3  tock`,
-      `   jmp start`]
+      { beat: 1, op: OPCODES.TICK },
+      { beat: 2, op: OPCODES.TOCK },
+      { beat: 3, op: OPCODES.TOCK },
+    ]
 
     const script = compiler.compile(track)
 
@@ -76,37 +71,12 @@ describe('tests compiler.compile', function () {
       pulse: 'quarter',
     })
 
-    // prettier-ignore
     const expected = [
-      `start:`, 
-      `   @1  tick`,
-      `   @2  tock`,
-      `   @3  tock`,
-      `   @4  tock`,
-      `   jmp start`]
-
-    const script = compiler.compile(track)
-
-    expect(script).to.deep.equal(expected)
-  })
-
-  it('4:4, 120BPM, quarter notes', function () {
-    const track = JSON.stringify({
-      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
-      title: '4:4, 120BPM, quarter notes',
-      tempo: 120,
-      timeSignature: '4:4',
-      pulse: 'quarter',
-    })
-
-    // prettier-ignore
-    const expected = [
-      `start:`, 
-      `   @1  tick`,
-      `   @2  tock`,
-      `   @3  tock`,
-      `   @4  tock`,
-      `   jmp start`]
+      { beat: 1, op: OPCODES.TICK },
+      { beat: 2, op: OPCODES.TOCK },
+      { beat: 3, op: OPCODES.TOCK },
+      { beat: 4, op: OPCODES.TOCK },
+    ]
 
     const script = compiler.compile(track)
 
@@ -122,15 +92,13 @@ describe('tests compiler.compile', function () {
       pulse: 'quarter',
     })
 
-    // prettier-ignore
     const expected = [
-      `start:`, 
-      `   @1  tick`,
-      `   @2  tock`,
-      `   @3  tock`,
-      `   @4  tock`,
-      `   @5  tock`,
-      `   jmp start`]
+      { beat: 1, op: OPCODES.TICK },
+      { beat: 2, op: OPCODES.TOCK },
+      { beat: 3, op: OPCODES.TOCK },
+      { beat: 4, op: OPCODES.TOCK },
+      { beat: 5, op: OPCODES.TOCK },
+    ]
 
     const script = compiler.compile(track)
 

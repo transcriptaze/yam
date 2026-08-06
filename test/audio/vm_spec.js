@@ -4,86 +4,69 @@ import { VM } from '../../html/javascript/audio/vm/vm.js'
 import { OPCODES } from '../../html/javascript/audio/vm/constants.js'
 
 describe('tests VM.tick', function () {
-  it('zero length program', function () {
+  it('BPM:120BPM, fs:44100, buffer:128, delay:0', function () {
+    const BPM = 120
+    const fs = 44100
+    const bufferSize = 128
+    const vm = new VM(fs, bufferSize, [])
+
     // prettier-ignore
-    const program = []
-    const vm = new VM(44100, 128, program)
-    const op = vm.tick()
-    const expected = OPCODES.NONE
+    const tests = [
+      { tick: 0,   time:    0.0000, click: 1 },
+      { tick: 1,   time:    2.9025 },
+      { tick: 2,   time:    5.8050 },
+      { tick: 3,   time:    8.7075 },
+      { tick: 4,   time:   11.6100 },
+      { tick: 5,   time:   14.5125 },
+      { tick: 6,   time:   17.4150 },
+      { tick: 7,   time:   20.3175 },
+      { tick: 8,   time:   23.2200 },
+      { tick: 9,   time:   26.1224 },
+      { tick: 10,  time:   29.0249 },
+      { tick: 170, time:  493.4240 },
+      { tick: 171, time:  496.3265 },
+      { tick: 172, time:  499.2290, click: 2  },
+      { tick: 173, time:  502.1315 },
+      { tick: 343, time:  995.5556 },
+      { tick: 344, time:  998.4580, click: 3 },
+      { tick: 345, time: 1001.3605 },
+    ]
 
-    expect(op).to.deep.equal(expected)
+    let tick = 0
+    for (const test of tests) {
+      while (tick < test.tick) {
+        vm.tick(BPM)
+        tick++
+      }
+
+      const { time, click } = vm.tick(BPM)
+      tick++
+
+      expect(time * 1000).to.be.approximately(test.time, 0.0001)
+      expect(click).to.equal(test.click)
+    }
   })
-
-  // it('delay', function () {
-  //   // prettier-ignore
-  //   const program = [
-  //     {
-  //       operation: 'delay',
-  //       at: 10.0,
-  //       duration: '15ms ',
-  //     }
-  //   ]
-  //
-  //   const vm = new VM(44100, 128, program)
-  //
-  //   expect(vm.tick()).to.deep.equal(OPCODES.NONE) // 0.0
-  //   expect(vm.tick()).to.deep.equal(OPCODES.NONE) // 2.902ms
-  //   expect(vm.tick()).to.deep.equal(OPCODES.NONE) // 5.805ms
-  //   expect(vm.tick()).to.deep.equal(OPCODES.NONE) // 5.805ms
-  //   expect(vm.tick()).to.deep.equal(OPCODES.NONE) // 8.707ms
-  //   expect(vm.tick()).to.deep.equal(OPCODES.NONE) // 11.610ms
-  //   expect(vm.tick()).to.deep.equal(OPCODES.NONE) // 14.512ms
-  //   expect(vm.tick()).to.deep.equal(OPCODES.NONE) // 17.415ms
-  //   expect(vm.tick()).to.deep.equal(OPCODES.NONE) // 20.317ms
-  //   expect(vm.tick()).to.deep.equal(OPCODES.NONE) // 23.220ms
-  //   expect(vm.tick()).to.deep.equal(OPCODES.NONE) // 26.122sms
-  //   expect(vm.tick()).to.deep.equal(OPCODES.NONE) // 29.025ms
-  //   expect(vm.tick()).to.deep.equal(OPCODES.NONE) // 31.927ms
-  // })
 })
 
 describe('tests VM.exec', function () {
   it('exec::tick/tock/tack/sticks', function () {
-    const worklet = {
-      tick() {
-        return ['tick']
-      },
-
-      tock() {
-        return ['tock']
-      },
-
-      tack() {
-        return ['tack']
-      },
-
-      sticks() {
-        return ['sticks']
-      },
-
-      ding() {
-        return ['ding']
-      },
-    }
-
-    // prettier-ignore
     const script = [
-      { beat:1, op: OPCODES.TICK },
-      { beat:2, op: OPCODES.TOCK },
-      { beat:4, op: OPCODES.TACK },
-      { beat:6, op: OPCODES.STICKS },
-      { beat:8, op: OPCODES.DING },
+      { beat: 1, op: OPCODES.TICK },
+      { beat: 2, op: OPCODES.TOCK },
+      { beat: 4, op: OPCODES.TACK },
+      { beat: 6, op: OPCODES.STICKS },
+      { beat: 8, op: OPCODES.DING },
     ]
 
-    const vm = new VM(44100, 128, worklet, script)
+    const vm = new VM(44100, 128, script)
 
-    expect(vm.exec(1)).to.deep.equal(['tick'])
-    expect(vm.exec(2)).to.deep.equal(['tock'])
+    expect(vm.exec(1)).to.deep.equal([OPCODES.TICK])
+    expect(vm.exec(2)).to.deep.equal([OPCODES.TOCK])
     expect(vm.exec(3)).to.deep.equal([])
-    expect(vm.exec(4)).to.deep.equal(['tack'])
+    expect(vm.exec(4)).to.deep.equal([OPCODES.TACK])
     expect(vm.exec(5)).to.deep.equal([])
-    expect(vm.exec(6)).to.deep.equal(['sticks'])
+    expect(vm.exec(6)).to.deep.equal([OPCODES.STICKS])
     expect(vm.exec(7)).to.deep.equal([])
-    expect(vm.exec(8)).to.deep.equal(['ding'])
+    expect(vm.exec(8)).to.deep.equal([OPCODES.DING])
   })
 })

@@ -1,55 +1,46 @@
 import { OPCODES } from './constants.js'
 
 export class VM {
-  #worklet = {}
   #script = []
-  #dt = (1000 * 128) / 44100
-  #state = {
-    t: 0,
-    pc: 0,
-    run: [],
-  }
 
-  constructor(fs, bufferSize, worklet, script) {
-    this.#worklet = worklet
+  #dt = (1000 * 128) / 44100
+  #ticks = 0
+  #time = 0
+  #click = 0
+  #clicked = Number.NEGATIVE_INFINITY
+
+  constructor(fs, bufferSize, script) {
     this.#script = script
     this.#dt = (1000 * bufferSize) / fs
 
     this.#reset()
   }
 
-  tick() {
-    console.log(this.#dt)
+  tick(BPM) {
+    const ticks = this.#ticks + 1
+    const start = this.#time
+    const end = ticks * this.#dt
 
-    return OPCODES.NONE
+    const interval = 60000 / BPM // ms
+    const next = this.#clicked < 0 ? 0.0 : this.#clicked + interval
+
+    this.#ticks = ticks
+    this.#time = end
+
+    if (next >= start && next < end) {
+      this.#click += 1
+      this.#clicked = next
+
+      return {
+        time: start / 1000,
+        click: this.#click,
+      }
+    }
+
+    return {
+      time: start / 1000,
+    }
   }
-
-  // tick() {
-  //   // ... schedule due operations
-  //   const start = this.#state.t
-  //   const end = this.#state.t + this.#dt
-  //   let pc = this.#state.pc
-  //
-  //   if (pc < this.#program.length) {
-  //     const op = this.#program[pc]
-  //
-  //     if (op.at >= start) {
-  //       this.#state.run.push(op)
-  //       pc++
-  //     }
-  //   }
-  //
-  //   this.#state.t += end
-  //   this.#state.pc = pc
-  //
-  //   // ... exec
-  //   const scheduled = this.#state.run
-  //   scheduled.forEach((op) => {
-  //     this.#exec(start, end, op)
-  //   })
-  //
-  //   return OPCODES.NONE
-  // }
 
   exec(beat) {
     const ops = []
@@ -63,27 +54,27 @@ export class VM {
   }
 
   #reset() {
-    this.#state.t = 0
-    this.#state.pc = 0
-    this.#state.run = []
+    this.#time = 0
+    this.#click = 0
+    this.#clicked = Number.NEGATIVE_INFINITY
   }
 
   #exec(op) {
     switch (op) {
       case OPCODES.TICK:
-        return this.#worklet.tick()
+        return [OPCODES.TICK]
 
       case OPCODES.TOCK:
-        return this.#worklet.tock()
+        return [OPCODES.TOCK]
 
       case OPCODES.TACK:
-        return this.#worklet.tack()
+        return [OPCODES.TACK]
 
       case OPCODES.STICKS:
-        return this.#worklet.sticks()
+        return [OPCODES.STICKS]
 
       case OPCODES.DING:
-        return this.#worklet.ding()
+        return [OPCODES.DING]
     }
 
     return []

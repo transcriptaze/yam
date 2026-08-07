@@ -42,11 +42,21 @@ export class VM {
     }
   }
 
-  exec(beat) {
+  click(click, timeSignature) {
+    const measure = Math.floor((click - 1) / timeSignature.beats) + 1
+    const beat = Math.floor((click - 1) % timeSignature.beats) + 1
+
+    return { measure, beat }
+  }
+
+  exec(at) {
     const ops = []
+
     for (const op of this.#script) {
-      if (op.beat === beat) {
-        ops.push(...this.#exec(op.op))
+      if (op.at.measure === '*' || op.at.measure === at.measure) {
+        if (op.at.beat === at.beat) {
+          ops.push(...this.#exec(op.op))
+        }
       }
     }
 

@@ -48,25 +48,135 @@ describe('tests VM.tick', function () {
   })
 })
 
-describe('tests VM.exec', function () {
-  it('exec::tick/tock/tack/sticks', function () {
-    const script = [
-      { beat: 1, op: OPCODES.TICK },
-      { beat: 2, op: OPCODES.TOCK },
-      { beat: 4, op: OPCODES.TACK },
-      { beat: 6, op: OPCODES.STICKS },
-      { beat: 8, op: OPCODES.DING },
+describe('tests VM.click', function () {
+  it('click 2:4, quarter notes', function () {
+    const timeSignature = { beats: 2, divisions: 4 }
+    const fs = 44100
+    const bufferSize = 128
+    const vm = new VM(fs, bufferSize, [])
+
+    // prettier-ignore
+    const tests = [
+      {click: 1.0, expected: { measure: 1, beat: 1}},
+      {click: 2.0, expected: { measure: 1, beat: 2}},
+      {click: 3.0, expected: { measure: 2, beat: 1}},
+      {click: 4.0, expected: { measure: 2, beat: 2}},
+      {click: 5.0, expected: { measure: 3, beat: 1}},
+      {click: 6.0, expected: { measure: 3, beat: 2}},
+      {click: 7.0, expected: { measure: 4, beat: 1}},
+      {click: 8.0, expected: { measure: 4, beat: 2}},
+      {click: 9.0, expected: { measure: 5, beat: 1}},
     ]
 
-    const vm = new VM(44100, 128, script)
+    for (const test of tests) {
+      const expected = test.expected
+      const { measure, beat } = vm.click(test.click, timeSignature)
 
-    expect(vm.exec(1)).to.deep.equal([OPCODES.TICK])
-    expect(vm.exec(2)).to.deep.equal([OPCODES.TOCK])
-    expect(vm.exec(3)).to.deep.equal([])
-    expect(vm.exec(4)).to.deep.equal([OPCODES.TACK])
-    expect(vm.exec(5)).to.deep.equal([])
-    expect(vm.exec(6)).to.deep.equal([OPCODES.STICKS])
-    expect(vm.exec(7)).to.deep.equal([])
-    expect(vm.exec(8)).to.deep.equal([OPCODES.DING])
+      expect(measure).to.equal(expected.measure)
+      expect(beat).to.equal(expected.beat)
+    }
+  })
+
+  it('click 3:4, quarter notes', function () {
+    const timeSignature = { beats: 3, divisions: 4 }
+    const fs = 44100
+    const bufferSize = 128
+    const vm = new VM(fs, bufferSize, [])
+
+    // prettier-ignore
+    const tests = [
+      {click: 1.0, expected: { measure: 1, beat: 1}},
+      {click: 2.0, expected: { measure: 1, beat: 2}},
+      {click: 3.0, expected: { measure: 1, beat: 3}},
+      {click: 4.0, expected: { measure: 2, beat: 1}},
+      {click: 5.0, expected: { measure: 2, beat: 2}},
+      {click: 6.0, expected: { measure: 2, beat: 3}},
+      {click: 7.0, expected: { measure: 3, beat: 1}},
+      {click: 8.0, expected: { measure: 3, beat: 2}},
+      {click: 9.0, expected: { measure: 3, beat: 3}},
+    ]
+
+    for (const test of tests) {
+      const expected = test.expected
+      const { measure, beat } = vm.click(test.click, timeSignature)
+
+      expect(measure).to.equal(expected.measure)
+      expect(beat).to.equal(expected.beat)
+    }
+  })
+
+  it('click 4:4, quarter notes', function () {
+    const timeSignature = { beats: 4, divisions: 4 }
+    const fs = 44100
+    const bufferSize = 128
+    const vm = new VM(fs, bufferSize, [])
+
+    // prettier-ignore
+    const tests = [
+      {click: 1.0, expected: { measure: 1, beat: 1}},
+      {click: 2.0, expected: { measure: 1, beat: 2}},
+      {click: 3.0, expected: { measure: 1, beat: 3}},
+      {click: 4.0, expected: { measure: 1, beat: 4}},
+      {click: 5.0, expected: { measure: 2, beat: 1}},
+      {click: 6.0, expected: { measure: 2, beat: 2}},
+      {click: 7.0, expected: { measure: 2, beat: 3}},
+      {click: 8.0, expected: { measure: 2, beat: 4}},
+      {click: 9.0, expected: { measure: 3, beat: 1}},
+    ]
+
+    for (const test of tests) {
+      const expected = test.expected
+      const { measure, beat } = vm.click(test.click, timeSignature)
+
+      expect(measure).to.equal(expected.measure)
+      expect(beat).to.equal(expected.beat)
+    }
+  })
+})
+
+describe('tests VM.exec', function () {
+  it('exec::tick/tock/tack/sticks', function () {
+    const fs = 44100
+    const bufferSize = 128
+    const script = [
+      { at: { measure: 1, beat: 1 }, op: OPCODES.TICK },
+      { at: { measure: 1, beat: 2 }, op: OPCODES.TOCK },
+      { at: { measure: 1, beat: 4 }, op: OPCODES.TACK },
+      { at: { measure: 2, beat: 2 }, op: OPCODES.STICKS },
+      { at: { measure: 2, beat: 4 }, op: OPCODES.DING },
+    ]
+
+    const vm = new VM(fs, bufferSize, script)
+
+    expect(vm.exec({ measure: 1, beat: 1 })).to.deep.equal([OPCODES.TICK])
+    expect(vm.exec({ measure: 1, beat: 2 })).to.deep.equal([OPCODES.TOCK])
+    expect(vm.exec({ measure: 1, beat: 3 })).to.deep.equal([])
+    expect(vm.exec({ measure: 1, beat: 4 })).to.deep.equal([OPCODES.TACK])
+    expect(vm.exec({ measure: 2, beat: 1 })).to.deep.equal([])
+    expect(vm.exec({ measure: 2, beat: 2 })).to.deep.equal([OPCODES.STICKS])
+    expect(vm.exec({ measure: 2, beat: 3 })).to.deep.equal([])
+    expect(vm.exec({ measure: 2, beat: 4 })).to.deep.equal([OPCODES.DING])
+  })
+
+  it('exec, measure:*', function () {
+    const fs = 44100
+    const bufferSize = 128
+    const script = [
+      { at: { measure: '*', beat: 1 }, op: OPCODES.TICK },
+      { at: { measure: '*', beat: 2 }, op: OPCODES.TOCK },
+      { at: { measure: '*', beat: 4 }, op: OPCODES.TACK },
+    ]
+
+    const vm = new VM(fs, bufferSize, script)
+
+    expect(vm.exec({ measure: 1, beat: 1 })).to.deep.equal([OPCODES.TICK])
+    expect(vm.exec({ measure: 1, beat: 2 })).to.deep.equal([OPCODES.TOCK])
+    expect(vm.exec({ measure: 1, beat: 3 })).to.deep.equal([])
+    expect(vm.exec({ measure: 1, beat: 4 })).to.deep.equal([OPCODES.TACK])
+
+    expect(vm.exec({ measure: 2, beat: 1 })).to.deep.equal([OPCODES.TICK])
+    expect(vm.exec({ measure: 2, beat: 2 })).to.deep.equal([OPCODES.TOCK])
+    expect(vm.exec({ measure: 2, beat: 3 })).to.deep.equal([])
+    expect(vm.exec({ measure: 2, beat: 4 })).to.deep.equal([OPCODES.TACK])
   })
 })

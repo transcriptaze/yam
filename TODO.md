@@ -6,16 +6,6 @@
 
 - [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] Rework clock as VM
-       - [ ] compiler: basic metronome
-       - [ ] vm: execute _instruction_ @
-       - instructions:
-           - tick
-           - tock
-           - tack
-           - stick
-           - ding
-           - notify
-
     - [ ] 2:2 time
     - [ ] unit test: BPM change
     - [ ] unit test: tactus change

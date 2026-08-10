@@ -1,8 +1,6 @@
 import { OPCODES } from './constants.js'
 
-export function compile(json) {
-  const track = JSON.parse(json)
-
+export function compile(track) {
   // prettier-ignore
   const re = /([1-9][0-9]*):(4)/
   const match = track.timeSignature.match(re)
@@ -15,11 +13,11 @@ export function compile(json) {
   for (let beat = 1; beat <= beats; beat++) {
     switch (beat) {
       case 1:
-        ops.push({ beat: 1, op: OPCODES.TICK })
+        ops.push({ at: { measure: '*', beat: 1 }, op: OPCODES.TICK })
         break
 
       default:
-        ops.push({ beat: beat, op: OPCODES.TOCK })
+        ops.push({ at: { measure: '*', beat: beat }, op: OPCODES.TOCK })
     }
   }
 

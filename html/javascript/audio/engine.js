@@ -14,6 +14,7 @@ class Engine {
   #recorder = null
   #initialised = false
   #armed = false
+  #debug = false
 
   #BPM = 120
   #timeSignature = '4:4'
@@ -34,7 +35,13 @@ class Engine {
     } else {
       return soundsets
         .get(ctx, this.#soundset)
-        .then((sounds) => metronome(ctx, sounds, this.#subscribers))
+        .then((sounds) => {
+          if (this.#debug) {
+            return metronome2(ctx, sounds, this.#subscribers)
+          } else {
+            return metronome(ctx, sounds, this.#subscribers)
+          }
+        })
         .then((metronome) => {
           metronome.track = this.#track
 
@@ -113,7 +120,8 @@ class Engine {
   }
 
   set debug(dbg) {
-    this.#exec(() => (this.#metronome.debug = dbg))
+    // this.#exec(() => (this.#metronome.debug = dbg))
+    this.#debug = dbg
   }
 
   play() {
@@ -288,6 +296,12 @@ class Engine {
 
 function metronome(ctx, sounds, subscribers) {
   return ctx.audioWorklet.addModule('./javascript/audio/worklets/worklet.js').then(() => new nodes.MetronomeNode(ctx, sounds, subscribers))
+}
+
+function metronome2(ctx, sounds, subscribers) {
+  return ctx.audioWorklet
+    .addModule('./javascript/audio/worklets/worklet2.js')
+    .then(() => new nodes.Metronome2Node(ctx, sounds, subscribers))
 }
 
 export const engine = new Engine()

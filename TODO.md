@@ -4,8 +4,14 @@
 
 - [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
 
-- [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
-    - [ ] Rework clock as VM
+- [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
+    - [ ] node/worklet
+        - [x] clicks
+        - [ ] BPM
+        - [ ] time signature
+        - [ ] pulse
+
+    - [ ] https://github.com/transcriptaze/yam/issues/45
     - [ ] 2:2 time
     - [ ] unit test: BPM change
     - [ ] unit test: tactus change

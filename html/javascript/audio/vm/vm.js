@@ -53,7 +53,7 @@ export class VM {
     const ops = []
 
     for (const op of this.#script) {
-      if (op.at.measure === '*' || op.at.measure === at.measure) {
+      if (op.at.measure == null || op.at.measure === '*' || op.at.measure === at.measure) {
         if (op.at.beat === at.beat) {
           ops.push(...this.#exec(op.op))
         }

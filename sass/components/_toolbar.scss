@@ -20,13 +20,14 @@ toolbar {
     div.right-menu {
       display: grid;
       grid-template-columns: auto;
-      grid-template-rows: auto auto auto auto;
+      grid-template-rows: auto auto auto auto auto;
       grid-template-areas:
         "settings"
         "fullscreen"
         "wakelock"
         "theme"
-        "about";
+        "about"
+        "debug";
     }
   }
 
@@ -157,6 +158,20 @@ toolbar {
   #oops.hidden {
       display: none;
   }
+
+  #debug {
+    grid-area: debug;
+    mask-image: url('/images/bug.svg');
+    mask-size: 30px;
+  }
+
+  #debug.enabled {
+    background-color: #dc322f;
+  }
+
+  #debug.hidden {
+      display: none;
+  }
   
   a {
     padding-top: 6px;
@@ -271,6 +286,10 @@ toolbar.statistics {
     #save {
       display: none;
     }
+
+    #debug {
+      display: none;
+    }
   }
 
   toolbar.metronome.editable {
@@ -382,6 +401,10 @@ toolbar.statistics {
     }
 
     #save {
+      display: none;
+    }
+
+    #debug {
       display: none;
     }
   }

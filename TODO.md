@@ -8,17 +8,21 @@
     - [ ] node/worklet
         - [x] clicks
         - [x] BPM
+        - [x] sync pads to VM click
         - [ ] time signature
         - [ ] pulse
         - [ ] start delay
 
     - [ ] https://github.com/transcriptaze/yam/issues/45
+        - "If the time signature is 4:4 and the pickup is the last half beat (4.5) it doesn't click."
+
     - [ ] 2:2 time
-    - [ ] unit test: BPM change
-    - [ ] unit test: tactus change
-    - [ ] Tick on on sixteenths
-    - [ ] Tick on triplets
-    - [ ] 'cue' generator
+    - [ ] sixteenths
+    - [ ] triplets
+    - [ ] rethink the 'flipped' message
+        - (?) shared buffer
+        - (?) animation timer
+
 
 - [ ] editor - default reverted to 4:4 instead of continuing with 6:4 (cf. https://github.com/transcriptaze/yam/issues/54)
 

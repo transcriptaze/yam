@@ -123,8 +123,6 @@ export class Metronome2Node extends AudioWorkletNode {
   }
 
   play() {
-    console.log('>>>>>>>> play')
-
     this.port.postMessage({
       message: 'play',
     })
@@ -302,71 +300,3 @@ function sample(buffer) {
     right: right,
   }
 }
-
-// function transmogrify(track) {
-//   const sections = [...generators.transmogrify(track)].map((u) => {
-//     const subsections = u.subsections.map((v) => {
-//       return {
-//         ...v,
-//         pulse: PULSE.pulseToInt(v.pulse),
-//         beats: parseTimeSignature(v.timeSignature).beats,
-//         divisions: parseTimeSignature(v.timeSignature).divisions,
-//         clicks: v.clicks,
-//         dings: v.dings ?? [],
-//       }
-//     })
-//
-//     return { ...u, subsections }
-//   })
-//
-//   const delay = track.sections?.length ? (track.sections[0].delay ?? 0) : 0
-//   const bars = sections.length === 0 ? INF : sections.reduce((measures, v) => measures + v.measures, 0)
-//
-//   let offset = 0
-//   for (const section of sections) {
-//     if (section.role === 'count-in') {
-//       offset += section.measures
-//     } else if (section.role === 'anacrusis') {
-//       offset += section.measures
-//     } else {
-//       break
-//     }
-//   }
-//
-//   // ... consolidate dings
-//   const dings = track.dings?.map((v) => v + offset) ?? []
-//
-//   sections.forEach((v) => {
-//     const list = v.dings?.map((x) => x + v.start - 1) ?? []
-//
-//     dings.push(...list)
-//
-//     v.subsections.forEach((ss) => {
-//       const list = ss.dings?.map((x) => x + ss.start - 1) ?? []
-//
-//       dings.push(...list)
-//     })
-//   })
-//
-//   dings.sort((p, q) => p - q)
-//
-//   // ... playable section
-//   return {
-//     UUID: track.UUID,
-//     tempo: track.tempo ?? 120,
-//     timeSignature: track.timeSignature ?? '',
-//     pulse: PULSE.pulseToInt(track.pulse ?? ''),
-//     BPM: track.BPM,
-//     loop: track.loop,
-//     loops: track.loops ?? INF,
-//     clicks: generators.clicks(track.clicks),
-//     ding: track.ding ?? false,
-//     dings: dings.map((v) => `${v}`),
-//     delay: clamp(durationToMS(delay), 0, MAX_DELAY),
-//
-//     bars: bars,
-//     beats: parseTimeSignature(track.timeSignature).beats,
-//     divisions: parseTimeSignature(track.timeSignature).divisions,
-//     sections: sections,
-//   }
-// }

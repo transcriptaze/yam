@@ -7,9 +7,10 @@
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
         - [x] clicks
-        - [ ] BPM
+        - [x] BPM
         - [ ] time signature
         - [ ] pulse
+        - [ ] start delay
 
     - [ ] https://github.com/transcriptaze/yam/issues/45
     - [ ] 2:2 time

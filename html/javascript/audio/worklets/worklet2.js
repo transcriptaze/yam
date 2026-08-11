@@ -38,7 +38,7 @@ export class Metronome2 extends AudioWorkletProcessor {
     this.clicks = new Map()
     this.clock = new Clock()
 
-    this.port.onmessage = this.onMessage.bind(this)
+    this.port.onmessage = (event) => this.#onMessage(event)
 
     console.log('**** WORKLET2')
   }
@@ -90,7 +90,7 @@ export class Metronome2 extends AudioWorkletProcessor {
     ]
   }
 
-  onMessage(event) {
+  #onMessage(event) {
     switch (event.data.message) {
       case 'initialise':
         this.initialise(event)
@@ -290,7 +290,7 @@ export class Metronome2 extends AudioWorkletProcessor {
 
     if (this.playing) {
       {
-        const { _time, click } = this.#vm.tick(120)
+        const { _time, click } = this.#vm.tick(BPM)
 
         if (click != null) {
           const { measure, beat } = this.#vm.click(click, { beats: 4, divisions: 4 })
@@ -409,7 +409,7 @@ export class Metronome2 extends AudioWorkletProcessor {
 
   #exec(opcode) {
     const cue = (v) => {
-      const click = this.clicks.get(v)
+      const click = this.clicks.get(v) ?? this.clicks.get('default')
       if (click != null) {
         this.#cued.push(sample(click))
       }

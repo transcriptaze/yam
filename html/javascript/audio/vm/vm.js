@@ -4,10 +4,12 @@ export class VM {
   #script = []
 
   #dt = (1000 * 128) / 44100
-  #ticks = 0
+  #tick = 0
   #time = 0
-  #click = 0
-  #clicked = Number.NEGATIVE_INFINITY
+  #click = {
+    click: 0,
+    time: Number.NEGATIVE_INFINITY,
+  }
 
   constructor(fs, bufferSize, script) {
     this.#script = script
@@ -17,23 +19,26 @@ export class VM {
   }
 
   tick(BPM) {
-    const ticks = this.#ticks + 1
+    const tick = this.#tick + 1
     const start = this.#time
-    const end = ticks * this.#dt
-
+    const end = tick * this.#dt
     const interval = 60000 / BPM // ms
-    const next = this.#clicked < 0 ? 0.0 : this.#clicked + interval
 
-    this.#ticks = ticks
+    let next = this.#click.time < 0 ? 0.0 : this.#click.time + interval
+    while (next < start) {
+      next += interval
+    }
+
+    this.#tick = tick
     this.#time = end
 
     if (next >= start && next < end) {
-      this.#click += 1
-      this.#clicked = next
+      this.#click.click += 1
+      this.#click.time = next
 
       return {
         time: start / 1000,
-        click: this.#click,
+        click: this.#click.click,
       }
     }
 
@@ -65,8 +70,10 @@ export class VM {
 
   #reset() {
     this.#time = 0
-    this.#click = 0
-    this.#clicked = Number.NEGATIVE_INFINITY
+    this.#click = {
+      click: 0,
+      time: Number.NEGATIVE_INFINITY,
+    }
   }
 
   #exec(op) {

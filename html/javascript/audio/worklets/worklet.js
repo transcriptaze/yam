@@ -33,7 +33,7 @@ export class Metronome extends AudioWorkletProcessor {
     this.clicks = new Map()
     this.clock = new Clock()
 
-    this.port.onmessage = this.onMessage.bind(this)
+    this.port.onmessage = (event) => this.#onMessage(event)
   }
 
   static get parameterDescriptors() {
@@ -83,7 +83,7 @@ export class Metronome extends AudioWorkletProcessor {
     ]
   }
 
-  onMessage(event) {
+  #onMessage(event) {
     switch (event.data.message) {
       case 'initialise':
         this.initialise(event)

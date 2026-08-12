@@ -7,15 +7,16 @@ describe('tests compiler.compile', function () {
   it('1:4, 120BPM, quarter notes', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
-      title: '2:4, 120BPM, quarter notes',
+      title: '1:4, 120BPM, quarter notes',
       tempo: 120,
       timeSignature: '2:4',
       pulse: 'quarter',
     }
 
+    // prettier-ignore
     const expected = [
-      { at: { measure: '*', beat: 1 }, op: OPCODES.TICK },
-      { at: { measure: '*', beat: 2 }, op: OPCODES.TOCK },
+      { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+      { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ]
 
     const script = compiler.compile(track)
@@ -32,9 +33,10 @@ describe('tests compiler.compile', function () {
       pulse: 'quarter',
     }
 
+    // prettier-ignore
     const expected = [
-      { at: { measure: '*', beat: 1 }, op: OPCODES.TICK },
-      { at: { measure: '*', beat: 2 }, op: OPCODES.TOCK },
+      { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+      { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ]
 
     const script = compiler.compile(track)
@@ -51,10 +53,10 @@ describe('tests compiler.compile', function () {
       pulse: 'quarter',
     }
 
+    // prettier-ignore
     const expected = [
-      { at: { measure: '*', beat: 1 }, op: OPCODES.TICK },
-      { at: { measure: '*', beat: 2 }, op: OPCODES.TOCK },
-      { at: { measure: '*', beat: 3 }, op: OPCODES.TOCK },
+      { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+      { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ]
 
     const script = compiler.compile(track)
@@ -71,11 +73,10 @@ describe('tests compiler.compile', function () {
       pulse: 'quarter',
     }
 
+    // prettier-ignore
     const expected = [
-      { at: { measure: '*', beat: 1 }, op: OPCODES.TICK },
-      { at: { measure: '*', beat: 2 }, op: OPCODES.TOCK },
-      { at: { measure: '*', beat: 3 }, op: OPCODES.TOCK },
-      { at: { measure: '*', beat: 4 }, op: OPCODES.TOCK },
+      { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+      { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ]
 
     const script = compiler.compile(track)
@@ -92,12 +93,10 @@ describe('tests compiler.compile', function () {
       pulse: 'quarter',
     }
 
+    // prettier-ignore
     const expected = [
-      { at: { measure: '*', beat: 1 }, op: OPCODES.TICK },
-      { at: { measure: '*', beat: 2 }, op: OPCODES.TOCK },
-      { at: { measure: '*', beat: 3 }, op: OPCODES.TOCK },
-      { at: { measure: '*', beat: 4 }, op: OPCODES.TOCK },
-      { at: { measure: '*', beat: 5 }, op: OPCODES.TOCK },
+      { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+      { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ]
 
     const script = compiler.compile(track)

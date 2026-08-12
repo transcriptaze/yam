@@ -1,6 +1,7 @@
 // import * as PULSE from '../shared/constants.js'
 // import { parseTimeSignature, durationToMS, clamp } from '../../util.js'
 // import * as generators from '../../generators.js'
+import { parseTimeSignature } from '../../util.js'
 import { EVENTS, DEFAULT } from '../../constants.js'
 
 import * as compiler from '..//vm/compiler.js'
@@ -18,7 +19,6 @@ const INF = Number.POSITIVE_INFINITY
 
 export class Metronome2Node extends AudioWorkletNode {
   #loops = INF
-  // #timeSignature = ''
   // #pulse = ''
 
   #cache = {
@@ -157,6 +157,15 @@ export class Metronome2Node extends AudioWorkletNode {
     }
   }
 
+  set timeSignature(timeSignature) {
+    const { beats, divisions } = parseTimeSignature(timeSignature)
+
+    if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
+      this.parameters.get('beats').setValueAtTime(beats, this.context.currentTime)
+      this.parameters.get('divisions').setValueAtTime(divisions, this.context.currentTime)
+    }
+  }
+
   set pulse(_pulse) {
     // this.#pulse = pulse
     //
@@ -165,19 +174,6 @@ export class Metronome2Node extends AudioWorkletNode {
     //
     //   if (!Number.isNaN(k)) {
     //     this.parameters.get('pulse').setValueAtTime(k, this.context.currentTime)
-    //   }
-    // }
-  }
-
-  set timeSignature(_timeSignature) {
-    // this.#timeSignature = timeSignature
-    //
-    // if (timeSignature != null) {
-    //   const { beats, divisions } = parseTimeSignature(timeSignature)
-    //
-    //   if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
-    //     this.parameters.get('beats').setValueAtTime(beats, this.context.currentTime)
-    //     this.parameters.get('divisions').setValueAtTime(divisions, this.context.currentTime)
     //   }
     // }
   }

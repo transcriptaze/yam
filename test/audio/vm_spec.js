@@ -234,7 +234,7 @@ describe('tests VM.click', function () {
 
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, timeSignature)
+      const { measure, beat } = vm.click(timeSignature)
 
       expect(measure).to.equal(expected.measure)
       expect(beat).to.equal(expected.beat)
@@ -262,7 +262,7 @@ describe('tests VM.click', function () {
 
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, timeSignature)
+      const { measure, beat } = vm.click(timeSignature)
 
       expect(measure).to.equal(expected.measure)
       expect(beat).to.equal(expected.beat)
@@ -290,7 +290,196 @@ describe('tests VM.click', function () {
 
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, timeSignature)
+      const { measure, beat } = vm.click(timeSignature)
+
+      expect(measure).to.equal(expected.measure)
+      expect(beat).to.equal(expected.beat)
+    }
+  })
+
+  it('click 4:4 -> 3:4 on beat 1, quarter notes', function () {
+    const fs = 44100
+    const bufferSize = 128
+    const vm = new VM(fs, bufferSize, [])
+
+    // prettier-ignore
+    const tests = [
+      {click: 1.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 1, beat: 1}},
+      {click: 2.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 1, beat: 2}},
+      {click: 3.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 1, beat: 3}},
+      {click: 4.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 1, beat: 4}},
+      {click: 5.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 2, beat: 1}},
+      {click: 6.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 2, beat: 2}},
+      {click: 7.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 2, beat: 3}},
+      {click: 8.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 3, beat: 1}},
+      {click: 9.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 3, beat: 2}},
+    ]
+
+    for (const test of tests) {
+      const expected = test.expected
+      const { measure, beat } = vm.click(test.timeSignature)
+
+      expect(measure).to.equal(expected.measure)
+      expect(beat).to.equal(expected.beat)
+    }
+  })
+
+  it('click 4:4 -> 3:4 on beat 2, quarter notes', function () {
+    const fs = 44100
+    const bufferSize = 128
+    const vm = new VM(fs, bufferSize, [])
+
+    // prettier-ignore
+    const tests = [
+      {click: 1.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 1, beat: 1}},
+      {click: 2.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 1, beat: 2}},
+      {click: 3.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 1, beat: 3}},
+      {click: 4.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 1, beat: 4}},
+      {click: 5.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 2, beat: 1}},
+      {click: 6.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 2, beat: 2}},
+      {click: 7.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 2, beat: 3}},
+      {click: 8.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 3, beat: 1}},
+      {click: 9.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 3, beat: 2}},
+    ]
+
+    for (const test of tests) {
+      const expected = test.expected
+      const { measure, beat } = vm.click(test.timeSignature)
+
+      expect(measure).to.equal(expected.measure)
+      expect(beat).to.equal(expected.beat)
+    }
+  })
+
+  it('click 4:4 -> 3:4 on beat 3, quarter notes', function () {
+    const fs = 44100
+    const bufferSize = 128
+    const vm = new VM(fs, bufferSize, [])
+
+    // prettier-ignore
+    const tests = [
+      {click: 1.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 1, beat: 1}},
+      {click: 2.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 1, beat: 2}},
+      {click: 3.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 1, beat: 3}},
+      {click: 4.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 1, beat: 4}},
+      {click: 5.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 2, beat: 1}},
+      {click: 6.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 2, beat: 2}},
+      {click: 7.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 2, beat: 3}},
+      {click: 8.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 3, beat: 1}},
+      {click: 9.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 3, beat: 2}},
+    ]
+
+    for (const test of tests) {
+      const expected = test.expected
+      const { measure, beat } = vm.click(test.timeSignature)
+
+      expect(measure).to.equal(expected.measure)
+      expect(beat).to.equal(expected.beat)
+    }
+  })
+
+  it('click 4:4 -> 3:4 on beat 4, quarter notes', function () {
+    const fs = 44100
+    const bufferSize = 128
+    const vm = new VM(fs, bufferSize, [])
+
+    // prettier-ignore
+    const tests = [
+      {click: 1.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 1, beat: 1}},
+      {click: 2.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 1, beat: 2}},
+      {click: 3.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 1, beat: 3}},
+      {click: 4.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 1, beat: 4}},
+      {click: 5.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 2, beat: 1}},
+      {click: 6.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 2, beat: 2}},
+      {click: 7.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 2, beat: 3}},
+      {click: 8.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 3, beat: 1}},
+      {click: 9.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 3, beat: 2}},
+    ]
+
+    for (const test of tests) {
+      const expected = test.expected
+      const { measure, beat } = vm.click(test.timeSignature)
+
+      expect(measure).to.equal(expected.measure)
+      expect(beat).to.equal(expected.beat)
+    }
+  })
+
+  it('click 3:4 -> 4:4 on beat 1, quarter notes', function () {
+    const fs = 44100
+    const bufferSize = 128
+    const vm = new VM(fs, bufferSize, [])
+
+    // prettier-ignore
+    const tests = [
+      {click: 1.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 1, beat: 1}},
+      {click: 2.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 1, beat: 2}},
+      {click: 3.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 1, beat: 3}},
+      {click: 4.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 1, beat: 4}},
+      {click: 5.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 2, beat: 1}},
+      {click: 6.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 2, beat: 2}},
+      {click: 7.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 2, beat: 3}},
+      {click: 8.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 2, beat: 4}},
+      {click: 9.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 3, beat: 1}},
+    ]
+
+    for (const test of tests) {
+      const expected = test.expected
+      const { measure, beat } = vm.click(test.timeSignature)
+
+      expect(measure).to.equal(expected.measure)
+      expect(beat).to.equal(expected.beat)
+    }
+  })
+
+  it('click 3:4 -> 4:4 on beat 2, quarter notes', function () {
+    const fs = 44100
+    const bufferSize = 128
+    const vm = new VM(fs, bufferSize, [])
+
+    // prettier-ignore
+    const tests = [
+      {click: 1.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 1, beat: 1}},
+      {click: 2.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 1, beat: 2}},
+      {click: 3.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 1, beat: 3}},
+      {click: 4.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 2, beat: 1}},
+      {click: 5.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 2, beat: 2}},
+      {click: 6.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 2, beat: 3}},
+      {click: 7.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 2, beat: 4}},
+      {click: 8.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 3, beat: 1}},
+      {click: 9.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 3, beat: 2}},
+    ]
+
+    for (const test of tests) {
+      const expected = test.expected
+      const { measure, beat } = vm.click(test.timeSignature)
+
+      expect(measure).to.equal(expected.measure)
+      expect(beat).to.equal(expected.beat)
+    }
+  })
+
+  it('click 3:4 -> 4:4 on beat 3, quarter notes', function () {
+    const fs = 44100
+    const bufferSize = 128
+    const vm = new VM(fs, bufferSize, [])
+
+    // prettier-ignore
+    const tests = [
+      {click: 1.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 1, beat: 1}},
+      {click: 2.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 1, beat: 2}},
+      {click: 3.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 1, beat: 3}},
+      {click: 4.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 2, beat: 1}},
+      {click: 5.0, timeSignature: { beats: 3, divisions: 4 }, expected: { measure: 2, beat: 2}},
+      {click: 6.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 2, beat: 3}},
+      {click: 7.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 2, beat: 4}},
+      {click: 8.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 3, beat: 1}},
+      {click: 9.0, timeSignature: { beats: 4, divisions: 4 }, expected: { measure: 3, beat: 2}},
+    ]
+
+    for (const test of tests) {
+      const expected = test.expected
+      const { measure, beat } = vm.click(test.timeSignature)
 
       expect(measure).to.equal(expected.measure)
       expect(beat).to.equal(expected.beat)
@@ -325,22 +514,23 @@ describe('tests VM.exec', function () {
   it('exec, measure:*', function () {
     const fs = 44100
     const bufferSize = 128
+
+    // prettier-ignore
     const script = [
-      { at: { measure: '*', beat: 1 }, op: OPCODES.TICK },
-      { at: { measure: '*', beat: 2 }, op: OPCODES.TOCK },
-      { at: { measure: '*', beat: 4 }, op: OPCODES.TACK },
+      { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+      { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ]
 
     const vm = new VM(fs, bufferSize, script)
 
     expect(vm.exec({ measure: 1, beat: 1 })).to.deep.equal([OPCODES.TICK])
     expect(vm.exec({ measure: 1, beat: 2 })).to.deep.equal([OPCODES.TOCK])
-    expect(vm.exec({ measure: 1, beat: 3 })).to.deep.equal([])
-    expect(vm.exec({ measure: 1, beat: 4 })).to.deep.equal([OPCODES.TACK])
+    expect(vm.exec({ measure: 1, beat: 3 })).to.deep.equal([OPCODES.TOCK])
+    expect(vm.exec({ measure: 1, beat: 4 })).to.deep.equal([OPCODES.TOCK])
 
     expect(vm.exec({ measure: 2, beat: 1 })).to.deep.equal([OPCODES.TICK])
     expect(vm.exec({ measure: 2, beat: 2 })).to.deep.equal([OPCODES.TOCK])
-    expect(vm.exec({ measure: 2, beat: 3 })).to.deep.equal([])
-    expect(vm.exec({ measure: 2, beat: 4 })).to.deep.equal([OPCODES.TACK])
+    expect(vm.exec({ measure: 2, beat: 3 })).to.deep.equal([OPCODES.TOCK])
+    expect(vm.exec({ measure: 2, beat: 4 })).to.deep.equal([OPCODES.TOCK])
   })
 })

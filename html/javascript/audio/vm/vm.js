@@ -7,8 +7,10 @@ export class VM {
   #tick = 0
   #time = 0
   #click = {
-    click: 0,
     time: Number.NEGATIVE_INFINITY,
+    click: 0,
+    measure: 0,
+    beat: 0,
   }
 
   constructor(fs, bufferSize, script) {
@@ -33,8 +35,8 @@ export class VM {
     this.#time = end
 
     if (next >= start && next < end) {
-      this.#click.click += 1
       this.#click.time = next
+      this.#click.click += 1
 
       return {
         time: start / 1000,
@@ -47,9 +49,17 @@ export class VM {
     }
   }
 
-  click(click, timeSignature) {
-    const measure = Math.floor((click - 1) / timeSignature.beats) + 1
-    const beat = Math.floor((click - 1) % timeSignature.beats) + 1
+  click({ beats, _divisions }) {
+    let measure = this.#click.measure === 0 ? 1 : this.#click.measure
+    let beat = this.#click.beat === 0 ? 1 : this.#click.beat + 1
+
+    if (beat > beats) {
+      beat = 1
+      measure += 1
+    }
+
+    this.#click.measure = measure
+    this.#click.beat = beat
 
     return { measure, beat }
   }
@@ -58,10 +68,24 @@ export class VM {
     const ops = []
 
     for (const op of this.#script) {
-      if (op.at.measure == null || op.at.measure === '*' || op.at.measure === at.measure) {
-        if (op.at.beat === at.beat) {
-          ops.push(...this.#exec(op.op))
-        }
+      if (op.at.measure === at.measure && op.at.beat === at.beat) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === at.measure && op.at.beat === '*') {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === '*' && op.at.beat === at.beat) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === '*' && op.at.beat === '*') {
+        ops.push(...this.#exec(op.op))
+        break
       }
     }
 
@@ -70,9 +94,12 @@ export class VM {
 
   #reset() {
     this.#time = 0
+
     this.#click = {
-      click: 0,
       time: Number.NEGATIVE_INFINITY,
+      click: 0,
+      measure: 0,
+      beat: 0,
     }
   }
 

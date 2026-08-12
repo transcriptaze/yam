@@ -3,15 +3,22 @@
 ## In Progress
 
 - [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
+- [ ] passive:true (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
+- [ ] capture:down (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
         - [x] clicks
         - [x] BPM
         - [x] sync pads to VM click
-        - [ ] time signature
+        - [x] time signature
         - [ ] pulse
         - [ ] start delay
+
+        - [ ] node+worklet per run a la YAD
+        - [ ] put gain into node::sample 
+        - [ ] Float32Buffer:copyTo
+        - [ ] move fs (?) and bufferSize to tick(...)
 
     - [ ] https://github.com/transcriptaze/yam/issues/45
         - "If the time signature is 4:4 and the pickup is the last half beat (4.5) it doesn't click."

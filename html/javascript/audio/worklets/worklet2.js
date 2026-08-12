@@ -260,6 +260,7 @@ export class Metronome2 extends AudioWorkletProcessor {
     const BPM = this.#bpm(clamp(parameters.BPM[0], 40, 200))
     const tactus = this.section?.beats ?? clamp(parameters.beats[0], 1, 32)
     const figura = this.section?.divisions ?? clamp(parameters.divisions[0], 1, 32)
+
     const pulse = this.section?.pulse ?? parameters.pulse[0]
     const loop = parameters.loop[0] === 1.0
     const ding = parameters.ding[0] === 1.0
@@ -294,7 +295,12 @@ export class Metronome2 extends AudioWorkletProcessor {
         const { _time, click } = this.#vm.tick(BPM)
 
         if (click != null) {
-          const { measure, beat } = this.#vm.click(click, { beats: 4, divisions: 4 })
+          const beats = tactus
+          const divisions = figura
+
+          console.log('>>>', { beats }, { divisions })
+
+          const { measure, beat } = this.#vm.click({ beats, divisions })
           const ops = this.#vm.exec({ measure, beat })
 
           for (const op of ops) {

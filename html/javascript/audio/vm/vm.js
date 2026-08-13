@@ -1,59 +1,168 @@
-export const OPCODES = {
-  NONE: 0,
-  DELAY: 1,
-  TICK: 2,
-}
+import { OPCODES } from './constants.js'
 
 export class VM {
-  #program = []
+  #script = []
+
   #dt = (1000 * 128) / 44100
-  #state = {
-    t: 0,
-    pc: 0,
-    run: [],
+  #tick = 0
+  #time = 0
+  #click = {
+    time: Number.NEGATIVE_INFINITY,
+    click: 0,
+    measure: 0,
+    beat: 0,
   }
 
-  constructor(fs, bufferSize, program) {
-    this.#program = program
+  constructor(fs, bufferSize, script) {
+    this.#script = script
     this.#dt = (1000 * bufferSize) / fs
 
     this.#reset()
   }
 
-  tick() {
-    // ... schedule due operations
-    const start = this.#state.t
-    const end = this.#state.t + this.#dt
-    let pc = this.#state.pc
+  tick(BPM) {
+    const tick = this.#tick + 1
+    const start = this.#time
+    const end = tick * this.#dt
 
-    if (pc < this.#program.length) {
-      const op = this.#program[pc]
+    this.#tick = tick
+    this.#time = end
 
-      if (op.at >= start) {
-        this.#state.run.push(op)
-        pc++
+    const time = start / 1000
+
+    // ... whole beats
+    {
+      const interval = 60000 / BPM // ms
+
+      let next = this.#click.time < 0 ? 0.0 : this.#click.time + interval
+      while (next < start) {
+        next += interval
+      }
+
+      if (next >= start && next < end) {
+        this.#click.time = next
+        this.#click.click += 1
+
+        return {
+          time: time,
+          click: this.#click.click,
+        }
       }
     }
 
-    this.#state.t += end
-    this.#state.pc = pc
+    // ... half beats
+    {
+      const interval = 60000 / BPM / 2 // ms
 
-    // ... exec
-    const scheduled = this.#state.run
-    scheduled.forEach((op) => {
-      this.#exec(start, end, op)
-    })
+      let next = this.#click.time < 0 ? 0.0 : this.#click.time + interval
+      while (next < start) {
+        next += interval
+      }
 
-    return OPCODES.NONE
+      if (next >= start && next < end) {
+        return {
+          time: time,
+          click: this.#click.click + 0.5,
+        }
+      }
+    }
+
+    // ... default
+    return {
+      time: time,
+    }
+  }
+
+  click(click, { beats, _divisions }) {
+    // const q = Math.trunc(click)
+    const r = click % 1
+
+    let measure = this.#click.measure === 0 ? 1 : this.#click.measure
+    let beat = this.#click.beat
+
+    if (r === 0) {
+      beat += 1
+    }
+
+    if (beat > beats) {
+      beat = 1
+      measure += 1
+    }
+
+    this.#click.measure = measure
+    this.#click.beat = beat
+
+    return {
+      measure: measure,
+      beat: beat + r,
+    }
+  }
+
+  exec(at) {
+    const ops = []
+
+    for (const op of this.#script) {
+      // const q = Math.trunc(at.beat)
+      const r = at.beat % 1
+
+      if (op.at.measure === at.measure && op.at.beat === at.beat) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === at.measure && op.at.beat === '*') {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === '*' && op.at.beat === at.beat) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === '*' && op.at.beat === '*' && r === 0.0) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === '*' && op.at.beat === '*.5' && r === 0.5) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+    }
+
+    return ops
   }
 
   #reset() {
-    this.#state.t = 0
-    this.#state.pc = 0
-    this.#state.run = []
+    this.#time = 0
+
+    this.#click = {
+      time: Number.NEGATIVE_INFINITY,
+      click: 0,
+      measure: 0,
+      beat: 0,
+    }
   }
 
-  #exec(start, end, op) {
-    console.log(op)
+  #exec(op) {
+    switch (op) {
+      case OPCODES.TICK:
+        return [OPCODES.TICK]
+
+      case OPCODES.TOCK:
+        return [OPCODES.TOCK]
+
+      case OPCODES.TACK:
+        return [OPCODES.TACK]
+
+      case OPCODES.STICKS:
+        return [OPCODES.STICKS]
+
+      case OPCODES.DING:
+        return [OPCODES.DING]
+    }
+
+    return []
   }
 }

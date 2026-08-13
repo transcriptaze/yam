@@ -1,13 +1,15 @@
 import * as FSM from './FSM.js'
 import * as level from './level.js'
 import { Clock } from './clock.js'
-import { DOTTED_QUARTER } from '../shared/constants.js'
+
+import { VM } from '../vm/vm.js'
+import { OPCODES } from '../vm/constants.js'
 
 const INF = Number.POSITIVE_INFINITY
 
 let DEBUG = false
 
-export class Metronome extends AudioWorkletProcessor {
+export class Metronome2 extends AudioWorkletProcessor {
   #fs = 44100
   #track = {
     BPM: null,
@@ -18,6 +20,9 @@ export class Metronome extends AudioWorkletProcessor {
     loops: INF,
     delay: 0,
   }
+
+  #script = []
+  #vm = new VM(44100, 128, [])
 
   #section = null
   #loops = 0
@@ -34,6 +39,8 @@ export class Metronome extends AudioWorkletProcessor {
     this.clock = new Clock()
 
     this.port.onmessage = (event) => this.#onMessage(event)
+
+    console.log('**** WORKLET2')
   }
 
   static get parameterDescriptors() {
@@ -119,8 +126,13 @@ export class Metronome extends AudioWorkletProcessor {
         }
         break
 
-      case 'track':
-        this.#track = transmogrify(event.data.track)
+      case 'script':
+        this.#script = event.data.script
+        this.#vm = new VM(44100, 128, event.data.script)
+
+        console.log(this.#script)
+        console.log(this.#vm)
+
         this.restart()
         break
 
@@ -248,6 +260,7 @@ export class Metronome extends AudioWorkletProcessor {
     const BPM = this.#bpm(clamp(parameters.BPM[0], 40, 200))
     const tactus = this.section?.beats ?? clamp(parameters.beats[0], 1, 32)
     const figura = this.section?.divisions ?? clamp(parameters.divisions[0], 1, 32)
+
     const pulse = this.section?.pulse ?? parameters.pulse[0]
     const loop = parameters.loop[0] === 1.0
     const ding = parameters.ding[0] === 1.0
@@ -277,6 +290,28 @@ export class Metronome extends AudioWorkletProcessor {
     }
 
     if (this.playing) {
+      // *** KLOCK ***
+      {
+        const { _time, click } = this.#vm.tick(BPM)
+
+        if (click != null) {
+          const beats = tactus
+          const divisions = figura
+
+          console.log('>>>', { click }, { beats }, { divisions })
+
+          const { measure, beat } = this.#vm.click(click, { beats, divisions })
+          const ops = this.#vm.exec({ measure, beat })
+
+          for (const op of ops) {
+            this.#exec(op)
+          }
+
+          this.flip({ state: FSM.STATE.PLAYING, bar: measure, beat: beat, loops: this.#loops })
+        }
+      }
+      // *** END KLOCK ***
+
       const cluck = clock.tick(BPM, tactus, figura, pulse, N)
 
       if (this.delaying) {
@@ -333,22 +368,19 @@ export class Metronome extends AudioWorkletProcessor {
             }
           }
 
-          this.cue(cluck.beat, pulse)
-          this.flip({ state: FSM.STATE.PLAYING, bar: cluck.bar, beat: cluck.beat, loops: this.#loops })
-
           log('PLAY', clock.t, clock.time, BPM, cluck.bar, cluck.beat, tactus, figura, pulse)
         }
       } else if (cluck.tock.click) {
-        // FIXME half-assed fix for https://github.com/transcriptaze/yam/issues/45
-        const measure = cluck.bar
-        const section = this.#track.sections.find((v) => measure >= v.start && measure <= v.end)
-        const clicks = section?.clicks ?? []
-
-        if (Array.isArray(clicks) && clicks.includes(cluck.tock.beat)) {
-          this.cue(cluck.tock.beat, pulse)
-        } else if (clicks instanceof Map && clicks.has(cluck.tock.beat)) {
-          this.cue(cluck.tock.beat, pulse)
-        }
+        // FIXME REMOVE half-assed fix for https://github.com/transcriptaze/yam/issues/45
+        // const measure = cluck.bar
+        // const section = this.#track.sections.find((v) => measure >= v.start && measure <= v.end)
+        // const clicks = section?.clicks ?? []
+        //
+        // if (Array.isArray(clicks) && clicks.includes(cluck.tock.beat)) {
+        //   this.cue(cluck.tock.beat, pulse)
+        // } else if (clicks instanceof Map && clicks.has(cluck.tock.beat)) {
+        //   this.cue(cluck.tock.beat, pulse)
+        // }
       }
     } else if (this.stopping) {
       this.FSM.onStopped()
@@ -381,96 +413,34 @@ export class Metronome extends AudioWorkletProcessor {
     return true
   }
 
-  cue(beat, pulse) {
-    const pattern = this.section?.clicks ?? this.#track?.clicks ?? null
-
-    // ... count-in
-    if ('count-in' === this.section?.role) {
-      const clicks = this.section?.clicks ?? []
-
-      if (clicks.length === 0) {
-        const click = this.clicks.get('count-in') ?? this.clicks.get('default')
-
-        if (click != null && (pulse !== DOTTED_QUARTER || [1, 4].includes(beat))) {
-          this.#cued.push(sample(click))
-        }
-      } else {
-        const click = this.clicks.get('count-in') ?? this.clicks.get('default')
-
-        if (clicks.includes(beat) && click != null) {
-          this.#cued.push(sample(click))
-        }
-      }
-
-      return
-    }
-
-    // ... anacrusis
-    if ('anacrusis' === this.section?.role) {
-      if (this.section?.clicks == null && pulse === DOTTED_QUARTER) {
-        if ([1, 4, 7, 10].includes(beat)) {
-          const click = this.clicks.get('sticks') ?? this.clicks.get('default')
-
-          if (click != null) {
-            this.#cued.push(sample(click))
-          }
-        }
-
-        return
-      }
-
-      const clicks = this.section?.clicks ?? []
-      const key = clicks.includes(beat) ? 'default' : 'count-in'
-      const click = this.clicks.get(key) ?? this.clicks.get('default')
-
+  #exec(opcode) {
+    const cue = (v) => {
+      const click = this.clicks.get(v) ?? this.clicks.get('default')
       if (click != null) {
         this.#cued.push(sample(click))
       }
-
-      return
     }
 
-    // ... clicks = [1,2,...]
-    if (pattern != null && Array.isArray(pattern)) {
-      if (pattern.includes(beat)) {
-        const click = this.clicks.get(beat) ?? this.clicks.get('default')
-        if (click != null) {
-          this.#cued.push(sample(click))
-        }
-      }
+    switch (opcode) {
+      case OPCODES.TICK:
+        cue('tick')
+        break
 
-      return
-    }
+      case OPCODES.TOCK:
+        cue('tock')
+        break
 
-    // ... clicks = {1:'sticks', ...}
-    if (pattern != null && pattern instanceof Map) {
-      if (pattern.has(`${beat}`)) {
-        const k = pattern.get(`${beat}`)
-        const click = this.clicks.get(k) ?? this.clicks.get('default')
-        if (click != null) {
-          this.#cued.push(sample(click))
-        }
-      }
+      case OPCODES.TACK:
+        cue('tack')
+        break
 
-      return
-    }
+      case OPCODES.STICKS:
+        cue('sticks')
+        break
 
-    // ... [3:8, 6:8, 9:8, 12:8], dotted-quarter
-    if (pulse === DOTTED_QUARTER) {
-      if ([1, 4, 7, 10].includes(beat)) {
-        const click = this.clicks.get(beat) ?? this.clicks.get('default')
-        if (click != null) {
-          this.#cued.push(sample(click))
-        }
-      }
-
-      return
-    }
-
-    // ... default
-    const click = this.clicks.get(beat) ?? this.clicks.get('default')
-    if (click != null) {
-      this.#cued.push(sample(click))
+      case OPCODES.DING:
+        cue('ding')
+        break
     }
   }
 
@@ -485,33 +455,6 @@ export class Metronome extends AudioWorkletProcessor {
       loops: loops,
     })
   }
-}
-
-function transmogrify(track) {
-  function* augment(list) {
-    let start = 0
-    for (const section of list) {
-      yield {
-        ...section,
-        start: start + 1,
-        end: start + section.measures,
-      }
-
-      start += section.measures
-    }
-  }
-
-  const subsections = track.sections.flatMap((section) => {
-    return section.subsections.map((v) => ({
-      ID: section.ID,
-      role: section.role,
-      ...v,
-    }))
-  })
-
-  track.sections = Array.from(augment(subsections))
-
-  return track
 }
 
 function render(out, click, gain) {
@@ -562,4 +505,4 @@ function log(tag, tick, time, bpm, bar, beat, tactus, figura, pulsus) {
   }
 }
 
-registerProcessor('metronome', Metronome)
+registerProcessor('metronome2', Metronome2)

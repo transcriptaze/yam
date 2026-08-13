@@ -373,6 +373,18 @@ export async function toggleTheme() {
   settings.save()
 }
 
+export async function toggleDebug() {
+  const bug = document.querySelector('#debug')
+
+  bug.classList.toggle('enabled')
+
+  if (bug.classList.contains('enabled')) {
+    engine.debug = true
+  } else {
+    engine.debug = false
+  }
+}
+
 export function onError(err) {
   console.error('ERROR', err)
 

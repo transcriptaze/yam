@@ -28,6 +28,52 @@ describe('tests utility functions', function () {
     }
   })
 
+  it('parseTimeSignature', function () {
+    // prettier-ignore
+    const tests = [
+      { v: undefined, expected: {beats:Number.NaN, divisions:Number.NaN} },
+      { v: null, expected: {beats:Number.NaN, divisions:Number.NaN} },
+      { v: '',   expected: {beats:Number.NaN, divisions:Number.NaN} },
+      { v: '*',  expected: {beats:Number.NaN, divisions:Number.NaN} },
+      { v: '3',  expected: {beats:Number.NaN, divisions:Number.NaN} },
+      { v: '3:', expected: {beats:Number.NaN, divisions:Number.NaN} },
+
+      { v: '0:4',  expected: {beats:Number.NaN, divisions:Number.NaN} },
+      { v: '1:4',  expected: {beats:1,  divisions:4} },
+      { v: '3:4',  expected: {beats:3,  divisions:4} },
+      { v: '4:4',  expected: {beats:4,  divisions:4} },
+      { v: '5:4',  expected: {beats:5,  divisions:4} },
+      { v: '32:4', expected: {beats:32, divisions:4} },
+      { v: '33:4', expected: {beats:Number.NaN, divisions:Number.NaN} },
+
+      { v: '4:0',  expected: {beats:Number.NaN, divisions:Number.NaN} },
+      { v: '4:1',  expected: {beats:4,  divisions:1} },
+      { v: '4:2',  expected: {beats:4,  divisions:2} },
+      { v: '4:3',  expected: {beats:Number.NaN, divisions:Number.NaN} },
+      { v: '4:4',  expected: {beats:4,  divisions:4} },
+      { v: '4:5',  expected: {beats:Number.NaN, divisions:Number.NaN} },
+      { v: '4:8',  expected: {beats:4,  divisions:8}  },
+      { v: '4:16', expected: {beats:4,  divisions:16} },
+      { v: '4:32', expected: {beats:4,  divisions:32} },
+    ]
+
+    for (const test of tests) {
+      const { beats, divisions } = util.parseTimeSignature(test.v)
+
+      if (Number.isNaN(test.expected.beats)) {
+        expect(beats).to.be.NaN
+      } else {
+        expect(beats).to.equal(test.expected.beats)
+      }
+
+      if (Number.isNaN(test.expected.divisions)) {
+        expect(divisions).to.be.NaN
+      } else {
+        expect(divisions).to.equal(test.expected.divisions)
+      }
+    }
+  })
+
   it('normaliseTag', function () {
     // prettier-ignore
     const tests = [

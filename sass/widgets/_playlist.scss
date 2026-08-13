@@ -37,6 +37,7 @@
 
       div.menu {
         box-sizing: border-box;
+        anchor-name: --playlist-menu-anchor;
 
         display: grid;
         grid-template-columns: auto;
@@ -86,6 +87,7 @@
       }
 
       [popover] {
+        position-anchor: --playlist-menu-anchor;
         top: calc(anchor(bottom) + 4px);
         left: calc(anchor(left) - 108px);
         transform: translateX(0px);

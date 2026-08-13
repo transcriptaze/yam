@@ -2,26 +2,38 @@
 
 ## In Progress
 
-- [x] Remove cloudflare branch and use alpha for deploys to yam-web.
+- [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
+- [ ] passive:true (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
+- [ ] capture:down (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 
-- [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
-    - [ ] Rework clock as VM
-       - compile to _sample:instruction_ using _fs_
-       - execute _instruction_ @ _sample_
-       - instruction:
-           - tick
-           - tock
-           - tack
-           - stick
-           - ding
-           - notify
+- [x] all popovers are broken
 
-    - [ ] 2:2 time
-    - [ ] unit test: BPM change
-    - [ ] unit test: tactus change
-    - [ ] Tick on on sixteenths
-    - [ ] Tick on triplets
-    - [ ] 'cue' generator
+- [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
+    - [ ] node/worklet
+        - [x] clicks
+        - [x] BPM
+        - [x] sync pads to VM click
+        - [x] time signature
+        - [ ] doublets
+        - [ ] half notes
+        - [ ] 6:8
+        - [ ] start delay
+
+        - [ ] node+worklet per run a la YAD
+        - [ ] put gain into node::sample 
+        - [ ] Float32Buffer:copyTo
+        - [ ] move fs (?) and bufferSize to tick(...)
+
+    - [ ] https://github.com/transcriptaze/yam/issues/45
+        - "If the time signature is 4:4 and the pickup is the last half beat (4.5) it doesn't click."
+
+    - [x] 2:2 time
+    - [ ] sixteenths
+    - [ ] triplets
+    - [ ] rethink the 'flipped' message
+        - (?) shared buffer
+        - (?) animation timer
+
 
 - [ ] editor - default reverted to 4:4 instead of continuing with 6:4 (cf. https://github.com/transcriptaze/yam/issues/54)
 

@@ -1,7 +1,8 @@
 :host(.component-section-time-signature) {
   div.time-signature {
-    position: relative;
     box-sizing: border-box;
+    position: relative;
+    anchor-name: --section-time-signature-anchor;
 
     display: grid; 
     grid-template-columns: auto;
@@ -91,6 +92,7 @@
     }
 
     div#list {
+      position-anchor: --section-time-signature-anchor;
       top: calc(anchor(bottom) + 8px);
       left: calc(anchor(left) + 12px);
 

@@ -46,7 +46,7 @@
   --toolbar-button-disabled: #ffffff76;
   --toolbar-button-enabled: #222222;
   --toolbar-button-hover: #c00000;
-  --toolbar-record-armed: #ff0000;
+  --toolbar-record-armed: #dc322f;
   --toolbar-wakelock-active: #b24a2c;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
@@ -274,6 +274,7 @@
 }
 :host(.component-mm) div.MM {
   position: relative;
+  anchor-name: --MM-anchor;
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-rows: 1fr;
@@ -378,6 +379,7 @@
   }
 }
 :host(.component-mm) div.MM [popover] {
+  position-anchor: --MM-anchor;
   top: calc(anchor(bottom) - 12px);
   left: calc(anchor(left) + 12px);
   margin: 0px;
@@ -488,8 +490,9 @@
 }
 
 :host(.component-time-signature) div.time-signature {
-  position: relative;
   box-sizing: border-box;
+  position: relative;
+  anchor-name: --time-signature-anchor;
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto;
@@ -610,6 +613,7 @@
   z-index: 2;
 }
 :host(.component-time-signature) div.time-signature div#list {
+  position-anchor: --time-signature-anchor;
   top: calc(anchor(bottom) + 8px);
   left: calc(anchor(left) + 12px);
   margin: 0px;
@@ -1507,6 +1511,7 @@ div.beat.on div.shape {
 }
 :host(.component-playlist) div.playlist div.summary div.menu {
   box-sizing: border-box;
+  anchor-name: --playlist-menu-anchor;
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto;
@@ -1546,6 +1551,7 @@ div.beat.on div.shape {
   background: transparent;
 }
 :host(.component-playlist) div.playlist div.summary [popover] {
+  position-anchor: --playlist-menu-anchor;
   top: calc(anchor(bottom) + 4px);
   left: calc(anchor(left) - 108px);
   transform: translateX(0px);
@@ -1970,6 +1976,7 @@ div.playlist-track #title {
   text-overflow: ellipsis;
 }
 div.playlist-track #menu {
+  anchor-name: --playlist-item-menu-anchor;
   width: 40px;
   height: 100%;
   border: none;
@@ -1981,6 +1988,7 @@ div.playlist-track #menu {
   mask-size: auto 16px;
 }
 div.playlist-track [popover] {
+  position-anchor: --playlist-item-menu-anchor;
   top: calc(anchor(bottom) + 12px);
   left: calc(anchor(left) + 24px);
   transform: translateX(-100%);
@@ -2800,8 +2808,9 @@ div.playlist-track.new div#title {
 }
 
 :host(.component-section-time-signature) div.time-signature {
-  position: relative;
   box-sizing: border-box;
+  position: relative;
+  anchor-name: --section-time-signature-anchor;
   display: grid;
   grid-template-columns: auto;
   grid-template-rows: auto;
@@ -2870,6 +2879,7 @@ div.playlist-track.new div#title {
   cursor: auto;
 }
 :host(.component-section-time-signature) div.time-signature div#list {
+  position-anchor: --section-time-signature-anchor;
   top: calc(anchor(bottom) + 8px);
   left: calc(anchor(left) + 12px);
   margin: 0px;
@@ -2966,6 +2976,7 @@ div.playlist-track.new div#title {
   padding: 0;
 }
 :host(.component-section-mm) div.MM {
+  anchor-name: --section-mm-anchor;
   display: grid;
   grid-template-columns: 1fr 1fr auto;
   grid-template-rows: 1fr;
@@ -3004,6 +3015,7 @@ div.playlist-track.new div#title {
   justify-self: start;
 }
 :host(.component-section-mm) div.MM [popover] {
+  position-anchor: --section-mm-anchor;
   top: calc(anchor(bottom) - 12px);
   left: calc(anchor(left) + 12px);
   margin: 0px;

@@ -24,34 +24,65 @@ export class VM {
     const tick = this.#tick + 1
     const start = this.#time
     const end = tick * this.#dt
-    const interval = 60000 / BPM // ms
-
-    let next = this.#click.time < 0 ? 0.0 : this.#click.time + interval
-    while (next < start) {
-      next += interval
-    }
 
     this.#tick = tick
     this.#time = end
 
-    if (next >= start && next < end) {
-      this.#click.time = next
-      this.#click.click += 1
+    const time = start / 1000
 
-      return {
-        time: start / 1000,
-        click: this.#click.click,
+    // ... whole beats
+    {
+      const interval = 60000 / BPM // ms
+
+      let next = this.#click.time < 0 ? 0.0 : this.#click.time + interval
+      while (next < start) {
+        next += interval
+      }
+
+      if (next >= start && next < end) {
+        this.#click.time = next
+        this.#click.click += 1
+
+        return {
+          time: time,
+          click: this.#click.click,
+        }
       }
     }
 
+    // ... half beats
+    {
+      const interval = 60000 / BPM / 2 // ms
+
+      let next = this.#click.time < 0 ? 0.0 : this.#click.time + interval
+      while (next < start) {
+        next += interval
+      }
+
+      if (next >= start && next < end) {
+        return {
+          time: time,
+          click: this.#click.click + 0.5,
+        }
+      }
+    }
+
+    // ... default
     return {
-      time: start / 1000,
+      time: time,
     }
   }
 
-  click({ beats, _divisions }) {
+  click(click, { beats, _divisions }) {
+    // const q = Math.trunc(click)
+    const r = click % 1
+
     let measure = this.#click.measure === 0 ? 1 : this.#click.measure
-    let beat = this.#click.beat === 0 ? 1 : this.#click.beat + 1
+    let beat = this.#click.beat
+
+    if (r === 0) {
+      beat += 1
+    }
 
     if (beat > beats) {
       beat = 1
@@ -61,13 +92,19 @@ export class VM {
     this.#click.measure = measure
     this.#click.beat = beat
 
-    return { measure, beat }
+    return {
+      measure: measure,
+      beat: beat + r,
+    }
   }
 
   exec(at) {
     const ops = []
 
     for (const op of this.#script) {
+      // const q = Math.trunc(at.beat)
+      const r = at.beat % 1
+
       if (op.at.measure === at.measure && op.at.beat === at.beat) {
         ops.push(...this.#exec(op.op))
         break
@@ -83,7 +120,12 @@ export class VM {
         break
       }
 
-      if (op.at.measure === '*' && op.at.beat === '*') {
+      if (op.at.measure === '*' && op.at.beat === '*' && r === 0.0) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === '*' && op.at.beat === '*.5' && r === 0.5) {
         ops.push(...this.#exec(op.op))
         break
       }

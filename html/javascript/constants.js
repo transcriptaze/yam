@@ -10,7 +10,14 @@ export const RANDOM = {
 }
 
 export const DIVISIONS = [1, 2, 4, 8, 16, 32]
-export const PULSES = ['eighth', 'eighth-doublet', 'quarter', 'dotted-quarter', 'half', 'dotted-half']
+
+export const EIGHTH_NOTES = 'eighth'
+export const EIGHTH_DOUBLET = 'eighth-doublet'
+export const QUARTER_NOTES = 'quarter'
+export const DOTTED_QUARTER_NOTES = 'dotted-quarter'
+export const HALF_NOTES = 'half'
+export const DOTTED_HALF_NOTES = 'dotted-half'
+export const PULSES = [EIGHTH_NOTES, EIGHTH_DOUBLET, QUARTER_NOTES, DOTTED_QUARTER_NOTES, HALF_NOTES, DOTTED_HALF_NOTES]
 
 // ... roles
 export const COUNT_IN = 'count-in'

@@ -12,7 +12,9 @@
         - [x] BPM
         - [x] sync pads to VM click
         - [x] time signature
-        - [ ] pulse
+        - [ ] doublets
+        - [ ] half notes
+        - [ ] 6:8
         - [ ] start delay
 
         - [ ] node+worklet per run a la YAD
@@ -23,7 +25,7 @@
     - [ ] https://github.com/transcriptaze/yam/issues/45
         - "If the time signature is 4:4 and the pickup is the last half beat (4.5) it doesn't click."
 
-    - [ ] 2:2 time
+    - [x] 2:2 time
     - [ ] sixteenths
     - [ ] triplets
     - [ ] rethink the 'flipped' message

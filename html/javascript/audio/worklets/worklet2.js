@@ -298,9 +298,9 @@ export class Metronome2 extends AudioWorkletProcessor {
           const beats = tactus
           const divisions = figura
 
-          console.log('>>>', { beats }, { divisions })
+          console.log('>>>', { click }, { beats }, { divisions })
 
-          const { measure, beat } = this.#vm.click({ beats, divisions })
+          const { measure, beat } = this.#vm.click(click, { beats, divisions })
           const ops = this.#vm.exec({ measure, beat })
 
           for (const op of ops) {

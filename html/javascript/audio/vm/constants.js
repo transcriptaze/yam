@@ -7,3 +7,12 @@ export const OPCODES = {
   STICK: 5,
   DING: 6,
 }
+
+export const SUBDIVISIONS = {
+  EIGHTHS: 'eighth',
+  EIGHTH_DOUBLETS: 'eighth-doublet',
+  QUARTERS: 'quarter',
+  DOTTED_QUARTERS: 'dotted-quarter',
+  HALF_NOTES: 'half',
+  DOTTED_HALF_NOTES: 'dotted-half',
+}

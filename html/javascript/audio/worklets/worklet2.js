@@ -3,7 +3,7 @@ import * as level from './level.js'
 import { Clock } from './clock.js'
 
 import { VM } from '../vm/vm.js'
-import { OPCODES } from '../vm/constants.js'
+import { OPCODES, SUBDIVISIONS, int2subdivisions } from '../vm/constants.js'
 
 const INF = Number.POSITIVE_INFINITY
 
@@ -260,8 +260,8 @@ export class Metronome2 extends AudioWorkletProcessor {
     const BPM = this.#bpm(clamp(parameters.BPM[0], 40, 200))
     const tactus = this.section?.beats ?? clamp(parameters.beats[0], 1, 32)
     const figura = this.section?.divisions ?? clamp(parameters.divisions[0], 1, 32)
-
     const pulse = this.section?.pulse ?? parameters.pulse[0]
+
     const loop = parameters.loop[0] === 1.0
     const ding = parameters.ding[0] === 1.0
     const gain = this.playing ? this.level.fadeIn() : this.level.fadeOut()
@@ -297,11 +297,12 @@ export class Metronome2 extends AudioWorkletProcessor {
         if (click != null) {
           const beats = tactus
           const divisions = figura
+          const subdivisions = int2subdivisions(pulse) ?? SUBDIVISIONS.QUARTER_NOTES
 
-          console.log('>>>', { click }, { beats }, { divisions })
+          console.log('>>>', { click }, { beats }, { divisions }, { subdivisions })
 
           const { measure, beat } = this.#vm.click(click, { beats, divisions })
-          const ops = this.#vm.exec({ measure, beat })
+          const ops = this.#vm.exec({ measure, beat }, subdivisions)
 
           for (const op of ops) {
             this.#exec(op)

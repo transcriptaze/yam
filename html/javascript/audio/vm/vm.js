@@ -1,4 +1,4 @@
-import { OPCODES } from './constants.js'
+import { OPCODES, SUBDIVISIONS } from './constants.js'
 
 export class VM {
   #script = []
@@ -98,7 +98,7 @@ export class VM {
     }
   }
 
-  exec(at) {
+  exec(at, subdivisions) {
     const ops = []
 
     for (const op of this.#script) {
@@ -120,12 +120,12 @@ export class VM {
         break
       }
 
-      if (op.at.measure === '*' && op.at.beat === '*' && r === 0.0) {
+      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.QUARTER_NOTES && r === 0.0) {
         ops.push(...this.#exec(op.op))
         break
       }
 
-      if (op.at.measure === '*' && op.at.beat === '*.5' && r === 0.5) {
+      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_DOUBLETS && (r === 0.0 || r === 0.5)) {
         ops.push(...this.#exec(op.op))
         break
       }

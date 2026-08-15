@@ -14,9 +14,11 @@
         - [x] BPM
         - [x] sync pads to VM click
         - [x] time signature
-        - [ ] doublets
-        - [ ] half notes
+        - [x] doublets
+        - [ ] reset VM on stop/start
         - [ ] 6:8
+        - [ ] dotted quarter
+        - [ ] half notes
         - [ ] start delay
 
         - [ ] node+worklet per run a la YAD

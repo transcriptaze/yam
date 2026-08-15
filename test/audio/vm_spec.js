@@ -2,6 +2,7 @@ import { describe, it } from 'mocha'
 import { expect } from 'chai'
 import { VM } from '../../html/javascript/audio/vm/vm.js'
 import { OPCODES, SUBDIVISIONS } from '../../html/javascript/audio/vm/constants.js'
+import { QUARTER_NOTES, EIGHTH_DOUBLETS } from '../../html/javascript/audio/vm/constants.js'
 
 describe('tests VM.tick', function () {
   it('tick fs:44100, buffer:128, delay:0', function () {
@@ -886,11 +887,11 @@ describe('tests VM.exec', function () {
     const vm = new VM(fs, bufferSize, script)
 
     for (const test of tests) {
-      expect(vm.exec({ measure: test.measure, beat: test.beat })).to.deep.equal(test.expected)
+      expect(vm.exec({ measure: test.measure, beat: test.beat }, QUARTER_NOTES)).to.deep.equal(test.expected)
     }
   })
 
-  it('exec, measure:*, beat:*', function () {
+  it('exec, measure:*, beat:*, quarter notes', function () {
     const fs = 44100
     const bufferSize = 128
 
@@ -923,48 +924,48 @@ describe('tests VM.exec', function () {
 
     const vm = new VM(fs, bufferSize, script)
     for (const test of tests) {
-      expect(vm.exec({ measure: test.measure, beat: test.beat })).to.deep.equal(test.expected)
+      expect(vm.exec({ measure: test.measure, beat: test.beat }, QUARTER_NOTES)).to.deep.equal(test.expected)
     }
   })
 
-  it('exec, measure:*, beat:*.5', function () {
+  it('exec, measure:*, beat:*, eighth-doublets', function () {
     const fs = 44100
     const bufferSize = 128
 
     // prettier-ignore
     const script = [
       { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
-      { at: { measure: '*', beat: '*.5' }, op: OPCODES.TACK },
+      { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ]
 
     // prettier-ignore
     const tests = [
       { measure: 1, beat: 1,   expected: [OPCODES.TICK] },
-      { measure: 1, beat: 1.5, expected: [OPCODES.TACK] },
-      { measure: 1, beat: 2,   expected: []             },
-      { measure: 1, beat: 2.5, expected: [OPCODES.TACK] },
-      { measure: 1, beat: 3,   expected: []             },
-      { measure: 1, beat: 3.5, expected: [OPCODES.TACK] },
-      { measure: 1, beat: 4,   expected: []             },
-      { measure: 1, beat: 4.5, expected: [OPCODES.TACK] },
+      { measure: 1, beat: 1.5, expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 2,   expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 2.5, expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 3,   expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 3.5, expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 4,   expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 4.5, expected: [OPCODES.TOCK] },
 
       { measure: 2, beat: 1,   expected: [OPCODES.TICK] },
-      { measure: 2, beat: 1.5, expected: [OPCODES.TACK] },
-      { measure: 2, beat: 2,   expected: []             },
-      { measure: 2, beat: 2.5, expected: [OPCODES.TACK] },
-      { measure: 2, beat: 3,   expected: []             },
-      { measure: 2, beat: 3.5, expected: [OPCODES.TACK] },
-      { measure: 2, beat: 4,   expected: []             },
-      { measure: 2, beat: 4.5, expected: [OPCODES.TACK] },
+      { measure: 2, beat: 1.5, expected: [OPCODES.TOCK] },
+      { measure: 2, beat: 2,   expected: [OPCODES.TOCK] },
+      { measure: 2, beat: 2.5, expected: [OPCODES.TOCK] },
+      { measure: 2, beat: 3,   expected: [OPCODES.TOCK] },
+      { measure: 2, beat: 3.5, expected: [OPCODES.TOCK] },
+      { measure: 2, beat: 4,   expected: [OPCODES.TOCK] },
+      { measure: 2, beat: 4.5, expected: [OPCODES.TOCK] },
     ]
 
     const vm = new VM(fs, bufferSize, script)
     for (const test of tests) {
-      expect(vm.exec({ measure: test.measure, beat: test.beat })).to.deep.equal(test.expected)
+      expect(vm.exec({ measure: test.measure, beat: test.beat }, EIGHTH_DOUBLETS)).to.deep.equal(test.expected)
     }
   })
 
-  it('exec, measure:*, beat:*, beat:*.5', function () {
+  it('exec, measure:*, beat:*, quarter notes -> eighth doublets', function () {
     const fs = 44100
     const bufferSize = 128
 
@@ -972,33 +973,69 @@ describe('tests VM.exec', function () {
     const script = [
       { at: { measure: '*', beat: 1     }, op: OPCODES.TICK },
       { at: { measure: '*', beat: '*'   }, op: OPCODES.TOCK },
-      { at: { measure: '*', beat: '*.5' }, op: OPCODES.TACK },
     ]
 
     // prettier-ignore
     const tests = [
-      { measure: 1, beat: 1,   expected: [OPCODES.TICK] },
-      { measure: 1, beat: 1.5, expected: [OPCODES.TACK] },
-      { measure: 1, beat: 2,   expected: [OPCODES.TOCK] },
-      { measure: 1, beat: 2.5, expected: [OPCODES.TACK] },
-      { measure: 1, beat: 3,   expected: [OPCODES.TOCK] },
-      { measure: 1, beat: 3.5, expected: [OPCODES.TACK] },
-      { measure: 1, beat: 4,   expected: [OPCODES.TOCK] },
-      { measure: 1, beat: 4.5, expected: [OPCODES.TACK] },
+      { measure: 1, beat: 1,   subdivisions: QUARTER_NOTES,   expected: [OPCODES.TICK] },
+      { measure: 1, beat: 1.5, subdivisions: QUARTER_NOTES,   expected: [] },
+      { measure: 1, beat: 2,   subdivisions: QUARTER_NOTES,   expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 2.5, subdivisions: QUARTER_NOTES,   expected: [] },
+      { measure: 1, beat: 3,   subdivisions: QUARTER_NOTES,   expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 3.5, subdivisions: QUARTER_NOTES,   expected: [] },
+      { measure: 1, beat: 4,   subdivisions: QUARTER_NOTES,   expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 4.5, subdivisions: QUARTER_NOTES,   expected: [] },
 
-      { measure: 2, beat: 1,   expected: [OPCODES.TICK] },
-      { measure: 2, beat: 1.5, expected: [OPCODES.TACK] },
-      { measure: 2, beat: 2,   expected: [OPCODES.TOCK] },
-      { measure: 2, beat: 2.5, expected: [OPCODES.TACK] },
-      { measure: 2, beat: 3,   expected: [OPCODES.TOCK] },
-      { measure: 2, beat: 3.5, expected: [OPCODES.TACK] },
-      { measure: 2, beat: 4,   expected: [OPCODES.TOCK] },
-      { measure: 2, beat: 4.5, expected: [OPCODES.TACK] },
+      { measure: 2, beat: 1,   subdivisions: QUARTER_NOTES,   expected: [OPCODES.TICK] },
+      { measure: 2, beat: 1.5, subdivisions: QUARTER_NOTES,   expected: [] },
+      { measure: 2, beat: 2,   subdivisions: QUARTER_NOTES,   expected: [OPCODES.TOCK] },
+      { measure: 2, beat: 2.5, subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
+      { measure: 2, beat: 3,   subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
+      { measure: 2, beat: 3.5, subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
+      { measure: 2, beat: 4,   subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
+      { measure: 2, beat: 4.5, subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
     ]
 
     const vm = new VM(fs, bufferSize, script)
     for (const test of tests) {
-      expect(vm.exec({ measure: test.measure, beat: test.beat })).to.deep.equal(test.expected)
+      expect(vm.exec({ measure: test.measure, beat: test.beat }, test.subdivisions)).to.deep.equal(test.expected)
+    }
+  })
+
+  it('exec, measure:*, beat:*, eighth doublets -> quarter notes', function () {
+    const fs = 44100
+    const bufferSize = 128
+
+    // prettier-ignore
+    const script = [
+      { at: { measure: '*', beat: 1     }, op: OPCODES.TICK },
+      { at: { measure: '*', beat: '*'   }, op: OPCODES.TOCK },
+    ]
+
+    // prettier-ignore
+    const tests = [
+      { measure: 1, beat: 1,   subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TICK] },
+      { measure: 1, beat: 1.5, subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 2,   subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 2.5, subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 3,   subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 3.5, subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 4,   subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 4.5, subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
+
+      { measure: 2, beat: 1,   subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TICK] },
+      { measure: 2, beat: 1.5, subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
+      { measure: 2, beat: 2,   subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
+      { measure: 2, beat: 2.5, subdivisions: QUARTER_NOTES,   expected: [] },
+      { measure: 2, beat: 3,   subdivisions: QUARTER_NOTES,   expected: [OPCODES.TOCK] },
+      { measure: 2, beat: 3.5, subdivisions: QUARTER_NOTES,   expected: [] },
+      { measure: 2, beat: 4,   subdivisions: QUARTER_NOTES,   expected: [OPCODES.TOCK] },
+      { measure: 2, beat: 4.5, subdivisions: QUARTER_NOTES,   expected: [] },
+    ]
+
+    const vm = new VM(fs, bufferSize, script)
+    for (const test of tests) {
+      expect(vm.exec({ measure: test.measure, beat: test.beat }, test.subdivisions)).to.deep.equal(test.expected)
     }
   })
 })

@@ -18,7 +18,8 @@
         - [x] fix hardcoded VM fs
         - [x] reset VM on stop/start
         - [x] fix hardcoded VM buffersize
-        - [ ] 6:8
+        - [x] 6:8
+        - [x] 2:2
         - [ ] dotted quarter
         - [ ] half notes
         - [ ] start delay

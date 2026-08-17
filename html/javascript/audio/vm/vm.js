@@ -74,9 +74,10 @@ export class VM {
     }
   }
 
-  click(click, { beats, _divisions }) {
-    // const q = Math.trunc(click)
-    const r = click % 1
+  click(click, { beats, divisions }) {
+    const klick = ((click - 1) * divisions) / 4
+    const _q = Math.trunc(klick)
+    let r = klick % 1
 
     let measure = this.#click.measure === 0 ? 1 : this.#click.measure
     let beat = this.#click.beat
@@ -86,8 +87,8 @@ export class VM {
     }
 
     if (beat > beats) {
-      beat = 1
       measure += 1
+      beat = 1
     }
 
     this.#click.measure = measure
@@ -99,11 +100,11 @@ export class VM {
     }
   }
 
-  exec(at, subdivisions) {
+  exec(at, { _beats, divisions }, subdivisions) {
     const ops = []
 
     for (const op of this.#script) {
-      // const q = Math.trunc(at.beat)
+      const q = Math.trunc(at.beat)
       const r = at.beat % 1
 
       if (op.at.measure === at.measure && op.at.beat === at.beat) {
@@ -117,6 +118,22 @@ export class VM {
       }
 
       if (op.at.measure === '*' && op.at.beat === at.beat) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (
+        op.at.measure === '*' &&
+        op.at.beat === '*' &&
+        divisions === 2 &&
+        subdivisions === SUBDIVISIONS.QUARTER_NOTES &&
+        (r === 0.0 || r === 0.5)
+      ) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.HALF_NOTES && q % 2 === 0 && r === 0.0) {
         ops.push(...this.#exec(op.op))
         break
       }

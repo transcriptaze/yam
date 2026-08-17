@@ -31,8 +31,8 @@ export class Metronome2Node extends AudioWorkletNode {
     loops: 0,
   }
 
-  constructor(context, { tick, tock, tack, stick, ding }, subscribers) {
-    super(context, 'metronome2', {
+  constructor(ctx, { tick, tock, tack, stick, ding }, subscribers) {
+    super(ctx, 'metronome2', {
       numberOfInputs: 0,
       numberOfOutputs: 1,
       outputChannelCount: [2],
@@ -45,7 +45,6 @@ export class Metronome2Node extends AudioWorkletNode {
     this.port.postMessage({
       message: 'initialise',
 
-      fs: context.sampleRate,
       tick: sample(tick),
       tock: sample(tock),
       tack: sample(tack),

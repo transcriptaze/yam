@@ -9,7 +9,7 @@ describe('tests VM.tick', function () {
     const BPM = 120
     const fs = 44100
     const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -29,11 +29,11 @@ describe('tests VM.tick', function () {
     let tick = 0
     for (const test of tests) {
       while (tick < test.tick) {
-        vm.tick(BPM)
+        vm.tick(BPM, bufferSize)
         tick++
       }
 
-      const { time } = vm.tick(BPM)
+      const { time } = vm.tick(BPM, bufferSize)
       tick++
 
       expect(time * 1000).to.be.approximately(test.time, 0.0001)
@@ -44,7 +44,7 @@ describe('tests VM.tick', function () {
     const BPM = 120
     const fs = 48000
     const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -64,11 +64,81 @@ describe('tests VM.tick', function () {
     let tick = 0
     for (const test of tests) {
       while (tick < test.tick) {
-        vm.tick(BPM)
+        vm.tick(BPM, bufferSize)
         tick++
       }
 
-      const { time } = vm.tick(BPM)
+      const { time } = vm.tick(BPM, bufferSize)
+      tick++
+
+      expect(time * 1000).to.be.approximately(test.time, 0.0001)
+    }
+  })
+
+  it('tick fs:48000, buffer:64, delay:0', function () {
+    const BPM = 120
+    const fs = 48000
+    const bufferSize = 64
+    const vm = new VM(fs, [])
+
+    // prettier-ignore
+    const tests = [
+      { tick: 0,   time:    0.0000 },
+      { tick: 1,   time:    1.3333 },
+      { tick: 2,   time:    2.6667 },
+      { tick: 3,   time:    4.0000 },
+      { tick: 4,   time:    5.3333 },
+      { tick: 5,   time:    6.6667 },
+      { tick: 6,   time:    8.0000 },
+      { tick: 7,   time:    9.3333 },
+      { tick: 8,   time:   10.6667 },
+      { tick: 9,   time:   12.0000 },
+      { tick: 10,  time:   13.3333 },
+    ]
+
+    let tick = 0
+    for (const test of tests) {
+      while (tick < test.tick) {
+        vm.tick(BPM, bufferSize)
+        tick++
+      }
+
+      const { time } = vm.tick(BPM, bufferSize)
+      tick++
+
+      expect(time * 1000).to.be.approximately(test.time, 0.0001)
+    }
+  })
+
+  it('tick fs:48000, buffer:256, delay:0', function () {
+    const BPM = 120
+    const fs = 48000
+    const bufferSize = 256
+    const vm = new VM(fs, [])
+
+    // prettier-ignore
+    const tests = [
+      { tick: 0,   time:    0.0000 },
+      { tick: 1,   time:    5.3333 },
+      { tick: 2,   time:   10.6667 },
+      { tick: 3,   time:   16.0000 },
+      { tick: 4,   time:   21.3333 },
+      { tick: 5,   time:   26.6667 },
+      { tick: 6,   time:   32.0000 },
+      { tick: 7,   time:   37.3333 },
+      { tick: 8,   time:   42.6667 },
+      { tick: 9,   time:   48.0000 },
+      { tick: 10,  time:   53.3333 },
+    ]
+
+    let tick = 0
+    for (const test of tests) {
+      while (tick < test.tick) {
+        vm.tick(BPM, bufferSize)
+        tick++
+      }
+
+      const { time } = vm.tick(BPM, bufferSize)
       tick++
 
       expect(time * 1000).to.be.approximately(test.time, 0.0001)
@@ -79,7 +149,7 @@ describe('tests VM.tick', function () {
     const BPM = 40
     const fs = 44100
     const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -106,11 +176,11 @@ describe('tests VM.tick', function () {
     let tick = 0
     for (const test of tests) {
       while (tick < test.tick) {
-        vm.tick(BPM)
+        vm.tick(BPM, bufferSize)
         tick++
       }
 
-      const { time, click } = vm.tick(BPM)
+      const { time, click } = vm.tick(BPM, bufferSize)
       tick++
 
       expect(time * 1000).to.be.approximately(test.time, 0.0001)
@@ -122,7 +192,7 @@ describe('tests VM.tick', function () {
     const BPM = 120
     const fs = 44100
     const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -149,11 +219,11 @@ describe('tests VM.tick', function () {
     let tick = 0
     for (const test of tests) {
       while (tick < test.tick) {
-        vm.tick(BPM)
+        vm.tick(BPM, bufferSize)
         tick++
       }
 
-      const { time, click } = vm.tick(BPM)
+      const { time, click } = vm.tick(BPM, bufferSize)
       tick++
 
       expect(time * 1000).to.be.approximately(test.time, 0.0001)
@@ -165,7 +235,7 @@ describe('tests VM.tick', function () {
     const BPM = 200
     const fs = 44100
     const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -192,11 +262,11 @@ describe('tests VM.tick', function () {
     let tick = 0
     for (const test of tests) {
       while (tick < test.tick) {
-        vm.tick(BPM)
+        vm.tick(BPM, bufferSize)
         tick++
       }
 
-      const { time, click } = vm.tick(BPM)
+      const { time, click } = vm.tick(BPM, bufferSize)
       tick++
 
       expect(time * 1000).to.be.approximately(test.time, 0.0001)
@@ -207,7 +277,7 @@ describe('tests VM.tick', function () {
   it('click 120BPM -> 40BPM, on the beat', function () {
     const fs = 44100
     const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -246,11 +316,11 @@ describe('tests VM.tick', function () {
     let tick = 0
     for (const test of tests) {
       while (tick < test.tick) {
-        vm.tick(test.BPM)
+        vm.tick(test.BPM, bufferSize)
         tick++
       }
 
-      const { time, click } = vm.tick(test.BPM)
+      const { time, click } = vm.tick(test.BPM, bufferSize)
       tick++
 
       expect(time * 1000).to.be.approximately(test.time, 0.0001)
@@ -261,7 +331,7 @@ describe('tests VM.tick', function () {
   it('click 120BPM -> 40BPM, on the half-beat', function () {
     const fs = 44100
     const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -300,11 +370,11 @@ describe('tests VM.tick', function () {
     let tick = 0
     for (const test of tests) {
       while (tick < test.tick) {
-        vm.tick(test.BPM)
+        vm.tick(test.BPM, bufferSize)
         tick++
       }
 
-      const { time, click } = vm.tick(test.BPM)
+      const { time, click } = vm.tick(test.BPM, bufferSize)
       tick++
 
       expect(time * 1000).to.be.approximately(test.time, 0.0001)
@@ -315,7 +385,7 @@ describe('tests VM.tick', function () {
   it('click 120BPM -> 200BPM, on the beat', function () {
     const fs = 44100
     const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -354,11 +424,11 @@ describe('tests VM.tick', function () {
     let tick = 0
     for (const test of tests) {
       while (tick < test.tick) {
-        vm.tick(test.BPM)
+        vm.tick(test.BPM, bufferSize)
         tick++
       }
 
-      const { time, click } = vm.tick(test.BPM)
+      const { time, click } = vm.tick(test.BPM, bufferSize)
       tick++
 
       expect(time * 1000).to.be.approximately(test.time, 0.0001)
@@ -369,7 +439,7 @@ describe('tests VM.tick', function () {
   it('click 120BPM -> 200BPM, on the half-beat', function () {
     const fs = 44100
     const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -404,11 +474,11 @@ describe('tests VM.tick', function () {
     let tick = 0
     for (const test of tests) {
       while (tick < test.tick) {
-        vm.tick(test.BPM)
+        vm.tick(test.BPM, bufferSize)
         tick++
       }
 
-      const { time, click } = vm.tick(test.BPM)
+      const { time, click } = vm.tick(test.BPM, bufferSize)
       tick++
 
       expect(time * 1000).to.be.approximately(test.time, 0.0001)
@@ -421,8 +491,7 @@ describe('tests VM.click, quarter notes', function () {
   it('click 2:2, quarter notes', function () {
     const timeSignature = { beats: 2, divisions: 2 }
     const fs = 44100
-    const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -457,8 +526,7 @@ describe('tests VM.click, quarter notes', function () {
   it('click 2:4, quarter notes', function () {
     const timeSignature = { beats: 2, divisions: 4 }
     const fs = 44100
-    const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -493,8 +561,7 @@ describe('tests VM.click, quarter notes', function () {
   it('click 3:4, quarter notes', function () {
     const timeSignature = { beats: 3, divisions: 4 }
     const fs = 44100
-    const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -529,8 +596,7 @@ describe('tests VM.click, quarter notes', function () {
   it('click 4:4, quarter notes', function () {
     const timeSignature = { beats: 4, divisions: 4 }
     const fs = 44100
-    const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -564,8 +630,7 @@ describe('tests VM.click, quarter notes', function () {
 
   it('click 4:4 -> 3:4 on beat 1, quarter notes', function () {
     const fs = 44100
-    const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -599,8 +664,7 @@ describe('tests VM.click, quarter notes', function () {
 
   it('click 4:4 -> 3:4 on beat 2, quarter notes', function () {
     const fs = 44100
-    const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -634,8 +698,7 @@ describe('tests VM.click, quarter notes', function () {
 
   it('click 4:4 -> 3:4 on beat 3, quarter notes', function () {
     const fs = 44100
-    const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -669,8 +732,7 @@ describe('tests VM.click, quarter notes', function () {
 
   it('click 4:4 -> 3:4 on beat 4, quarter notes', function () {
     const fs = 44100
-    const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -704,8 +766,7 @@ describe('tests VM.click, quarter notes', function () {
 
   it('click 3:4 -> 4:4 on beat 1, quarter notes', function () {
     const fs = 44100
-    const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -739,8 +800,7 @@ describe('tests VM.click, quarter notes', function () {
 
   it('click 3:4 -> 4:4 on beat 2, quarter notes', function () {
     const fs = 44100
-    const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -775,8 +835,7 @@ describe('tests VM.click, quarter notes', function () {
 
   it('click 3:4 -> 4:4 on beat 3, quarter notes', function () {
     const fs = 44100
-    const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -815,8 +874,7 @@ describe('tests VM.click with subdivisions', function () {
     const timeSignature = { beats: 4, divisions: 4 }
     const subdivisions = SUBDIVISIONS.EIGHTH_DOUBLETS
     const fs = 44100
-    const bufferSize = 128
-    const vm = new VM(fs, bufferSize, [])
+    const vm = new VM(fs, [])
 
     // prettier-ignore
     const tests = [
@@ -853,7 +911,6 @@ describe('tests VM.click with subdivisions', function () {
 describe('tests VM.exec', function () {
   it('exec::tick/tock/tack/sticks', function () {
     const fs = 44100
-    const bufferSize = 128
 
     // prettier-ignore
     const script = [
@@ -884,7 +941,7 @@ describe('tests VM.exec', function () {
       { measure: 2, beat: 4.5, expected: [OPCODES.DING] },
     ]
 
-    const vm = new VM(fs, bufferSize, script)
+    const vm = new VM(fs, script)
 
     for (const test of tests) {
       expect(vm.exec({ measure: test.measure, beat: test.beat }, QUARTER_NOTES)).to.deep.equal(test.expected)
@@ -893,7 +950,6 @@ describe('tests VM.exec', function () {
 
   it('exec, measure:*, beat:*, quarter notes', function () {
     const fs = 44100
-    const bufferSize = 128
 
     // prettier-ignore
     const script = [
@@ -922,7 +978,7 @@ describe('tests VM.exec', function () {
       { measure: 2, beat: 4.5, expected: []             },
     ]
 
-    const vm = new VM(fs, bufferSize, script)
+    const vm = new VM(fs, script)
     for (const test of tests) {
       expect(vm.exec({ measure: test.measure, beat: test.beat }, QUARTER_NOTES)).to.deep.equal(test.expected)
     }
@@ -930,7 +986,6 @@ describe('tests VM.exec', function () {
 
   it('exec, measure:*, beat:*, eighth-doublets', function () {
     const fs = 44100
-    const bufferSize = 128
 
     // prettier-ignore
     const script = [
@@ -959,7 +1014,7 @@ describe('tests VM.exec', function () {
       { measure: 2, beat: 4.5, expected: [OPCODES.TOCK] },
     ]
 
-    const vm = new VM(fs, bufferSize, script)
+    const vm = new VM(fs, script)
     for (const test of tests) {
       expect(vm.exec({ measure: test.measure, beat: test.beat }, EIGHTH_DOUBLETS)).to.deep.equal(test.expected)
     }
@@ -967,7 +1022,6 @@ describe('tests VM.exec', function () {
 
   it('exec, measure:*, beat:*, quarter notes -> eighth doublets', function () {
     const fs = 44100
-    const bufferSize = 128
 
     // prettier-ignore
     const script = [
@@ -996,7 +1050,7 @@ describe('tests VM.exec', function () {
       { measure: 2, beat: 4.5, subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
     ]
 
-    const vm = new VM(fs, bufferSize, script)
+    const vm = new VM(fs, script)
     for (const test of tests) {
       expect(vm.exec({ measure: test.measure, beat: test.beat }, test.subdivisions)).to.deep.equal(test.expected)
     }
@@ -1004,7 +1058,6 @@ describe('tests VM.exec', function () {
 
   it('exec, measure:*, beat:*, eighth doublets -> quarter notes', function () {
     const fs = 44100
-    const bufferSize = 128
 
     // prettier-ignore
     const script = [
@@ -1033,7 +1086,7 @@ describe('tests VM.exec', function () {
       { measure: 2, beat: 4.5, subdivisions: QUARTER_NOTES,   expected: [] },
     ]
 
-    const vm = new VM(fs, bufferSize, script)
+    const vm = new VM(fs, script)
     for (const test of tests) {
       expect(vm.exec({ measure: test.measure, beat: test.beat }, test.subdivisions)).to.deep.equal(test.expected)
     }

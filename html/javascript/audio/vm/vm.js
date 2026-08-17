@@ -1,9 +1,9 @@
 import { OPCODES, SUBDIVISIONS } from './constants.js'
 
 export class VM {
+  #fs = 44100
   #script = []
 
-  #dt = (1000 * 128) / 44100
   #tick = 0
   #time = 0
   #click = {
@@ -13,17 +13,18 @@ export class VM {
     beat: 0,
   }
 
-  constructor(fs, bufferSize, script) {
+  constructor(fs, script) {
+    this.#fs = fs
     this.#script = script
-    this.#dt = (1000 * bufferSize) / fs
 
     this.#reset()
   }
 
-  tick(BPM) {
+  tick(BPM, bufferSize) {
+    const dt = (1000 * bufferSize) / this.#fs
     const tick = this.#tick + 1
     const start = this.#time
-    const end = tick * this.#dt
+    const end = tick * dt
 
     this.#tick = tick
     this.#time = end

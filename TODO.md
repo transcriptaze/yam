@@ -15,7 +15,9 @@
         - [x] sync pads to VM click
         - [x] time signature
         - [x] doublets
-        - [ ] reset VM on stop/start
+        - [x] fix hardcoded VM fs
+        - [x] reset VM on stop/start
+        - [x] fix hardcoded VM buffersize
         - [ ] 6:8
         - [ ] dotted quarter
         - [ ] half notes

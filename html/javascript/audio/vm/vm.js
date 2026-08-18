@@ -1,6 +1,7 @@
 import { OPCODES, SUBDIVISIONS } from './constants.js'
 
 const PULSE = new Map([
+  ['eighth-doublet', 4],
   ['quarter', 4],
   ['half', 2],
 ])

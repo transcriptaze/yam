@@ -18,11 +18,20 @@
         - [x] fix hardcoded VM fs
         - [x] reset VM on stop/start
         - [x] fix hardcoded VM buffersize
-        - [x] 2:2
-        - [ ] 6:8
-        - [ ] dotted quarter
-        - [ ] half notes
         - [ ] start delay
+
+        - [x] 4:4/eigths
+        - [x] 4:4/quarter notes
+        - [ ] 4:4/half notes
+
+        - [ ] 2:2 eighths
+        - [x] 2:2 quarter notes
+        - [x] 2:2 half notes
+
+        - [x] 6:8 eighth doublets
+        - [ ] 6:8 eighths
+        - [ ] 6:8 dotted quarters
+
 
         - [ ] node+worklet per run a la YAD
         - [ ] put gain into node::sample 

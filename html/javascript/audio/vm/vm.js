@@ -1,5 +1,10 @@
 import { OPCODES, SUBDIVISIONS } from './constants.js'
 
+const PULSE = new Map([
+  ['quarter', 4],
+  ['half', 2],
+])
+
 export class VM {
   #fs = 44100
   #script = []
@@ -74,8 +79,9 @@ export class VM {
     }
   }
 
-  click(click, { beats, divisions }) {
-    const klick = ((click - 1) * divisions) / 4
+  click(click, { beats, divisions }, subdivisions) {
+    const pulse = PULSE.get(subdivisions) ?? 4
+    const klick = ((click - 1) * divisions) / pulse
     const _q = Math.trunc(klick)
     let r = klick % 1
 

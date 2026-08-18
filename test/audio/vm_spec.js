@@ -525,7 +525,7 @@ describe('tests VM.click, quarter notes', function () {
     // ... run
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, timeSignature)
+      const { measure, beat } = vm.click(test.click, timeSignature, QUARTER_NOTES)
 
       expect({ measure, beat }).to.deep.equal(expected)
     }
@@ -560,7 +560,7 @@ describe('tests VM.click, quarter notes', function () {
     // ... run
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, timeSignature)
+      const { measure, beat } = vm.click(test.click, timeSignature, QUARTER_NOTES)
 
       expect({ measure, beat }).to.deep.equal(expected)
     }
@@ -595,7 +595,7 @@ describe('tests VM.click, quarter notes', function () {
     // ... run
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, timeSignature)
+      const { measure, beat } = vm.click(test.click, timeSignature, QUARTER_NOTES)
 
       expect({ measure, beat }).to.deep.equal(expected)
     }
@@ -629,7 +629,7 @@ describe('tests VM.click, quarter notes', function () {
     // ... run
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, test.timeSignature)
+      const { measure, beat } = vm.click(test.click, test.timeSignature, QUARTER_NOTES)
 
       expect({ measure, beat }).to.deep.equal(expected)
     }
@@ -663,7 +663,7 @@ describe('tests VM.click, quarter notes', function () {
     // ... run
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, test.timeSignature)
+      const { measure, beat } = vm.click(test.click, test.timeSignature, QUARTER_NOTES)
 
       expect({ measure, beat }).to.deep.equal(expected)
     }
@@ -697,7 +697,7 @@ describe('tests VM.click, quarter notes', function () {
     // ... run
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, test.timeSignature)
+      const { measure, beat } = vm.click(test.click, test.timeSignature, QUARTER_NOTES)
 
       expect({ measure, beat }).to.deep.equal(expected)
     }
@@ -731,7 +731,7 @@ describe('tests VM.click, quarter notes', function () {
     // ... run
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, test.timeSignature)
+      const { measure, beat } = vm.click(test.click, test.timeSignature, QUARTER_NOTES)
 
       expect({ measure, beat }).to.deep.equal(expected)
     }
@@ -765,7 +765,7 @@ describe('tests VM.click, quarter notes', function () {
     // ... run
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, test.timeSignature)
+      const { measure, beat } = vm.click(test.click, test.timeSignature, QUARTER_NOTES)
 
       expect({ measure, beat }).to.deep.equal(expected)
     }
@@ -800,7 +800,7 @@ describe('tests VM.click, quarter notes', function () {
     // ... run
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, test.timeSignature)
+      const { measure, beat } = vm.click(test.click, test.timeSignature, QUARTER_NOTES)
 
       expect({ measure, beat }).to.deep.equal(expected)
     }
@@ -835,7 +835,7 @@ describe('tests VM.click, quarter notes', function () {
     // ... run
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, test.timeSignature)
+      const { measure, beat } = vm.click(test.click, test.timeSignature, QUARTER_NOTES)
 
       expect({ measure, beat }).to.deep.equal(expected)
     }
@@ -1056,124 +1056,162 @@ describe('tests VM.exec', function () {
   })
 })
 
-describe('tests VM.click with 2:2 time', function () {
-  it('click: 2/2', function () {
+describe('4:4 time', function () {
+  it('4:4 time, quarter notes @120BPM', function () {
     // prettier-ignore
     const tests = [
-      {click: 1.0, expected: { measure: 1, beat: 1    }},
-      {click: 1.5, expected: { measure: 1, beat: 1.25 }},
-      {click: 2.0, expected: { measure: 1, beat: 1.5  }},
-      {click: 2.5, expected: { measure: 1, beat: 1.75 }},
-      {click: 3.0, expected: { measure: 1, beat: 2    }},
-      {click: 3.5, expected: { measure: 1, beat: 2.25 }},
-      {click: 4.0, expected: { measure: 1, beat: 2.5  }},
-      {click: 4.5, expected: { measure: 1, beat: 2.75 }},
-      {click: 5.0, expected: { measure: 2, beat: 1    }},
-      {click: 5.5, expected: { measure: 2, beat: 1.25 }},
-      {click: 6.0, expected: { measure: 2, beat: 1.5  }},
-      {click: 6.5, expected: { measure: 2, beat: 1.75 }},
-      {click: 7.0, expected: { measure: 2, beat: 2    }},
-      {click: 7.5, expected: { measure: 2, beat: 2.25 }},
-      {click: 8.0, expected: { measure: 2, beat: 2.5  }},
-      {click: 8.5, expected: { measure: 2, beat: 2.75 }},
-      {click: 9.0, expected: { measure: 3, beat: 1    }},
+      { tick:    0, time:    0.0000, click: 1,    expected: { measure: 1, beat: 1,   ops: [OPCODES.TICK] }},
+      { tick:   86, time:  249.6145, click: 1.5,  expected: { measure: 1, beat: 1.5, ops: []             }},
+      { tick:  172, time:  499.2290, click: 2,    expected: { measure: 1, beat: 2,   ops: [OPCODES.TOCK] }},
+      { tick:  258, time:  748.8435, click: 2.5,  expected: { measure: 1, beat: 2.5, ops: []             }},
+      { tick:  344, time:  998.4580, click: 3,    expected: { measure: 1, beat: 3,   ops: [OPCODES.TOCK] }},
+      { tick:  430, time: 1248.0726, click: 3.5,  expected: { measure: 1, beat: 3.5, ops: []             }},
+      { tick:  516, time: 1497.6871, click: 4,    expected: { measure: 1, beat: 4,   ops: [OPCODES.TOCK] }},
+      { tick:  602, time: 1747.3016, click: 4.5,  expected: { measure: 1, beat: 4.5, ops: []             }},
+      { tick:  689, time: 1999.8186, click: 5,    expected: { measure: 2, beat: 1,   ops: [OPCODES.TICK] }},
+      { tick:  775, time: 2249.4331, click: 5.5,  expected: { measure: 2, beat: 1.5, ops: []             }},
+      { tick:  861, time: 2499.0476, click: 6,    expected: { measure: 2, beat: 2,   ops: [OPCODES.TOCK] }},
+      { tick:  947, time: 2748.6621, click: 6.5,  expected: { measure: 2, beat: 2.5, ops: []             }},
+      { tick: 1033, time: 2998.2766, click: 7,    expected: { measure: 2, beat: 3,   ops: [OPCODES.TOCK] }},
+      { tick: 1119, time: 3247.8912, click: 7.5,  expected: { measure: 2, beat: 3.5, ops: []             }},
+      { tick: 1205, time: 3497.5057, click: 8,    expected: { measure: 2, beat: 4,   ops: [OPCODES.TOCK] }},
+      { tick: 1291, time: 3747.1202, click: 8.5,  expected: { measure: 2, beat: 4.5, ops: []             }},
+      { tick: 1378, time: 3999.6372, click: 9,    expected: { measure: 3, beat: 1,   ops: [OPCODES.TICK] }},
     ]
 
     // ... setup
-    const timeSignature = { beats: 2, divisions: 2 }
-    const vm = new VM(FS, [])
-
-    for (const test of tests) {
-      const expected = test.expected
-      const { measure, beat } = vm.click(test.click, timeSignature)
-
-      expect({ measure, beat }).to.deep.equal(expected)
-    }
-  })
-
-  it('exec: measure:*, beat:*, 2:2 time, half notes', function () {
-    // prettier-ignore
-    const tests = [
-      {click: 1.0, expected: [OPCODES.TICK] },
-      {click: 1.5, expected: []             },
-      {click: 2.0, expected: []             },
-      {click: 2.5, expected: []             },
-      {click: 3.0, expected: [OPCODES.TOCK] },
-      {click: 3.5, expected: []             },
-      {click: 4.0, expected: []             },
-      {click: 4.5, expected: []             },
-      {click: 5.0, expected: [OPCODES.TICK] },
-      {click: 5.5, expected: []             },
-      {click: 6.0, expected: []             },
-      {click: 6.5, expected: []             },
-      {click: 7.0, expected: [OPCODES.TOCK] },
-      {click: 7.5, expected: []             },
-      {click: 8.0, expected: []             },
-      {click: 8.5, expected: []             },
-      {click: 9.0, expected: [OPCODES.TICK] },
-    ]
-
-    // ... setup
-    const timeSignature = { beats: 2, divisions: 2 }
-    const subdivisions = HALF_NOTES
-
-    // prettier-ignore
+    const timeSignature = { beats: 4, divisions: 4 }
+    const subdivisions = QUARTER_NOTES
     const script = [
-      { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+      { at: { measure: '*', beat: 1 }, op: OPCODES.TICK },
       { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ]
 
     const vm = new VM(FS, script)
 
     // ... run
+    let tick = 0
     for (const test of tests) {
-      const click = vm.click(test.click, timeSignature)
-      const ops = vm.exec(click, timeSignature, subdivisions)
+      while (tick < test.tick) {
+        vm.tick(BPM, BUFFERSIZE)
+        tick++
+      }
 
-      expect(ops).to.deep.equal(test.expected)
+      const { time, click } = vm.tick(BPM, BUFFERSIZE)
+      const { measure, beat } = vm.click(click, timeSignature, subdivisions)
+      const ops = vm.exec({ measure, beat }, timeSignature, subdivisions)
+
+      tick++
+
+      expect(time * 1000).to.be.approximately(test.time, 0.0001)
+      expect(click).to.equal(test.click)
+      expect({ measure, beat, ops }).to.deep.equal(test.expected)
     }
   })
+})
 
-  it('exec: measure:*, beat:*, 2:2 time', function () {
+describe('2:2 time', function () {
+  it('2:2 time, quarter notes @120BPM', function () {
     // prettier-ignore
     const tests = [
-      {click: 1.0, expected: [OPCODES.TICK] },
-      {click: 1.5, expected: []             },
-      {click: 2.0, expected: [OPCODES.TOCK] },
-      {click: 2.5, expected: []             },
-      {click: 3.0, expected: [OPCODES.TOCK] },
-      {click: 3.5, expected: []             },
-      {click: 4.0, expected: [OPCODES.TOCK] },
-      {click: 4.5, expected: []             },
-      {click: 5.0, expected: [OPCODES.TICK] },
-      {click: 5.5, expected: []             },
-      {click: 6.0, expected: [OPCODES.TOCK] },
-      {click: 6.5, expected: []             },
-      {click: 7.0, expected: [OPCODES.TOCK] },
-      {click: 7.5, expected: []             },
-      {click: 8.0, expected: [OPCODES.TOCK] },
-      {click: 8.5, expected: []             },
-      {click: 9.0, expected: [OPCODES.TICK] },
+      { tick:    0, time:    0.0000, click: 1,    expected: { measure: 1, beat: 1,    ops: [OPCODES.TICK] }},
+      { tick:   86, time:  249.6145, click: 1.5,  expected: { measure: 1, beat: 1.25, ops: []             }},
+      { tick:  172, time:  499.2290, click: 2,    expected: { measure: 1, beat: 1.5,  ops: [OPCODES.TOCK] }},
+      { tick:  258, time:  748.8435, click: 2.5,  expected: { measure: 1, beat: 1.75, ops: []             }},
+      { tick:  344, time:  998.4580, click: 3,    expected: { measure: 1, beat: 2,    ops: [OPCODES.TOCK] }},
+      { tick:  430, time: 1248.0726, click: 3.5,  expected: { measure: 1, beat: 2.25, ops: []             }},
+      { tick:  516, time: 1497.6871, click: 4,    expected: { measure: 1, beat: 2.5,  ops: [OPCODES.TOCK] }},
+      { tick:  602, time: 1747.3016, click: 4.5,  expected: { measure: 1, beat: 2.75, ops: []             }},
+      { tick:  689, time: 1999.8186, click: 5,    expected: { measure: 2, beat: 1,    ops: [OPCODES.TICK] }},
+      { tick:  775, time: 2249.4331, click: 5.5,  expected: { measure: 2, beat: 1.25, ops: []             }},
+      { tick:  861, time: 2499.0476, click: 6,    expected: { measure: 2, beat: 1.5,  ops: [OPCODES.TOCK] }},
+      { tick:  947, time: 2748.6621, click: 6.5,  expected: { measure: 2, beat: 1.75, ops: []             }},
+      { tick: 1033, time: 2998.2766, click: 7,    expected: { measure: 2, beat: 2,    ops: [OPCODES.TOCK] }},
+      { tick: 1119, time: 3247.8912, click: 7.5,  expected: { measure: 2, beat: 2.25, ops: []             }},
+      { tick: 1205, time: 3497.5057, click: 8,    expected: { measure: 2, beat: 2.5,  ops: [OPCODES.TOCK] }},
+      { tick: 1291, time: 3747.1202, click: 8.5,  expected: { measure: 2, beat: 2.75, ops: []             }},
+      { tick: 1378, time: 3999.6372, click: 9,    expected: { measure: 3, beat: 1,    ops: [OPCODES.TICK] }},
     ]
 
     // ... setup
     const timeSignature = { beats: 2, divisions: 2 }
     const subdivisions = QUARTER_NOTES
-
-    // prettier-ignore
     const script = [
-      { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+      { at: { measure: '*', beat: 1 }, op: OPCODES.TICK },
       { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ]
 
     const vm = new VM(FS, script)
 
     // ... run
+    let tick = 0
     for (const test of tests) {
-      const click = vm.click(test.click, timeSignature)
-      const ops = vm.exec(click, timeSignature, subdivisions)
+      while (tick < test.tick) {
+        vm.tick(BPM, BUFFERSIZE)
+        tick++
+      }
 
-      expect(ops).to.deep.equal(test.expected)
+      const { time, click } = vm.tick(BPM, BUFFERSIZE)
+      const { measure, beat } = vm.click(click, timeSignature, subdivisions)
+      const ops = vm.exec({ measure, beat }, timeSignature, subdivisions)
+
+      tick++
+
+      expect(time * 1000).to.be.approximately(test.time, 0.0001)
+      expect(click).to.equal(test.click)
+      expect({ measure, beat, ops }).to.deep.equal(test.expected)
+    }
+  })
+
+  it('2:2 time, half notes @120BPM', function () {
+    // prettier-ignore
+    const tests = [
+      { tick:    0, time:    0.0000, click: 1,    expected: { measure: 1, beat: 1,   ops: [OPCODES.TICK] }},
+      { tick:   86, time:  249.6145, click: 1.5,  expected: { measure: 1, beat: 1.5, ops: []             }},
+      { tick:  172, time:  499.2290, click: 2,    expected: { measure: 1, beat: 2,   ops: [OPCODES.TOCK] }},
+      { tick:  258, time:  748.8435, click: 2.5,  expected: { measure: 1, beat: 2.5, ops: []             }},
+      { tick:  344, time:  998.4580, click: 3,    expected: { measure: 2, beat: 1,   ops: [OPCODES.TICK] }},
+      { tick:  430, time: 1248.0726, click: 3.5,  expected: { measure: 2, beat: 1.5, ops: []             }},
+      { tick:  516, time: 1497.6871, click: 4,    expected: { measure: 2, beat: 2,   ops: [OPCODES.TOCK] }},
+      { tick:  602, time: 1747.3016, click: 4.5,  expected: { measure: 2, beat: 2.5, ops: []             }},
+      { tick:  689, time: 1999.8186, click: 5,    expected: { measure: 3, beat: 1,   ops: [OPCODES.TICK] }},
+      { tick:  775, time: 2249.4331, click: 5.5,  expected: { measure: 3, beat: 1.5, ops: []             }},
+      { tick:  861, time: 2499.0476, click: 6,    expected: { measure: 3, beat: 2,   ops: [OPCODES.TOCK] }},
+      { tick:  947, time: 2748.6621, click: 6.5,  expected: { measure: 3, beat: 2.5, ops: []             }},
+      { tick: 1033, time: 2998.2766, click: 7,    expected: { measure: 4, beat: 1,   ops: [OPCODES.TICK] }},
+      { tick: 1119, time: 3247.8912, click: 7.5,  expected: { measure: 4, beat: 1.5, ops: []             }},
+      { tick: 1205, time: 3497.5057, click: 8,    expected: { measure: 4, beat: 2,   ops: [OPCODES.TOCK] }},
+      { tick: 1291, time: 3747.1202, click: 8.5,  expected: { measure: 4, beat: 2.5, ops: []             }},
+      { tick: 1378, time: 3999.6372, click: 9,    expected: { measure: 5, beat: 1,   ops: [OPCODES.TICK] }},
+    ]
+
+    // ... setup
+    const timeSignature = { beats: 2, divisions: 2 }
+    const subdivisions = HALF_NOTES
+    const script = [
+      { at: { measure: '*', beat: 1 }, op: OPCODES.TICK },
+      { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+    ]
+
+    const vm = new VM(FS, script)
+
+    // ... run
+    let tick = 0
+    for (const test of tests) {
+      while (tick < test.tick) {
+        vm.tick(BPM, BUFFERSIZE)
+        tick++
+      }
+
+      const { time, click } = vm.tick(BPM, BUFFERSIZE)
+      const { measure, beat } = vm.click(click, timeSignature, subdivisions)
+      const ops = vm.exec({ measure, beat }, timeSignature, subdivisions)
+
+      tick++
+
+      expect(time * 1000).to.be.approximately(test.time, 0.0001)
+      expect(click).to.equal(test.click)
+      expect({ measure, beat, ops }).to.deep.equal(test.expected)
     }
   })
 })

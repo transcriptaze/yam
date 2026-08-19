@@ -1,6 +1,7 @@
 import { OPCODES, SUBDIVISIONS } from './constants.js'
 
 const PULSE = new Map([
+  ['eighth', 8],
   ['eighth-doublet', 4],
   ['quarter', 4],
   ['half', 2],
@@ -151,6 +152,11 @@ export class VM {
       }
 
       if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_DOUBLETS && (r === 0.0 || r === 0.5)) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_NOTES && r === 0.0) {
         ops.push(...this.#exec(op.op))
         break
       }

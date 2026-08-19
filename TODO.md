@@ -29,9 +29,8 @@
         - [x] 2:2 half notes
 
         - [x] 6:8 eighth doublets
-        - [ ] 6:8 eighths
-        - [ ] 6:8 dotted quarters
-
+        - [x] 6:8 eighths
+        - [x] 6:8 dotted quarters
 
         - [ ] node+worklet per run a la YAD
         - [ ] put gain into node::sample 

@@ -2,7 +2,7 @@ import { describe, it } from 'mocha'
 import { expect } from 'chai'
 import { VM } from '../../html/javascript/audio/vm/vm.js'
 import { OPCODES } from '../../html/javascript/audio/vm/constants.js'
-import { HALF_NOTES, QUARTER_NOTES, EIGHTH_NOTES, EIGHTH_DOUBLETS } from '../../html/javascript/audio/vm/constants.js'
+import { EIGHTH_NOTES, EIGHTH_DOUBLETS, QUARTER_NOTES, DOTTED_QUARTER_NOTES, HALF_NOTES } from '../../html/javascript/audio/vm/constants.js'
 
 const FS = 44100
 const BUFFERSIZE = 128
@@ -301,7 +301,7 @@ describe('tests VM.tick', function () {
       { tick:  259, bpm: 120, time:  751.7460 },
 
       { tick:  343, bpm: 120, time:  995.5556 },
-      { tick:  344, bpm:  40, time:  998.4580 },
+      { tick:  344, bpm:  40, time:  998.4580, click: 2.333},
       { tick:  345, bpm:  40, time: 1001.3605 },
 
       { tick:  688, bpm:  40, time: 1996.9161 },
@@ -329,10 +329,11 @@ describe('tests VM.tick', function () {
       }
 
       const { time, click } = vm.tick(test.bpm, BUFFERSIZE)
-      tick++
 
       expect(time * 1000).to.be.approximately(test.time, 0.0001)
-      expect(click).to.equal(test.click)
+      expect(click, `tick ${tick}`).to.equal(test.click)
+
+      tick++
     }
   })
 
@@ -409,7 +410,7 @@ describe('tests VM.tick', function () {
       { tick: 259, bpm: 120, time:  751.7460 },
 
       { tick: 343, bpm: 120, time:  995.5556 },
-      { tick: 344, bpm: 200, time:  998.4580 },
+      { tick: 344, bpm: 200, time:  998.4580, click: 2.333 },
       { tick: 345, bpm: 200, time: 1001.3605 },
 
       { tick: 377, bpm: 200, time: 1094.2404 },
@@ -437,10 +438,11 @@ describe('tests VM.tick', function () {
       }
 
       const { time, click } = vm.tick(test.bpm, BUFFERSIZE)
-      tick++
 
       expect(time * 1000).to.be.approximately(test.time, 0.0001)
-      expect(click).to.equal(test.click)
+      expect(click, `tick ${tick}`).to.equal(test.click)
+
+      tick++
     }
   })
 
@@ -1084,7 +1086,7 @@ describe('4:4 time', function () {
       { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ])
 
-    run(vm, BPM, { beats: 4, divisions: 4 }, QUARTER_NOTES, tests)
+    run(vm, 120, { beats: 4, divisions: 4 }, QUARTER_NOTES, tests)
   })
 })
 
@@ -1116,7 +1118,7 @@ describe('2:2 time', function () {
       { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ])
 
-    run(vm, BPM, { beats: 2, divisions: 2 }, QUARTER_NOTES, tests)
+    run(vm, 120, { beats: 2, divisions: 2 }, QUARTER_NOTES, tests)
   })
 
   it('2:2 time, half notes @120BPM', function () {
@@ -1146,7 +1148,7 @@ describe('2:2 time', function () {
       { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ])
 
-    run(vm, BPM, { beats: 2, divisions: 2 }, HALF_NOTES, tests)
+    run(vm, 120, { beats: 2, divisions: 2 }, HALF_NOTES, tests)
   })
 })
 
@@ -1180,7 +1182,7 @@ describe('tests VM.click with 6:8 time', function () {
       { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ])
 
-    run(vm, BPM, { beats: 6, divisions: 8 }, EIGHTH_DOUBLETS, tests)
+    run(vm, 120, { beats: 6, divisions: 8 }, EIGHTH_DOUBLETS, tests)
   })
 
   it('6:8 time, eighth notes @120BPM', function () {
@@ -1218,7 +1220,37 @@ describe('tests VM.click with 6:8 time', function () {
       { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ])
 
-    run(vm, BPM, { beats: 6, divisions: 8 }, EIGHTH_NOTES, tests)
+    run(vm, 120, { beats: 6, divisions: 8 }, EIGHTH_NOTES, tests)
+  })
+
+  it('6:8 time, dotted quarter @40BPM', function () {
+    // prettier-ignore
+    const tests = [
+      { tick:    0, time:    0.0000, click: 1,     expected: { measure: 1, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick:  172, time:  499.2290, click: 1.333, expected: { measure: 1, beat: 1.333, ops: [OPCODES.TOCK] }},
+      { tick:  258, time:  748.8435, click: 1.5,   expected: { measure: 1, beat: 1.5,   ops: []             }},
+      { tick:  344, time:  998.4580, click: 1.667, expected: { measure: 1, beat: 1.667, ops: [OPCODES.TOCK] }},
+      { tick:  516, time: 1497.6871, click: 2,     expected: { measure: 1, beat: 2,     ops: [OPCODES.TOCK] }},
+      { tick:  689, time: 1999.8186, click: 2.333, expected: { measure: 1, beat: 2.333, ops: [OPCODES.TOCK] }},
+      { tick:  775, time: 2249.4331, click: 2.5,   expected: { measure: 1, beat: 2.5,   ops: []             }},
+      { tick:  861, time: 2499.0476, click: 2.667, expected: { measure: 1, beat: 2.667, ops: [OPCODES.TOCK] }},
+      { tick: 1033, time: 2998.2766, click: 3,     expected: { measure: 2, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick: 1205, time: 3497.5057, click: 3.333, expected: { measure: 2, beat: 1.333, ops: [OPCODES.TOCK] }},
+      { tick: 1291, time: 3747.1202, click: 3.5,   expected: { measure: 2, beat: 1.5,   ops: []             }},
+      { tick: 1378, time: 3999.6372, click: 3.667, expected: { measure: 2, beat: 1.667, ops: [OPCODES.TOCK] }},
+      { tick: 1550, time: 4498.8662, click: 4,     expected: { measure: 2, beat: 2,     ops: [OPCODES.TOCK] }},
+      { tick: 1722, time: 4998.0952, click: 4.333, expected: { measure: 2, beat: 2.333, ops: [OPCODES.TOCK] }},
+      { tick: 1808, time: 5247.7098, click: 4.5,   expected: { measure: 2, beat: 2.5,   ops: []             }},
+      { tick: 1894, time: 5497.3243, click: 4.667, expected: { measure: 2, beat: 2.667, ops: [OPCODES.TOCK] }},
+      { tick: 2067, time: 5999.4558, click: 5,     expected: { measure: 3, beat: 1,     ops: [OPCODES.TICK] }},
+    ]
+
+    const vm = new VM(FS, [
+      { at: { measure: '*', beat: 1 }, op: OPCODES.TICK },
+      { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+    ])
+
+    run(vm, 40, { beats: 6, divisions: 8 }, DOTTED_QUARTER_NOTES, tests)
   })
 })
 

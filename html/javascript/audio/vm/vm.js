@@ -4,6 +4,7 @@ const PULSE = new Map([
   ['eighth', 8],
   ['eighth-doublet', 4],
   ['quarter', 4],
+  ['dotted-quarter', 8],
   ['half', 2],
 ])
 
@@ -75,6 +76,39 @@ export class VM {
       }
     }
 
+    // ... dotted quarters, triplets, etc
+    {
+      const interval = (2 * 60000) / BPM / 3 // ms
+
+      let next = this.#click.time < 0 ? 0.0 : this.#click.time + interval
+      while (next < start) {
+        next += interval
+      }
+
+      if (next >= start && next < end) {
+        return {
+          time: time,
+          click: this.#click.click + 0.667,
+        }
+      }
+    }
+
+    {
+      const interval = 60000 / BPM / 3 // ms
+
+      let next = this.#click.time < 0 ? 0.0 : this.#click.time + interval
+      while (next < start) {
+        next += interval
+      }
+
+      if (next >= start && next < end) {
+        return {
+          time: time,
+          click: this.#click.click + 0.333,
+        }
+      }
+    }
+
     // ... default
     return {
       time: time,
@@ -83,9 +117,24 @@ export class VM {
 
   click(click, { beats, divisions }, subdivisions) {
     const pulse = PULSE.get(subdivisions) ?? 4
-    const klick = ((click - 1) * divisions) / pulse
+    const klick = (() => {
+      let k = ((click - 1) * divisions) / pulse
+
+      k = k.toFixed(3)
+      k = parseFloat(k)
+
+      return k
+    })()
+
     const _q = Math.trunc(klick)
-    let r = klick % 1
+    const r = (() => {
+      let k = klick % 1
+
+      k = k.toFixed(3)
+      k = parseFloat(k)
+
+      return k
+    })()
 
     let measure = this.#click.measure === 0 ? 1 : this.#click.measure
     let beat = this.#click.beat
@@ -95,6 +144,9 @@ export class VM {
     }
 
     if (beat > beats) {
+      measure += 1
+      beat = 1
+    } else if (subdivisions === SUBDIVISIONS.DOTTED_QUARTERS && beat > beats / 3) {
       measure += 1
       beat = 1
     }
@@ -113,7 +165,14 @@ export class VM {
 
     for (const op of this.#script) {
       const q = Math.trunc(at.beat)
-      const r = at.beat % 1
+      const r = (() => {
+        let k = at.beat % 1
+
+        k = k.toFixed(3)
+        k = parseFloat(k)
+
+        return k
+      })()
 
       if (op.at.measure === at.measure && op.at.beat === at.beat) {
         ops.push(...this.#exec(op.op))
@@ -157,6 +216,21 @@ export class VM {
       }
 
       if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_NOTES && r === 0.0) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.DOTTED_QUARTERS && r === 0.0) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.DOTTED_QUARTERS && r === 0.333) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.DOTTED_QUARTERS && r === 0.667) {
         ops.push(...this.#exec(op.op))
         break
       }

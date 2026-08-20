@@ -2,6 +2,7 @@ import { OPCODES, SUBDIVISIONS } from './constants.js'
 
 const PULSE = new Map([
   ['eighth', 8],
+  ['eighth-triplet', 8],
   ['eighth-doublet', 4],
   ['quarter', 4],
   ['dotted-quarter', 8],
@@ -28,7 +29,7 @@ export class VM {
     this.#reset()
   }
 
-  tick(BPM, bufferSize) {
+  tick(BPM, bufferSize, debug) {
     const dt = (1000 * bufferSize) / this.#fs
     const tick = this.#tick + 1
     const start = this.#time
@@ -38,6 +39,10 @@ export class VM {
     this.#time = end
 
     const time = start / 1000
+
+    if (debug) {
+      console.log('>>>>   ', { tick }, { start }, { end })
+    }
 
     // ... whole beats
     {
@@ -101,6 +106,10 @@ export class VM {
         next += interval
       }
 
+      if (debug) {
+        console.log('>>>> >>', { tick }, { start }, { end }, { next })
+      }
+
       if (next >= start && next < end) {
         return {
           time: time,
@@ -147,6 +156,9 @@ export class VM {
       measure += 1
       beat = 1
     } else if (subdivisions === SUBDIVISIONS.DOTTED_QUARTERS && beat > beats / 3) {
+      measure += 1
+      beat = 1
+    } else if (subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && beat > beats / 3) {
       measure += 1
       beat = 1
     }
@@ -225,12 +237,17 @@ export class VM {
         break
       }
 
-      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.DOTTED_QUARTERS && r === 0.333) {
+      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.0) {
         ops.push(...this.#exec(op.op))
         break
       }
 
-      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.DOTTED_QUARTERS && r === 0.667) {
+      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.333) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.667) {
         ops.push(...this.#exec(op.op))
         break
       }

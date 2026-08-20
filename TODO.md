@@ -28,8 +28,9 @@
         - [x] 2:2 quarter notes
         - [x] 2:2 half notes
 
-        - [x] 6:8 eighth doublets
         - [x] 6:8 eighths
+        - [x] 6:8 eighth doublets
+        - [x] 6:8 eighth triplets
         - [x] 6:8 dotted quarters
 
         - [ ] node+worklet per run a la YAD

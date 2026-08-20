@@ -6,6 +6,7 @@ import { VM } from '../vm/vm.js'
 import { OPCODES, SUBDIVISIONS, int2subdivisions } from '../vm/constants.js'
 
 const INF = Number.POSITIVE_INFINITY
+const START_DELAY = 250
 
 let DEBUG = false
 
@@ -20,6 +21,7 @@ export class Metronome2 extends AudioWorkletProcessor {
     delay: 0,
   }
 
+  #time = 0
   #script = []
   #vm = new VM(sampleRate, [])
 
@@ -172,6 +174,7 @@ export class Metronome2 extends AudioWorkletProcessor {
       this.samples = 0
       this.clock.reset()
 
+      this.#time = 0
       this.#vm = new VM(sampleRate, this.#script)
 
       console.log({ sampleRate })
@@ -200,6 +203,7 @@ export class Metronome2 extends AudioWorkletProcessor {
     const playing = this.playing
 
     this.FSM.onStop()
+    this.#time = 0
     this.#loops = 0 // NTS: always reset loop count on loading a track
     this.#samples = 0
 
@@ -218,10 +222,6 @@ export class Metronome2 extends AudioWorkletProcessor {
 
   get delaying() {
     return this.#delay > 0
-  }
-
-  get starting() {
-    return this.FSM.starting
   }
 
   get stopping() {
@@ -267,26 +267,31 @@ export class Metronome2 extends AudioWorkletProcessor {
     const gain = this.playing ? this.level.fadeIn() : this.level.fadeOut()
     let clock = this.clock
 
+    // ... internal clock
+    const dt = (N * 1000) / sampleRate
+    const start = this.#time
+    const end = start + dt
+
+    this.#time = end
     this.#samples += N > 0 ? N : 0
 
-    if (this.starting) {
-      clock.tick(BPM, tactus, figura, pulse, N)
-
-      if (clock.time >= 250) {
-        if (this.FSM.onPreamble()) {
-          clock.reset()
-          this.flip({ state: FSM.STATE.PLAYING, bar: 0, beat: 0, loops: this.#loops })
-          this.port.postMessage({
-            message: 'playing',
-            track: this.#track?.UUID ?? '',
-            loops: this.#loops,
-            BPM: Math.round(clamp(parameters.BPM[0], 40, 200)),
-          })
-
-          // ... start delay?
-          this.#delay = this.track?.delay ?? 0
-        }
+    // ... 250ms start delay
+    if (this.FSM.starting) {
+      if (start < START_DELAY) {
+        return true
       }
+
+      this.FSM.playing = true
+      this.flip({ state: FSM.STATE.PLAYING, bar: 0, beat: 0, loops: this.#loops })
+      this.port.postMessage({
+        message: 'playing',
+        track: this.#track?.UUID ?? '',
+        loops: this.#loops,
+        BPM: Math.round(clamp(parameters.BPM[0], 40, 200)),
+      })
+
+      // ... start delay?
+      this.#delay = this.track?.delay ?? 0
     }
 
     if (this.playing) {
@@ -299,7 +304,7 @@ export class Metronome2 extends AudioWorkletProcessor {
           const divisions = figura
           const subdivisions = int2subdivisions(pulse) ?? SUBDIVISIONS.QUARTER_NOTES
 
-          console.log('>>>', { N }, { click }, { beats }, { divisions }, { subdivisions })
+          // console.log('>>>', { N }, { click }, { beats }, { divisions }, { subdivisions })
 
           const { measure, beat } = this.#vm.click(click, { beats, divisions }, subdivisions)
           const ops = this.#vm.exec({ measure, beat }, { beats, divisions }, subdivisions)

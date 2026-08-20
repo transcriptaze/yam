@@ -6,7 +6,7 @@
 - [ ] passive:true (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 - [ ] capture:down (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 
-- [x] all popovers are broken
+- [ ] editor: changing title does not enable 'save'
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
@@ -18,7 +18,12 @@
         - [x] fix hardcoded VM fs
         - [x] reset VM on stop/start
         - [x] fix hardcoded VM buffersize
-        - [ ] start delay
+        - [x] start delay
+        - [ ] play track
+        - [ ] sections
+        - [ ] track delay
+        - [ ] fix pads for 6:8 dotted quarters
+        - [ ] remove FSM
 
         - [x] 4:4/eigths
         - [x] 4:4/quarter notes

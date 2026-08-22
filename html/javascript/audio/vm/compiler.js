@@ -7,5 +7,8 @@ export function compile(_track) {
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
   ]
 
-  return ops
+  return {
+    delay: 0,
+    script: ops,
+  }
 }

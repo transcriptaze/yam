@@ -19,9 +19,9 @@
         - [x] reset VM on stop/start
         - [x] fix hardcoded VM buffersize
         - [x] start delay
-        - [ ] play track
-        - [ ] sections
+        - [x] play track
         - [ ] track delay
+        - [ ] sections
         - [ ] fix pads for 6:8 dotted quarters
         - [ ] remove FSM
 

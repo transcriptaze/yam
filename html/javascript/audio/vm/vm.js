@@ -29,7 +29,7 @@ export class VM {
     this.#reset()
   }
 
-  tick(BPM, bufferSize, debug) {
+  tick(BPM, bufferSize) {
     const dt = (1000 * bufferSize) / this.#fs
     const tick = this.#tick + 1
     const start = this.#time
@@ -39,10 +39,6 @@ export class VM {
     this.#time = end
 
     const time = start / 1000
-
-    if (debug) {
-      console.log('>>>>   ', { tick }, { start }, { end })
-    }
 
     // ... whole beats
     {
@@ -104,10 +100,6 @@ export class VM {
       let next = this.#click.time < 0 ? 0.0 : this.#click.time + interval
       while (next < start) {
         next += interval
-      }
-
-      if (debug) {
-        console.log('>>>> >>', { tick }, { start }, { end }, { next })
       }
 
       if (next >= start && next < end) {
@@ -201,13 +193,8 @@ export class VM {
         break
       }
 
-      if (
-        op.at.measure === '*' &&
-        op.at.beat === '*' &&
-        divisions === 2 &&
-        subdivisions === SUBDIVISIONS.QUARTER_NOTES &&
-        (r === 0.0 || r === 0.5)
-      ) {
+      // prettier-ignore
+      if (op.at.measure === '*' && op.at.beat === '*' && divisions === 2 && subdivisions === SUBDIVISIONS.QUARTER_NOTES && (r === 0.0 || r === 0.5)) {
         ops.push(...this.#exec(op.op))
         break
       }

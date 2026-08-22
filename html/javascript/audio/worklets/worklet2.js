@@ -175,7 +175,7 @@ export class Metronome2 extends AudioWorkletProcessor {
       this.clock.reset()
 
       this.#time = 0
-      this.#vm = new VM(sampleRate, this.#script)
+      this.#vm = new VM(sampleRate, this.#script.script)
 
       console.log({ sampleRate })
       console.log(this.#script)
@@ -211,7 +211,7 @@ export class Metronome2 extends AudioWorkletProcessor {
       if (this.FSM.onPlay()) {
         this.section = null
         this.clock.reset()
-        this.#vm = new VM(sampleRate, this.#script)
+        this.#vm = new VM(sampleRate, this.#script.script)
       }
     }
   }

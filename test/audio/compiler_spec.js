@@ -14,10 +14,13 @@ describe('tests compiler.compile', function () {
     }
 
     // prettier-ignore
-    const expected = [
-      { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
-      { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
-    ]
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
 
     const script = compiler.compile(track)
 
@@ -34,10 +37,13 @@ describe('tests compiler.compile', function () {
     }
 
     // prettier-ignore
-    const expected = [
-      { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
-      { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
-    ]
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
 
     const script = compiler.compile(track)
 
@@ -54,10 +60,13 @@ describe('tests compiler.compile', function () {
     }
 
     // prettier-ignore
-    const expected = [
-      { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
-      { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
-    ]
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
 
     const script = compiler.compile(track)
 
@@ -74,10 +83,13 @@ describe('tests compiler.compile', function () {
     }
 
     // prettier-ignore
-    const expected = [
-      { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
-      { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
-    ]
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
 
     const script = compiler.compile(track)
 
@@ -94,10 +106,13 @@ describe('tests compiler.compile', function () {
     }
 
     // prettier-ignore
-    const expected = [
-      { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
-      { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
-    ]
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
 
     const script = compiler.compile(track)
 

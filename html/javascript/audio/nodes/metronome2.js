@@ -1,8 +1,5 @@
-// import * as PULSE from '../shared/constants.js'
-// import { parseTimeSignature, durationToMS, clamp } from '../../util.js'
-// import * as generators from '../../generators.js'
 import { parseTimeSignature } from '../../util.js'
-import { EVENTS, DEFAULT } from '../../constants.js'
+import { EVENTS } from '../../constants.js'
 
 import * as compiler from '../vm/compiler.js'
 import { subdivisions2int } from '../vm/constants.js'
@@ -186,14 +183,7 @@ export class Metronome2Node extends AudioWorkletNode {
     this.parameters.get('ding').setValueAtTime(ding ? 1 : 0, ctx.currentTime)
   }
 
-  set track(v) {
-    const track = v ?? {
-      UUID: DEFAULT.UUID,
-      tempo: 120,
-      timeSignature: '4:4',
-      pulse: 'quarter',
-    }
-
+  set track(track) {
     const script = compiler.compile(track)
 
     this.port.postMessage({

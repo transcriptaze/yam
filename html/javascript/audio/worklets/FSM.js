@@ -33,7 +33,7 @@ export class FSM {
 
   // NTS: interim thing for worklet 2 only
   set playing(_v) {
-    this.state === STATE.PLAYING
+    this.state = STATE.PLAYING
   }
 
   get stopping() {

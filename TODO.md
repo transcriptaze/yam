@@ -20,7 +20,7 @@
         - [x] fix hardcoded VM buffersize
         - [x] start delay
         - [x] play track
-        - [ ] track delay
+        - [x] track delay
         - [ ] sections
         - [ ] fix pads for 6:8 dotted quarters
         - [ ] remove FSM

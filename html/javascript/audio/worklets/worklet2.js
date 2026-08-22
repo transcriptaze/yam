@@ -22,13 +22,17 @@ export class Metronome2 extends AudioWorkletProcessor {
   }
 
   #time = 0
-  #script = []
+
+  #script = {
+    delay: 0,
+    script: [],
+  }
+
   #vm = new VM(sampleRate, [])
 
   #section = null
   #loops = 0
   #cued = []
-  #delay = 0
   #samples = 0
 
   constructor(options) {
@@ -220,10 +224,6 @@ export class Metronome2 extends AudioWorkletProcessor {
     return this.FSM.playing
   }
 
-  get delaying() {
-    return this.#delay > 0
-  }
-
   get stopping() {
     return this.FSM.stopping
   }
@@ -256,6 +256,44 @@ export class Metronome2 extends AudioWorkletProcessor {
   }
 
   process(_inputs, outputs, parameters) {
+    const N = outputs?.[0]?.[0]?.length ?? 0
+    const gain = this.playing ? this.level.fadeIn() : this.level.fadeOut()
+
+    // ... internal clock
+    const dt = (N * 1000) / sampleRate
+    const start = this.#time
+    const end = start + dt
+
+    this.#process(start, outputs, parameters)
+
+    // ... render
+    for (const out of outputs) {
+      for (const v of this.#cued) {
+        if (out.length > 0) {
+          render(out[0], v.left, gain)
+        }
+
+        if (out.length > 1) {
+          render(out[1], v.right, gain)
+        }
+      }
+
+      // FIXME render logic is only designed for one output
+      break
+    }
+
+    const finished = this.#cued.some((v) => v.done())
+    if (finished) {
+      this.#cued = this.#cued.filter((v) => !v.done())
+    }
+
+    // ... done
+    this.#time = end
+
+    return true
+  }
+
+  #process(t, outputs, parameters) {
     const N = outputs?.[0]?.[0]?.length ?? -3 // FIXME should be 0 probably
     const BPM = this.#bpm(clamp(parameters.BPM[0], 40, 200))
     const tactus = this.section?.beats ?? clamp(parameters.beats[0], 1, 32)
@@ -264,21 +302,14 @@ export class Metronome2 extends AudioWorkletProcessor {
 
     const loop = parameters.loop[0] === 1.0
     const ding = parameters.ding[0] === 1.0
-    const gain = this.playing ? this.level.fadeIn() : this.level.fadeOut()
     let clock = this.clock
 
-    // ... internal clock
-    const dt = (N * 1000) / sampleRate
-    const start = this.#time
-    const end = start + dt
-
-    this.#time = end
     this.#samples += N > 0 ? N : 0
 
-    // ... 250ms start delay
+    // ... 250ms pre-start delay
     if (this.FSM.starting) {
-      if (start < START_DELAY) {
-        return true
+      if (t < START_DELAY) {
+        return
       }
 
       this.FSM.playing = true
@@ -289,11 +320,14 @@ export class Metronome2 extends AudioWorkletProcessor {
         loops: this.#loops,
         BPM: Math.round(clamp(parameters.BPM[0], 40, 200)),
       })
-
-      // ... start delay?
-      this.#delay = this.track?.delay ?? 0
     }
 
+    // ... track delay
+    if (t < START_DELAY + this.#script.delay) {
+      return
+    }
+
+    // ... play
     if (this.playing) {
       // *** KLOCK ***
       {
@@ -320,12 +354,7 @@ export class Metronome2 extends AudioWorkletProcessor {
 
       const cluck = clock.tick(BPM, tactus, figura, pulse, N)
 
-      if (this.delaying) {
-        if (clock.time >= this.#delay) {
-          this.#delay = 0
-          clock.reset()
-        }
-      } else if (cluck.click) {
+      if (cluck.click) {
         const measure = cluck.bar
         const section = this.#track.sections.find((v) => measure >= v.start && measure <= v.end)
 
@@ -395,28 +424,6 @@ export class Metronome2 extends AudioWorkletProcessor {
 
       log('STOP', clock.t, clock.time, BPM, Number.NaN, Number.NaN, tactus, figura, pulse)
     }
-
-    // ... render
-    if (outputs != null && outputs.length > 0 && outputs[0] != null) {
-      const out = outputs[0]
-
-      for (const v of this.#cued) {
-        if (out.length > 0 && out[0] != null) {
-          render(out[0], v.left, gain)
-        }
-
-        if (out.length > 1 && out[1] != null) {
-          render(out[1], v.right, gain)
-        }
-      }
-
-      const finished = this.#cued.some((v) => v.done())
-      if (finished) {
-        this.#cued = this.#cued.filter((v) => !v.done())
-      }
-    }
-
-    return true
   }
 
   #exec(opcode) {

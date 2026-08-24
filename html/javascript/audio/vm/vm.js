@@ -1,11 +1,24 @@
-import { OPCODES } from './constants.js'
+import { OPCODES, SUBDIVISIONS } from './constants.js'
+
+const PULSE = new Map([
+  ['eighth', 8],
+  ['eighth-triplet', 8],
+  ['eighth-doublet', 4],
+  ['quarter', 4],
+  ['dotted-quarter', 8],
+  ['half', 2],
+])
 
 export class VM {
+  #fs = 44100
   #script = []
 
-  #dt = (1000 * 128) / 44100
   #tick = 0
   #time = 0
+  #state = {
+    stopped: false,
+  }
+
   #click = {
     time: Number.NEGATIVE_INFINITY,
     click: 0,
@@ -13,17 +26,18 @@ export class VM {
     beat: 0,
   }
 
-  constructor(fs, bufferSize, script) {
+  constructor(fs, script) {
+    this.#fs = fs
     this.#script = script
-    this.#dt = (1000 * bufferSize) / fs
 
     this.#reset()
   }
 
-  tick(BPM) {
+  tick(BPM, bufferSize) {
+    const dt = (1000 * bufferSize) / this.#fs
     const tick = this.#tick + 1
     const start = this.#time
-    const end = tick * this.#dt
+    const end = tick * dt
 
     this.#tick = tick
     this.#time = end
@@ -67,15 +81,65 @@ export class VM {
       }
     }
 
+    // ... dotted quarters, triplets, etc
+    {
+      const interval = (2 * 60000) / BPM / 3 // ms
+
+      let next = this.#click.time < 0 ? 0.0 : this.#click.time + interval
+      while (next < start) {
+        next += interval
+      }
+
+      if (next >= start && next < end) {
+        return {
+          time: time,
+          click: this.#click.click + 0.667,
+        }
+      }
+    }
+
+    {
+      const interval = 60000 / BPM / 3 // ms
+
+      let next = this.#click.time < 0 ? 0.0 : this.#click.time + interval
+      while (next < start) {
+        next += interval
+      }
+
+      if (next >= start && next < end) {
+        return {
+          time: time,
+          click: this.#click.click + 0.333,
+        }
+      }
+    }
+
     // ... default
     return {
       time: time,
     }
   }
 
-  click(click, { beats, _divisions }) {
-    // const q = Math.trunc(click)
-    const r = click % 1
+  click(click, { beats, divisions }, subdivisions) {
+    const pulse = PULSE.get(subdivisions) ?? 4
+    const klick = (() => {
+      let k = ((click - 1) * divisions) / pulse
+
+      k = k.toFixed(3)
+      k = parseFloat(k)
+
+      return k
+    })()
+
+    const _q = Math.trunc(klick)
+    const r = (() => {
+      let k = klick % 1
+
+      k = k.toFixed(3)
+      k = parseFloat(k)
+
+      return k
+    })()
 
     let measure = this.#click.measure === 0 ? 1 : this.#click.measure
     let beat = this.#click.beat
@@ -85,8 +149,14 @@ export class VM {
     }
 
     if (beat > beats) {
-      beat = 1
       measure += 1
+      beat = 1
+    } else if (subdivisions === SUBDIVISIONS.DOTTED_QUARTERS && beat > beats / 3) {
+      measure += 1
+      beat = 1
+    } else if (subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && beat > beats / 3) {
+      measure += 1
+      beat = 1
     }
 
     this.#click.measure = measure
@@ -98,12 +168,19 @@ export class VM {
     }
   }
 
-  exec(at) {
+  exec(at, { _beats, divisions }, subdivisions) {
     const ops = []
 
     for (const op of this.#script) {
-      // const q = Math.trunc(at.beat)
-      const r = at.beat % 1
+      const q = Math.trunc(at.beat)
+      const r = (() => {
+        let k = at.beat % 1
+
+        k = k.toFixed(3)
+        k = parseFloat(k)
+
+        return k
+      })()
 
       if (op.at.measure === at.measure && op.at.beat === at.beat) {
         ops.push(...this.#exec(op.op))
@@ -120,12 +197,48 @@ export class VM {
         break
       }
 
-      if (op.at.measure === '*' && op.at.beat === '*' && r === 0.0) {
+      // prettier-ignore
+      if (op.at.measure === '*' && op.at.beat === '*' && divisions === 2 && subdivisions === SUBDIVISIONS.QUARTER_NOTES && (r === 0.0 || r === 0.5)) {
         ops.push(...this.#exec(op.op))
         break
       }
 
-      if (op.at.measure === '*' && op.at.beat === '*.5' && r === 0.5) {
+      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.HALF_NOTES && q % 2 === 0 && r === 0.0) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.QUARTER_NOTES && r === 0.0) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_DOUBLETS && (r === 0.0 || r === 0.5)) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_NOTES && r === 0.0) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.DOTTED_QUARTERS && r === 0.0) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.0) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.333) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.667) {
         ops.push(...this.#exec(op.op))
         break
       }
@@ -147,20 +260,39 @@ export class VM {
 
   #exec(op) {
     switch (op) {
+      case OPCODES.STOP:
+        this.#state.stopped = true
+        return [OPCODES.STOP]
+
       case OPCODES.TICK:
-        return [OPCODES.TICK]
+        if (!this.#state.stopped) {
+          return [OPCODES.TICK]
+        }
+        break
 
       case OPCODES.TOCK:
-        return [OPCODES.TOCK]
+        if (!this.#state.stopped) {
+          return [OPCODES.TOCK]
+        }
+        break
 
       case OPCODES.TACK:
-        return [OPCODES.TACK]
+        if (!this.#state.stopped) {
+          return [OPCODES.TACK]
+        }
+        break
 
       case OPCODES.STICKS:
-        return [OPCODES.STICKS]
+        if (!this.#state.stopped) {
+          return [OPCODES.STICKS]
+        }
+        break
 
       case OPCODES.DING:
-        return [OPCODES.DING]
+        if (!this.#state.stopped) {
+          return [OPCODES.DING]
+        }
+        break
     }
 
     return []

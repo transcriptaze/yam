@@ -1,10 +1,8 @@
-// import * as PULSE from '../shared/constants.js'
-// import { parseTimeSignature, durationToMS, clamp } from '../../util.js'
-// import * as generators from '../../generators.js'
 import { parseTimeSignature } from '../../util.js'
-import { EVENTS, DEFAULT } from '../../constants.js'
+import { EVENTS } from '../../constants.js'
 
-import * as compiler from '..//vm/compiler.js'
+import * as compiler from '../vm/compiler.js'
+import { subdivisions2int } from '../vm/constants.js'
 
 const STATE = {
   START: 0,
@@ -30,8 +28,8 @@ export class Metronome2Node extends AudioWorkletNode {
     loops: 0,
   }
 
-  constructor(context, { tick, tock, tack, stick, ding }, subscribers) {
-    super(context, 'metronome2', {
+  constructor(ctx, { tick, tock, tack, stick, ding }, subscribers) {
+    super(ctx, 'metronome2', {
       numberOfInputs: 0,
       numberOfOutputs: 1,
       outputChannelCount: [2],
@@ -44,15 +42,12 @@ export class Metronome2Node extends AudioWorkletNode {
     this.port.postMessage({
       message: 'initialise',
 
-      fs: context.sampleRate,
       tick: sample(tick),
       tock: sample(tock),
       tack: sample(tack),
       ding: sample(ding),
       stick: sample(stick),
     })
-
-    console.log('**** NODE2')
   }
 
   onMessage(event) {
@@ -166,16 +161,12 @@ export class Metronome2Node extends AudioWorkletNode {
     }
   }
 
-  set pulse(_pulse) {
-    // this.#pulse = pulse
-    //
-    // if (pulse != null) {
-    //   const k = PULSE.pulseToInt(pulse)
-    //
-    //   if (!Number.isNaN(k)) {
-    //     this.parameters.get('pulse').setValueAtTime(k, this.context.currentTime)
-    //   }
-    // }
+  set pulse(subdivisions) {
+    const k = subdivisions2int(subdivisions)
+
+    if (!Number.isNaN(k)) {
+      this.parameters.get('pulse').setValueAtTime(k, this.context.currentTime)
+    }
   }
 
   set loop(loop) {
@@ -190,14 +181,7 @@ export class Metronome2Node extends AudioWorkletNode {
     this.parameters.get('ding').setValueAtTime(ding ? 1 : 0, ctx.currentTime)
   }
 
-  set track(v) {
-    const track = v ?? {
-      UUID: DEFAULT.UUID,
-      tempo: 120,
-      timeSignature: '4:4',
-      pulse: 'quarter',
-    }
-
+  set track(track) {
     const script = compiler.compile(track)
 
     this.port.postMessage({

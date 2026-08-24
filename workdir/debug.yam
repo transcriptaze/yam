@@ -7,30 +7,22 @@
       "title": "Songs to play when I'm drunk and high and thinking about my ex",
       "tracks": [
         "b8acedd3-58bc-4084-8beb-37c93f4c0e3b",
-        "3af2c1e3-c3b3-4b24-b140-0951849af9a3",
         "4b6d4905-e18b-4568-b48d-367c79674381",
         "5304dd6e-32ac-4e53-8a3b-7f246cb77820",
-        "a2f5717b-681f-43b8-bf72-e85df7b0698c",
         "d76f150d-8461-4fd9-a934-da7bf2699132"
       ],
-      "random": [
-        {
-          "UUID": "3af2c1e3-c3b3-4b24-b140-0951849af9a3",
-          "title": "<< random >>"
-        },
-        {
-          "UUID": "a2f5717b-681f-43b8-bf72-e85df7b0698c",
-          "title": "<< random >>"
-        }
-      ],
+      "random": [],
       "muted": []
     },
     {
       "UUID": "fd7f480b-6e51-46cb-ab5e-5726ab383944",
       "version": 0,
       "index": 1,
-      "title": "Playlist #13",
-      "tracks": [],
+      "title": "Klock",
+      "tracks": [
+        "6eac8ad7-d251-4031-ad62-13d52cf479b3"
+      ],
+      "random": [],
       "muted": []
     },
     {
@@ -39,12 +31,51 @@
       "index": 2,
       "title": "Playlist #X11Y",
       "tracks": [
+        "6eac8ad7-d251-4031-ad62-13d52cf479b3",
         "4b6d4905-e18b-4568-b48d-367c79674381",
         "f9534f96-0893-4d7a-ac2a-bbd774734d1b",
+        "c21d155a-45b4-4e04-ac71-e50cbaa156c3",
         "657cc85b-4dc7-4779-afde-fcb9681ee5d5",
         "c9b989e1-b13b-4beb-96c1-0b19adfaf9c7",
+        "31a8855a-9f33-49e8-a025-3f4e541a24b1",
         "a141f3ac-6e8e-47ac-b9c8-c9c27d521305",
-        "e7ff88da-a9ad-4c2c-a5f7-0459eab10f02"
+        "26def117-41e8-4281-b7d3-f8135fa3962a",
+        "e7ff88da-a9ad-4c2c-a5f7-0459eab10f02",
+        "39da87e1-f6c0-43b0-b98d-ea58ad737475"
+      ],
+      "random": [
+        {
+          "UUID": "31a8855a-9f33-49e8-a025-3f4e541a24b1",
+          "title": "random",
+          "filter": {
+            "include": [
+              "woot",
+              "toot"
+            ],
+            "exclude": []
+          }
+        },
+        {
+          "UUID": "c21d155a-45b4-4e04-ac71-e50cbaa156c3",
+          "title": "random",
+          "filter": {
+            "include": [
+              "woot"
+            ],
+            "exclude": []
+          }
+        },
+        {
+          "UUID": "26def117-41e8-4281-b7d3-f8135fa3962a",
+          "title": "random",
+          "filter": {
+            "include": [
+              "toot",
+              "ok"
+            ],
+            "exclude": []
+          }
+        }
       ],
       "muted": [
         "c9b989e1-b13b-4beb-96c1-0b19adfaf9c7"
@@ -59,6 +90,7 @@
         "e7ff88da-a9ad-4c2c-a5f7-0459eab10f02",
         "f9534f96-0893-4d7a-ac2a-bbd774734d1b"
       ],
+      "random": [],
       "muted": []
     },
     {
@@ -67,6 +99,7 @@
       "index": 4,
       "title": "Playlist #16",
       "tracks": [],
+      "random": [],
       "muted": []
     },
     {
@@ -90,8 +123,27 @@
         "6b215525-03a9-4694-a104-36f23b3dcf23",
         "7993b89b-1cae-4cfd-a985-091998c63fb3",
         "d76f150d-8461-4fd9-a934-da7bf2699132",
-        "657cc85b-4dc7-4779-afde-fcb9681ee5d5"
+        "657cc85b-4dc7-4779-afde-fcb9681ee5d5",
+        "5a2b15b6-1630-42a9-91f7-613ea3eb5911",
+        "e26d0fdd-3383-4cb1-90a7-b2e4eae03cb0",
+        "5e2462d0-e7d3-4dfe-924b-ca278bd69bd0",
+        "c3f6a904-943e-4241-8978-e2451197d4ed",
+        "b4b17b28-64ef-4687-a000-eeb0aea6c225",
+        "a9a085e5-f1ad-46cb-8288-1f4d50e7b904",
+        "39da87e1-f6c0-43b0-b98d-ea58ad737475",
+        "6eac8ad7-d251-4031-ad62-13d52cf479b3"
       ],
+      "random": [],
+      "muted": []
+    },
+    {
+      "UUID": "f0517acb-73c8-4ae3-89b3-77c20bc9236e",
+      "version": 0,
+      "index": 9007199254740991,
+      "deleted": 1787263791497,
+      "title": "Playlist #7",
+      "tracks": [],
+      "random": [],
       "muted": []
     }
   ],
@@ -107,7 +159,12 @@
         {
           "role": "count-in",
           "delay": "2500 ms",
-          "measures": 1
+          "measures": 1,
+          "subsections": [
+            {
+              "measures": 1
+            }
+          ]
         },
         {
           "role": "anacrusis",
@@ -116,51 +173,124 @@
             3.5
           ],
           "measures": 1,
-          "timeSignature": "3:4"
+          "timeSignature": "3:4",
+          "subsections": [
+            {
+              "measures": 1,
+              "timeSignature": "3:4"
+            }
+          ]
         },
         {
           "role": "intro",
           "measures": 4,
           "pulse": "quarter",
-          "tempo": 125
+          "tempo": 125,
+          "subsections": [
+            {
+              "measures": 4,
+              "pulse": "quarter",
+              "tempo": 125
+            }
+          ]
         },
         {
           "role": "verse",
           "measures": 4,
           "timeSignature": "6:8",
           "pulse": "eighth",
-          "name": "Verse 1"
+          "name": "Verse 1",
+          "subsections": [
+            {
+              "measures": 4,
+              "timeSignature": "6:8",
+              "pulse": "eighth"
+            }
+          ]
         },
         {
           "role": "verse",
           "measures": 4,
-          "tempo": 80
+          "tempo": 80,
+          "subsections": [
+            {
+              "measures": 4,
+              "tempo": 80
+            }
+          ]
         },
         {
           "role": "chorus",
           "measures": 4,
           "tempo": 160,
           "timeSignature": "5:4",
-          "pulse": "quarter"
+          "pulse": "quarter",
+          "subsections": [
+            {
+              "measures": 4,
+              "timeSignature": "5:4",
+              "pulse": "quarter",
+              "tempo": 160
+            }
+          ]
         },
         {
           "role": "chorus",
           "measures": 4,
-          "tempo": 140
+          "tempo": 140,
+          "subsections": [
+            {
+              "measures": 4,
+              "tempo": 140
+            }
+          ]
         },
         {
           "measures": 4,
           "tempo": 60,
-          "pulse": "eighth"
+          "pulse": "eighth",
+          "subsections": [
+            {
+              "measures": 4,
+              "pulse": "eighth",
+              "tempo": 60
+            }
+          ]
         },
         {
           "measures": 4,
           "pulse": "quarter",
-          "name": "Ending"
+          "name": "Ending",
+          "subsections": [
+            {
+              "measures": 4,
+              "pulse": "quarter"
+            }
+          ]
         }
+      ],
+      "tags": [
+        "woot"
       ],
       "metronome": {
         "BPM": 60,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
+      "UUID": "39da87e1-f6c0-43b0-b98d-ea58ad737475",
+      "version": 0,
+      "title": "⁓ The Long Way Home from Yesterday ⁓",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [],
+      "tags": [
+        "toot"
+      ],
+      "metronome": {
+        "BPM": 120,
         "loop": false,
         "ding": false
       }
@@ -262,6 +392,7 @@
           "measures": 2
         }
       ],
+      "tags": [],
       "metronome": {
         "BPM": 66,
         "loop": false,
@@ -467,8 +598,49 @@
           ]
         }
       ],
+      "tags": [
+        "ok"
+      ],
       "metronome": {
-        "BPM": 161,
+        "BPM": 160,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
+      "UUID": "5a2b15b6-1630-42a9-91f7-613ea3eb5911",
+      "version": 0,
+      "title": "(debug - anacrusis)",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "CountIn @ 4.5",
+          "role": "anacrusis",
+          "clicks": [
+            4.5
+          ]
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 120,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
+      "UUID": "5e2462d0-e7d3-4dfe-924b-ca278bd69bd0",
+      "version": 0,
+      "title": "⁓ Ghosts in the Static ⁓",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [],
+      "tags": [],
+      "metronome": {
+        "BPM": 120,
         "loop": false,
         "ding": false
       }
@@ -481,8 +653,99 @@
       "timeSignature": "3:4",
       "pulse": "eighth-doublet",
       "sections": [],
+      "tags": [],
       "metronome": {
         "BPM": 120,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
+      "UUID": "6b215525-03a9-4694-a104-36f23b3dcf23",
+      "version": 0,
+      "title": "(debug - dings)",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "role": "count-in"
+        },
+        {
+          "role": "anacrusis"
+        },
+        {
+          "name": "track dings (2.3)",
+          "role": "other",
+          "measures": 4
+        },
+        {
+          "name": "section dings (2.4)",
+          "role": "other",
+          "measures": 4,
+          "timeSignature": "5:4",
+          "dings": [
+            2.4
+          ]
+        },
+        {
+          "name": "sub-section dings (6.2 - 6.4)",
+          "role": "other",
+          "timeSignature": "4:4",
+          "subsections": [
+            {
+              "measures": 4
+            },
+            {
+              "measures": 4,
+              "dings": [
+                2.2,
+                2.3,
+                2.4
+              ]
+            }
+          ]
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 80,
+        "loop": false,
+        "ding": true,
+        "dings": [
+          2.3
+        ]
+      }
+    },
+    {
+      "UUID": "6eac8ad7-d251-4031-ad62-13d52cf479b3",
+      "version": 0,
+      "title": "klock - basic",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
+      "UUID": "7993b89b-1cae-4cfd-a985-091998c63fb3",
+      "version": 0,
+      "title": "(debug) 9/8",
+      "tempo": 120,
+      "timeSignature": "9:8",
+      "pulse": "dotted-quarter",
+      "sections": [],
+      "tags": [
+        "toot",
+        "ok"
+      ],
+      "metronome": {
+        "BPM": 100,
         "loop": false,
         "ding": false
       }
@@ -515,6 +778,7 @@
           "measures": 4
         }
       ],
+      "tags": [],
       "metronome": {
         "BPM": 60,
         "loop": true,
@@ -529,6 +793,9 @@
       "timeSignature": "4:4",
       "pulse": "quarter",
       "sections": [],
+      "tags": [
+        "toot"
+      ],
       "metronome": {
         "BPM": 120,
         "loop": false,
@@ -537,6 +804,21 @@
           "1": "sticks",
           "4": "tack"
         }
+      }
+    },
+    {
+      "UUID": "a9a085e5-f1ad-46cb-8288-1f4d50e7b904",
+      "version": 0,
+      "title": "⁓ Second Hand Universe ⁓",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [],
+      "tags": [],
+      "metronome": {
+        "BPM": 120,
+        "loop": false,
+        "ding": false
       }
     },
     {
@@ -550,12 +832,27 @@
         {
           "name": "CountIn",
           "role": "count-in",
-          "delay": "500 ms"
+          "delay": "500 ms",
+          "measures": 1,
+          "subsections": [
+            {
+              "measures": 1
+            }
+          ]
         },
         {
           "name": "Verse",
-          "measures": 4
+          "measures": 4,
+          "subsections": [
+            {
+              "measures": 4
+            }
+          ]
         }
+      ],
+      "tags": [
+        "woot",
+        "toot"
       ],
       "metronome": {
         "BPM": 120,
@@ -598,6 +895,22 @@
           ]
         }
       ],
+      "tags": [],
+      "metronome": {
+        "BPM": 120,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
+      "UUID": "b4b17b28-64ef-4687-a000-eeb0aea6c225",
+      "version": 0,
+      "title": "⁓ Blueprints for Silence ⁓",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [],
+      "tags": [],
       "metronome": {
         "BPM": 120,
         "loop": false,
@@ -615,15 +928,27 @@
         {
           "name": "CountIn",
           "role": "count-in",
-          "delay": "500 ms"
+          "delay": "500 ms",
+          "measures": 1,
+          "subsections": [
+            {
+              "measures": 1
+            }
+          ]
         },
         {
           "name": "Verse",
-          "measures": 4
+          "measures": 4,
+          "subsections": [
+            {
+              "measures": 4
+            }
+          ]
         }
       ],
+      "tags": [],
       "metronome": {
-        "BPM": 120,
+        "BPM": 40,
         "loop": false,
         "ding": false
       }
@@ -657,6 +982,7 @@
           }
         }
       ],
+      "tags": [],
       "metronome": {
         "BPM": 120,
         "loop": false,
@@ -668,21 +994,14 @@
       }
     },
     {
-      "UUID": "5a2b15b6-1630-42a9-91f7-613ea3eb5911",
+      "UUID": "c3f6a904-943e-4241-8978-e2451197d4ed",
       "version": 0,
-      "title": "(debug - anacrusis)",
+      "title": "⁓ Your Shadow’s Got My Eyes ⁓",
       "tempo": 120,
       "timeSignature": "4:4",
       "pulse": "quarter",
-      "sections": [
-        {
-          "name": "CountIn @ 4.5",
-          "role": "anacrusis",
-          "clicks": [
-            4.5
-          ]
-        }
-      ],
+      "sections": [],
+      "tags": [],
       "metronome": {
         "BPM": 120,
         "loop": false,
@@ -781,6 +1100,7 @@
           "measures": 12
         }
       ],
+      "tags": [],
       "metronome": {
         "BPM": 116,
         "loop": false,
@@ -798,174 +1118,39 @@
         {
           "role": "count-in",
           "delay": "500ms",
-          "measures": 2
+          "measures": 2,
+          "subsections": [
+            {
+              "measures": 2
+            }
+          ]
         },
         {
           "role": "intro",
-          "measures": 8
+          "measures": 8,
+          "subsections": [
+            {
+              "measures": 8
+            }
+          ]
         },
         {
           "name": "Verse 1",
           "role": "verse",
-          "measures": 24
+          "measures": 24,
+          "subsections": [
+            {
+              "measures": 24
+            }
+          ]
         }
+      ],
+      "tags": [
+        "ok"
       ],
       "metronome": {
         "BPM": 90,
         "loop": true,
-        "ding": false
-      }
-    },
-    {
-      "UUID": "e7ff88da-a9ad-4c2c-a5f7-0459eab10f02",
-      "version": 0,
-      "title": "Jukskei (bridge)",
-      "tempo": 160,
-      "timeSignature": "4:4",
-      "pulse": "quarter",
-      "sections": [],
-      "metronome": {
-        "BPM": 125,
-        "loop": false,
-        "ding": false
-      }
-    },
-    {
-      "UUID": "f9534f96-0893-4d7a-ac2a-bbd774734d1b",
-      "version": 0,
-      "title": "Greensleeves",
-      "tempo": 69,
-      "timeSignature": "3:4",
-      "pulse": "eighth-doublet",
-      "sections": [
-        {
-          "role": "anacrusis",
-          "measures": 1,
-          "clicks": [
-            3,
-            3.5
-          ],
-          "subsections": [
-            {
-              "measures": 1
-            }
-          ]
-        },
-        {
-          "name": "Verse 1",
-          "role": "verse",
-          "measures": 8,
-          "subsections": [
-            {
-              "measures": 8
-            }
-          ]
-        },
-        {
-          "name": "Verse 2",
-          "role": "verse",
-          "measures": 8,
-          "subsections": [
-            {
-              "measures": 8
-            }
-          ]
-        },
-        {
-          "name": "Chorus 1",
-          "role": "chorus",
-          "measures": 8,
-          "subsections": [
-            {
-              "measures": 8
-            }
-          ]
-        },
-        {
-          "name": "Chorus 2",
-          "role": "chorus",
-          "measures": 8,
-          "subsections": [
-            {
-              "measures": 8
-            }
-          ]
-        }
-      ],
-      "metronome": {
-        "BPM": 54,
-        "loop": true,
-        "loops": 3,
-        "ding": false
-      }
-    },
-    {
-      "UUID": "6b215525-03a9-4694-a104-36f23b3dcf23",
-      "version": 0,
-      "title": "(debug - dings)",
-      "tempo": 120,
-      "timeSignature": "4:4",
-      "pulse": "quarter",
-      "sections": [
-        {
-          "role": "count-in"
-        },
-        {
-          "role": "anacrusis"
-        },
-        {
-          "name": "track dings (2.3)",
-          "role": "other",
-          "measures": 4
-        },
-        {
-          "name": "section dings (2.4)",
-          "role": "other",
-          "measures": 4,
-          "timeSignature": "5:4",
-          "dings": [
-            2.4
-          ]
-        },
-        {
-          "name": "sub-section dings (6.2 - 6.4)",
-          "role": "other",
-          "timeSignature": "4:4",
-          "subsections": [
-            {
-              "measures": 4
-            },
-            {
-              "measures": 4,
-              "dings": [
-                2.2,
-                2.3,
-                2.4
-              ]
-            }
-          ]
-        }
-      ],
-      "metronome": {
-        "BPM": 80,
-        "loop": false,
-        "ding": false,
-        "dings": [
-          2.3
-        ]
-      }
-    },
-    {
-      "UUID": "7993b89b-1cae-4cfd-a985-091998c63fb3",
-      "version": 0,
-      "title": "(debug) 9/8",
-      "tempo": 120,
-      "timeSignature": "9:8",
-      "pulse": "dotted-quarter",
-      "sections": [],
-      "metronome": {
-        "BPM": 100,
-        "loop": false,
         "ding": false
       }
     },
@@ -1122,11 +1307,97 @@
           "timeSignature": "4:4"
         }
       ],
+      "tags": [],
       "metronome": {
         "BPM": 80,
         "loop": false,
         "ding": false
       }
-    }    
+    },
+    {
+      "UUID": "e7ff88da-a9ad-4c2c-a5f7-0459eab10f02",
+      "version": 0,
+      "title": "Jukskei (bridge)",
+      "tempo": 160,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [],
+      "tags": [],
+      "metronome": {
+        "BPM": 125,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
+      "UUID": "f9534f96-0893-4d7a-ac2a-bbd774734d1b",
+      "version": 0,
+      "title": "Greensleeves",
+      "tempo": 69,
+      "timeSignature": "3:4",
+      "pulse": "eighth-doublet",
+      "sections": [
+        {
+          "role": "anacrusis",
+          "measures": 1,
+          "clicks": [
+            3,
+            3.5
+          ],
+          "subsections": [
+            {
+              "measures": 1
+            }
+          ]
+        },
+        {
+          "name": "Verse 1",
+          "role": "verse",
+          "measures": 8,
+          "subsections": [
+            {
+              "measures": 8
+            }
+          ]
+        },
+        {
+          "name": "Verse 2",
+          "role": "verse",
+          "measures": 8,
+          "subsections": [
+            {
+              "measures": 8
+            }
+          ]
+        },
+        {
+          "name": "Chorus 1",
+          "role": "chorus",
+          "measures": 8,
+          "subsections": [
+            {
+              "measures": 8
+            }
+          ]
+        },
+        {
+          "name": "Chorus 2",
+          "role": "chorus",
+          "measures": 8,
+          "subsections": [
+            {
+              "measures": 8
+            }
+          ]
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 54,
+        "loop": true,
+        "loops": 3,
+        "ding": false
+      }
+    }
   ]
 }

@@ -6,7 +6,8 @@
 - [ ] passive:true (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 - [ ] capture:down (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 
-- [x] all popovers are broken
+- [x] editor: changing title does not enable 'save'
+- [x] web manifest
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
@@ -14,10 +15,36 @@
         - [x] BPM
         - [x] sync pads to VM click
         - [x] time signature
-        - [ ] doublets
-        - [ ] half notes
-        - [ ] 6:8
-        - [ ] start delay
+        - [x] doublets
+        - [x] fix hardcoded VM fs
+        - [x] reset VM on stop/start
+        - [x] fix hardcoded VM buffersize
+        - [x] start delay
+        - [x] play track
+        - [x] track delay
+        - [ ] track: play start to finish
+           - [ ] vm unit test
+           - [ ] compile track measures
+           - [ ] sort script by strictness
+
+        - [ ] sections
+        - [ ] loops
+        - [ ] dings
+        - [ ] fix pads for 6:8 dotted quarters
+        - [ ] remove FSM
+
+        - [x] 4:4/eigths
+        - [x] 4:4/quarter notes
+        - [ ] 4:4/half notes
+
+        - [ ] 2:2 eighths
+        - [x] 2:2 quarter notes
+        - [x] 2:2 half notes
+
+        - [x] 6:8 eighths
+        - [x] 6:8 eighth doublets
+        - [x] 6:8 eighth triplets
+        - [x] 6:8 dotted quarters
 
         - [ ] node+worklet per run a la YAD
         - [ ] put gain into node::sample 

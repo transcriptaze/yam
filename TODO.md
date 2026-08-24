@@ -7,6 +7,7 @@
 - [ ] capture:down (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 
 - [ ] editor: changing title does not enable 'save'
+- [ ] web manifest
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
@@ -21,7 +22,12 @@
         - [x] start delay
         - [x] play track
         - [x] track delay
+        - [ ] track: play start to finish
+        - [ ] sort script by strictness
+
         - [ ] sections
+        - [ ] loops
+        - [ ] dings
         - [ ] fix pads for 6:8 dotted quarters
         - [ ] remove FSM
 

@@ -35,7 +35,7 @@ export class Metronome2 extends AudioWorkletProcessor {
   #cued = []
   #samples = 0
 
-  constructor(options) {
+  constructor(_options) {
     super()
 
     this.FSM = new FSM.FSM()
@@ -44,8 +44,6 @@ export class Metronome2 extends AudioWorkletProcessor {
     this.clock = new Clock()
 
     this.port.onmessage = (event) => this.#onMessage(event)
-
-    console.log('**** WORKLET2', { options }, { sampleRate })
   }
 
   static get parameterDescriptors() {
@@ -171,9 +169,6 @@ export class Metronome2 extends AudioWorkletProcessor {
 
   play() {
     if (this.FSM.onPlay()) {
-      // NTS: dont't reset loop count on play/stop so that you can restart without "losing your place"
-      // this.#loops = 0
-
       this.section = null
       this.samples = 0
       this.clock.reset()
@@ -338,16 +333,12 @@ export class Metronome2 extends AudioWorkletProcessor {
           const divisions = figura
           const subdivisions = int2subdivisions(pulse) ?? SUBDIVISIONS.QUARTER_NOTES
 
-          // console.log('>>>', { N }, { click }, { beats }, { divisions }, { subdivisions })
-
           const { measure, beat } = this.#vm.click(click, { beats, divisions }, subdivisions)
           const ops = this.#vm.exec({ measure, beat }, { beats, divisions }, subdivisions)
 
           for (const op of ops) {
-            this.#exec(op)
+            this.#exec(op, { measure, beat })
           }
-
-          this.flip({ state: FSM.STATE.PLAYING, bar: measure, beat: beat, loops: this.#loops })
         }
       }
       // *** END KLOCK ***
@@ -365,32 +356,12 @@ export class Metronome2 extends AudioWorkletProcessor {
         if (measure > this.track.bars && this.FSM.onStop()) {
           this.#loops++
 
-          this.port.postMessage({
-            message: 'done',
-            track: this.#track?.UUID ?? '',
-          })
-
-          this.FSM.onStopped()
-          log('STOP', clock.t, clock.time, BPM, cluck.bar, cluck.beat, tactus, figura, pulse)
-
           const loops = this.track?.loops ?? INF
 
           if (loop && (loops == INF || this.#loops < loops) && this.FSM.onPlay()) {
             this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
             this.section = null
             this.clock.reset()
-          } else {
-            const loops = this.#loops
-            this.#loops = 0 // NTS: done, reset loop count
-
-            this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
-            this.port.postMessage({
-              message: 'stopped',
-              track: this.#track?.UUID ?? '',
-              loops: loops,
-              samples: this.#samples,
-              duration: this.#samples / sampleRate,
-            })
           }
         } else {
           const playhead = `${cluck.bar}.${cluck.beat}`
@@ -417,21 +388,39 @@ export class Metronome2 extends AudioWorkletProcessor {
         //   this.cue(cluck.tock.beat, pulse)
         // }
       }
-    } else if (this.stopping) {
-      this.FSM.onStopped()
-      // NTS: send current loops - doesn't reset loop count on stop anymore
-      this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
-
-      log('STOP', clock.t, clock.time, BPM, Number.NaN, Number.NaN, tactus, figura, pulse)
     }
   }
 
-  #exec(opcode) {
+  #exec(opcode, { measure, beat }) {
     const cue = (v) => {
       const click = this.clicks.get(v) ?? this.clicks.get('default')
       if (click != null) {
         this.#cued.push(sample(click))
       }
+
+      this.flip({ state: FSM.STATE.PLAYING, bar: measure, beat: beat, loops: this.#loops })
+    }
+
+    const stop = () => {
+      this.FSM.onStop()
+      this.FSM.onStopped()
+
+      this.port.postMessage({
+        message: 'stopped',
+        track: this.#track?.UUID ?? '',
+        loops: this.#loops, // NTS: send current loops - doesn't reset loop count on stop anymore
+        samples: this.#samples,
+        duration: this.#samples / sampleRate,
+      })
+
+      // this.#loops = 0 // NTS: done, reset loop count
+      //
+      // this.port.postMessage({
+      //   message: 'done',
+      //   track: this.#track?.UUID ?? '',
+      // })
+
+      this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
     }
 
     switch (opcode) {
@@ -453,6 +442,10 @@ export class Metronome2 extends AudioWorkletProcessor {
 
       case OPCODES.DING:
         cue('ding')
+        break
+
+      case OPCODES.STOP:
+        stop()
         break
     }
   }

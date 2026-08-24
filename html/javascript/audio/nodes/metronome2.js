@@ -48,8 +48,6 @@ export class Metronome2Node extends AudioWorkletNode {
       ding: sample(ding),
       stick: sample(stick),
     })
-
-    console.log('**** NODE2')
   }
 
   onMessage(event) {

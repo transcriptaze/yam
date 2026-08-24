@@ -15,6 +15,10 @@ export class VM {
 
   #tick = 0
   #time = 0
+  #state = {
+    stopped: false,
+  }
+
   #click = {
     time: Number.NEGATIVE_INFINITY,
     click: 0,
@@ -256,20 +260,39 @@ export class VM {
 
   #exec(op) {
     switch (op) {
+      case OPCODES.STOP:
+        this.#state.stopped = true
+        return [OPCODES.STOP]
+
       case OPCODES.TICK:
-        return [OPCODES.TICK]
+        if (!this.#state.stopped) {
+          return [OPCODES.TICK]
+        }
+        break
 
       case OPCODES.TOCK:
-        return [OPCODES.TOCK]
+        if (!this.#state.stopped) {
+          return [OPCODES.TOCK]
+        }
+        break
 
       case OPCODES.TACK:
-        return [OPCODES.TACK]
+        if (!this.#state.stopped) {
+          return [OPCODES.TACK]
+        }
+        break
 
       case OPCODES.STICKS:
-        return [OPCODES.STICKS]
+        if (!this.#state.stopped) {
+          return [OPCODES.STICKS]
+        }
+        break
 
       case OPCODES.DING:
-        return [OPCODES.DING]
+        if (!this.#state.stopped) {
+          return [OPCODES.DING]
+        }
+        break
     }
 
     return []

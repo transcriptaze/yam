@@ -23,7 +23,6 @@
         - [x] play track
         - [x] track delay
         - [ ] track: play start to finish
-           - [ ] vm unit test
            - [ ] compile track measures
            - [ ] sort script by strictness
 

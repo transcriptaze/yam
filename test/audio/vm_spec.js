@@ -978,6 +978,49 @@ describe('tests VM.exec', function () {
       expect(vm.exec(click, timeSignature, subdivisions)).to.deep.equal(test.expected)
     }
   })
+
+  it('exec, stop', function () {
+    // prettier-ignore
+    const tests = [
+      { measure: 1, beat: 1,   expected: [OPCODES.TICK] },
+      { measure: 1, beat: 1.5, expected: []             },
+      { measure: 1, beat: 2,   expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 2.5, expected: []             },
+      { measure: 1, beat: 3,   expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 3.5, expected: []             },
+      { measure: 1, beat: 4,   expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 4.5, expected: []             },
+
+      { measure: 2, beat: 1,   expected: [OPCODES.STOP] },
+      { measure: 2, beat: 1.5, expected: [] },
+      { measure: 2, beat: 2,   expected: [] },
+      { measure: 2, beat: 2.5, expected: [] },
+      { measure: 2, beat: 3,   expected: [] },
+      { measure: 2, beat: 3.5, expected: [] },
+      { measure: 2, beat: 4,   expected: [] },
+      { measure: 2, beat: 4.5, expected: [] },
+    ]
+
+    // ... setup
+    const timeSignature = { beats: 4, divisions: 4 }
+    const subdivisions = QUARTER_NOTES
+
+    // prettier-ignore
+    const script = [
+      { at: { measure: 2,   beat: 1   }, op: OPCODES.STOP },
+      { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+      { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+    ]
+
+    const vm = new VM(FS, script)
+
+    // ... run
+    for (const test of tests) {
+      const click = { measure: test.measure, beat: test.beat }
+
+      expect(vm.exec(click, timeSignature, subdivisions)).to.deep.equal(test.expected)
+    }
+  })
 })
 
 describe('4:4 time', function () {
@@ -1264,3 +1307,4 @@ function run(vm, bpm, timeSignature, subdivisions, tests) {
     expect({ measure, beat, ops }).to.deep.equal(test.expected)
   }
 }
+

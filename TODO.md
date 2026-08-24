@@ -6,8 +6,8 @@
 - [ ] passive:true (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 - [ ] capture:down (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 
-- [ ] editor: changing title does not enable 'save'
-- [ ] web manifest
+- [x] editor: changing title does not enable 'save'
+- [x] web manifest
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
@@ -23,7 +23,9 @@
         - [x] play track
         - [x] track delay
         - [ ] track: play start to finish
-        - [ ] sort script by strictness
+           - [ ] vm unit test
+           - [ ] compile track measures
+           - [ ] sort script by strictness
 
         - [ ] sections
         - [ ] loops

@@ -18,8 +18,10 @@
       "UUID": "fd7f480b-6e51-46cb-ab5e-5726ab383944",
       "version": 0,
       "index": 1,
-      "title": "Playlist #13",
-      "tracks": [],
+      "title": "Klock",
+      "tracks": [
+        "6eac8ad7-d251-4031-ad62-13d52cf479b3"
+      ],
       "random": [],
       "muted": []
     },
@@ -718,8 +720,8 @@
     {
       "UUID": "6eac8ad7-d251-4031-ad62-13d52cf479b3",
       "version": 0,
-      "title": "debug (klock)",
-      "tempo": 90,
+      "title": "klock - basic",
+      "tempo": 120,
       "timeSignature": "4:4",
       "pulse": "quarter",
       "sections": [],

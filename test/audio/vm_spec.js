@@ -1307,4 +1307,3 @@ function run(vm, bpm, timeSignature, subdivisions, tests) {
     expect({ measure, beat, ops }).to.deep.equal(test.expected)
   }
 }
-

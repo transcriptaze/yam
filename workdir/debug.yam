@@ -20,7 +20,9 @@
       "index": 1,
       "title": "Klock",
       "tracks": [
-        "6eac8ad7-d251-4031-ad62-13d52cf479b3"
+        "6eac8ad7-d251-4031-ad62-13d52cf479b3",
+        "466e08f0-27cb-4c93-ac9c-1bd8f3d5d804",
+        "27e6743d-9345-4d8e-8ef7-09c4e0c0d348"
       ],
       "random": [],
       "muted": []
@@ -131,7 +133,9 @@
         "b4b17b28-64ef-4687-a000-eeb0aea6c225",
         "a9a085e5-f1ad-46cb-8288-1f4d50e7b904",
         "39da87e1-f6c0-43b0-b98d-ea58ad737475",
-        "6eac8ad7-d251-4031-ad62-13d52cf479b3"
+        "6eac8ad7-d251-4031-ad62-13d52cf479b3",
+        "27e6743d-9345-4d8e-8ef7-09c4e0c0d348",
+        "466e08f0-27cb-4c93-ac9c-1bd8f3d5d804"
       ],
       "random": [],
       "muted": []
@@ -148,6 +152,32 @@
     }
   ],
   "tracks": [
+    {
+      "UUID": "27e6743d-9345-4d8e-8ef7-09c4e0c0d348",
+      "version": 0,
+      "title": "klock - section, 8 bars",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "verse",
+          "measures": 8,
+          "subsections": [
+            {
+              "measures": 8
+            }
+          ],
+          "role": "verse"
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": false
+      }
+    },
     {
       "UUID": "32e544f0-1c67-431f-9198-85cd67d7a410",
       "version": 0,
@@ -291,6 +321,29 @@
       ],
       "metronome": {
         "BPM": 120,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
+      "UUID": "466e08f0-27cb-4c93-ac9c-1bd8f3d5d804",
+      "version": 0,
+      "title": "klock - section, unspecified measures",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "verse",
+          "role": "verse",
+          "subsections": [
+            {}
+          ]
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
         "loop": false,
         "ding": false
       }

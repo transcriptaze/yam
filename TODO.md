@@ -21,14 +21,19 @@
         - [x] fix hardcoded VM buffersize
         - [x] start delay
         - [x] play track
-        - [x] track delay
-        - [ ] track: play start to finish
-           - [ ] compile track measures
-           - [ ] sort script by strictness
-
-        - [ ] sections
-        - [ ] loops
+        - [x] track: play start to finish
+            - [x] worklet
+            - [x] compile track measures
+ 
+        - [ ] track delay
+            - [x] worklet
+            - [ ] compiler
+        
         - [ ] dings
+        - [ ] sort script by strictness
+        - [ ] sections
+        - [ ] subsections
+        - [ ] loops
         - [ ] fix pads for 6:8 dotted quarters
         - [ ] remove FSM
 

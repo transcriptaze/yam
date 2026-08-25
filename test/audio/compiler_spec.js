@@ -7,7 +7,6 @@ describe('compile: basic track', function () {
   it('1:4, 120BPM, quarter notes', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
-      title: '1:4, 120BPM, quarter notes',
       tempo: 120,
       timeSignature: '2:4',
       pulse: 'quarter',
@@ -30,7 +29,6 @@ describe('compile: basic track', function () {
   it('2:4, 120BPM, quarter notes', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
-      title: '2:4, 120BPM, quarter notes',
       tempo: 120,
       timeSignature: '2:4',
       pulse: 'quarter',
@@ -53,7 +51,6 @@ describe('compile: basic track', function () {
   it('3:4, 120BPM, quarter notes', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
-      title: '3:4, 120BPM, quarter notes',
       tempo: 120,
       timeSignature: '3:4',
       pulse: 'quarter',
@@ -76,7 +73,6 @@ describe('compile: basic track', function () {
   it('4:4, 120BPM, quarter notes', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
-      title: '4:4, 120BPM, quarter notes',
       tempo: 120,
       timeSignature: '4:4',
       pulse: 'quarter',
@@ -99,7 +95,6 @@ describe('compile: basic track', function () {
   it('5:4, 120BPM, quarter notes', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
-      title: '5:4, 120BPM, quarter notes',
       tempo: 120,
       timeSignature: '5:4',
       pulse: 'quarter',
@@ -108,6 +103,63 @@ describe('compile: basic track', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      script: [
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
+})
+
+describe('compile: track with delay', function () {
+  it('no delay', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          name: 'count-in',
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
+
+  it('1250ms delay', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          name: 'count-in',
+          delay: 1250,
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 1250,
       script: [
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },

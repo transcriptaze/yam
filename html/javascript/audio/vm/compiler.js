@@ -1,11 +1,19 @@
 import { OPCODES } from './constants.js'
 
 export function compile(track) {
-  const ops = []
+  const script = {
+    delay: 0,
+    script: [],
+  }
 
-  // ... bars
   const sections = track?.sections ?? []
 
+  // ... delay
+  if (sections.length > 0) {
+    script.delay = sections[0].delay ?? 0
+  }
+
+  // ... bars
   if (sections.length > 0) {
     const bars = sections.reduce((N, section) => {
       const measures = section.measures ?? Number.POSITIVE_INFINITY
@@ -14,16 +22,13 @@ export function compile(track) {
     }, 0)
 
     if (bars !== Number.POSITIVE_INFINITY) {
-      ops.push({ at: { measure: bars + 1, beat: 1 }, op: OPCODES.STOP })
+      script.script.push({ at: { measure: bars + 1, beat: 1 }, op: OPCODES.STOP })
     }
   }
 
   // ... default
-  ops.push({ at: { measure: '*', beat: 1 }, op: OPCODES.TICK })
-  ops.push({ at: { measure: '*', beat: '*' }, op: OPCODES.TOCK })
+  script.script.push({ at: { measure: '*', beat: 1 }, op: OPCODES.TICK })
+  script.script.push({ at: { measure: '*', beat: '*' }, op: OPCODES.TOCK })
 
-  return {
-    delay: 0,
-    script: ops,
-  }
+  return script
 }

@@ -19,16 +19,12 @@
         - [x] fix hardcoded VM fs
         - [x] reset VM on stop/start
         - [x] fix hardcoded VM buffersize
+        - [x] stop doesn't reset pads
         - [x] start delay
         - [x] play track
         - [x] track: play start to finish
-            - [x] worklet
-            - [x] compile track measures
- 
-        - [ ] track delay
-            - [x] worklet
-            - [ ] compiler
-        
+        - [x] track delay
+
         - [ ] dings
         - [ ] sort script by strictness
         - [ ] sections

@@ -22,7 +22,8 @@
       "tracks": [
         "6eac8ad7-d251-4031-ad62-13d52cf479b3",
         "466e08f0-27cb-4c93-ac9c-1bd8f3d5d804",
-        "27e6743d-9345-4d8e-8ef7-09c4e0c0d348"
+        "27e6743d-9345-4d8e-8ef7-09c4e0c0d348",
+        "60d16e10-3ee5-409a-ad63-1665ae8054fc"
       ],
       "random": [],
       "muted": []
@@ -135,7 +136,8 @@
         "39da87e1-f6c0-43b0-b98d-ea58ad737475",
         "6eac8ad7-d251-4031-ad62-13d52cf479b3",
         "27e6743d-9345-4d8e-8ef7-09c4e0c0d348",
-        "466e08f0-27cb-4c93-ac9c-1bd8f3d5d804"
+        "466e08f0-27cb-4c93-ac9c-1bd8f3d5d804",
+        "60d16e10-3ee5-409a-ad63-1665ae8054fc"
       ],
       "random": [],
       "muted": []
@@ -1449,6 +1451,27 @@
         "BPM": 54,
         "loop": true,
         "loops": 3,
+        "ding": false
+      }
+    },
+    {
+      "UUID": "60d16e10-3ee5-409a-ad63-1665ae8054fc",
+      "version": 0,
+      "title": "klock - 2500ms delay",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "count-in",
+          "role": "count-in",
+          "delay": 2500
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
         "ding": false
       }
     }

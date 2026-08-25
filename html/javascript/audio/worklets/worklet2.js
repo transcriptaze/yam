@@ -195,6 +195,13 @@ export class Metronome2 extends AudioWorkletProcessor {
         loops: this.#loops,
         bars: this.#track,
       })
+
+      this.port.postMessage({
+        message: 'done',
+        track: this.#track?.UUID ?? '',
+      })
+
+      this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
     }
   }
 

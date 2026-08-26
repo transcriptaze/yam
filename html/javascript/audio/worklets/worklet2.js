@@ -302,8 +302,8 @@ export class Metronome2 extends AudioWorkletProcessor {
     const figura = this.section?.divisions ?? clamp(parameters.divisions[0], 1, 32)
     const pulse = this.section?.pulse ?? parameters.pulse[0]
 
-    const loop = parameters.loop[0] === 1.0
     const ding = parameters.ding[0] === 1.0
+    const loop = parameters.loop[0] === 1.0
     let clock = this.clock
 
     this.#samples += N > 0 ? N : 0
@@ -341,7 +341,7 @@ export class Metronome2 extends AudioWorkletProcessor {
           const subdivisions = int2subdivisions(pulse) ?? SUBDIVISIONS.QUARTER_NOTES
 
           const { measure, beat } = this.#vm.click(click, { beats, divisions }, subdivisions)
-          const ops = this.#vm.exec({ measure, beat }, { beats, divisions }, subdivisions)
+          const ops = this.#vm.exec({ measure, beat }, { beats, divisions }, subdivisions, ding)
 
           for (const op of ops) {
             this.#exec(op, { measure, beat })

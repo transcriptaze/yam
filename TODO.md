@@ -24,12 +24,18 @@
         - [x] play track
         - [x] track: play start to finish
         - [x] track delay
-
         - [ ] dings
-        - [ ] sort script by strictness
+            - [x] vm
+            - [x] compiler
+            - [x] enable/disable
+            - [ ] default to tock if disabled and on beat
+
+        - [ ] count-in
+        - [ ] pickup
         - [ ] sections
         - [ ] subsections
         - [ ] loops
+        - [ ] sort script by strictness
         - [ ] fix pads for 6:8 dotted quarters
         - [ ] remove FSM
 
@@ -50,6 +56,7 @@
         - [ ] put gain into node::sample 
         - [ ] Float32Buffer:copyTo
         - [ ] move fs (?) and bufferSize to tick(...)
+        - [ ] // FIXME render logic is only designed for one output
 
     - [ ] https://github.com/transcriptaze/yam/issues/45
         - "If the time signature is 4:4 and the pickup is the last half beat (4.5) it doesn't click."

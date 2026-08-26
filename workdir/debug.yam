@@ -21,9 +21,10 @@
       "title": "Klock",
       "tracks": [
         "6eac8ad7-d251-4031-ad62-13d52cf479b3",
+        "60d16e10-3ee5-409a-ad63-1665ae8054fc",
         "466e08f0-27cb-4c93-ac9c-1bd8f3d5d804",
         "27e6743d-9345-4d8e-8ef7-09c4e0c0d348",
-        "60d16e10-3ee5-409a-ad63-1665ae8054fc"
+        "7de7131f-4f56-420e-bd9b-3ae52a29d1e4"
       ],
       "random": [],
       "muted": []
@@ -137,7 +138,8 @@
         "6eac8ad7-d251-4031-ad62-13d52cf479b3",
         "27e6743d-9345-4d8e-8ef7-09c4e0c0d348",
         "466e08f0-27cb-4c93-ac9c-1bd8f3d5d804",
-        "60d16e10-3ee5-409a-ad63-1665ae8054fc"
+        "60d16e10-3ee5-409a-ad63-1665ae8054fc",
+        "7de7131f-4f56-420e-bd9b-3ae52a29d1e4"
       ],
       "random": [],
       "muted": []
@@ -701,6 +703,27 @@
       }
     },
     {
+      "UUID": "60d16e10-3ee5-409a-ad63-1665ae8054fc",
+      "version": 0,
+      "title": "klock - 2500ms delay",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "count-in",
+          "role": "count-in",
+          "delay": 2500
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
       "UUID": "657cc85b-4dc7-4779-afde-fcb9681ee5d5",
       "version": 0,
       "title": "A Very Very Long And Complicated Name For A Track That Will Never Be Played",
@@ -803,6 +826,30 @@
         "BPM": 100,
         "loop": false,
         "ding": false
+      }
+    },
+    {
+      "UUID": "7de7131f-4f56-420e-bd9b-3ae52a29d1e4",
+      "version": 0,
+      "title": "klock - dings",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "verse",
+          "role": "verse",
+          "measures": 8,
+          "dings": [
+            2.4
+          ]
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": true
       }
     },
     {
@@ -1451,27 +1498,6 @@
         "BPM": 54,
         "loop": true,
         "loops": 3,
-        "ding": false
-      }
-    },
-    {
-      "UUID": "60d16e10-3ee5-409a-ad63-1665ae8054fc",
-      "version": 0,
-      "title": "klock - 2500ms delay",
-      "tempo": 120,
-      "timeSignature": "4:4",
-      "pulse": "quarter",
-      "sections": [
-        {
-          "name": "count-in",
-          "role": "count-in",
-          "delay": 2500
-        }
-      ],
-      "tags": [],
-      "metronome": {
-        "BPM": 90,
-        "loop": false,
         "ding": false
       }
     }

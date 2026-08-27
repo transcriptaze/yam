@@ -168,7 +168,7 @@ export class VM {
     }
   }
 
-  exec(at, { _beats, divisions }, subdivisions) {
+  exec(at, { _beats, divisions }, { subdivisions, ding }) {
     const ops = []
 
     for (const op of this.#script) {
@@ -183,8 +183,12 @@ export class VM {
       })()
 
       if (op.at.measure === at.measure && op.at.beat === at.beat) {
-        ops.push(...this.#exec(op.op))
-        break
+        const list = this.#exec(op.op)
+
+        if (!list.includes(OPCODES.DING) || ding) {
+          ops.push(...list)
+          break
+        }
       }
 
       if (op.at.measure === at.measure && op.at.beat === '*') {

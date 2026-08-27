@@ -58,6 +58,12 @@
         - [ ] move fs (?) and bufferSize to tick(...)
         - [ ] // FIXME render logic is only designed for one output
 
+        - 1/3 = 85/256 (ref. https://www.youtube.com/watch?v=xs5iOwkX9fU)
+        - f32: 0.3330000107288360595703125
+        - f64: 0.3330000000000000182076576083554901182651519775390625
+        - f32: 1/3 = 0.3333333432674407958984375
+        - f64: 1/3 = 0.333333333333333314829616256247386932373046875
+
     - [ ] https://github.com/transcriptaze/yam/issues/45
         - "If the time signature is 4:4 and the pickup is the last half beat (4.5) it doesn't click."
 

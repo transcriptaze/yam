@@ -341,7 +341,7 @@ export class Metronome2 extends AudioWorkletProcessor {
           const subdivisions = int2subdivisions(pulse) ?? SUBDIVISIONS.QUARTER_NOTES
 
           const { measure, beat } = this.#vm.click(click, { beats, divisions }, subdivisions)
-          const ops = this.#vm.exec({ measure, beat }, { beats, divisions }, subdivisions, ding)
+          const ops = this.#vm.exec({ measure, beat }, { beats, divisions }, { subdivisions, ding })
 
           for (const op of ops) {
             this.#exec(op, { measure, beat })
@@ -370,18 +370,6 @@ export class Metronome2 extends AudioWorkletProcessor {
             this.section = null
             this.clock.reset()
           }
-        } else {
-          const playhead = `${cluck.bar}.${cluck.beat}`
-          const dings = this.#track?.dings ?? []
-
-          if (ding && dings.includes(playhead)) {
-            const ting = this.clicks.get('ding')
-            if (ting != null) {
-              this.#cued.push(sample(ting))
-            }
-          }
-
-          log('PLAY', clock.t, clock.time, BPM, cluck.bar, cluck.beat, tactus, figura, pulse)
         }
       } else if (cluck.tock.click) {
         // FIXME REMOVE half-assed fix for https://github.com/transcriptaze/yam/issues/45
@@ -504,7 +492,7 @@ function clamp(v, min, max) {
   return Math.min(Math.max(v, min), max)
 }
 
-function log(tag, tick, time, bpm, bar, beat, tactus, figura, pulsus) {
+function _log(tag, tick, time, bpm, bar, beat, tactus, figura, pulsus) {
   if (DEBUG) {
     let msg = `>> ${tag}`
 

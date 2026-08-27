@@ -24,11 +24,11 @@
         - [x] play track
         - [x] track: play start to finish
         - [x] track delay
-        - [ ] dings
+        - [x] dings
             - [x] vm
             - [x] compiler
             - [x] enable/disable
-            - [ ] default to tock if disabled and on beat
+            - [x] default to tock if disabled and on beat
 
         - [ ] count-in
         - [ ] pickup

@@ -22,6 +22,7 @@ export class Metronome2 extends AudioWorkletProcessor {
   }
 
   #time = 0
+  #ding = false
 
   #script = {
     delay: 0,
@@ -83,13 +84,6 @@ export class Metronome2 extends AudioWorkletProcessor {
         maxValue: 1,
         automationRate: 'k-rate',
       },
-      {
-        name: 'ding',
-        defaultValue: 0,
-        minValue: 0,
-        maxValue: 1,
-        automationRate: 'k-rate',
-      },
     ]
   }
 
@@ -127,6 +121,10 @@ export class Metronome2 extends AudioWorkletProcessor {
         } else {
           this.play()
         }
+        break
+
+      case 'ding':
+        this.#ding = event.data.ding === true
         break
 
       case 'script':
@@ -302,7 +300,6 @@ export class Metronome2 extends AudioWorkletProcessor {
     const figura = this.section?.divisions ?? clamp(parameters.divisions[0], 1, 32)
     const pulse = this.section?.pulse ?? parameters.pulse[0]
 
-    const ding = parameters.ding[0] === 1.0
     const loop = parameters.loop[0] === 1.0
     let clock = this.clock
 
@@ -340,8 +337,13 @@ export class Metronome2 extends AudioWorkletProcessor {
           const divisions = figura
           const subdivisions = int2subdivisions(pulse) ?? SUBDIVISIONS.QUARTER_NOTES
 
+          const context = {
+            subdivisions: subdivisions,
+            ding: this.#ding,
+          }
+
           const { measure, beat } = this.#vm.click(click, { beats, divisions }, subdivisions)
-          const ops = this.#vm.exec({ measure, beat }, { beats, divisions }, { subdivisions, ding })
+          const ops = this.#vm.exec({ measure, beat }, { beats, divisions }, context)
 
           for (const op of ops) {
             this.#exec(op, { measure, beat })

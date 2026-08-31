@@ -174,10 +174,6 @@ export class Metronome2 extends AudioWorkletProcessor {
       this.#time = 0
       this.#vm = new VM(sampleRate, this.#script.script)
 
-      console.log({ sampleRate })
-      console.log(this.#script)
-      console.log(this.#vm)
-
       this.port.postMessage({
         message: 'ready',
         track: this.#track?.UUID ?? '',

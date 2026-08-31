@@ -31,6 +31,19 @@ export function compile(track) {
     script.script.push({ at: { measure: v.measure, beat: v.beat }, op: OPCODES.DING })
   })
 
+  // ... count-in
+  for (const section of sections) {
+    if (section.role === 'count-in') {
+      const measures = section.measures ?? 1
+
+      for (let m = 1; m <= measures; m++) {
+        script.script.push({ at: { measure: m, beat: '*' }, op: OPCODES.STICKS })
+      }
+    }
+
+    break
+  }
+
   // ... default
   script.script.push({ at: { measure: '*', beat: 1 }, op: OPCODES.TICK })
   script.script.push({ at: { measure: '*', beat: '*' }, op: OPCODES.TOCK })

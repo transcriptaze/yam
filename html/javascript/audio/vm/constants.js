@@ -5,7 +5,7 @@ export const OPCODES = {
   TICK: 3,
   TOCK: 4,
   TACK: 5,
-  STICK: 6,
+  STICKS: 6,
   DING: 7,
 }
 

@@ -182,6 +182,7 @@ export class VM {
         return k
       })()
 
+      // ... measure+beat spec i.e. { measure:1, beat:2}
       if (op.at.measure === at.measure && op.at.beat === at.beat) {
         const list = this.#exec(op.op)
 
@@ -191,16 +192,65 @@ export class VM {
         }
       }
 
-      if (op.at.measure === at.measure && op.at.beat === '*') {
+      // ... measure spec e.g. count-in { measure:1, beat:'*'}
+      if (
+        op.at.measure === at.measure &&
+        op.at.beat === '*' &&
+        divisions === 2 &&
+        subdivisions === SUBDIVISIONS.QUARTER_NOTES &&
+        (r === 0.0 || r === 0.5)
+      ) {
         ops.push(...this.#exec(op.op))
         break
       }
 
+      if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.HALF_NOTES && q % 2 === 0 && r === 0.0) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.QUARTER_NOTES && r === 0.0) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_DOUBLETS && (r === 0.0 || r === 0.5)) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_NOTES && r === 0.0) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.DOTTED_QUARTERS && r === 0.0) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.0) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.333) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.667) {
+        ops.push(...this.#exec(op.op))
+        break
+      }
+
+      // .... beat spec e.g. { measure:'*', beat:1}
       if (op.at.measure === '*' && op.at.beat === at.beat) {
         ops.push(...this.#exec(op.op))
         break
       }
 
+      // ... default i.e. { measure:'*', beat:'*'}
       // prettier-ignore
       if (op.at.measure === '*' && op.at.beat === '*' && divisions === 2 && subdivisions === SUBDIVISIONS.QUARTER_NOTES && (r === 0.0 || r === 0.5)) {
         ops.push(...this.#exec(op.op))

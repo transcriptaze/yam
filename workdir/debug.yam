@@ -24,7 +24,9 @@
         "60d16e10-3ee5-409a-ad63-1665ae8054fc",
         "466e08f0-27cb-4c93-ac9c-1bd8f3d5d804",
         "27e6743d-9345-4d8e-8ef7-09c4e0c0d348",
-        "7de7131f-4f56-420e-bd9b-3ae52a29d1e4"
+        "7de7131f-4f56-420e-bd9b-3ae52a29d1e4",
+        "b3ef497c-fe67-4e55-be76-91b77899d647",
+        "883f42ff-9d06-4aff-b0ea-254fff9bf23a"
       ],
       "random": [],
       "muted": []
@@ -139,7 +141,9 @@
         "27e6743d-9345-4d8e-8ef7-09c4e0c0d348",
         "466e08f0-27cb-4c93-ac9c-1bd8f3d5d804",
         "60d16e10-3ee5-409a-ad63-1665ae8054fc",
-        "7de7131f-4f56-420e-bd9b-3ae52a29d1e4"
+        "7de7131f-4f56-420e-bd9b-3ae52a29d1e4",
+        "b3ef497c-fe67-4e55-be76-91b77899d647",
+        "883f42ff-9d06-4aff-b0ea-254fff9bf23a"
       ],
       "random": [],
       "muted": []
@@ -853,6 +857,31 @@
       }
     },
     {
+      "UUID": "883f42ff-9d06-4aff-b0ea-254fff9bf23a",
+      "version": 0,
+      "title": "klock - count-in (2 bars)",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "count-in",
+          "role": "count-in",
+          "measures": 2
+        },
+        {
+          "name": "verse",
+          "role": "verse"
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
       "UUID": "a141f3ac-6e8e-47ac-b9c8-c9c27d521305",
       "version": 0,
       "title": "Jesu Joy of Man's Desiring",
@@ -1000,6 +1029,31 @@
       "tags": [],
       "metronome": {
         "BPM": 120,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
+      "UUID": "b3ef497c-fe67-4e55-be76-91b77899d647",
+      "version": 0,
+      "title": "klock - count-in",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "count-in",
+          "role": "count-in",
+          "measures": 1
+        },
+        {
+          "name": "verse",
+          "role": "verse"
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
         "loop": false,
         "ding": false
       }

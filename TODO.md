@@ -6,9 +6,6 @@
 - [ ] passive:true (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 - [ ] capture:down (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 
-- [x] editor: changing title does not enable 'save'
-- [x] web manifest
-
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
         - [x] clicks
@@ -25,36 +22,35 @@
         - [x] track: play start to finish
         - [x] track delay
         - [x] dings
-            - [x] vm
-            - [x] compiler
-            - [x] enable/disable
-            - [x] default to tock if disabled and on beat
-
-        - [ ] count-in
+        - [x] count-in
         - [ ] pickup
+
         - [ ] sections
         - [ ] subsections
         - [ ] loops
         - [ ] sort script by strictness
-        - [ ] fix pads for 6:8 dotted quarters
         - [ ] remove FSM
 
-        - [x] 4:4/eigths
-        - [x] 4:4/quarter notes
-        - [ ] 4:4/half notes
+        - [ ] 4:4
+            - [x] eigths
+            - [x] eighth doublets
+            - [x] quarter notes
+            - [ ] half notes
 
-        - [ ] 2:2 eighths
-        - [x] 2:2 quarter notes
-        - [x] 2:2 half notes
+        - [ ] 2:2
+            - [ ] eighths
+            - [x] quarter notes
+            - [x] half notes
 
-        - [x] 6:8 eighths
-        - [x] 6:8 eighth doublets
-        - [x] 6:8 eighth triplets
-        - [x] 6:8 dotted quarters
+        - [x] 6:8
+            - [x] eighths
+            - [x] eighth doublets
+            - [x] eighth triplets
+            - [x] dotted quarters
+            - [ ] fix pads for dotted quarters
 
         - [ ] node+worklet per run a la YAD
         - [ ] put gain into node::sample 
-        - [ ] Float32Buffer:copyTo
         - [ ] move fs (?) and bufferSize to tick(...)
         - [ ] // FIXME render logic is only designed for one output
 
@@ -67,7 +63,6 @@
     - [ ] https://github.com/transcriptaze/yam/issues/45
         - "If the time signature is 4:4 and the pickup is the last half beat (4.5) it doesn't click."
 
-    - [x] 2:2 time
     - [ ] sixteenths
     - [ ] triplets
     - [ ] rethink the 'flipped' message
@@ -379,6 +374,9 @@
 12. CLI (?)
 
 ## Other
+- (?) neural net
+      - https://www.youtube.com/watch?v=dbXCghmnyEs
+
 - (?) Processing
       - https://processing.org/reference/libraries/sound/index.html
       - https://code.compartmental.net/minim

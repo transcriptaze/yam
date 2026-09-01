@@ -25,15 +25,15 @@
         - [x] count-in
         - [x] pickup
             - [x] https://github.com/transcriptaze/yam/issues/45
+        - [x] sort script by strictness
+        - [x] { t,t'}, {tick,tick'}, t=t',t'+=dt, tick=tick', tick'++
 
-        - [ ] { t,t'}, {tick,tick'}, t=t',t'+=dt, tick=tick', tick'++
         - [ ] sections: tempo
         - [ ] sections: time signature
         - [ ] sections: subdivisions
         - [ ] sections: clicks
         - [ ] subsections
         - [ ] loops
-        - [x] sort script by strictness
         - [ ] remove FSM
 
         - [ ] 4:4

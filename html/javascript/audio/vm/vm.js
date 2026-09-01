@@ -13,8 +13,12 @@ export class VM {
   #fs = 44100
   #script = []
 
-  #tick = 0
-  #time = 0
+  #time = {
+    tick: 0,
+    t: 0,
+    tʼ: 0,
+  }
+
   #state = {
     stopped: false,
   }
@@ -35,14 +39,14 @@ export class VM {
 
   tick(BPM, bufferSize) {
     const dt = (1000 * bufferSize) / this.#fs
-    const tick = this.#tick + 1
-    const start = this.#time
-    const end = tick * dt
 
-    this.#tick = tick
-    this.#time = end
+    this.#time.tick++
+    this.#time.t = this.#time.tʼ
+    this.#time.tʼ = this.#time.tick * dt
 
-    const time = start / 1000
+    const start = this.#time.t
+    const end = this.#time.tʼ
+    const time = this.#time.t / 1000
 
     // ... whole beats
     {
@@ -58,7 +62,7 @@ export class VM {
         this.#click.click += 1
 
         return {
-          time: time,
+          time,
           click: this.#click.click,
         }
       }
@@ -75,7 +79,7 @@ export class VM {
 
       if (next >= start && next < end) {
         return {
-          time: time,
+          time,
           click: this.#click.click + 0.5,
         }
       }
@@ -92,7 +96,7 @@ export class VM {
 
       if (next >= start && next < end) {
         return {
-          time: time,
+          time,
           click: this.#click.click + 0.667,
         }
       }
@@ -108,7 +112,7 @@ export class VM {
 
       if (next >= start && next < end) {
         return {
-          time: time,
+          time,
           click: this.#click.click + 0.333,
         }
       }
@@ -116,7 +120,7 @@ export class VM {
 
     // ... default
     return {
-      time: time,
+      time,
     }
   }
 
@@ -302,7 +306,9 @@ export class VM {
   }
 
   #reset() {
-    this.#time = 0
+    this.#time.tick = 0
+    this.#time.t = 0
+    this.#time.tʼ = 0
 
     this.#click = {
       time: Number.NEGATIVE_INFINITY,

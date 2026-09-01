@@ -490,3 +490,216 @@ describe('compile: count-in', function () {
     expect(script).to.deep.equal(expected)
   })
 })
+
+describe('compile: anacrusis', function () {
+  it('1 bar default pickup @start', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          role: 'anacrusis',
+          measures: 1,
+        },
+        {
+          role: 'verse',
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
+        { at: { measure: 1,   beat: 4   }, op: OPCODES.TOCK },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
+
+  it('2 bar default pickup @start', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          role: 'anacrusis',
+          measures: 2,
+        },
+        {
+          role: 'verse',
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
+        { at: { measure: 2,   beat: '*' }, op: OPCODES.STICKS },
+        { at: { measure: 2,   beat: 4   }, op: OPCODES.TOCK },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
+
+  it('1 bar default pickup somewhere in the middle', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          role: 'verse',
+          measures: 4,
+        },
+        {
+          role: 'anacrusis',
+          measures: 1,
+        },
+        {
+          role: 'verse',
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: 5,   beat: '*' }, op: OPCODES.STICKS },
+        { at: { measure: 5,   beat: 4   }, op: OPCODES.TOCK },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
+
+  it('2 bar default pickup somewhere in the middle', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          role: 'verse',
+          measures: 4,
+        },
+        {
+          role: 'anacrusis',
+          measures: 2,
+        },
+        {
+          role: 'verse',
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: 5,   beat: '*' }, op: OPCODES.STICKS },
+        { at: { measure: 6,   beat: '*' }, op: OPCODES.STICKS },
+        { at: { measure: 6,   beat: 4   }, op: OPCODES.TOCK },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
+
+  it('1 bar pickup with on-beat clicks', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          role: 'anacrusis',
+          measures: 1,
+          clicks: [3, 4],
+        },
+        {
+          role: 'verse',
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
+        { at: { measure: 1,   beat: 3   }, op: OPCODES.TOCK },
+        { at: { measure: 1,   beat: 4   }, op: OPCODES.TOCK },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
+
+  it('1 bar pickup with off-beat clicks', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          role: 'anacrusis',
+          measures: 1,
+          clicks: [4.5],
+        },
+        {
+          role: 'verse',
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
+        { at: { measure: 1,   beat: 4.5 }, op: OPCODES.TOCK },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
+})

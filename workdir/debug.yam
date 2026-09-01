@@ -26,7 +26,9 @@
         "27e6743d-9345-4d8e-8ef7-09c4e0c0d348",
         "7de7131f-4f56-420e-bd9b-3ae52a29d1e4",
         "b3ef497c-fe67-4e55-be76-91b77899d647",
-        "883f42ff-9d06-4aff-b0ea-254fff9bf23a"
+        "883f42ff-9d06-4aff-b0ea-254fff9bf23a",
+        "6f6155cc-7ecb-4182-965e-cb08eba47413",
+        "e24034a5-08c4-4506-988f-59dbf005e597"
       ],
       "random": [],
       "muted": []
@@ -143,7 +145,9 @@
         "60d16e10-3ee5-409a-ad63-1665ae8054fc",
         "7de7131f-4f56-420e-bd9b-3ae52a29d1e4",
         "b3ef497c-fe67-4e55-be76-91b77899d647",
-        "883f42ff-9d06-4aff-b0ea-254fff9bf23a"
+        "883f42ff-9d06-4aff-b0ea-254fff9bf23a",
+        "6f6155cc-7ecb-4182-965e-cb08eba47413",
+        "e24034a5-08c4-4506-988f-59dbf005e597"
       ],
       "random": [],
       "muted": []
@@ -861,17 +865,25 @@
       "version": 0,
       "title": "klock - count-in (2 bars)",
       "tempo": 120,
-      "timeSignature": "4:4",
-      "pulse": "quarter",
+      "timeSignature": "6:8",
+      "pulse": "dotted-quarter",
       "sections": [
         {
           "name": "count-in",
           "role": "count-in",
-          "measures": 2
+          "measures": 2,
+          "subsections": [
+            {
+              "measures": 2
+            }
+          ]
         },
         {
           "name": "verse",
-          "role": "verse"
+          "role": "verse",
+          "subsections": [
+            {}
+          ]
         }
       ],
       "tags": [],
@@ -1552,6 +1564,59 @@
         "BPM": 54,
         "loop": true,
         "loops": 3,
+        "ding": false
+      }
+    },
+    {
+      "UUID": "6f6155cc-7ecb-4182-965e-cb08eba47413",
+      "version": 0,
+      "title": "klock - pickup bar",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "pickup",
+          "role": "anacrusis",
+          "measures": 1
+        },
+        {
+          "name": "verse",
+          "role": "verse"
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
+      "UUID": "e24034a5-08c4-4506-988f-59dbf005e597",
+      "version": 0,
+      "title": "klock - pickup bar (4.5)",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "pickup",
+          "role": "anacrusis",
+          "measures": 1,
+          "clicks": [
+            4.5
+          ]
+        },
+        {
+          "name": "verse",
+          "role": "verse"
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
         "ding": false
       }
     }

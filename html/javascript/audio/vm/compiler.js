@@ -1,3 +1,4 @@
+import { parseTimeSignature } from '../../util.js'
 import { OPCODES } from './constants.js'
 
 export function compile(track) {
@@ -32,17 +33,30 @@ export function compile(track) {
   })
 
   // ... count-in
-  for (const section of sections) {
-    if (section.role === 'count-in') {
-      const measures = section.measures ?? 1
+  {
+    const measure = 1
+    for (const section of sections) {
+      if (section.role === 'count-in') {
+        const measures = section.measures ?? 1
 
-      for (let m = 1; m <= measures; m++) {
-        script.script.push({ at: { measure: m, beat: '*' }, op: OPCODES.STICKS })
+        for (let m = 0; m < measures; m++) {
+          script.script.push({ at: { measure: measure + m, beat: '*' }, op: OPCODES.STICKS })
+        }
       }
-    }
 
-    break
+      break
+    }
   }
+
+  // ... anacrusis
+  anacruses(track).forEach(({ measure, beat }) => {
+    // NTS: do NOT use Number.isNaN - it only works on actual numbers
+    if (!isNaN(beat)) {
+      script.script.push({ at: { measure, beat }, op: OPCODES.TOCK })
+    } else {
+      script.script.push({ at: { measure, beat }, op: OPCODES.STICKS })
+    }
+  })
 
   // ... default
   script.script.push({ at: { measure: '*', beat: 1 }, op: OPCODES.TICK })
@@ -136,4 +150,40 @@ function dings(track) {
         return p.beat - q.beat
       }
     })
+}
+
+function anacruses(track) {
+  const { beats, _divisions } = parseTimeSignature(track.timeSignature)
+  const sections = track?.sections ?? []
+  const list = []
+
+  let bar = 1
+  for (const section of sections) {
+    if (section.role === 'anacrusis') {
+      const measures = section.measures ?? 1
+      const clicks = section.clicks ?? []
+
+      for (let m = 0; m < measures; m++) {
+        list.push({ measure: bar + m, beat: '*' })
+      }
+
+      if (clicks.length > 0) {
+        clicks.forEach((click) => {
+          // NTS: do NOT use Number.isNaN (expects actual numbers)
+          if (!isNaN(click)) {
+            list.push({ measure: bar + measures - 1, beat: click })
+          }
+        })
+      } else if (!Number.isNaN(beats)) {
+        list.push({ measure: bar + measures - 1, beat: beats })
+      }
+    }
+
+    bar += section.measures ?? Number.POSITIVE_INFINITY
+    if (bar === Number.POSITIVE_INFINITY) {
+      break
+    }
+  }
+
+  return list
 }

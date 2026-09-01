@@ -143,14 +143,13 @@ export class Metronome2 extends AudioWorkletProcessor {
     const tick = event.data.tick
     const tock = event.data.tock
     const tack = event.data.tack
-    const sticks = event.data.stick
+    const sticks = event.data.sticks
     const ding = event.data.ding
 
     this.clock.fs = event.data.fs
     this.level.sampleRate = event.data.fs
     this.clicks = new Map([
       ['default', tock],
-      ['count-in', sticks],
       ['tick', tick],
       ['tock', tock],
       ['tack', tack],
@@ -369,17 +368,6 @@ export class Metronome2 extends AudioWorkletProcessor {
             this.clock.reset()
           }
         }
-      } else if (cluck.tock.click) {
-        // FIXME REMOVE half-assed fix for https://github.com/transcriptaze/yam/issues/45
-        // const measure = cluck.bar
-        // const section = this.#track.sections.find((v) => measure >= v.start && measure <= v.end)
-        // const clicks = section?.clicks ?? []
-        //
-        // if (Array.isArray(clicks) && clicks.includes(cluck.tock.beat)) {
-        //   this.cue(cluck.tock.beat, pulse)
-        // } else if (clicks instanceof Map && clicks.has(cluck.tock.beat)) {
-        //   this.cue(cluck.tock.beat, pulse)
-        // }
       }
     }
   }

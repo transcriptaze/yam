@@ -23,12 +23,17 @@
         - [x] track delay
         - [x] dings
         - [x] count-in
-        - [ ] pickup
+        - [x] pickup
+            - [x] https://github.com/transcriptaze/yam/issues/45
 
-        - [ ] sections
+        - [ ] { t,t'}, {tick,tick'}, t=t',t'+=dt, tick=tick', tick'++
+        - [ ] sections: tempo
+        - [ ] sections: time signature
+        - [ ] sections: subdivisions
+        - [ ] sections: clicks
         - [ ] subsections
         - [ ] loops
-        - [ ] sort script by strictness
+        - [x] sort script by strictness
         - [ ] remove FSM
 
         - [ ] 4:4
@@ -48,8 +53,10 @@
             - [x] eighth triplets
             - [x] dotted quarters
             - [ ] fix pads for dotted quarters
+            - [ ] rethink to not use fractional beats
 
         - [ ] node+worklet per run a la YAD
+        - [ ] replace flip with ring buffer + animation timer
         - [ ] put gain into node::sample 
         - [ ] move fs (?) and bufferSize to tick(...)
         - [ ] // FIXME render logic is only designed for one output
@@ -60,8 +67,6 @@
         - f32: 1/3 = 0.3333333432674407958984375
         - f64: 1/3 = 0.333333333333333314829616256247386932373046875
 
-    - [ ] https://github.com/transcriptaze/yam/issues/45
-        - "If the time signature is 4:4 and the pickup is the last half beat (4.5) it doesn't click."
 
     - [ ] sixteenths
     - [ ] triplets

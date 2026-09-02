@@ -30,6 +30,7 @@ export class Metronome2 extends AudioWorkletProcessor {
   }
 
   #vm = new VM(sampleRate, [])
+  #tempo = null
 
   #section = null
   #loops = 0
@@ -171,6 +172,7 @@ export class Metronome2 extends AudioWorkletProcessor {
       this.clock.reset()
 
       this.#time = 0
+      this.#tempo = null
       this.#vm = new VM(sampleRate, this.#script.script)
 
       this.port.postMessage({
@@ -210,6 +212,7 @@ export class Metronome2 extends AudioWorkletProcessor {
       if (this.FSM.onPlay()) {
         this.section = null
         this.clock.reset()
+        this.#tempo = null
         this.#vm = new VM(sampleRate, this.#script.script)
       }
     }
@@ -217,14 +220,6 @@ export class Metronome2 extends AudioWorkletProcessor {
 
   get playing() {
     return this.FSM.playing
-  }
-
-  get stopping() {
-    return this.FSM.stopping
-  }
-
-  get stopped() {
-    return this.FSM.stopped
   }
 
   get track() {
@@ -241,13 +236,13 @@ export class Metronome2 extends AudioWorkletProcessor {
 
   #bpm(BPM) {
     const tempo = this.#track?.tempo ?? null
-    const bpm = this.section?.tempo ?? null
+    const bpm = this.#tempo ?? null
 
     if (tempo != null && bpm != null) {
       return (bpm * BPM) / tempo
     }
 
-    return this.section?.tempo ?? BPM
+    return this.#tempo ?? BPM
   }
 
   process(_inputs, outputs, parameters) {
@@ -402,6 +397,17 @@ export class Metronome2 extends AudioWorkletProcessor {
       // })
 
       this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
+    }
+
+    const tempo = (bpm) => {
+      this.#tempo = bpm
+    }
+
+    if (typeof opcode === 'object') {
+      if (opcode.opcode === OPCODES.TEMPO) {
+        tempo(opcode.tempo)
+        return
+      }
     }
 
     switch (opcode) {

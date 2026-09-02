@@ -1,12 +1,13 @@
 export const OPCODES = {
-  NONE: 0,
-  STOP: 1,
-  DELAY: 2,
-  TICK: 3,
-  TOCK: 4,
-  TACK: 5,
-  STICKS: 6,
-  DING: 7,
+  NONE: 'none',
+  STOP: 'stop',
+  DELAY: 'delay',
+  TICK: 'tick',
+  TOCK: 'tock',
+  TACK: 'tack',
+  STICKS: 'sticks',
+  DING: 'ding',
+  TEMPO: 'tempo',
 }
 
 export const SUBDIVISIONS = {

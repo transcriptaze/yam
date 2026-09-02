@@ -5,6 +5,7 @@
 - [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
 - [ ] passive:true (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 - [ ] capture:down (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
+- [ ] move new/random to top of + list
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
@@ -24,17 +25,17 @@
         - [x] dings
         - [x] count-in
         - [x] pickup
-            - [x] https://github.com/transcriptaze/yam/issues/45
         - [x] sort script by strictness
         - [x] { t,t'}, {tick,tick'}, t=t',t'+=dt, tick=tick', tick'++
 
-        - [ ] sections: tempo
+        - [x] sections: tempo
         - [ ] sections: time signature
         - [ ] sections: subdivisions
         - [ ] sections: clicks
         - [ ] subsections
         - [ ] loops
         - [ ] remove FSM
+        - [ ] exec: inject actions
 
         - [ ] 4:4
             - [x] eigths

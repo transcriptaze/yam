@@ -188,10 +188,15 @@ export class VM {
 
       // ... measure+beat spec i.e. { measure:1, beat:2}
       if (op.at.measure === at.measure && op.at.beat === at.beat) {
-        const list = this.#exec(op.op)
+        const v = this.#exec(op.op)
 
-        if (!list.includes(OPCODES.DING) || ding) {
-          ops.push(...list)
+        if (v.includes(OPCODES.TEMPO)) {
+          ops.push({ opcode: OPCODES.TEMPO, tempo: op.tempo })
+        } else if (v.includes(OPCODES.DING) && ding) {
+          ops.push(...v)
+          break
+        } else if (!v.includes(OPCODES.DING)) {
+          ops.push(...v)
           break
         }
       }
@@ -351,6 +356,12 @@ export class VM {
       case OPCODES.DING:
         if (!this.#state.stopped) {
           return [OPCODES.DING]
+        }
+        break
+
+      case OPCODES.TEMPO:
+        if (!this.#state.stopped) {
+          return [OPCODES.TEMPO]
         }
         break
     }

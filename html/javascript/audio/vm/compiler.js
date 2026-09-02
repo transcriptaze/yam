@@ -58,6 +58,11 @@ export function compile(track) {
     }
   })
 
+  // ... tempo changes
+  tempo(track).forEach(({ measure, beat, tempo }) => {
+    script.script.push({ at: { measure, beat }, op: OPCODES.TEMPO, tempo: tempo })
+  })
+
   // ... default
   script.script.push({ at: { measure: '*', beat: 1 }, op: OPCODES.TICK })
   script.script.push({ at: { measure: '*', beat: '*' }, op: OPCODES.TOCK })
@@ -177,6 +182,27 @@ function anacruses(track) {
       } else if (!Number.isNaN(beats)) {
         list.push({ measure: bar + measures - 1, beat: beats })
       }
+    }
+
+    bar += section.measures ?? Number.POSITIVE_INFINITY
+    if (bar === Number.POSITIVE_INFINITY) {
+      break
+    }
+  }
+
+  return list
+}
+
+function tempo(track) {
+  const sections = track?.sections ?? []
+  const list = []
+
+  let bar = 1
+  for (const section of sections) {
+    const tempo = section.tempo
+
+    if (tempo && !Number.isNaN(tempo)) {
+      list.push({ measure: bar, beat: 1, tempo: tempo })
     }
 
     bar += section.measures ?? Number.POSITIVE_INFINITY

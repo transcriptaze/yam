@@ -7,25 +7,13 @@ export function compile(track) {
     script: [],
   }
 
-  const sections = track?.sections ?? []
-
   // ... delay
-  if (sections.length > 0) {
-    script.delay = sections[0].delay ?? 0
-  }
+  script.delay = delay(track)
 
   // ... stop
-  if (sections.length > 0) {
-    const bars = sections.reduce((N, section) => {
-      const measures = section.measures ?? Number.POSITIVE_INFINITY
-
-      return N + measures
-    }, 0)
-
-    if (bars !== Number.POSITIVE_INFINITY) {
-      script.script.push({ at: { measure: bars + 1, beat: 1 }, op: OPCODES.STOP })
-    }
-  }
+  stop(track).forEach((v) => {
+    script.script.push({ at: { measure: v.measure, beat: v.beat }, op: OPCODES.STOP })
+  })
 
   // ... dings
   dings(track).forEach((v) => {
@@ -33,24 +21,13 @@ export function compile(track) {
   })
 
   // ... count-in
-  {
-    const measure = 1
-    for (const section of sections) {
-      if (section.role === 'count-in') {
-        const measures = section.measures ?? 1
-
-        for (let m = 0; m < measures; m++) {
-          script.script.push({ at: { measure: measure + m, beat: '*' }, op: OPCODES.STICKS })
-        }
-      }
-
-      break
-    }
-  }
+  countIn(track).forEach((v) => {
+    script.script.push({ at: { measure: v.measure, beat: v.beat }, op: OPCODES.STICKS })
+  })
 
   // ... anacrusis
+  // NTS: do NOT use Number.isNaN - it only works on actual numbers
   anacruses(track).forEach(({ measure, beat }) => {
-    // NTS: do NOT use Number.isNaN - it only works on actual numbers
     if (!isNaN(beat)) {
       script.script.push({ at: { measure, beat }, op: OPCODES.TOCK })
     } else {
@@ -68,6 +45,35 @@ export function compile(track) {
   script.script.push({ at: { measure: '*', beat: '*' }, op: OPCODES.TOCK })
 
   return script
+}
+
+function delay(track) {
+  const sections = track?.sections ?? []
+
+  if (sections.length > 0) {
+    return sections[0].delay ?? 0
+  }
+
+  return 0
+}
+
+function stop(track) {
+  const list = []
+  const sections = track?.sections ?? []
+
+  if (sections.length > 0) {
+    const bars = sections.reduce((N, section) => {
+      const measures = section.measures ?? Number.POSITIVE_INFINITY
+
+      return N + measures
+    }, 0)
+
+    if (bars !== Number.POSITIVE_INFINITY) {
+      list.push({ measure: bars + 1, beat: 1 })
+    }
+  }
+
+  return list
 }
 
 function dings(track) {
@@ -155,6 +161,26 @@ function dings(track) {
         return p.beat - q.beat
       }
     })
+}
+
+function countIn(track) {
+  const list = []
+  const sections = track?.sections ?? []
+  const measure = 1
+
+  for (const section of sections) {
+    if (section.role === 'count-in') {
+      const measures = section.measures ?? 1
+
+      for (let m = 0; m < measures; m++) {
+        list.push({ measure: measure + m, beat: '*' })
+      }
+    }
+
+    break
+  }
+
+  return list
 }
 
 function anacruses(track) {

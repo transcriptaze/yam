@@ -2,6 +2,7 @@ import { parseTimeSignature } from '../../util.js'
 import { EVENTS } from '../../constants.js'
 
 import * as compiler from '../vm/compiler.js'
+import * as linker from '../vm/linker.js'
 import { subdivisions2int } from '../vm/constants.js'
 
 const STATE = {
@@ -13,11 +14,9 @@ const STATE = {
 }
 
 const INF = Number.POSITIVE_INFINITY
-// const MAX_DELAY = 30000 // ms
 
 export class Metronome2Node extends AudioWorkletNode {
   #loops = INF
-  // #pulse = ''
 
   #cache = {
     track: '',
@@ -46,7 +45,7 @@ export class Metronome2Node extends AudioWorkletNode {
       tock: sample(tock),
       tack: sample(tack),
       ding: sample(ding),
-      stick: sample(stick),
+      sticks: sample(stick),
     })
   }
 
@@ -176,13 +175,16 @@ export class Metronome2Node extends AudioWorkletNode {
   }
 
   set ding(ding) {
-    const ctx = this.context
-
-    this.parameters.get('ding').setValueAtTime(ding ? 1 : 0, ctx.currentTime)
+    this.port.postMessage({
+      message: 'ding',
+      ding: ding === true,
+    })
   }
 
   set track(track) {
     const script = compiler.compile(track)
+
+    linker.link(script)
 
     this.port.postMessage({
       message: 'script',

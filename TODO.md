@@ -5,9 +5,7 @@
 - [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
 - [ ] passive:true (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 - [ ] capture:down (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
-
-- [x] editor: changing title does not enable 'save'
-- [x] web manifest
+- [x] move new/random to top of + list
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
@@ -19,42 +17,58 @@
         - [x] fix hardcoded VM fs
         - [x] reset VM on stop/start
         - [x] fix hardcoded VM buffersize
+        - [x] stop doesn't reset pads
         - [x] start delay
         - [x] play track
+        - [x] track: play start to finish
         - [x] track delay
-        - [ ] track: play start to finish
-           - [ ] vm unit test
-           - [ ] compile track measures
-           - [ ] sort script by strictness
+        - [x] dings
+        - [x] count-in
+        - [x] pickup
+        - [x] sort script by strictness
+        - [x] { t,t'}, {tick,tick'}, t=t',t'+=dt, tick=tick', tick'++
 
-        - [ ] sections
+        - [x] sections: tempo
+        - [ ] sections: time signature
+        - [ ] sections: subdivisions
+        - [ ] sections: clicks
+        - [ ] subsections
         - [ ] loops
-        - [ ] dings
-        - [ ] fix pads for 6:8 dotted quarters
         - [ ] remove FSM
+        - [ ] exec: inject actions
 
-        - [x] 4:4/eigths
-        - [x] 4:4/quarter notes
-        - [ ] 4:4/half notes
+        - [ ] 4:4
+            - [x] eigths
+            - [x] eighth doublets
+            - [x] quarter notes
+            - [ ] half notes
 
-        - [ ] 2:2 eighths
-        - [x] 2:2 quarter notes
-        - [x] 2:2 half notes
+        - [ ] 2:2
+            - [ ] eighths
+            - [x] quarter notes
+            - [x] half notes
 
-        - [x] 6:8 eighths
-        - [x] 6:8 eighth doublets
-        - [x] 6:8 eighth triplets
-        - [x] 6:8 dotted quarters
+        - [x] 6:8
+            - [x] eighths
+            - [x] eighth doublets
+            - [x] eighth triplets
+            - [x] dotted quarters
+            - [ ] fix pads for dotted quarters
+            - [ ] rethink to not use fractional beats
 
         - [ ] node+worklet per run a la YAD
+        - [ ] replace flip with ring buffer + animation timer
         - [ ] put gain into node::sample 
-        - [ ] Float32Buffer:copyTo
         - [ ] move fs (?) and bufferSize to tick(...)
+        - [ ] // FIXME render logic is only designed for one output
 
-    - [ ] https://github.com/transcriptaze/yam/issues/45
-        - "If the time signature is 4:4 and the pickup is the last half beat (4.5) it doesn't click."
+        - 1/3 = 85/256 (ref. https://www.youtube.com/watch?v=xs5iOwkX9fU)
+        - f32: 0.3330000107288360595703125
+        - f64: 0.3330000000000000182076576083554901182651519775390625
+        - f32: 1/3 = 0.3333333432674407958984375
+        - f64: 1/3 = 0.333333333333333314829616256247386932373046875
 
-    - [x] 2:2 time
+
     - [ ] sixteenths
     - [ ] triplets
     - [ ] rethink the 'flipped' message
@@ -366,6 +380,9 @@
 12. CLI (?)
 
 ## Other
+- (?) neural net
+      - https://www.youtube.com/watch?v=dbXCghmnyEs
+
 - (?) Processing
       - https://processing.org/reference/libraries/sound/index.html
       - https://code.compartmental.net/minim

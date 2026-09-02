@@ -22,6 +22,7 @@ export class Metronome2 extends AudioWorkletProcessor {
   }
 
   #time = 0
+  #ding = false
 
   #script = {
     delay: 0,
@@ -29,6 +30,7 @@ export class Metronome2 extends AudioWorkletProcessor {
   }
 
   #vm = new VM(sampleRate, [])
+  #tempo = null
 
   #section = null
   #loops = 0
@@ -83,13 +85,6 @@ export class Metronome2 extends AudioWorkletProcessor {
         maxValue: 1,
         automationRate: 'k-rate',
       },
-      {
-        name: 'ding',
-        defaultValue: 0,
-        minValue: 0,
-        maxValue: 1,
-        automationRate: 'k-rate',
-      },
     ]
   }
 
@@ -129,6 +124,10 @@ export class Metronome2 extends AudioWorkletProcessor {
         }
         break
 
+      case 'ding':
+        this.#ding = event.data.ding === true
+        break
+
       case 'script':
         this.#script = event.data.script
         this.restart()
@@ -145,14 +144,13 @@ export class Metronome2 extends AudioWorkletProcessor {
     const tick = event.data.tick
     const tock = event.data.tock
     const tack = event.data.tack
-    const sticks = event.data.stick
+    const sticks = event.data.sticks
     const ding = event.data.ding
 
     this.clock.fs = event.data.fs
     this.level.sampleRate = event.data.fs
     this.clicks = new Map([
       ['default', tock],
-      ['count-in', sticks],
       ['tick', tick],
       ['tock', tock],
       ['tack', tack],
@@ -174,11 +172,8 @@ export class Metronome2 extends AudioWorkletProcessor {
       this.clock.reset()
 
       this.#time = 0
+      this.#tempo = null
       this.#vm = new VM(sampleRate, this.#script.script)
-
-      console.log({ sampleRate })
-      console.log(this.#script)
-      console.log(this.#vm)
 
       this.port.postMessage({
         message: 'ready',
@@ -195,6 +190,13 @@ export class Metronome2 extends AudioWorkletProcessor {
         loops: this.#loops,
         bars: this.#track,
       })
+
+      this.port.postMessage({
+        message: 'done',
+        track: this.#track?.UUID ?? '',
+      })
+
+      this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
     }
   }
 
@@ -210,6 +212,7 @@ export class Metronome2 extends AudioWorkletProcessor {
       if (this.FSM.onPlay()) {
         this.section = null
         this.clock.reset()
+        this.#tempo = null
         this.#vm = new VM(sampleRate, this.#script.script)
       }
     }
@@ -217,14 +220,6 @@ export class Metronome2 extends AudioWorkletProcessor {
 
   get playing() {
     return this.FSM.playing
-  }
-
-  get stopping() {
-    return this.FSM.stopping
-  }
-
-  get stopped() {
-    return this.FSM.stopped
   }
 
   get track() {
@@ -241,13 +236,13 @@ export class Metronome2 extends AudioWorkletProcessor {
 
   #bpm(BPM) {
     const tempo = this.#track?.tempo ?? null
-    const bpm = this.section?.tempo ?? null
+    const bpm = this.#tempo ?? null
 
     if (tempo != null && bpm != null) {
       return (bpm * BPM) / tempo
     }
 
-    return this.section?.tempo ?? BPM
+    return this.#tempo ?? BPM
   }
 
   process(_inputs, outputs, parameters) {
@@ -296,7 +291,6 @@ export class Metronome2 extends AudioWorkletProcessor {
     const pulse = this.section?.pulse ?? parameters.pulse[0]
 
     const loop = parameters.loop[0] === 1.0
-    const ding = parameters.ding[0] === 1.0
     let clock = this.clock
 
     this.#samples += N > 0 ? N : 0
@@ -333,8 +327,13 @@ export class Metronome2 extends AudioWorkletProcessor {
           const divisions = figura
           const subdivisions = int2subdivisions(pulse) ?? SUBDIVISIONS.QUARTER_NOTES
 
+          const context = {
+            subdivisions: subdivisions,
+            ding: this.#ding,
+          }
+
           const { measure, beat } = this.#vm.click(click, { beats, divisions }, subdivisions)
-          const ops = this.#vm.exec({ measure, beat }, { beats, divisions }, subdivisions)
+          const ops = this.#vm.exec({ measure, beat }, { beats, divisions }, context)
 
           for (const op of ops) {
             this.#exec(op, { measure, beat })
@@ -363,30 +362,7 @@ export class Metronome2 extends AudioWorkletProcessor {
             this.section = null
             this.clock.reset()
           }
-        } else {
-          const playhead = `${cluck.bar}.${cluck.beat}`
-          const dings = this.#track?.dings ?? []
-
-          if (ding && dings.includes(playhead)) {
-            const ting = this.clicks.get('ding')
-            if (ting != null) {
-              this.#cued.push(sample(ting))
-            }
-          }
-
-          log('PLAY', clock.t, clock.time, BPM, cluck.bar, cluck.beat, tactus, figura, pulse)
         }
-      } else if (cluck.tock.click) {
-        // FIXME REMOVE half-assed fix for https://github.com/transcriptaze/yam/issues/45
-        // const measure = cluck.bar
-        // const section = this.#track.sections.find((v) => measure >= v.start && measure <= v.end)
-        // const clicks = section?.clicks ?? []
-        //
-        // if (Array.isArray(clicks) && clicks.includes(cluck.tock.beat)) {
-        //   this.cue(cluck.tock.beat, pulse)
-        // } else if (clicks instanceof Map && clicks.has(cluck.tock.beat)) {
-        //   this.cue(cluck.tock.beat, pulse)
-        // }
       }
     }
   }
@@ -421,6 +397,17 @@ export class Metronome2 extends AudioWorkletProcessor {
       // })
 
       this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
+    }
+
+    const tempo = (bpm) => {
+      this.#tempo = bpm
+    }
+
+    if (typeof opcode === 'object') {
+      if (opcode.opcode === OPCODES.TEMPO) {
+        tempo(opcode.tempo)
+        return
+      }
     }
 
     switch (opcode) {
@@ -497,7 +484,7 @@ function clamp(v, min, max) {
   return Math.min(Math.max(v, min), max)
 }
 
-function log(tag, tick, time, bpm, bar, beat, tactus, figura, pulsus) {
+function _log(tag, tick, time, bpm, bar, beat, tactus, figura, pulsus) {
   if (DEBUG) {
     let msg = `>> ${tag}`
 

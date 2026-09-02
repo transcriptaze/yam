@@ -20,7 +20,16 @@
       "index": 1,
       "title": "Klock",
       "tracks": [
-        "6eac8ad7-d251-4031-ad62-13d52cf479b3"
+        "6eac8ad7-d251-4031-ad62-13d52cf479b3",
+        "60d16e10-3ee5-409a-ad63-1665ae8054fc",
+        "466e08f0-27cb-4c93-ac9c-1bd8f3d5d804",
+        "27e6743d-9345-4d8e-8ef7-09c4e0c0d348",
+        "7de7131f-4f56-420e-bd9b-3ae52a29d1e4",
+        "b3ef497c-fe67-4e55-be76-91b77899d647",
+        "883f42ff-9d06-4aff-b0ea-254fff9bf23a",
+        "6f6155cc-7ecb-4182-965e-cb08eba47413",
+        "e24034a5-08c4-4506-988f-59dbf005e597",
+        "fe2aade7-25db-429b-ab5a-af6b1c8559b2"
       ],
       "random": [],
       "muted": []
@@ -131,7 +140,16 @@
         "b4b17b28-64ef-4687-a000-eeb0aea6c225",
         "a9a085e5-f1ad-46cb-8288-1f4d50e7b904",
         "39da87e1-f6c0-43b0-b98d-ea58ad737475",
-        "6eac8ad7-d251-4031-ad62-13d52cf479b3"
+        "6eac8ad7-d251-4031-ad62-13d52cf479b3",
+        "27e6743d-9345-4d8e-8ef7-09c4e0c0d348",
+        "466e08f0-27cb-4c93-ac9c-1bd8f3d5d804",
+        "60d16e10-3ee5-409a-ad63-1665ae8054fc",
+        "7de7131f-4f56-420e-bd9b-3ae52a29d1e4",
+        "b3ef497c-fe67-4e55-be76-91b77899d647",
+        "883f42ff-9d06-4aff-b0ea-254fff9bf23a",
+        "6f6155cc-7ecb-4182-965e-cb08eba47413",
+        "e24034a5-08c4-4506-988f-59dbf005e597",
+        "fe2aade7-25db-429b-ab5a-af6b1c8559b2"
       ],
       "random": [],
       "muted": []
@@ -148,6 +166,32 @@
     }
   ],
   "tracks": [
+    {
+      "UUID": "27e6743d-9345-4d8e-8ef7-09c4e0c0d348",
+      "version": 0,
+      "title": "klock - section, 8 bars",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "verse",
+          "measures": 8,
+          "subsections": [
+            {
+              "measures": 8
+            }
+          ],
+          "role": "verse"
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": false
+      }
+    },
     {
       "UUID": "32e544f0-1c67-431f-9198-85cd67d7a410",
       "version": 0,
@@ -291,6 +335,29 @@
       ],
       "metronome": {
         "BPM": 120,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
+      "UUID": "466e08f0-27cb-4c93-ac9c-1bd8f3d5d804",
+      "version": 0,
+      "title": "klock - section, unspecified measures",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "verse",
+          "role": "verse",
+          "subsections": [
+            {}
+          ]
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
         "loop": false,
         "ding": false
       }
@@ -646,6 +713,27 @@
       }
     },
     {
+      "UUID": "60d16e10-3ee5-409a-ad63-1665ae8054fc",
+      "version": 0,
+      "title": "klock - 2500ms delay",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "count-in",
+          "role": "count-in",
+          "delay": 2500
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
       "UUID": "657cc85b-4dc7-4779-afde-fcb9681ee5d5",
       "version": 0,
       "title": "A Very Very Long And Complicated Name For A Track That Will Never Be Played",
@@ -733,6 +821,31 @@
       }
     },
     {
+      "UUID": "6f6155cc-7ecb-4182-965e-cb08eba47413",
+      "version": 0,
+      "title": "klock - pickup bar",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "pickup",
+          "role": "anacrusis",
+          "measures": 1
+        },
+        {
+          "name": "verse",
+          "role": "verse"
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
       "UUID": "7993b89b-1cae-4cfd-a985-091998c63fb3",
       "version": 0,
       "title": "(debug) 9/8",
@@ -746,6 +859,63 @@
       ],
       "metronome": {
         "BPM": 100,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
+      "UUID": "7de7131f-4f56-420e-bd9b-3ae52a29d1e4",
+      "version": 0,
+      "title": "klock - dings",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "verse",
+          "role": "verse",
+          "measures": 8,
+          "dings": [
+            2.4
+          ]
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": true
+      }
+    },
+    {
+      "UUID": "883f42ff-9d06-4aff-b0ea-254fff9bf23a",
+      "version": 0,
+      "title": "klock - count-in (2 bars)",
+      "tempo": 120,
+      "timeSignature": "6:8",
+      "pulse": "dotted-quarter",
+      "sections": [
+        {
+          "name": "count-in",
+          "role": "count-in",
+          "measures": 2,
+          "subsections": [
+            {
+              "measures": 2
+            }
+          ]
+        },
+        {
+          "name": "verse",
+          "role": "verse",
+          "subsections": [
+            {}
+          ]
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
         "loop": false,
         "ding": false
       }
@@ -898,6 +1068,31 @@
       "tags": [],
       "metronome": {
         "BPM": 120,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
+      "UUID": "b3ef497c-fe67-4e55-be76-91b77899d647",
+      "version": 0,
+      "title": "klock - count-in",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "count-in",
+          "role": "count-in",
+          "measures": 1
+        },
+        {
+          "name": "verse",
+          "role": "verse"
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
         "loop": false,
         "ding": false
       }
@@ -1155,6 +1350,34 @@
       }
     },
     {
+      "UUID": "e24034a5-08c4-4506-988f-59dbf005e597",
+      "version": 0,
+      "title": "klock - pickup bar (4.5)",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "pickup",
+          "role": "anacrusis",
+          "measures": 1,
+          "clicks": [
+            4.5
+          ]
+        },
+        {
+          "name": "verse",
+          "role": "verse"
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
       "UUID": "e26d0fdd-3383-4cb1-90a7-b2e4eae03cb0",
       "version": 0,
       "title": "Awakening",
@@ -1396,6 +1619,44 @@
         "BPM": 54,
         "loop": true,
         "loops": 3,
+        "ding": false
+      }
+    },
+    {
+      "UUID": "fe2aade7-25db-429b-ab5a-af6b1c8559b2",
+      "version": 0,
+      "title": "klock - tempo change",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "verse 1",
+          "role": "verse",
+          "measures": 4,
+          "subsections": [
+            {
+              "measures": 4
+            }
+          ]
+        },
+        {
+          "name": "verse 2",
+          "role": "verse",
+          "measures": 4,
+          "tempo": 80,
+          "subsections": [
+            {
+              "measures": 4,
+              "tempo": 80
+            }
+          ]
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
         "ding": false
       }
     }

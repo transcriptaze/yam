@@ -8,6 +8,7 @@ export const OPCODES = {
   STICKS: 'sticks',
   DING: 'ding',
   TEMPO: 'tempo',
+  TIME_SIGNATURE: 'time-signature',
 }
 
 export const SUBDIVISIONS = {

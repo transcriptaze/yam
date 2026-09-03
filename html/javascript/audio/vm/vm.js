@@ -192,6 +192,8 @@ export class VM {
 
         if (v.includes(OPCODES.TEMPO)) {
           ops.push({ opcode: OPCODES.TEMPO, tempo: op.tempo })
+        } else if (v.includes(OPCODES.TIME_SIGNATURE)) {
+          ops.push({ opcode: OPCODES.TIME_SIGNATURE, timeSignature: op.timeSignature })
         } else if (v.includes(OPCODES.DING) && ding) {
           ops.push(...v)
           break
@@ -362,6 +364,12 @@ export class VM {
       case OPCODES.TEMPO:
         if (!this.#state.stopped) {
           return [OPCODES.TEMPO]
+        }
+        break
+
+      case OPCODES.TIME_SIGNATURE:
+        if (!this.#state.stopped) {
+          return [OPCODES.TIME_SIGNATURE]
         }
         break
     }

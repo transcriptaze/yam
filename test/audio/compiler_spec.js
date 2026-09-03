@@ -744,7 +744,7 @@ describe('compile: anacrusis', function () {
 // }
 
 describe('compile: tempo change', function () {
-  it('4:4 to 3:4', function () {
+  it('120 BPM to 80BPM', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       tempo: 120,
@@ -767,6 +767,41 @@ describe('compile: tempo change', function () {
       script: [
         { at: { measure: 9,   beat: 1   }, op: OPCODES.STOP },
         { at: { measure: 5,   beat: 1   }, op: OPCODES.TEMPO, tempo: 80 },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK  },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK  },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
+})
+
+describe('compile: time signature change', function () {
+  it('4:4 to 3:4', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          measures: 4,
+        },
+        {
+          measures: 4,
+          timeSignature: '3:4',
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: 9,   beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: 5,   beat: 1   }, op: OPCODES.TIME_SIGNATURE, timeSignature: { beats:3, divisions:4 } },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK  },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK  },
       ],

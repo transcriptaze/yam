@@ -2,40 +2,20 @@
 
 ## In Progress
 
-- [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
-- [ ] passive:true (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
-- [ ] capture:down (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 - [x] move new/random to top of + list
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
-        - [x] clicks
-        - [x] BPM
-        - [x] sync pads to VM click
-        - [x] time signature
-        - [x] doublets
-        - [x] fix hardcoded VM fs
-        - [x] reset VM on stop/start
-        - [x] fix hardcoded VM buffersize
-        - [x] stop doesn't reset pads
-        - [x] start delay
-        - [x] play track
-        - [x] track: play start to finish
-        - [x] track delay
-        - [x] dings
-        - [x] count-in
-        - [x] pickup
-        - [x] sort script by strictness
-        - [x] { t,t'}, {tick,tick'}, t=t',t'+=dt, tick=tick', tick'++
+        - [ ] exec: inject actions
+        - [ ] linker: combine multiple actions into one
 
         - [x] sections: tempo
-        - [ ] sections: time signature
+        - [x] sections: time signature
         - [ ] sections: subdivisions
         - [ ] sections: clicks
         - [ ] subsections
         - [ ] loops
         - [ ] remove FSM
-        - [ ] exec: inject actions
 
         - [ ] 4:4
             - [x] eigths
@@ -75,6 +55,11 @@
         - (?) shared buffer
         - (?) animation timer
 
+## To Be Done
+
+- [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
+- [ ] passive:true (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
+- [ ] capture:down (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 
 - [ ] editor - default reverted to 4:4 instead of continuing with 6:4 (cf. https://github.com/transcriptaze/yam/issues/54)
 

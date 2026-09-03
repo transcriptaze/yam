@@ -31,6 +31,7 @@ export class Metronome2 extends AudioWorkletProcessor {
 
   #vm = new VM(sampleRate, [])
   #tempo = null
+  #timeSignature = null
 
   #section = null
   #loops = 0
@@ -130,6 +131,7 @@ export class Metronome2 extends AudioWorkletProcessor {
 
       case 'script':
         this.#script = event.data.script
+        console.log('>>>', this.#script.script)
         this.restart()
         break
 
@@ -173,6 +175,7 @@ export class Metronome2 extends AudioWorkletProcessor {
 
       this.#time = 0
       this.#tempo = null
+      this.#timeSignature = null
       this.#vm = new VM(sampleRate, this.#script.script)
 
       this.port.postMessage({
@@ -213,6 +216,7 @@ export class Metronome2 extends AudioWorkletProcessor {
         this.section = null
         this.clock.reset()
         this.#tempo = null
+        this.#timeSignature = null
         this.#vm = new VM(sampleRate, this.#script.script)
       }
     }
@@ -286,8 +290,8 @@ export class Metronome2 extends AudioWorkletProcessor {
   #process(t, outputs, parameters) {
     const N = outputs?.[0]?.[0]?.length ?? -3 // FIXME should be 0 probably
     const BPM = this.#bpm(clamp(parameters.BPM[0], 40, 200))
-    const tactus = this.section?.beats ?? clamp(parameters.beats[0], 1, 32)
-    const figura = this.section?.divisions ?? clamp(parameters.divisions[0], 1, 32)
+    const tactus = this.#timeSignature?.beats ?? clamp(parameters.beats[0], 1, 32)
+    const figura = this.#timeSignature?.divisions ?? clamp(parameters.divisions[0], 1, 32)
     const pulse = this.section?.pulse ?? parameters.pulse[0]
 
     const loop = parameters.loop[0] === 1.0
@@ -399,13 +403,24 @@ export class Metronome2 extends AudioWorkletProcessor {
       this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
     }
 
-    const tempo = (bpm) => {
-      this.#tempo = bpm
+    const tempo = () => {
+      console.log('>>>> TEMPO', opcode.tempo)
+      this.#tempo = opcode.tempo
+    }
+
+    const timeSignature = () => {
+      console.log('>>>> TIME SIGNATURE')
+      this.#timeSignature = opcode.timeSignature
     }
 
     if (typeof opcode === 'object') {
       if (opcode.opcode === OPCODES.TEMPO) {
-        tempo(opcode.tempo)
+        tempo()
+        return
+      }
+
+      if (opcode.opcode === OPCODES.TIME_SIGNATURE) {
+        timeSignature()
         return
       }
     }

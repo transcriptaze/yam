@@ -40,6 +40,11 @@ export function compile(track) {
     script.script.push({ at: { measure, beat }, op: OPCODES.TEMPO, tempo: tempo })
   })
 
+  // ... time signatures changes
+  timeSignature(track).forEach(({ measure, beat, timeSignature }) => {
+    script.script.push({ at: { measure, beat }, op: OPCODES.TIME_SIGNATURE, timeSignature: timeSignature })
+  })
+
   // ... default
   script.script.push({ at: { measure: '*', beat: 1 }, op: OPCODES.TICK })
   script.script.push({ at: { measure: '*', beat: '*' }, op: OPCODES.TOCK })
@@ -229,6 +234,31 @@ function tempo(track) {
 
     if (tempo && !Number.isNaN(tempo)) {
       list.push({ measure: bar, beat: 1, tempo: tempo })
+    }
+
+    bar += section.measures ?? Number.POSITIVE_INFINITY
+    if (bar === Number.POSITIVE_INFINITY) {
+      break
+    }
+  }
+
+  return list
+}
+
+function timeSignature(track) {
+  const sections = track?.sections ?? []
+  const list = []
+
+  let bar = 1
+  for (const section of sections) {
+    const timeSignature = section.timeSignature
+
+    if (timeSignature) {
+      const { beats, divisions } = parseTimeSignature(timeSignature)
+
+      if (!isNaN(beats) && !isNaN(divisions)) {
+        list.push({ measure: bar, beat: 1, timeSignature: { beats, divisions } })
+      }
     }
 
     bar += section.measures ?? Number.POSITIVE_INFINITY

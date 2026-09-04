@@ -32,8 +32,8 @@ export class Metronome2 extends AudioWorkletProcessor {
   #vm = new VM(sampleRate, [])
   #tempo = null
   #timeSignature = null
+  #subdivisions = null
 
-  #section = null
   #loops = 0
   #cued = []
   #samples = 0
@@ -107,6 +107,10 @@ export class Metronome2 extends AudioWorkletProcessor {
           delay: 0,
         }
 
+        this.#tempo = null
+        this.#timeSignature = null
+        this.#subdivisions = null
+
         break
 
       case 'play':
@@ -131,7 +135,6 @@ export class Metronome2 extends AudioWorkletProcessor {
 
       case 'script':
         this.#script = event.data.script
-        console.log('>>>', this.#script.script)
         this.restart()
         break
 
@@ -169,13 +172,13 @@ export class Metronome2 extends AudioWorkletProcessor {
 
   play() {
     if (this.FSM.onPlay()) {
-      this.section = null
       this.samples = 0
       this.clock.reset()
 
       this.#time = 0
       this.#tempo = null
       this.#timeSignature = null
+      this.#subdivisions = null
       this.#vm = new VM(sampleRate, this.#script.script)
 
       this.port.postMessage({
@@ -213,10 +216,11 @@ export class Metronome2 extends AudioWorkletProcessor {
 
     if (playing) {
       if (this.FSM.onPlay()) {
-        this.section = null
         this.clock.reset()
+
         this.#tempo = null
         this.#timeSignature = null
+        this.#subdivisions = null
         this.#vm = new VM(sampleRate, this.#script.script)
       }
     }
@@ -228,14 +232,6 @@ export class Metronome2 extends AudioWorkletProcessor {
 
   get track() {
     return this.#track
-  }
-
-  get section() {
-    return this.#section
-  }
-
-  set section(v) {
-    this.#section = v
   }
 
   #bpm(BPM) {
@@ -292,7 +288,7 @@ export class Metronome2 extends AudioWorkletProcessor {
     const BPM = this.#bpm(clamp(parameters.BPM[0], 40, 200))
     const tactus = this.#timeSignature?.beats ?? clamp(parameters.beats[0], 1, 32)
     const figura = this.#timeSignature?.divisions ?? clamp(parameters.divisions[0], 1, 32)
-    const pulse = this.section?.pulse ?? parameters.pulse[0]
+    const subdivisions = this.#subdivisions ?? int2subdivisions(parameters.pulse[0]) ?? SUBDIVISIONS.QUARTER_NOTES
 
     const loop = parameters.loop[0] === 1.0
     let clock = this.clock
@@ -322,14 +318,12 @@ export class Metronome2 extends AudioWorkletProcessor {
 
     // ... play
     if (this.playing) {
-      // *** KLOCK ***
       {
         const { _time, click } = this.#vm.tick(BPM, N)
 
         if (click != null) {
           const beats = tactus
           const divisions = figura
-          const subdivisions = int2subdivisions(pulse) ?? SUBDIVISIONS.QUARTER_NOTES
 
           const context = {
             subdivisions: subdivisions,
@@ -344,17 +338,12 @@ export class Metronome2 extends AudioWorkletProcessor {
           }
         }
       }
-      // *** END KLOCK ***
 
-      const cluck = clock.tick(BPM, tactus, figura, pulse, N)
+      // *** --- LEGACY STUFF --- ***
+      const cluck = clock.tick(BPM, tactus, figura, 0.25, N)
 
       if (cluck.click) {
         const measure = cluck.bar
-        const section = this.#track.sections.find((v) => measure >= v.start && measure <= v.end)
-
-        if (section != null) {
-          this.section = section
-        }
 
         if (measure > this.track.bars && this.FSM.onStop()) {
           this.#loops++
@@ -363,11 +352,11 @@ export class Metronome2 extends AudioWorkletProcessor {
 
           if (loop && (loops == INF || this.#loops < loops) && this.FSM.onPlay()) {
             this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
-            this.section = null
             this.clock.reset()
           }
         }
       }
+      // *** --- END LEGACY STUFF --- ***
     }
   }
 
@@ -413,6 +402,11 @@ export class Metronome2 extends AudioWorkletProcessor {
       this.#timeSignature = opcode.timeSignature
     }
 
+    const subdivisions = () => {
+      console.log('>>>> SUBDIVISIONS')
+      this.#subdivisions = opcode.subdivisions
+    }
+
     if (typeof opcode === 'object') {
       if (opcode.opcode === OPCODES.TEMPO) {
         tempo()
@@ -421,6 +415,11 @@ export class Metronome2 extends AudioWorkletProcessor {
 
       if (opcode.opcode === OPCODES.TIME_SIGNATURE) {
         timeSignature()
+        return
+      }
+
+      if (opcode.opcode === OPCODES.SUBDIVISIONS) {
+        subdivisions()
         return
       }
     }

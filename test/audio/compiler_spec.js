@@ -3,7 +3,7 @@ import { expect } from 'chai'
 import * as compiler from '../../html/javascript/audio/vm/compiler.js'
 import { OPCODES } from '../../html/javascript/audio/vm/constants.js'
 
-describe('compile: basic track', function () {
+describe('basic track', function () {
   it('1:4, 120BPM, quarter notes', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
@@ -115,7 +115,7 @@ describe('compile: basic track', function () {
   })
 })
 
-describe('compile: track with delay', function () {
+describe('track with delay', function () {
   it('no delay', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
@@ -172,7 +172,7 @@ describe('compile: track with delay', function () {
   })
 })
 
-describe('compile: stop', function () {
+describe('stop', function () {
   it('unspecified measures', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
@@ -230,7 +230,7 @@ describe('compile: stop', function () {
   })
 })
 
-describe('compile: dings', function () {
+describe('dings', function () {
   it('track dings', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
@@ -424,7 +424,7 @@ describe('compile: dings', function () {
   })
 })
 
-describe('compile: count-in', function () {
+describe('count-in', function () {
   it('4:4, 1 bar count-in', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
@@ -491,7 +491,7 @@ describe('compile: count-in', function () {
   })
 })
 
-describe('compile: anacrusis', function () {
+describe('anacrusis', function () {
   it('1 bar default pickup @start', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
@@ -704,46 +704,7 @@ describe('compile: anacrusis', function () {
   })
 })
 
-// {
-//   "UUID": "fe2aade7-25db-429b-ab5a-af6b1c8559b2",
-//   "version": 0,
-//   "title": "klock - tempo change",
-//   "tempo": 120,
-//   "timeSignature": "4:4",
-//   "pulse": "quarter",
-//   "sections": [
-//     {
-//       "name": "verse 1",
-//       "role": "verse",
-//       "measures": 4,
-//       "subsections": [
-//         {
-//           "measures": 4
-//         }
-//       ]
-//     },
-//     {
-//       "name": "verse 2",
-//       "role": "verse",
-//       "measures": 4,
-//       "timeSignature": "3:4",
-//       "subsections": [
-//         {
-//           "measures": 4,
-//           "tempo": 80
-//         }
-//       ]
-//     }
-//   ],
-//   "tags": [],
-//   "metronome": {
-//     "BPM": 90,
-//     "loop": false,
-//     "ding": false
-//   }
-// }
-
-describe('compile: tempo change', function () {
+describe('tempo', function () {
   it('120 BPM to 80BPM', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
@@ -778,7 +739,7 @@ describe('compile: tempo change', function () {
   })
 })
 
-describe('compile: time signature change', function () {
+describe('time signature', function () {
   it('4:4 to 3:4', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
@@ -802,6 +763,41 @@ describe('compile: time signature change', function () {
       script: [
         { at: { measure: 9,   beat: 1   }, op: OPCODES.STOP },
         { at: { measure: 5,   beat: 1   }, op: OPCODES.TIME_SIGNATURE, timeSignature: { beats:3, divisions:4 } },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK  },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK  },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
+})
+
+describe('subdivisions', function () {
+  it('quarter notes to eighth doublets', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          measures: 4,
+        },
+        {
+          measures: 4,
+          pulse: 'eighth-doublet',
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: 9,   beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: 5,   beat: 1   }, op: OPCODES.SUBDIVISIONS, subdivisions: 'eighth-doublet' },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK  },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK  },
       ],

@@ -6,12 +6,9 @@
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
-        - [ ] exec: inject actions
-        - [ ] linker: combine multiple actions into one
-
         - [x] sections: tempo
         - [x] sections: time signature
-        - [ ] sections: subdivisions
+        - [x] sections: subdivisions
         - [ ] sections: clicks
         - [ ] subsections
         - [ ] loops
@@ -36,6 +33,13 @@
             - [ ] fix pads for dotted quarters
             - [ ] rethink to not use fractional beats
 
+        - [ ] convert subdivisions parameter to a postMessage
+        - [ ] convert time-signature parameter to a postMessage
+        - [ ] convert BPM parameter to a postMessage
+        - [ ] convert loop parameter to a postMessage
+
+        - [ ] exec: inject actions
+        - [ ] linker: combine multiple actions into one
         - [ ] node+worklet per run a la YAD
         - [ ] replace flip with ring buffer + animation timer
         - [ ] put gain into node::sample 

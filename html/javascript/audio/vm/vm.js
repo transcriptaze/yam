@@ -30,6 +30,14 @@ export class VM {
     beat: 0,
   }
 
+  #actions = {
+    stop: (ops) => this.#stop(ops),
+    tick: (ops) => this.#tick(ops),
+    tock: (ops) => this.#tock(ops),
+    tack: (ops) => this.#tack(ops),
+    sticks: (ops) => this.#sticks(ops),
+  }
+
   constructor(fs, script) {
     this.#fs = fs
     this.#script = script
@@ -188,12 +196,14 @@ export class VM {
 
       // ... measure+beat spec i.e. { measure:1, beat:2}
       if (op.at.measure === at.measure && op.at.beat === at.beat) {
-        const v = this.#exec(op.op)
+        const v = this.#exec(op.op, ops)
 
         if (v.includes(OPCODES.TEMPO)) {
           ops.push({ opcode: OPCODES.TEMPO, tempo: op.tempo })
         } else if (v.includes(OPCODES.TIME_SIGNATURE)) {
           ops.push({ opcode: OPCODES.TIME_SIGNATURE, timeSignature: op.timeSignature })
+        } else if (v.includes(OPCODES.SUBDIVISIONS)) {
+          ops.push({ opcode: OPCODES.SUBDIVISIONS, subdivisions: op.subdivisions })
         } else if (v.includes(OPCODES.DING) && ding) {
           ops.push(...v)
           break
@@ -204,107 +214,102 @@ export class VM {
       }
 
       // ... measure spec e.g. count-in { measure:1, beat:'*'}
-      if (
-        op.at.measure === at.measure &&
-        op.at.beat === '*' &&
-        divisions === 2 &&
-        subdivisions === SUBDIVISIONS.QUARTER_NOTES &&
-        (r === 0.0 || r === 0.5)
-      ) {
-        ops.push(...this.#exec(op.op))
+      // prettier-ignore
+      if (op.at.measure === at.measure && op.at.beat === '*' && divisions === 2 && subdivisions === SUBDIVISIONS.QUARTER_NOTES && (r === 0.0 || r === 0.5)) {
+        ops.push(...this.#exec(op.op, ops))
         break
       }
 
       if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.HALF_NOTES && q % 2 === 0 && r === 0.0) {
-        ops.push(...this.#exec(op.op))
+        ops.push(...this.#exec(op.op, ops))
         break
       }
 
       if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.QUARTER_NOTES && r === 0.0) {
-        ops.push(...this.#exec(op.op))
+        ops.push(...this.#exec(op.op, ops))
         break
       }
 
       if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_DOUBLETS && (r === 0.0 || r === 0.5)) {
-        ops.push(...this.#exec(op.op))
+        ops.push(...this.#exec(op.op, ops))
         break
       }
 
       if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_NOTES && r === 0.0) {
-        ops.push(...this.#exec(op.op))
+        ops.push(...this.#exec(op.op, ops))
         break
       }
 
       if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.DOTTED_QUARTERS && r === 0.0) {
-        ops.push(...this.#exec(op.op))
+        ops.push(...this.#exec(op.op, ops))
         break
       }
 
       if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.0) {
-        ops.push(...this.#exec(op.op))
+        ops.push(...this.#exec(op.op, ops))
         break
       }
 
       if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.333) {
-        ops.push(...this.#exec(op.op))
+        ops.push(...this.#exec(op.op, ops))
         break
       }
 
       if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.667) {
-        ops.push(...this.#exec(op.op))
+        ops.push(...this.#exec(op.op, ops))
         break
       }
 
       // .... beat spec e.g. { measure:'*', beat:1}
       if (op.at.measure === '*' && op.at.beat === at.beat) {
-        ops.push(...this.#exec(op.op))
+        ops.push(...this.#exec(op.op, ops))
         break
       }
 
       // ... default i.e. { measure:'*', beat:'*'}
       // prettier-ignore
       if (op.at.measure === '*' && op.at.beat === '*' && divisions === 2 && subdivisions === SUBDIVISIONS.QUARTER_NOTES && (r === 0.0 || r === 0.5)) {
-        ops.push(...this.#exec(op.op))
+        ops.push(...this.#exec(op.op,ops))
         break
       }
 
       if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.HALF_NOTES && q % 2 === 0 && r === 0.0) {
-        ops.push(...this.#exec(op.op))
+        ops.push(...this.#exec(op.op, ops))
         break
       }
 
       if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.QUARTER_NOTES && r === 0.0) {
-        ops.push(...this.#exec(op.op))
+        ops.push(...this.#exec(op.op, ops))
         break
       }
 
       if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_DOUBLETS && (r === 0.0 || r === 0.5)) {
-        ops.push(...this.#exec(op.op))
+        ops.push(...this.#exec(op.op, ops))
         break
       }
 
       if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_NOTES && r === 0.0) {
-        ops.push(...this.#exec(op.op))
+        ops.push(...this.#exec(op.op, ops))
         break
       }
 
       if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.DOTTED_QUARTERS && r === 0.0) {
-        ops.push(...this.#exec(op.op))
+        ops.push(...this.#exec(op.op, ops))
         break
       }
 
       if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.0) {
-        ops.push(...this.#exec(op.op))
+        ops.push(...this.#exec(op.op, ops))
         break
       }
 
       if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.333) {
-        ops.push(...this.#exec(op.op))
+        ops.push(...this.#exec(op.op, ops))
         break
       }
 
       if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.667) {
-        ops.push(...this.#exec(op.op))
+        ops.push(...this.#exec(op.op, ops))
         break
       }
     }
@@ -325,34 +330,26 @@ export class VM {
     }
   }
 
-  #exec(op) {
+  #exec(op, ops) {
     switch (op) {
       case OPCODES.STOP:
-        this.#state.stopped = true
-        return [OPCODES.STOP]
+        this.#actions.stop(ops)
+        break
 
       case OPCODES.TICK:
-        if (!this.#state.stopped) {
-          return [OPCODES.TICK]
-        }
+        this.#actions.tick(ops)
         break
 
       case OPCODES.TOCK:
-        if (!this.#state.stopped) {
-          return [OPCODES.TOCK]
-        }
+        this.#actions.tock(ops)
         break
 
       case OPCODES.TACK:
-        if (!this.#state.stopped) {
-          return [OPCODES.TACK]
-        }
+        this.#actions.tack(ops)
         break
 
       case OPCODES.STICKS:
-        if (!this.#state.stopped) {
-          return [OPCODES.STICKS]
-        }
+        this.#actions.sticks(ops)
         break
 
       case OPCODES.DING:
@@ -372,8 +369,43 @@ export class VM {
           return [OPCODES.TIME_SIGNATURE]
         }
         break
+
+      case OPCODES.SUBDIVISIONS:
+        if (!this.#state.stopped) {
+          return [OPCODES.SUBDIVISIONS]
+        }
+        break
     }
 
     return []
+  }
+
+  #stop(ops) {
+    this.#state.stopped = true
+    ops.push(OPCODES.STOP)
+  }
+
+  #tick(ops) {
+    if (!this.#state.stopped) {
+      ops.push(OPCODES.TICK)
+    }
+  }
+
+  #tock(ops) {
+    if (!this.#state.stopped) {
+      ops.push(OPCODES.TOCK)
+    }
+  }
+
+  #tack(ops) {
+    if (!this.#state.stopped) {
+      ops.push(OPCODES.TACK)
+    }
+  }
+
+  #sticks(ops) {
+    if (!this.#state.stopped) {
+      ops.push(OPCODES.STICKS)
+    }
   }
 }

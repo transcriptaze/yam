@@ -30,7 +30,8 @@
         "6f6155cc-7ecb-4182-965e-cb08eba47413",
         "e24034a5-08c4-4506-988f-59dbf005e597",
         "fe2aade7-25db-429b-ab5a-af6b1c8559b2",
-        "54789129-03ed-493b-8c3d-1b270ff90d52"
+        "54789129-03ed-493b-8c3d-1b270ff90d52",
+        "05740c20-52fd-41ee-867a-edad7e702c74"
       ],
       "random": [],
       "muted": []
@@ -153,7 +154,8 @@
         "fe2aade7-25db-429b-ab5a-af6b1c8559b2",
         "54789129-03ed-493b-8c3d-1b270ff90d52",
         "a00b3639-ded9-4062-9dfe-6670afb94e4f",
-        "6fd3399f-5dfc-4f1e-a3c7-46cdea5de251"
+        "6fd3399f-5dfc-4f1e-a3c7-46cdea5de251",
+        "05740c20-52fd-41ee-867a-edad7e702c74"
       ],
       "random": [],
       "muted": []
@@ -1721,6 +1723,44 @@
             {
               "measures": 4,
               "tempo": 160
+            }
+          ]
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
+      "UUID": "05740c20-52fd-41ee-867a-edad7e702c74",
+      "version": 0,
+      "title": "klock - subdivisions",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "verse 1",
+          "role": "verse",
+          "measures": 4,
+          "subsections": [
+            {
+              "measures": 4
+            }
+          ]
+        },
+        {
+          "name": "verse 2",
+          "role": "verse",
+          "measures": 4,
+          "pulse": "eighth-doublet",
+          "subsections": [
+            {
+              "measures": 4,
+              "pulse": "eighth-doublet"
             }
           ]
         }

@@ -13,6 +13,7 @@
         - [ ] subsections
         - [ ] loops
         - [ ] remove FSM
+        - [ ] move TICK, TOCK, TACK, STICKS, DING to IR enum
 
         - [ ] 4:4
             - [x] eigths

@@ -361,15 +361,6 @@ export class Metronome2 extends AudioWorkletProcessor {
   }
 
   #exec(opcode, { measure, beat }) {
-    const cue = (v) => {
-      const click = this.clicks.get(v) ?? this.clicks.get('default')
-      if (click != null) {
-        this.#cued.push(sample(click))
-      }
-
-      this.flip({ state: FSM.STATE.PLAYING, bar: measure, beat: beat, loops: this.#loops })
-    }
-
     const stop = () => {
       this.FSM.onStop()
       this.FSM.onStopped()
@@ -392,61 +383,46 @@ export class Metronome2 extends AudioWorkletProcessor {
       this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
     }
 
+    const cue = () => {
+      const click = this.clicks.get(opcode.sample) ?? this.clicks.get('default')
+      if (click != null) {
+        this.#cued.push(sample(click))
+      }
+
+      this.flip({ state: FSM.STATE.PLAYING, bar: measure, beat: beat, loops: this.#loops })
+    }
+
     const tempo = () => {
-      console.log('>>>> TEMPO', opcode.tempo)
       this.#tempo = opcode.tempo
     }
 
     const timeSignature = () => {
-      console.log('>>>> TIME SIGNATURE')
       this.#timeSignature = opcode.timeSignature
     }
 
     const subdivisions = () => {
-      console.log('>>>> SUBDIVISIONS')
       this.#subdivisions = opcode.subdivisions
     }
 
-    if (typeof opcode === 'object') {
-      if (opcode.opcode === OPCODES.TEMPO) {
-        tempo()
-        return
-      }
-
-      if (opcode.opcode === OPCODES.TIME_SIGNATURE) {
-        timeSignature()
-        return
-      }
-
-      if (opcode.opcode === OPCODES.SUBDIVISIONS) {
-        subdivisions()
-        return
-      }
-    }
-
-    switch (opcode) {
-      case OPCODES.TICK:
-        cue('tick')
-        break
-
-      case OPCODES.TOCK:
-        cue('tock')
-        break
-
-      case OPCODES.TACK:
-        cue('tack')
-        break
-
-      case OPCODES.STICKS:
-        cue('sticks')
-        break
-
-      case OPCODES.DING:
-        cue('ding')
-        break
-
+    switch (opcode.opcode) {
       case OPCODES.STOP:
         stop()
+        break
+
+      case OPCODES.PLAY:
+        cue()
+        break
+
+      case OPCODES.TEMPO:
+        tempo()
+        break
+
+      case OPCODES.TIME_SIGNATURE:
+        timeSignature()
+        break
+
+      case OPCODES.SUBDIVISIONS:
+        subdivisions()
         break
     }
   }

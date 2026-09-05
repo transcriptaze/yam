@@ -30,14 +30,6 @@ export class VM {
     beat: 0,
   }
 
-  #actions = {
-    stop: (ops) => this.#stop(ops),
-    tick: (ops) => this.#tick(ops),
-    tock: (ops) => this.#tock(ops),
-    tack: (ops) => this.#tack(ops),
-    sticks: (ops) => this.#sticks(ops),
-  }
-
   constructor(fs, script) {
     this.#fs = fs
     this.#script = script
@@ -181,6 +173,7 @@ export class VM {
   }
 
   exec(at, { _beats, divisions }, { subdivisions, ding }) {
+    const context = { ding }
     const ops = []
 
     for (const op of this.#script) {
@@ -196,121 +189,58 @@ export class VM {
 
       // ... measure+beat spec i.e. { measure:1, beat:2}
       if (op.at.measure === at.measure && op.at.beat === at.beat) {
-        const v = this.#exec(op.op, ops)
-
-        if (v.includes(OPCODES.TEMPO)) {
-          ops.push({ opcode: OPCODES.TEMPO, tempo: op.tempo })
-        } else if (v.includes(OPCODES.TIME_SIGNATURE)) {
-          ops.push({ opcode: OPCODES.TIME_SIGNATURE, timeSignature: op.timeSignature })
-        } else if (v.includes(OPCODES.SUBDIVISIONS)) {
-          ops.push({ opcode: OPCODES.SUBDIVISIONS, subdivisions: op.subdivisions })
-        } else if (v.includes(OPCODES.DING) && ding) {
-          ops.push(...v)
-          break
-        } else if (!v.includes(OPCODES.DING)) {
-          ops.push(...v)
-          break
-        }
+        this.#exec(op, ops, context)
       }
 
       // ... measure spec e.g. count-in { measure:1, beat:'*'}
-      // prettier-ignore
-      if (op.at.measure === at.measure && op.at.beat === '*' && divisions === 2 && subdivisions === SUBDIVISIONS.QUARTER_NOTES && (r === 0.0 || r === 0.5)) {
-        ops.push(...this.#exec(op.op, ops))
-        break
-      }
-
-      if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.HALF_NOTES && q % 2 === 0 && r === 0.0) {
-        ops.push(...this.#exec(op.op, ops))
-        break
-      }
-
-      if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.QUARTER_NOTES && r === 0.0) {
-        ops.push(...this.#exec(op.op, ops))
-        break
-      }
-
-      if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_DOUBLETS && (r === 0.0 || r === 0.5)) {
-        ops.push(...this.#exec(op.op, ops))
-        break
-      }
-
-      if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_NOTES && r === 0.0) {
-        ops.push(...this.#exec(op.op, ops))
-        break
-      }
-
-      if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.DOTTED_QUARTERS && r === 0.0) {
-        ops.push(...this.#exec(op.op, ops))
-        break
-      }
-
-      if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.0) {
-        ops.push(...this.#exec(op.op, ops))
-        break
-      }
-
-      if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.333) {
-        ops.push(...this.#exec(op.op, ops))
-        break
-      }
-
-      if (op.at.measure === at.measure && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.667) {
-        ops.push(...this.#exec(op.op, ops))
-        break
+      if (op.at.measure === at.measure && op.at.beat === '*') {
+        if (divisions === 2 && subdivisions === SUBDIVISIONS.QUARTER_NOTES && (r === 0.0 || r === 0.5)) {
+          this.#exec(op, ops, context)
+        } else if (subdivisions === SUBDIVISIONS.HALF_NOTES && q % 2 === 0 && r === 0.0) {
+          this.#exec(op, ops, context)
+        } else if (subdivisions === SUBDIVISIONS.QUARTER_NOTES && r === 0.0) {
+          this.#exec(op, ops, context)
+        } else if (subdivisions === SUBDIVISIONS.EIGHTH_DOUBLETS && (r === 0.0 || r === 0.5)) {
+          this.#exec(op, ops, context)
+        } else if (subdivisions === SUBDIVISIONS.EIGHTH_NOTES && r === 0.0) {
+          this.#exec(op, ops, context)
+        } else if (subdivisions === SUBDIVISIONS.DOTTED_QUARTERS && r === 0.0) {
+          this.#exec(op, ops, context)
+        } else if (subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.0) {
+          this.#exec(op, ops, context)
+        } else if (subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.333) {
+          this.#exec(op, ops, context)
+        } else if (subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.667) {
+          this.#exec(op, ops, context)
+        }
       }
 
       // .... beat spec e.g. { measure:'*', beat:1}
       if (op.at.measure === '*' && op.at.beat === at.beat) {
-        ops.push(...this.#exec(op.op, ops))
-        break
+        this.#exec(op, ops, context)
       }
 
       // ... default i.e. { measure:'*', beat:'*'}
-      // prettier-ignore
-      if (op.at.measure === '*' && op.at.beat === '*' && divisions === 2 && subdivisions === SUBDIVISIONS.QUARTER_NOTES && (r === 0.0 || r === 0.5)) {
-        ops.push(...this.#exec(op.op,ops))
-        break
-      }
-
-      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.HALF_NOTES && q % 2 === 0 && r === 0.0) {
-        ops.push(...this.#exec(op.op, ops))
-        break
-      }
-
-      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.QUARTER_NOTES && r === 0.0) {
-        ops.push(...this.#exec(op.op, ops))
-        break
-      }
-
-      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_DOUBLETS && (r === 0.0 || r === 0.5)) {
-        ops.push(...this.#exec(op.op, ops))
-        break
-      }
-
-      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_NOTES && r === 0.0) {
-        ops.push(...this.#exec(op.op, ops))
-        break
-      }
-
-      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.DOTTED_QUARTERS && r === 0.0) {
-        ops.push(...this.#exec(op.op, ops))
-        break
-      }
-
-      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.0) {
-        ops.push(...this.#exec(op.op, ops))
-        break
-      }
-
-      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.333) {
-        ops.push(...this.#exec(op.op, ops))
-        break
-      }
-
-      if (op.at.measure === '*' && op.at.beat === '*' && subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.667) {
-        ops.push(...this.#exec(op.op, ops))
-        break
+      if (op.at.measure === '*' && op.at.beat === '*') {
+        if (divisions === 2 && subdivisions === SUBDIVISIONS.QUARTER_NOTES && (r === 0.0 || r === 0.5)) {
+          this.#exec(op, ops, context)
+        } else if (subdivisions === SUBDIVISIONS.HALF_NOTES && q % 2 === 0 && r === 0.0) {
+          this.#exec(op, ops, context)
+        } else if (subdivisions === SUBDIVISIONS.QUARTER_NOTES && r === 0.0) {
+          this.#exec(op, ops, context)
+        } else if (subdivisions === SUBDIVISIONS.EIGHTH_DOUBLETS && (r === 0.0 || r === 0.5)) {
+          this.#exec(op, ops, context)
+        } else if (subdivisions === SUBDIVISIONS.EIGHTH_NOTES && r === 0.0) {
+          this.#exec(op, ops, context)
+        } else if (subdivisions === SUBDIVISIONS.DOTTED_QUARTERS && r === 0.0) {
+          this.#exec(op, ops, context)
+        } else if (subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.0) {
+          this.#exec(op, ops, context)
+        } else if (subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.333) {
+          this.#exec(op, ops, context)
+        } else if (subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && r === 0.667) {
+          this.#exec(op, ops, context)
+        }
       }
     }
 
@@ -330,82 +260,72 @@ export class VM {
     }
   }
 
-  #exec(op, ops) {
-    switch (op) {
+  #exec(op, ops, context = {}) {
+    const { ding = true } = context
+
+    switch (op.op) {
       case OPCODES.STOP:
-        this.#actions.stop(ops)
+        this.#state.stopped = true
+        this.#push(ops, { opcode: OPCODES.STOP })
         break
 
       case OPCODES.TICK:
-        this.#actions.tick(ops)
+        if (!this.#state.stopped) {
+          this.#push(ops, { opcode: OPCODES.PLAY, sample: 'tick' })
+        }
         break
 
       case OPCODES.TOCK:
-        this.#actions.tock(ops)
+        if (!this.#state.stopped) {
+          this.#push(ops, { opcode: OPCODES.PLAY, sample: 'tock' })
+        }
         break
 
       case OPCODES.TACK:
-        this.#actions.tack(ops)
+        if (!this.#state.stopped) {
+          this.#push(ops, { opcode: OPCODES.PLAY, sample: 'tack' })
+        }
         break
 
       case OPCODES.STICKS:
-        this.#actions.sticks(ops)
+        if (!this.#state.stopped) {
+          this.#push(ops, { opcode: OPCODES.PLAY, sample: 'sticks' })
+        }
         break
 
       case OPCODES.DING:
         if (!this.#state.stopped) {
-          return [OPCODES.DING]
+          if (ding) {
+            this.#push(ops, { opcode: OPCODES.PLAY, sample: 'ding' })
+          }
         }
         break
 
       case OPCODES.TEMPO:
         if (!this.#state.stopped) {
-          return [OPCODES.TEMPO]
+          this.#push(ops, { opcode: OPCODES.TEMPO, tempo: op.tempo })
         }
         break
 
       case OPCODES.TIME_SIGNATURE:
         if (!this.#state.stopped) {
-          return [OPCODES.TIME_SIGNATURE]
+          this.#push(ops, { opcode: OPCODES.TIME_SIGNATURE, timeSignature: op.timeSignature })
         }
         break
 
       case OPCODES.SUBDIVISIONS:
         if (!this.#state.stopped) {
-          return [OPCODES.SUBDIVISIONS]
+          this.#push(ops, { opcode: OPCODES.SUBDIVISIONS, subdivisions: op.subdivisions })
         }
         break
     }
 
-    return []
+    return null
   }
 
-  #stop(ops) {
-    this.#state.stopped = true
-    ops.push(OPCODES.STOP)
-  }
-
-  #tick(ops) {
-    if (!this.#state.stopped) {
-      ops.push(OPCODES.TICK)
-    }
-  }
-
-  #tock(ops) {
-    if (!this.#state.stopped) {
-      ops.push(OPCODES.TOCK)
-    }
-  }
-
-  #tack(ops) {
-    if (!this.#state.stopped) {
-      ops.push(OPCODES.TACK)
-    }
-  }
-
-  #sticks(ops) {
-    if (!this.#state.stopped) {
-      ops.push(OPCODES.STICKS)
+  #push(ops, op) {
+    if (!ops.some((v) => v.opcode === op.opcode)) {
+      ops.push(op)
     }
   }
 }

@@ -10,6 +10,10 @@
         - [x] sections: time signature
         - [x] sections: subdivisions
         - [ ] sections: clicks
+           - track clicks
+           - section clicks
+           - measure ranges
+
         - [ ] subsections
         - [ ] loops
         - [ ] remove FSM

@@ -27,12 +27,14 @@ export class Metronome2Node extends AudioWorkletNode {
     loops: 0,
   }
 
-  constructor(ctx, { tick, tock, tack, stick, ding }, subscribers) {
+  constructor(ctx, { tick, tock, tack, stick, ding, skip }, subscribers) {
     super(ctx, 'metronome2', {
       numberOfInputs: 0,
       numberOfOutputs: 1,
       outputChannelCount: [2],
     })
+
+    console.log('>>>', skip)
 
     this.subscribers = subscribers
     this.port.onmessage = this.onMessage.bind(this)
@@ -46,6 +48,11 @@ export class Metronome2Node extends AudioWorkletNode {
       tack: sample(tack),
       ding: sample(ding),
       sticks: sample(stick),
+      skip: {
+        length: 0,
+        left: new Float32Array(),
+        right: new Float32Array(),
+      },
     })
   }
 

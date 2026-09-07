@@ -3,6 +3,23 @@ import { expect } from 'chai'
 import * as compiler from '../../html/javascript/audio/vm/compiler.js'
 import { OPCODES } from '../../html/javascript/audio/vm/constants.js'
 
+describe('no track', function () {
+  it('1:4, 120BPM, quarter notes', function () {
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(null)
+
+    expect(script).to.deep.equal(expected)
+  })
+})
+
 describe('basic track', function () {
   it('1:4, 120BPM, quarter notes', function () {
     const track = {
@@ -798,6 +815,54 @@ describe('subdivisions', function () {
       script: [
         { at: { measure: 9,   beat: 1   }, op: OPCODES.STOP },
         { at: { measure: 5,   beat: 1   }, op: OPCODES.SUBDIVISIONS, subdivisions: 'eighth-doublet' },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK  },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK  },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
+})
+
+describe('clicks', function () {
+  it('section: beats array', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          measures: 4,
+          clicks: [1, 4],
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: 5, beat: 1   }, op: OPCODES.STOP },
+
+        { at: { measure: 1, beat: 1   }, op: OPCODES.TICK  },
+        { at: { measure: 1, beat: 4   }, op: OPCODES.TOCK  },
+        { at: { measure: 1, beat: '*' }, op: OPCODES.SKIP  },
+
+        { at: { measure: 2, beat: 1   }, op: OPCODES.TICK  },
+        { at: { measure: 2, beat: 4   }, op: OPCODES.TOCK  },
+        { at: { measure: 2, beat: '*' }, op: OPCODES.SKIP  },
+
+        { at: { measure: 3, beat: 1   }, op: OPCODES.TICK  },
+        { at: { measure: 3, beat: 4   }, op: OPCODES.TOCK  },
+        { at: { measure: 3, beat: '*' }, op: OPCODES.SKIP  },
+
+        { at: { measure: 4, beat: 1   }, op: OPCODES.TICK  },
+        { at: { measure: 4, beat: 4   }, op: OPCODES.TOCK  },
+        { at: { measure: 4, beat: '*' }, op: OPCODES.SKIP  },
+
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK  },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK  },
       ],

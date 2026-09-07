@@ -151,6 +151,7 @@ export class Metronome2 extends AudioWorkletProcessor {
     const tack = event.data.tack
     const sticks = event.data.sticks
     const ding = event.data.ding
+    const skip = event.data.skip
 
     this.clock.fs = event.data.fs
     this.level.sampleRate = event.data.fs
@@ -161,6 +162,7 @@ export class Metronome2 extends AudioWorkletProcessor {
       ['tack', tack],
       ['sticks', sticks],
       ['ding', ding],
+      ['skip', skip],
       [1, tick],
       [2, tock],
       [3, tock],

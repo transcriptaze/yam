@@ -12,6 +12,18 @@ const PULSE = new Map([
 ])
 
 export function compile(track) {
+  // ... no track?
+  if (track == null) {
+    return {
+      delay: 0,
+      script: [
+        { at: { measure: '*', beat: 1 }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+  }
+
+  // ... compile track
   const script = {
     delay: 0,
     script: [],
@@ -58,6 +70,11 @@ export function compile(track) {
   // ... subdivisions
   subdivisions(track).forEach(({ measure, beat, subdivisions }) => {
     script.script.push({ at: { measure, beat }, op: OPCODES.SUBDIVISIONS, subdivisions: subdivisions })
+  })
+
+  // ... clicks
+  clicks(track).forEach(({ measure, beat, click }) => {
+    script.script.push({ at: { measure, beat }, op: click })
   })
 
   // ... default
@@ -301,6 +318,44 @@ function subdivisions(track) {
 
     bar += section.measures ?? Number.POSITIVE_INFINITY
     if (bar === Number.POSITIVE_INFINITY) {
+      break
+    }
+  }
+
+  return list
+}
+
+function clicks(track) {
+  const sections = track?.sections ?? []
+  const list = []
+
+  let measure = 1
+  for (const section of sections) {
+    if (section.role === 'anacrusis') {
+      continue
+    }
+
+    const clicks = section.clicks
+    const measures = section.measures ?? Number.POSITIVE_INFINITY
+
+    if (clicks != null && Array.isArray(clicks)) {
+      if (!isNaN(measures && measures === Number.POSITIVE_INFINITY)) {
+        for (let i = 0; i < measures; i++) {
+          for (const beat of clicks) {
+            if (beat === 1) {
+              list.push({ measure: measure + i, beat, click: OPCODES.TICK })
+            } else {
+              list.push({ measure: measure + i, beat, click: OPCODES.TOCK })
+            }
+          }
+
+          list.push({ measure: measure + i, beat: '*', click: OPCODES.SKIP })
+        }
+      }
+    }
+
+    measure += measures
+    if (measure === Number.POSITIVE_INFINITY) {
       break
     }
   }

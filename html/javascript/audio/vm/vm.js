@@ -301,6 +301,12 @@ export class VM {
         }
         break
 
+      case OPCODES.SKIP:
+        if (!this.#state.stopped) {
+          this.#push(ops, { opcode: OPCODES.PLAY, sample: 'skip' })
+        }
+        break
+
       case OPCODES.TEMPO:
         if (!this.#state.stopped) {
           this.#push(ops, { opcode: OPCODES.TEMPO, tempo: op.tempo })

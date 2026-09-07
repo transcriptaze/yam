@@ -1,9 +1,11 @@
 # Notes
 
+## WebAudio
+1. Web audio cannot decode a header only WAV file (seems to absolutely require the data chunk).
+
+
 ## git
-1. https://stackoverflow.com/questions/22844806/how-to-change-my-git-username-in-terminal
-2. https://stackoverflow.com/questions/4220416/can-i-specify-multiple-users-for-myself-in-gitconfig/43654115#43654115
-3. https://24ways.org/2013/keeping-parts-of-your-codebase-private-on-github/
+1. https://24ways.org/2013/keeping-parts-of-your-codebase-private-on-github/
 
 
 ## Bravura
@@ -143,6 +145,7 @@
 - https://www.reddit.com/r/musictheory/comments/d1mqjo/help_me_understand_68_time_signature
 - https://music.stackexchange.com/questions/61139/how-to-count-6-8
 - https://tinachristieflute.com/music-theory-for-flutists/counting-rhythms/counting-with-a-system-6-8-time
+- https://music.stackexchange.com/questions/98971/how-would-i-convert-6-8-dotted-crotchet-66-to-a-6-8-regular-crotchet-value
 
 ### Packaging
 - https://www.npmjs.com/package/rollup-plugin-web-worker-loader

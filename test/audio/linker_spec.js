@@ -3,7 +3,7 @@ import { expect } from 'chai'
 import * as linker from '../../html/javascript/audio/vm/linker.js'
 import { OPCODES } from '../../html/javascript/audio/vm/constants.js'
 
-describe('linker: link', function () {
+describe('linker: sort', function () {
   it('sort measures into executable order', function () {
     // prettier-ignore
     const script = {
@@ -104,6 +104,38 @@ describe('linker: link', function () {
         { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    linker.link(script)
+
+    expect(script).to.deep.equal(expected)
+  })
+})
+
+describe('linker: optimize', function () {
+  it('remove redundant ops', function () {
+    // prettier-ignore
+    const script = {
+      delay: 0,
+      script: [
+        { at: { measure: 5,   beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: '*', beat: 4   }, op: OPCODES.TACK   },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.SKIP   },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK  },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK  },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: 5,   beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: '*', beat: 4   }, op: OPCODES.TACK   },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.SKIP   },
       ],
     }
 

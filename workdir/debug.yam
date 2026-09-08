@@ -32,6 +32,8 @@
         "fe2aade7-25db-429b-ab5a-af6b1c8559b2",
         "54789129-03ed-493b-8c3d-1b270ff90d52",
         "05740c20-52fd-41ee-867a-edad7e702c74",
+        "9493afd8-c6a0-4ab3-a114-e4bcaeeff0b6",
+        "d05391e5-0857-44c4-a44c-ac1d8f43f4e2",
         "ad41c588-40ad-45b2-996d-459d923c9ad1"
       ],
       "random": [],
@@ -151,7 +153,9 @@
         "54789129-03ed-493b-8c3d-1b270ff90d52",
         "05740c20-52fd-41ee-867a-edad7e702c74",
         "ad41c588-40ad-45b2-996d-459d923c9ad1",
-        "39da87e1-f6c0-43b0-b98d-ea58ad737475"
+        "39da87e1-f6c0-43b0-b98d-ea58ad737475",
+        "d05391e5-0857-44c4-a44c-ac1d8f43f4e2",
+        "9493afd8-c6a0-4ab3-a114-e4bcaeeff0b6"
       ],
       "random": [],
       "muted": []
@@ -1354,6 +1358,37 @@
       }
     },
     {
+      "UUID": "d05391e5-0857-44c4-a44c-ac1d8f43f4e2",
+      "version": 0,
+      "title": "klock - track clicks (map)",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "verse 1",
+          "role": "verse",
+          "measures": 4,
+          "subsections": [
+            {
+              "measures": 4
+            }
+          ]
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": false,
+        "clicks": {
+          "1": "tick",
+          "3": "ding",
+          "4": "tack"
+        }
+      }
+    },
+    {
       "UUID": "d76f150d-8461-4fd9-a934-da7bf2699132",
       "version": 0,
       "title": "Keurboom",
@@ -1709,6 +1744,28 @@
         "BPM": 90,
         "loop": false,
         "ding": false
+      }
+    },
+    {
+      "UUID": "9493afd8-c6a0-4ab3-a114-e4bcaeeff0b6",
+      "version": 0,
+      "title": "klock - track clicks (array)",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "verse 1",
+          "role": "verse",
+          "measures": 4
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 120,
+        "loop": false,
+        "ding": false,
+        "clicks": [1,4]
       }
     }
   ]

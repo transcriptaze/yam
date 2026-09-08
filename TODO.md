@@ -9,17 +9,21 @@
         - [x] sections: subdivisions
         - [ ] sections: clicks
            - [x] section clicks
-           - track clicks
-           - measure ranges
-           - ding: replace OPCODE.TICK, etc with OPCODE.PLAY
-           - ding: move dings.enabled to worklet
+           - [ ] section w/infinite measures
+           - [x] track clicks
+           - [ ] test track + section clicks
+           - [ ] ding: replace OPCODE.TICK, etc with OPCODE.PLAY
+           - [ ] ding: move dings.enabled to worklet
+           - [ ] linker: remove redundant entries
+           - [ ] linker: measure ranges
+           - [ ] check "debug: dings" track
 
         - [ ] subsections
         - [ ] loops
         - [ ] remove FSM
 
         - [ ] 4:4
-            - [x] eigths
+            - [x] eighths
             - [x] eighth doublets
             - [x] quarter notes
             - [ ] half notes

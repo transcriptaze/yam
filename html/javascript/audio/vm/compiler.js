@@ -326,8 +326,34 @@ function subdivisions(track) {
 }
 
 function clicks(track) {
-  const sections = track?.sections ?? []
   const list = []
+
+  // ... track clicks
+  const clicks = track.clicks
+
+  if (clicks != null && Array.isArray(clicks)) {
+    for (const beat of clicks) {
+      if (beat === 1) {
+        list.push({ measure: '*', beat, click: OPCODES.TICK })
+      } else {
+        list.push({ measure: '*', beat, click: OPCODES.TOCK })
+      }
+    }
+
+    list.push({ measure: '*', beat: '*', click: OPCODES.SKIP })
+  } else if (clicks != null && typeof clicks === 'object') {
+    for (const [k, v] of Object.entries(clicks)) {
+      const beat = parseFloat(`${k}`)
+      if (!isNaN(beat)) {
+        list.push({ measure: '*', beat, click: `${v}` })
+      }
+    }
+
+    list.push({ measure: '*', beat: '*', click: OPCODES.SKIP })
+  }
+
+  // ... section clicks
+  const sections = track?.sections ?? []
 
   let measure = 1
   for (const section of sections) {

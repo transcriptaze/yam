@@ -872,4 +872,58 @@ describe('clicks', function () {
 
     expect(script).to.deep.equal(expected)
   })
+
+  it('section: beats map', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          measures: 4,
+          clicks: {
+            1: 'sticks',
+            3: 'tack',
+            4: 'ding',
+          },
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: 5, beat: 1   }, op: OPCODES.STOP },
+
+        { at: { measure: 1, beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: 1, beat: 3   }, op: OPCODES.TACK   },
+        { at: { measure: 1, beat: 4   }, op: OPCODES.DING   },
+        { at: { measure: 1, beat: '*' }, op: OPCODES.SKIP   },
+
+        { at: { measure: 2, beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: 2, beat: 3   }, op: OPCODES.TACK   },
+        { at: { measure: 2, beat: 4   }, op: OPCODES.DING   },
+        { at: { measure: 2, beat: '*' }, op: OPCODES.SKIP  },
+
+        { at: { measure: 3, beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: 3, beat: 3   }, op: OPCODES.TACK   },
+        { at: { measure: 3, beat: 4   }, op: OPCODES.DING   },
+        { at: { measure: 3, beat: '*' }, op: OPCODES.SKIP  },
+
+        { at: { measure: 4, beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: 4, beat: 3   }, op: OPCODES.TACK   },
+        { at: { measure: 4, beat: 4   }, op: OPCODES.DING   },
+        { at: { measure: 4, beat: '*' }, op: OPCODES.SKIP  },
+
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK  },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK  },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
 })

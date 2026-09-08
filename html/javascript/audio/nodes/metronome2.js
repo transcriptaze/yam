@@ -34,8 +34,6 @@ export class Metronome2Node extends AudioWorkletNode {
       outputChannelCount: [2],
     })
 
-    console.log('>>>', skip)
-
     this.subscribers = subscribers
     this.port.onmessage = this.onMessage.bind(this)
 
@@ -48,11 +46,7 @@ export class Metronome2Node extends AudioWorkletNode {
       tack: sample(tack),
       ding: sample(ding),
       sticks: sample(stick),
-      skip: {
-        length: 0,
-        left: new Float32Array(),
-        right: new Float32Array(),
-      },
+      skip: sample(skip),
     })
   }
 

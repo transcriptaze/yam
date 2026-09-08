@@ -150,7 +150,8 @@
         "fe2aade7-25db-429b-ab5a-af6b1c8559b2",
         "54789129-03ed-493b-8c3d-1b270ff90d52",
         "05740c20-52fd-41ee-867a-edad7e702c74",
-        "ad41c588-40ad-45b2-996d-459d923c9ad1"
+        "ad41c588-40ad-45b2-996d-459d923c9ad1",
+        "39da87e1-f6c0-43b0-b98d-ea58ad737475"
       ],
       "random": [],
       "muted": []
@@ -1037,6 +1038,41 @@
       }
     },
     {
+      "UUID": "ad41c588-40ad-45b2-996d-459d923c9ad1",
+      "version": 0,
+      "title": "klock - section clicks",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "tick .. tock",
+          "role": "verse",
+          "measures": 4,
+          "clicks": [
+            1,
+            4
+          ]
+        },
+        {
+          "name": "stick .. tack - ding",
+          "role": "verse",
+          "measures": 4,
+          "clicks": {
+            "2": "sticks",
+            "3": "tack",
+            "4": "ding"
+          }
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
       "UUID": "afa1d592-ce5c-498f-9a32-b35780cfb74e",
       "version": 0,
       "title": "(debug - loop)",
@@ -1667,41 +1703,6 @@
             }
           ]
         }
-      ],
-      "tags": [],
-      "metronome": {
-        "BPM": 90,
-        "loop": false,
-        "ding": false
-      }
-    },
-    {
-      "UUID": "ad41c588-40ad-45b2-996d-459d923c9ad1",
-      "version": 0,
-      "title": "klock - tictactoc",
-      "tempo": 120,
-      "timeSignature": "4:4",
-      "pulse": "quarter",
-      "sections": [
-        {
-          "name": "verse",
-          "role": "verse",
-          "measures": 4,
-          "clicks": [
-            1,
-            4
-          ]
-        },
-        {
-          "name": "verse",
-          "role": "verse",
-          "measures": 4,
-          "clicks": {
-            "2": "sticks",
-            "3": "tack",
-            "4": "ding"
-          }
-       }
       ],
       "tags": [],
       "metronome": {

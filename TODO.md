@@ -2,22 +2,21 @@
 
 ## In Progress
 
-- [x] move new/random to top of + list
-
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
         - [x] sections: tempo
         - [x] sections: time signature
         - [x] sections: subdivisions
         - [ ] sections: clicks
+           - [x] section clicks
            - track clicks
-           - section clicks
            - measure ranges
+           - ding: replace OPCODE.TICK, etc with OPCODE.PLAY
+           - ding: move dings.enabled to worklet
 
         - [ ] subsections
         - [ ] loops
         - [ ] remove FSM
-        - [ ] move TICK, TOCK, TACK, STICKS, DING to IR enum
 
         - [ ] 4:4
             - [x] eigths

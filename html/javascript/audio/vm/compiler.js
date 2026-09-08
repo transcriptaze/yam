@@ -352,6 +352,19 @@ function clicks(track) {
           list.push({ measure: measure + i, beat: '*', click: OPCODES.SKIP })
         }
       }
+    } else if (clicks != null && typeof clicks === 'object') {
+      if (!isNaN(measures && measures === Number.POSITIVE_INFINITY)) {
+        for (let i = 0; i < measures; i++) {
+          for (const [k, v] of Object.entries(clicks)) {
+            const beat = parseFloat(`${k}`)
+            if (!isNaN(beat)) {
+              list.push({ measure: measure + i, beat, click: `${v}` })
+            }
+          }
+
+          list.push({ measure: measure + i, beat: '*', click: OPCODES.SKIP })
+        }
+      }
     }
 
     measure += measures

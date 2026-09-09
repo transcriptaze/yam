@@ -760,7 +760,7 @@ describe('tests VM.click, quarter notes', function () {
 })
 
 describe('tests VM.exec', function () {
-  it('exec::tick/tock/tack/sticks', function () {
+  it('exec::tick/tock/tack/sticks/ding', function () {
     // prettier-ignore
     const tests = [
       { measure: 1, beat: 1,   expected: [{ opcode:OPCODES.PLAY, sample:'tick' }] },
@@ -1384,7 +1384,7 @@ describe('dings', function () {
 
     // prettier-ignore
     const vm = new VM(FS, [
-      { at: { measure: 2,   beat: 4   }, op: OPCODES.DING },
+      { at: { measure: 2,   beat: 4   }, op: OPCODES.DONG },
       { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
       { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ])
@@ -1423,7 +1423,7 @@ describe('dings', function () {
 
     // prettier-ignore
     const vm = new VM(FS, [
-      { at: { measure: 2,   beat: 1.5 }, op: OPCODES.DING },
+      { at: { measure: 2,   beat: 1.5 }, op: OPCODES.DONG },
       { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
       { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ])
@@ -1467,8 +1467,8 @@ describe('dings', function () {
 
     // prettier-ignore
     const vm = new VM(FS, [
-      { at: { measure: 1,   beat: 3   }, op: OPCODES.DING },
-      { at: { measure: 2,   beat: 4   }, op: OPCODES.DING },
+      { at: { measure: 1,   beat: 3   }, op: OPCODES.DONG },
+      { at: { measure: 2,   beat: 4   }, op: OPCODES.DONG },
       { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
       { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ])
@@ -1512,8 +1512,8 @@ describe('dings', function () {
 
     // prettier-ignore
     const vm = new VM(FS, [
-      { at: { measure: 1,   beat: 2.5 }, op: OPCODES.DING },
-      { at: { measure: 2,   beat: 2.5 }, op: OPCODES.DING },
+      { at: { measure: 1,   beat: 2.5 }, op: OPCODES.DONG },
+      { at: { measure: 2,   beat: 2.5 }, op: OPCODES.DONG },
       { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
       { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ])

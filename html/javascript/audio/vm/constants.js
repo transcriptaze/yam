@@ -7,6 +7,7 @@ export const OPCODES = {
   TACK: 'tack',
   STICKS: 'sticks',
   DING: 'ding',
+  DONG: 'dong', // conditional 'ding'
   SKIP: 'skip',
   PLAY: 'play',
   TEMPO: 'tempo',

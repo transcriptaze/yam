@@ -13,9 +13,9 @@
            - [x] track clicks
            - [x] linker: remove redundant entries
            - [x] test track + section clicks
-           - [ ] ding: replace OPCODE.TICK, etc with OPCODE.PLAY
+           - [x] fix click:ding
+           - [x] check "debug: dings" track
            - [ ] linker: measure ranges
-           - [ ] check "debug: dings" track
 
         - [ ] subsections
         - [ ] loops

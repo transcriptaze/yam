@@ -365,7 +365,7 @@ function clicks(track) {
     const measures = section.measures ?? Number.POSITIVE_INFINITY
 
     if (clicks != null && Array.isArray(clicks)) {
-      if (!isNaN(measures && measures === Number.POSITIVE_INFINITY)) {
+      if (!isNaN(measures) && measures !== Number.POSITIVE_INFINITY) {
         for (let i = 0; i < measures; i++) {
           for (const beat of clicks) {
             if (beat === 1) {
@@ -378,8 +378,20 @@ function clicks(track) {
           list.push({ measure: measure + i, beat: '*', click: OPCODES.SKIP })
         }
       }
+
+      if (!isNaN(measures) && measures === Number.POSITIVE_INFINITY) {
+        for (const beat of clicks) {
+          if (beat === 1) {
+            list.push({ measure: '*', beat, click: OPCODES.TICK })
+          } else {
+            list.push({ measure: '*', beat, click: OPCODES.TOCK })
+          }
+        }
+
+        list.push({ measure: '*', beat: '*', click: OPCODES.SKIP })
+      }
     } else if (clicks != null && typeof clicks === 'object') {
-      if (!isNaN(measures && measures === Number.POSITIVE_INFINITY)) {
+      if (!isNaN(measures) && measures !== Number.POSITIVE_INFINITY) {
         for (let i = 0; i < measures; i++) {
           for (const [k, v] of Object.entries(clicks)) {
             const beat = parseFloat(`${k}`)
@@ -390,6 +402,17 @@ function clicks(track) {
 
           list.push({ measure: measure + i, beat: '*', click: OPCODES.SKIP })
         }
+      }
+
+      if (!isNaN(measures) && measures === Number.POSITIVE_INFINITY) {
+        for (const [k, v] of Object.entries(clicks)) {
+          const beat = parseFloat(`${k}`)
+          if (!isNaN(beat)) {
+            list.push({ measure: '*', beat, click: `${v}` })
+          }
+        }
+
+        list.push({ measure: '*', beat: '*', click: OPCODES.SKIP })
       }
     }
 

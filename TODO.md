@@ -9,12 +9,11 @@
         - [x] sections: subdivisions
         - [ ] sections: clicks
            - [x] section clicks
-           - [ ] section w/infinite measures
+           - [x] section w/infinite measures
            - [x] track clicks
            - [x] linker: remove redundant entries
-           - [ ] test track + section clicks
+           - [x] test track + section clicks
            - [ ] ding: replace OPCODE.TICK, etc with OPCODE.PLAY
-           - [ ] ding: move dings.enabled to worklet
            - [ ] linker: measure ranges
            - [ ] check "debug: dings" track
 

@@ -34,7 +34,8 @@
         "05740c20-52fd-41ee-867a-edad7e702c74",
         "9493afd8-c6a0-4ab3-a114-e4bcaeeff0b6",
         "d05391e5-0857-44c4-a44c-ac1d8f43f4e2",
-        "ad41c588-40ad-45b2-996d-459d923c9ad1"
+        "ad41c588-40ad-45b2-996d-459d923c9ad1",
+        "fc6da4ff-1387-4639-bd18-9db7c3891b1b"
       ],
       "random": [],
       "muted": []
@@ -155,7 +156,8 @@
         "ad41c588-40ad-45b2-996d-459d923c9ad1",
         "39da87e1-f6c0-43b0-b98d-ea58ad737475",
         "d05391e5-0857-44c4-a44c-ac1d8f43f4e2",
-        "9493afd8-c6a0-4ab3-a114-e4bcaeeff0b6"
+        "9493afd8-c6a0-4ab3-a114-e4bcaeeff0b6",
+        "fc6da4ff-1387-4639-bd18-9db7c3891b1b"
       ],
       "random": [],
       "muted": []
@@ -986,6 +988,31 @@
       }
     },
     {
+      "UUID": "9493afd8-c6a0-4ab3-a114-e4bcaeeff0b6",
+      "version": 0,
+      "title": "klock - track clicks (array)",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "verse 1",
+          "role": "verse",
+          "measures": 4
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 120,
+        "loop": false,
+        "ding": false,
+        "clicks": [
+          1,
+          4
+        ]
+      }
+    },
+    {
       "UUID": "a141f3ac-6e8e-47ac-b9c8-c9c27d521305",
       "version": 0,
       "title": "Jesu Joy of Man's Desiring",
@@ -1747,9 +1774,9 @@
       }
     },
     {
-      "UUID": "9493afd8-c6a0-4ab3-a114-e4bcaeeff0b6",
+      "UUID": "fc6da4ff-1387-4639-bd18-9db7c3891b1b",
       "version": 0,
-      "title": "klock - track clicks (array)",
+      "title": "klock - section clicks (infinite)",
       "tempo": 120,
       "timeSignature": "4:4",
       "pulse": "quarter",
@@ -1758,14 +1785,22 @@
           "name": "verse 1",
           "role": "verse",
           "measures": 4
-        }
+        },
+        {
+          "name": "verse 2",
+          "role": "verse",
+           "clicks": {
+            "2": "sticks",
+            "3": "tack",
+            "4": "ding"
+          }
+       }
       ],
       "tags": [],
       "metronome": {
-        "BPM": 120,
+        "BPM": 90,
         "loop": false,
-        "ding": false,
-        "clicks": [1,4]
+        "ding": false
       }
     }
   ]

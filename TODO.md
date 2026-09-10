@@ -4,6 +4,11 @@
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
+        - [x] convert subdivisions parameter to a postMessage
+        - [ ] convert time-signature parameter to a postMessage
+        - [ ] convert BPM parameter to a postMessage
+        - [ ] convert loop parameter to a postMessage
+
         - [x] sections: tempo
         - [x] sections: time signature
         - [x] sections: subdivisions
@@ -40,10 +45,14 @@
             - [ ] fix pads for dotted quarters
             - [ ] rethink to not use fractional beats
 
-        - [ ] convert subdivisions parameter to a postMessage
-        - [ ] convert time-signature parameter to a postMessage
-        - [ ] convert BPM parameter to a postMessage
-        - [ ] convert loop parameter to a postMessage
+        - [ ] 5:4
+            - [ ] eighths
+            - [ ] eighth doublets
+            - [x] quarter notes
+            - [ ] dotted quarters
+            - [ ] half notes
+            - [ ] dotted half notes
+
 
         - [ ] exec: inject actions
         - [ ] linker: combine multiple actions into one

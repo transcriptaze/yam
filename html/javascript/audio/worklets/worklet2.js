@@ -3,7 +3,7 @@ import * as level from './level.js'
 import { Clock } from './clock.js'
 
 import { VM } from '../vm/vm.js'
-import { OPCODES, SUBDIVISIONS, int2subdivisions } from '../vm/constants.js'
+import { OPCODES, SUBDIVISIONS } from '../vm/constants.js'
 
 const INF = Number.POSITIVE_INFINITY
 const START_DELAY = 250
@@ -15,14 +15,12 @@ export class Metronome2 extends AudioWorkletProcessor {
     BPM: null,
     beats: null,
     divisions: null,
-    pulse: null,
     sections: [],
     loops: INF,
     delay: 0,
   }
 
   #time = 0
-  #ding = false
 
   #script = {
     delay: 0,
@@ -37,6 +35,11 @@ export class Metronome2 extends AudioWorkletProcessor {
   #loops = 0
   #cued = []
   #samples = 0
+
+  #parameters = {
+    ding: false,
+    subdivisions: null,
+  }
 
   constructor(_options) {
     super()
@@ -73,13 +76,6 @@ export class Metronome2 extends AudioWorkletProcessor {
         automationRate: 'k-rate',
       },
       {
-        name: 'pulse',
-        defaultValue: 3,
-        minValue: 1,
-        maxValue: 6,
-        automationRate: 'k-rate',
-      },
-      {
         name: 'loop',
         defaultValue: 0,
         minValue: 0,
@@ -101,7 +97,6 @@ export class Metronome2 extends AudioWorkletProcessor {
           BPM: null,
           beats: null,
           divisions: null,
-          pulse: null,
           sections: [],
           loops: INF,
           delay: 0,
@@ -129,8 +124,12 @@ export class Metronome2 extends AudioWorkletProcessor {
         }
         break
 
+      case 'subdivisions':
+        this.#parameters.subdivisions = event.data.subdivisions
+        break
+
       case 'ding':
-        this.#ding = event.data.ding === true
+        this.#parameters.ding = event.data.ding === true
         break
 
       case 'script':
@@ -290,7 +289,7 @@ export class Metronome2 extends AudioWorkletProcessor {
     const BPM = this.#bpm(clamp(parameters.BPM[0], 40, 200))
     const tactus = this.#timeSignature?.beats ?? clamp(parameters.beats[0], 1, 32)
     const figura = this.#timeSignature?.divisions ?? clamp(parameters.divisions[0], 1, 32)
-    const subdivisions = this.#subdivisions ?? int2subdivisions(parameters.pulse[0]) ?? SUBDIVISIONS.QUARTER_NOTES
+    const subdivisions = this.#subdivisions ?? this.#parameters.subdivisions ?? SUBDIVISIONS.QUARTER_NOTES
 
     const loop = parameters.loop[0] === 1.0
     let clock = this.clock
@@ -329,7 +328,7 @@ export class Metronome2 extends AudioWorkletProcessor {
 
           const context = {
             subdivisions: subdivisions,
-            ding: this.#ding,
+            ding: this.#parameters.ding,
           }
 
           const { measure, beat } = this.#vm.click(click, { beats, divisions }, subdivisions)

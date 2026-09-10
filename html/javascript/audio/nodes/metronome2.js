@@ -3,7 +3,6 @@ import { EVENTS } from '../../constants.js'
 
 import * as compiler from '../vm/compiler.js'
 import * as linker from '../vm/linker.js'
-import { subdivisions2int } from '../vm/constants.js'
 
 const STATE = {
   START: 0,
@@ -162,11 +161,10 @@ export class Metronome2Node extends AudioWorkletNode {
   }
 
   set pulse(subdivisions) {
-    const k = subdivisions2int(subdivisions)
-
-    if (!Number.isNaN(k)) {
-      this.parameters.get('pulse').setValueAtTime(k, this.context.currentTime)
-    }
+    this.port.postMessage({
+      message: 'subdivisions',
+      subdivisions: subdivisions,
+    })
   }
 
   set loop(loop) {

@@ -1,3 +1,4 @@
+// import * as generators from '../../generators.js'
 import { parseTimeSignature } from '../../util.js'
 import { OPCODES, SUBDIVISIONS } from './constants.js'
 
@@ -11,7 +12,11 @@ const PULSE = new Map([
   ['dotted-half', SUBDIVISIONS.DOTTED_HALF_NOTES],
 ])
 
-export function compile(track) {
+export function compile(v) {
+  const track = transmogrify(v)
+
+  // console.log(track)
+
   // ... no track?
   if (track == null) {
     return {
@@ -424,3 +429,59 @@ function clicks(track) {
 
   return list
 }
+
+function transmogrify(track) {
+  if (track == null) {
+    return null
+  }
+
+  const f = (section) => {
+    return {
+      role: section.role,
+      measures: section.measures,
+      timeSignature: section.timeSignature,
+      tempo: section.tempo,
+      pulse: section.pulse,
+      clicks: section.clicks,
+      dings: section.dings,
+      delay: section.delay,
+    }
+  }
+
+  function* unroll() {
+    const sections = track?.sections ?? []
+
+    for (const section of sections) {
+      if (section.subsections != null) {
+        for (const subsection of section.subsections) {
+          yield subsection
+        }
+      } else {
+        yield section
+      }
+    }
+  }
+
+  return {
+    UUID: track.UUID,
+    delay: track.delay ?? 0,
+    timeSignature: track.timeSignature,
+    clicks: track.clicks,
+    dings: track.dings,
+    sections: [...unroll(track)].flatMap((v) => f(v)),
+  }
+}
+
+// function* transmogrify2(track) {
+//   const sections = track?.sections ?? []
+//
+//   for (const section of sections) {
+//     if (section.subsections != null) {
+//       for (const subsection of section.subsections) {
+//         yield subsection
+//       }
+//     } else {
+//       yield section
+//     }
+//   }
+// }

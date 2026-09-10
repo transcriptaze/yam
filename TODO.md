@@ -20,9 +20,11 @@
            - [x] test track + section clicks
            - [x] fix click:ding
            - [x] check "debug: dings" track
+           - [ ] subdivisions not updating UI
            - [ ] linker: measure ranges
 
-        - [ ] subsections
+        - [x] subsections
+
         - [ ] loops
         - [ ] remove FSM
 
@@ -76,6 +78,8 @@
         - (?) animation timer
 
 ## To Be Done
+
+https://evergarden.moe/
 
 - [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
 - [ ] passive:true (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)

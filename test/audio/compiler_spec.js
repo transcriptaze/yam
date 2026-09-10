@@ -1128,3 +1128,125 @@ describe('clicks', function () {
     expect(script).to.deep.equal(expected)
   })
 })
+
+describe('subsections', function () {
+  it('tempo', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          measures: 4,
+        },
+        {
+          subsections: [
+            {
+              measures: 4,
+              tempo: 80,
+            },
+          ],
+        },
+        {
+          measures: 4,
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: 13,  beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: 5,   beat: 1   }, op: OPCODES.TEMPO, tempo: 80 },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK  },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK  },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
+
+  it('time signature', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          measures: 4,
+        },
+        {
+          subsections: [
+            {
+              measures: 4,
+              timeSignature: '5:4',
+            },
+          ],
+        },
+        {
+          measures: 4,
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: 13,  beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: 5,   beat: 1   }, op: OPCODES.TIME_SIGNATURE, timeSignature: { beats:5, divisions:4 } },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK  },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK  },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
+
+  it('subdivisions', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          measures: 4,
+        },
+        {
+          subsections: [
+            {
+              measures: 4,
+              pulse: 'dotted-quarter',
+            },
+          ],
+        },
+        {
+          measures: 4,
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: 13,  beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: 5,   beat: 1   }, op: OPCODES.SUBDIVISIONS, subdivisions: 'dotted-quarter' },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK  },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK  },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
+})

@@ -24,6 +24,7 @@
         "60d16e10-3ee5-409a-ad63-1665ae8054fc",
         "466e08f0-27cb-4c93-ac9c-1bd8f3d5d804",
         "27e6743d-9345-4d8e-8ef7-09c4e0c0d348",
+        "ba03dd10-e1da-4dbe-871d-564c01de6a52",
         "7de7131f-4f56-420e-bd9b-3ae52a29d1e4",
         "b3ef497c-fe67-4e55-be76-91b77899d647",
         "883f42ff-9d06-4aff-b0ea-254fff9bf23a",
@@ -157,7 +158,8 @@
         "39da87e1-f6c0-43b0-b98d-ea58ad737475",
         "d05391e5-0857-44c4-a44c-ac1d8f43f4e2",
         "9493afd8-c6a0-4ab3-a114-e4bcaeeff0b6",
-        "fc6da4ff-1387-4639-bd18-9db7c3891b1b"
+        "fc6da4ff-1387-4639-bd18-9db7c3891b1b",
+        "ba03dd10-e1da-4dbe-871d-564c01de6a52"
       ],
       "random": [],
       "muted": []
@@ -168,6 +170,15 @@
       "index": 9007199254740991,
       "deleted": 1787263791497,
       "title": "Playlist #7",
+      "tracks": [],
+      "random": [],
+      "muted": []
+    },
+    {
+      "UUID": "1b63a078-dcd2-4c13-b364-2ebe2a869447",
+      "version": 0,
+      "index": 9007199254740991,
+      "title": "Playlist #8",
       "tracks": [],
       "random": [],
       "muted": []
@@ -1736,6 +1747,36 @@
       }
     },
     {
+      "UUID": "fc6da4ff-1387-4639-bd18-9db7c3891b1b",
+      "version": 0,
+      "title": "klock - section clicks (infinite)",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "verse 1",
+          "role": "verse",
+          "measures": 4
+        },
+        {
+          "name": "verse 2",
+          "role": "verse",
+          "clicks": {
+            "2": "sticks",
+            "3": "tack",
+            "4": "ding"
+          }
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
       "UUID": "fe2aade7-25db-429b-ab5a-af6b1c8559b2",
       "version": 0,
       "title": "klock - tempo",
@@ -1774,9 +1815,9 @@
       }
     },
     {
-      "UUID": "fc6da4ff-1387-4639-bd18-9db7c3891b1b",
+      "UUID": "ba03dd10-e1da-4dbe-871d-564c01de6a52",
       "version": 0,
-      "title": "klock - section clicks (infinite)",
+      "title": "klock - subsections",
       "tempo": 120,
       "timeSignature": "4:4",
       "pulse": "quarter",
@@ -1789,12 +1830,30 @@
         {
           "name": "verse 2",
           "role": "verse",
-           "clicks": {
-            "2": "sticks",
-            "3": "tack",
-            "4": "ding"
-          }
-       }
+          "subsections": [
+            {
+              "measures": 4,
+              "tempo": 80,
+              "colour": "#ff0000"
+            },
+            {
+              "measures": 4,
+              "tempo": 120,
+              "timeSignature": "5:4",
+              "colour": "#00ff00"
+            },
+            {
+              "measures": 4,
+              "pulse": "dotted-quarter",
+              "colour": "#0000ff"
+            }
+          ]
+        },
+        {
+          "name": "verse 3",
+          "role": "verse",
+          "measures": 4
+        }
       ],
       "tags": [],
       "metronome": {

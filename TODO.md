@@ -2,6 +2,8 @@
 
 ## In Progress
 
+- [x] section/subsections subdivisions not updating UI
+
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
         - [x] convert subdivisions parameter to a postMessage
@@ -20,7 +22,6 @@
            - [x] test track + section clicks
            - [x] fix click:ding
            - [x] check "debug: dings" track
-           - [ ] subdivisions not updating UI
            - [ ] linker: measure ranges
 
         - [x] subsections

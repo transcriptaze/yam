@@ -19,7 +19,11 @@ export class MM extends HTMLElement {
   }
 
   #BPM = 120
-  #pulse = 'quarter'
+
+  #state = {
+    pulse: 'quarter',
+  }
+
   #track = null
   #bar = -1
 
@@ -163,23 +167,17 @@ export class MM extends HTMLElement {
   }
 
   get pulse() {
-    return this.#pulse
+    return this.#state.pulse
   }
 
   set pulse(v) {
-    const shadow = this.shadowRoot
-    const span = shadow.querySelector('#pulse span.icon-pulse')
-    const img = shadow.querySelector('#pulse img')
-
     if (v == null || v === '') {
-      this.#pulse = 'quarter'
+      this.#state.pulse = 'quarter'
     } else {
-      this.#pulse = parsePulse(v)
+      this.#state.pulse = parsePulse(v)
     }
 
-    const src = PULSES.get(this.#pulse) ?? NONE
-    span.style.maskImage = `url('${src}')`
-    img.src = src
+    this.#pulse = this.#state.pulse
   }
 
   get BPM() {
@@ -254,6 +252,16 @@ export class MM extends HTMLElement {
     }
   }
 
+  set #pulse(v) {
+    const shadow = this.shadowRoot
+    const span = shadow.querySelector('#pulse span.icon-pulse')
+    const img = shadow.querySelector('#pulse img')
+
+    const src = PULSES.get(v) ?? NONE
+    span.style.maskImage = `url('${src}')`
+    img.src = src
+  }
+
   get #disabled() {
     return this.getAttribute('disabled') != null
   }
@@ -298,14 +306,13 @@ export class MM extends HTMLElement {
 
   #redraw(pulse, BPM) {
     const widgets = {
-      pulse: this.shadowRoot.querySelector('#pulse'),
       BPM: this.shadowRoot.querySelector('input'),
     }
 
     if (PULSES.has(pulse)) {
-      widgets.pulse.src = PULSES.get(pulse)
+      this.#pulse = pulse
     } else {
-      widgets.pulse.src = PULSES.get(`quarter`)
+      this.#pulse = `quarter`
     }
 
     widgets.BPM.value = `${BPM}`

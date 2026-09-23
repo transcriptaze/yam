@@ -1,15 +1,7 @@
 import { describe, it } from 'mocha'
 import { expect } from 'chai'
 import { VM } from '../../html/javascript/audio/vm/vm.js'
-import { OPCODES } from '../../html/javascript/audio/vm/constants.js'
-import {
-  EIGHTH_NOTES,
-  EIGHTH_DOUBLETS,
-  EIGHTH_TRIPLETS,
-  QUARTER_NOTES,
-  DOTTED_QUARTER_NOTES,
-  HALF_NOTES,
-} from '../../html/javascript/audio/vm/constants.js'
+import { OPCODES, SUBDIVISIONS } from '../../html/javascript/audio/vm/constants.js'
 
 const FS = 44100
 const BUFFERSIZE = 128
@@ -449,7 +441,7 @@ describe('tests VM.click, quarter notes', function () {
     // ... run
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, timeSignature, QUARTER_NOTES)
+      const { measure, beat } = vm.click(test.click, timeSignature, SUBDIVISIONS.QUARTER_NOTES)
 
       expect({ measure, beat }).to.deep.equal(expected)
     }
@@ -484,7 +476,7 @@ describe('tests VM.click, quarter notes', function () {
     // ... run
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, timeSignature, QUARTER_NOTES)
+      const { measure, beat } = vm.click(test.click, timeSignature, SUBDIVISIONS.QUARTER_NOTES)
 
       expect({ measure, beat }).to.deep.equal(expected)
     }
@@ -515,7 +507,7 @@ describe('tests VM.click, quarter notes', function () {
     // ... setup
     const vm = new VM(FS, [])
     const timeSignature = { beats: 4, divisions: 4 }
-    const subdivisions = QUARTER_NOTES
+    const subdivisions = SUBDIVISIONS.QUARTER_NOTES
 
     // ... run
     for (const test of tests) {
@@ -554,7 +546,7 @@ describe('tests VM.click, quarter notes', function () {
     // ... run
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, test.timeSignature, QUARTER_NOTES)
+      const { measure, beat } = vm.click(test.click, test.timeSignature, SUBDIVISIONS.QUARTER_NOTES)
 
       expect({ measure, beat }).to.deep.equal(expected)
     }
@@ -588,7 +580,7 @@ describe('tests VM.click, quarter notes', function () {
     // ... run
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, test.timeSignature, QUARTER_NOTES)
+      const { measure, beat } = vm.click(test.click, test.timeSignature, SUBDIVISIONS.QUARTER_NOTES)
 
       expect({ measure, beat }).to.deep.equal(expected)
     }
@@ -622,7 +614,7 @@ describe('tests VM.click, quarter notes', function () {
     // ... run
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, test.timeSignature, QUARTER_NOTES)
+      const { measure, beat } = vm.click(test.click, test.timeSignature, SUBDIVISIONS.QUARTER_NOTES)
 
       expect({ measure, beat }).to.deep.equal(expected)
     }
@@ -656,7 +648,7 @@ describe('tests VM.click, quarter notes', function () {
     // ... run
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, test.timeSignature, QUARTER_NOTES)
+      const { measure, beat } = vm.click(test.click, test.timeSignature, SUBDIVISIONS.QUARTER_NOTES)
 
       expect({ measure, beat }).to.deep.equal(expected)
     }
@@ -690,7 +682,7 @@ describe('tests VM.click, quarter notes', function () {
     // ... run
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, test.timeSignature, QUARTER_NOTES)
+      const { measure, beat } = vm.click(test.click, test.timeSignature, SUBDIVISIONS.QUARTER_NOTES)
 
       expect({ measure, beat }).to.deep.equal(expected)
     }
@@ -725,7 +717,7 @@ describe('tests VM.click, quarter notes', function () {
     // ... run
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, test.timeSignature, QUARTER_NOTES)
+      const { measure, beat } = vm.click(test.click, test.timeSignature, SUBDIVISIONS.QUARTER_NOTES)
 
       expect({ measure, beat }).to.deep.equal(expected)
     }
@@ -760,7 +752,7 @@ describe('tests VM.click, quarter notes', function () {
     // ... run
     for (const test of tests) {
       const expected = test.expected
-      const { measure, beat } = vm.click(test.click, test.timeSignature, QUARTER_NOTES)
+      const { measure, beat } = vm.click(test.click, test.timeSignature, SUBDIVISIONS.QUARTER_NOTES)
 
       expect({ measure, beat }).to.deep.equal(expected)
     }
@@ -768,30 +760,30 @@ describe('tests VM.click, quarter notes', function () {
 })
 
 describe('tests VM.exec', function () {
-  it('exec::tick/tock/tack/sticks', function () {
+  it('exec::tick/tock/tack/sticks/ding', function () {
     // prettier-ignore
     const tests = [
-      { measure: 1, beat: 1,   expected: [OPCODES.TICK] },
+      { measure: 1, beat: 1,   expected: [{ opcode:OPCODES.PLAY, sample:'tick' }] },
       { measure: 1, beat: 1.5, expected: [] },
-      { measure: 1, beat: 2,   expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 2,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
       { measure: 1, beat: 2.5, expected: [] },
       { measure: 1, beat: 3,   expected: [] },
       { measure: 1, beat: 3.5, expected: [] },
-      { measure: 1, beat: 4,   expected: [OPCODES.TACK] },
+      { measure: 1, beat: 4,   expected: [{ opcode:OPCODES.PLAY, sample:'tack' }] },
       { measure: 1, beat: 4.5, expected: [] },
       { measure: 2, beat: 1,   expected: [] },
       { measure: 2, beat: 1.5, expected: [] },
-      { measure: 2, beat: 2,   expected: [OPCODES.STICKS] },
+      { measure: 2, beat: 2,   expected: [{ opcode:OPCODES.PLAY, sample:'sticks' }] },
       { measure: 2, beat: 2.5, expected: [] },
       { measure: 2, beat: 3,   expected: [] },
       { measure: 2, beat: 3.5, expected: [] },
       { measure: 2, beat: 4,   expected: [] },
-      { measure: 2, beat: 4.5, expected: [OPCODES.DING] },
+      { measure: 2, beat: 4.5, expected: [{ opcode:OPCODES.PLAY, sample:'ding' }] },
     ]
 
     // ... setup
     const timeSignature = { beats: 4, divisions: 4 }
-    const subdivisions = QUARTER_NOTES
+    const subdivisions = SUBDIVISIONS.QUARTER_NOTES
 
     // prettier-ignore
     const script = [
@@ -815,28 +807,28 @@ describe('tests VM.exec', function () {
   it('exec, measure:*, beat:*, quarter notes', function () {
     // prettier-ignore
     const tests = [
-      { measure: 1, beat: 1,   expected: [OPCODES.TICK] },
+      { measure: 1, beat: 1,   expected: [{ opcode:OPCODES.PLAY, sample:'tick' }] },
       { measure: 1, beat: 1.5, expected: []             },
-      { measure: 1, beat: 2,   expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 2,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
       { measure: 1, beat: 2.5, expected: []             },
-      { measure: 1, beat: 3,   expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 3,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
       { measure: 1, beat: 3.5, expected: []             },
-      { measure: 1, beat: 4,   expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 4,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
       { measure: 1, beat: 4.5, expected: []             },
 
-      { measure: 2, beat: 1,   expected: [OPCODES.TICK] },
+      { measure: 2, beat: 1,   expected: [{ opcode:OPCODES.PLAY, sample:'tick' }] },
       { measure: 2, beat: 1.5, expected: []             },
-      { measure: 2, beat: 2,   expected: [OPCODES.TOCK] },
+      { measure: 2, beat: 2,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
       { measure: 2, beat: 2.5, expected: []             },
-      { measure: 2, beat: 3,   expected: [OPCODES.TOCK] },
+      { measure: 2, beat: 3,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
       { measure: 2, beat: 3.5, expected: []             },
-      { measure: 2, beat: 4,   expected: [OPCODES.TOCK] },
+      { measure: 2, beat: 4,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
       { measure: 2, beat: 4.5, expected: []             },
     ]
 
     // ... setup
     const timeSignature = { beats: 4, divisions: 4 }
-    const subdivisions = QUARTER_NOTES
+    const subdivisions = SUBDIVISIONS.QUARTER_NOTES
 
     // prettier-ignore
     const script = [
@@ -857,28 +849,28 @@ describe('tests VM.exec', function () {
   it('exec, measure:*, beat:*, eighth-doublets', function () {
     // prettier-ignore
     const tests = [
-      { measure: 1, beat: 1,   expected: [OPCODES.TICK] },
-      { measure: 1, beat: 1.5, expected: [OPCODES.TOCK] },
-      { measure: 1, beat: 2,   expected: [OPCODES.TOCK] },
-      { measure: 1, beat: 2.5, expected: [OPCODES.TOCK] },
-      { measure: 1, beat: 3,   expected: [OPCODES.TOCK] },
-      { measure: 1, beat: 3.5, expected: [OPCODES.TOCK] },
-      { measure: 1, beat: 4,   expected: [OPCODES.TOCK] },
-      { measure: 1, beat: 4.5, expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 1,   expected: [{ opcode:OPCODES.PLAY, sample:'tick' }] },
+      { measure: 1, beat: 1.5, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 1, beat: 2,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 1, beat: 2.5, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 1, beat: 3,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 1, beat: 3.5, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 1, beat: 4,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 1, beat: 4.5, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
 
-      { measure: 2, beat: 1,   expected: [OPCODES.TICK] },
-      { measure: 2, beat: 1.5, expected: [OPCODES.TOCK] },
-      { measure: 2, beat: 2,   expected: [OPCODES.TOCK] },
-      { measure: 2, beat: 2.5, expected: [OPCODES.TOCK] },
-      { measure: 2, beat: 3,   expected: [OPCODES.TOCK] },
-      { measure: 2, beat: 3.5, expected: [OPCODES.TOCK] },
-      { measure: 2, beat: 4,   expected: [OPCODES.TOCK] },
-      { measure: 2, beat: 4.5, expected: [OPCODES.TOCK] },
+      { measure: 2, beat: 1,   expected: [{ opcode:OPCODES.PLAY, sample:'tick' }] },
+      { measure: 2, beat: 1.5, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 2, beat: 2,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 2, beat: 2.5, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 2, beat: 3,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 2, beat: 3.5, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 2, beat: 4,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 2, beat: 4.5, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
     ]
 
     // ... setup
     const timeSignature = { beats: 4, divisions: 4 }
-    const subdivisions = EIGHTH_DOUBLETS
+    const subdivisions = SUBDIVISIONS.EIGHTH_DOUBLETS
 
     // prettier-ignore
     const script = [
@@ -899,23 +891,23 @@ describe('tests VM.exec', function () {
   it('exec, measure:*, beat:*, quarter notes -> eighth doublets', function () {
     // prettier-ignore
     const tests = [
-      { measure: 1, beat: 1,   subdivisions: QUARTER_NOTES,   expected: [OPCODES.TICK] },
-      { measure: 1, beat: 1.5, subdivisions: QUARTER_NOTES,   expected: [] },
-      { measure: 1, beat: 2,   subdivisions: QUARTER_NOTES,   expected: [OPCODES.TOCK] },
-      { measure: 1, beat: 2.5, subdivisions: QUARTER_NOTES,   expected: [] },
-      { measure: 1, beat: 3,   subdivisions: QUARTER_NOTES,   expected: [OPCODES.TOCK] },
-      { measure: 1, beat: 3.5, subdivisions: QUARTER_NOTES,   expected: [] },
-      { measure: 1, beat: 4,   subdivisions: QUARTER_NOTES,   expected: [OPCODES.TOCK] },
-      { measure: 1, beat: 4.5, subdivisions: QUARTER_NOTES,   expected: [] },
+      { measure: 1, beat: 1,   subdivisions: SUBDIVISIONS.QUARTER_NOTES,   expected: [{ opcode:OPCODES.PLAY, sample:'tick' }] },
+      { measure: 1, beat: 1.5, subdivisions: SUBDIVISIONS.QUARTER_NOTES,   expected: [] },
+      { measure: 1, beat: 2,   subdivisions: SUBDIVISIONS.QUARTER_NOTES,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 1, beat: 2.5, subdivisions: SUBDIVISIONS.QUARTER_NOTES,   expected: [] },
+      { measure: 1, beat: 3,   subdivisions: SUBDIVISIONS.QUARTER_NOTES,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 1, beat: 3.5, subdivisions: SUBDIVISIONS.QUARTER_NOTES,   expected: [] },
+      { measure: 1, beat: 4,   subdivisions: SUBDIVISIONS.QUARTER_NOTES,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 1, beat: 4.5, subdivisions: SUBDIVISIONS.QUARTER_NOTES,   expected: [] },
 
-      { measure: 2, beat: 1,   subdivisions: QUARTER_NOTES,   expected: [OPCODES.TICK] },
-      { measure: 2, beat: 1.5, subdivisions: QUARTER_NOTES,   expected: [] },
-      { measure: 2, beat: 2,   subdivisions: QUARTER_NOTES,   expected: [OPCODES.TOCK] },
-      { measure: 2, beat: 2.5, subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
-      { measure: 2, beat: 3,   subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
-      { measure: 2, beat: 3.5, subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
-      { measure: 2, beat: 4,   subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
-      { measure: 2, beat: 4.5, subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
+      { measure: 2, beat: 1,   subdivisions: SUBDIVISIONS.QUARTER_NOTES,   expected: [{ opcode:OPCODES.PLAY, sample:'tick' }] },
+      { measure: 2, beat: 1.5, subdivisions: SUBDIVISIONS.QUARTER_NOTES,   expected: [] },
+      { measure: 2, beat: 2,   subdivisions: SUBDIVISIONS.QUARTER_NOTES,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 2, beat: 2.5, subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 2, beat: 3,   subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 2, beat: 3.5, subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 2, beat: 4,   subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 2, beat: 4.5, subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
     ]
 
     // ... setup
@@ -941,23 +933,23 @@ describe('tests VM.exec', function () {
   it('exec, measure:*, beat:*, eighth doublets -> quarter notes', function () {
     // prettier-ignore
     const tests = [
-      { measure: 1, beat: 1,   subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TICK] },
-      { measure: 1, beat: 1.5, subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
-      { measure: 1, beat: 2,   subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
-      { measure: 1, beat: 2.5, subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
-      { measure: 1, beat: 3,   subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
-      { measure: 1, beat: 3.5, subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
-      { measure: 1, beat: 4,   subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
-      { measure: 1, beat: 4.5, subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 1,   subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS, expected: [{ opcode:OPCODES.PLAY, sample:'tick' }] },
+      { measure: 1, beat: 1.5, subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 1, beat: 2,   subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 1, beat: 2.5, subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 1, beat: 3,   subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 1, beat: 3.5, subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 1, beat: 4,   subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 1, beat: 4.5, subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
 
-      { measure: 2, beat: 1,   subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TICK] },
-      { measure: 2, beat: 1.5, subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
-      { measure: 2, beat: 2,   subdivisions: EIGHTH_DOUBLETS, expected: [OPCODES.TOCK] },
-      { measure: 2, beat: 2.5, subdivisions: QUARTER_NOTES,   expected: [] },
-      { measure: 2, beat: 3,   subdivisions: QUARTER_NOTES,   expected: [OPCODES.TOCK] },
-      { measure: 2, beat: 3.5, subdivisions: QUARTER_NOTES,   expected: [] },
-      { measure: 2, beat: 4,   subdivisions: QUARTER_NOTES,   expected: [OPCODES.TOCK] },
-      { measure: 2, beat: 4.5, subdivisions: QUARTER_NOTES,   expected: [] },
+      { measure: 2, beat: 1,   subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS, expected: [{ opcode:OPCODES.PLAY, sample:'tick' }] },
+      { measure: 2, beat: 1.5, subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 2, beat: 2,   subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS, expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 2, beat: 2.5, subdivisions: SUBDIVISIONS.QUARTER_NOTES,   expected: [] },
+      { measure: 2, beat: 3,   subdivisions: SUBDIVISIONS.QUARTER_NOTES,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 2, beat: 3.5, subdivisions: SUBDIVISIONS.QUARTER_NOTES,   expected: [] },
+      { measure: 2, beat: 4,   subdivisions: SUBDIVISIONS.QUARTER_NOTES,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
+      { measure: 2, beat: 4.5, subdivisions: SUBDIVISIONS.QUARTER_NOTES,   expected: [] },
     ]
 
     // ... setup
@@ -983,16 +975,16 @@ describe('tests VM.exec', function () {
   it('exec, stop', function () {
     // prettier-ignore
     const tests = [
-      { measure: 1, beat: 1,   expected: [OPCODES.TICK] },
+      { measure: 1, beat: 1,   expected: [{ opcode:OPCODES.PLAY, sample:'tick' }] },
       { measure: 1, beat: 1.5, expected: []             },
-      { measure: 1, beat: 2,   expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 2,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
       { measure: 1, beat: 2.5, expected: []             },
-      { measure: 1, beat: 3,   expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 3,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
       { measure: 1, beat: 3.5, expected: []             },
-      { measure: 1, beat: 4,   expected: [OPCODES.TOCK] },
+      { measure: 1, beat: 4,   expected: [{ opcode:OPCODES.PLAY, sample:'tock' }] },
       { measure: 1, beat: 4.5, expected: []             },
 
-      { measure: 2, beat: 1,   expected: [OPCODES.STOP] },
+      { measure: 2, beat: 1,   expected: [{ opcode: OPCODES.STOP }] },
       { measure: 2, beat: 1.5, expected: [] },
       { measure: 2, beat: 2,   expected: [] },
       { measure: 2, beat: 2.5, expected: [] },
@@ -1004,7 +996,7 @@ describe('tests VM.exec', function () {
 
     // ... setup
     const timeSignature = { beats: 4, divisions: 4 }
-    const subdivisions = QUARTER_NOTES
+    const subdivisions = SUBDIVISIONS.QUARTER_NOTES
 
     // prettier-ignore
     const script = [
@@ -1027,30 +1019,30 @@ describe('tests VM.exec', function () {
 describe('4:4 time', function () {
   it('quarter notes @120BPM', function () {
     const context = {
-      subdivisions: QUARTER_NOTES,
+      subdivisions: SUBDIVISIONS.QUARTER_NOTES,
     }
 
     // prettier-ignore
     const tests = [
-      { tick:    0, time:    0.0000, click: 1,     context, expected: { measure: 1, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick:    0, time:    0.0000, click: 1,     context, expected: { measure: 1, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick:   57, time:  165.4422, click: 1.333, context, expected: { measure: 1, beat: 1.333, ops: []             }},
       { tick:   86, time:  249.6145, click: 1.5,   context, expected: { measure: 1, beat: 1.5,   ops: []             }},
       { tick:  114, time:  330.8844, click: 1.667, context, expected: { measure: 1, beat: 1.667, ops: []             }},
-      { tick:  172, time:  499.2290, click: 2,     context, expected: { measure: 1, beat: 2,     ops: [OPCODES.TOCK] }},
+      { tick:  172, time:  499.2290, click: 2,     context, expected: { measure: 1, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  258, time:  748.8435, click: 2.5,   context, expected: { measure: 1, beat: 2.5,   ops: []             }},
-      { tick:  344, time:  998.4580, click: 3,     context, expected: { measure: 1, beat: 3,     ops: [OPCODES.TOCK] }},
+      { tick:  344, time:  998.4580, click: 3,     context, expected: { measure: 1, beat: 3,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  430, time: 1248.0726, click: 3.5,   context, expected: { measure: 1, beat: 3.5,   ops: []             }},
-      { tick:  516, time: 1497.6871, click: 4,     context, expected: { measure: 1, beat: 4,     ops: [OPCODES.TOCK] }},
+      { tick:  516, time: 1497.6871, click: 4,     context, expected: { measure: 1, beat: 4,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  602, time: 1747.3016, click: 4.5,   context, expected: { measure: 1, beat: 4.5,   ops: []             }},
-      { tick:  689, time: 1999.8186, click: 5,     context, expected: { measure: 2, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick:  689, time: 1999.8186, click: 5,     context, expected: { measure: 2, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick:  775, time: 2249.4331, click: 5.5,   context, expected: { measure: 2, beat: 1.5,   ops: []             }},
-      { tick:  861, time: 2499.0476, click: 6,     context, expected: { measure: 2, beat: 2,     ops: [OPCODES.TOCK] }},
+      { tick:  861, time: 2499.0476, click: 6,     context, expected: { measure: 2, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  947, time: 2748.6621, click: 6.5,   context, expected: { measure: 2, beat: 2.5,   ops: []             }},
-      { tick: 1033, time: 2998.2766, click: 7,     context, expected: { measure: 2, beat: 3,     ops: [OPCODES.TOCK] }},
+      { tick: 1033, time: 2998.2766, click: 7,     context, expected: { measure: 2, beat: 3,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1119, time: 3247.8912, click: 7.5,   context, expected: { measure: 2, beat: 3.5,   ops: []             }},
-      { tick: 1205, time: 3497.5057, click: 8,     context, expected: { measure: 2, beat: 4,     ops: [OPCODES.TOCK] }},
+      { tick: 1205, time: 3497.5057, click: 8,     context, expected: { measure: 2, beat: 4,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1291, time: 3747.1202, click: 8.5,   context, expected: { measure: 2, beat: 4.5,   ops: []             }},
-      { tick: 1378, time: 3999.6372, click: 9,     context, expected: { measure: 3, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick: 1378, time: 3999.6372, click: 9,     context, expected: { measure: 3, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
     ]
 
     // prettier-ignore
@@ -1064,30 +1056,30 @@ describe('4:4 time', function () {
 
   it('eighth-doublets notes @120BPM', function () {
     const context = {
-      subdivisions: EIGHTH_DOUBLETS,
+      subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS,
     }
 
     // prettier-ignore
     const tests = [
-      { tick:    0, time:    0.0000, click: 1,     context, expected: { measure: 1, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick:    0, time:    0.0000, click: 1,     context, expected: { measure: 1, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick:   57, time:  165.4422, click: 1.333, context, expected: { measure: 1, beat: 1.333, ops: []             }},
-      { tick:   86, time:  249.6145, click: 1.5,   context, expected: { measure: 1, beat: 1.5,   ops: [OPCODES.TOCK] }},
+      { tick:   86, time:  249.6145, click: 1.5,   context, expected: { measure: 1, beat: 1.5,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  114, time:  330.8844, click: 1.667, context, expected: { measure: 1, beat: 1.667, ops: []             }},
-      { tick:  172, time:  499.2290, click: 2,     context, expected: { measure: 1, beat: 2,     ops: [OPCODES.TOCK] }},
-      { tick:  258, time:  748.8435, click: 2.5,   context, expected: { measure: 1, beat: 2.5,   ops: [OPCODES.TOCK] }},
-      { tick:  344, time:  998.4580, click: 3,     context, expected: { measure: 1, beat: 3,     ops: [OPCODES.TOCK] }},
-      { tick:  430, time: 1248.0726, click: 3.5,   context, expected: { measure: 1, beat: 3.5,   ops: [OPCODES.TOCK] }},
-      { tick:  516, time: 1497.6871, click: 4,     context, expected: { measure: 1, beat: 4,     ops: [OPCODES.TOCK] }},
-      { tick:  602, time: 1747.3016, click: 4.5,   context, expected: { measure: 1, beat: 4.5,   ops: [OPCODES.TOCK] }},
-      { tick:  689, time: 1999.8186, click: 5,     context, expected: { measure: 2, beat: 1,     ops: [OPCODES.TICK] }},
-      { tick:  775, time: 2249.4331, click: 5.5,   context, expected: { measure: 2, beat: 1.5,   ops: [OPCODES.TOCK] }},
-      { tick:  861, time: 2499.0476, click: 6,     context, expected: { measure: 2, beat: 2,     ops: [OPCODES.TOCK] }},
-      { tick:  947, time: 2748.6621, click: 6.5,   context, expected: { measure: 2, beat: 2.5,   ops: [OPCODES.TOCK] }},
-      { tick: 1033, time: 2998.2766, click: 7,     context, expected: { measure: 2, beat: 3,     ops: [OPCODES.TOCK] }},
-      { tick: 1119, time: 3247.8912, click: 7.5,   context, expected: { measure: 2, beat: 3.5,   ops: [OPCODES.TOCK] }},
-      { tick: 1205, time: 3497.5057, click: 8,     context, expected: { measure: 2, beat: 4,     ops: [OPCODES.TOCK] }},
-      { tick: 1291, time: 3747.1202, click: 8.5,   context, expected: { measure: 2, beat: 4.5,   ops: [OPCODES.TOCK] }},
-      { tick: 1378, time: 3999.6372, click: 9,     context, expected: { measure: 3, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick:  172, time:  499.2290, click: 2,     context, expected: { measure: 1, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  258, time:  748.8435, click: 2.5,   context, expected: { measure: 1, beat: 2.5,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  344, time:  998.4580, click: 3,     context, expected: { measure: 1, beat: 3,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  430, time: 1248.0726, click: 3.5,   context, expected: { measure: 1, beat: 3.5,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  516, time: 1497.6871, click: 4,     context, expected: { measure: 1, beat: 4,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  602, time: 1747.3016, click: 4.5,   context, expected: { measure: 1, beat: 4.5,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  689, time: 1999.8186, click: 5,     context, expected: { measure: 2, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
+      { tick:  775, time: 2249.4331, click: 5.5,   context, expected: { measure: 2, beat: 1.5,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  861, time: 2499.0476, click: 6,     context, expected: { measure: 2, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  947, time: 2748.6621, click: 6.5,   context, expected: { measure: 2, beat: 2.5,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 1033, time: 2998.2766, click: 7,     context, expected: { measure: 2, beat: 3,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 1119, time: 3247.8912, click: 7.5,   context, expected: { measure: 2, beat: 3.5,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 1205, time: 3497.5057, click: 8,     context, expected: { measure: 2, beat: 4,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 1291, time: 3747.1202, click: 8.5,   context, expected: { measure: 2, beat: 4.5,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 1378, time: 3999.6372, click: 9,     context, expected: { measure: 3, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
     ]
 
     // prettier-ignore
@@ -1101,30 +1093,30 @@ describe('4:4 time', function () {
 
   it('count-in', function () {
     const context = {
-      subdivisions: QUARTER_NOTES,
+      subdivisions: SUBDIVISIONS.QUARTER_NOTES,
     }
 
     // prettier-ignore
     const tests = [
-      { tick:    0, time:    0.0000, click: 1,     context, expected: { measure: 1, beat: 1,     ops: [OPCODES.STICKS] }},
+      { tick:    0, time:    0.0000, click: 1,     context, expected: { measure: 1, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'sticks' }] }},
       { tick:   57, time:  165.4422, click: 1.333, context, expected: { measure: 1, beat: 1.333, ops: []               }},
       { tick:   86, time:  249.6145, click: 1.5,   context, expected: { measure: 1, beat: 1.5,   ops: []               }},
       { tick:  114, time:  330.8844, click: 1.667, context, expected: { measure: 1, beat: 1.667, ops: []               }},
-      { tick:  172, time:  499.2290, click: 2,     context, expected: { measure: 1, beat: 2,     ops: [OPCODES.STICKS] }},
+      { tick:  172, time:  499.2290, click: 2,     context, expected: { measure: 1, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'sticks' }] }},
       { tick:  258, time:  748.8435, click: 2.5,   context, expected: { measure: 1, beat: 2.5,   ops: []               }},
-      { tick:  344, time:  998.4580, click: 3,     context, expected: { measure: 1, beat: 3,     ops: [OPCODES.STICKS] }},
+      { tick:  344, time:  998.4580, click: 3,     context, expected: { measure: 1, beat: 3,     ops: [{ opcode:OPCODES.PLAY, sample:'sticks' }] }},
       { tick:  430, time: 1248.0726, click: 3.5,   context, expected: { measure: 1, beat: 3.5,   ops: []               }},
-      { tick:  516, time: 1497.6871, click: 4,     context, expected: { measure: 1, beat: 4,     ops: [OPCODES.STICKS] }},
+      { tick:  516, time: 1497.6871, click: 4,     context, expected: { measure: 1, beat: 4,     ops: [{ opcode:OPCODES.PLAY, sample:'sticks' }] }},
       { tick:  602, time: 1747.3016, click: 4.5,   context, expected: { measure: 1, beat: 4.5,   ops: []               }},
-      { tick:  689, time: 1999.8186, click: 5,     context, expected: { measure: 2, beat: 1,     ops: [OPCODES.TICK]   }},
+      { tick:  689, time: 1999.8186, click: 5,     context, expected: { measure: 2, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick:  775, time: 2249.4331, click: 5.5,   context, expected: { measure: 2, beat: 1.5,   ops: []               }},
-      { tick:  861, time: 2499.0476, click: 6,     context, expected: { measure: 2, beat: 2,     ops: [OPCODES.TOCK]   }},
+      { tick:  861, time: 2499.0476, click: 6,     context, expected: { measure: 2, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }]   }},
       { tick:  947, time: 2748.6621, click: 6.5,   context, expected: { measure: 2, beat: 2.5,   ops: []               }},
-      { tick: 1033, time: 2998.2766, click: 7,     context, expected: { measure: 2, beat: 3,     ops: [OPCODES.TOCK]   }},
+      { tick: 1033, time: 2998.2766, click: 7,     context, expected: { measure: 2, beat: 3,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }]   }},
       { tick: 1119, time: 3247.8912, click: 7.5,   context, expected: { measure: 2, beat: 3.5,   ops: []               }},
-      { tick: 1205, time: 3497.5057, click: 8,     context, expected: { measure: 2, beat: 4,     ops: [OPCODES.TOCK]   }},
+      { tick: 1205, time: 3497.5057, click: 8,     context, expected: { measure: 2, beat: 4,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }]   }},
       { tick: 1291, time: 3747.1202, click: 8.5,   context, expected: { measure: 2, beat: 4.5,   ops: []               }},
-      { tick: 1378, time: 3999.6372, click: 9,     context, expected: { measure: 3, beat: 1,     ops: [OPCODES.TICK]   }},
+      { tick: 1378, time: 3999.6372, click: 9,     context, expected: { measure: 3, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }]   }},
     ]
 
     // prettier-ignore
@@ -1141,28 +1133,28 @@ describe('4:4 time', function () {
 describe('2:2 time', function () {
   it('2:2 time, half notes @120BPM', function () {
     const context = {
-      subdivisions: HALF_NOTES,
+      subdivisions: SUBDIVISIONS.HALF_NOTES,
     }
 
     // prettier-ignore
     const tests = [
-      { tick:    0, time:    0.0000, click: 1,    context, expected: { measure: 1, beat: 1,   ops: [OPCODES.TICK] }},
+      { tick:    0, time:    0.0000, click: 1,    context, expected: { measure: 1, beat: 1,   ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick:   86, time:  249.6145, click: 1.5,  context, expected: { measure: 1, beat: 1.5, ops: []             }},
-      { tick:  172, time:  499.2290, click: 2,    context, expected: { measure: 1, beat: 2,   ops: [OPCODES.TOCK] }},
+      { tick:  172, time:  499.2290, click: 2,    context, expected: { measure: 1, beat: 2,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  258, time:  748.8435, click: 2.5,  context, expected: { measure: 1, beat: 2.5, ops: []             }},
-      { tick:  344, time:  998.4580, click: 3,    context, expected: { measure: 2, beat: 1,   ops: [OPCODES.TICK] }},
+      { tick:  344, time:  998.4580, click: 3,    context, expected: { measure: 2, beat: 1,   ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick:  430, time: 1248.0726, click: 3.5,  context, expected: { measure: 2, beat: 1.5, ops: []             }},
-      { tick:  516, time: 1497.6871, click: 4,    context, expected: { measure: 2, beat: 2,   ops: [OPCODES.TOCK] }},
+      { tick:  516, time: 1497.6871, click: 4,    context, expected: { measure: 2, beat: 2,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  602, time: 1747.3016, click: 4.5,  context, expected: { measure: 2, beat: 2.5, ops: []             }},
-      { tick:  689, time: 1999.8186, click: 5,    context, expected: { measure: 3, beat: 1,   ops: [OPCODES.TICK] }},
+      { tick:  689, time: 1999.8186, click: 5,    context, expected: { measure: 3, beat: 1,   ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick:  775, time: 2249.4331, click: 5.5,  context, expected: { measure: 3, beat: 1.5, ops: []             }},
-      { tick:  861, time: 2499.0476, click: 6,    context, expected: { measure: 3, beat: 2,   ops: [OPCODES.TOCK] }},
+      { tick:  861, time: 2499.0476, click: 6,    context, expected: { measure: 3, beat: 2,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  947, time: 2748.6621, click: 6.5,  context, expected: { measure: 3, beat: 2.5, ops: []             }},
-      { tick: 1033, time: 2998.2766, click: 7,    context, expected: { measure: 4, beat: 1,   ops: [OPCODES.TICK] }},
+      { tick: 1033, time: 2998.2766, click: 7,    context, expected: { measure: 4, beat: 1,   ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick: 1119, time: 3247.8912, click: 7.5,  context, expected: { measure: 4, beat: 1.5, ops: []             }},
-      { tick: 1205, time: 3497.5057, click: 8,    context, expected: { measure: 4, beat: 2,   ops: [OPCODES.TOCK] }},
+      { tick: 1205, time: 3497.5057, click: 8,    context, expected: { measure: 4, beat: 2,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1291, time: 3747.1202, click: 8.5,  context, expected: { measure: 4, beat: 2.5, ops: []             }},
-      { tick: 1378, time: 3999.6372, click: 9,    context, expected: { measure: 5, beat: 1,   ops: [OPCODES.TICK] }},
+      { tick: 1378, time: 3999.6372, click: 9,    context, expected: { measure: 5, beat: 1,   ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
     ]
 
     // prettier-ignore
@@ -1176,28 +1168,28 @@ describe('2:2 time', function () {
 
   it('2:2 time, quarter notes @120BPM', function () {
     const context = {
-      subdivisions: QUARTER_NOTES,
+      subdivisions: SUBDIVISIONS.QUARTER_NOTES,
     }
 
     // prettier-ignore
     const tests = [
-      { tick:    0, time:    0.0000, click: 1,    context, expected: { measure: 1, beat: 1,    ops: [OPCODES.TICK] }},
+      { tick:    0, time:    0.0000, click: 1,    context, expected: { measure: 1, beat: 1,    ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick:   86, time:  249.6145, click: 1.5,  context, expected: { measure: 1, beat: 1.25, ops: []             }},
-      { tick:  172, time:  499.2290, click: 2,    context, expected: { measure: 1, beat: 1.5,  ops: [OPCODES.TOCK] }},
+      { tick:  172, time:  499.2290, click: 2,    context, expected: { measure: 1, beat: 1.5,  ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  258, time:  748.8435, click: 2.5,  context, expected: { measure: 1, beat: 1.75, ops: []             }},
-      { tick:  344, time:  998.4580, click: 3,    context, expected: { measure: 1, beat: 2,    ops: [OPCODES.TOCK] }},
+      { tick:  344, time:  998.4580, click: 3,    context, expected: { measure: 1, beat: 2,    ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  430, time: 1248.0726, click: 3.5,  context, expected: { measure: 1, beat: 2.25, ops: []             }},
-      { tick:  516, time: 1497.6871, click: 4,    context, expected: { measure: 1, beat: 2.5,  ops: [OPCODES.TOCK] }},
+      { tick:  516, time: 1497.6871, click: 4,    context, expected: { measure: 1, beat: 2.5,  ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  602, time: 1747.3016, click: 4.5,  context, expected: { measure: 1, beat: 2.75, ops: []             }},
-      { tick:  689, time: 1999.8186, click: 5,    context, expected: { measure: 2, beat: 1,    ops: [OPCODES.TICK] }},
+      { tick:  689, time: 1999.8186, click: 5,    context, expected: { measure: 2, beat: 1,    ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick:  775, time: 2249.4331, click: 5.5,  context, expected: { measure: 2, beat: 1.25, ops: []             }},
-      { tick:  861, time: 2499.0476, click: 6,    context, expected: { measure: 2, beat: 1.5,  ops: [OPCODES.TOCK] }},
+      { tick:  861, time: 2499.0476, click: 6,    context, expected: { measure: 2, beat: 1.5,  ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  947, time: 2748.6621, click: 6.5,  context, expected: { measure: 2, beat: 1.75, ops: []             }},
-      { tick: 1033, time: 2998.2766, click: 7,    context, expected: { measure: 2, beat: 2,    ops: [OPCODES.TOCK] }},
+      { tick: 1033, time: 2998.2766, click: 7,    context, expected: { measure: 2, beat: 2,    ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1119, time: 3247.8912, click: 7.5,  context, expected: { measure: 2, beat: 2.25, ops: []             }},
-      { tick: 1205, time: 3497.5057, click: 8,    context, expected: { measure: 2, beat: 2.5,  ops: [OPCODES.TOCK] }},
+      { tick: 1205, time: 3497.5057, click: 8,    context, expected: { measure: 2, beat: 2.5,  ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1291, time: 3747.1202, click: 8.5,  context, expected: { measure: 2, beat: 2.75, ops: []             }},
-      { tick: 1378, time: 3999.6372, click: 9,    context, expected: { measure: 3, beat: 1,    ops: [OPCODES.TICK] }},
+      { tick: 1378, time: 3999.6372, click: 9,    context, expected: { measure: 3, beat: 1,    ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
     ]
 
     // prettier-ignore
@@ -1212,37 +1204,37 @@ describe('2:2 time', function () {
 
 describe('tests VM.click with 6:8 time', function () {
   const context = {
-    subdivisions: EIGHTH_NOTES,
+    subdivisions: SUBDIVISIONS.EIGHTH_NOTES,
   }
 
   it('6:8 time, eighth notes @120BPM', function () {
     // prettier-ignore
     const tests = [
-      { tick:    0, time:    0.0000, click: 1,    context, expected: { measure: 1, beat: 1,   ops: [OPCODES.TICK] }},
+      { tick:    0, time:    0.0000, click: 1,    context, expected: { measure: 1, beat: 1,   ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick:   86, time:  249.6145, click: 1.5,  context, expected: { measure: 1, beat: 1.5, ops: []             }},
-      { tick:  172, time:  499.2290, click: 2,    context, expected: { measure: 1, beat: 2,   ops: [OPCODES.TOCK] }},
+      { tick:  172, time:  499.2290, click: 2,    context, expected: { measure: 1, beat: 2,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  258, time:  748.8435, click: 2.5,  context, expected: { measure: 1, beat: 2.5, ops: []             }},
-      { tick:  344, time:  998.4580, click: 3,    context, expected: { measure: 1, beat: 3,   ops: [OPCODES.TOCK] }},
+      { tick:  344, time:  998.4580, click: 3,    context, expected: { measure: 1, beat: 3,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  430, time: 1248.0726, click: 3.5,  context, expected: { measure: 1, beat: 3.5, ops: []             }},
-      { tick:  516, time: 1497.6871, click: 4,    context, expected: { measure: 1, beat: 4,   ops: [OPCODES.TOCK] }},
+      { tick:  516, time: 1497.6871, click: 4,    context, expected: { measure: 1, beat: 4,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  602, time: 1747.3016, click: 4.5,  context, expected: { measure: 1, beat: 4.5, ops: []             }},
-      { tick:  689, time: 1999.8186, click: 5,    context, expected: { measure: 1, beat: 5,   ops: [OPCODES.TOCK] }},
+      { tick:  689, time: 1999.8186, click: 5,    context, expected: { measure: 1, beat: 5,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  775, time: 2249.4331, click: 5.5,  context, expected: { measure: 1, beat: 5.5, ops: []             }},
-      { tick:  861, time: 2499.0476, click: 6,    context, expected: { measure: 1, beat: 6,   ops: [OPCODES.TOCK] }},
+      { tick:  861, time: 2499.0476, click: 6,    context, expected: { measure: 1, beat: 6,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  947, time: 2748.6621, click: 6.5,  context, expected: { measure: 1, beat: 6.5, ops: []             }},
-      { tick: 1033, time: 2998.2766, click: 7,    context, expected: { measure: 2, beat: 1,   ops: [OPCODES.TICK] }},
+      { tick: 1033, time: 2998.2766, click: 7,    context, expected: { measure: 2, beat: 1,   ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick: 1119, time: 3247.8912, click: 7.5,  context, expected: { measure: 2, beat: 1.5, ops: []             }},
-      { tick: 1205, time: 3497.5057, click: 8,    context, expected: { measure: 2, beat: 2,   ops: [OPCODES.TOCK] }},
+      { tick: 1205, time: 3497.5057, click: 8,    context, expected: { measure: 2, beat: 2,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1291, time: 3747.1202, click: 8.5,  context, expected: { measure: 2, beat: 2.5, ops: []             }},
-      { tick: 1378, time: 3999.6372, click: 9,    context, expected: { measure: 2, beat: 3,   ops: [OPCODES.TOCK] }},
+      { tick: 1378, time: 3999.6372, click: 9,    context, expected: { measure: 2, beat: 3,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1464, time: 4249.2517, click: 9.5,  context, expected: { measure: 2, beat: 3.5, ops: []             }},
-      { tick: 1550, time: 4498.8662, click: 10,   context, expected: { measure: 2, beat: 4,   ops: [OPCODES.TOCK] }},
+      { tick: 1550, time: 4498.8662, click: 10,   context, expected: { measure: 2, beat: 4,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1636, time: 4748.4807, click: 10.5, context, expected: { measure: 2, beat: 4.5, ops: []             }},
-      { tick: 1722, time: 4998.0952, click: 11,   context, expected: { measure: 2, beat: 5,   ops: [OPCODES.TOCK] }},
+      { tick: 1722, time: 4998.0952, click: 11,   context, expected: { measure: 2, beat: 5,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1808, time: 5247.7098, click: 11.5, context, expected: { measure: 2, beat: 5.5, ops: []             }},
-      { tick: 1894, time: 5497.3243, click: 12,   context, expected: { measure: 2, beat: 6,   ops: [OPCODES.TOCK] }},
+      { tick: 1894, time: 5497.3243, click: 12,   context, expected: { measure: 2, beat: 6,   ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1981, time: 5749.8413, click: 12.5, context, expected: { measure: 2, beat: 6.5, ops: []             }},
-      { tick: 2067, time: 5999.4558, click: 13,   context, expected: { measure: 3, beat: 1,   ops: [OPCODES.TICK] }},
+      { tick: 2067, time: 5999.4558, click: 13,   context, expected: { measure: 3, beat: 1,   ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
     ]
 
     const vm = new VM(FS, [
@@ -1255,30 +1247,30 @@ describe('tests VM.click with 6:8 time', function () {
 
   it('6:8 time, eighth doublets @120BPM', function () {
     const context = {
-      subdivisions: EIGHTH_DOUBLETS,
+      subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS,
     }
 
     // prettier-ignore
     const tests = [
-      { tick:    0, time:    0.0000, click: 1,    context, expected: { measure: 1, beat: 1, ops: [OPCODES.TICK] }},
-      { tick:   86, time:  249.6145, click: 1.5,  context, expected: { measure: 1, beat: 2, ops: [OPCODES.TOCK] }},
-      { tick:  172, time:  499.2290, click: 2,    context, expected: { measure: 1, beat: 3, ops: [OPCODES.TOCK] }},
-      { tick:  258, time:  748.8435, click: 2.5,  context, expected: { measure: 1, beat: 4, ops: [OPCODES.TOCK] }},
-      { tick:  344, time:  998.4580, click: 3,    context, expected: { measure: 1, beat: 5, ops: [OPCODES.TOCK] }},
-      { tick:  430, time: 1248.0726, click: 3.5,  context, expected: { measure: 1, beat: 6, ops: [OPCODES.TOCK] }},
-      { tick:  516, time: 1497.6871, click: 4,    context, expected: { measure: 2, beat: 1, ops: [OPCODES.TICK] }},
-      { tick:  602, time: 1747.3016, click: 4.5,  context, expected: { measure: 2, beat: 2, ops: [OPCODES.TOCK] }},
-      { tick:  689, time: 1999.8186, click: 5,    context, expected: { measure: 2, beat: 3, ops: [OPCODES.TOCK] }},
-      { tick:  775, time: 2249.4331, click: 5.5,  context, expected: { measure: 2, beat: 4, ops: [OPCODES.TOCK] }},
-      { tick:  861, time: 2499.0476, click: 6,    context, expected: { measure: 2, beat: 5, ops: [OPCODES.TOCK] }},
-      { tick:  947, time: 2748.6621, click: 6.5,  context, expected: { measure: 2, beat: 6, ops: [OPCODES.TOCK] }},
-      { tick: 1033, time: 2998.2766, click: 7,    context, expected: { measure: 3, beat: 1, ops: [OPCODES.TICK] }},
-      { tick: 1119, time: 3247.8912, click: 7.5,  context, expected: { measure: 3, beat: 2, ops: [OPCODES.TOCK] }},
-      { tick: 1205, time: 3497.5057, click: 8,    context, expected: { measure: 3, beat: 3, ops: [OPCODES.TOCK] }},
-      { tick: 1291, time: 3747.1202, click: 8.5,  context, expected: { measure: 3, beat: 4, ops: [OPCODES.TOCK] }},
-      { tick: 1378, time: 3999.6372, click: 9,    context, expected: { measure: 3, beat: 5, ops: [OPCODES.TOCK] }},
-      { tick: 1464, time: 4249.2517, click: 9.5,  context, expected: { measure: 3, beat: 6, ops: [OPCODES.TOCK] }},
-      { tick: 1550, time: 4498.8662, click: 10,   context, expected: { measure: 4, beat: 1, ops: [OPCODES.TICK] }},
+      { tick:    0, time:    0.0000, click: 1,    context, expected: { measure: 1, beat: 1, ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
+      { tick:   86, time:  249.6145, click: 1.5,  context, expected: { measure: 1, beat: 2, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  172, time:  499.2290, click: 2,    context, expected: { measure: 1, beat: 3, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  258, time:  748.8435, click: 2.5,  context, expected: { measure: 1, beat: 4, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  344, time:  998.4580, click: 3,    context, expected: { measure: 1, beat: 5, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  430, time: 1248.0726, click: 3.5,  context, expected: { measure: 1, beat: 6, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  516, time: 1497.6871, click: 4,    context, expected: { measure: 2, beat: 1, ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
+      { tick:  602, time: 1747.3016, click: 4.5,  context, expected: { measure: 2, beat: 2, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  689, time: 1999.8186, click: 5,    context, expected: { measure: 2, beat: 3, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  775, time: 2249.4331, click: 5.5,  context, expected: { measure: 2, beat: 4, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  861, time: 2499.0476, click: 6,    context, expected: { measure: 2, beat: 5, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  947, time: 2748.6621, click: 6.5,  context, expected: { measure: 2, beat: 6, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 1033, time: 2998.2766, click: 7,    context, expected: { measure: 3, beat: 1, ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
+      { tick: 1119, time: 3247.8912, click: 7.5,  context, expected: { measure: 3, beat: 2, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 1205, time: 3497.5057, click: 8,    context, expected: { measure: 3, beat: 3, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 1291, time: 3747.1202, click: 8.5,  context, expected: { measure: 3, beat: 4, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 1378, time: 3999.6372, click: 9,    context, expected: { measure: 3, beat: 5, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 1464, time: 4249.2517, click: 9.5,  context, expected: { measure: 3, beat: 6, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 1550, time: 4498.8662, click: 10,   context, expected: { measure: 4, beat: 1, ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
     ]
 
     // prettier-ignore
@@ -1292,28 +1284,28 @@ describe('tests VM.click with 6:8 time', function () {
 
   it('6:8 time, eighth triplets @40BPM', function () {
     const context = {
-      subdivisions: EIGHTH_TRIPLETS,
+      subdivisions: SUBDIVISIONS.EIGHTH_TRIPLETS,
     }
 
     // prettier-ignore
     const tests = [
-      { tick:    0, time:    0.0000, click: 1,     context, expected: { measure: 1, beat: 1,     ops: [OPCODES.TICK] }},
-      { tick:  172, time:  499.2290, click: 1.333, context, expected: { measure: 1, beat: 1.333, ops: [OPCODES.TOCK] }},
+      { tick:    0, time:    0.0000, click: 1,     context, expected: { measure: 1, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
+      { tick:  172, time:  499.2290, click: 1.333, context, expected: { measure: 1, beat: 1.333, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  258, time:  748.8435, click: 1.5,   context, expected: { measure: 1, beat: 1.5,   ops: []             }},
-      { tick:  344, time:  998.4580, click: 1.667, context, expected: { measure: 1, beat: 1.667, ops: [OPCODES.TOCK] }},
-      { tick:  516, time: 1497.6871, click: 2,     context, expected: { measure: 1, beat: 2,     ops: [OPCODES.TOCK] }},
-      { tick:  689, time: 1999.8186, click: 2.333, context, expected: { measure: 1, beat: 2.333, ops: [OPCODES.TOCK] }},
+      { tick:  344, time:  998.4580, click: 1.667, context, expected: { measure: 1, beat: 1.667, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  516, time: 1497.6871, click: 2,     context, expected: { measure: 1, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  689, time: 1999.8186, click: 2.333, context, expected: { measure: 1, beat: 2.333, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  775, time: 2249.4331, click: 2.5,   context, expected: { measure: 1, beat: 2.5,   ops: []             }},
-      { tick:  861, time: 2499.0476, click: 2.667, context, expected: { measure: 1, beat: 2.667, ops: [OPCODES.TOCK] }},
-      { tick: 1033, time: 2998.2766, click: 3,     context, expected: { measure: 2, beat: 1,     ops: [OPCODES.TICK] }},
-      { tick: 1205, time: 3497.5057, click: 3.333, context, expected: { measure: 2, beat: 1.333, ops: [OPCODES.TOCK] }},
+      { tick:  861, time: 2499.0476, click: 2.667, context, expected: { measure: 1, beat: 2.667, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 1033, time: 2998.2766, click: 3,     context, expected: { measure: 2, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
+      { tick: 1205, time: 3497.5057, click: 3.333, context, expected: { measure: 2, beat: 1.333, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1291, time: 3747.1202, click: 3.5,   context, expected: { measure: 2, beat: 1.5,   ops: []             }},
-      { tick: 1378, time: 3999.6372, click: 3.667, context, expected: { measure: 2, beat: 1.667, ops: [OPCODES.TOCK] }},
-      { tick: 1550, time: 4498.8662, click: 4,     context, expected: { measure: 2, beat: 2,     ops: [OPCODES.TOCK] }},
-      { tick: 1722, time: 4998.0952, click: 4.333, context, expected: { measure: 2, beat: 2.333, ops: [OPCODES.TOCK] }},
+      { tick: 1378, time: 3999.6372, click: 3.667, context, expected: { measure: 2, beat: 1.667, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 1550, time: 4498.8662, click: 4,     context, expected: { measure: 2, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 1722, time: 4998.0952, click: 4.333, context, expected: { measure: 2, beat: 2.333, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1808, time: 5247.7098, click: 4.5,   context, expected: { measure: 2, beat: 2.5,   ops: []             }},
-      { tick: 1894, time: 5497.3243, click: 4.667, context, expected: { measure: 2, beat: 2.667, ops: [OPCODES.TOCK] }},
-      { tick: 2067, time: 5999.4558, click: 5,     context, expected: { measure: 3, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick: 1894, time: 5497.3243, click: 4.667, context, expected: { measure: 2, beat: 2.667, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 2067, time: 5999.4558, click: 5,     context, expected: { measure: 3, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
     ]
 
     const vm = new VM(FS, [
@@ -1326,29 +1318,29 @@ describe('tests VM.click with 6:8 time', function () {
 
   it('6:8 time, dotted quarter @40BPM', function () {
     const context = {
-      subdivisions: DOTTED_QUARTER_NOTES,
+      subdivisions: SUBDIVISIONS.DOTTED_QUARTERS,
       ding: true,
     }
 
     // prettier-ignore
     const tests = [
-      { tick:    0, time:    0.0000, click: 1,     context, expected: { measure: 1, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick:    0, time:    0.0000, click: 1,     context, expected: { measure: 1, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick:  172, time:  499.2290, click: 1.333, context, expected: { measure: 1, beat: 1.333, ops: []             }},
       { tick:  258, time:  748.8435, click: 1.5,   context, expected: { measure: 1, beat: 1.5,   ops: []             }},
       { tick:  344, time:  998.4580, click: 1.667, context, expected: { measure: 1, beat: 1.667, ops: []             }},
-      { tick:  516, time: 1497.6871, click: 2,     context, expected: { measure: 1, beat: 2,     ops: [OPCODES.TOCK] }},
+      { tick:  516, time: 1497.6871, click: 2,     context, expected: { measure: 1, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  689, time: 1999.8186, click: 2.333, context, expected: { measure: 1, beat: 2.333, ops: []             }},
       { tick:  775, time: 2249.4331, click: 2.5,   context, expected: { measure: 1, beat: 2.5,   ops: []             }},
       { tick:  861, time: 2499.0476, click: 2.667, context, expected: { measure: 1, beat: 2.667, ops: []             }},
-      { tick: 1033, time: 2998.2766, click: 3,     context, expected: { measure: 2, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick: 1033, time: 2998.2766, click: 3,     context, expected: { measure: 2, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick: 1205, time: 3497.5057, click: 3.333, context, expected: { measure: 2, beat: 1.333, ops: []             }},
       { tick: 1291, time: 3747.1202, click: 3.5,   context, expected: { measure: 2, beat: 1.5,   ops: []             }},
       { tick: 1378, time: 3999.6372, click: 3.667, context, expected: { measure: 2, beat: 1.667, ops: []             }},
-      { tick: 1550, time: 4498.8662, click: 4,     context, expected: { measure: 2, beat: 2,     ops: [OPCODES.TOCK] }},
+      { tick: 1550, time: 4498.8662, click: 4,     context, expected: { measure: 2, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1722, time: 4998.0952, click: 4.333, context, expected: { measure: 2, beat: 2.333, ops: []             }},
       { tick: 1808, time: 5247.7098, click: 4.5,   context, expected: { measure: 2, beat: 2.5,   ops: []             }},
       { tick: 1894, time: 5497.3243, click: 4.667, context, expected: { measure: 2, beat: 2.667, ops: []             }},
-      { tick: 2067, time: 5999.4558, click: 5,     context, expected: { measure: 3, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick: 2067, time: 5999.4558, click: 5,     context, expected: { measure: 3, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
     ]
 
     const vm = new VM(FS, [
@@ -1363,36 +1355,36 @@ describe('tests VM.click with 6:8 time', function () {
 describe('dings', function () {
   it('on beat ding', function () {
     const context = {
-      subdivisions: QUARTER_NOTES,
+      subdivisions: SUBDIVISIONS.QUARTER_NOTES,
       ding: true,
     }
 
     // prettier-ignore
     const tests = [
-      { tick:    0, time:    0.0000, click: 1,     context, expected: { measure: 1, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick:    0, time:    0.0000, click: 1,     context, expected: { measure: 1, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick:   57, time:  165.4422, click: 1.333, context, expected: { measure: 1, beat: 1.333, ops: []             }},
       { tick:   86, time:  249.6145, click: 1.5,   context, expected: { measure: 1, beat: 1.5,   ops: []             }},
       { tick:  114, time:  330.8844, click: 1.667, context, expected: { measure: 1, beat: 1.667, ops: []             }},
-      { tick:  172, time:  499.2290, click: 2,     context, expected: { measure: 1, beat: 2,     ops: [OPCODES.TOCK] }},
+      { tick:  172, time:  499.2290, click: 2,     context, expected: { measure: 1, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  258, time:  748.8435, click: 2.5,   context, expected: { measure: 1, beat: 2.5,   ops: []             }},
-      { tick:  344, time:  998.4580, click: 3,     context, expected: { measure: 1, beat: 3,     ops: [OPCODES.TOCK] }},
+      { tick:  344, time:  998.4580, click: 3,     context, expected: { measure: 1, beat: 3,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  430, time: 1248.0726, click: 3.5,   context, expected: { measure: 1, beat: 3.5,   ops: []             }},
-      { tick:  516, time: 1497.6871, click: 4,     context, expected: { measure: 1, beat: 4,     ops: [OPCODES.TOCK] }},
+      { tick:  516, time: 1497.6871, click: 4,     context, expected: { measure: 1, beat: 4,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  602, time: 1747.3016, click: 4.5,   context, expected: { measure: 1, beat: 4.5,   ops: []             }},
-      { tick:  689, time: 1999.8186, click: 5,     context, expected: { measure: 2, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick:  689, time: 1999.8186, click: 5,     context, expected: { measure: 2, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick:  775, time: 2249.4331, click: 5.5,   context, expected: { measure: 2, beat: 1.5,   ops: []             }},
-      { tick:  861, time: 2499.0476, click: 6,     context, expected: { measure: 2, beat: 2,     ops: [OPCODES.TOCK] }},
+      { tick:  861, time: 2499.0476, click: 6,     context, expected: { measure: 2, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  947, time: 2748.6621, click: 6.5,   context, expected: { measure: 2, beat: 2.5,   ops: []             }},
-      { tick: 1033, time: 2998.2766, click: 7,     context, expected: { measure: 2, beat: 3,     ops: [OPCODES.TOCK] }},
+      { tick: 1033, time: 2998.2766, click: 7,     context, expected: { measure: 2, beat: 3,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1119, time: 3247.8912, click: 7.5,   context, expected: { measure: 2, beat: 3.5,   ops: []             }},
-      { tick: 1205, time: 3497.5057, click: 8,     context, expected: { measure: 2, beat: 4,     ops: [OPCODES.DING] }},
+      { tick: 1205, time: 3497.5057, click: 8,     context, expected: { measure: 2, beat: 4,     ops: [{ opcode:OPCODES.PLAY, sample:'ding' }] }},
       { tick: 1291, time: 3747.1202, click: 8.5,   context, expected: { measure: 2, beat: 4.5,   ops: []             }},
-      { tick: 1378, time: 3999.6372, click: 9,     context, expected: { measure: 3, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick: 1378, time: 3999.6372, click: 9,     context, expected: { measure: 3, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
     ]
 
     // prettier-ignore
     const vm = new VM(FS, [
-      { at: { measure: 2,   beat: 4   }, op: OPCODES.DING },
+      { at: { measure: 2,   beat: 4   }, op: OPCODES.DONG },
       { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
       { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ])
@@ -1402,36 +1394,36 @@ describe('dings', function () {
 
   it('off beat ding', function () {
     const context = {
-      subdivisions: QUARTER_NOTES,
+      subdivisions: SUBDIVISIONS.QUARTER_NOTES,
       ding: true,
     }
 
     // prettier-ignore
     const tests = [
-      { tick:    0, time:    0.0000, click: 1,     context, expected: { measure: 1, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick:    0, time:    0.0000, click: 1,     context, expected: { measure: 1, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick:   57, time:  165.4422, click: 1.333, context, expected: { measure: 1, beat: 1.333, ops: []             }},
       { tick:   86, time:  249.6145, click: 1.5,   context, expected: { measure: 1, beat: 1.5,   ops: []             }},
       { tick:  114, time:  330.8844, click: 1.667, context, expected: { measure: 1, beat: 1.667, ops: []             }},
-      { tick:  172, time:  499.2290, click: 2,     context, expected: { measure: 1, beat: 2,     ops: [OPCODES.TOCK] }},
+      { tick:  172, time:  499.2290, click: 2,     context, expected: { measure: 1, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  258, time:  748.8435, click: 2.5,   context, expected: { measure: 1, beat: 2.5,   ops: []             }},
-      { tick:  344, time:  998.4580, click: 3,     context, expected: { measure: 1, beat: 3,     ops: [OPCODES.TOCK] }},
+      { tick:  344, time:  998.4580, click: 3,     context, expected: { measure: 1, beat: 3,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  430, time: 1248.0726, click: 3.5,   context, expected: { measure: 1, beat: 3.5,   ops: []             }},
-      { tick:  516, time: 1497.6871, click: 4,     context, expected: { measure: 1, beat: 4,     ops: [OPCODES.TOCK] }},
+      { tick:  516, time: 1497.6871, click: 4,     context, expected: { measure: 1, beat: 4,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  602, time: 1747.3016, click: 4.5,   context, expected: { measure: 1, beat: 4.5,   ops: []             }},
-      { tick:  689, time: 1999.8186, click: 5,     context, expected: { measure: 2, beat: 1,     ops: [OPCODES.TICK] }},
-      { tick:  775, time: 2249.4331, click: 5.5,   context, expected: { measure: 2, beat: 1.5,   ops: [OPCODES.DING] }},
-      { tick:  861, time: 2499.0476, click: 6,     context, expected: { measure: 2, beat: 2,     ops: [OPCODES.TOCK] }},
+      { tick:  689, time: 1999.8186, click: 5,     context, expected: { measure: 2, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
+      { tick:  775, time: 2249.4331, click: 5.5,   context, expected: { measure: 2, beat: 1.5,   ops: [{ opcode:OPCODES.PLAY, sample:'ding' }] }},
+      { tick:  861, time: 2499.0476, click: 6,     context, expected: { measure: 2, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  947, time: 2748.6621, click: 6.5,   context, expected: { measure: 2, beat: 2.5,   ops: []             }},
-      { tick: 1033, time: 2998.2766, click: 7,     context, expected: { measure: 2, beat: 3,     ops: [OPCODES.TOCK] }},
+      { tick: 1033, time: 2998.2766, click: 7,     context, expected: { measure: 2, beat: 3,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1119, time: 3247.8912, click: 7.5,   context, expected: { measure: 2, beat: 3.5,   ops: []             }},
-      { tick: 1205, time: 3497.5057, click: 8,     context, expected: { measure: 2, beat: 4,     ops: [OPCODES.TOCK] }},
+      { tick: 1205, time: 3497.5057, click: 8,     context, expected: { measure: 2, beat: 4,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1291, time: 3747.1202, click: 8.5,   context, expected: { measure: 2, beat: 4.5,   ops: []             }},
-      { tick: 1378, time: 3999.6372, click: 9,     context, expected: { measure: 3, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick: 1378, time: 3999.6372, click: 9,     context, expected: { measure: 3, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
     ]
 
     // prettier-ignore
     const vm = new VM(FS, [
-      { at: { measure: 2,   beat: 1.5 }, op: OPCODES.DING },
+      { at: { measure: 2,   beat: 1.5 }, op: OPCODES.DONG },
       { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
       { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ])
@@ -1441,42 +1433,42 @@ describe('dings', function () {
 
   it('on-beat ding, disabled', function () {
     const dingOn = {
-      subdivisions: QUARTER_NOTES,
+      subdivisions: SUBDIVISIONS.QUARTER_NOTES,
       ding: true,
     }
 
     const dingOff = {
-      subdivisions: QUARTER_NOTES,
+      subdivisions: SUBDIVISIONS.QUARTER_NOTES,
       ding: false,
     }
 
     // prettier-ignore
     const tests = [
-      { tick:    0, time:    0.0000, click: 1,     context: dingOn,  expected: { measure: 1, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick:    0, time:    0.0000, click: 1,     context: dingOn,  expected: { measure: 1, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick:   57, time:  165.4422, click: 1.333, context: dingOn,  expected: { measure: 1, beat: 1.333, ops: []             }},
       { tick:   86, time:  249.6145, click: 1.5,   context: dingOn,  expected: { measure: 1, beat: 1.5,   ops: []             }},
       { tick:  114, time:  330.8844, click: 1.667, context: dingOn,  expected: { measure: 1, beat: 1.667, ops: []             }},
-      { tick:  172, time:  499.2290, click: 2,     context: dingOn,  expected: { measure: 1, beat: 2,     ops: [OPCODES.TOCK] }},
+      { tick:  172, time:  499.2290, click: 2,     context: dingOn,  expected: { measure: 1, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  258, time:  748.8435, click: 2.5,   context: dingOn,  expected: { measure: 1, beat: 2.5,   ops: []             }},
-      { tick:  344, time:  998.4580, click: 3,     context: dingOn,  expected: { measure: 1, beat: 3,     ops: [OPCODES.DING] }},
+      { tick:  344, time:  998.4580, click: 3,     context: dingOn,  expected: { measure: 1, beat: 3,     ops: [{ opcode:OPCODES.PLAY, sample:'ding' }] }},
       { tick:  430, time: 1248.0726, click: 3.5,   context: dingOn,  expected: { measure: 1, beat: 3.5,   ops: []             }},
-      { tick:  516, time: 1497.6871, click: 4,     context: dingOn,  expected: { measure: 1, beat: 4,     ops: [OPCODES.TOCK] }},
+      { tick:  516, time: 1497.6871, click: 4,     context: dingOn,  expected: { measure: 1, beat: 4,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  602, time: 1747.3016, click: 4.5,   context: dingOn,  expected: { measure: 1, beat: 4.5,   ops: []             }},
-      { tick:  689, time: 1999.8186, click: 5,     context: dingOn,  expected: { measure: 2, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick:  689, time: 1999.8186, click: 5,     context: dingOn,  expected: { measure: 2, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick:  775, time: 2249.4331, click: 5.5,   context: dingOn,  expected: { measure: 2, beat: 1.5,   ops: []             }},
-      { tick:  861, time: 2499.0476, click: 6,     context: dingOn,  expected: { measure: 2, beat: 2,     ops: [OPCODES.TOCK] }},
+      { tick:  861, time: 2499.0476, click: 6,     context: dingOn,  expected: { measure: 2, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  947, time: 2748.6621, click: 6.5,   context: dingOn,  expected: { measure: 2, beat: 2.5,   ops: []             }},
-      { tick: 1033, time: 2998.2766, click: 7,     context: dingOn,  expected: { measure: 2, beat: 3,     ops: [OPCODES.TOCK] }},
+      { tick: 1033, time: 2998.2766, click: 7,     context: dingOn,  expected: { measure: 2, beat: 3,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1119, time: 3247.8912, click: 7.5,   context: dingOn,  expected: { measure: 2, beat: 3.5,   ops: []             }},
-      { tick: 1205, time: 3497.5057, click: 8,     context: dingOff, expected: { measure: 2, beat: 4,     ops: [OPCODES.TOCK] }},
+      { tick: 1205, time: 3497.5057, click: 8,     context: dingOff, expected: { measure: 2, beat: 4,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1291, time: 3747.1202, click: 8.5,   context: dingOff, expected: { measure: 2, beat: 4.5,   ops: []             }},
-      { tick: 1378, time: 3999.6372, click: 9,     context: dingOff, expected: { measure: 3, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick: 1378, time: 3999.6372, click: 9,     context: dingOff, expected: { measure: 3, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
     ]
 
     // prettier-ignore
     const vm = new VM(FS, [
-      { at: { measure: 1,   beat: 3   }, op: OPCODES.DING },
-      { at: { measure: 2,   beat: 4   }, op: OPCODES.DING },
+      { at: { measure: 1,   beat: 3   }, op: OPCODES.DONG },
+      { at: { measure: 2,   beat: 4   }, op: OPCODES.DONG },
       { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
       { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ])
@@ -1486,42 +1478,42 @@ describe('dings', function () {
 
   it('off-beat ding, disabled', function () {
     const dingOn = {
-      subdivisions: QUARTER_NOTES,
+      subdivisions: SUBDIVISIONS.QUARTER_NOTES,
       ding: true,
     }
 
     const dingOff = {
-      subdivisions: QUARTER_NOTES,
+      subdivisions: SUBDIVISIONS.QUARTER_NOTES,
       ding: false,
     }
 
     // prettier-ignore
     const tests = [
-      { tick:    0, time:    0.0000, context: dingOn,  click: 1,     expected: { measure: 1, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick:    0, time:    0.0000, context: dingOn,  click: 1,     expected: { measure: 1, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick:   57, time:  165.4422, context: dingOn,  click: 1.333, expected: { measure: 1, beat: 1.333, ops: []             }},
       { tick:   86, time:  249.6145, context: dingOn,  click: 1.5,   expected: { measure: 1, beat: 1.5,   ops: []             }},
       { tick:  114, time:  330.8844, context: dingOn,  click: 1.667, expected: { measure: 1, beat: 1.667, ops: []             }},
-      { tick:  172, time:  499.2290, context: dingOn,  click: 2,     expected: { measure: 1, beat: 2,     ops: [OPCODES.TOCK] }},
-      { tick:  258, time:  748.8435, context: dingOn,  click: 2.5,   expected: { measure: 1, beat: 2.5,   ops: [OPCODES.DING] }},
-      { tick:  344, time:  998.4580, context: dingOn,  click: 3,     expected: { measure: 1, beat: 3,     ops: [OPCODES.TOCK] }},
+      { tick:  172, time:  499.2290, context: dingOn,  click: 2,     expected: { measure: 1, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  258, time:  748.8435, context: dingOn,  click: 2.5,   expected: { measure: 1, beat: 2.5,   ops: [{ opcode:OPCODES.PLAY, sample:'ding' }] }},
+      { tick:  344, time:  998.4580, context: dingOn,  click: 3,     expected: { measure: 1, beat: 3,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  430, time: 1248.0726, context: dingOn,  click: 3.5,   expected: { measure: 1, beat: 3.5,   ops: []             }},
-      { tick:  516, time: 1497.6871, context: dingOn,  click: 4,     expected: { measure: 1, beat: 4,     ops: [OPCODES.TOCK] }},
+      { tick:  516, time: 1497.6871, context: dingOn,  click: 4,     expected: { measure: 1, beat: 4,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  602, time: 1747.3016, context: dingOn,  click: 4.5,   expected: { measure: 1, beat: 4.5,   ops: []             }},
-      { tick:  689, time: 1999.8186, context: dingOn,  click: 5,     expected: { measure: 2, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick:  689, time: 1999.8186, context: dingOn,  click: 5,     expected: { measure: 2, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick:  775, time: 2249.4331, context: dingOn,  click: 5.5,   expected: { measure: 2, beat: 1.5,   ops: []             }},
-      { tick:  861, time: 2499.0476, context: dingOn,  click: 6,     expected: { measure: 2, beat: 2,     ops: [OPCODES.TOCK] }},
+      { tick:  861, time: 2499.0476, context: dingOn,  click: 6,     expected: { measure: 2, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  947, time: 2748.6621, context: dingOff, click: 6.5,   expected: { measure: 2, beat: 2.5,   ops: []             }},
-      { tick: 1033, time: 2998.2766, context: dingOff, click: 7,     expected: { measure: 2, beat: 3,     ops: [OPCODES.TOCK] }},
+      { tick: 1033, time: 2998.2766, context: dingOff, click: 7,     expected: { measure: 2, beat: 3,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1119, time: 3247.8912, context: dingOff, click: 7.5,   expected: { measure: 2, beat: 3.5,   ops: []             }},
-      { tick: 1205, time: 3497.5057, context: dingOff, click: 8,     expected: { measure: 2, beat: 4,     ops: [OPCODES.TOCK] }},
+      { tick: 1205, time: 3497.5057, context: dingOff, click: 8,     expected: { measure: 2, beat: 4,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1291, time: 3747.1202, context: dingOff, click: 8.5,   expected: { measure: 2, beat: 4.5,   ops: []             }},
-      { tick: 1378, time: 3999.6372, context: dingOff, click: 9,     expected: { measure: 3, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick: 1378, time: 3999.6372, context: dingOff, click: 9,     expected: { measure: 3, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
     ]
 
     // prettier-ignore
     const vm = new VM(FS, [
-      { at: { measure: 1,   beat: 2.5 }, op: OPCODES.DING },
-      { at: { measure: 2,   beat: 2.5 }, op: OPCODES.DING },
+      { at: { measure: 1,   beat: 2.5 }, op: OPCODES.DONG },
+      { at: { measure: 2,   beat: 2.5 }, op: OPCODES.DONG },
       { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
       { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ])
@@ -1530,33 +1522,33 @@ describe('dings', function () {
   })
 })
 
-describe('tempo change', function () {
+describe('tempo/time-signature/subdivisions', function () {
   it('default -> 80BPM', function () {
     const context = {
-      subdivisions: QUARTER_NOTES,
+      subdivisions: SUBDIVISIONS.QUARTER_NOTES,
     }
 
     // prettier-ignore
     const tests = [
-      { tick:    0, time:    0.0000, click: 1,     context, expected: { measure: 1, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick:    0, time:    0.0000, click: 1,     context, expected: { measure: 1, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
       { tick:   57, time:  165.4422, click: 1.333, context, expected: { measure: 1, beat: 1.333, ops: []             }},
       { tick:   86, time:  249.6145, click: 1.5,   context, expected: { measure: 1, beat: 1.5,   ops: []             }},
       { tick:  114, time:  330.8844, click: 1.667, context, expected: { measure: 1, beat: 1.667, ops: []             }},
-      { tick:  172, time:  499.2290, click: 2,     context, expected: { measure: 1, beat: 2,     ops: [OPCODES.TOCK] }},
+      { tick:  172, time:  499.2290, click: 2,     context, expected: { measure: 1, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  258, time:  748.8435, click: 2.5,   context, expected: { measure: 1, beat: 2.5,   ops: []             }},
-      { tick:  344, time:  998.4580, click: 3,     context, expected: { measure: 1, beat: 3,     ops: [OPCODES.TOCK] }},
+      { tick:  344, time:  998.4580, click: 3,     context, expected: { measure: 1, beat: 3,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  430, time: 1248.0726, click: 3.5,   context, expected: { measure: 1, beat: 3.5,   ops: []             }},
-      { tick:  516, time: 1497.6871, click: 4,     context, expected: { measure: 1, beat: 4,     ops: [OPCODES.TOCK] }},
+      { tick:  516, time: 1497.6871, click: 4,     context, expected: { measure: 1, beat: 4,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  602, time: 1747.3016, click: 4.5,   context, expected: { measure: 1, beat: 4.5,   ops: []             }},
-      { tick:  689, time: 1999.8186, click: 5,     context, expected: { measure: 2, beat: 1,     ops: [ {opcode:OPCODES.TEMPO, tempo:80}, OPCODES.TICK ] }},
+      { tick:  689, time: 1999.8186, click: 5,     context, expected: { measure: 2, beat: 1,     ops: [ {opcode:OPCODES.TEMPO, tempo:80}, { opcode:OPCODES.PLAY, sample:'tick' } ] }},
       { tick:  775, time: 2249.4331, click: 5.5,   context, expected: { measure: 2, beat: 1.5,   ops: []             }},
-      { tick:  861, time: 2499.0476, click: 6,     context, expected: { measure: 2, beat: 2,     ops: [OPCODES.TOCK] }},
+      { tick:  861, time: 2499.0476, click: 6,     context, expected: { measure: 2, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick:  947, time: 2748.6621, click: 6.5,   context, expected: { measure: 2, beat: 2.5,   ops: []             }},
-      { tick: 1033, time: 2998.2766, click: 7,     context, expected: { measure: 2, beat: 3,     ops: [OPCODES.TOCK] }},
+      { tick: 1033, time: 2998.2766, click: 7,     context, expected: { measure: 2, beat: 3,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1119, time: 3247.8912, click: 7.5,   context, expected: { measure: 2, beat: 3.5,   ops: []             }},
-      { tick: 1205, time: 3497.5057, click: 8,     context, expected: { measure: 2, beat: 4,     ops: [OPCODES.TOCK] }},
+      { tick: 1205, time: 3497.5057, click: 8,     context, expected: { measure: 2, beat: 4,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
       { tick: 1291, time: 3747.1202, click: 8.5,   context, expected: { measure: 2, beat: 4.5,   ops: []             }},
-      { tick: 1378, time: 3999.6372, click: 9,     context, expected: { measure: 3, beat: 1,     ops: [OPCODES.TICK] }},
+      { tick: 1378, time: 3999.6372, click: 9,     context, expected: { measure: 3, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
     ]
 
     // prettier-ignore
@@ -1564,6 +1556,176 @@ describe('tempo change', function () {
       { at: { measure: 2,   beat: 1   }, op: OPCODES.TEMPO, tempo: 80 },
       { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
       { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+    ])
+
+    run(vm, 120, { beats: 4, divisions: 4 }, tests)
+  })
+
+  it('default -> 3:4 time', function () {
+    const context = {
+      subdivisions: SUBDIVISIONS.QUARTER_NOTES,
+    }
+
+    // prettier-ignore
+    const tests = [
+      { tick:    0, time:    0.0000, click: 1,     context, expected: { measure: 1, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
+      { tick:   57, time:  165.4422, click: 1.333, context, expected: { measure: 1, beat: 1.333, ops: []             }},
+      { tick:   86, time:  249.6145, click: 1.5,   context, expected: { measure: 1, beat: 1.5,   ops: []             }},
+      { tick:  114, time:  330.8844, click: 1.667, context, expected: { measure: 1, beat: 1.667, ops: []             }},
+      { tick:  172, time:  499.2290, click: 2,     context, expected: { measure: 1, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  258, time:  748.8435, click: 2.5,   context, expected: { measure: 1, beat: 2.5,   ops: []             }},
+      { tick:  344, time:  998.4580, click: 3,     context, expected: { measure: 1, beat: 3,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  430, time: 1248.0726, click: 3.5,   context, expected: { measure: 1, beat: 3.5,   ops: []             }},
+      { tick:  516, time: 1497.6871, click: 4,     context, expected: { measure: 1, beat: 4,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  602, time: 1747.3016, click: 4.5,   context, expected: { measure: 1, beat: 4.5,   ops: []             }},
+      { tick:  689, time: 1999.8186, click: 5,     context, expected: { measure: 2, beat: 1,     ops: [ { opcode:OPCODES.TIME_SIGNATURE, timeSignature:{beats:3, divisions:4}}, { opcode:OPCODES.PLAY, sample:'tick' } ] }},
+      { tick:  775, time: 2249.4331, click: 5.5,   context, expected: { measure: 2, beat: 1.5,   ops: []             }},
+      { tick:  861, time: 2499.0476, click: 6,     context, expected: { measure: 2, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  947, time: 2748.6621, click: 6.5,   context, expected: { measure: 2, beat: 2.5,   ops: []             }},
+      { tick: 1033, time: 2998.2766, click: 7,     context, expected: { measure: 2, beat: 3,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 1119, time: 3247.8912, click: 7.5,   context, expected: { measure: 2, beat: 3.5,   ops: []             }},
+      { tick: 1205, time: 3497.5057, click: 8,     context, expected: { measure: 2, beat: 4,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 1291, time: 3747.1202, click: 8.5,   context, expected: { measure: 2, beat: 4.5,   ops: []             }},
+      { tick: 1378, time: 3999.6372, click: 9,     context, expected: { measure: 3, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
+    ]
+
+    // prettier-ignore
+    const vm = new VM(FS, [
+      { at: { measure: 2,   beat: 1   }, op: OPCODES.TIME_SIGNATURE, timeSignature: { beats:3, divisions:4 } },
+      { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+      { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+    ])
+
+    run(vm, 120, { beats: 4, divisions: 4 }, tests)
+  })
+
+  it('default -> eighth-doublets', function () {
+    const context = {
+      subdivisions: SUBDIVISIONS.QUARTER_NOTES,
+    }
+
+    // prettier-ignore
+    const tests = [
+      { tick:    0, time:    0.0000, click: 1,     context, expected: { measure: 1, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
+      { tick:   57, time:  165.4422, click: 1.333, context, expected: { measure: 1, beat: 1.333, ops: []             }},
+      { tick:   86, time:  249.6145, click: 1.5,   context, expected: { measure: 1, beat: 1.5,   ops: []             }},
+      { tick:  114, time:  330.8844, click: 1.667, context, expected: { measure: 1, beat: 1.667, ops: []             }},
+      { tick:  172, time:  499.2290, click: 2,     context, expected: { measure: 1, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  258, time:  748.8435, click: 2.5,   context, expected: { measure: 1, beat: 2.5,   ops: []             }},
+      { tick:  344, time:  998.4580, click: 3,     context, expected: { measure: 1, beat: 3,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  430, time: 1248.0726, click: 3.5,   context, expected: { measure: 1, beat: 3.5,   ops: []             }},
+      { tick:  516, time: 1497.6871, click: 4,     context, expected: { measure: 1, beat: 4,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  602, time: 1747.3016, click: 4.5,   context, expected: { measure: 1, beat: 4.5,   ops: []             }},
+      { tick:  689, time: 1999.8186, click: 5,     context, expected: { measure: 2, beat: 1,     ops: [{ opcode:OPCODES.SUBDIVISIONS, subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS}, { opcode:OPCODES.PLAY,         sample:'tick' } ]}},
+      { tick:  775, time: 2249.4331, click: 5.5,   context, expected: { measure: 2, beat: 1.5,   ops: []             }},
+      { tick:  861, time: 2499.0476, click: 6,     context, expected: { measure: 2, beat: 2,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  947, time: 2748.6621, click: 6.5,   context, expected: { measure: 2, beat: 2.5,   ops: []             }},
+      { tick: 1033, time: 2998.2766, click: 7,     context, expected: { measure: 2, beat: 3,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 1119, time: 3247.8912, click: 7.5,   context, expected: { measure: 2, beat: 3.5,   ops: []             }},
+      { tick: 1205, time: 3497.5057, click: 8,     context, expected: { measure: 2, beat: 4,     ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 1291, time: 3747.1202, click: 8.5,   context, expected: { measure: 2, beat: 4.5,   ops: []             }},
+      { tick: 1378, time: 3999.6372, click: 9,     context, expected: { measure: 3, beat: 1,     ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
+    ]
+
+    // prettier-ignore
+    const vm = new VM(FS, [
+      { at: { measure: 2,   beat: 1   }, op: OPCODES.SUBDIVISIONS, subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS },
+      { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+      { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+    ])
+
+    run(vm, 120, { beats: 4, divisions: 4 }, tests)
+  })
+})
+
+describe('clicks', function () {
+  it('section: clicks array', function () {
+    const context = {
+      subdivisions: SUBDIVISIONS.QUARTER_NOTES,
+    }
+
+    // prettier-ignore
+    const tests = [
+      { tick:    0, time:    0.0000, click: 1,  context, expected: { measure: 1, beat: 1, ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
+      { tick:  172, time:  499.2290, click: 2,  context, expected: { measure: 1, beat: 2, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  344, time:  998.4580, click: 3,  context, expected: { measure: 1, beat: 3, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick:  516, time: 1497.6871, click: 4,  context, expected: { measure: 1, beat: 4, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+
+      { tick:  689, time: 1999.8186, click: 5,  context, expected: { measure: 2, beat: 1, ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
+      { tick:  861, time: 2499.0476, click: 6,  context, expected: { measure: 2, beat: 2, ops: [{ opcode:OPCODES.PLAY, sample:'skip' }] }},
+      { tick: 1033, time: 2998.2766, click: 7,  context, expected: { measure: 2, beat: 3, ops: [{ opcode:OPCODES.PLAY, sample:'skip' }] }},
+      { tick: 1205, time: 3497.5057, click: 8,  context, expected: { measure: 2, beat: 4, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+
+      { tick: 1378, time: 3999.6372, click: 9,  context, expected: { measure: 3, beat: 1, ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
+      { tick: 1550, time: 4498.8662, click: 10, context, expected: { measure: 3, beat: 2, ops: [{ opcode:OPCODES.PLAY, sample:'skip' }] }},
+      { tick: 1722, time: 4998.0952, click: 11, context, expected: { measure: 3, beat: 3, ops: [{ opcode:OPCODES.PLAY, sample:'skip' }] }},
+      { tick: 1894, time: 5497.3243, click: 12, context, expected: { measure: 3, beat: 4, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+
+      { tick: 2067, time: 5999.4558, click: 13, context, expected: { measure: 4, beat: 1, ops: [{ opcode:OPCODES.PLAY, sample:'tick' }] }},
+      { tick: 2239, time: 6498.6848, click: 14, context, expected: { measure: 4, beat: 2, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 2411, time: 6997.9138, click: 15, context, expected: { measure: 4, beat: 3, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+      { tick: 2583, time: 7497.1429, click: 16, context, expected: { measure: 4, beat: 4, ops: [{ opcode:OPCODES.PLAY, sample:'tock' }] }},
+    ]
+    // prettier-ignore
+    const vm = new VM(FS, [
+        { at: { measure: 5, beat: 1   }, op: OPCODES.STOP },
+
+        { at: { measure: 2, beat: 1   }, op: OPCODES.TICK  },
+        { at: { measure: 2, beat: 4   }, op: OPCODES.TOCK  },
+        { at: { measure: 2, beat: '*' }, op: OPCODES.SKIP  },
+
+        { at: { measure: 3, beat: 1   }, op: OPCODES.TICK  },
+        { at: { measure: 3, beat: 4   }, op: OPCODES.TOCK  },
+        { at: { measure: 3, beat: '*' }, op: OPCODES.SKIP  },
+
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK  },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK  },
+    ])
+
+    run(vm, 120, { beats: 4, divisions: 4 }, tests)
+  })
+
+  it('section: clicks map', function () {
+    const context = {
+      subdivisions: SUBDIVISIONS.QUARTER_NOTES,
+    }
+
+    // prettier-ignore
+    const tests = [
+      { tick:    0, time:    0.0000, click: 1,  context, expected: { measure: 1, beat: 1, ops: [{ opcode:OPCODES.PLAY, sample:'tick'   }] }},
+      { tick:  172, time:  499.2290, click: 2,  context, expected: { measure: 1, beat: 2, ops: [{ opcode:OPCODES.PLAY, sample:'tock'   }] }},
+      { tick:  344, time:  998.4580, click: 3,  context, expected: { measure: 1, beat: 3, ops: [{ opcode:OPCODES.PLAY, sample:'tock'   }] }},
+      { tick:  516, time: 1497.6871, click: 4,  context, expected: { measure: 1, beat: 4, ops: [{ opcode:OPCODES.PLAY, sample:'tock'   }] }},
+
+      { tick:  689, time: 1999.8186, click: 5,  context, expected: { measure: 2, beat: 1, ops: [{ opcode:OPCODES.PLAY, sample:'sticks' }] }},
+      { tick:  861, time: 2499.0476, click: 6,  context, expected: { measure: 2, beat: 2, ops: [{ opcode:OPCODES.PLAY, sample:'skip'   }] }},
+      { tick: 1033, time: 2998.2766, click: 7,  context, expected: { measure: 2, beat: 3, ops: [{ opcode:OPCODES.PLAY, sample:'skip'   }] }},
+      { tick: 1205, time: 3497.5057, click: 8,  context, expected: { measure: 2, beat: 4, ops: [{ opcode:OPCODES.PLAY, sample:'ding'   }] }},
+
+      { tick: 1378, time: 3999.6372, click: 9,  context, expected: { measure: 3, beat: 1, ops: [{ opcode:OPCODES.PLAY, sample:'sticks' }] }},
+      { tick: 1550, time: 4498.8662, click: 10, context, expected: { measure: 3, beat: 2, ops: [{ opcode:OPCODES.PLAY, sample:'skip'   }] }},
+      { tick: 1722, time: 4998.0952, click: 11, context, expected: { measure: 3, beat: 3, ops: [{ opcode:OPCODES.PLAY, sample:'skip'   }] }},
+      { tick: 1894, time: 5497.3243, click: 12, context, expected: { measure: 3, beat: 4, ops: [{ opcode:OPCODES.PLAY, sample:'ding'   }] }},
+
+      { tick: 2067, time: 5999.4558, click: 13, context, expected: { measure: 4, beat: 1, ops: [{ opcode:OPCODES.PLAY, sample:'tick'   }] }},
+      { tick: 2239, time: 6498.6848, click: 14, context, expected: { measure: 4, beat: 2, ops: [{ opcode:OPCODES.PLAY, sample:'tock'   }] }},
+      { tick: 2411, time: 6997.9138, click: 15, context, expected: { measure: 4, beat: 3, ops: [{ opcode:OPCODES.PLAY, sample:'tock'   }] }},
+      { tick: 2583, time: 7497.1429, click: 16, context, expected: { measure: 4, beat: 4, ops: [{ opcode:OPCODES.PLAY, sample:'tock'   }] }},
+    ]
+    // prettier-ignore
+    const vm = new VM(FS, [
+        { at: { measure: 5, beat: 1   }, op: OPCODES.STOP },
+
+        { at: { measure: 2, beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: 2, beat: 4   }, op: OPCODES.DING   },
+        { at: { measure: 2, beat: '*' }, op: OPCODES.SKIP   },
+
+        { at: { measure: 3, beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: 3, beat: 4   }, op: OPCODES.DING   },
+        { at: { measure: 3, beat: '*' }, op: OPCODES.SKIP   },
+
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
     ])
 
     run(vm, 120, { beats: 4, divisions: 4 }, tests)

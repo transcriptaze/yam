@@ -1,0 +1,13 @@
+Title	URL	Assignees	Status	Linked pull requests	Sub-issues progress
+PWA	https://github.com/transcriptaze/yam/issues/30		Todo		
+Track editor toolbar play/stop	https://github.com/transcriptaze/yam/issues/16		Todo		
+Rework track editor to separate data/view	https://github.com/transcriptaze/yam/issues/54		Todo		
+Current track statistics	https://github.com/transcriptaze/yam/issues/56		Todo		
+Rework wheel to select time signature, subdivisions, etc	https://github.com/transcriptaze/yam/issues/58		Todo		
+Restructure with signals	https://github.com/transcriptaze/yam/issues/59		Todo		
+Remove sass	https://github.com/transcriptaze/yam/issues/60		Todo		
+Rework clock as VM	https://github.com/transcriptaze/yam/issues/46		In Progress		
+sparklines	https://github.com/transcriptaze/yam/issues/57		In Progress		
+Export click track	https://github.com/transcriptaze/yam/issues/53		Done		
+Capture play statistics	https://github.com/transcriptaze/yam/issues/11	transcriptaze	Done		
+Tags	https://github.com/transcriptaze/yam/issues/55		Done		

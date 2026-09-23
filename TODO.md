@@ -2,43 +2,35 @@
 
 ## In Progress
 
-- [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
-- [ ] passive:true (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
-- [ ] capture:down (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
-- [x] move new/random to top of + list
+- [x] section/subsections subdivisions not updating UI
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
-        - [x] clicks
-        - [x] BPM
-        - [x] sync pads to VM click
-        - [x] time signature
-        - [x] doublets
-        - [x] fix hardcoded VM fs
-        - [x] reset VM on stop/start
-        - [x] fix hardcoded VM buffersize
-        - [x] stop doesn't reset pads
-        - [x] start delay
-        - [x] play track
-        - [x] track: play start to finish
-        - [x] track delay
-        - [x] dings
-        - [x] count-in
-        - [x] pickup
-        - [x] sort script by strictness
-        - [x] { t,t'}, {tick,tick'}, t=t',t'+=dt, tick=tick', tick'++
+        - [x] convert subdivisions parameter to a postMessage
+        - [ ] convert time-signature parameter to a postMessage
+        - [ ] convert BPM parameter to a postMessage
+        - [ ] convert loop parameter to a postMessage
 
         - [x] sections: tempo
-        - [ ] sections: time signature
-        - [ ] sections: subdivisions
+        - [x] sections: time signature
+        - [x] sections: subdivisions
         - [ ] sections: clicks
-        - [ ] subsections
+           - [x] section clicks
+           - [x] section w/infinite measures
+           - [x] track clicks
+           - [x] linker: remove redundant entries
+           - [x] test track + section clicks
+           - [x] fix click:ding
+           - [x] check "debug: dings" track
+           - [ ] linker: measure ranges
+
+        - [x] subsections
+
         - [ ] loops
         - [ ] remove FSM
-        - [ ] exec: inject actions
 
         - [ ] 4:4
-            - [x] eigths
+            - [x] eighths
             - [x] eighth doublets
             - [x] quarter notes
             - [ ] half notes
@@ -56,6 +48,17 @@
             - [ ] fix pads for dotted quarters
             - [ ] rethink to not use fractional beats
 
+        - [ ] 5:4
+            - [ ] eighths
+            - [ ] eighth doublets
+            - [x] quarter notes
+            - [ ] dotted quarters
+            - [ ] half notes
+            - [ ] dotted half notes
+
+
+        - [ ] exec: inject actions
+        - [ ] linker: combine multiple actions into one
         - [ ] node+worklet per run a la YAD
         - [ ] replace flip with ring buffer + animation timer
         - [ ] put gain into node::sample 
@@ -75,6 +78,13 @@
         - (?) shared buffer
         - (?) animation timer
 
+## To Be Done
+
+https://evergarden.moe/
+
+- [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
+- [ ] passive:true (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
+- [ ] capture:down (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 
 - [ ] editor - default reverted to 4:4 instead of continuing with 6:4 (cf. https://github.com/transcriptaze/yam/issues/54)
 

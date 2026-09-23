@@ -7,7 +7,12 @@ export const OPCODES = {
   TACK: 'tack',
   STICKS: 'sticks',
   DING: 'ding',
+  DONG: 'dong', // conditional 'ding'
+  SKIP: 'skip',
+  PLAY: 'play',
   TEMPO: 'tempo',
+  TIME_SIGNATURE: 'time-signature',
+  SUBDIVISIONS: 'subdivisions',
 }
 
 export const SUBDIVISIONS = {
@@ -27,21 +32,3 @@ export const QUARTER_NOTES = SUBDIVISIONS.QUARTER_NOTES
 export const DOTTED_QUARTER_NOTES = SUBDIVISIONS.DOTTED_QUARTERS
 export const HALF_NOTES = SUBDIVISIONS.HALF_NOTES
 export const DOTTED_HALF_NOTES = SUBDIVISIONS.DOTTED_HALF_NOTES
-
-const subdivisions = new Map([
-  [1, EIGHTH_NOTES],
-  [2, EIGHTH_DOUBLETS],
-  [3, EIGHTH_TRIPLETS],
-  [4, QUARTER_NOTES],
-  [5, DOTTED_QUARTER_NOTES],
-  [6, HALF_NOTES],
-  [7, DOTTED_HALF_NOTES],
-])
-
-export function int2subdivisions(i) {
-  return subdivisions.get(i)
-}
-
-export function subdivisions2int(subdivision) {
-  return subdivisions.entries().find(([_, v]) => v === subdivision)?.[0] ?? Number.NaN
-}

@@ -24,12 +24,19 @@
         "60d16e10-3ee5-409a-ad63-1665ae8054fc",
         "466e08f0-27cb-4c93-ac9c-1bd8f3d5d804",
         "27e6743d-9345-4d8e-8ef7-09c4e0c0d348",
+        "ba03dd10-e1da-4dbe-871d-564c01de6a52",
         "7de7131f-4f56-420e-bd9b-3ae52a29d1e4",
         "b3ef497c-fe67-4e55-be76-91b77899d647",
         "883f42ff-9d06-4aff-b0ea-254fff9bf23a",
         "6f6155cc-7ecb-4182-965e-cb08eba47413",
         "e24034a5-08c4-4506-988f-59dbf005e597",
-        "fe2aade7-25db-429b-ab5a-af6b1c8559b2"
+        "fe2aade7-25db-429b-ab5a-af6b1c8559b2",
+        "54789129-03ed-493b-8c3d-1b270ff90d52",
+        "05740c20-52fd-41ee-867a-edad7e702c74",
+        "9493afd8-c6a0-4ab3-a114-e4bcaeeff0b6",
+        "d05391e5-0857-44c4-a44c-ac1d8f43f4e2",
+        "ad41c588-40ad-45b2-996d-459d923c9ad1",
+        "fc6da4ff-1387-4639-bd18-9db7c3891b1b"
       ],
       "random": [],
       "muted": []
@@ -135,11 +142,6 @@
         "657cc85b-4dc7-4779-afde-fcb9681ee5d5",
         "5a2b15b6-1630-42a9-91f7-613ea3eb5911",
         "e26d0fdd-3383-4cb1-90a7-b2e4eae03cb0",
-        "5e2462d0-e7d3-4dfe-924b-ca278bd69bd0",
-        "c3f6a904-943e-4241-8978-e2451197d4ed",
-        "b4b17b28-64ef-4687-a000-eeb0aea6c225",
-        "a9a085e5-f1ad-46cb-8288-1f4d50e7b904",
-        "39da87e1-f6c0-43b0-b98d-ea58ad737475",
         "6eac8ad7-d251-4031-ad62-13d52cf479b3",
         "27e6743d-9345-4d8e-8ef7-09c4e0c0d348",
         "466e08f0-27cb-4c93-ac9c-1bd8f3d5d804",
@@ -149,7 +151,15 @@
         "883f42ff-9d06-4aff-b0ea-254fff9bf23a",
         "6f6155cc-7ecb-4182-965e-cb08eba47413",
         "e24034a5-08c4-4506-988f-59dbf005e597",
-        "fe2aade7-25db-429b-ab5a-af6b1c8559b2"
+        "fe2aade7-25db-429b-ab5a-af6b1c8559b2",
+        "54789129-03ed-493b-8c3d-1b270ff90d52",
+        "05740c20-52fd-41ee-867a-edad7e702c74",
+        "ad41c588-40ad-45b2-996d-459d923c9ad1",
+        "39da87e1-f6c0-43b0-b98d-ea58ad737475",
+        "d05391e5-0857-44c4-a44c-ac1d8f43f4e2",
+        "9493afd8-c6a0-4ab3-a114-e4bcaeeff0b6",
+        "fc6da4ff-1387-4639-bd18-9db7c3891b1b",
+        "ba03dd10-e1da-4dbe-871d-564c01de6a52"
       ],
       "random": [],
       "muted": []
@@ -163,9 +173,56 @@
       "tracks": [],
       "random": [],
       "muted": []
+    },
+    {
+      "UUID": "1b63a078-dcd2-4c13-b364-2ebe2a869447",
+      "version": 0,
+      "index": 9007199254740991,
+      "title": "Playlist #8",
+      "tracks": [],
+      "random": [],
+      "muted": []
     }
   ],
   "tracks": [
+    {
+      "UUID": "05740c20-52fd-41ee-867a-edad7e702c74",
+      "version": 0,
+      "title": "klock - subdivisions",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "verse 1",
+          "role": "verse",
+          "measures": 4,
+          "subsections": [
+            {
+              "measures": 4
+            }
+          ]
+        },
+        {
+          "name": "verse 2",
+          "role": "verse",
+          "measures": 4,
+          "pulse": "eighth-doublet",
+          "subsections": [
+            {
+              "measures": 4,
+              "pulse": "eighth-doublet"
+            }
+          ]
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": false
+      }
+    },
     {
       "UUID": "27e6743d-9345-4d8e-8ef7-09c4e0c0d348",
       "version": 0,
@@ -675,6 +732,42 @@
       }
     },
     {
+      "UUID": "54789129-03ed-493b-8c3d-1b270ff90d52",
+      "version": 0,
+      "title": "klock - time signature",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "verse 1",
+          "role": "verse",
+          "subsections": [
+            {
+              "measures": 4
+            }
+          ]
+        },
+        {
+          "name": "verse 2",
+          "role": "verse",
+          "timeSignature": "3:4",
+          "subsections": [
+            {
+              "measures": 4,
+              "timeSignature": "3:4"
+            }
+          ]
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
       "UUID": "5a2b15b6-1630-42a9-91f7-613ea3eb5911",
       "version": 0,
       "title": "(debug - anacrusis)",
@@ -690,21 +783,6 @@
           ]
         }
       ],
-      "tags": [],
-      "metronome": {
-        "BPM": 120,
-        "loop": false,
-        "ding": false
-      }
-    },
-    {
-      "UUID": "5e2462d0-e7d3-4dfe-924b-ca278bd69bd0",
-      "version": 0,
-      "title": "⁓ Ghosts in the Static ⁓",
-      "tempo": 120,
-      "timeSignature": "4:4",
-      "pulse": "quarter",
-      "sections": [],
       "tags": [],
       "metronome": {
         "BPM": 120,
@@ -921,6 +999,31 @@
       }
     },
     {
+      "UUID": "9493afd8-c6a0-4ab3-a114-e4bcaeeff0b6",
+      "version": 0,
+      "title": "klock - track clicks (array)",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "verse 1",
+          "role": "verse",
+          "measures": 4
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 120,
+        "loop": false,
+        "ding": false,
+        "clicks": [
+          1,
+          4
+        ]
+      }
+    },
+    {
       "UUID": "a141f3ac-6e8e-47ac-b9c8-c9c27d521305",
       "version": 0,
       "title": "Jesu Joy of Man's Desiring",
@@ -977,16 +1080,36 @@
       }
     },
     {
-      "UUID": "a9a085e5-f1ad-46cb-8288-1f4d50e7b904",
+      "UUID": "ad41c588-40ad-45b2-996d-459d923c9ad1",
       "version": 0,
-      "title": "⁓ Second Hand Universe ⁓",
+      "title": "klock - section clicks",
       "tempo": 120,
       "timeSignature": "4:4",
       "pulse": "quarter",
-      "sections": [],
+      "sections": [
+        {
+          "name": "tick .. tock",
+          "role": "verse",
+          "measures": 4,
+          "clicks": [
+            1,
+            4
+          ]
+        },
+        {
+          "name": "stick .. tack - ding",
+          "role": "verse",
+          "measures": 4,
+          "clicks": {
+            "2": "sticks",
+            "3": "tack",
+            "4": "ding"
+          }
+        }
+      ],
       "tags": [],
       "metronome": {
-        "BPM": 120,
+        "BPM": 90,
         "loop": false,
         "ding": false
       }
@@ -1098,21 +1221,6 @@
       }
     },
     {
-      "UUID": "b4b17b28-64ef-4687-a000-eeb0aea6c225",
-      "version": 0,
-      "title": "⁓ Blueprints for Silence ⁓",
-      "tempo": 120,
-      "timeSignature": "4:4",
-      "pulse": "quarter",
-      "sections": [],
-      "tags": [],
-      "metronome": {
-        "BPM": 120,
-        "loop": false,
-        "ding": false
-      }
-    },
-    {
       "UUID": "b8acedd3-58bc-4084-8beb-37c93f4c0e3b",
       "version": 0,
       "title": "(debug - no loop)",
@@ -1186,21 +1294,6 @@
           1,
           4
         ]
-      }
-    },
-    {
-      "UUID": "c3f6a904-943e-4241-8978-e2451197d4ed",
-      "version": 0,
-      "title": "⁓ Your Shadow’s Got My Eyes ⁓",
-      "tempo": 120,
-      "timeSignature": "4:4",
-      "pulse": "quarter",
-      "sections": [],
-      "tags": [],
-      "metronome": {
-        "BPM": 120,
-        "loop": false,
-        "ding": false
       }
     },
     {
@@ -1300,6 +1393,37 @@
         "BPM": 116,
         "loop": false,
         "ding": false
+      }
+    },
+    {
+      "UUID": "d05391e5-0857-44c4-a44c-ac1d8f43f4e2",
+      "version": 0,
+      "title": "klock - track clicks (map)",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "verse 1",
+          "role": "verse",
+          "measures": 4,
+          "subsections": [
+            {
+              "measures": 4
+            }
+          ]
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": false,
+        "clicks": {
+          "1": "tick",
+          "3": "ding",
+          "4": "tack"
+        }
       }
     },
     {
@@ -1623,9 +1747,39 @@
       }
     },
     {
+      "UUID": "fc6da4ff-1387-4639-bd18-9db7c3891b1b",
+      "version": 0,
+      "title": "klock - section clicks (infinite)",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "verse 1",
+          "role": "verse",
+          "measures": 4
+        },
+        {
+          "name": "verse 2",
+          "role": "verse",
+          "clicks": {
+            "2": "sticks",
+            "3": "tack",
+            "4": "ding"
+          }
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
       "UUID": "fe2aade7-25db-429b-ab5a-af6b1c8559b2",
       "version": 0,
-      "title": "klock - tempo change",
+      "title": "klock - tempo",
       "tempo": 120,
       "timeSignature": "4:4",
       "pulse": "quarter",
@@ -1644,13 +1798,61 @@
           "name": "verse 2",
           "role": "verse",
           "measures": 4,
-          "tempo": 80,
+          "tempo": 160,
           "subsections": [
             {
               "measures": 4,
-              "tempo": 80
+              "tempo": 160
             }
           ]
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
+      "UUID": "ba03dd10-e1da-4dbe-871d-564c01de6a52",
+      "version": 0,
+      "title": "klock - subsections",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "verse 1",
+          "role": "verse",
+          "measures": 4
+        },
+        {
+          "name": "verse 2",
+          "role": "verse",
+          "subsections": [
+            {
+              "measures": 4,
+              "tempo": 80,
+              "colour": "#ff0000"
+            },
+            {
+              "measures": 4,
+              "tempo": 120,
+              "timeSignature": "5:4",
+              "colour": "#00ff00"
+            },
+            {
+              "measures": 4,
+              "pulse": "dotted-quarter",
+              "colour": "#0000ff"
+            }
+          ]
+        },
+        {
+          "name": "verse 3",
+          "role": "verse",
+          "measures": 4
         }
       ],
       "tags": [],

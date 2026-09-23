@@ -1,7 +1,34 @@
+// import * as generators from '../../generators.js'
 import { parseTimeSignature } from '../../util.js'
-import { OPCODES } from './constants.js'
+import { OPCODES, SUBDIVISIONS } from './constants.js'
 
-export function compile(track) {
+const PULSE = new Map([
+  ['eighth', SUBDIVISIONS.EIGHTH_NOTES],
+  ['eighth-doublet', SUBDIVISIONS.EIGHTH_DOUBLETS],
+  ['eighth-triplet', SUBDIVISIONS.EIGHTH_TRIPLETS],
+  ['quarter', SUBDIVISIONS.QUARTER_NOTES],
+  ['dotted-quarter', SUBDIVISIONS.DOTTED_QUARTERS],
+  ['half', SUBDIVISIONS.HALF_NOTES],
+  ['dotted-half', SUBDIVISIONS.DOTTED_HALF_NOTES],
+])
+
+export function compile(v) {
+  const track = transmogrify(v)
+
+  // console.log(track)
+
+  // ... no track?
+  if (track == null) {
+    return {
+      delay: 0,
+      script: [
+        { at: { measure: '*', beat: 1 }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+  }
+
+  // ... compile track
   const script = {
     delay: 0,
     script: [],
@@ -17,7 +44,7 @@ export function compile(track) {
 
   // ... dings
   dings(track).forEach((v) => {
-    script.script.push({ at: { measure: v.measure, beat: v.beat }, op: OPCODES.DING })
+    script.script.push({ at: { measure: v.measure, beat: v.beat }, op: OPCODES.DONG })
   })
 
   // ... count-in
@@ -35,9 +62,24 @@ export function compile(track) {
     }
   })
 
-  // ... tempo changes
+  // ... tempo
   tempo(track).forEach(({ measure, beat, tempo }) => {
     script.script.push({ at: { measure, beat }, op: OPCODES.TEMPO, tempo: tempo })
+  })
+
+  // ... time signature
+  timeSignature(track).forEach(({ measure, beat, timeSignature }) => {
+    script.script.push({ at: { measure, beat }, op: OPCODES.TIME_SIGNATURE, timeSignature: timeSignature })
+  })
+
+  // ... subdivisions
+  subdivisions(track).forEach(({ measure, beat, subdivisions }) => {
+    script.script.push({ at: { measure, beat }, op: OPCODES.SUBDIVISIONS, subdivisions: subdivisions })
+  })
+
+  // ... clicks
+  clicks(track).forEach(({ measure, beat, click }) => {
+    script.script.push({ at: { measure, beat }, op: click })
   })
 
   // ... default
@@ -239,3 +281,207 @@ function tempo(track) {
 
   return list
 }
+
+function timeSignature(track) {
+  const sections = track?.sections ?? []
+  const list = []
+
+  let bar = 1
+  for (const section of sections) {
+    const timeSignature = section.timeSignature
+
+    if (timeSignature) {
+      const { beats, divisions } = parseTimeSignature(timeSignature)
+
+      if (!isNaN(beats) && !isNaN(divisions)) {
+        list.push({ measure: bar, beat: 1, timeSignature: { beats, divisions } })
+      }
+    }
+
+    bar += section.measures ?? Number.POSITIVE_INFINITY
+    if (bar === Number.POSITIVE_INFINITY) {
+      break
+    }
+  }
+
+  return list
+}
+
+function subdivisions(track) {
+  const sections = track?.sections ?? []
+  const list = []
+
+  let bar = 1
+  for (const section of sections) {
+    const pulse = section.pulse
+
+    if (pulse) {
+      if (PULSE.has(pulse)) {
+        list.push({ measure: bar, beat: 1, subdivisions: PULSE.get(pulse) })
+      }
+    }
+
+    bar += section.measures ?? Number.POSITIVE_INFINITY
+    if (bar === Number.POSITIVE_INFINITY) {
+      break
+    }
+  }
+
+  return list
+}
+
+function clicks(track) {
+  const list = []
+
+  // ... track clicks
+  const clicks = track.clicks
+
+  if (clicks != null && Array.isArray(clicks)) {
+    for (const beat of clicks) {
+      if (beat === 1) {
+        list.push({ measure: '*', beat, click: OPCODES.TICK })
+      } else {
+        list.push({ measure: '*', beat, click: OPCODES.TOCK })
+      }
+    }
+
+    list.push({ measure: '*', beat: '*', click: OPCODES.SKIP })
+  } else if (clicks != null && typeof clicks === 'object') {
+    for (const [k, v] of Object.entries(clicks)) {
+      const beat = parseFloat(`${k}`)
+      if (!isNaN(beat)) {
+        list.push({ measure: '*', beat, click: `${v}` })
+      }
+    }
+
+    list.push({ measure: '*', beat: '*', click: OPCODES.SKIP })
+  }
+
+  // ... section clicks
+  const sections = track?.sections ?? []
+
+  let measure = 1
+  for (const section of sections) {
+    if (section.role === 'anacrusis') {
+      continue
+    }
+
+    const clicks = section.clicks
+    const measures = section.measures ?? Number.POSITIVE_INFINITY
+
+    if (clicks != null && Array.isArray(clicks)) {
+      if (!isNaN(measures) && measures !== Number.POSITIVE_INFINITY) {
+        for (let i = 0; i < measures; i++) {
+          for (const beat of clicks) {
+            if (beat === 1) {
+              list.push({ measure: measure + i, beat, click: OPCODES.TICK })
+            } else {
+              list.push({ measure: measure + i, beat, click: OPCODES.TOCK })
+            }
+          }
+
+          list.push({ measure: measure + i, beat: '*', click: OPCODES.SKIP })
+        }
+      }
+
+      if (!isNaN(measures) && measures === Number.POSITIVE_INFINITY) {
+        for (const beat of clicks) {
+          if (beat === 1) {
+            list.push({ measure: '*', beat, click: OPCODES.TICK })
+          } else {
+            list.push({ measure: '*', beat, click: OPCODES.TOCK })
+          }
+        }
+
+        list.push({ measure: '*', beat: '*', click: OPCODES.SKIP })
+      }
+    } else if (clicks != null && typeof clicks === 'object') {
+      if (!isNaN(measures) && measures !== Number.POSITIVE_INFINITY) {
+        for (let i = 0; i < measures; i++) {
+          for (const [k, v] of Object.entries(clicks)) {
+            const beat = parseFloat(`${k}`)
+            if (!isNaN(beat)) {
+              list.push({ measure: measure + i, beat, click: `${v}` })
+            }
+          }
+
+          list.push({ measure: measure + i, beat: '*', click: OPCODES.SKIP })
+        }
+      }
+
+      if (!isNaN(measures) && measures === Number.POSITIVE_INFINITY) {
+        for (const [k, v] of Object.entries(clicks)) {
+          const beat = parseFloat(`${k}`)
+          if (!isNaN(beat)) {
+            list.push({ measure: '*', beat, click: `${v}` })
+          }
+        }
+
+        list.push({ measure: '*', beat: '*', click: OPCODES.SKIP })
+      }
+    }
+
+    measure += measures
+    if (measure === Number.POSITIVE_INFINITY) {
+      break
+    }
+  }
+
+  return list
+}
+
+function transmogrify(track) {
+  if (track == null) {
+    return null
+  }
+
+  const f = (section) => {
+    return {
+      role: section.role,
+      measures: section.measures,
+      timeSignature: section.timeSignature,
+      tempo: section.tempo,
+      pulse: section.pulse,
+      clicks: section.clicks,
+      dings: section.dings,
+      delay: section.delay,
+    }
+  }
+
+  function* unroll() {
+    const sections = track?.sections ?? []
+
+    for (const section of sections) {
+      if (section.subsections != null) {
+        for (const subsection of section.subsections) {
+          yield subsection
+        }
+      } else {
+        yield section
+      }
+    }
+  }
+
+  return {
+    UUID: track.UUID,
+    delay: track.delay ?? 0,
+    timeSignature: track.timeSignature,
+    clicks: track.clicks,
+    dings: track.dings,
+    sections: [...unroll(track)].flatMap((v) => f(v)),
+  }
+}
+
+// function* transmogrify2(track) {
+//   const sections = track?.sections ?? []
+//
+//   for (const section of sections) {
+//     if (section.subsections != null) {
+//       for (const subsection of section.subsections) {
+//         yield subsection
+//       }
+//     } else {
+//       yield section
+//     }
+//   }
+// }

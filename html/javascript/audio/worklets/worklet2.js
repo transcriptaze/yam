@@ -249,6 +249,7 @@ export class Metronome2 extends AudioWorkletProcessor {
   process(_inputs, outputs, parameters) {
     const N = outputs?.[0]?.[0]?.length ?? 0
     const gain = this.playing ? this.level.fadeIn() : this.level.fadeOut()
+    const loop = parameters.loop[0] === 1.0
 
     // ... internal clock
     const dt = (N * 1000) / sampleRate
@@ -273,13 +274,19 @@ export class Metronome2 extends AudioWorkletProcessor {
       break
     }
 
-    const finished = this.#cued.some((v) => v.done())
-    if (finished) {
+    const completed = this.#cued.some((v) => v.done())
+    if (completed) {
       this.#cued = this.#cued.filter((v) => !v.done())
     }
 
-    // ... done
-    this.#time = end
+    // ... loop?
+    if (this.FSM.stopped && this.#cued.length == 0 && loop && this.#loops < this.#script.loops) {
+      this.#time = 0
+      this.#vm.reset()
+      this.FSM.onPlay()
+    } else {
+      this.#time = end
+    }
 
     return true
   }
@@ -290,9 +297,6 @@ export class Metronome2 extends AudioWorkletProcessor {
     const tactus = this.#timeSignature?.beats ?? clamp(parameters.beats[0], 1, 32)
     const figura = this.#timeSignature?.divisions ?? clamp(parameters.divisions[0], 1, 32)
     const subdivisions = this.#subdivisions ?? this.#parameters.subdivisions ?? SUBDIVISIONS.QUARTER_NOTES
-
-    const loop = parameters.loop[0] === 1.0
-    let clock = this.clock
 
     this.#samples += N > 0 ? N : 0
 
@@ -319,45 +323,35 @@ export class Metronome2 extends AudioWorkletProcessor {
 
     // ... play
     if (this.playing) {
-      {
-        const { _time, click } = this.#vm.tick(BPM, N)
+      const { _time, click } = this.#vm.tick(BPM, N)
 
-        if (click != null) {
-          const beats = tactus
-          const divisions = figura
+      if (click != null) {
+        const beats = tactus
+        const divisions = figura
 
-          const context = {
-            subdivisions: subdivisions,
-            ding: this.#parameters.ding,
-          }
+        const context = {
+          subdivisions: subdivisions,
+          ding: this.#parameters.ding,
+        }
 
-          const { measure, beat } = this.#vm.click(click, { beats, divisions }, subdivisions)
-          const ops = this.#vm.exec({ measure, beat }, { beats, divisions }, context)
+        const { measure, beat } = this.#vm.click(click, { beats, divisions }, subdivisions)
+        const ops = this.#vm.exec({ measure, beat }, { beats, divisions }, context)
 
-          for (const op of ops) {
-            this.#exec(op, { measure, beat })
-          }
+        for (const op of ops) {
+          this.#exec(op, { measure, beat })
         }
       }
 
-      // *** --- LEGACY STUFF --- ***
-      const cluck = clock.tick(BPM, tactus, figura, 0.25, N)
-
-      if (cluck.click) {
-        const measure = cluck.bar
-
-        if (measure > this.track.bars && this.FSM.onStop()) {
-          this.#loops++
-
-          const loops = this.track?.loops ?? INF
-
-          if (loop && (loops == INF || this.#loops < loops) && this.FSM.onPlay()) {
-            this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
-            this.clock.reset()
-          }
-        }
-      }
-      // *** --- END LEGACY STUFF --- ***
+      // // *** --- LEGACY STUFF --- ***
+      //     this.#loops++
+      //
+      //     const loops = this.track?.loops ?? INF
+      //
+      //     if (loop && (loops == INF || this.#loops < loops) && this.FSM.onPlay()) {
+      //       this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
+      //       this.clock.reset()
+      //     }
+      // // *** --- END LEGACY STUFF --- ***
     }
   }
 
@@ -366,16 +360,16 @@ export class Metronome2 extends AudioWorkletProcessor {
       this.FSM.onStop()
       this.FSM.onStopped()
 
+      this.#loops++
+
       this.port.postMessage({
         message: 'stopped',
         track: this.#track?.UUID ?? '',
-        loops: this.#loops, // NTS: send current loops - doesn't reset loop count on stop anymore
+        loops: this.#loops,
         samples: this.#samples,
         duration: this.#samples / sampleRate,
       })
 
-      // this.#loops = 0 // NTS: done, reset loop count
-      //
       // this.port.postMessage({
       //   message: 'done',
       //   track: this.#track?.UUID ?? '',

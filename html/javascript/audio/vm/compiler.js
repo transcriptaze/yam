@@ -21,6 +21,7 @@ export function compile(v) {
   if (track == null) {
     return {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: '*', beat: 1 }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
@@ -30,7 +31,8 @@ export function compile(v) {
 
   // ... compile track
   const script = {
-    delay: 0,
+    delay: delay(track),
+    loops: loops(track),
     script: [],
   }
 
@@ -97,6 +99,10 @@ function delay(track) {
   }
 
   return 0
+}
+
+function loops(track) {
+  return track?.loops ?? Number.POSITIVE_INFINITY
 }
 
 function stop(track) {
@@ -467,21 +473,8 @@ function transmogrify(track) {
     delay: track.delay ?? 0,
     timeSignature: track.timeSignature,
     clicks: track.clicks,
+    loops: track.loops,
     dings: track.dings,
     sections: [...unroll(track)].flatMap((v) => f(v)),
   }
 }
-
-// function* transmogrify2(track) {
-//   const sections = track?.sections ?? []
-//
-//   for (const section of sections) {
-//     if (section.subsections != null) {
-//       for (const subsection of section.subsections) {
-//         yield subsection
-//       }
-//     } else {
-//       yield section
-//     }
-//   }
-// }

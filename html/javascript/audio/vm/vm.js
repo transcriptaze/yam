@@ -37,6 +37,10 @@ export class VM {
     this.#reset()
   }
 
+  reset() {
+    this.#reset()
+  }
+
   tick(BPM, bufferSize) {
     const dt = (1000 * bufferSize) / this.#fs
 
@@ -251,6 +255,8 @@ export class VM {
     this.#time.tick = 0
     this.#time.t = 0
     this.#time.tʼ = 0
+
+    this.#state.stopped = false
 
     this.#click = {
       time: Number.NEGATIVE_INFINITY,

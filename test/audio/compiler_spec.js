@@ -9,6 +9,7 @@ describe('no track', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
@@ -33,6 +34,7 @@ describe('basic track', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
@@ -55,6 +57,7 @@ describe('basic track', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
@@ -77,6 +80,7 @@ describe('basic track', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
@@ -99,6 +103,7 @@ describe('basic track', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
@@ -121,6 +126,7 @@ describe('basic track', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
@@ -150,6 +156,7 @@ describe('track with delay', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
@@ -178,6 +185,7 @@ describe('track with delay', function () {
     // prettier-ignore
     const expected = {
       delay: 1250,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
@@ -207,6 +215,7 @@ describe('stop', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
@@ -235,6 +244,7 @@ describe('stop', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure:   9, beat: 1   }, op: OPCODES.STOP },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
@@ -261,6 +271,7 @@ describe('dings', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 2,   beat: 3.5 }, op: OPCODES.DONG },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
@@ -291,6 +302,7 @@ describe('dings', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 9,   beat: 1   }, op: OPCODES.STOP },
         { at: { measure: 4,   beat: 3.5 }, op: OPCODES.DONG },
@@ -326,6 +338,7 @@ describe('dings', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 17,  beat: 1   }, op: OPCODES.STOP },
         { at: { measure: 13,  beat: 3.5 }, op: OPCODES.DONG },
@@ -361,6 +374,7 @@ describe('dings', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 13,  beat: 1   }, op: OPCODES.STOP },
         { at: { measure: 12,  beat: 4   }, op: OPCODES.DONG },
@@ -393,6 +407,7 @@ describe('dings', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 9,   beat: 1   }, op: OPCODES.STOP },
         { at: { measure: 4,   beat: 3.5 }, op: OPCODES.DONG },
@@ -425,6 +440,7 @@ describe('dings', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 9,   beat: 1    }, op: OPCODES.STOP },
         { at: { measure: 2,   beat: 3.25 }, op: OPCODES.DONG },
@@ -463,6 +479,7 @@ describe('count-in', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
@@ -495,6 +512,7 @@ describe('count-in', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: 2,   beat: '*' }, op: OPCODES.STICKS },
@@ -530,6 +548,7 @@ describe('anacrusis', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: 1,   beat: 4   }, op: OPCODES.TOCK },
@@ -563,6 +582,7 @@ describe('anacrusis', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: 2,   beat: '*' }, op: OPCODES.STICKS },
@@ -601,6 +621,7 @@ describe('anacrusis', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 5,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: 5,   beat: 4   }, op: OPCODES.TOCK },
@@ -638,6 +659,7 @@ describe('anacrusis', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 5,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: 6,   beat: '*' }, op: OPCODES.STICKS },
@@ -673,6 +695,7 @@ describe('anacrusis', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: 1,   beat: 3   }, op: OPCODES.TOCK },
@@ -708,6 +731,7 @@ describe('anacrusis', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: 1,   beat: 4.5 }, op: OPCODES.TOCK },
@@ -743,6 +767,7 @@ describe('tempo', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 9,   beat: 1   }, op: OPCODES.STOP },
         { at: { measure: 5,   beat: 1   }, op: OPCODES.TEMPO, tempo: 80 },
@@ -778,6 +803,7 @@ describe('time signature', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 9,   beat: 1   }, op: OPCODES.STOP },
         { at: { measure: 5,   beat: 1   }, op: OPCODES.TIME_SIGNATURE, timeSignature: { beats:3, divisions:4 } },
@@ -813,6 +839,7 @@ describe('subdivisions', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 9,   beat: 1   }, op: OPCODES.STOP },
         { at: { measure: 5,   beat: 1   }, op: OPCODES.SUBDIVISIONS, subdivisions: 'eighth-doublet' },
@@ -845,6 +872,7 @@ describe('clicks', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 5, beat: 1   }, op: OPCODES.STOP },
 
@@ -890,6 +918,7 @@ describe('clicks', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK  },
         { at: { measure: '*', beat: 4   }, op: OPCODES.TOCK  },
@@ -926,6 +955,7 @@ describe('clicks', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 5, beat: 1   }, op: OPCODES.STOP },
 
@@ -979,6 +1009,7 @@ describe('clicks', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: '*', beat: 1   }, op: OPCODES.STICKS },
         { at: { measure: '*', beat: 3   }, op: OPCODES.TACK   },
@@ -1012,6 +1043,7 @@ describe('clicks', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 5,   beat: 1   }, op: OPCODES.STOP },
 
@@ -1049,6 +1081,7 @@ describe('clicks', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 5,   beat: 1   }, op: OPCODES.STOP },
 
@@ -1096,6 +1129,7 @@ describe('clicks', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 5, beat: 2   }, op: OPCODES.DING },
         { at: { measure: 5, beat: 3   }, op: OPCODES.TOCK },
@@ -1157,6 +1191,7 @@ describe('subsections', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 13,  beat: 1   }, op: OPCODES.STOP },
         { at: { measure: 5,   beat: 1   }, op: OPCODES.TEMPO, tempo: 80 },
@@ -1197,6 +1232,7 @@ describe('subsections', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 13,  beat: 1   }, op: OPCODES.STOP },
         { at: { measure: 5,   beat: 1   }, op: OPCODES.TIME_SIGNATURE, timeSignature: { beats:5, divisions:4 } },
@@ -1237,11 +1273,49 @@ describe('subsections', function () {
     // prettier-ignore
     const expected = {
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 13,  beat: 1   }, op: OPCODES.STOP },
         { at: { measure: 5,   beat: 1   }, op: OPCODES.SUBDIVISIONS, subdivisions: 'dotted-quarter' },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK  },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK  },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
+})
+
+describe('loops', function () {
+  it('loops: 5', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      loops: 5,
+      sections: [
+        {
+          role: 'count-in',
+          measures: 1,
+        },
+        {
+          measures: 4,
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      loops: 5,
+      script: [
+        { at: { measure: 6,   beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],
     }
 

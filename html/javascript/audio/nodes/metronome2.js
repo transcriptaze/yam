@@ -168,9 +168,14 @@ export class Metronome2Node extends AudioWorkletNode {
   }
 
   set loop(loop) {
-    const ctx = this.context
+    this.port.postMessage({
+      message: 'loop',
+      loop: loop === true,
+    })
 
-    this.parameters.get('loop').setValueAtTime(loop ? 1 : 0, ctx.currentTime)
+    // const ctx = this.context
+    //
+    // this.parameters.get('loop').setValueAtTime(loop ? 1 : 0, ctx.currentTime)
   }
 
   set ding(ding) {

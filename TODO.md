@@ -9,7 +9,7 @@
         - [x] convert subdivisions parameter to a postMessage
         - [ ] convert time-signature parameter to a postMessage
         - [ ] convert BPM parameter to a postMessage
-        - [ ] convert loop parameter to a postMessage
+        - [x] convert loop parameter to a postMessage
 
         - [x] sections: tempo
         - [x] sections: time signature
@@ -23,11 +23,11 @@
            - [x] fix click:ding
            - [x] check "debug: dings" track
            - [ ] linker: measure ranges
-
         - [x] subsections
-
         - [ ] loops
+
         - [ ] remove FSM
+        - [ ] remove track
 
         - [ ] 4:4
             - [x] eighths

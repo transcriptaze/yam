@@ -24,6 +24,7 @@ export class Metronome2 extends AudioWorkletProcessor {
 
   #script = {
     delay: 0,
+    loops: Number.POSITIVE_INFINITY,
     script: [],
   }
 
@@ -37,8 +38,9 @@ export class Metronome2 extends AudioWorkletProcessor {
   #samples = 0
 
   #parameters = {
-    ding: false,
     subdivisions: null,
+    loop: false,
+    ding: false,
   }
 
   constructor(_options) {
@@ -73,13 +75,6 @@ export class Metronome2 extends AudioWorkletProcessor {
         defaultValue: 4,
         minValue: 1,
         maxValue: 32,
-        automationRate: 'k-rate',
-      },
-      {
-        name: 'loop',
-        defaultValue: 0,
-        minValue: 0,
-        maxValue: 1,
         automationRate: 'k-rate',
       },
     ]
@@ -126,6 +121,10 @@ export class Metronome2 extends AudioWorkletProcessor {
 
       case 'subdivisions':
         this.#parameters.subdivisions = event.data.subdivisions
+        break
+
+      case 'loop':
+        this.#parameters.loop = event.data.loop === true
         break
 
       case 'ding':
@@ -180,6 +179,7 @@ export class Metronome2 extends AudioWorkletProcessor {
       this.#tempo = null
       this.#timeSignature = null
       this.#subdivisions = null
+      this.#loops = 0
       this.#vm = new VM(sampleRate, this.#script.script)
 
       this.port.postMessage({
@@ -212,7 +212,7 @@ export class Metronome2 extends AudioWorkletProcessor {
 
     this.FSM.onStop()
     this.#time = 0
-    this.#loops = 0 // NTS: always reset loop count on loading a track
+    this.#loops = 0
     this.#samples = 0
 
     if (playing) {
@@ -249,7 +249,6 @@ export class Metronome2 extends AudioWorkletProcessor {
   process(_inputs, outputs, parameters) {
     const N = outputs?.[0]?.[0]?.length ?? 0
     const gain = this.playing ? this.level.fadeIn() : this.level.fadeOut()
-    const loop = parameters.loop[0] === 1.0
 
     // ... internal clock
     const dt = (N * 1000) / sampleRate
@@ -280,7 +279,7 @@ export class Metronome2 extends AudioWorkletProcessor {
     }
 
     // ... loop?
-    if (this.FSM.stopped && this.#cued.length == 0 && loop && this.#loops < this.#script.loops) {
+    if (this.FSM.stopped && this.#cued.length == 0 && this.#parameters.loop && this.#loops < this.#script.loops) {
       this.#time = 0
       this.#vm.reset()
       this.FSM.onPlay()

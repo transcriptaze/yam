@@ -190,6 +190,8 @@ export class Metronome2Node extends AudioWorkletNode {
 
     linker.link(script)
 
+    this.#loops = script?.loops ?? INF
+
     this.port.postMessage({
       message: 'script',
       script: script,
@@ -202,24 +204,6 @@ export class Metronome2Node extends AudioWorkletNode {
     //   this.pulse = v?.pulse ?? this.pulse
     //   this.BPM = v?.BPM ?? this.BPM
     //   this.#loops = v?.loops ?? INF
-    //
-    //   const track = transmogrify({
-    //     UUID: v?.UUID,
-    //     tempo: v?.tempo,
-    //     timeSignature: v?.timeSignature ?? this.#timeSignature,
-    //     pulse: v?.pulse ?? this.#pulse,
-    //     BPM: v?.BPM,
-    //     loops: v?.loops ?? INF,
-    //     clicks: v?.clicks ?? null,
-    //     ding: v?.ding ?? false,
-    //     dings: v?.dings ?? [],
-    //     sections: v?.sections ?? [],
-    //   })
-    //
-    //   this.port.postMessage({
-    //     message: 'track',
-    //     track: track,
-    //   })
     //
     //   // ... loop ?
     //   const ctx = this.context

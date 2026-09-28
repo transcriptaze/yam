@@ -23,8 +23,9 @@
            - [x] fix click:ding
            - [x] check "debug: dings" track
            - [ ] linker: measure ranges
+
         - [x] subsections
-        - [ ] loops
+        - [x] loops
 
         - [ ] remove FSM
         - [ ] remove track

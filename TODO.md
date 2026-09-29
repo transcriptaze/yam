@@ -7,14 +7,14 @@
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
         - [x] convert subdivisions parameter to a postMessage
-        - [ ] convert time-signature parameter to a postMessage
-        - [ ] convert BPM parameter to a postMessage
         - [x] convert loop parameter to a postMessage
+        - [ ] convert time-signature parameter to a postMessage
+        - (?) convert BPM parameter to a postMessage
 
         - [x] sections: tempo
         - [x] sections: time signature
         - [x] sections: subdivisions
-        - [ ] sections: clicks
+        - [x] sections: clicks
            - [x] section clicks
            - [x] section w/infinite measures
            - [x] track clicks
@@ -22,11 +22,10 @@
            - [x] test track + section clicks
            - [x] fix click:ding
            - [x] check "debug: dings" track
-           - [ ] linker: measure ranges
 
+        - [x] linker: measure ranges
         - [x] subsections
         - [x] loops
-        - [ ] delay seems to be broken
 
         - [ ] remove FSM
         - [ ] remove track
@@ -83,6 +82,8 @@
 ## To Be Done
 
 https://evergarden.moe/
+https://apod.nasa.gov/apod/ap260928.html
+
 
 - [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
 - [ ] passive:true (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)

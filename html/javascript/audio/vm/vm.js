@@ -180,6 +180,18 @@ export class VM {
     const context = { ding }
     const ops = []
 
+    const includes = (op, measure) => {
+      if (op.at.measure === measure) {
+        return true
+      }
+
+      if (Array.isArray(op.at.measure) && measure >= op.at.measure[0] && measure <= op.at.measure[1]) {
+        return true
+      }
+
+      return false
+    }
+
     for (const op of this.#script) {
       const q = Math.trunc(at.beat)
       const r = (() => {
@@ -192,12 +204,12 @@ export class VM {
       })()
 
       // ... measure+beat spec i.e. { measure:1, beat:2}
-      if (op.at.measure === at.measure && op.at.beat === at.beat) {
+      if (includes(op, at.measure) && op.at.beat === at.beat) {
         this.#exec(op, ops, context)
       }
 
       // ... measure spec e.g. count-in { measure:1, beat:'*'}
-      if (op.at.measure === at.measure && op.at.beat === '*') {
+      if (includes(op, at.measure) && op.at.beat === '*') {
         if (divisions === 2 && subdivisions === SUBDIVISIONS.QUARTER_NOTES && (r === 0.0 || r === 0.5)) {
           this.#exec(op, ops, context)
         } else if (subdivisions === SUBDIVISIONS.HALF_NOTES && q % 2 === 0 && r === 0.0) {

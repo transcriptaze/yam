@@ -26,6 +26,7 @@
 
         - [x] subsections
         - [x] loops
+        - [ ] delay seems to be broken
 
         - [ ] remove FSM
         - [ ] remove track

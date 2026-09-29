@@ -340,17 +340,6 @@ export class Metronome2 extends AudioWorkletProcessor {
           this.#exec(op, { measure, beat })
         }
       }
-
-      // // *** --- LEGACY STUFF --- ***
-      //     this.#loops++
-      //
-      //     const loops = this.track?.loops ?? INF
-      //
-      //     if (loop && (loops == INF || this.#loops < loops) && this.FSM.onPlay()) {
-      //       this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
-      //       this.clock.reset()
-      //     }
-      // // *** --- END LEGACY STUFF --- ***
     }
   }
 

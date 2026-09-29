@@ -172,10 +172,6 @@ export class Metronome2Node extends AudioWorkletNode {
       message: 'loop',
       loop: loop === true,
     })
-
-    // const ctx = this.context
-    //
-    // this.parameters.get('loop').setValueAtTime(loop ? 1 : 0, ctx.currentTime)
   }
 
   set ding(ding) {
@@ -197,23 +193,9 @@ export class Metronome2Node extends AudioWorkletNode {
       script: script,
     })
 
+    // FIXME
     // if (v == null) {
     //   this.port.postMessage({ message: 'clear' })
-    // } else {
-    //   this.timeSignature = v?.timeSignature ?? this.timeSignature
-    //   this.pulse = v?.pulse ?? this.pulse
-    //   this.BPM = v?.BPM ?? this.BPM
-    //   this.#loops = v?.loops ?? INF
-    //
-    //   // ... loop ?
-    //   const ctx = this.context
-    //   const loopable = v?.loopable ?? false
-    //   const loop = v?.loop ?? false
-    //   const dings = track.dings ?? []
-    //   const ding = track.ding ?? false
-    //
-    //   this.parameters.get('loop').setValueAtTime(loopable && loop ? 1 : 0, ctx.currentTime)
-    //   this.parameters.get('ding').setValueAtTime(dings.length > 0 && ding ? 1 : 0, ctx.currentTime)
     // }
   }
 

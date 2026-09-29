@@ -155,9 +155,17 @@ export class Metronome2Node extends AudioWorkletNode {
     const { beats, divisions } = parseTimeSignature(timeSignature)
 
     if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
-      this.parameters.get('beats').setValueAtTime(beats, this.context.currentTime)
-      this.parameters.get('divisions').setValueAtTime(divisions, this.context.currentTime)
+      this.port.postMessage({
+        message: 'time-signature',
+        beats: beats,
+        divisions: divisions,
+      })
     }
+
+    // if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
+    //   this.parameters.get('beats').setValueAtTime(beats, this.context.currentTime)
+    //   this.parameters.get('divisions').setValueAtTime(divisions, this.context.currentTime)
+    // }
   }
 
   set pulse(subdivisions) {

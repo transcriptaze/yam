@@ -2,33 +2,22 @@
 
 ## In Progress
 
-- [x] section/subsections subdivisions not updating UI
-
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
         - [x] convert subdivisions parameter to a postMessage
         - [x] convert loop parameter to a postMessage
-        - [ ] convert time-signature parameter to a postMessage
-        - (?) convert BPM parameter to a postMessage
-
+        - [x] convert time-signature parameter to a postMessage
         - [x] sections: tempo
         - [x] sections: time signature
         - [x] sections: subdivisions
         - [x] sections: clicks
-           - [x] section clicks
-           - [x] section w/infinite measures
-           - [x] track clicks
-           - [x] linker: remove redundant entries
-           - [x] test track + section clicks
-           - [x] fix click:ding
-           - [x] check "debug: dings" track
-
+        - [x] linker: remove redundant entries
         - [x] linker: measure ranges
         - [x] subsections
         - [x] loops
 
-        - [ ] remove FSM
         - [ ] remove track
+        - [ ] remove FSM
 
         - [ ] 4:4
             - [x] eighths

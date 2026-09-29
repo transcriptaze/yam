@@ -38,6 +38,8 @@ export class Metronome2 extends AudioWorkletProcessor {
   #samples = 0
 
   #parameters = {
+    beats: null,
+    divisions: null,
     subdivisions: null,
     loop: false,
     ding: false,
@@ -61,20 +63,6 @@ export class Metronome2 extends AudioWorkletProcessor {
         defaultValue: 120,
         minValue: 40,
         maxValue: 240,
-        automationRate: 'k-rate',
-      },
-      {
-        name: 'beats',
-        defaultValue: 4,
-        minValue: 1,
-        maxValue: 32,
-        automationRate: 'k-rate',
-      },
-      {
-        name: 'divisions',
-        defaultValue: 4,
-        minValue: 1,
-        maxValue: 32,
         automationRate: 'k-rate',
       },
     ]
@@ -117,6 +105,11 @@ export class Metronome2 extends AudioWorkletProcessor {
         } else {
           this.play()
         }
+        break
+
+      case 'time-signature':
+        this.#parameters.beats = event.data.beats
+        this.#parameters.divisions = event.data.divisions
         break
 
       case 'subdivisions':
@@ -293,8 +286,8 @@ export class Metronome2 extends AudioWorkletProcessor {
   #process(t, outputs, parameters) {
     const N = outputs?.[0]?.[0]?.length ?? -3 // FIXME should be 0 probably
     const BPM = this.#bpm(clamp(parameters.BPM[0], 40, 200))
-    const tactus = this.#timeSignature?.beats ?? clamp(parameters.beats[0], 1, 32)
-    const figura = this.#timeSignature?.divisions ?? clamp(parameters.divisions[0], 1, 32)
+    const tactus = this.#timeSignature?.beats ?? this.#parameters.beats ?? 4
+    const figura = this.#timeSignature?.divisions ?? this.#parameters.divisions ?? 4
     const subdivisions = this.#subdivisions ?? this.#parameters.subdivisions ?? SUBDIVISIONS.QUARTER_NOTES
 
     this.#samples += N > 0 ? N : 0

@@ -1,4 +1,4 @@
-// import * as generators from '../../generators.js'
+import { DEFAULT } from '../../constants.js'
 import { parseTimeSignature } from '../../util.js'
 import { OPCODES, SUBDIVISIONS } from './constants.js'
 
@@ -15,11 +15,10 @@ const PULSE = new Map([
 export function compile(v) {
   const track = transmogrify(v)
 
-  // console.log(track)
-
   // ... no track?
   if (track == null) {
     return {
+      UUID: DEFAULT.UUID,
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -31,6 +30,7 @@ export function compile(v) {
 
   // ... compile track
   const script = {
+    UUID: UUID(track),
     delay: delay(track),
     loops: loops(track),
     script: [],
@@ -89,6 +89,10 @@ export function compile(v) {
   script.script.push({ at: { measure: '*', beat: '*' }, op: OPCODES.TOCK })
 
   return script
+}
+
+function UUID(track) {
+  return track?.UUID ?? DEFAULT.UUID
 }
 
 function delay(track) {

@@ -8,6 +8,7 @@ describe('no track', function () {
   it('1:4, 120BPM, quarter notes', function () {
     // prettier-ignore
     const expected = {
+      UUID: '00000000-0000-0000-0000-000000000000',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -33,6 +34,7 @@ describe('basic track', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -56,6 +58,7 @@ describe('basic track', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -79,6 +82,7 @@ describe('basic track', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -102,6 +106,7 @@ describe('basic track', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -125,6 +130,7 @@ describe('basic track', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -155,6 +161,7 @@ describe('track with delay', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -184,6 +191,7 @@ describe('track with delay', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 1250,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -214,6 +222,7 @@ describe('stop', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -243,6 +252,7 @@ describe('stop', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -270,6 +280,7 @@ describe('dings', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -301,6 +312,7 @@ describe('dings', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -337,6 +349,7 @@ describe('dings', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -373,6 +386,7 @@ describe('dings', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -406,6 +420,7 @@ describe('dings', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -439,6 +454,7 @@ describe('dings', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -478,6 +494,7 @@ describe('count-in', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -511,6 +528,7 @@ describe('count-in', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -547,6 +565,7 @@ describe('anacrusis', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -581,6 +600,7 @@ describe('anacrusis', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -620,6 +640,7 @@ describe('anacrusis', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -658,6 +679,7 @@ describe('anacrusis', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -694,6 +716,7 @@ describe('anacrusis', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -730,6 +753,7 @@ describe('anacrusis', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -766,6 +790,7 @@ describe('tempo', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -802,6 +827,7 @@ describe('time signature', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -838,6 +864,7 @@ describe('subdivisions', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -871,6 +898,7 @@ describe('clicks', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -917,6 +945,7 @@ describe('clicks', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -954,6 +983,7 @@ describe('clicks', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -1008,6 +1038,7 @@ describe('clicks', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -1042,6 +1073,7 @@ describe('clicks', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -1080,6 +1112,7 @@ describe('clicks', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -1128,6 +1161,7 @@ describe('clicks', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -1190,6 +1224,7 @@ describe('subsections', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -1231,6 +1266,7 @@ describe('subsections', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -1272,6 +1308,7 @@ describe('subsections', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
@@ -1309,6 +1346,7 @@ describe('loops', function () {
 
     // prettier-ignore
     const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       delay: 0,
       loops: 5,
       script: [

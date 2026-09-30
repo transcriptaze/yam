@@ -161,11 +161,6 @@ export class Metronome2Node extends AudioWorkletNode {
         divisions: divisions,
       })
     }
-
-    // if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
-    //   this.parameters.get('beats').setValueAtTime(beats, this.context.currentTime)
-    //   this.parameters.get('divisions').setValueAtTime(divisions, this.context.currentTime)
-    // }
   }
 
   set pulse(subdivisions) {
@@ -190,6 +185,7 @@ export class Metronome2Node extends AudioWorkletNode {
   }
 
   set track(track) {
+    console.log('>> set::track')
     const script = compiler.compile(track)
 
     linker.link(script)

@@ -15,9 +15,15 @@
         - [x] linker: measure ranges
         - [x] subsections
         - [x] loops
+        - [ ] fix tempo
 
-        - [ ] remove track
+        - [x] remove track
+            - [x] UUID
+            - [x] stopped::bars
+
         - [ ] remove FSM
+        - (?) 'done' message
+        - [ ] // FIXME render logic is only designed for one output
 
         - [ ] 4:4
             - [x] eighths
@@ -47,13 +53,13 @@
             - [ ] dotted half notes
 
 
-        - [ ] exec: inject actions
+        - (?) exec: inject actions
         - [ ] linker: combine multiple actions into one
         - [ ] node+worklet per run a la YAD
         - [ ] replace flip with ring buffer + animation timer
-        - [ ] put gain into node::sample 
+        - [ ] let script drive pads/info/etc
+        - (?) bake gain into node::sample 
         - [ ] move fs (?) and bufferSize to tick(...)
-        - [ ] // FIXME render logic is only designed for one output
 
         - 1/3 = 85/256 (ref. https://www.youtube.com/watch?v=xs5iOwkX9fU)
         - f32: 0.3330000107288360595703125
@@ -61,12 +67,9 @@
         - f32: 1/3 = 0.3333333432674407958984375
         - f64: 1/3 = 0.333333333333333314829616256247386932373046875
 
-
     - [ ] sixteenths
     - [ ] triplets
-    - [ ] rethink the 'flipped' message
-        - (?) shared buffer
-        - (?) animation timer
+
 
 ## To Be Done
 

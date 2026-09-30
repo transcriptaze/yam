@@ -5,24 +5,14 @@ import { Clock } from './clock.js'
 import { VM } from '../vm/vm.js'
 import { OPCODES, SUBDIVISIONS } from '../vm/constants.js'
 
-const INF = Number.POSITIVE_INFINITY
 const START_DELAY = 250
-
 let DEBUG = false
 
 export class Metronome2 extends AudioWorkletProcessor {
-  #track = {
-    BPM: null,
-    beats: null,
-    divisions: null,
-    sections: [],
-    loops: INF,
-    delay: 0,
-  }
-
   #time = 0
 
   #script = {
+    tempo: null,
     delay: 0,
     loops: Number.POSITIVE_INFINITY,
     script: [],
@@ -76,19 +66,9 @@ export class Metronome2 extends AudioWorkletProcessor {
 
       case 'clear':
         this.stop()
-        this.#track = {
-          BPM: null,
-          beats: null,
-          divisions: null,
-          sections: [],
-          loops: INF,
-          delay: 0,
-        }
-
         this.#tempo = null
         this.#timeSignature = null
         this.#subdivisions = null
-
         break
 
       case 'play':
@@ -177,7 +157,7 @@ export class Metronome2 extends AudioWorkletProcessor {
 
       this.port.postMessage({
         message: 'ready',
-        track: this.#track?.UUID ?? '',
+        track: this.#script?.UUID ?? '',
       })
     }
   }
@@ -186,14 +166,13 @@ export class Metronome2 extends AudioWorkletProcessor {
     if (this.FSM.onStop()) {
       this.port.postMessage({
         message: 'stopped',
-        track: this.#track?.UUID ?? '',
+        track: this.#script?.UUID ?? '',
         loops: this.#loops,
-        bars: this.#track,
       })
 
       this.port.postMessage({
         message: 'done',
-        track: this.#track?.UUID ?? '',
+        track: this.#script?.UUID ?? '',
       })
 
       this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
@@ -224,12 +203,8 @@ export class Metronome2 extends AudioWorkletProcessor {
     return this.FSM.playing
   }
 
-  get track() {
-    return this.#track
-  }
-
   #bpm(BPM) {
-    const tempo = this.#track?.tempo ?? null
+    const tempo = this.#script?.tempo ?? null
     const bpm = this.#tempo ?? null
 
     if (tempo != null && bpm != null) {
@@ -302,7 +277,7 @@ export class Metronome2 extends AudioWorkletProcessor {
       this.flip({ state: FSM.STATE.PLAYING, bar: 0, beat: 0, loops: this.#loops })
       this.port.postMessage({
         message: 'playing',
-        track: this.#track?.UUID ?? '',
+        track: this.#script?.UUID ?? '',
         loops: this.#loops,
         BPM: Math.round(clamp(parameters.BPM[0], 40, 200)),
       })
@@ -345,7 +320,7 @@ export class Metronome2 extends AudioWorkletProcessor {
 
       this.port.postMessage({
         message: 'stopped',
-        track: this.#track?.UUID ?? '',
+        track: this.#script?.UUID ?? '',
         loops: this.#loops,
         samples: this.#samples,
         duration: this.#samples / sampleRate,
@@ -353,7 +328,7 @@ export class Metronome2 extends AudioWorkletProcessor {
 
       // this.port.postMessage({
       //   message: 'done',
-      //   track: this.#track?.UUID ?? '',
+      //   track: this.#script?.UUID ?? '',
       // })
 
       this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
@@ -407,7 +382,7 @@ export class Metronome2 extends AudioWorkletProcessor {
     this.port.postMessage({
       message: 'flipped',
 
-      track: this.#track?.UUID ?? '',
+      track: this.#script?.UUID ?? '',
       state: state,
       bar: bar,
       beat: beat,

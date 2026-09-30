@@ -2,32 +2,27 @@
 
 ## In Progress
 
-- [x] section/subsections subdivisions not updating UI
-
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
         - [x] convert subdivisions parameter to a postMessage
-        - [ ] convert time-signature parameter to a postMessage
-        - [ ] convert BPM parameter to a postMessage
-        - [ ] convert loop parameter to a postMessage
-
+        - [x] convert loop parameter to a postMessage
+        - [x] convert time-signature parameter to a postMessage
         - [x] sections: tempo
         - [x] sections: time signature
         - [x] sections: subdivisions
-        - [ ] sections: clicks
-           - [x] section clicks
-           - [x] section w/infinite measures
-           - [x] track clicks
-           - [x] linker: remove redundant entries
-           - [x] test track + section clicks
-           - [x] fix click:ding
-           - [x] check "debug: dings" track
-           - [ ] linker: measure ranges
-
+        - [x] sections: clicks
+        - [x] linker: remove redundant entries
+        - [x] linker: measure ranges
         - [x] subsections
+        - [x] loops
+        - [x] fix tempo
+        - [x] remove track
 
-        - [ ] loops
         - [ ] remove FSM
+        - [ ] clear
+        - (?) 'done' message
+        - [ ] // FIXME render logic is only designed for one output
+        - [ ] cleanup flipped info
 
         - [ ] 4:4
             - [x] eighths
@@ -57,13 +52,13 @@
             - [ ] dotted half notes
 
 
-        - [ ] exec: inject actions
+        - (?) exec: inject actions
         - [ ] linker: combine multiple actions into one
         - [ ] node+worklet per run a la YAD
         - [ ] replace flip with ring buffer + animation timer
-        - [ ] put gain into node::sample 
+        - [ ] let script drive pads/info/etc
+        - (?) bake gain into node::sample 
         - [ ] move fs (?) and bufferSize to tick(...)
-        - [ ] // FIXME render logic is only designed for one output
 
         - 1/3 = 85/256 (ref. https://www.youtube.com/watch?v=xs5iOwkX9fU)
         - f32: 0.3330000107288360595703125
@@ -71,16 +66,15 @@
         - f32: 1/3 = 0.3333333432674407958984375
         - f64: 1/3 = 0.333333333333333314829616256247386932373046875
 
-
     - [ ] sixteenths
     - [ ] triplets
-    - [ ] rethink the 'flipped' message
-        - (?) shared buffer
-        - (?) animation timer
+
 
 ## To Be Done
 
 https://evergarden.moe/
+https://apod.nasa.gov/apod/ap260928.html
+
 
 - [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
 - [ ] passive:true (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)

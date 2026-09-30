@@ -92,6 +92,7 @@ cloudflare: cloudflare-build
 	npx wrangler pages deploy --project-name yam dist/cloudflare
 
 debug:
+	find test -name "**.js" -exec npx prettier --write {} +
 	npm run vm
 
 sass: 

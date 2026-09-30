@@ -1,4 +1,4 @@
-// import * as generators from '../../generators.js'
+import { DEFAULT } from '../../constants.js'
 import { parseTimeSignature } from '../../util.js'
 import { OPCODES, SUBDIVISIONS } from './constants.js'
 
@@ -15,12 +15,12 @@ const PULSE = new Map([
 export function compile(v) {
   const track = transmogrify(v)
 
-  // console.log(track)
-
   // ... no track?
   if (track == null) {
     return {
+      UUID: DEFAULT.UUID,
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: '*', beat: 1 }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
@@ -30,7 +30,10 @@ export function compile(v) {
 
   // ... compile track
   const script = {
-    delay: 0,
+    UUID: UUID(track),
+    tempo: track.tempo,
+    delay: delay(track),
+    loops: loops(track),
     script: [],
   }
 
@@ -89,6 +92,10 @@ export function compile(v) {
   return script
 }
 
+function UUID(track) {
+  return track?.UUID ?? DEFAULT.UUID
+}
+
 function delay(track) {
   const sections = track?.sections ?? []
 
@@ -97,6 +104,10 @@ function delay(track) {
   }
 
   return 0
+}
+
+function loops(track) {
+  return track?.loops ?? Number.POSITIVE_INFINITY
 }
 
 function stop(track) {
@@ -464,24 +475,12 @@ function transmogrify(track) {
 
   return {
     UUID: track.UUID,
+    tempo: track.tempo,
     delay: track.delay ?? 0,
     timeSignature: track.timeSignature,
     clicks: track.clicks,
+    loops: track.loops,
     dings: track.dings,
     sections: [...unroll(track)].flatMap((v) => f(v)),
   }
 }
-
-// function* transmogrify2(track) {
-//   const sections = track?.sections ?? []
-//
-//   for (const section of sections) {
-//     if (section.subsections != null) {
-//       for (const subsection of section.subsections) {
-//         yield subsection
-//       }
-//     } else {
-//       yield section
-//     }
-//   }
-// }

@@ -155,8 +155,11 @@ export class Metronome2Node extends AudioWorkletNode {
     const { beats, divisions } = parseTimeSignature(timeSignature)
 
     if (!Number.isNaN(beats) && !Number.isNaN(divisions)) {
-      this.parameters.get('beats').setValueAtTime(beats, this.context.currentTime)
-      this.parameters.get('divisions').setValueAtTime(divisions, this.context.currentTime)
+      this.port.postMessage({
+        message: 'time-signature',
+        beats: beats,
+        divisions: divisions,
+      })
     }
   }
 
@@ -168,9 +171,10 @@ export class Metronome2Node extends AudioWorkletNode {
   }
 
   set loop(loop) {
-    const ctx = this.context
-
-    this.parameters.get('loop').setValueAtTime(loop ? 1 : 0, ctx.currentTime)
+    this.port.postMessage({
+      message: 'loop',
+      loop: loop === true,
+    })
   }
 
   set ding(ding) {
@@ -181,50 +185,21 @@ export class Metronome2Node extends AudioWorkletNode {
   }
 
   set track(track) {
+    console.log('>> set::track')
     const script = compiler.compile(track)
 
     linker.link(script)
+
+    this.#loops = script?.loops ?? INF
 
     this.port.postMessage({
       message: 'script',
       script: script,
     })
 
+    // FIXME
     // if (v == null) {
     //   this.port.postMessage({ message: 'clear' })
-    // } else {
-    //   this.timeSignature = v?.timeSignature ?? this.timeSignature
-    //   this.pulse = v?.pulse ?? this.pulse
-    //   this.BPM = v?.BPM ?? this.BPM
-    //   this.#loops = v?.loops ?? INF
-    //
-    //   const track = transmogrify({
-    //     UUID: v?.UUID,
-    //     tempo: v?.tempo,
-    //     timeSignature: v?.timeSignature ?? this.#timeSignature,
-    //     pulse: v?.pulse ?? this.#pulse,
-    //     BPM: v?.BPM,
-    //     loops: v?.loops ?? INF,
-    //     clicks: v?.clicks ?? null,
-    //     ding: v?.ding ?? false,
-    //     dings: v?.dings ?? [],
-    //     sections: v?.sections ?? [],
-    //   })
-    //
-    //   this.port.postMessage({
-    //     message: 'track',
-    //     track: track,
-    //   })
-    //
-    //   // ... loop ?
-    //   const ctx = this.context
-    //   const loopable = v?.loopable ?? false
-    //   const loop = v?.loop ?? false
-    //   const dings = track.dings ?? []
-    //   const ding = track.ding ?? false
-    //
-    //   this.parameters.get('loop').setValueAtTime(loopable && loop ? 1 : 0, ctx.currentTime)
-    //   this.parameters.get('ding').setValueAtTime(dings.length > 0 && ding ? 1 : 0, ctx.currentTime)
     // }
   }
 

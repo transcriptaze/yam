@@ -31,6 +31,7 @@ export function compile(v) {
   // ... compile track
   const script = {
     UUID: UUID(track),
+    tempo: track.tempo,
     delay: delay(track),
     loops: loops(track),
     script: [],
@@ -474,6 +475,7 @@ function transmogrify(track) {
 
   return {
     UUID: track.UUID,
+    tempo: track.tempo,
     delay: track.delay ?? 0,
     timeSignature: track.timeSignature,
     clicks: track.clicks,

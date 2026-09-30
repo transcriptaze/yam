@@ -15,15 +15,14 @@
         - [x] linker: measure ranges
         - [x] subsections
         - [x] loops
-        - [ ] fix tempo
-
+        - [x] fix tempo
         - [x] remove track
-            - [x] UUID
-            - [x] stopped::bars
 
         - [ ] remove FSM
+        - [ ] clear
         - (?) 'done' message
         - [ ] // FIXME render logic is only designed for one output
+        - [ ] cleanup flipped info
 
         - [ ] 4:4
             - [x] eighths

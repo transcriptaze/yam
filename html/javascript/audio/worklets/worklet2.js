@@ -261,8 +261,8 @@ export class Metronome2 extends AudioWorkletProcessor {
   #process(t, outputs, parameters) {
     const N = outputs?.[0]?.[0]?.length ?? -3 // FIXME should be 0 probably
     const BPM = this.#bpm(clamp(parameters.BPM[0], 40, 200))
-    const tactus = this.#timeSignature?.beats ?? this.#parameters.beats ?? 4
-    const figura = this.#timeSignature?.divisions ?? this.#parameters.divisions ?? 4
+    const beats = this.#timeSignature?.beats ?? this.#parameters.beats ?? 4
+    const divisions = this.#timeSignature?.divisions ?? this.#parameters.divisions ?? 4
     const subdivisions = this.#subdivisions ?? this.#parameters.subdivisions ?? SUBDIVISIONS.QUARTER_NOTES
 
     this.#samples += N > 0 ? N : 0
@@ -290,12 +290,9 @@ export class Metronome2 extends AudioWorkletProcessor {
 
     // ... play
     if (this.playing) {
-      const { _time, click } = this.#vm.tick(BPM, N)
+      const { _time, click } = this.#vm.tick(BPM, N, { beats, divisions }, subdivisions)
 
       if (click != null) {
-        const beats = tactus
-        const divisions = figura
-
         const context = {
           subdivisions: subdivisions,
           ding: this.#parameters.ding,

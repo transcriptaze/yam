@@ -41,8 +41,9 @@ export class VM {
     this.#reset()
   }
 
-  tick(BPM, bufferSize) {
+  tick(BPM, bufferSize, timeSignature = {}, subdivisions = SUBDIVISIONS.QUARTER_NOTES) {
     const dt = (1000 * bufferSize) / this.#fs
+    const { divisions = 4 } = timeSignature
 
     this.#time.tick++
     this.#time.t = this.#time.tʼ
@@ -54,7 +55,15 @@ export class VM {
 
     // ... whole beats
     {
-      const interval = 60000 / BPM // ms
+      const interval = (() => {
+        if (subdivisions === SUBDIVISIONS.DOTTED_QUARTERS && divisions == 4) {
+          return 40000 / BPM // ms
+        } else if (subdivisions === SUBDIVISIONS.DOTTED_QUARTERS && divisions == 8) {
+          return 20000 / BPM // ms
+        } else {
+          return 60000 / BPM // ms
+        }
+      })()
 
       let next = this.#click.time < 0 ? 0.0 : this.#click.time + interval
       while (next < start) {
@@ -89,7 +98,7 @@ export class VM {
       }
     }
 
-    // ... dotted quarters, triplets, etc
+    // ... eighth triplets
     {
       const interval = (2 * 60000) / BPM / 3 // ms
 
@@ -159,9 +168,9 @@ export class VM {
     if (beat > beats) {
       measure += 1
       beat = 1
-    } else if (subdivisions === SUBDIVISIONS.DOTTED_QUARTERS && beat > beats / 3) {
-      measure += 1
-      beat = 1
+      // } else if (subdivisions === SUBDIVISIONS.DOTTED_QUARTERS && beat > beats / 3) {
+      //   measure += 1
+      //   beat = 1
     } else if (subdivisions === SUBDIVISIONS.EIGHTH_TRIPLETS && beat > beats / 3) {
       measure += 1
       beat = 1

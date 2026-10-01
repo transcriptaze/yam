@@ -86,7 +86,16 @@ export function compile(v) {
   })
 
   // ... default
+
   script.script.push({ at: { measure: '*', beat: 1 }, op: OPCODES.TICK })
+
+  if (track.timeSignature === '6:8' && track.pulse === 'dotted-quarter') {
+    script.script.push({ at: { measure: '*', beat: 2 }, op: OPCODES.SKIP })
+    script.script.push({ at: { measure: '*', beat: 3 }, op: OPCODES.SKIP })
+    script.script.push({ at: { measure: '*', beat: 5 }, op: OPCODES.SKIP })
+    script.script.push({ at: { measure: '*', beat: 6 }, op: OPCODES.SKIP })
+  }
+
   script.script.push({ at: { measure: '*', beat: '*' }, op: OPCODES.TOCK })
 
   return script
@@ -478,6 +487,7 @@ function transmogrify(track) {
     tempo: track.tempo,
     delay: track.delay ?? 0,
     timeSignature: track.timeSignature,
+    pulse: track.pulse,
     clicks: track.clicks,
     loops: track.loops,
     dings: track.dings,

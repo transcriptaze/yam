@@ -18,9 +18,9 @@
         - [x] fix tempo
         - [x] remove track
 
+        - (?) 'done' message
         - [ ] remove FSM
         - [ ] clear
-        - (?) 'done' message
         - [ ] // FIXME render logic is only designed for one output
         - [ ] cleanup flipped info
 
@@ -36,12 +36,12 @@
             - [x] half notes
 
         - [x] 6:8
-            - [x] eighths
-            - [x] eighth doublets
-            - [x] eighth triplets
             - [x] dotted quarters
-            - [ ] fix pads for dotted quarters
-            - [ ] rethink to not use fractional beats
+            - [x] fix pads for dotted quarters
+            - [x] rethink to not use fractional beats
+            - [ ] eighths
+            - [ ] eighth doublets
+            - [ ] eighth triplets
 
         - [ ] 5:4
             - [ ] eighths

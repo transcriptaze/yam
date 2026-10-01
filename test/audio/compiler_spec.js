@@ -148,6 +148,35 @@ describe('basic track', function () {
 
     expect(script).to.deep.equal(expected)
   })
+
+  it('6:8, 120BPM, dotted quarter notes', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '6:8',
+      pulse: 'dotted-quarter',
+    }
+
+    // prettier-ignore
+    const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      delay: 0,
+      loops: Number.POSITIVE_INFINITY,
+      script: [
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: 2   }, op: OPCODES.SKIP },
+        { at: { measure: '*', beat: 3   }, op: OPCODES.SKIP },
+        { at: { measure: '*', beat: 5   }, op: OPCODES.SKIP },
+        { at: { measure: '*', beat: 6   }, op: OPCODES.SKIP },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
 })
 
 describe('track with delay', function () {

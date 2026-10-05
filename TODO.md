@@ -19,10 +19,12 @@
         - [x] remove track
         - [x] 'done' message
         - [x] remove clear
+        - [x] flip debug option
 
         - [ ] remove FSM
         - [ ] // FIXME render logic is only designed for one output
         - [ ] cleanup flipped info
+        - [ ] remove old worklet and rename
 
         - [ ] 4:4
             - [x] eighths

@@ -37,9 +37,9 @@ class Engine {
         .get(ctx, this.#soundset)
         .then((sounds) => {
           if (this.#debug) {
-            return metronome2(ctx, sounds, this.#subscribers)
-          } else {
             return metronome(ctx, sounds, this.#subscribers)
+          } else {
+            return metronome2(ctx, sounds, this.#subscribers)
           }
         })
         .then((metronome) => {
@@ -57,17 +57,14 @@ class Engine {
           const recorder = new MediaRecorder(stream.stream)
 
           recorder.addEventListener('start', () => {
-            console.log('START')
             this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'recording' } }))
           })
 
           recorder.addEventListener('stop', () => {
-            console.log('STOP')
             this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'stop' } }))
           })
 
           recorder.addEventListener('dataavailable', (e) => {
-            console.log('ON-DATA-AVAILABLE')
             if (this.#armed) {
               this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'done', audio: e.data } }))
             }

@@ -1044,7 +1044,7 @@ toolbar div.menu div.left-menu {
 toolbar div.menu div.right-menu {
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: auto auto auto auto auto;
+  grid-template-rows: auto auto auto auto auto auto;
   grid-template-areas: "settings" "fullscreen" "wakelock" "theme" "about" "debug";
 }
 toolbar img {
@@ -1169,9 +1169,6 @@ toolbar #reset:hover {
 toolbar #settings {
   display: none;
 }
-toolbar #bug {
-  display: none;
-}
 toolbar #wakelock.active {
   background-color: var(--toolbar-wakelock-active);
 }
@@ -1195,9 +1192,19 @@ toolbar.playlist #playlist {
 toolbar.playlist #edit {
   display: none;
 }
+toolbar.playlist #debug {
+  display: none;
+}
+
+toolbar.editor #debug {
+  display: none;
+}
 
 toolbar.statistics #save {
   display: block;
+}
+toolbar.statistics #debug {
+  display: none;
 }
 
 @media (max-width: 768px) and (orientation: portrait) {
@@ -1223,9 +1230,9 @@ toolbar.statistics #save {
   toolbar div.menu div.right-menu {
     width: fit-content;
     display: grid;
-    grid-template-columns: auto auto auto auto auto;
+    grid-template-columns: auto auto auto auto auto auto;
     grid-template-rows: auto;
-    grid-template-areas: "settings fullscreen wakelock theme about";
+    grid-template-areas: "debug settings fullscreen wakelock theme about";
     column-gap: 4px;
   }
   toolbar.metronome #playlist {
@@ -1235,9 +1242,6 @@ toolbar.statistics #save {
     display: none;
   }
   toolbar.metronome #save {
-    display: none;
-  }
-  toolbar.metronome #debug {
     display: none;
   }
   toolbar.metronome.editable #edit {
@@ -1308,9 +1312,10 @@ toolbar.statistics #save {
     justify-content: flex-start;
   }
   toolbar div.menu div.right-menu {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto auto auto auto;
+    grid-template-areas: "debug" "settings" "fullscreen" "wakelock" "theme" "about";
   }
   toolbar.metronome #playlist {
     display: block;
@@ -1319,9 +1324,6 @@ toolbar.statistics #save {
     display: none;
   }
   toolbar.metronome #save {
-    display: none;
-  }
-  toolbar.metronome #debug {
     display: none;
   }
   toolbar.metronome.editable #edit {

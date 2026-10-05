@@ -323,10 +323,10 @@ export class Metronome2 extends AudioWorkletProcessor {
         duration: this.#samples / sampleRate,
       })
 
-      // this.port.postMessage({
-      //   message: 'done',
-      //   track: this.#script?.UUID ?? '',
-      // })
+      this.port.postMessage({
+        message: 'done',
+        track: this.#script?.UUID ?? '',
+      })
 
       this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
     }

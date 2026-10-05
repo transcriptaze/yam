@@ -17,8 +17,8 @@
         - [x] loops
         - [x] fix tempo
         - [x] remove track
+        - [x] 'done' message
 
-        - (?) 'done' message
         - [ ] remove FSM
         - [ ] clear
         - [ ] // FIXME render logic is only designed for one output
@@ -27,13 +27,19 @@
         - [ ] 4:4
             - [x] eighths
             - [x] eighth doublets
+            - [ ] eighth triplets
             - [x] quarter notes
+            - [ ] dotted quarters
             - [ ] half notes
+            - [ ] dotted half notes
 
         - [ ] 2:2
             - [ ] eighths
+            - [ ] eighth doublets
             - [x] quarter notes
+            - [ ] dotted quarters
             - [x] half notes
+            - [ ] dotted half notes
 
         - [x] 6:8
             - [x] dotted quarters
@@ -44,9 +50,9 @@
             - [ ] eighth triplets
 
         - [ ] 5:4
+            - [x] quarter notes
             - [ ] eighths
             - [ ] eighth doublets
-            - [x] quarter notes
             - [ ] dotted quarters
             - [ ] half notes
             - [ ] dotted half notes

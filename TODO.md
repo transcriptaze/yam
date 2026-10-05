@@ -18,9 +18,9 @@
         - [x] fix tempo
         - [x] remove track
         - [x] 'done' message
+        - [x] remove clear
 
         - [ ] remove FSM
-        - [ ] clear
         - [ ] // FIXME render logic is only designed for one output
         - [ ] cleanup flipped info
 

@@ -64,13 +64,6 @@ export class Metronome2 extends AudioWorkletProcessor {
         this.initialise(event)
         break
 
-      case 'clear':
-        this.stop()
-        this.#tempo = null
-        this.#timeSignature = null
-        this.#subdivisions = null
-        break
-
       case 'play':
         this.play()
         break

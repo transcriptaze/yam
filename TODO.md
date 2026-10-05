@@ -20,6 +20,7 @@
         - [x] 'done' message
         - [x] remove clear
         - [x] flip debug option
+        - [x] count-in/anacrusis only plays forever
 
         - [ ] remove FSM
         - [ ] // FIXME render logic is only designed for one output

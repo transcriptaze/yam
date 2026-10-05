@@ -15,6 +15,8 @@ port = args.port
 folder = args.dir
 
 class CORSRequestHandler(SimpleHTTPRequestHandler):
+    # protocol_version = "HTTP/1.0"
+
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs, directory=folder)
 
@@ -26,6 +28,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
         self.send_header('Cross-Origin-Opener-Policy', 'same-origin')
         # self.send_header('Cache-Control', 'max-age=3600, must-revalidate')
         # self.send_header('Cache-Control', 'no-store, no-cache, must-revalidate')
+        # self.send_header("Connection", "close")
 
         # favicons
         if self.path.startswith("/favicon."):

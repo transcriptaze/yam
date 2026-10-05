@@ -1,5 +1,6 @@
 import * as FSM from './FSM.js'
 import * as level from './level.js'
+import { STATE } from './FSM.js'
 import { Clock } from './clock.js'
 
 import { VM } from '../vm/vm.js'
@@ -133,7 +134,7 @@ export class Metronome2 extends AudioWorkletProcessor {
       [4, tock],
     ])
 
-    this.FSM.onStart()
+    this.FSM.state = STATE.STOPPED
   }
 
   play() {
@@ -168,7 +169,7 @@ export class Metronome2 extends AudioWorkletProcessor {
         track: this.#script?.UUID ?? '',
       })
 
-      this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
+      this.flip({ state: STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
     }
   }
 
@@ -193,7 +194,7 @@ export class Metronome2 extends AudioWorkletProcessor {
   }
 
   get playing() {
-    return this.FSM.playing
+    return this.FSM.state === STATE.PLAYING
   }
 
   #bpm(BPM) {
@@ -240,7 +241,7 @@ export class Metronome2 extends AudioWorkletProcessor {
     }
 
     // ... loop?
-    if (this.FSM.stopped && this.#cued.length == 0 && this.#parameters.loop && this.#loops < this.#script.loops) {
+    if (this.FSM.state === STATE.STOPPED && this.#cued.length == 0 && this.#parameters.loop && this.#loops < this.#script.loops) {
       this.#time = 0
       this.#vm.reset()
       this.FSM.onPlay()
@@ -261,13 +262,13 @@ export class Metronome2 extends AudioWorkletProcessor {
     this.#samples += N > 0 ? N : 0
 
     // ... 250ms pre-start delay
-    if (this.FSM.starting) {
+    if (this.FSM.state === STATE.STARTING) {
       if (t < START_DELAY) {
         return
       }
 
-      this.FSM.playing = true
-      this.flip({ state: FSM.STATE.PLAYING, bar: 0, beat: 0, loops: this.#loops })
+      this.FSM.state = STATE.PLAYING
+      this.flip({ state: STATE.PLAYING, bar: 0, beat: 0, loops: this.#loops })
       this.port.postMessage({
         message: 'playing',
         track: this.#script?.UUID ?? '',
@@ -321,7 +322,7 @@ export class Metronome2 extends AudioWorkletProcessor {
         track: this.#script?.UUID ?? '',
       })
 
-      this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
+      this.flip({ state: STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
     }
 
     const cue = () => {
@@ -330,7 +331,7 @@ export class Metronome2 extends AudioWorkletProcessor {
         this.#cued.push(sample(click))
       }
 
-      this.flip({ state: FSM.STATE.PLAYING, bar: measure, beat: beat, loops: this.#loops })
+      this.flip({ state: STATE.PLAYING, bar: measure, beat: beat, loops: this.#loops })
     }
 
     const tempo = () => {

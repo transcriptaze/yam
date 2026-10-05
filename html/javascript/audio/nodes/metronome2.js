@@ -185,7 +185,6 @@ export class Metronome2Node extends AudioWorkletNode {
   }
 
   set track(track) {
-    console.log('>> set::track')
     const script = compiler.compile(track)
 
     linker.link(script)
@@ -196,11 +195,6 @@ export class Metronome2Node extends AudioWorkletNode {
       message: 'script',
       script: script,
     })
-
-    // FIXME
-    // if (v == null) {
-    //   this.port.postMessage({ message: 'clear' })
-    // }
   }
 
   get playing() {

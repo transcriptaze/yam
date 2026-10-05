@@ -17,36 +17,44 @@
         - [x] loops
         - [x] fix tempo
         - [x] remove track
+        - [x] 'done' message
+        - [x] remove clear
+        - [x] flip debug option
 
         - [ ] remove FSM
-        - [ ] clear
-        - (?) 'done' message
         - [ ] // FIXME render logic is only designed for one output
         - [ ] cleanup flipped info
+        - [ ] remove old worklet and rename
 
         - [ ] 4:4
             - [x] eighths
             - [x] eighth doublets
+            - [ ] eighth triplets
             - [x] quarter notes
+            - [ ] dotted quarters
             - [ ] half notes
+            - [ ] dotted half notes
 
         - [ ] 2:2
             - [ ] eighths
-            - [x] quarter notes
-            - [x] half notes
-
-        - [x] 6:8
-            - [x] eighths
-            - [x] eighth doublets
-            - [x] eighth triplets
-            - [x] dotted quarters
-            - [ ] fix pads for dotted quarters
-            - [ ] rethink to not use fractional beats
-
-        - [ ] 5:4
-            - [ ] eighths
             - [ ] eighth doublets
             - [x] quarter notes
+            - [ ] dotted quarters
+            - [x] half notes
+            - [ ] dotted half notes
+
+        - [x] 6:8
+            - [x] dotted quarters
+            - [x] fix pads for dotted quarters
+            - [x] rethink to not use fractional beats
+            - [ ] eighths
+            - [ ] eighth doublets
+            - [ ] eighth triplets
+
+        - [ ] 5:4
+            - [x] quarter notes
+            - [ ] eighths
+            - [ ] eighth doublets
             - [ ] dotted quarters
             - [ ] half notes
             - [ ] dotted half notes

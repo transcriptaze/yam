@@ -125,7 +125,15 @@ function stop(track) {
 
   if (sections.length > 0) {
     const bars = sections.reduce((N, section) => {
-      const measures = section.measures ?? Number.POSITIVE_INFINITY
+      let measures = section.measures ?? Number.POSITIVE_INFINITY
+
+      if (section.role === 'count-in' && measures === Number.POSITIVE_INFINITY) {
+        measures = 1
+      }
+
+      if (section.role === 'anacrusis' && measures === Number.POSITIVE_INFINITY) {
+        measures = 1
+      }
 
       return N + measures
     }, 0)

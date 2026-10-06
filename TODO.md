@@ -2,6 +2,8 @@
 
 ## In Progress
 
+- [x] cosmic latte (https://science.nasa.gov/image-article/apod-2026-september-28-cosmic-latte-the-average-color-of-the-universe/)
+
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
         - [x] convert subdivisions parameter to a postMessage
@@ -20,9 +22,10 @@
         - [x] 'done' message
         - [x] remove clear
         - [x] flip debug option
+        - [x] count-in/anacrusis only plays forever
+        - [x] support more than one output
 
         - [ ] remove FSM
-        - [ ] // FIXME render logic is only designed for one output
         - [ ] cleanup flipped info
         - [ ] remove old worklet and rename
 
@@ -81,7 +84,7 @@
 ## To Be Done
 
 https://evergarden.moe/
-https://apod.nasa.gov/apod/ap260928.html
+
 
 
 - [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)

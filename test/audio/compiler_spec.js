@@ -304,6 +304,73 @@ describe('stop', function () {
 
     expect(script).to.deep.equal(expected)
   })
+
+  it('default count-in', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          name: 'count-in',
+          role: 'count-in',
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      delay: 0,
+      loops: Number.POSITIVE_INFINITY,
+      script: [
+        { at: { measure: 2,   beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
+
+  it('default pickup', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          name: 'Pickup Bar',
+          role: 'anacrusis',
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      delay: 0,
+      loops: Number.POSITIVE_INFINITY,
+      script: [
+        { at: { measure: 2,   beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
+        { at: { measure: 1,   beat: 4   }, op: OPCODES.TOCK },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
 })
 
 describe('dings', function () {

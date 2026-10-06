@@ -1,6 +1,7 @@
 @use '../palettes/default' as colours;
 @use 'sass:color';
 
+$cosmic_latte: colours.$cosmic_latte;
 $white: colours.$white;
 $black: colours.$black;
 $grey: colours.$grey;
@@ -9,7 +10,8 @@ $amber: #ff800040;
 
 :root {
   --logo: url('/images/logo.png');
-  --background: #{$white} url("../images/textures/ricepaper_v3.png");
+  --background: #{$cosmic_latte} url("../images/textures/ricepaper_v3x.png");
+  --background_old: #{$white} url("../images/textures/ricepaper_v3.png");
   --panel-background: transparent;
   --panel-border: 1px solid red;
   

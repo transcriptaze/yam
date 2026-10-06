@@ -142,7 +142,9 @@ export class Metronome2 extends AudioWorkletProcessor {
   }
 
   play() {
-    if (this.FSM.onPlay()) {
+    if (this.FSM.state === STATE.STOPPED || this.FSM.state === STATE.STOPPING) {
+      this.FSM.state = STATE.STARTING
+
       this.samples = 0
       this.clock.reset()
 
@@ -186,7 +188,9 @@ export class Metronome2 extends AudioWorkletProcessor {
     this.#samples = 0
 
     if (playing) {
-      if (this.FSM.onPlay()) {
+      if (this.FSM.state === STATE.STOPPED || this.FSM.state === STATE.STOPPING) {
+        this.FSM.state = STATE.STARTING
+
         this.clock.reset()
 
         this.#tempo = null
@@ -254,7 +258,10 @@ export class Metronome2 extends AudioWorkletProcessor {
     if (this.FSM.state === STATE.STOPPED && done && this.#parameters.loop && this.#loops < this.#script.loops) {
       this.#time = 0
       this.#vm.reset()
-      this.FSM.onPlay()
+
+      if (this.FSM.state === STATE.STOPPED || this.FSM.state === STATE.STOPPING) {
+        this.FSM.state = STATE.STARTING
+      }
     } else {
       this.#time = end
     }

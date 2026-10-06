@@ -21,8 +21,7 @@
         - [x] remove clear
         - [x] flip debug option
         - [x] count-in/anacrusis only plays forever
-        - [x] // FIXME render logic is only designed for one output
-        - [ ] klock: loops playing bars instead of 4
+        - [x] support more than one output
 
         - [ ] remove FSM
         - [ ] cleanup flipped info

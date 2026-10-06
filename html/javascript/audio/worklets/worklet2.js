@@ -36,8 +36,12 @@ export class Metronome2 extends AudioWorkletProcessor {
     ding: false,
   }
 
-  constructor(_options) {
+  constructor(options) {
     super()
+
+    if (options.numberOfOutputs > 0) {
+      this.#cued = Array.from({ length: options.numberOfOutputs }, () => [])
+    }
 
     this.FSM = new FSM.FSM()
     this.level = new level.Level()
@@ -220,28 +224,34 @@ export class Metronome2 extends AudioWorkletProcessor {
     this.#process(start, outputs, parameters)
 
     // ... render
-    for (const out of outputs) {
-      for (const v of this.#cued) {
-        if (out.length > 0) {
-          render(out[0], v.left, gain)
-        }
+    for (const [ix, out] of outputs.entries()) {
+      if (ix < this.#cued.length) {
+        const cued = this.#cued[ix]
 
-        if (out.length > 1) {
-          render(out[1], v.right, gain)
+        for (const v of cued) {
+          if (out.length > 0) {
+            render(out[0], v.left, gain)
+          }
+
+          if (out.length > 1) {
+            render(out[1], v.right, gain)
+          }
         }
       }
-
-      // FIXME render logic is only designed for one output
-      break
     }
 
-    const completed = this.#cued.some((v) => v.done())
-    if (completed) {
-      this.#cued = this.#cued.filter((v) => !v.done())
+    // ... prune played cues
+    for (let ix = 0; ix < this.#cued.length; ix++) {
+      const prune = this.#cued[ix].some((v) => v.done())
+      if (prune) {
+        this.#cued[ix] = this.#cued[ix].filter((v) => !v.done())
+      }
     }
 
     // ... loop?
-    if (this.FSM.state === STATE.STOPPED && this.#cued.length == 0 && this.#parameters.loop && this.#loops < this.#script.loops) {
+    const done = this.#cued.every((v) => v.length === 0)
+
+    if (this.FSM.state === STATE.STOPPED && done && this.#parameters.loop && this.#loops < this.#script.loops) {
       this.#time = 0
       this.#vm.reset()
       this.FSM.onPlay()
@@ -328,7 +338,9 @@ export class Metronome2 extends AudioWorkletProcessor {
     const cue = () => {
       const click = this.clicks.get(opcode.sample) ?? this.clicks.get('default')
       if (click != null) {
-        this.#cued.push(sample(click))
+        for (const cued of this.#cued) {
+          cued.push(sample(click))
+        }
       }
 
       this.flip({ state: STATE.PLAYING, bar: measure, beat: beat, loops: this.#loops })

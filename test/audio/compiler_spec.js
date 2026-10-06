@@ -305,7 +305,7 @@ describe('stop', function () {
     expect(script).to.deep.equal(expected)
   })
 
-  it.only('default count-in', function () {
+  it('default count-in', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       tempo: 120,
@@ -338,7 +338,7 @@ describe('stop', function () {
     expect(script).to.deep.equal(expected)
   })
 
-  it.only('default pickup', function () {
+  it('default pickup', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       tempo: 120,

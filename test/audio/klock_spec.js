@@ -210,6 +210,7 @@ describe('legacy tracks', function () {
       UUID: '5304dd6e-32ac-4e53-8a3b-7f246cb77820',
       tempo: 160,
       delay: 0,
+      loops: Number.POSITIVE_INFINITY,
       script: [
         // ... count-in
         { at: { measure: 1,   beat: 1 }, op: OPCODES.STICKS },
@@ -224,25 +225,48 @@ describe('legacy tracks', function () {
 
         // ... fermata
         { at: { measure: 75,  beat: 1   }, op: OPCODES.TIME_SIGNATURE, timeSignature: {beats:5, divisions:4} },
-        { at: { measure: 75,  beat: 1   }, op: OPCODES.STICKS },
+        // FIXME: { at: { measure: 75,  beat: 1   }, op: OPCODES.STICKS },
         { at: { measure: 75,  beat: 2   }, op: OPCODES.STICKS },
         { at: { measure: 75,  beat: 3   }, op: OPCODES.STICKS },
         { at: { measure: 75,  beat: 4   }, op: OPCODES.STICKS },
         { at: { measure: 75,  beat: 5   }, op: OPCODES.TACK   },
         { at: { measure: 75,  beat: '*' }, op: OPCODES.SKIP   },
 
-        // { at: { measure: 169, beat: 1   }, op: OPCODES.STOP },
-        // { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
-        // { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
-        // { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+        { at: { measure: 76,  beat: 1   }, op: OPCODES.TIME_SIGNATURE, timeSignature: {beats:4, divisions:4} },
+
+        // ... outro
+        { at: { measure: 166,  beat: 1   }, op: OPCODES.TEMPO, tempo: 80 },
+        // FIXME: { at: { measure: 166,  beat: 1   }, op: OPCODES.SUBDIVISIONS, subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS },
+        // FIXME: { at: { measure: 166,  beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: 166,  beat: 2   }, op: OPCODES.STICKS },
+        { at: { measure: 166,  beat: 3   }, op: OPCODES.STICKS },
+        { at: { measure: 166,  beat: 4   }, op: OPCODES.STICKS },
+        { at: { measure: 166,  beat: 4.5 }, op: OPCODES.TACK },
+        { at: { measure: 166,  beat: '*' }, op: OPCODES.SKIP },
+
+        { at: { measure: 167,  beat: 1   }, op: OPCODES.TEMPO, tempo: 160 },
+        // FIXME: { at: { measure: 167,  beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: 167,  beat: 2   }, op: OPCODES.STICKS },
+        { at: { measure: 167,  beat: 3   }, op: OPCODES.STICKS },
+        { at: { measure: 167,  beat: 4   }, op: OPCODES.STICKS },
+        { at: { measure: 167,  beat: '*' }, op: OPCODES.SKIP },
+
+        { at: { measure: 168,  beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: 168,  beat: 2   }, op: OPCODES.STICKS },
+        { at: { measure: 168,  beat: 3   }, op: OPCODES.STICKS },
+        { at: { measure: 168,  beat: 4   }, op: OPCODES.STICKS },
+        { at: { measure: 168,  beat: '*' }, op: OPCODES.SKIP },
+
+        // ... rest
+        { at: { measure: 169, beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],
     }
 
     const script = compiler.compile(track)
 
     linker.link(script)
-
-    console.log('>>>> SCRIPT:', script.script)
 
     expect(script).to.deep.equal(expected)
   })

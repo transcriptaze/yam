@@ -38,7 +38,7 @@
 }
 :root {
   --logo: url("/images/logo.png");
-  --background: #fff8e7 url("../images/textures/ricepaper_v3x.png");
+  --background: #fff8e7 url("../images/textures/ricepaper.png");
   --background_old: #ffffff url("../images/textures/ricepaper_v3.png");
   --panel-background: transparent;
   --panel-border: 1px solid red;

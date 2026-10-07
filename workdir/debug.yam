@@ -38,7 +38,8 @@
         "d05391e5-0857-44c4-a44c-ac1d8f43f4e2",
         "ad41c588-40ad-45b2-996d-459d923c9ad1",
         "fc6da4ff-1387-4639-bd18-9db7c3891b1b",
-        "d81b43d5-7ea5-45c1-a3d5-5f93f7dc7048"
+        "d81b43d5-7ea5-45c1-a3d5-5f93f7dc7048",
+        "e9271b0b-8295-44e6-9961-b0c08d28d396"
       ],
       "random": [],
       "muted": []
@@ -163,7 +164,8 @@
         "fc6da4ff-1387-4639-bd18-9db7c3891b1b",
         "ba03dd10-e1da-4dbe-871d-564c01de6a52",
         "9cd51404-c39b-4518-8a30-1f569fafd2f0",
-        "d81b43d5-7ea5-45c1-a3d5-5f93f7dc7048"
+        "d81b43d5-7ea5-45c1-a3d5-5f93f7dc7048",
+        "e9271b0b-8295-44e6-9961-b0c08d28d396"
       ],
       "random": [],
       "muted": []
@@ -716,11 +718,9 @@
           ]
         }
       ],
-      "tags": [
-        "ok"
-      ],
+      "tags": [],
       "metronome": {
-        "BPM": 160,
+        "BPM": 161,
         "loop": false,
         "ding": false
       }
@@ -1564,6 +1564,41 @@
       }
     },
     {
+      "UUID": "d81b43d5-7ea5-45c1-a3d5-5f93f7dc7048",
+      "version": 0,
+      "title": "klock - measure ranges",
+      "tempo": 120,
+      "timeSignature": "4:4",
+      "pulse": "quarter",
+      "sections": [
+        {
+          "name": "Verse 1",
+          "role": "verse",
+          "measures": 4
+        },
+        {
+          "name": "Verse 2",
+          "role": "verse",
+          "measures": 8,
+          "clicks": {
+            "1": "sticks",
+            "4": "tack"
+          }
+        },
+        {
+          "name": "Verse 3",
+          "role": "verse",
+          "measures": 4
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 90,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
       "UUID": "e24034a5-08c4-4506-988f-59dbf005e597",
       "version": 0,
       "title": "klock - pickup bar (4.5)",
@@ -1767,6 +1802,42 @@
       }
     },
     {
+      "UUID": "e9271b0b-8295-44e6-9961-b0c08d28d396",
+      "version": 0,
+      "title": "klock - 6/8 time, dotted quarters",
+      "tempo": 40,
+      "timeSignature": "6:8",
+      "pulse": "dotted-quarter",
+      "sections": [
+        {
+          "name": "Count in",
+          "role": "count-in",
+          "measures": 1,
+          "subsections": [
+            {
+              "measures": 1
+            }
+          ]
+        },
+        {
+          "name": "Verse",
+          "role": "verse",
+          "measures": 4,
+          "subsections": [
+            {
+              "measures": 5
+            }
+          ]
+        }
+      ],
+      "tags": [],
+      "metronome": {
+        "BPM": 40,
+        "loop": false,
+        "ding": false
+      }
+    },
+    {
       "UUID": "f9534f96-0893-4d7a-ac2a-bbd774734d1b",
       "version": 0,
       "title": "Greensleeves",
@@ -1891,45 +1962,10 @@
           "tempo": 160,
           "subsections": [
             {
-              "measures": 4,
+              "measures": 12,
               "tempo": 160
             }
           ]
-        }
-      ],
-      "tags": [],
-      "metronome": {
-        "BPM": 90,
-        "loop": false,
-        "ding": false
-      }
-    },
-    {
-      "UUID": "d81b43d5-7ea5-45c1-a3d5-5f93f7dc7048",
-      "version": 0,
-      "title": "klock - measure ranges",
-      "tempo": 120,
-      "timeSignature": "4:4",
-      "pulse": "quarter",
-      "sections": [
-        {
-          "name": "Verse 1",
-          "role": "verse",
-          "measures": 4
-        },
-        {
-          "name": "Verse 2",
-          "role": "verse",
-          "measures": 8,
-          "clicks": {
-            "1": "sticks",
-            "4": "tack"
-          }
-       },
-        {
-          "name": "Verse 3",
-          "role": "verse",
-          "measures": 4
         }
       ],
       "tags": [],

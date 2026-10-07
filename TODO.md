@@ -24,6 +24,9 @@
         - [x] flip debug option
         - [x] count-in/anacrusis only plays forever
         - [x] support more than one output
+        - [ ] Jukskei: count-in
+        - [ ] Kierboom: no dings
+        - [ ] Baby Elephant Walk: count-in
 
         - [ ] remove FSM
         - [ ] cleanup flipped info

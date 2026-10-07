@@ -52,7 +52,7 @@ export function compile(v) {
 
   // ... count-in
   countIn(track).forEach((v) => {
-    script.script.push({ at: { measure: v.measure, beat: v.beat }, op: OPCODES.STICKS })
+    script.script.push({ at: { measure: v.measure, beat: v.beat }, op: v.op })
   })
 
   // ... anacrusis
@@ -236,18 +236,34 @@ function dings(track) {
 function countIn(track) {
   const list = []
   const sections = track?.sections ?? []
-  const measure = 1
+  let measure = 1
 
   for (const section of sections) {
-    if (section.role === 'count-in') {
-      const measures = section.measures ?? 1
+    // NTS: expects count-in at start of track only
+    if (section.role !== 'count-in') {
+      break
+    }
 
-      for (let m = 0; m < measures; m++) {
-        list.push({ measure: measure + m, beat: '*' })
+    const measures = section.measures ?? 1
+    const clicks = section.clicks ?? []
+
+    for (let m = 0; m < measures; m++) {
+      clicks.forEach((click) => {
+        if (!isNaN(click)) {
+          list.push({ measure: measure + m, beat: click, op: OPCODES.STICKS })
+        }
+      })
+    }
+
+    for (let m = 0; m < measures; m++) {
+      if (clicks.length > 0) {
+        list.push({ measure: measure + m, beat: '*', op: OPCODES.SKIP })
+      } else {
+        list.push({ measure: measure + m, beat: '*', op: OPCODES.STICKS })
       }
     }
 
-    break
+    measure++
   }
 
   return list
@@ -482,7 +498,16 @@ function transmogrify(track) {
     for (const section of sections) {
       if (section.subsections != null) {
         for (const subsection of section.subsections) {
-          yield subsection
+          yield {
+            role: subsection.role ?? section.role,
+            measures: subsection.measures,
+            timeSignature: subsection.timeSignature,
+            tempo: subsection.tempo,
+            pulse: subsection.pulse,
+            clicks: subsection.clicks,
+            dings: subsection.dings,
+            delay: subsection.delay,
+          }
         }
       } else {
         yield section

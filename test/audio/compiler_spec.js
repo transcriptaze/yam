@@ -656,6 +656,60 @@ describe('count-in', function () {
 
     expect(script).to.deep.equal(expected)
   })
+
+  it('4:4, 2 bar 1-2, 1-2-3-4 count-in ', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          role: 'count-in',
+          subsections: [
+            {
+              measures: 1,
+              clicks: [1, 3],
+            },
+            {
+              measures: 1,
+              clicks: [1, 2, 3, 4],
+            },
+          ],
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      delay: 0,
+      loops: Number.POSITIVE_INFINITY,
+      script: [
+        { at: { measure: 1,   beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: 1,   beat: 3   }, op: OPCODES.STICKS },
+        { at: { measure: 1,   beat: '*' }, op: OPCODES.SKIP },
+
+        { at: { measure: 2,   beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: 2,   beat: 2   }, op: OPCODES.STICKS },
+        { at: { measure: 2,   beat: 3   }, op: OPCODES.STICKS },
+        { at: { measure: 2,   beat: 4   }, op: OPCODES.STICKS },
+        { at: { measure: 2,   beat: '*' }, op: OPCODES.SKIP },
+
+        { at: { measure: 3, beat: 1   }, op: OPCODES.STOP },
+
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    linker.link(script)
+
+    expect(script).to.deep.equal(expected)
+  })
 })
 
 describe('anacrusis', function () {

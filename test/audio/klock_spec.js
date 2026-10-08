@@ -270,4 +270,209 @@ describe('legacy tracks', function () {
 
     expect(script).to.deep.equal(expected)
   })
+
+  it('Kierboom', function () {
+    const track = {
+      UUID: 'd76f150d-8461-4fd9-a934-da7bf2699132',
+      version: 0,
+      title: 'Kierboom',
+      tempo: 123,
+      timeSignature: '6:8',
+      pulse: 'dotted-quarter',
+      sections: [
+        {
+          role: 'count-in',
+          delay: '500ms',
+          measures: 2,
+          subsections: [
+            {
+              measures: 2,
+            },
+          ],
+        },
+        {
+          role: 'intro',
+          measures: 8,
+          subsections: [
+            {
+              measures: 8,
+            },
+          ],
+        },
+        {
+          name: 'Verse 1',
+          role: 'verse',
+          subsections: [
+            {
+              measures: 8,
+            },
+            {
+              measures: 16,
+            },
+          ],
+        },
+        {
+          name: 'Verse 2',
+          role: 'verse',
+          measures: 12,
+          dings: [12.1],
+          subsections: [
+            {
+              measures: 12,
+            },
+          ],
+        },
+        {
+          name: 'Bridge 1A',
+          role: 'bridge',
+          measures: 12,
+          dings: [1.3],
+          subsections: [
+            {
+              measures: 12,
+            },
+          ],
+        },
+        {
+          name: 'Bridge 1B',
+          role: 'bridge',
+          measures: 16,
+          subsections: [
+            {
+              measures: 16,
+            },
+          ],
+        },
+        {
+          name: 'Solo (main)',
+          role: 'other',
+          measures: 24,
+          subsections: [
+            {
+              measures: 24,
+            },
+          ],
+        },
+        {
+          name: 'Solo (variation)',
+          role: 'other',
+          measures: 8,
+          subsections: [
+            {
+              measures: 8,
+            },
+          ],
+        },
+        {
+          name: 'Verse 3',
+          role: 'verse',
+          measures: 24,
+          subsections: [
+            {
+              measures: 24,
+            },
+          ],
+        },
+        {
+          name: 'Verse 4',
+          role: 'verse',
+          measures: 12,
+          dings: [12.1],
+          subsections: [
+            {
+              measures: 12,
+            },
+          ],
+        },
+        {
+          name: 'Bridge 2A',
+          role: 'bridge',
+          measures: 12,
+          dings: [1.3],
+          subsections: [
+            {
+              measures: 12,
+            },
+          ],
+        },
+        {
+          name: 'Bridge 2B',
+          role: 'bridge',
+          measures: 16,
+          subsections: [
+            {
+              measures: 16,
+            },
+          ],
+        },
+        {
+          name: 'Dramatic Pause',
+          role: 'anacrusis',
+          measures: 1,
+          timeSignature: '3:8',
+          subsections: [
+            {
+              measures: 1,
+              timeSignature: '3:8',
+            },
+          ],
+        },
+        {
+          name: 'Outro',
+          role: 'outro',
+          measures: 20,
+          timeSignature: '6:8',
+          subsections: [
+            {
+              measures: 11,
+              timeSignature: '6:8',
+            },
+          ],
+        },
+      ],
+      tags: [],
+      metronome: {
+        BPM: 113,
+        loop: false,
+        ding: true,
+      },
+    }
+
+    // prettier-ignore
+    const expected = {
+      UUID: 'd76f150d-8461-4fd9-a934-da7bf2699132',
+      tempo: 123,
+      delay: 0,
+      loops: Number.POSITIVE_INFINITY,
+      script: [
+        // ... count-in
+        { at: { measure: 1, beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: 1, beat: 4   }, op: OPCODES.STICKS },
+        { at: { measure: 1, beat: '*' }, op: OPCODES.SKIP },
+
+        { at: { measure: 2, beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: 2, beat: 4   }, op: OPCODES.STICKS },
+        { at: { measure: 2, beat: '*' }, op: OPCODES.SKIP },
+
+        // ... dramatic pause
+        { at: { measure: 171, beat: 1   }, op: OPCODES.TIME_SIGNATURE, timeSignature: { beats:3, divisions: 8 } },
+        { at: { measure: 171, beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: 171, beat: '*' }, op: OPCODES.SKIP },
+
+        { at: { measure: 172, beat: 1   }, op: OPCODES.TIME_SIGNATURE, timeSignature: { beats:6, divisions: 8 } },
+
+        // ... rest
+        { at: { measure: 183, beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: 4   }, op: OPCODES.TOCK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.SKIP },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    linker.link(script)
+
+    expect(script).to.deep.equal(expected)
+  })
 })

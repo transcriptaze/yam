@@ -6,27 +6,20 @@
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
-        - [x] convert subdivisions parameter to a postMessage
-        - [x] convert loop parameter to a postMessage
-        - [x] convert time-signature parameter to a postMessage
-        - [x] sections: tempo
-        - [x] sections: time signature
-        - [x] sections: subdivisions
-        - [x] sections: clicks
-        - [x] linker: remove redundant entries
-        - [x] linker: measure ranges
-        - [x] subsections
-        - [x] loops
-        - [x] fix tempo
-        - [x] remove track
-        - [x] 'done' message
-        - [x] remove clear
-        - [x] flip debug option
-        - [x] count-in/anacrusis only plays forever
-        - [x] support more than one output
-        - [ ] Jukskei: count-in
+        - [x] Jukskei: count-in
+        - [ ] Jukskei: fermata
+        - [x] Kierboom: count-in
+        - [x] Kierboom: anacrusis
         - [ ] Kierboom: no dings
+        - [ ] Floating: sticks
         - [ ] Baby Elephant Walk: count-in
+        - [ ] tracks with loops enabled start automatically
+        - [ ] // FIXME this is really fragile - it depends on operator precendence to let skip, sticks, etc override e.g. tock. Compiler shouldn't really generate code 
+              like that. (see it('track + section clicks', function ())
+        - [ ] // FIXME redundant ops
+        - [ ] remove linker from compiler_spec
+        - [ ] linker_spec: unit test for operator precedence
+        - [ ] linker_spec: unit test for e.g. time-signature and tick on the same measure+beat
 
         - [ ] remove FSM
         - [ ] cleanup flipped info

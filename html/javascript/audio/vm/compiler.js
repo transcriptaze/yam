@@ -56,13 +56,8 @@ export function compile(v) {
   })
 
   // ... anacrusis
-  // NTS: do NOT use Number.isNaN - it only works on actual numbers
-  anacruses(track).forEach(({ measure, beat }) => {
-    if (!isNaN(beat)) {
-      script.script.push({ at: { measure, beat }, op: OPCODES.TOCK })
-    } else {
-      script.script.push({ at: { measure, beat }, op: OPCODES.STICKS })
-    }
+  anacruses(track).forEach((v) => {
+    script.script.push({ at: { measure: v.measure, beat: v.beat }, op: v.op })
   })
 
   // ... tempo
@@ -90,13 +85,12 @@ export function compile(v) {
   script.script.push({ at: { measure: '*', beat: 1 }, op: OPCODES.TICK })
 
   if (track.timeSignature === '6:8' && track.pulse === 'dotted-quarter') {
-    script.script.push({ at: { measure: '*', beat: 2 }, op: OPCODES.SKIP })
-    script.script.push({ at: { measure: '*', beat: 3 }, op: OPCODES.SKIP })
-    script.script.push({ at: { measure: '*', beat: 5 }, op: OPCODES.SKIP })
-    script.script.push({ at: { measure: '*', beat: 6 }, op: OPCODES.SKIP })
+    script.script.push({ at: { measure: '*', beat: 1 }, op: OPCODES.TICK })
+    script.script.push({ at: { measure: '*', beat: 4 }, op: OPCODES.TOCK })
+    script.script.push({ at: { measure: '*', beat: '*' }, op: OPCODES.SKIP })
+  } else {
+    script.script.push({ at: { measure: '*', beat: '*' }, op: OPCODES.TOCK })
   }
-
-  script.script.push({ at: { measure: '*', beat: '*' }, op: OPCODES.TOCK })
 
   return script
 }
@@ -238,6 +232,25 @@ function countIn(track) {
   const sections = track?.sections ?? []
   let measure = 1
 
+  const f = (section) => {
+    const timeSignature = section.timeSignature ?? track.timeSignature
+    const pulse = section.pulse ?? track.pulse
+
+    if (section.clicks != null) {
+      return section.clicks
+    }
+
+    if (timeSignature === '3:8' && pulse === 'dotted-quarter') {
+      return [1]
+    }
+
+    if (timeSignature === '6:8' && pulse === 'dotted-quarter') {
+      return [1, 4]
+    }
+
+    return []
+  }
+
   for (const section of sections) {
     // NTS: expects count-in at start of track only
     if (section.role !== 'count-in') {
@@ -245,7 +258,7 @@ function countIn(track) {
     }
 
     const measures = section.measures ?? 1
-    const clicks = section.clicks ?? []
+    const clicks = f(section)
 
     for (let m = 0; m < measures; m++) {
       clicks.forEach((click) => {
@@ -274,25 +287,65 @@ function anacruses(track) {
   const sections = track?.sections ?? []
   const list = []
 
+  const f = (section) => {
+    const timeSignature = section.timeSignature ?? track.timeSignature
+    const pulse = section.pulse ?? track.pulse
+
+    if (section.clicks != null) {
+      return section.clicks
+    }
+
+    if (timeSignature === '3:8' && pulse === 'dotted-quarter') {
+      return {
+        1: OPCODES.STICKS,
+      }
+    }
+
+    if (timeSignature === '6:8' && pulse === 'dotted-quarter') {
+      return {
+        1: OPCODES.STICKS,
+        4: OPCODES.STICKS,
+      }
+    }
+
+    return null
+  }
+
+  // NTS: do NOT use Number.isNaN (expects actual numbers)
   let bar = 1
   for (const section of sections) {
     if (section.role === 'anacrusis') {
       const measures = section.measures ?? 1
-      const clicks = section.clicks ?? []
+      const clicks = f(section)
 
-      for (let m = 0; m < measures; m++) {
-        list.push({ measure: bar + m, beat: '*' })
-      }
+      // default: click on last beat
+      if (clicks == null) {
+        if (!isNaN(beats)) {
+          list.push({ measure: bar + measures - 1, beat: beats, op: OPCODES.TOCK })
+        }
 
-      if (clicks.length > 0) {
+        for (let m = 0; m < measures; m++) {
+          list.push({ measure: bar + m, beat: '*', op: OPCODES.STICKS })
+        }
+      } else if (!Array.isArray(clicks)) {
+        for (const [k, v] of Object.entries(clicks)) {
+          const beat = parseFloat(`${k}`)
+          if (!isNaN(beat)) {
+            list.push({ measure: bar + measures - 1, beat, op: `${v}` })
+          }
+        }
+
+        list.push({ measure: bar + measures - 1, beat: '*', op: OPCODES.SKIP })
+      } else {
         clicks.forEach((click) => {
-          // NTS: do NOT use Number.isNaN (expects actual numbers)
           if (!isNaN(click)) {
-            list.push({ measure: bar + measures - 1, beat: click })
+            list.push({ measure: bar + measures - 1, beat: click, op: OPCODES.TOCK })
           }
         })
-      } else if (!Number.isNaN(beats)) {
-        list.push({ measure: bar + measures - 1, beat: beats })
+
+        for (let m = 0; m < measures; m++) {
+          list.push({ measure: bar + m, beat: '*', op: OPCODES.STICKS })
+        }
       }
     }
 
@@ -406,7 +459,7 @@ function clicks(track) {
 
   let measure = 1
   for (const section of sections) {
-    if (section.role === 'anacrusis') {
+    if (['count-in', 'anacrusis'].includes(section.role)) {
       continue
     }
 

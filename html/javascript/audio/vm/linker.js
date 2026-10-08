@@ -1,3 +1,5 @@
+import { OPCODES } from './constants.js'
+
 export function link(script) {
   sort(script)
   prune(script)
@@ -39,15 +41,57 @@ function sort(script) {
       return u
     }
 
-    return compare(beat.p, beat.q)
+    const v = compare(beat.p, beat.q)
+
+    if (v !== 0) {
+      return v
+    }
+
+    // ... operator precedence
+    // FIXME this is really fragile - it depends on operator precendence to let skip, sticks, etc override e.g. tock
+    const precedence = [
+      OPCODES.TEMPO,
+      OPCODES.TIME_SIGNATURE,
+      OPCODES.SUBDIVISIONS,
+      OPCODES.DELAY,
+      OPCODES.STOP,
+      OPCODES.SKIP,
+      OPCODES.DONG,
+      OPCODES.DING,
+      OPCODES.STICKS,
+      OPCODES.TACK,
+      OPCODES.TICK,
+      OPCODES.TOCK,
+      OPCODES.PLAY,
+      OPCODES.NONE,
+    ]
+
+    const ix = precedence.indexOf(p.op)
+    const jx = precedence.indexOf(q.op)
+
+    return ix - jx
   })
 }
 
 // remove redundant ops
 function prune(script) {
+  const suffix = (op) => {
+    switch (op.op) {
+      case OPCODES.TICK:
+      case OPCODES.TOCK:
+      case OPCODES.TACK:
+      case OPCODES.STICKS:
+      case OPCODES.SKIP:
+        return 'play'
+
+      default:
+        return `${op.op}`
+    }
+  }
+
   const set = new Map()
   for (const op of script.script) {
-    const key = `${op.at.measure}:${op.at.beat}`
+    const key = `${op.at.measure}:${op.at.beat}:${suffix(op)}`
 
     if (!set.has(key)) {
       set.set(key, op)

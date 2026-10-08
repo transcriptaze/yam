@@ -164,12 +164,10 @@ describe('basic track', function () {
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK }, // FIXME redundant ops
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
-        { at: { measure: '*', beat: 2   }, op: OPCODES.SKIP },
-        { at: { measure: '*', beat: 3   }, op: OPCODES.SKIP },
-        { at: { measure: '*', beat: 5   }, op: OPCODES.SKIP },
-        { at: { measure: '*', beat: 6   }, op: OPCODES.SKIP },
-        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+        { at: { measure: '*', beat: 4   }, op: OPCODES.TOCK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.SKIP },
       ],
     }
 
@@ -360,8 +358,8 @@ describe('stop', function () {
       loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 2,   beat: 1   }, op: OPCODES.STOP },
-        { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: 1,   beat: 4   }, op: OPCODES.TOCK },
+        { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],
@@ -737,8 +735,8 @@ describe('anacrusis', function () {
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
-        { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: 1,   beat: 4   }, op: OPCODES.TOCK },
+        { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],
@@ -773,9 +771,9 @@ describe('anacrusis', function () {
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
+        { at: { measure: 2,   beat: 4   }, op: OPCODES.TOCK },
         { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: 2,   beat: '*' }, op: OPCODES.STICKS },
-        { at: { measure: 2,   beat: 4   }, op: OPCODES.TOCK },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],
@@ -814,8 +812,8 @@ describe('anacrusis', function () {
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
-        { at: { measure: 5,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: 5,   beat: 4   }, op: OPCODES.TOCK },
+        { at: { measure: 5,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],
@@ -854,9 +852,9 @@ describe('anacrusis', function () {
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
+        { at: { measure: 6,   beat: 4   }, op: OPCODES.TOCK },
         { at: { measure: 5,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: 6,   beat: '*' }, op: OPCODES.STICKS },
-        { at: { measure: 6,   beat: 4   }, op: OPCODES.TOCK },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],
@@ -892,9 +890,9 @@ describe('anacrusis', function () {
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
-        { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: 1,   beat: 3   }, op: OPCODES.TOCK },
         { at: { measure: 1,   beat: 4   }, op: OPCODES.TOCK },
+        { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],
@@ -930,8 +928,8 @@ describe('anacrusis', function () {
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
-        { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: 1,   beat: 4.5 }, op: OPCODES.TOCK },
+        { at: { measure: 1,   beat: '*' }, op: OPCODES.STICKS },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],

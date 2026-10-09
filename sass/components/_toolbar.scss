@@ -188,10 +188,6 @@ toolbar {
     display: none;
   }
 
-  // #bug {
-  //   display: none;
-  // }
-
   #wakelock.active {
     background-color: var(--toolbar-wakelock-active);
   }
@@ -245,14 +241,6 @@ toolbar.statistics {
   }
 }
 
-// toolbar img#bug {
-//   filter: invert(78%) sepia(0%) saturate(34%) hue-rotate(219deg) brightness(98%) contrast(95%);
-// }
-
-// toolbar img#bug.enabled {
-//   filter: none;
-// }
-
 @media (max-width: 768px) and (orientation:portrait) {
   toolbar {
     width: calc(100vw - 4px);
@@ -302,7 +290,7 @@ toolbar.statistics {
     }
 
     #debug {
-      // display: none;
+      display: none;
     }
   }
 
@@ -398,10 +386,6 @@ toolbar.statistics {
       }
 
       div.right-menu {
-        // display: flex;
-        // flex-direction: column;
-        // justify-content: flex-end;
-
         display: grid;
         grid-template-columns: auto;
         grid-template-rows: auto auto auto auto auto auto;
@@ -430,7 +414,7 @@ toolbar.statistics {
     }
 
     #debug {
-      // display: none;
+      display: none;
     }
   }
 

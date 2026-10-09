@@ -1245,6 +1245,9 @@ toolbar.statistics #debug {
   toolbar.metronome #save {
     display: none;
   }
+  toolbar.metronome #debug {
+    display: none;
+  }
   toolbar.metronome.editable #edit {
     display: block;
   }
@@ -1325,6 +1328,9 @@ toolbar.statistics #debug {
     display: none;
   }
   toolbar.metronome #save {
+    display: none;
+  }
+  toolbar.metronome #debug {
     display: none;
   }
   toolbar.metronome.editable #edit {

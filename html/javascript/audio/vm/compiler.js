@@ -460,6 +460,7 @@ function clicks(track) {
   let measure = 1
   for (const section of sections) {
     if (['count-in', 'anacrusis'].includes(section.role)) {
+      measure += section.measure ?? 1
       continue
     }
 
@@ -557,7 +558,7 @@ function transmogrify(track) {
             timeSignature: subsection.timeSignature,
             tempo: subsection.tempo,
             pulse: subsection.pulse,
-            clicks: subsection.clicks,
+            clicks: subsection.clicks ?? section.clicks,
             dings: subsection.dings,
             delay: subsection.delay,
           }

@@ -6,18 +6,22 @@
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
+        - [x] tracks with loops enabled start automatically
+
         - [x] Jukskei: count-in
-        - [ ] Jukskei: fermata
+        - [x] Jukskei: fermata
         - [x] Kierboom: count-in
         - [x] Kierboom: anacrusis
         - [ ] Kierboom: no dings
         - [ ] Floating: sticks
-        - [ ] Baby Elephant Walk: count-in
-        - [ ] tracks with loops enabled start automatically
+        - [ ] Baby Elephant Walk: pickup
+        - [x] Greensleeves: pickup
+
         - [ ] // FIXME this is really fragile - it depends on operator precendence to let skip, sticks, etc override e.g. tock. Compiler shouldn't really generate code 
               like that. (see it('track + section clicks', function ())
         - [ ] // FIXME redundant ops
         - [ ] remove linker from compiler_spec
+        - [ ] compiler_spec: unit test for clicks after count-in and pickup
         - [ ] linker_spec: unit test for operator precedence
         - [ ] linker_spec: unit test for e.g. time-signature and tick on the same measure+beat
 
@@ -75,6 +79,7 @@
 
     - [ ] sixteenths
     - [ ] triplets
+    - https://www.youtube.com/watch?v=6BcpkEL--fU&list=WL&index=13
 
 
 ## To Be Done

@@ -269,8 +269,6 @@ describe('legacy tracks', function () {
 
     linker.link(script)
 
-    console.log('>>>>', script.script)
-
     expect(script).to.deep.equal(expected)
   })
 
@@ -475,6 +473,103 @@ describe('legacy tracks', function () {
     const script = compiler.compile(track)
 
     linker.link(script)
+
+    expect(script).to.deep.equal(expected)
+  })
+
+  it('Greensleeves', function () {
+    const track = {
+      UUID: 'f9534f96-0893-4d7a-ac2a-bbd774734d1b',
+      version: 0,
+      title: 'Greensleeves',
+      tempo: 69,
+      timeSignature: '3:4',
+      pulse: 'eighth-doublet',
+      sections: [
+        {
+          role: 'anacrusis',
+          measures: 1,
+          clicks: [3, 3.5],
+          subsections: [
+            {
+              measures: 1,
+            },
+          ],
+        },
+        {
+          name: 'Verse 1',
+          role: 'verse',
+          measures: 8,
+          subsections: [
+            {
+              measures: 8,
+            },
+          ],
+        },
+        {
+          name: 'Verse 2',
+          role: 'verse',
+          measures: 8,
+          subsections: [
+            {
+              measures: 8,
+            },
+          ],
+        },
+        {
+          name: 'Chorus 1',
+          role: 'chorus',
+          measures: 8,
+          subsections: [
+            {
+              measures: 8,
+            },
+          ],
+        },
+        {
+          name: 'Chorus 2',
+          role: 'chorus',
+          measures: 8,
+          subsections: [
+            {
+              measures: 8,
+            },
+          ],
+        },
+      ],
+      tags: [],
+      metronome: {
+        BPM: 55,
+        loop: true,
+        loops: 3,
+        ding: false,
+      },
+    }
+
+    // prettier-ignore
+    const expected = {
+      UUID: 'f9534f96-0893-4d7a-ac2a-bbd774734d1b',
+      tempo: 69,
+      delay: 0,
+      loops: Number.POSITIVE_INFINITY,
+      script: [
+        // ... pickup
+        { at: { measure: 1, beat: 3   }, op: OPCODES.TOCK },
+        { at: { measure: 1, beat: 3.5 }, op: OPCODES.TOCK },
+        { at: { measure: 1, beat: '*' }, op: OPCODES.STICKS },
+
+        // ... rest
+        { at: { measure: 34,  beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    linker.link(script)
+
+    console.log(script.script)
 
     expect(script).to.deep.equal(expected)
   })

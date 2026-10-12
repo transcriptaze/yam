@@ -6,6 +6,8 @@
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
+        - [x] tracks with loops enabled start automatically
+
         - [x] Jukskei: count-in
         - [x] Jukskei: fermata
         - [x] Kierboom: count-in
@@ -13,9 +15,8 @@
         - [ ] Kierboom: no dings
         - [ ] Floating: sticks
         - [ ] Baby Elephant Walk: pickup
-        - [ ] Greensleeved: pickup
+        - [x] Greensleeves: pickup
 
-        - [x] tracks with loops enabled start automatically
         - [ ] // FIXME this is really fragile - it depends on operator precendence to let skip, sticks, etc override e.g. tock. Compiler shouldn't really generate code 
               like that. (see it('track + section clicks', function ())
         - [ ] // FIXME redundant ops

@@ -558,7 +558,7 @@ function transmogrify(track) {
             timeSignature: subsection.timeSignature,
             tempo: subsection.tempo,
             pulse: subsection.pulse,
-            clicks: subsection.clicks,
+            clicks: subsection.clicks ?? section.clicks,
             dings: subsection.dings,
             delay: subsection.delay,
           }

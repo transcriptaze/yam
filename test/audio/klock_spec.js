@@ -2,10 +2,10 @@ import { describe, it } from 'mocha'
 import { expect } from 'chai'
 import * as compiler from '../../html/javascript/audio/vm/compiler.js'
 import * as linker from '../../html/javascript/audio/vm/linker.js'
-import { OPCODES } from '../../html/javascript/audio/vm/constants.js'
+import { OPCODES, SUBDIVISIONS } from '../../html/javascript/audio/vm/constants.js'
 
 describe('legacy tracks', function () {
-  it.skip('jukskei', function () {
+  it('jukskei', function () {
     const track = {
       UUID: '5304dd6e-32ac-4e53-8a3b-7f246cb77820',
       version: 0,
@@ -225,7 +225,7 @@ describe('legacy tracks', function () {
 
         // ... fermata
         { at: { measure: 75,  beat: 1   }, op: OPCODES.TIME_SIGNATURE, timeSignature: {beats:5, divisions:4} },
-        // FIXME: { at: { measure: 75,  beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: 75,  beat: 1   }, op: OPCODES.STICKS },
         { at: { measure: 75,  beat: 2   }, op: OPCODES.STICKS },
         { at: { measure: 75,  beat: 3   }, op: OPCODES.STICKS },
         { at: { measure: 75,  beat: 4   }, op: OPCODES.STICKS },
@@ -236,8 +236,8 @@ describe('legacy tracks', function () {
 
         // ... outro
         { at: { measure: 166,  beat: 1   }, op: OPCODES.TEMPO, tempo: 80 },
-        // FIXME: { at: { measure: 166,  beat: 1   }, op: OPCODES.SUBDIVISIONS, subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS },
-        // FIXME: { at: { measure: 166,  beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: 166,  beat: 1   }, op: OPCODES.SUBDIVISIONS, subdivisions: SUBDIVISIONS.EIGHTH_DOUBLETS },
+        { at: { measure: 166,  beat: 1   }, op: OPCODES.TICK },
         { at: { measure: 166,  beat: 2   }, op: OPCODES.STICKS },
         { at: { measure: 166,  beat: 3   }, op: OPCODES.STICKS },
         { at: { measure: 166,  beat: 4   }, op: OPCODES.STICKS },
@@ -245,7 +245,8 @@ describe('legacy tracks', function () {
         { at: { measure: 166,  beat: '*' }, op: OPCODES.SKIP },
 
         { at: { measure: 167,  beat: 1   }, op: OPCODES.TEMPO, tempo: 160 },
-        // FIXME: { at: { measure: 167,  beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: 167,  beat: 1   }, op: OPCODES.SUBDIVISIONS, subdivisions: SUBDIVISIONS.QUARTER_NOTES },
+        { at: { measure: 167,  beat: 1   }, op: OPCODES.STICKS },
         { at: { measure: 167,  beat: 2   }, op: OPCODES.STICKS },
         { at: { measure: 167,  beat: 3   }, op: OPCODES.STICKS },
         { at: { measure: 167,  beat: 4   }, op: OPCODES.STICKS },
@@ -267,6 +268,8 @@ describe('legacy tracks', function () {
     const script = compiler.compile(track)
 
     linker.link(script)
+
+    console.log('>>>>', script.script)
 
     expect(script).to.deep.equal(expected)
   })

@@ -7,12 +7,14 @@
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
         - [x] Jukskei: count-in
-        - [ ] Jukskei: fermata
+        - [x] Jukskei: fermata
         - [x] Kierboom: count-in
         - [x] Kierboom: anacrusis
         - [ ] Kierboom: no dings
         - [ ] Floating: sticks
-        - [ ] Baby Elephant Walk: count-in
+        - [ ] Baby Elephant Walk: pickup
+        - [ ] Greensleeved: pickup
+
         - [ ] tracks with loops enabled start automatically
         - [ ] // FIXME this is really fragile - it depends on operator precendence to let skip, sticks, etc override e.g. tock. Compiler shouldn't really generate code 
               like that. (see it('track + section clicks', function ())
@@ -75,6 +77,7 @@
 
     - [ ] sixteenths
     - [ ] triplets
+    - https://www.youtube.com/watch?v=6BcpkEL--fU&list=WL&index=13
 
 
 ## To Be Done

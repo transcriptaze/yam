@@ -142,7 +142,7 @@ export class Metronome2 extends AudioWorkletProcessor {
   }
 
   play() {
-    if (this.FSM.state === STATE.STOPPED || this.FSM.state === STATE.STOPPING) {
+    if (this.FSM.state === STATE.PAUSED || this.FSM.state === STATE.STOPPED || this.FSM.state === STATE.STOPPING) {
       this.FSM.state = STATE.STARTING
 
       this.samples = 0
@@ -198,6 +198,8 @@ export class Metronome2 extends AudioWorkletProcessor {
         this.#subdivisions = null
         this.#vm = new VM(sampleRate, this.#script.script)
       }
+    } else {
+      this.FSM.state = STATE.PAUSED // prevent autoplay if loops and loop enabled
     }
   }
 

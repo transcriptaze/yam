@@ -4,6 +4,7 @@ export const STATE = {
   STARTING: 2,
   PLAYING: 3,
   STOPPING: 4,
+  PAUSED: 5,
 }
 
 Object.freeze(STATE)

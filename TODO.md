@@ -15,11 +15,12 @@
         - [ ] Baby Elephant Walk: pickup
         - [ ] Greensleeved: pickup
 
-        - [ ] tracks with loops enabled start automatically
+        - [x] tracks with loops enabled start automatically
         - [ ] // FIXME this is really fragile - it depends on operator precendence to let skip, sticks, etc override e.g. tock. Compiler shouldn't really generate code 
               like that. (see it('track + section clicks', function ())
         - [ ] // FIXME redundant ops
         - [ ] remove linker from compiler_spec
+        - [ ] compiler_spec: unit test for clicks after count-in and pickup
         - [ ] linker_spec: unit test for operator precedence
         - [ ] linker_spec: unit test for e.g. time-signature and tick on the same measure+beat
 

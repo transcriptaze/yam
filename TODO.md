@@ -2,20 +2,20 @@
 
 ## In Progress
 
-- [x] cosmic latte (https://science.nasa.gov/image-article/apod-2026-september-28-cosmic-latte-the-average-color-of-the-universe/)
-
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
         - [x] tracks with loops enabled start automatically
+        - [x] loop count gets reset on stop
+        - [x] loop count displays max loops while restarting
 
         - [x] Jukskei: count-in
         - [x] Jukskei: fermata
+        - [x] Greensleeves: pickup
         - [x] Kierboom: count-in
         - [x] Kierboom: anacrusis
         - [ ] Kierboom: no dings
         - [ ] Floating: sticks
         - [ ] Baby Elephant Walk: pickup
-        - [x] Greensleeves: pickup
 
         - [ ] // FIXME this is really fragile - it depends on operator precendence to let skip, sticks, etc override e.g. tock. Compiler shouldn't really generate code 
               like that. (see it('track + section clicks', function ())

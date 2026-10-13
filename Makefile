@@ -98,7 +98,10 @@ debug:
 sass: 
 	npx sass --watch sass:html/css --no-source-map  --style=expanded
 
-run: build
+run: go
+	./bin/yam --html ./html
+
+python-run: build
 	python3 yam.py
 
 run-yam: package

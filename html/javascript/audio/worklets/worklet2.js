@@ -152,7 +152,6 @@ export class Metronome2 extends AudioWorkletProcessor {
       this.#tempo = null
       this.#timeSignature = null
       this.#subdivisions = null
-      this.#loops = 0
       this.#vm = new VM(sampleRate, this.#script.script)
 
       this.port.postMessage({
@@ -264,6 +263,10 @@ export class Metronome2 extends AudioWorkletProcessor {
       if (this.FSM.state === STATE.STOPPED || this.FSM.state === STATE.STOPPING) {
         this.FSM.state = STATE.STARTING
       }
+    } else if (this.FSM.state === STATE.STOPPED && done) {
+      this.FSM.state = STATE.PAUSED
+      this.#loops = 0
+      this.#time = end
     } else {
       this.#time = end
     }
@@ -341,7 +344,12 @@ export class Metronome2 extends AudioWorkletProcessor {
         track: this.#script?.UUID ?? '',
       })
 
-      this.flip({ state: STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
+      // NTS minor hack to reset displayed loop count when all looped out
+      if (this.#loops < this.#script.loops) {
+        this.flip({ state: STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
+      } else {
+        this.flip({ state: STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
+      }
     }
 
     const cue = () => {

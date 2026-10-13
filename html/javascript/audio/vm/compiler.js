@@ -559,7 +559,7 @@ function transmogrify(track) {
             tempo: subsection.tempo,
             pulse: subsection.pulse,
             clicks: subsection.clicks ?? section.clicks,
-            dings: subsection.dings,
+            dings: subsection.dings ?? section.dings,
             delay: subsection.delay,
           }
         }

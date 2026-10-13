@@ -2,31 +2,32 @@
 
 ## In Progress
 
-- [x] cosmic latte (https://science.nasa.gov/image-article/apod-2026-september-28-cosmic-latte-the-average-color-of-the-universe/)
-
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
         - [x] tracks with loops enabled start automatically
+        - [x] loop count gets reset on stop
+        - [x] loop count displays max loops while restarting
+        - [ ] cleanup flipped info
 
         - [x] Jukskei: count-in
         - [x] Jukskei: fermata
+        - [x] Greensleeves: pickup
         - [x] Kierboom: count-in
         - [x] Kierboom: anacrusis
-        - [ ] Kierboom: no dings
+        - [x] Kierboom: dings
         - [ ] Floating: sticks
         - [ ] Baby Elephant Walk: pickup
-        - [x] Greensleeves: pickup
 
         - [ ] // FIXME this is really fragile - it depends on operator precendence to let skip, sticks, etc override e.g. tock. Compiler shouldn't really generate code 
               like that. (see it('track + section clicks', function ())
         - [ ] // FIXME redundant ops
         - [ ] remove linker from compiler_spec
         - [ ] compiler_spec: unit test for clicks after count-in and pickup
+        - [ ] compiler_spec: unit test for subsection dings
         - [ ] linker_spec: unit test for operator precedence
         - [ ] linker_spec: unit test for e.g. time-signature and tick on the same measure+beat
 
-        - [ ] remove FSM
-        - [ ] cleanup flipped info
+        - [ ] rework FSM
         - [ ] remove old worklet and rename
 
         - [ ] 4:4

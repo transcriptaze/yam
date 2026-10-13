@@ -455,6 +455,12 @@ describe('legacy tracks', function () {
         { at: { measure: 2, beat: 4   }, op: OPCODES.STICKS },
         { at: { measure: 2, beat: '*' }, op: OPCODES.SKIP },
 
+        // ... dings
+        { at: { measure: 46,  beat: 1 }, op: OPCODES.DONG },
+        { at: { measure: 47,  beat: 3 }, op: OPCODES.DONG },
+        { at: { measure: 142, beat: 1 }, op: OPCODES.DONG },
+        { at: { measure: 143, beat: 3 }, op: OPCODES.DONG },
+
         // ... dramatic pause
         { at: { measure: 171, beat: 1   }, op: OPCODES.TIME_SIGNATURE, timeSignature: { beats:3, divisions: 8 } },
         { at: { measure: 171, beat: 1   }, op: OPCODES.STICKS },

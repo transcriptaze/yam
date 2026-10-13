@@ -127,8 +127,8 @@
       "index": 9007199254740991,
       "title": "All Tracks",
       "tracks": [
-        "e7ff88da-a9ad-4c2c-a5f7-0459eab10f02",
         "5304dd6e-32ac-4e53-8a3b-7f246cb77820",
+        "d76f150d-8461-4fd9-a934-da7bf2699132",
         "f9534f96-0893-4d7a-ac2a-bbd774734d1b",
         "4b6d4905-e18b-4568-b48d-367c79674381",
         "c9b989e1-b13b-4beb-96c1-0b19adfaf9c7",
@@ -141,7 +141,6 @@
         "a5865ad8-f82b-42bb-9460-06af8d416e8f",
         "6b215525-03a9-4694-a104-36f23b3dcf23",
         "7993b89b-1cae-4cfd-a985-091998c63fb3",
-        "d76f150d-8461-4fd9-a934-da7bf2699132",
         "657cc85b-4dc7-4779-afde-fcb9681ee5d5",
         "5a2b15b6-1630-42a9-91f7-613ea3eb5911",
         "e26d0fdd-3383-4cb1-90a7-b2e4eae03cb0",
@@ -165,7 +164,8 @@
         "ba03dd10-e1da-4dbe-871d-564c01de6a52",
         "9cd51404-c39b-4518-8a30-1f569fafd2f0",
         "d81b43d5-7ea5-45c1-a3d5-5f93f7dc7048",
-        "e9271b0b-8295-44e6-9961-b0c08d28d396"
+        "e9271b0b-8295-44e6-9961-b0c08d28d396",
+        "e7ff88da-a9ad-4c2c-a5f7-0459eab10f02"
       ],
       "random": [],
       "muted": []
@@ -1050,7 +1050,7 @@
       "metronome": {
         "BPM": 90,
         "loop": true,
-        "loops": 2,
+        "loops": 3,
         "ding": false
       }
     },

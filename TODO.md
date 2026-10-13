@@ -7,13 +7,14 @@
         - [x] tracks with loops enabled start automatically
         - [x] loop count gets reset on stop
         - [x] loop count displays max loops while restarting
+        - [ ] cleanup flipped info
 
         - [x] Jukskei: count-in
         - [x] Jukskei: fermata
         - [x] Greensleeves: pickup
         - [x] Kierboom: count-in
         - [x] Kierboom: anacrusis
-        - [ ] Kierboom: no dings
+        - [x] Kierboom: dings
         - [ ] Floating: sticks
         - [ ] Baby Elephant Walk: pickup
 
@@ -22,11 +23,11 @@
         - [ ] // FIXME redundant ops
         - [ ] remove linker from compiler_spec
         - [ ] compiler_spec: unit test for clicks after count-in and pickup
+        - [ ] compiler_spec: unit test for subsection dings
         - [ ] linker_spec: unit test for operator precedence
         - [ ] linker_spec: unit test for e.g. time-signature and tick on the same measure+beat
 
-        - [ ] remove FSM
-        - [ ] cleanup flipped info
+        - [ ] rework FSM
         - [ ] remove old worklet and rename
 
         - [ ] 4:4

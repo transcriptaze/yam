@@ -5,7 +5,7 @@ import * as linker from '../../html/javascript/audio/vm/linker.js'
 import { OPCODES, SUBDIVISIONS } from '../../html/javascript/audio/vm/constants.js'
 
 describe('legacy tracks', function () {
-  it('jukskei', function () {
+  it('Jukskei', function () {
     const track = {
       UUID: '5304dd6e-32ac-4e53-8a3b-7f246cb77820',
       version: 0,
@@ -732,6 +732,135 @@ describe('legacy tracks', function () {
 
         // ... rest
         { at: { measure: 56,  beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    linker.link(script)
+
+    expect(script).to.deep.equal(expected)
+  })
+
+  it('Baby Elephant Walk', function () {
+    const track = {
+      UUID: '4b6d4905-e18b-4568-b48d-367c79674381',
+      version: 0,
+      title: 'Baby Elephant Walk',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'eighth-doublet',
+      sections: [
+        {
+          role: 'anacrusis',
+          clicks: [4.5],
+        },
+        {
+          role: 'intro',
+          name: 'Intro',
+          measures: 4,
+        },
+        {
+          role: 'verse',
+          name: 'Verse 1',
+          subsections: [
+            {
+              measures: 4,
+            },
+            {
+              measures: 12,
+            },
+          ],
+        },
+        {
+          role: 'verse',
+          name: 'Verse 2',
+          subsections: [
+            {
+              measures: 4,
+            },
+            {
+              measures: 12,
+            },
+          ],
+        },
+        {
+          role: 'bridge',
+          name: 'Bridge 1',
+          subsections: [
+            {
+              measures: 3,
+              timeSignature: '4:4',
+            },
+            {
+              measures: 1,
+              timeSignature: '5:4',
+            },
+            {
+              measures: 4,
+              timeSignature: '4:4',
+            },
+          ],
+        },
+        {
+          role: 'bridge',
+          name: 'Bridge 2',
+          subsections: [
+            {
+              measures: 3,
+              timeSignature: '4:4',
+            },
+            {
+              measures: 1,
+              timeSignature: '5:4',
+            },
+            {
+              measures: 4,
+              timeSignature: '4:4',
+            },
+          ],
+        },
+        {
+          role: 'verse',
+          name: 'Verse 3',
+          subsections: [
+            {
+              measures: 4,
+            },
+            {
+              measures: 12,
+            },
+          ],
+        },
+        {
+          name: 'Outro',
+          role: 'outro',
+          measures: 2,
+        },
+      ],
+      tags: [],
+      metronome: {
+        BPM: 66,
+        loop: false,
+        ding: false,
+      },
+    }
+
+    // prettier-ignore
+    const expected = {
+      UUID: '4b6d4905-e18b-4568-b48d-367c79674381',
+      tempo: 120,
+      delay: 0,
+      loops: Number.POSITIVE_INFINITY,
+      script: [
+        // ... pickup
+        { at: { measure: 1, beat: 4.5   }, op: OPCODES.TOCK },
+        { at: { measure: 1, beat: '*' }, op: OPCODES.STICKS },
+
+        // ... rest
+        { at: { measure: 72,  beat: 1   }, op: OPCODES.STOP },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],

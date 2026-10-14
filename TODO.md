@@ -16,7 +16,7 @@
         - [x] Kierboom: anacrusis
         - [x] Kierboom: dings
         - [x] Floating: anacruses
-        - [ ] Baby Elephant Walk: pickup
+        - [x] Baby Elephant Walk: pickup
 
         - [ ] // FIXME this is really fragile - it depends on operator precendence to let skip, sticks, etc override e.g. tock. Compiler shouldn't really generate code 
               like that. (see it('track + section clicks', function ())

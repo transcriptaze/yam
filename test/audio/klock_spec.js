@@ -575,7 +575,171 @@ describe('legacy tracks', function () {
 
     linker.link(script)
 
-    console.log(script.script)
+    expect(script).to.deep.equal(expected)
+  })
+
+  it('Floating', function () {
+    const track = {
+      UUID: '4bdbf20a-744c-43f2-b54c-bd05f785a61c',
+      version: 0,
+      title: 'Floating',
+      tempo: 96,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          role: 'count-in',
+          delay: '500ms',
+          subsections: [
+            {
+              measures: 1,
+              clicks: [1, 2, 3, 4],
+            },
+          ],
+        },
+        {
+          name: 'Intro',
+          role: 'intro',
+          measures: 2,
+          subsections: [
+            {
+              measures: 2,
+            },
+          ],
+        },
+        {
+          name: 'Verse 1A',
+          role: 'verse',
+          measures: 8,
+          subsections: [
+            {
+              measures: 8,
+            },
+          ],
+        },
+        {
+          role: 'anacrusis',
+          measures: 1,
+          clicks: [3, 4],
+          subsections: [
+            {
+              measures: 1,
+            },
+          ],
+        },
+        {
+          name: 'Verse 1B',
+          role: 'verse',
+          measures: 10,
+          subsections: [
+            {
+              measures: 10,
+            },
+          ],
+        },
+        {
+          name: 'Verse 1C',
+          role: 'verse',
+          measures: 6,
+          subsections: [
+            {
+              measures: 6,
+            },
+          ],
+        },
+        {
+          name: 'Verse 2A',
+          role: 'verse',
+          measures: 8,
+          subsections: [
+            {
+              measures: 8,
+            },
+          ],
+        },
+        {
+          role: 'anacrusis',
+          measures: 1,
+          clicks: [3, 4],
+          subsections: [
+            {
+              measures: 1,
+            },
+          ],
+        },
+        {
+          name: 'Verse 2B',
+          role: 'verse',
+          measures: 10,
+          subsections: [
+            {
+              measures: 10,
+            },
+          ],
+        },
+        {
+          name: 'Verse 2C',
+          role: 'verse',
+          measures: 6,
+          subsections: [
+            {
+              measures: 6,
+            },
+          ],
+        },
+        {
+          name: 'Outro',
+          role: 'outro',
+          measures: 2,
+          subsections: [
+            {
+              measures: 2,
+            },
+          ],
+        },
+      ],
+      tags: ['ok', 'drop D'],
+      metronome: {
+        BPM: 96,
+        loop: false,
+        loops: 2,
+        ding: false,
+      },
+    }
+
+    // prettier-ignore
+    const expected = {
+      UUID: '4bdbf20a-744c-43f2-b54c-bd05f785a61c',
+      tempo: 96,
+      delay: 0,
+      loops: Number.POSITIVE_INFINITY,
+      script: [
+        // ... count-in
+        { at: { measure: 1, beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: 1, beat: 2   }, op: OPCODES.STICKS },
+        { at: { measure: 1, beat: 3   }, op: OPCODES.STICKS },
+        { at: { measure: 1, beat: 4   }, op: OPCODES.STICKS },
+        { at: { measure: 1, beat: '*' }, op: OPCODES.SKIP },
+
+        // ... markers
+        { at: { measure: 12, beat: 3   }, op: OPCODES.TOCK },
+        { at: { measure: 12, beat: 4   }, op: OPCODES.TOCK },
+        { at: { measure: 12, beat: '*' }, op: OPCODES.STICKS },
+
+        { at: { measure: 37, beat: 3   }, op: OPCODES.TOCK },
+        { at: { measure: 37, beat: 4   }, op: OPCODES.TOCK },
+        { at: { measure: 37, beat: '*' }, op: OPCODES.STICKS },
+
+        // ... rest
+        { at: { measure: 56,  beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    linker.link(script)
 
     expect(script).to.deep.equal(expected)
   })

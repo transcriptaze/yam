@@ -11,6 +11,7 @@ let DEBUG = false
 
 export class Metronome2 extends AudioWorkletProcessor {
   #time = 0
+  #FSM = new FSM.FSM()
 
   #script = {
     tempo: null,
@@ -43,7 +44,6 @@ export class Metronome2 extends AudioWorkletProcessor {
       this.#cued = Array.from({ length: options.numberOfOutputs }, () => [])
     }
 
-    this.FSM = new FSM.FSM()
     this.level = new level.Level()
     this.clicks = new Map()
     this.clock = new Clock()
@@ -138,12 +138,12 @@ export class Metronome2 extends AudioWorkletProcessor {
       [4, tock],
     ])
 
-    this.FSM.state = STATE.STOPPED
+    this.#FSM.state = STATE.STOPPED
   }
 
   play() {
-    if (this.FSM.state === STATE.PAUSED || this.FSM.state === STATE.STOPPED || this.FSM.state === STATE.STOPPING) {
-      this.FSM.state = STATE.STARTING
+    if (this.#FSM.state === STATE.PAUSED || this.#FSM.state === STATE.STOPPED || this.#FSM.state === STATE.STOPPING) {
+      this.#FSM.state = STATE.STARTING
 
       this.samples = 0
       this.clock.reset()
@@ -162,7 +162,16 @@ export class Metronome2 extends AudioWorkletProcessor {
   }
 
   stop() {
-    if (this.FSM.onStop()) {
+    // NTS: only ever seems to be STATE.PLAYING
+    if (this.#FSM.state === STATE.STARTING || this.#FSM.state === STATE.PLAYING) {
+      if (this.#FSM.state === STATE.STARTING) {
+        this.state = STATE.STOPPED
+      }
+
+      if (this.#FSM.state === STATE.PLAYING) {
+        this.#FSM.state = STATE.STOPPING
+      }
+
       this.port.postMessage({
         message: 'stopped',
         track: this.#script?.UUID ?? '',
@@ -181,14 +190,23 @@ export class Metronome2 extends AudioWorkletProcessor {
   restart() {
     const playing = this.playing
 
-    this.FSM.onStop()
+    if (this.#FSM.state === STATE.STARTING || this.#FSM.state === STATE.PLAYING) {
+      if (this.#FSM.state === STATE.STARTING) {
+        this.state = STATE.STOPPED
+      }
+
+      if (this.#FSM.state === STATE.PLAYING) {
+        this.#FSM.state = STATE.STOPPING
+      }
+    }
+
     this.#time = 0
     this.#loops = 0
     this.#samples = 0
 
     if (playing) {
-      if (this.FSM.state === STATE.STOPPED || this.FSM.state === STATE.STOPPING) {
-        this.FSM.state = STATE.STARTING
+      if (this.#FSM.state === STATE.STOPPED || this.#FSM.state === STATE.STOPPING) {
+        this.#FSM.state = STATE.STARTING
 
         this.clock.reset()
 
@@ -198,12 +216,12 @@ export class Metronome2 extends AudioWorkletProcessor {
         this.#vm = new VM(sampleRate, this.#script.script)
       }
     } else {
-      this.FSM.state = STATE.PAUSED // prevent autoplay if loops and loop enabled
+      this.#FSM.state = STATE.PAUSED // prevent autoplay if loops and loop enabled
     }
   }
 
   get playing() {
-    return this.FSM.state === STATE.PLAYING
+    return this.#FSM.state === STATE.PLAYING
   }
 
   #bpm(BPM) {
@@ -256,15 +274,15 @@ export class Metronome2 extends AudioWorkletProcessor {
     // ... loop?
     const done = this.#cued.every((v) => v.length === 0)
 
-    if (this.FSM.state === STATE.STOPPED && done && this.#parameters.loop && this.#loops < this.#script.loops) {
+    if (this.#FSM.state === STATE.STOPPED && done && this.#parameters.loop && this.#loops < this.#script.loops) {
       this.#time = 0
       this.#vm.reset()
 
-      if (this.FSM.state === STATE.STOPPED || this.FSM.state === STATE.STOPPING) {
-        this.FSM.state = STATE.STARTING
+      if (this.#FSM.state === STATE.STOPPED || this.#FSM.state === STATE.STOPPING) {
+        this.#FSM.state = STATE.STARTING
       }
-    } else if (this.FSM.state === STATE.STOPPED && done) {
-      this.FSM.state = STATE.PAUSED
+    } else if (this.#FSM.state === STATE.STOPPED && done) {
+      this.#FSM.state = STATE.PAUSED
       this.#loops = 0
       this.#time = end
     } else {
@@ -284,12 +302,12 @@ export class Metronome2 extends AudioWorkletProcessor {
     this.#samples += N > 0 ? N : 0
 
     // ... 250ms pre-start delay
-    if (this.FSM.state === STATE.STARTING) {
+    if (this.#FSM.state === STATE.STARTING) {
       if (t < START_DELAY) {
         return
       }
 
-      this.FSM.state = STATE.PLAYING
+      this.#FSM.state = STATE.PLAYING
       this.flip({ state: STATE.PLAYING, bar: 0, beat: 0, loops: this.#loops })
       this.port.postMessage({
         message: 'playing',
@@ -326,8 +344,21 @@ export class Metronome2 extends AudioWorkletProcessor {
 
   #exec(opcode, { measure, beat }) {
     const stop = () => {
-      this.FSM.onStop()
-      this.FSM.onStopped()
+      // NTS: possibly only ever PLAYING since this is now invoked from the VM
+      if (this.#FSM.state === STATE.STARTING || this.#FSM.state === STATE.PLAYING) {
+        if (this.#FSM.state === STATE.STARTING) {
+          this.state = STATE.STOPPED
+        }
+
+        if (this.#FSM.state === STATE.PLAYING) {
+          this.#FSM.state = STATE.STOPPING
+        }
+      }
+
+      // FIXME this should be in process() as should all the stuff below
+      if (this.#FSM.state === STATE.STOPPING) {
+        this.#FSM.state = STATE.STOPPED
+      }
 
       this.#loops++
 
@@ -401,7 +432,6 @@ export class Metronome2 extends AudioWorkletProcessor {
   flip({ state, bar, beat, loops }) {
     this.port.postMessage({
       message: 'flipped',
-
       track: this.#script?.UUID ?? '',
       state: state,
       bar: bar,

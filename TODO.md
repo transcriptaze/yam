@@ -7,7 +7,7 @@
         - [x] tracks with loops enabled start automatically
         - [x] loop count gets reset on stop
         - [x] loop count displays max loops while restarting
-        - [ ] cleanup flipped info
+        - [x] cleanup flipped info
 
         - [x] Jukskei: count-in
         - [x] Jukskei: fermata
@@ -28,6 +28,7 @@
         - [ ] linker_spec: unit test for e.g. time-signature and tick on the same measure+beat
 
         - [ ] rework FSM
+            - restart: STOPPING doesn't seem to ever transition to STOPPED
         - [ ] remove old worklet and rename
 
         - [ ] 4:4

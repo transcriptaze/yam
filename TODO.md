@@ -4,32 +4,23 @@
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
-        - [x] tracks with loops enabled start automatically
-        - [x] loop count gets reset on stop
-        - [x] loop count displays max loops while restarting
-        - [x] cleanup flipped info
+        - [x] hide debug
+        - [ ] rename worklets
 
-        - [x] Jukskei: count-in
-        - [x] Jukskei: fermata
-        - [x] Greensleeves: pickup
-        - [x] Kierboom: count-in
-        - [x] Kierboom: anacrusis
-        - [x] Kierboom: dings
-        - [x] Floating: anacruses
-        - [x] Baby Elephant Walk: pickup
-
-        - [ ] // FIXME this is really fragile - it depends on operator precendence to let skip, sticks, etc override e.g. tock. Compiler shouldn't really generate code 
-              like that. (see it('track + section clicks', function ())
-        - [ ] // FIXME redundant ops
-        - [ ] remove linker from compiler_spec
+        - [ ] move fs (?) and bufferSize to tick(...)
         - [ ] compiler_spec: unit test for clicks after count-in and pickup
         - [ ] compiler_spec: unit test for subsection dings
         - [ ] linker_spec: unit test for operator precedence
         - [ ] linker_spec: unit test for e.g. time-signature and tick on the same measure+beat
 
+        - [ ] // FIXME this is really fragile - it depends on operator precendence to let skip, sticks, etc override e.g. tock. Compiler shouldn't really generate code 
+              like that. (see it('track + section clicks', function ())
+        - [ ] // FIXME redundant ops
+        - [ ] remove linker from compiler_spec
+
         - [ ] rework FSM
             - restart: STOPPING doesn't seem to ever transition to STOPPED
-        - [ ] remove old worklet and rename
+        - [ ] remove old worklet
 
         - [ ] 4:4
             - [x] eighths
@@ -64,20 +55,23 @@
             - [ ] half notes
             - [ ] dotted half notes
 
+        - [ ] optimise VM::tick
+        - [ ] optimise VM::click
+        - [ ] optimise VM::exec
+        - [ ] let script drive pads/info/etc
 
         - (?) exec: inject actions
         - [ ] linker: combine multiple actions into one
         - [ ] node+worklet per run a la YAD
         - [ ] replace flip with ring buffer + animation timer
-        - [ ] let script drive pads/info/etc
         - (?) bake gain into node::sample 
-        - [ ] move fs (?) and bufferSize to tick(...)
 
-        - 1/3 = 85/256 (ref. https://www.youtube.com/watch?v=xs5iOwkX9fU)
-        - f32: 0.3330000107288360595703125
-        - f64: 0.3330000000000000182076576083554901182651519775390625
-        - f32: 1/3 = 0.3333333432674407958984375
-        - f64: 1/3 = 0.333333333333333314829616256247386932373046875
+        - [ ] figure out the floating point equality thing for 1.333, etc
+            - 1/3 = 85/256 (ref. https://www.youtube.com/watch?v=xs5iOwkX9fU)
+            - f32: 0.3330000107288360595703125
+            - f64: 0.3330000000000000182076576083554901182651519775390625
+            - f32: 1/3 = 0.3333333432674407958984375
+            - f64: 1/3 = 0.333333333333333314829616256247386932373046875
 
     - [ ] sixteenths
     - [ ] triplets

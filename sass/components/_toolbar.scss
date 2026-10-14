@@ -163,6 +163,8 @@ toolbar {
     grid-area: debug;
     mask-image: url('/images/bug.svg');
     mask-size: 30px;
+    
+    display: none;
   }
 
   #debug.enabled {

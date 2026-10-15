@@ -37,9 +37,9 @@ class Engine {
         .get(ctx, this.#soundset)
         .then((sounds) => {
           if (this.#debug) {
-            return metronome(ctx, sounds, this.#subscribers)
+            return metronome_v0(ctx, sounds, this.#subscribers)
           } else {
-            return metronome2(ctx, sounds, this.#subscribers)
+            return metronome_v1(ctx, sounds, this.#subscribers)
           }
         })
         .then((metronome) => {
@@ -291,14 +291,12 @@ class Engine {
   }
 }
 
-function metronome(ctx, sounds, subscribers) {
-  return ctx.audioWorklet.addModule('./javascript/audio/worklets/worklet.js').then(() => new nodes.MetronomeNode(ctx, sounds, subscribers))
+function metronome_v0(ctx, sounds, subscribers) {
+  return ctx.audioWorklet.addModule('./javascript/audio/worklets/worklet_v0.js').then(() => new nodes.MetronomeV0(ctx, sounds, subscribers))
 }
 
-function metronome2(ctx, sounds, subscribers) {
-  return ctx.audioWorklet
-    .addModule('./javascript/audio/worklets/worklet2.js')
-    .then(() => new nodes.Metronome2Node(ctx, sounds, subscribers))
+function metronome_v1(ctx, sounds, subscribers) {
+  return ctx.audioWorklet.addModule('./javascript/audio/worklets/worklet_v1.js').then(() => new nodes.MetronomeV1(ctx, sounds, subscribers))
 }
 
 export const engine = new Engine()

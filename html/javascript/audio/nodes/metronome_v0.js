@@ -2,19 +2,12 @@ import * as PULSE from '../shared/constants.js'
 import { parseTimeSignature, durationToMS, clamp } from '../../util.js'
 import * as generators from '../../generators.js'
 import { EVENTS } from '../../constants.js'
-
-const STATE = {
-  START: 0,
-  STOPPED: 1,
-  STARTING: 2,
-  PLAYING: 3,
-  STOPPING: 4,
-}
+import { STATE } from '../shared/constants.js'
 
 const INF = Number.POSITIVE_INFINITY
 const MAX_DELAY = 30000 // ms
 
-export class MetronomeNode extends AudioWorkletNode {
+export class MetronomeV0 extends AudioWorkletNode {
   #loops = INF
   #timeSignature = ''
   #pulse = ''

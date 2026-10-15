@@ -1,5 +1,17 @@
-// pulse parameter encoding
+// FSM state
 
+export const STATE = {
+  START: 0,
+  STOPPED: 1,
+  STARTING: 2,
+  PLAYING: 3,
+  STOPPING: 4,
+  PAUSED: 5,
+}
+
+Object.freeze(STATE)
+
+// pulse parameter encoding
 export const EIGHTH = 1
 export const EIGHTH_DOUBLET = 2
 export const QUARTER = 3

@@ -6,8 +6,8 @@
     - [ ] node/worklet
         - [x] hide debug
         - [x] rename worklets
+        - [x] move bufferSize to tick(...)
 
-        - [ ] move fs (?) and bufferSize to tick(...)
         - [ ] compiler_spec: unit test for clicks after count-in and pickup
         - [ ] compiler_spec: unit test for subsection dings
         - [ ] linker_spec: unit test for operator precedence
@@ -81,8 +81,6 @@
 ## To Be Done
 
 https://evergarden.moe/
-
-
 
 - [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
 - [ ] passive:true (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)

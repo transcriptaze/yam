@@ -22,8 +22,6 @@ export function statistics() {
 }
 
 export function putStatistic(record) {
-  infof(`update statistic ${record.start} '${record.title}'`)
-
   const f = (db) => {
     const transaction = db.transaction([TABLE], 'readwrite')
 

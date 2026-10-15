@@ -75,8 +75,6 @@ export function putPlaylists(playlists) {
 }
 
 export function putPlaylist(playlist) {
-  infof(`store playlist '${playlist.title}'`)
-
   const f = (db) => {
     const transaction = db.transaction(['playlists'], 'readwrite')
 

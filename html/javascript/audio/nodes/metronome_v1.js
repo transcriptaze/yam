@@ -1,20 +1,13 @@
 import { parseTimeSignature } from '../../util.js'
 import { EVENTS } from '../../constants.js'
+import { STATE } from '../shared/constants.js'
 
 import * as compiler from '../vm/compiler.js'
 import * as linker from '../vm/linker.js'
 
-const STATE = {
-  START: 0,
-  STOPPED: 1,
-  STARTING: 2,
-  PLAYING: 3,
-  STOPPING: 4,
-}
-
 const INF = Number.POSITIVE_INFINITY
 
-export class Metronome2Node extends AudioWorkletNode {
+export class MetronomeV1 extends AudioWorkletNode {
   #loops = INF
 
   #cache = {

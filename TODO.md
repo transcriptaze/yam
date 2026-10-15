@@ -5,7 +5,7 @@
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
         - [x] hide debug
-        - [ ] rename worklets
+        - [x] rename worklets
 
         - [ ] move fs (?) and bufferSize to tick(...)
         - [ ] compiler_spec: unit test for clicks after count-in and pickup

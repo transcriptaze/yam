@@ -1151,7 +1151,6 @@ toolbar #debug {
   grid-area: debug;
   mask-image: url("/images/bug.svg");
   mask-size: 30px;
-  display: none;
 }
 toolbar #debug.enabled {
   background-color: #dc322f;

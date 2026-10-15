@@ -1,13 +1,4 @@
-export const STATE = {
-  START: 0,
-  STOPPED: 1,
-  STARTING: 2,
-  PLAYING: 3,
-  STOPPING: 4,
-  PAUSED: 5,
-}
-
-Object.freeze(STATE)
+import { STATE } from '../shared/constants.js'
 
 export class FSM {
   constructor() {
@@ -31,11 +22,6 @@ export class FSM {
   get playing() {
     return this.state === STATE.PLAYING
   }
-
-  // // NTS: interim thing for worklet 2 only
-  // set playing(_v) {
-  //   this.state = STATE.PLAYING
-  // }
 
   get stopping() {
     return this.state === STATE.STOPPING

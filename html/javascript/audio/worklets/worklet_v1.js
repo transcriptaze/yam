@@ -1,10 +1,10 @@
 import * as FSM from './FSM.js'
 import * as level from './level.js'
-import { STATE } from './FSM.js'
 import { Clock } from './clock.js'
 
 import { VM } from '../vm/vm.js'
 import { OPCODES, SUBDIVISIONS } from '../vm/constants.js'
+import { STATE } from '../shared/constants.js'
 
 const START_DELAY = 250
 let DEBUG = false

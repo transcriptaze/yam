@@ -75,8 +75,6 @@ export function putTracks(tracks) {
 }
 
 export function putTrack(track) {
-  infof(`store track '${track.title}'`)
-
   const f = (db) => {
     const transaction = db.transaction(['tracks'], 'readwrite')
 
@@ -96,8 +94,6 @@ export function putTrack(track) {
 }
 
 export function deleteTrack(track) {
-  infof(`delete track '${track.title}'`)
-
   const f = (db) => {
     const transaction = db.transaction(['tracks'], 'readwrite')
 

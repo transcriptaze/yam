@@ -1,6 +1,6 @@
 BUILD := $(shell git rev-parse --short HEAD)
 UNAME := $(shell uname)
-VERSION ?= v0.3.2
+VERSION ?= v0.3.3
 
 ifeq ($(UNAME),Darwin)
    SED := sed -i ''
@@ -92,12 +92,16 @@ cloudflare: cloudflare-build
 	npx wrangler pages deploy --project-name yam dist/cloudflare
 
 debug:
-	npm run debug
+	find test -name "**.js" -exec npx prettier --write {} +
+	npm run vm
 
 sass: 
 	npx sass --watch sass:html/css --no-source-map  --style=expanded
 
-run: build
+run: go
+	./bin/yam --html ./html
+
+python-run: build
 	python3 yam.py
 
 run-yam: package

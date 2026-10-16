@@ -14,6 +14,7 @@ class Engine {
   #recorder = null
   #initialised = false
   #armed = false
+  #debug = false
 
   #BPM = 120
   #timeSignature = '4:4'
@@ -34,7 +35,13 @@ class Engine {
     } else {
       return soundsets
         .get(ctx, this.#soundset)
-        .then((sounds) => metronome(ctx, sounds, this.#subscribers))
+        .then((sounds) => {
+          if (this.#debug) {
+            return metronome_v0(ctx, sounds, this.#subscribers)
+          } else {
+            return metronome_v1(ctx, sounds, this.#subscribers)
+          }
+        })
         .then((metronome) => {
           metronome.track = this.#track
 
@@ -50,17 +57,14 @@ class Engine {
           const recorder = new MediaRecorder(stream.stream)
 
           recorder.addEventListener('start', () => {
-            console.log('START')
             this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'recording' } }))
           })
 
           recorder.addEventListener('stop', () => {
-            console.log('STOP')
             this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'stop' } }))
           })
 
           recorder.addEventListener('dataavailable', (e) => {
-            console.log('ON-DATA-AVAILABLE')
             if (this.#armed) {
               this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.RECORDING, { detail: { state: 'done', audio: e.data } }))
             }
@@ -113,7 +117,8 @@ class Engine {
   }
 
   set debug(dbg) {
-    this.#exec(() => (this.#metronome.debug = dbg))
+    // this.#exec(() => (this.#metronome.debug = dbg))
+    this.#debug = dbg
   }
 
   play() {
@@ -286,8 +291,12 @@ class Engine {
   }
 }
 
-function metronome(ctx, sounds, subscribers) {
-  return ctx.audioWorklet.addModule('./javascript/audio/worklets/worklet.js').then(() => new nodes.MetronomeNode(ctx, sounds, subscribers))
+function metronome_v0(ctx, sounds, subscribers) {
+  return ctx.audioWorklet.addModule('./javascript/audio/worklets/worklet_v0.js').then(() => new nodes.MetronomeV0(ctx, sounds, subscribers))
+}
+
+function metronome_v1(ctx, sounds, subscribers) {
+  return ctx.audioWorklet.addModule('./javascript/audio/worklets/worklet_v1.js').then(() => new nodes.MetronomeV1(ctx, sounds, subscribers))
 }
 
 export const engine = new Engine()

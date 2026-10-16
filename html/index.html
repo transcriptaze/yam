@@ -2,6 +2,7 @@
 <html class="metronome" data-theme="default">
   <head>
     <title>Yet Another Metronome</title>
+    <link rel="manifest"   href="/manifest.json">
     <link rel="icon"       href="/favicon.png" type="image/png" />
     <link rel="stylesheet" href="./css/YAM.css" />
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
@@ -78,6 +79,7 @@
             <button id="theme"      class="icon-theme"       aria-label="Theme"></button>
             <button id="about"      class="icon-about"       aria-label="About"></button>
             <button id="oops"       class="icon-oops hidden" aria-label="Ooops"></button>
+            <button id="debug"      class="icon-debug"       aria-label="Debug"></button>
           </div>
         </div>
       </toolbar>
@@ -760,10 +762,10 @@
 
     <template id="template-add-tracks">
       <div class="tracklist">
-        <ul></ul>
-        <hr />
         <button id="new-track">&#11000;&nbsp;new track</button>
         <button id="random-track">&#11000;&nbsp;random track</button>
+        <hr />
+        <ul></ul>
       </div>
     </template>
 
@@ -944,7 +946,11 @@
   <!-- SCRIPTS -->
   <script type="module">
     import "./javascript/widgets/widgets.js"
-    import { initialise, reset, show, load, save, record, requestWakeLock, toggleWakeLock, onError, showError, toggleTheme } from './javascript/YAM.js'
+    import { initialise, reset, show, load, save, record, onError, showError, 
+             requestWakeLock, 
+             toggleWakeLock,
+             toggleTheme,
+             toggleDebug } from './javascript/YAM.js'
 
     const toolbar = {
       reset: document.querySelector('toolbar #reset'),
@@ -960,6 +966,7 @@
       theme: document.querySelector('toolbar #theme'),
       about: document.querySelector('toolbar #about'),
       oops: document.querySelector('toolbar #oops'),
+      debug: document.querySelector('toolbar #debug'),
     }
 
     // ... attach event handlers (because .. Safari)
@@ -973,6 +980,7 @@
     toolbar.wakelock.onclick = () => toggleWakeLock()
     toolbar.theme.onclick = () =>  toggleTheme()
     toolbar.oops.onclick = () => showError()
+    toolbar.debug.onclick = () =>  toggleDebug()
 
     toolbar.fullscreen.addEventListener('click', (event) => {
       if (document.fullscreenEnabled) {

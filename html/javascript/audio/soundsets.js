@@ -9,6 +9,7 @@ const SOUNDS = [
   'audio/default/tack.wav',
   'audio/default/stick.wav',
   'audio/default/ding.wav',
+  'audio/default/skip.wav',
 ]
 
 const FETCH = {
@@ -48,13 +49,14 @@ export function get(ctx, soundset) {
     })
   })
 
-  return promise.then(([tick, tock, tack, stick, ding]) => {
+  return promise.then(([tick, tock, tack, stick, ding, skip]) => {
     return {
       tick: tick,
       tock: tock,
       tack: tack,
       stick: stick,
       ding: ding,
+      skip: skip,
     }
   })
 }

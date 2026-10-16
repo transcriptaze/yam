@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Unreleased
+
+### Updated
+1. Added explicit position-anchors for popovers (browser behaviour change).
+
+
 ## [0.3.2](https://github.com/transcriptaze/yam/releases/tag/v0.3.2) - 2026-07-23
 
 ### Added

@@ -38,7 +38,8 @@
 }
 :root {
   --logo: url("/images/logo.png");
-  --background: #ffffff url("../images/textures/ricepaper_v3.png");
+  --background: #fff8e7 url("../images/textures/ricepaper.png");
+  --background_old: #ffffff url("../images/textures/ricepaper_v3.png");
   --panel-background: transparent;
   --panel-border: 1px solid red;
   --metronome-button-disabled: #c0c0c0;
@@ -46,7 +47,7 @@
   --toolbar-button-disabled: #ffffff76;
   --toolbar-button-enabled: #222222;
   --toolbar-button-hover: #c00000;
-  --toolbar-record-armed: #ff0000;
+  --toolbar-record-armed: #dc322f;
   --toolbar-wakelock-active: #b24a2c;
   --track-colour-muted: #a0a0a0;
   --track-colour-deleting: #a0a0a0;
@@ -1044,8 +1045,8 @@ toolbar div.menu div.left-menu {
 toolbar div.menu div.right-menu {
   display: grid;
   grid-template-columns: auto;
-  grid-template-rows: auto auto auto auto;
-  grid-template-areas: "settings" "fullscreen" "wakelock" "theme" "about";
+  grid-template-rows: auto auto auto auto auto auto;
+  grid-template-areas: "settings" "fullscreen" "wakelock" "theme" "about" "debug";
 }
 toolbar img {
   width: 36px;
@@ -1146,6 +1147,17 @@ toolbar #oops {
 toolbar #oops.hidden {
   display: none;
 }
+toolbar #debug {
+  grid-area: debug;
+  mask-image: url("/images/bug.svg");
+  mask-size: 30px;
+}
+toolbar #debug.enabled {
+  background-color: #dc322f;
+}
+toolbar #debug.hidden {
+  display: none;
+}
 toolbar a {
   padding-top: 6px;
   padding-bottom: 6px;
@@ -1156,9 +1168,6 @@ toolbar #reset:hover {
   background-color: var(--toolbar-button-hover);
 }
 toolbar #settings {
-  display: none;
-}
-toolbar #bug {
   display: none;
 }
 toolbar #wakelock.active {
@@ -1184,9 +1193,19 @@ toolbar.playlist #playlist {
 toolbar.playlist #edit {
   display: none;
 }
+toolbar.playlist #debug {
+  display: none;
+}
+
+toolbar.editor #debug {
+  display: none;
+}
 
 toolbar.statistics #save {
   display: block;
+}
+toolbar.statistics #debug {
+  display: none;
 }
 
 @media (max-width: 768px) and (orientation: portrait) {
@@ -1212,9 +1231,9 @@ toolbar.statistics #save {
   toolbar div.menu div.right-menu {
     width: fit-content;
     display: grid;
-    grid-template-columns: auto auto auto auto auto;
+    grid-template-columns: auto auto auto auto auto auto;
     grid-template-rows: auto;
-    grid-template-areas: "settings fullscreen wakelock theme about";
+    grid-template-areas: "debug settings fullscreen wakelock theme about";
     column-gap: 4px;
   }
   toolbar.metronome #playlist {
@@ -1224,6 +1243,9 @@ toolbar.statistics #save {
     display: none;
   }
   toolbar.metronome #save {
+    display: none;
+  }
+  toolbar.metronome #debug {
     display: none;
   }
   toolbar.metronome.editable #edit {
@@ -1294,9 +1316,10 @@ toolbar.statistics #save {
     justify-content: flex-start;
   }
   toolbar div.menu div.right-menu {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-end;
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto auto auto auto auto;
+    grid-template-areas: "debug" "settings" "fullscreen" "wakelock" "theme" "about";
   }
   toolbar.metronome #playlist {
     display: block;
@@ -1305,6 +1328,9 @@ toolbar.statistics #save {
     display: none;
   }
   toolbar.metronome #save {
+    display: none;
+  }
+  toolbar.metronome #debug {
     display: none;
   }
   toolbar.metronome.editable #edit {

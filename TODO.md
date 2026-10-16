@@ -2,29 +2,85 @@
 
 ## In Progress
 
-- [x] reset doesn't clear track from engine
-- [x] don't display stats for random tracks
-- [x] change Cloudflare to yamm
-- [x] tags (cf. https://github.com/transcriptaze/yam/issues/55)
+- [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
+    - [ ] node/worklet
+        - [ ] compiler_spec: unit test for clicks after count-in and pickup
+        - [ ] compiler_spec: unit test for subsection dings
+        - [ ] linker_spec: unit test for operator precedence
+        - [ ] linker_spec: unit test for e.g. time-signature and tick on the same measure+beat
 
-- [ ] Rework clock (cf. https://github.com/transcriptaze/yam/issues/46)
-    - [ ] Rework clock as VM
-       - compile to _sample:instruction_ using _fs_
-       - execute _instruction_ @ _sample_
-       - instruction:
-           - tick
-           - tock
-           - tack
-           - stick
-           - ding
-           - notify
+        - [ ] // FIXME this is really fragile - it depends on operator precendence to let skip, sticks, etc override e.g. tock. Compiler shouldn't really generate code 
+              like that. (see it('track + section clicks', function ())
+        - [ ] // FIXME redundant ops
+        - [ ] remove linker from compiler_spec
 
-    - [ ] 2:2 time
-    - [ ] unit test: BPM change
-    - [ ] unit test: tactus change
-    - [ ] Tick on on sixteenths
-    - [ ] Tick on triplets
-    - [ ] 'cue' generator
+        - [ ] rework FSM
+            - restart: STOPPING doesn't seem to ever transition to STOPPED
+        - [ ] remove old worklet
+
+        - [ ] 4:4
+            - [x] eighths
+            - [x] eighth doublets
+            - [ ] eighth triplets
+            - [x] quarter notes
+            - [ ] dotted quarters
+            - [ ] half notes
+            - [ ] dotted half notes
+
+        - [ ] 2:2
+            - [ ] eighths
+            - [ ] eighth doublets
+            - [x] quarter notes
+            - [ ] dotted quarters
+            - [x] half notes
+            - [ ] dotted half notes
+
+        - [x] 6:8
+            - [x] dotted quarters
+            - [x] fix pads for dotted quarters
+            - [x] rethink to not use fractional beats
+            - [ ] eighths
+            - [ ] eighth doublets
+            - [ ] eighth triplets
+
+        - [ ] 5:4
+            - [x] quarter notes
+            - [ ] eighths
+            - [ ] eighth doublets
+            - [ ] dotted quarters
+            - [ ] half notes
+            - [ ] dotted half notes
+
+        - [ ] optimise VM::tick
+        - [ ] optimise VM::click
+        - [ ] optimise VM::exec
+        - [ ] let script drive pads/info/etc
+
+        - (?) exec: inject actions
+        - [ ] linker: combine multiple actions into one
+        - [ ] node+worklet per run a la YAD
+        - [ ] replace flip with ring buffer + animation timer
+        - (?) bake gain into node::sample 
+
+        - [ ] figure out the floating point equality thing for 1.333, etc
+            - 1/3 = 85/256 (ref. https://www.youtube.com/watch?v=xs5iOwkX9fU)
+            - f32: 0.3330000107288360595703125
+            - f64: 0.3330000000000000182076576083554901182651519775390625
+            - f32: 1/3 = 0.3333333432674407958984375
+            - f64: 1/3 = 0.333333333333333314829616256247386932373046875
+
+    - [ ] sixteenths
+    - [ ] triplets
+    - https://www.youtube.com/watch?v=6BcpkEL--fU&list=WL&index=13
+
+
+## To Be Done
+
+https://evergarden.moe/
+
+- [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
+- [ ] passive:true (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
+- [ ] capture:down (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 
 - [ ] editor - default reverted to 4:4 instead of continuing with 6:4 (cf. https://github.com/transcriptaze/yam/issues/54)
 
@@ -330,6 +386,9 @@
 12. CLI (?)
 
 ## Other
+- (?) neural net
+      - https://www.youtube.com/watch?v=dbXCghmnyEs
+
 - (?) Processing
       - https://processing.org/reference/libraries/sound/index.html
       - https://code.compartmental.net/minim

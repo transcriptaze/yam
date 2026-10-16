@@ -19,6 +19,10 @@
         "ding": {
             "file": "audio/default/ding.wav",
             "version": 0
+        },
+        "skip": {
+            "file": "audio/default/skip.wav",
+            "version": 0
         }
     }
 }

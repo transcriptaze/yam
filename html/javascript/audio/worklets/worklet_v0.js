@@ -1,7 +1,7 @@
 import * as FSM from './FSM.js'
 import * as level from './level.js'
 import { Clock } from './clock.js'
-import { DOTTED_QUARTER } from '../shared/constants.js'
+import { STATE, DOTTED_QUARTER } from '../shared/constants.js'
 
 const INF = Number.POSITIVE_INFINITY
 
@@ -33,7 +33,7 @@ export class Metronome extends AudioWorkletProcessor {
     this.clicks = new Map()
     this.clock = new Clock()
 
-    this.port.onmessage = this.onMessage.bind(this)
+    this.port.onmessage = (event) => this.#onMessage(event)
   }
 
   static get parameterDescriptors() {
@@ -83,7 +83,7 @@ export class Metronome extends AudioWorkletProcessor {
     ]
   }
 
-  onMessage(event) {
+  #onMessage(event) {
     switch (event.data.message) {
       case 'initialise':
         this.initialise(event)
@@ -262,7 +262,7 @@ export class Metronome extends AudioWorkletProcessor {
       if (clock.time >= 250) {
         if (this.FSM.onPreamble()) {
           clock.reset()
-          this.flip({ state: FSM.STATE.PLAYING, bar: 0, beat: 0, loops: this.#loops })
+          this.flip({ state: STATE.PLAYING, bar: 0, beat: 0, loops: this.#loops })
           this.port.postMessage({
             message: 'playing',
             track: this.#track?.UUID ?? '',
@@ -306,14 +306,14 @@ export class Metronome extends AudioWorkletProcessor {
           const loops = this.track?.loops ?? INF
 
           if (loop && (loops == INF || this.#loops < loops) && this.FSM.onPlay()) {
-            this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
+            this.flip({ state: STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
             this.section = null
             this.clock.reset()
           } else {
             const loops = this.#loops
             this.#loops = 0 // NTS: done, reset loop count
 
-            this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
+            this.flip({ state: STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
             this.port.postMessage({
               message: 'stopped',
               track: this.#track?.UUID ?? '',
@@ -334,7 +334,7 @@ export class Metronome extends AudioWorkletProcessor {
           }
 
           this.cue(cluck.beat, pulse)
-          this.flip({ state: FSM.STATE.PLAYING, bar: cluck.bar, beat: cluck.beat, loops: this.#loops })
+          this.flip({ state: STATE.PLAYING, bar: cluck.bar, beat: cluck.beat, loops: this.#loops })
 
           log('PLAY', clock.t, clock.time, BPM, cluck.bar, cluck.beat, tactus, figura, pulse)
         }
@@ -353,7 +353,7 @@ export class Metronome extends AudioWorkletProcessor {
     } else if (this.stopping) {
       this.FSM.onStopped()
       // NTS: send current loops - doesn't reset loop count on stop anymore
-      this.flip({ state: FSM.STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
+      this.flip({ state: STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
 
       log('STOP', clock.t, clock.time, BPM, Number.NaN, Number.NaN, tactus, figura, pulse)
     }

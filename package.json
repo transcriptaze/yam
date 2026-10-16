@@ -1,7 +1,7 @@
 {
     "type": "module",
     "name": "yam",
-    "version": "0.3.2",
+    "version": "0.3.3",
     "description": "WebAudio Metronome",
     "author": "transcriptaze",
     "license": "GPL-3.0",
@@ -23,7 +23,7 @@
         "css": "sass sass:httpd/css --no-source-map --style=expanded",
         "watch": "sass --watch sass:httpd/css --no-source-map --style=expanded",
         "test": "mocha --require test/setup.js 'test/**/*_spec.js'",
-        "klock": "mocha --require test/setup.js 'test/audio/clock/klock_spec.js'",
+        "vm": "mocha --require test/setup.js 'test/audio/*_spec.js'",
         "debug": "mocha --require test/setup.js 'test/misc/util_spec.js'"
     },
 

@@ -5,6 +5,8 @@
   padding: 0;
 
   div.MM {
+    anchor-name: --section-mm-anchor;    
+
     display: grid;
     grid-template-columns: 1fr 1fr auto;
     grid-template-rows: 1fr;
@@ -51,6 +53,7 @@
     }
 
     [popover] {
+      position-anchor: --section-mm-anchor;    
       top: calc(anchor(bottom) - 12px);
       left: calc(anchor(left) + 12px);
 

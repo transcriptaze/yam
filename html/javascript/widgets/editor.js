@@ -17,6 +17,12 @@ export class Editor extends HTMLElement {
 
   // ... handlers
   #handlers = {
+    title: {
+      change: (_event) => {
+        this.#modified = true
+      },
+    },
+
     timeSignature: {
       change: (event) => {
         const defaults = {}
@@ -226,6 +232,8 @@ export class Editor extends HTMLElement {
     this.#timeSignature.addEventListener('change', this.#handlers.timeSignature.change)
     this.#mm.addEventListener('change', this.#handlers.mm.changed)
     this.#plus.addEventListener('click', this.#handlers.plus.click)
+
+    this.#fields.title.addEventListener('input', this.#handlers.title.change)
 
     this.#fields.BPM.addEventListener('input', this.#handlers.BPM.change)
     this.#fields.BPM.addEventListener('change', this.#handlers.BPM.changed)

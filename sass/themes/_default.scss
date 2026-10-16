@@ -1,6 +1,7 @@
 @use '../palettes/default' as colours;
 @use 'sass:color';
 
+$cosmic_latte: colours.$cosmic_latte;
 $white: colours.$white;
 $black: colours.$black;
 $grey: colours.$grey;
@@ -9,7 +10,8 @@ $amber: #ff800040;
 
 :root {
   --logo: url('/images/logo.png');
-  --background: #{$white} url("../images/textures/ricepaper_v3.png");
+  --background: #{$cosmic_latte} url("../images/textures/ricepaper.png");
+  --background_old: #{$white} url("../images/textures/ricepaper_v3.png");
   --panel-background: transparent;
   --panel-border: 1px solid red;
   
@@ -19,7 +21,7 @@ $amber: #ff800040;
   --toolbar-button-disabled: #ffffff76;
   --toolbar-button-enabled: #222222;
   --toolbar-button-hover: #c00000;
-  --toolbar-record-armed: #ff0000;
+  --toolbar-record-armed: #dc322f;
   --toolbar-wakelock-active: #b24a2c;
 
   --track-colour-muted: #{$grey};

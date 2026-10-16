@@ -6,7 +6,8 @@
 
   div.MM {
     position: relative;
-
+    anchor-name: --MM-anchor;
+    
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 1fr;
@@ -139,6 +140,7 @@
     }
 
     [popover] {
+      position-anchor: --MM-anchor;
       top: calc(anchor(bottom) - 12px);
       left: calc(anchor(left) + 12px);
 

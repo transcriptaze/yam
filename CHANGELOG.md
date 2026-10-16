@@ -2,8 +2,13 @@
 
 ## Unreleased
 
+
+## [0.3.3](https://github.com/transcriptaze/yam/releases/tag/v0.3.3) - 2026-10-16
+
 ### Updated
 1. Added explicit position-anchors for popovers (browser behaviour change).
+2. Reworked WebAudio node/worklet so to compile tracks outside of the worklet to an executable
+   script that is executed by a VM in the worklet in real-time.
 
 
 ## [0.3.2](https://github.com/transcriptaze/yam/releases/tag/v0.3.2) - 2026-07-23

@@ -1383,10 +1383,11 @@ toolbar.statistics #debug {
 }
 div.metronome {
   box-sizing: border-box;
+  overflow: hidden;
   display: grid;
   grid-template-columns: 1fr auto auto;
-  grid-template-rows: auto auto auto auto 1fr;
-  grid-template-areas: "pads pads pads" "info info info" "metrics loop ding" "bpm bpm bpm" "metronome metronome metronome";
+  grid-template-rows: auto auto auto auto 1fr auto;
+  grid-template-areas: "pads pads pads" "info info info" "metrics loop ding" "bpm bpm bpm" "metronome metronome metronome" "sparklines sparklines sparklines";
   justify-items: center;
   align-items: start;
 }
@@ -1476,6 +1477,13 @@ div.metronome yam-mm {
 }
 div.metronome yam-loop {
   height: 100%;
+  outline: none;
+}
+div.metronome yam-sparklines {
+  grid-area: sparklines;
+  align-self: center;
+  width: 100%;
+  height: 40px;
   outline: none;
 }
 

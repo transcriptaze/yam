@@ -2,6 +2,12 @@
 
 ## In Progress
 
+- [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
+    - [x] widget
+    - [ ] dark mode text
+    - [ ] update on played
+
+
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
         - [ ] compiler_spec: unit test for clicks after count-in and pickup
@@ -54,7 +60,6 @@
         - [ ] optimise VM::tick
         - [ ] optimise VM::click
         - [ ] optimise VM::exec
-        - [ ] let script drive pads/info/etc
 
         - (?) exec: inject actions
         - [ ] linker: combine multiple actions into one
@@ -69,16 +74,18 @@
             - f32: 1/3 = 0.3333333432674407958984375
             - f64: 1/3 = 0.333333333333333314829616256247386932373046875
 
-    - [ ] sixteenths
-    - [ ] triplets
-    - https://www.youtube.com/watch?v=6BcpkEL--fU&list=WL&index=13
 
 
 ## To Be Done
 
-https://evergarden.moe/
+- https://evergarden.moe/
+- https://www.youtube.com/watch?v=6BcpkEL--fU&list=WL&index=13
 
-- [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
+- [ ] sixteenths
+- [ ] triplets
+- [ ] swung triplets
+- [ ] let script drive pads/info/etc
+
 - [ ] passive:true (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 - [ ] capture:down (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 

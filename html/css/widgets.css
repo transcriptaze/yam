@@ -3143,3 +3143,30 @@ div.playlist-track.new div#title {
   border: none;
   font-family: Lato;
 }
+
+:host(.component-sparklines) div {
+  position: relative;
+  box-sizing: border-box;
+  display: block;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding-top: 0px;
+  padding-bottom: 8px;
+  padding-left: 16px;
+  padding-right: 16px;
+  border: none;
+  outline: none;
+  overflow: hidden;
+}
+:host(.component-sparklines) canvas {
+  box-sizing: border-box;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  border: none;
+  font-family: Lato;
+}

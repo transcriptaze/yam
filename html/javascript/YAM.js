@@ -27,6 +27,7 @@ const widgets = {
   tracks: document.querySelector('yam-playlist-tracks'),
   editor: document.querySelector('yam-editor'),
   windmill: document.querySelector('div.windmill'),
+  sparklines: document.querySelector('yam-sparklines'),
 }
 
 export function initialise() {
@@ -80,7 +81,7 @@ export function initialise() {
 
   // ... initialise playlists, tracks and statistics
   Promise.all([models.playlists.restore(), models.tracks.restore(), statistics.restore()])
-    .then(([playlists, tracks, _statistics]) => {
+    .then(([playlists, tracks, statistics]) => {
       playlists.forEach((playlist) => playlist.initialise())
       widgets.playlists.initialise(playlists, tracks)
 
@@ -108,6 +109,7 @@ export function initialise() {
       widgets.metronome.bof = playlist?.BOF ?? true
       widgets.metronome.eof = playlist?.EOF ?? true
       widgets.tracks.playlist = { playlist: playlist, selected: null }
+      widgets.sparklines.statistics = statistics
 
       models.playlists.prune(models.tracks.tracks)
       models.tracks.prune(models.playlists)
@@ -742,6 +744,8 @@ function onPlaylistSelected(event) {
 
   widgets.metronome.bof = playlist?.BOF ?? true
   widgets.metronome.eof = playlist?.EOF ?? true
+
+  widgets.sparklines.track = track
 
   widgets.editor.track = track
   engine.track = track

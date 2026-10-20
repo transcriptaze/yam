@@ -19,6 +19,7 @@ export class Sparklines extends HTMLElement {
   #played = []
 
   #style = {
+    text: '#222222',
     labels: 'weekdays-small',
     fonts: {
       normal: '20px sans-serif',
@@ -49,6 +50,7 @@ export class Sparklines extends HTMLElement {
 
     this.#style.fonts.normal = style.getPropertyValue('--weekdays-font').trim() || '20px sans-serif'
     this.#style.fonts.small = style.getPropertyValue('--weekdays-small-font').trim() || '16px sans-serif'
+    this.#style.text = style.getPropertyValue('--text').trim() || '#222222'
 
     this.resizeObserver = new ResizeObserver(([_entry]) => {
       const div = this.shadowRoot.querySelector('div')
@@ -177,7 +179,7 @@ export class Sparklines extends HTMLElement {
 
           ctx.font = this.#style.fonts.normal
           ctx.textAlign = 'center'
-          ctx.fillStyle = '#000000'
+          ctx.fillStyle = this.#style.text
           ctx.fillText(day, x, height - 2)
         })
       }
@@ -190,7 +192,7 @@ export class Sparklines extends HTMLElement {
 
           ctx.font = this.#style.fonts.small
           ctx.textAlign = 'center'
-          ctx.fillStyle = '#000000'
+          ctx.fillStyle = this.#style.text
           ctx.fillText(day, x, height - 2)
         })
       }

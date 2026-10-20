@@ -22,7 +22,6 @@ class Statistics {
   }
 
   summarize(track) {
-    console.log({ track })
     const stats = {
       track: track,
       played: 0,
@@ -65,6 +64,7 @@ class Statistics {
     const end = new Date(to.getFullYear(), to.getMonth(), to.getDate() + 1)
 
     const records = this.#rs.filter((v) => v.track === track && v.start >= start && v.start < end)
+
     const played = [...query(start, end, records)]
     const total = played.reduce((N, v) => N + v.played, 0)
 

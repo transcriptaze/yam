@@ -362,24 +362,25 @@ export class Metronome2 extends AudioWorkletProcessor {
 
       this.#loops++
 
-      this.port.postMessage({
-        message: 'stopped',
-        track: this.#script?.UUID ?? '',
-        loops: this.#loops,
-        samples: this.#samples,
-        duration: this.#samples / sampleRate,
-      })
-
+      // NTS: update statistics
       this.port.postMessage({
         message: 'done',
         track: this.#script?.UUID ?? '',
       })
 
-      // NTS minor hack to reset displayed loop count when all looped out
+      // NTS: reset displayed loop count when all looped out
       if (this.#loops < this.#script.loops) {
         this.flip({ state: STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
       } else {
         this.flip({ state: STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
+
+        this.port.postMessage({
+          message: 'stopped',
+          track: this.#script?.UUID ?? '',
+          loops: this.#loops,
+          samples: this.#samples,
+          duration: this.#samples / sampleRate,
+        })
       }
     }
 

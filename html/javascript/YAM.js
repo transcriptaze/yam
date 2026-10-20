@@ -373,6 +373,7 @@ export async function toggleTheme() {
   }
 
   settings.save()
+  widgets.sparklines.refresh()
 }
 
 export async function toggleDebug() {

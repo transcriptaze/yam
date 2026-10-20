@@ -22,7 +22,6 @@ export class Sparklines extends HTMLElement {
   #played = []
 
   #style = {
-    text: '#222222',
     labels: 'weekdays-small',
     fonts: {
       normal: '20px sans-serif',
@@ -53,7 +52,6 @@ export class Sparklines extends HTMLElement {
 
     this.#style.fonts.normal = style.getPropertyValue('--weekdays-font').trim() || '20px sans-serif'
     this.#style.fonts.small = style.getPropertyValue('--weekdays-small-font').trim() || '16px sans-serif'
-    this.#style.text = style.getPropertyValue('--text').trim() || '#222222'
 
     this.resizeObserver = new ResizeObserver(([_entry]) => {
       const div = this.shadowRoot.querySelector('div')
@@ -127,12 +125,18 @@ export class Sparklines extends HTMLElement {
     this.#redraw()
   }
 
+  refresh() {
+    this.#redraw()
+  }
+
   #redraw() {
+    const style = getComputedStyle(this)
     const canvas = this.shadowRoot.querySelector('canvas')
     const ctx = canvas.getContext('2d')
 
     const width = canvas.width
     const height = canvas.height
+    const textColour = style.getPropertyValue('--text').trim() || '#222222'
 
     ctx.fillStyle = 'transparent'
     ctx.clearRect(0, 0, width, height)
@@ -197,7 +201,7 @@ export class Sparklines extends HTMLElement {
 
           ctx.font = this.#style.fonts.normal
           ctx.textAlign = 'center'
-          ctx.fillStyle = this.#style.text
+          ctx.fillStyle = textColour
           ctx.fillText(day, x, height - 2)
         })
       }
@@ -210,7 +214,7 @@ export class Sparklines extends HTMLElement {
 
           ctx.font = this.#style.fonts.small
           ctx.textAlign = 'center'
-          ctx.fillStyle = this.#style.text
+          ctx.fillStyle = textColour
           ctx.fillText(day, x, height - 2)
         })
       }

@@ -1,3 +1,5 @@
+import { EVENTS } from '../constants.js'
+
 const WEEKDAYS = ['S', 'M', 'T', 'W', 'T', 'F', 'S']
 
 const COLOURS = [
@@ -16,6 +18,7 @@ export class Sparklines extends HTMLElement {
   }
 
   #statistics = null
+  #track = null
   #played = []
 
   #style = {
@@ -89,12 +92,26 @@ export class Sparklines extends HTMLElement {
 
   set statistics(v) {
     this.#statistics = v
+
+    v.addEventListener(EVENTS.STATISTICS_UPDATED, (e) => {
+      if (this.#track != null && this.#track !== '' && e.detail.track === this.#track) {
+        const now = new Date()
+        const year = now.getFullYear()
+        const month = now.getMonth()
+        const day = now.getDate()
+        const from = new Date(year, month, day - 14)
+
+        this.#played = this.#statistics?.query(this.#track, from, now)?.played ?? []
+        this.#redraw()
+      }
+    })
   }
 
   set track(v) {
     const UUID = v?.UUID ?? ''
 
     if (UUID === '') {
+      this.#track = ''
       this.#played = []
     } else {
       const now = new Date()
@@ -103,6 +120,7 @@ export class Sparklines extends HTMLElement {
       const day = now.getDate()
       const from = new Date(year, month, day - 14)
 
+      this.#track = UUID
       this.#played = this.#statistics?.query(UUID, from, now)?.played ?? []
     }
 

@@ -16,9 +16,14 @@ class Statistics {
   }
 
   #rs = []
+  #subscribers = new EventTarget()
 
   load(list) {
     this.#rs = list
+  }
+
+  addEventListener(event, f, options) {
+    this.#subscribers.addEventListener(event, f, options)
   }
 
   summarize(track) {
@@ -94,7 +99,19 @@ class Statistics {
 
     save({ ...this.#record })
 
+    const track = datastore.tracks.get(e.detail.track)
+
+    this.#rs.push({
+      ...this.#record,
+      title: track?.title ?? '',
+      countIn: track?.countIn ?? 0,
+      pickup: track?.pickup ?? 0,
+      measures: track?.bars ?? INF,
+      tempo: track?.tempo ?? 120,
+    })
+
     this.#clear()
+    this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.STATISTICS_UPDATED, { detail: { track: e.detail.track } }))
   }
 
   onClick(e) {
@@ -116,7 +133,19 @@ class Statistics {
 
     save({ ...this.#record })
 
+    const track = datastore.tracks.get(e.detail.track)
+
+    this.#rs.push({
+      ...this.#record,
+      title: track?.title ?? '',
+      countIn: track?.countIn ?? 0,
+      pickup: track?.pickup ?? 0,
+      measures: track?.bars ?? INF,
+      tempo: track?.tempo ?? 120,
+    })
+
     this.#clear()
+    this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.STATISTICS_UPDATED, { detail: { track: e.detail.track } }))
   }
 
   #clear() {

@@ -5,7 +5,7 @@
 - [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
     - [x] widget
     - [x] update on played
-    - [ ] dark mode text
+    - [x] dark mode text
 
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)

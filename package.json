@@ -13,12 +13,10 @@
     "bugs": {
         "url": "https://github.com/transcriptaze/yam/issues"
     },
-
     "repository": {
         "type": "git",
         "url": "git+https://github.com/transcriptaze/yam.git"
     },
-
     "scripts": {
         "css": "sass sass:httpd/css --no-source-map --style=expanded",
         "watch": "sass --watch sass:httpd/css --no-source-map --style=expanded",
@@ -26,7 +24,6 @@
         "vm": "mocha --require test/setup.js 'test/audio/*_spec.js'",
         "debug": "mocha --require test/setup.js 'test/misc/util_spec.js'"
     },
-
     "devDependencies": {
         "@eslint/js": "^9.20.0",
         "chai": "^5.2.0",
@@ -37,5 +34,11 @@
         "prettier": "^3.7.1",
         "sass": "^1.87.0",
         "wrangler": "^4.100.0"
+    },
+    "allowScripts": {
+        "esbuild@0.28.2": true,
+        "fsevents@2.3.3": true,
+        "workerd@1.20261019.1": true,
+        "@parcel/watcher@2.6.0": true
     }
 }

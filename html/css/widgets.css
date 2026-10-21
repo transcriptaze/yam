@@ -37,7 +37,7 @@
   size-adjust: 120%;
 }
 :root {
-  --logo: url("/images/logo.png");
+  --logo: url('/images/logo.png');
   --background: #fff8e7 url("../images/textures/ricepaper.png");
   --background_old: #ffffff url("../images/textures/ricepaper_v3.png");
   --panel-background: transparent;
@@ -57,8 +57,8 @@
   --beat-on: red;
   --info-title-text: #222222;
   --info-detail-text: #222222;
-  --info-icon: url("../images/save.svg");
-  --info-icon-disabled: url("../images/save-disabled.svg");
+  --info-icon: url('../images/save.svg');
+  --info-icon-disabled: url('../images/save-disabled.svg');
   --time-signature-none: #bfbfbf;
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;
@@ -82,8 +82,8 @@
   --button-background-translucent: #666666;
   --button-background-transparent: rgba(192, 192, 192, 0.1);
   --button-border: 1px solid #222222;
-  --checkbox-background-unchecked: url("/images/checkbox-unchecked.svg") no-repeat center / contain;
-  --checkbox-background-checked: url("/images/checkbox-checked.svg") no-repeat center / contain;
+  --checkbox-background-unchecked: url('/images/checkbox-unchecked.svg') no-repeat center / contain;
+  --checkbox-background-checked: url('/images/checkbox-checked.svg') no-repeat center / contain;
   --input-background: #ffffff;
   --select-background: #ffffff;
   --playlist-title-background: rgba(255, 128, 0, 0.2509803922);
@@ -130,7 +130,7 @@
 }
 
 [data-theme=dark] {
-  --logo: url("/images/dark/logo.png");
+  --logo: url('/images/dark/logo.png');
   --background: #0f0f10 url("../images/textures/45degreee_fabric.webp");
   --panel-background: #0f0f10;
   --panel-border: 1px solid #7a7a7f;
@@ -149,8 +149,8 @@
   --beat-on: rgba(220, 50, 47, 0.9);
   --info-title-text: #d6d6d8;
   --info-detail-text: #d6d6d8;
-  --info-icon: url("../images/dark/save.svg");
-  --info-icon-disabled: url("../images/dark/save-disabled.svg");
+  --info-icon: url('../images/dark/save.svg');
+  --info-icon-disabled: url('../images/dark/save-disabled.svg');
   --knob-background-opacity: 0%;
   --knob-ticks: #b9b9bc;
   --knob-labels: rgba(185, 185, 188, 0.9);
@@ -174,8 +174,8 @@
   --button-background-translucent: #9a9a9e;
   --button-background-transparent: rgba(154, 154, 158, 0.1);
   --button-border: 1px solid #b9b9bc;
-  --checkbox-background-unchecked: url("/images/dark/checkbox-unchecked.svg") no-repeat center / contain;
-  --checkbox-background-checked: url("/images/dark/checkbox-checked.svg") no-repeat center / contain;
+  --checkbox-background-unchecked: url('/images/dark/checkbox-unchecked.svg') no-repeat center / contain;
+  --checkbox-background-checked: url('/images/dark/checkbox-checked.svg') no-repeat center / contain;
   --input-background: #b9b9bc;
   --select-background: #b9b9bc;
   --playlist-title-background: #343438;
@@ -684,10 +684,12 @@
   outline: none;
   font-size: 0.8em;
   text-align: center;
-  -moz-appearance: textfield;
 }
 :host(.component-time-signature) div.time-signature div#list div.content div.custom input::-webkit-inner-spin-button {
   -webkit-appearance: none;
+}
+:host(.component-time-signature) div.time-signature div#list div.content div.custom input {
+  -moz-appearance: textfield;
 }
 :host(.component-time-signature) div.time-signature div#list div.content div.custom input:invalid {
   color: red;
@@ -704,11 +706,11 @@
 :host(.component-time-signature) div.time-signature.disabled button div span.icon {
   background-color: var(--icon-disabled);
 }
-:host(.component-time-signature) div.time-signature.locked button {
-  cursor: auto;
-}
 :host(.component-time-signature) div.time-signature.locked button div span.icon {
   background-color: var(--icon-locked);
+}
+:host(.component-time-signature) div.time-signature.locked button {
+  cursor: auto;
 }
 :host(.component-time-signature) div.time-signature.locked div.overlay {
   pointer-events: auto;
@@ -1905,10 +1907,6 @@ div.beat.on div.shape {
   background: var(--button-background-transparent);
   backdrop-filter: blur(2px);
   -webkit-backdrop-filter: blur(2px);
-  margin: 8px;
-  border: none;
-  border-radius: 50%;
-  z-index: 2;
 }
 :host(.component-playlist-tracks) div.playlist-tracks #plus div.blur {
   background: var(--button-background-translucent);
@@ -1920,6 +1918,12 @@ div.beat.on div.shape {
   mask-image: url("/images/circle-plus.svg");
   -webkit-mask-repeat: no-repeat;
   -webkit-mask-size: contain;
+}
+:host(.component-playlist-tracks) div.playlist-tracks #plus {
+  margin: 8px;
+  border: none;
+  border-radius: 50%;
+  z-index: 2;
 }
 :host(.component-playlist-tracks) div.playlist-tracks #save {
   width: 40px;
@@ -2092,9 +2096,6 @@ div.playlist-track #tags div div.tag {
   grid-template-rows: auto;
   column-gap: 4px;
   align-items: center;
-  font-size: 1em;
-  font-style: normal;
-  text-decoration: none;
 }
 div.playlist-track #tags div div.tag div.icon {
   grid-column: 1;
@@ -2114,6 +2115,11 @@ div.playlist-track #tags div div.tag span {
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+div.playlist-track #tags div div.tag {
+  font-size: 1em;
+  font-style: normal;
+  text-decoration: none;
 }
 div.playlist-track #tags div .tag[data-state=ignore] {
   color: #c0c0c0;
@@ -2363,10 +2369,12 @@ div.playlist-track.new div#title {
   grid-column: 4;
   grid-row: 1;
   min-width: 2em;
-  -moz-appearance: textfield;
 }
 :host(.component-editor) div.track-editor div.metrics #BPM::-webkit-inner-spin-button {
   -webkit-appearance: none;
+}
+:host(.component-editor) div.track-editor div.metrics #BPM {
+  -moz-appearance: textfield;
 }
 :host(.component-editor) div.track-editor div.metronome {
   box-sizing: border-box;
@@ -2702,10 +2710,12 @@ div.playlist-track.new div#title {
 }
 :host(.component-section) div.section input[type=number] {
   text-align: center;
-  -moz-appearance: textfield;
 }
 :host(.component-section) div.section input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
+}
+:host(.component-section) div.section input[type=number] {
+  -moz-appearance: textfield;
 }
 :host(.component-section) div.section #role {
   width: 8em;
@@ -2805,10 +2815,12 @@ div.playlist-track.new div#title {
 :host(.component-subsection) div.subsection input[type=number] {
   text-align: center;
   font-style: normal;
-  -moz-appearance: textfield;
 }
 :host(.component-subsection) div.subsection input[type=number]::-webkit-inner-spin-button {
   -webkit-appearance: none;
+}
+:host(.component-subsection) div.subsection input[type=number] {
+  -moz-appearance: textfield;
 }
 :host(.component-subsection) div.subsection #measures {
   width: 3em;
@@ -2956,10 +2968,12 @@ div.playlist-track.new div#title {
   outline: none;
   font-size: 0.8em;
   text-align: center;
-  -moz-appearance: textfield;
 }
 :host(.component-section-time-signature) div.time-signature div#list div.content div.custom input::-webkit-inner-spin-button {
   -webkit-appearance: none;
+}
+:host(.component-section-time-signature) div.time-signature div#list div.content div.custom input {
+  -moz-appearance: textfield;
 }
 :host(.component-section-time-signature) div.time-signature div#list div.content div.custom input:invalid {
   color: red;

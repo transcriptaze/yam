@@ -136,7 +136,8 @@ export class Sparklines extends HTMLElement {
 
     const width = canvas.width
     const height = canvas.height
-    const textColour = style.getPropertyValue('--text').trim() || '#222222'
+    const textColour = style.getPropertyValue('--sparklines-text').trim() || '#222222'
+    const lineColour = style.getPropertyValue('--sparklines-lines').trim() || '#44444480'
 
     ctx.fillStyle = 'transparent'
     ctx.clearRect(0, 0, width, height)
@@ -179,10 +180,28 @@ export class Sparklines extends HTMLElement {
         return a
       }, 1)
 
+      // ... grid
+      const max = 8
+      const grid = Array.from(harmonics(max))
+
+      ctx.beginPath()
+      ctx.strokeStyle = lineColour
+      ctx.lineWidth = 0.5
+
+      for (const line of grid) {
+        const H = height - 2
+        const y = (line * height) / 2.25
+
+        ctx.moveTo(0, H - y)
+        ctx.lineTo(width, H - y)
+      }
+
+      ctx.stroke()
+
       // ... bars (harmonic series)
       this.#played.forEach((record, ix) => {
         const x = bars[ix]
-        const n = record.played
+        const n = Math.min(record.played, max)
         const r = 1.25
 
         let sum = 0
@@ -190,24 +209,11 @@ export class Sparklines extends HTMLElement {
           sum += 1 / (r * i)
         }
 
-        const h = Math.min(height, height * (sum / 3.25))
+        const h = Math.min(height, height * (sum / 2.25))
 
         ctx.fillStyle = COLOURS[ix % COLOURS.length]
         ctx.fillRect(x - cw / 2, height - h - 2, cw, h)
       })
-
-      //  // ... bars (geometric series)
-      //  this.#played.forEach((record, ix) => {
-      //    const x = bars[ix]
-      //    const r = 0.6667
-      //    const n = record.played
-      //    const sum = 1 * ((1 - Math.pow(r, n)) / (1 - r))
-      //    const H = 1 / (1 - r)
-      //    const h = Math.min(height, height * (sum / H))
-      //
-      //    ctx.fillStyle = COLOURS[ix % COLOURS.length]
-      //    ctx.fillRect(x - cw / 2, height - h - 2, cw, h)
-      //  })
 
       // ... weekdays labels
       if (this.#style.labels === 'weekdays') {
@@ -219,7 +225,7 @@ export class Sparklines extends HTMLElement {
           ctx.font = this.#style.fonts.normal
           ctx.textAlign = 'center'
           ctx.fillStyle = textColour
-          ctx.fillText(day, x, height - 2)
+          ctx.fillText(day, x, height - 4)
         })
       }
 
@@ -232,10 +238,20 @@ export class Sparklines extends HTMLElement {
           ctx.font = this.#style.fonts.small
           ctx.textAlign = 'center'
           ctx.fillStyle = textColour
-          ctx.fillText(day, x, height - 2)
+          ctx.fillText(day, x, height - 6)
         })
       }
     }
+  }
+}
+
+function* harmonics(N, r = 1.25) {
+  let sum = 0
+  yield sum
+
+  for (let k = 1; k <= N; k++) {
+    sum += 1 / (k * r)
+    yield sum.toFixed(4)
   }
 }
 

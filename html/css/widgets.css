@@ -96,6 +96,8 @@
   --editor-subsection-background: #fcfcfc;
   --editor-subsection-img-none: grayscale(100%) opacity(25%);
   --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
+  --sparklines-text: var(--text);
+  --sparklines-lines: #44444480;
   --statistics-history-background: transparent;
   --role-count-in-colour: #d69574;
   --role-anacrusis-colour: #cbb469;
@@ -186,6 +188,8 @@
   --editor-subsection-background: #b9b9bc;
   --editor-subsection-img-none: grayscale(100%) opacity(35%);
   --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
+  --sparklines-text: var(--text);
+  --sparklines-lines: #b9b9bcc0;
   --statistics-history-background: #1f1f21;
 }
 

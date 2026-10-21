@@ -22,7 +22,7 @@ jobs:
         npm install prettier --save-dev
 
     - name: Install sass
-      run: npm install sass --save-dev
+      run: npm install --save-dev sass@1.105.2
 
     - name: Build
       run: make build-all

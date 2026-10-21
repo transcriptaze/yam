@@ -23,7 +23,7 @@ format:
 	find test            -name "*.js" -exec npx prettier --write {} +
 
 build: format
-# 	npx sass sass:html/css --no-source-map --style=expanded --trace
+	npx sass sass:html/css --no-source-map --style=expanded --trace
 	find html/javascript -name "*.js" -exec npx eslint --fix {} +
 
 test: build

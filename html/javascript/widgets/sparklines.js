@@ -179,18 +179,35 @@ export class Sparklines extends HTMLElement {
         return a
       }, 1)
 
-      // ... bars
-      const max = this.#played.reduce((a, v) => (v.played > a ? v.played : a), 0)
+      // ... bars (harmonic series)
+      this.#played.forEach((record, ix) => {
+        const x = bars[ix]
+        const n = record.played
+        const r = 1.25
 
-      if (max > 0) {
-        this.#played.forEach((record, ix) => {
-          const x = bars[ix]
-          const h = 0.9 * Math.ceil((height * record.played) / max)
+        let sum = 0
+        for (let i = 1; i <= n; i++) {
+          sum += 1 / (r * i)
+        }
 
-          ctx.fillStyle = COLOURS[ix % COLOURS.length]
-          ctx.fillRect(x - cw / 2, height - h - 2, cw, h)
-        })
-      }
+        const h = Math.min(height, height * (sum / 3.25))
+
+        ctx.fillStyle = COLOURS[ix % COLOURS.length]
+        ctx.fillRect(x - cw / 2, height - h - 2, cw, h)
+      })
+
+      //  // ... bars (geometric series)
+      //  this.#played.forEach((record, ix) => {
+      //    const x = bars[ix]
+      //    const r = 0.6667
+      //    const n = record.played
+      //    const sum = 1 * ((1 - Math.pow(r, n)) / (1 - r))
+      //    const H = 1 / (1 - r)
+      //    const h = Math.min(height, height * (sum / H))
+      //
+      //    ctx.fillStyle = COLOURS[ix % COLOURS.length]
+      //    ctx.fillRect(x - cw / 2, height - h - 2, cw, h)
+      //  })
 
       // ... weekdays labels
       if (this.#style.labels === 'weekdays') {

@@ -6,7 +6,8 @@
     - [x] widget
     - [x] update on played
     - [x] dark mode text
-
+    - [x] scale barlines geometrically
+    - [ ] horizontal gridlines
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet

@@ -37,7 +37,7 @@
   size-adjust: 120%;
 }
 :root {
-  --logo: url("/images/logo.png");
+  --logo: url('/images/logo.png');
   --background: #fff8e7 url("../images/textures/ricepaper.png");
   --background_old: #ffffff url("../images/textures/ricepaper_v3.png");
   --panel-background: transparent;
@@ -57,8 +57,8 @@
   --beat-on: red;
   --info-title-text: #222222;
   --info-detail-text: #222222;
-  --info-icon: url("../images/save.svg");
-  --info-icon-disabled: url("../images/save-disabled.svg");
+  --info-icon: url('../images/save.svg');
+  --info-icon-disabled: url('../images/save-disabled.svg');
   --time-signature-none: #bfbfbf;
   --loop-enabled: #c63800;
   --ding-enabled: #c63800;
@@ -82,8 +82,8 @@
   --button-background-translucent: #666666;
   --button-background-transparent: rgba(192, 192, 192, 0.1);
   --button-border: 1px solid #222222;
-  --checkbox-background-unchecked: url("/images/checkbox-unchecked.svg") no-repeat center / contain;
-  --checkbox-background-checked: url("/images/checkbox-checked.svg") no-repeat center / contain;
+  --checkbox-background-unchecked: url('/images/checkbox-unchecked.svg') no-repeat center / contain;
+  --checkbox-background-checked: url('/images/checkbox-checked.svg') no-repeat center / contain;
   --input-background: #ffffff;
   --select-background: #ffffff;
   --playlist-title-background: rgba(255, 128, 0, 0.2509803922);
@@ -96,7 +96,7 @@
   --editor-subsection-background: #fcfcfc;
   --editor-subsection-img-none: grayscale(100%) opacity(25%);
   --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
-  --sparklines-text: #222222;
+  --sparklines-text: #444444;
   --sparklines-lines: #44444480;
   --statistics-history-background: transparent;
   --role-count-in-colour: #d69574;
@@ -130,7 +130,7 @@
 }
 
 [data-theme=dark] {
-  --logo: url("/images/dark/logo.png");
+  --logo: url('/images/dark/logo.png');
   --background: #0f0f10 url("../images/textures/45degreee_fabric.webp");
   --panel-background: #0f0f10;
   --panel-border: 1px solid #7a7a7f;
@@ -149,8 +149,8 @@
   --beat-on: rgba(220, 50, 47, 0.9);
   --info-title-text: #d6d6d8;
   --info-detail-text: #d6d6d8;
-  --info-icon: url("../images/dark/save.svg");
-  --info-icon-disabled: url("../images/dark/save-disabled.svg");
+  --info-icon: url('../images/dark/save.svg');
+  --info-icon-disabled: url('../images/dark/save-disabled.svg');
   --knob-background-opacity: 0%;
   --knob-ticks: #b9b9bc;
   --knob-labels: rgba(185, 185, 188, 0.9);
@@ -174,8 +174,8 @@
   --button-background-translucent: #9a9a9e;
   --button-background-transparent: rgba(154, 154, 158, 0.1);
   --button-border: 1px solid #b9b9bc;
-  --checkbox-background-unchecked: url("/images/dark/checkbox-unchecked.svg") no-repeat center / contain;
-  --checkbox-background-checked: url("/images/dark/checkbox-checked.svg") no-repeat center / contain;
+  --checkbox-background-unchecked: url('/images/dark/checkbox-unchecked.svg') no-repeat center / contain;
+  --checkbox-background-checked: url('/images/dark/checkbox-checked.svg') no-repeat center / contain;
   --input-background: #b9b9bc;
   --select-background: #b9b9bc;
   --playlist-title-background: #343438;
@@ -188,7 +188,7 @@
   --editor-subsection-background: #b9b9bc;
   --editor-subsection-img-none: grayscale(100%) opacity(35%);
   --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
-  --sparklines-text: #b9b9bc;
+  --sparklines-text: #b9b9bcc0;
   --sparklines-lines: #b9b9bcc0;
   --statistics-history-background: #1f1f21;
 }
@@ -1604,19 +1604,19 @@ div.playlists yam-playlist-tracks {
   }
 }
 :root {
-  --weekdays-font: 20px sans-serif;
-  --weekdays-small-font: 16px sans-serif;
+  --weekdays-font: 20px "Lato", sans-serif;
+  --weekdays-small-font: 16px "Lato", sans-serif;
 }
 @media (max-width: 768px) and (orientation: portrait) {
   :root {
-    --weekdays-font: bold 20px sans-serif;
-    --weekdays-small-font: bold 16px sans-serif;
+    --weekdays-font: bold 20px "Lato", sans-serif;
+    --weekdays-small-font: bold 16px "Lato", sans-serif;
   }
 }
 @media (max-width: 1024px) and (orientation: landscape) {
   :root {
-    --weekdays-font: bold 20px sans-serif;
-    --weekdays-small-font: bold 16px sans-serif;
+    --weekdays-font: bold 20px "Lato", sans-serif;
+    --weekdays-small-font: bold "Lato", 16px sans-serif;
   }
 }
 

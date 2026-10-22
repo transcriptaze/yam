@@ -8,6 +8,10 @@
     - [x] dark mode text
     - [x] scale barlines geometrically
     - [x] horizontal gridlines
+    - [x] lighter text
+    - [x] text is weird on Android
+    - [ ] landscape
+
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet

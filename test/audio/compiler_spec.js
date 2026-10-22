@@ -1376,6 +1376,81 @@ describe('clicks', function () {
 
     expect(script).to.deep.equal(expected)
   })
+
+  it.only('section clicks with count-in + anacrusis', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          role: 'count-in',
+          subsections: [
+            {
+              measures: 2,
+            },
+          ],
+        },
+        {
+          role: 'anacrusis',
+          clicks: [4.5],
+        },
+        {
+          measures: 4,
+        },
+        {
+          measures: 2,
+          clicks: {
+            1: 'sticks',
+            4: 'tack',
+          },
+        },
+        {
+          measures: 4,
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      delay: 0,
+      loops: Number.POSITIVE_INFINITY,
+      script: [
+        // ... count-in
+        { at: { measure: 1, beat: '*' }, op: OPCODES.STICKS },
+        { at: { measure: 2, beat: '*' }, op: OPCODES.STICKS },
+
+        // ... pickup bar
+        { at: { measure: 3, beat: 4.5 }, op: OPCODES.TOCK },
+        { at: { measure: 3, beat: '*' }, op: OPCODES.STICKS },
+
+        // ... custom clicks
+        { at: { measure: 8, beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: 8, beat: 4   }, op: OPCODES.TACK },
+        { at: { measure: 8, beat: '*' }, op: OPCODES.SKIP },
+
+        { at: { measure: 9, beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: 9, beat: 4   }, op: OPCODES.TACK },
+        { at: { measure: 9, beat: '*' }, op: OPCODES.SKIP },
+
+        // ... stop
+        { at: { measure: 14,  beat: 1   }, op: OPCODES.STOP },
+
+        // ... default
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    linker.link(script)
+
+    expect(script).to.deep.equal(expected)
+  })
 })
 
 describe('subsections', function () {

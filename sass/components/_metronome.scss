@@ -171,7 +171,7 @@ div.metronome {
     grid-template-rows: auto auto auto 1fr;
     grid-template-areas: 
       "pads pads pads pads" 
-      "info info info info" 
+      "info info sparklines sparklines" 
       "metrics other other other" 
       "bpm metronome metronome metronome";
     justify-items: center;

@@ -15,7 +15,7 @@
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
-        - [ ] compiler_spec: unit test for clicks after count-in and pickup
+        - [x] compiler_spec: unit test for clicks after count-in and pickup
         - [ ] compiler_spec: unit test for subsection dings
         - [ ] linker_spec: unit test for operator precedence
         - [ ] linker_spec: unit test for e.g. time-signature and tick on the same measure+beat

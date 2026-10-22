@@ -460,7 +460,7 @@ function clicks(track) {
   let measure = 1
   for (const section of sections) {
     if (['count-in', 'anacrusis'].includes(section.role)) {
-      measure += section.measure ?? 1
+      measure += section.measures ?? 1
       continue
     }
 

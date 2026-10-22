@@ -1514,7 +1514,7 @@ div.metronome yam-sparklines {
     display: grid;
     grid-template-columns: 50% auto 1fr auto;
     grid-template-rows: auto auto auto 1fr;
-    grid-template-areas: "pads pads pads pads" "info info info info" "metrics other other other" "bpm metronome metronome metronome";
+    grid-template-areas: "pads pads pads pads" "info info sparklines sparklines" "metrics other other other" "bpm metronome metronome metronome";
     justify-items: center;
     align-items: start;
     column-gap: 2px;

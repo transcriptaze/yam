@@ -10,7 +10,7 @@
     - [x] horizontal gridlines
     - [x] lighter text
     - [x] text is weird on Android
-    - [ ] landscape
+    - [x] landscape
 
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)

@@ -9,8 +9,8 @@
     - [x] scale barlines geometrically
     - [x] horizontal gridlines
     - [x] lighter text
-    - [x] text is weird on Android
     - [x] landscape
+    - [ ] text is weird on Android
 
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)

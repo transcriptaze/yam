@@ -34,13 +34,13 @@
 
   @media (max-width: 768px) and (orientation:portrait) {
     canvas {
-      text-size-adjust: 100%;
+      text-size-adjust: none;
     }
   }
 
   @media (max-width: 1024px) and (orientation: landscape) {
     canvas {
-      text-size-adjust: 100%;
+      text-size-adjust: none;
     }
   }
 }

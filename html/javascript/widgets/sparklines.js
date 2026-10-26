@@ -23,10 +23,7 @@ export class Sparklines extends HTMLElement {
 
   #style = {
     labels: 'weekdays-small',
-    fonts: {
-      normal: '20px sans-serif',
-      small: '16px sans-serif',
-    },
+    font: '16px sans-serif',
   }
 
   constructor() {
@@ -50,8 +47,7 @@ export class Sparklines extends HTMLElement {
 
     const style = getComputedStyle(this)
 
-    this.#style.fonts.normal = style.getPropertyValue('--weekdays-font').trim() || '20px sans-serif'
-    this.#style.fonts.small = style.getPropertyValue('--weekdays-small-font').trim() || '16px sans-serif'
+    this.#style.font = style.getPropertyValue('--sparklines-font').trim() || '16px sans-serif'
 
     this.resizeObserver = new ResizeObserver(([_entry]) => {
       const div = this.shadowRoot.querySelector('div')
@@ -215,32 +211,16 @@ export class Sparklines extends HTMLElement {
         ctx.fillRect(x - cw / 2, height - h - 2, cw, h)
       })
 
-      // ... weekdays labels
-      if (this.#style.labels === 'weekdays') {
-        const days = this.#played.map((v) => WEEKDAYS[v.date.getDay()])
+      const days = this.#played.map((v) => WEEKDAYS[v.date.getDay()])
 
-        days.forEach((day, ix) => {
-          const x = bars[ix]
+      days.forEach((day, ix) => {
+        const x = bars[ix]
 
-          ctx.font = this.#style.fonts.normal
-          ctx.textAlign = 'center'
-          ctx.fillStyle = textColour
-          ctx.fillText(day, x, height - 4)
-        })
-      }
-
-      if (this.#style.labels === 'weekdays-small') {
-        const days = this.#played.map((v) => WEEKDAYS[v.date.getDay()])
-
-        days.forEach((day, ix) => {
-          const x = bars[ix]
-
-          ctx.font = this.#style.fonts.small
-          ctx.textAlign = 'center'
-          ctx.fillStyle = textColour
-          ctx.fillText(day, x, height - 6)
-        })
-      }
+        ctx.font = this.#style.font
+        ctx.textAlign = 'center'
+        ctx.fillStyle = textColour
+        ctx.fillText(day, x, height - 6)
+      })
     }
   }
 }

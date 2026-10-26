@@ -433,6 +433,85 @@ describe('dings', function () {
     expect(script).to.deep.equal(expected)
   })
 
+  it.only('subsection: inherited dings', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          name: 'verse',
+          dings: ['4:3.5'],
+          subsections: [
+            {
+              measures: 8,
+            },
+          ],
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      delay: 0,
+      loops: Number.POSITIVE_INFINITY,
+      script: [
+        { at: { measure: 9,   beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: 4,   beat: 3.5 }, op: OPCODES.DONG },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
+
+  it.only('subsection dings', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          name: 'verse',
+          subsections: [
+            {
+              measures: 4,
+            },
+            {
+              measures: 4,
+              dings: ['1:3.5'],
+            },
+          ],
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      delay: 0,
+      loops: Number.POSITIVE_INFINITY,
+      script: [
+        { at: { measure: 9,   beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: 5,   beat: 3.5 }, op: OPCODES.DONG },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
+
   it('multi-section dings', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',

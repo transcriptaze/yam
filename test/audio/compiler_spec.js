@@ -433,7 +433,7 @@ describe('dings', function () {
     expect(script).to.deep.equal(expected)
   })
 
-  it.only('subsection: inherited dings', function () {
+  it('subsection: inherited dings', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       tempo: 120,
@@ -471,7 +471,7 @@ describe('dings', function () {
     expect(script).to.deep.equal(expected)
   })
 
-  it.only('subsection dings', function () {
+  it('subsection dings', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       tempo: 120,
@@ -1456,7 +1456,7 @@ describe('clicks', function () {
     expect(script).to.deep.equal(expected)
   })
 
-  it.only('section clicks with count-in + anacrusis', function () {
+  it('section clicks with count-in + anacrusis', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       tempo: 120,

@@ -17,13 +17,15 @@
     - [ ] node/worklet
         - [x] compiler_spec: unit test for clicks after count-in and pickup
         - [x] compiler_spec: unit tests for subsection dings
-        - [ ] linker_spec: unit test for operator precedence
-        - [ ] linker_spec: unit test for e.g. time-signature and tick on the same measure+beat
+        - [x] linker_spec: unit test for operator precedence
+        - [x] linker_spec: unit test for e.g. time-signature and tick on the same measure+beat
+        - [ ] linker: ding + dong ????
+        - [ ] linker: remove NONE ????
 
+        - [ ] remove linker from compiler_spec
         - [ ] // FIXME this is really fragile - it depends on operator precendence to let skip, sticks, etc override e.g. tock. Compiler shouldn't really generate code 
               like that. (see it('track + section clicks', function ())
         - [ ] // FIXME redundant ops
-        - [ ] remove linker from compiler_spec
 
         - [ ] rework FSM
             - restart: STOPPING doesn't seem to ever transition to STOPPED

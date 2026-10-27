@@ -280,3 +280,171 @@ describe('linker: optimize', function () {
     expect(script).to.deep.equal(expected)
   })
 })
+
+describe('linker: precedence', function () {
+  it('sort metronome ops by precedence: skip', function () {
+    // prettier-ignore
+    const script = {
+      delay: 0,
+      script: [
+        { at: { measure: 5, beat: 1 }, op: OPCODES.TOCK },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.TICK },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.TACK },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.STICKS },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.SKIP },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: 5,   beat: 1 }, op: OPCODES.SKIP },
+      ],
+    }
+
+    linker.link(script)
+
+    expect(script).to.deep.equal(expected)
+  })
+
+  it('sort metronome ops by precedence: sticks', function () {
+    // prettier-ignore
+    const script = {
+      delay: 0,
+      script: [
+        { at: { measure: 5, beat: 1 }, op: OPCODES.TOCK },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.TICK },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.STICKS },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.TACK },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: 5,   beat: 1 }, op: OPCODES.STICKS },
+      ],
+    }
+
+    linker.link(script)
+
+    expect(script).to.deep.equal(expected)
+  })
+
+  it('sort metronome ops by precedence: tack', function () {
+    // prettier-ignore
+    const script = {
+      delay: 0,
+      script: [
+        { at: { measure: 5, beat: 1 }, op: OPCODES.TOCK },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.TICK },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.TACK },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: 5,   beat: 1 }, op: OPCODES.TACK },
+      ],
+    }
+
+    linker.link(script)
+
+    expect(script).to.deep.equal(expected)
+  })
+
+  it('sort metronome ops by precedence: tick', function () {
+    // prettier-ignore
+    const script = {
+      delay: 0,
+      script: [
+        { at: { measure: 5, beat: 1 }, op: OPCODES.TOCK },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.TICK },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: 5,   beat: 1 }, op: OPCODES.TICK },
+      ],
+    }
+
+    linker.link(script)
+
+    expect(script).to.deep.equal(expected)
+  })
+
+  it('sort metronome ops by precedence: tick', function () {
+    // prettier-ignore
+    const script = {
+      delay: 0,
+      script: [
+        { at: { measure: 5, beat: 1 }, op: OPCODES.TICK },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.TOCK },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: 5,   beat: 1 }, op: OPCODES.TICK },
+      ],
+    }
+
+    linker.link(script)
+
+    expect(script).to.deep.equal(expected)
+  })
+})
+
+describe.only('linker: combined ops', function () {
+  it('combined metronome and track ops', function () {
+    // prettier-ignore
+    const script = {
+      delay: 0,
+      script: [
+        { at: { measure: 5, beat: 1 }, op: OPCODES.TACK },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.DELAY },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.STOP },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.SKIP },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.TEMPO },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.TIME_SIGNATURE },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.SUBDIVISIONS },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.DONG },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.DING },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.PLAY },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.STICKS },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.TICK },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.TOCK },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.NONE },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      delay: 0,
+      script: [
+        { at: { measure: 5, beat: 1 }, op: OPCODES.TEMPO },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.TIME_SIGNATURE },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.SUBDIVISIONS },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.DELAY },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.STOP },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.SKIP },
+        { at: { measure: 5, beat: 1 }, op: OPCODES.DONG }, // ??? 
+        { at: { measure: 5, beat: 1 }, op: OPCODES.DING }, // ???
+        { at: { measure: 5, beat: 1 }, op: OPCODES.NONE },
+      ],
+    }
+
+    linker.link(script)
+
+    expect(script).to.deep.equal(expected)
+  })
+})

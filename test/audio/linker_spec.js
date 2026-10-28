@@ -422,7 +422,6 @@ describe('linker: combined ops', function () {
         { at: { measure: 5, beat: 1 }, op: OPCODES.STICKS },
         { at: { measure: 5, beat: 1 }, op: OPCODES.TICK },
         { at: { measure: 5, beat: 1 }, op: OPCODES.TOCK },
-        { at: { measure: 5, beat: 1 }, op: OPCODES.NONE },
       ],
     }
 
@@ -437,7 +436,6 @@ describe('linker: combined ops', function () {
         { at: { measure: 5, beat: 1 }, op: OPCODES.STOP },
         { at: { measure: 5, beat: 1 }, op: OPCODES.SKIP },
         { at: { measure: 5, beat: 1 }, op: OPCODES.DING },
-        { at: { measure: 5, beat: 1 }, op: OPCODES.NONE },
       ],
     }
 

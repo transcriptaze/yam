@@ -1,5 +1,4 @@
 export const OPCODES = {
-  NONE: 'none',
   STOP: 'stop',
   DELAY: 'delay',
   TICK: 'tick',

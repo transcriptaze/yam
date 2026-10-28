@@ -1612,14 +1612,14 @@ div.playlists yam-playlist-tracks {
   :root {
     --weekdays-font: bold 20px "Lato", sans-serif;
     --weekdays-small-font: bold 16px "Lato", sans-serif;
-    --sparklines-font: bold 22px "Lato", sans-serif;
+    --sparklines-font: bold 24px "Lato", sans-serif;
   }
 }
 @media (max-width: 1024px) and (orientation: landscape) {
   :root {
     --weekdays-font: bold 20px "Lato", sans-serif;
     --weekdays-small-font: bold 16px "Lato", sans-serif;
-    --sparklines-font: bold 22px "Lato", sans-serif;
+    --sparklines-font: bold 24px "Lato", sans-serif;
   }
 }
 

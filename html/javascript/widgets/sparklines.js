@@ -211,15 +211,18 @@ export class Sparklines extends HTMLElement {
         ctx.fillRect(x - cw / 2, height - h - 2, cw, h)
       })
 
+      // ... weekday labels
       const days = this.#played.map((v) => WEEKDAYS[v.date.getDay()])
+
+      ctx.font = this.#style.font
+      ctx.textAlign = 'center'
+      ctx.fillStyle = textColour
 
       days.forEach((day, ix) => {
         const x = bars[ix]
+        const tm = ctx.measureText(day)
 
-        ctx.font = this.#style.font
-        ctx.textAlign = 'center'
-        ctx.fillStyle = textColour
-        ctx.fillText(day, x, height - 6)
+        ctx.fillText(day, x, height - tm.fontBoundingBoxDescent - 2)
       })
     }
   }

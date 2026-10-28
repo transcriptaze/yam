@@ -388,7 +388,7 @@ describe('dings', function () {
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
-        { at: { measure: 2,   beat: 3.5 }, op: OPCODES.DONG },
+        { at: { measure: 2,   beat: 3.5 }, op: OPCODES.DING },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],
@@ -422,7 +422,7 @@ describe('dings', function () {
       loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 9,   beat: 1   }, op: OPCODES.STOP },
-        { at: { measure: 4,   beat: 3.5 }, op: OPCODES.DONG },
+        { at: { measure: 4,   beat: 3.5 }, op: OPCODES.DING },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],
@@ -460,7 +460,7 @@ describe('dings', function () {
       loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 9,   beat: 1   }, op: OPCODES.STOP },
-        { at: { measure: 4,   beat: 3.5 }, op: OPCODES.DONG },
+        { at: { measure: 4,   beat: 3.5 }, op: OPCODES.DING },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],
@@ -501,7 +501,7 @@ describe('dings', function () {
       loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 9,   beat: 1   }, op: OPCODES.STOP },
-        { at: { measure: 5,   beat: 3.5 }, op: OPCODES.DONG },
+        { at: { measure: 5,   beat: 3.5 }, op: OPCODES.DING },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],
@@ -539,7 +539,7 @@ describe('dings', function () {
       loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 17,  beat: 1   }, op: OPCODES.STOP },
-        { at: { measure: 13,  beat: 3.5 }, op: OPCODES.DONG },
+        { at: { measure: 13,  beat: 3.5 }, op: OPCODES.DING },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],
@@ -577,7 +577,7 @@ describe('dings', function () {
       loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 13,  beat: 1   }, op: OPCODES.STOP },
-        { at: { measure: 12,  beat: 4   }, op: OPCODES.DONG },
+        { at: { measure: 12,  beat: 4   }, op: OPCODES.DING },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],
@@ -612,7 +612,7 @@ describe('dings', function () {
       loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 9,   beat: 1   }, op: OPCODES.STOP },
-        { at: { measure: 4,   beat: 3.5 }, op: OPCODES.DONG },
+        { at: { measure: 4,   beat: 3.5 }, op: OPCODES.DING },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],
@@ -647,10 +647,10 @@ describe('dings', function () {
       loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 9,   beat: 1    }, op: OPCODES.STOP },
-        { at: { measure: 2,   beat: 3.25 }, op: OPCODES.DONG },
-        { at: { measure: 2,   beat: 3.75 }, op: OPCODES.DONG },
-        { at: { measure: 5,   beat: 4.5  }, op: OPCODES.DONG },
-        { at: { measure: 7,   beat: 1    }, op: OPCODES.DONG },
+        { at: { measure: 2,   beat: 3.25 }, op: OPCODES.DING },
+        { at: { measure: 2,   beat: 3.75 }, op: OPCODES.DING },
+        { at: { measure: 5,   beat: 4.5  }, op: OPCODES.DING },
+        { at: { measure: 7,   beat: 1    }, op: OPCODES.DING },
         { at: { measure: '*', beat: 1    }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*'  }, op: OPCODES.TOCK },
       ],

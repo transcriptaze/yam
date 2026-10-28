@@ -56,7 +56,6 @@ function sort(script) {
       OPCODES.DELAY,
       OPCODES.STOP,
       OPCODES.SKIP,
-      OPCODES.DONG,
       OPCODES.DING,
       OPCODES.STICKS,
       OPCODES.TACK,

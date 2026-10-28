@@ -19,7 +19,7 @@
         - [x] compiler_spec: unit tests for subsection dings
         - [x] linker_spec: unit test for operator precedence
         - [x] linker_spec: unit test for e.g. time-signature and tick on the same measure+beat
-        - [ ] linker: ding + dong ????
+        - [x] ding/dong
         - [ ] linker: remove NONE ????
 
         - [ ] remove linker from compiler_spec

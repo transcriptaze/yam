@@ -404,7 +404,7 @@ describe('linker: precedence', function () {
   })
 })
 
-describe.only('linker: combined ops', function () {
+describe('linker: combined ops', function () {
   it('combined metronome and track ops', function () {
     // prettier-ignore
     const script = {
@@ -417,7 +417,6 @@ describe.only('linker: combined ops', function () {
         { at: { measure: 5, beat: 1 }, op: OPCODES.TEMPO },
         { at: { measure: 5, beat: 1 }, op: OPCODES.TIME_SIGNATURE },
         { at: { measure: 5, beat: 1 }, op: OPCODES.SUBDIVISIONS },
-        { at: { measure: 5, beat: 1 }, op: OPCODES.DONG },
         { at: { measure: 5, beat: 1 }, op: OPCODES.DING },
         { at: { measure: 5, beat: 1 }, op: OPCODES.PLAY },
         { at: { measure: 5, beat: 1 }, op: OPCODES.STICKS },
@@ -437,8 +436,7 @@ describe.only('linker: combined ops', function () {
         { at: { measure: 5, beat: 1 }, op: OPCODES.DELAY },
         { at: { measure: 5, beat: 1 }, op: OPCODES.STOP },
         { at: { measure: 5, beat: 1 }, op: OPCODES.SKIP },
-        { at: { measure: 5, beat: 1 }, op: OPCODES.DONG }, // ??? 
-        { at: { measure: 5, beat: 1 }, op: OPCODES.DING }, // ???
+        { at: { measure: 5, beat: 1 }, op: OPCODES.DING },
         { at: { measure: 5, beat: 1 }, op: OPCODES.NONE },
       ],
     }

@@ -1,7 +1,6 @@
 import { describe, it } from 'mocha'
 import { expect } from 'chai'
 import * as compiler from '../../html/javascript/audio/vm/compiler.js'
-import * as linker from '../../html/javascript/audio/vm/linker.js'
 import { OPCODES } from '../../html/javascript/audio/vm/constants.js'
 
 describe('no track', function () {
@@ -388,7 +387,7 @@ describe('dings', function () {
       delay: 0,
       loops: Number.POSITIVE_INFINITY,
       script: [
-        { at: { measure: 2,   beat: 3.5 }, op: OPCODES.DONG },
+        { at: { measure: 2,   beat: 3.5 }, op: OPCODES.DING },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],
@@ -422,7 +421,86 @@ describe('dings', function () {
       loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 9,   beat: 1   }, op: OPCODES.STOP },
-        { at: { measure: 4,   beat: 3.5 }, op: OPCODES.DONG },
+        { at: { measure: 4,   beat: 3.5 }, op: OPCODES.DING },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
+
+  it('subsection: inherited dings', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          name: 'verse',
+          dings: ['4:3.5'],
+          subsections: [
+            {
+              measures: 8,
+            },
+          ],
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      delay: 0,
+      loops: Number.POSITIVE_INFINITY,
+      script: [
+        { at: { measure: 9,   beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: 4,   beat: 3.5 }, op: OPCODES.DING },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
+      ],
+    }
+
+    const script = compiler.compile(track)
+
+    expect(script).to.deep.equal(expected)
+  })
+
+  it('subsection dings', function () {
+    const track = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      timeSignature: '4:4',
+      pulse: 'quarter',
+      sections: [
+        {
+          name: 'verse',
+          subsections: [
+            {
+              measures: 4,
+            },
+            {
+              measures: 4,
+              dings: ['1:3.5'],
+            },
+          ],
+        },
+      ],
+    }
+
+    // prettier-ignore
+    const expected = {
+      UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
+      tempo: 120,
+      delay: 0,
+      loops: Number.POSITIVE_INFINITY,
+      script: [
+        { at: { measure: 9,   beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: 5,   beat: 3.5 }, op: OPCODES.DING },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],
@@ -460,7 +538,7 @@ describe('dings', function () {
       loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 17,  beat: 1   }, op: OPCODES.STOP },
-        { at: { measure: 13,  beat: 3.5 }, op: OPCODES.DONG },
+        { at: { measure: 13,  beat: 3.5 }, op: OPCODES.DING },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],
@@ -498,7 +576,7 @@ describe('dings', function () {
       loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 13,  beat: 1   }, op: OPCODES.STOP },
-        { at: { measure: 12,  beat: 4   }, op: OPCODES.DONG },
+        { at: { measure: 12,  beat: 4   }, op: OPCODES.DING },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],
@@ -533,7 +611,7 @@ describe('dings', function () {
       loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 9,   beat: 1   }, op: OPCODES.STOP },
-        { at: { measure: 4,   beat: 3.5 }, op: OPCODES.DONG },
+        { at: { measure: 4,   beat: 3.5 }, op: OPCODES.DING },
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK },
       ],
@@ -568,10 +646,10 @@ describe('dings', function () {
       loops: Number.POSITIVE_INFINITY,
       script: [
         { at: { measure: 9,   beat: 1    }, op: OPCODES.STOP },
-        { at: { measure: 2,   beat: 3.25 }, op: OPCODES.DONG },
-        { at: { measure: 2,   beat: 3.75 }, op: OPCODES.DONG },
-        { at: { measure: 5,   beat: 4.5  }, op: OPCODES.DONG },
-        { at: { measure: 7,   beat: 1    }, op: OPCODES.DONG },
+        { at: { measure: 2,   beat: 3.25 }, op: OPCODES.DING },
+        { at: { measure: 2,   beat: 3.75 }, op: OPCODES.DING },
+        { at: { measure: 5,   beat: 4.5  }, op: OPCODES.DING },
+        { at: { measure: 7,   beat: 1    }, op: OPCODES.DING },
         { at: { measure: '*', beat: 1    }, op: OPCODES.TICK },
         { at: { measure: '*', beat: '*'  }, op: OPCODES.TOCK },
       ],
@@ -702,9 +780,7 @@ describe('count-in', function () {
       ],
     }
 
-    const script = compiler.compile(track)
-
-    linker.link(script)
+    const script = sort(compiler.compile(track))
 
     expect(script).to.deep.equal(expected)
   })
@@ -1365,19 +1441,19 @@ describe('clicks', function () {
         { at: { measure: 13,  beat: 1   }, op: OPCODES.STOP },
 
         { at: { measure: '*', beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK }, // pruned by linker
         { at: { measure: '*', beat: 4   }, op: OPCODES.TACK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.SKIP },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK }, // pruned by linker
       ],
     }
 
-    const script = compiler.compile(track)
-
-    linker.link(script)
+    const script = sort(compiler.compile(track))
 
     expect(script).to.deep.equal(expected)
   })
 
-  it.only('section clicks with count-in + anacrusis', function () {
+  it('section clicks with count-in + anacrusis', function () {
     const track = {
       UUID: 'ad60619f-a1dc-4df9-85d8-c6750fdc32b7',
       tempo: 120,
@@ -1437,7 +1513,7 @@ describe('clicks', function () {
         { at: { measure: 9, beat: '*' }, op: OPCODES.SKIP },
 
         // ... stop
-        { at: { measure: 14,  beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: 14, beat: 1   }, op: OPCODES.STOP },
 
         // ... default
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
@@ -1445,9 +1521,7 @@ describe('clicks', function () {
       ],
     }
 
-    const script = compiler.compile(track)
-
-    linker.link(script)
+    const script = sort(compiler.compile(track))
 
     expect(script).to.deep.equal(expected)
   })
@@ -1622,3 +1696,72 @@ describe('loops', function () {
     expect(script).to.deep.equal(expected)
   })
 })
+
+// sort ops into measure + beat order
+function sort(script) {
+  const compare = (p, q) => {
+    if (Number.isNaN(p) && Number.isNaN(q)) {
+      return 0
+    }
+
+    if (Number.isNaN(p) && !Number.isNaN(q)) {
+      return 1
+    }
+
+    if (!Number.isNaN(p) && Number.isNaN(q)) {
+      return -1
+    }
+
+    return p - q
+  }
+
+  script.script.sort((p, q) => {
+    const measure = {
+      p: parseInt(`${p.at.measure}`),
+      q: parseInt(`${q.at.measure}`),
+    }
+
+    const beat = {
+      p: parseFloat(`${p.at.beat}`),
+      q: parseFloat(`${q.at.beat}`),
+    }
+
+    const u = compare(measure.p, measure.q)
+
+    if (u !== 0) {
+      return u
+    }
+
+    const v = compare(beat.p, beat.q)
+
+    if (v !== 0) {
+      return v
+    }
+
+    // // ... operator precedence
+    // // FIXME this is really fragile - it depends on operator precendence to let skip, sticks, etc override e.g. tock
+    // const precedence = [
+    //   OPCODES.TEMPO,
+    //   OPCODES.TIME_SIGNATURE,
+    //   OPCODES.SUBDIVISIONS,
+    //   OPCODES.DELAY,
+    //   OPCODES.STOP,
+    //   OPCODES.SKIP,
+    //   OPCODES.DING,
+    //   OPCODES.STICKS,
+    //   OPCODES.TACK,
+    //   OPCODES.TICK,
+    //   OPCODES.TOCK,
+    //   OPCODES.PLAY,
+    // ]
+    //
+    // const ix = precedence.indexOf(p.op)
+    // const jx = precedence.indexOf(q.op)
+    //
+    // return ix - jx
+
+    return 0
+  })
+
+  return script
+}

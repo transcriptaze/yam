@@ -9,21 +9,16 @@
     - [x] scale barlines geometrically
     - [x] horizontal gridlines
     - [x] lighter text
-    - [x] text is weird on Android
     - [x] landscape
+    - [ ] text is weird on Android
 
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
-        - [x] compiler_spec: unit test for clicks after count-in and pickup
-        - [ ] compiler_spec: unit test for subsection dings
-        - [ ] linker_spec: unit test for operator precedence
-        - [ ] linker_spec: unit test for e.g. time-signature and tick on the same measure+beat
-
+        - [x] remove linker from compiler_spec
         - [ ] // FIXME this is really fragile - it depends on operator precendence to let skip, sticks, etc override e.g. tock. Compiler shouldn't really generate code 
               like that. (see it('track + section clicks', function ())
         - [ ] // FIXME redundant ops
-        - [ ] remove linker from compiler_spec
 
         - [ ] rework FSM
             - restart: STOPPING doesn't seem to ever transition to STOPPED
@@ -78,7 +73,6 @@
             - f64: 0.3330000000000000182076576083554901182651519775390625
             - f32: 1/3 = 0.3333333432674407958984375
             - f64: 1/3 = 0.333333333333333314829616256247386932373046875
-
 
 
 ## To Be Done

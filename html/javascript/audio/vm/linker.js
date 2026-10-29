@@ -56,14 +56,12 @@ function sort(script) {
       OPCODES.DELAY,
       OPCODES.STOP,
       OPCODES.SKIP,
-      OPCODES.DONG,
       OPCODES.DING,
       OPCODES.STICKS,
       OPCODES.TACK,
       OPCODES.TICK,
       OPCODES.TOCK,
       OPCODES.PLAY,
-      OPCODES.NONE,
     ]
 
     const ix = precedence.indexOf(p.op)

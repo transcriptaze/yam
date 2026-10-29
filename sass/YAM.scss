@@ -14,15 +14,18 @@
 :root {
   --weekdays-font: 20px "Lato", sans-serif;
   --weekdays-small-font: 16px "Lato", sans-serif;
+  --sparklines-font: 16px "Lato", sans-serif;
 
   @media (max-width: 768px) and (orientation:portrait) {
     --weekdays-font: bold 20px "Lato", sans-serif;
     --weekdays-small-font: bold 16px "Lato", sans-serif;
+    --sparklines-font: bold 28px "Lato", sans-serif;
   }
 
   @media (max-width: 1024px) and (orientation: landscape) {
     --weekdays-font: bold 20px "Lato", sans-serif;
-    --weekdays-small-font: bold "Lato", 16px sans-serif;
+    --weekdays-small-font: bold 16px "Lato", sans-serif;
+    --sparklines-font: bold 28px "Lato", sans-serif;
   }
 }
 

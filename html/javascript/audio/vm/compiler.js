@@ -47,7 +47,7 @@ export function compile(v) {
 
   // ... dings
   dings(track).forEach((v) => {
-    script.script.push({ at: { measure: v.measure, beat: v.beat }, op: OPCODES.DONG })
+    script.script.push({ at: { measure: v.measure, beat: v.beat }, op: OPCODES.DING })
   })
 
   // ... count-in

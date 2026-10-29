@@ -1,7 +1,6 @@
 import { describe, it } from 'mocha'
 import { expect } from 'chai'
 import * as compiler from '../../html/javascript/audio/vm/compiler.js'
-import * as linker from '../../html/javascript/audio/vm/linker.js'
 import { OPCODES } from '../../html/javascript/audio/vm/constants.js'
 
 describe('no track', function () {
@@ -781,9 +780,7 @@ describe('count-in', function () {
       ],
     }
 
-    const script = compiler.compile(track)
-
-    linker.link(script)
+    const script = sort(compiler.compile(track))
 
     expect(script).to.deep.equal(expected)
   })
@@ -1444,14 +1441,14 @@ describe('clicks', function () {
         { at: { measure: 13,  beat: 1   }, op: OPCODES.STOP },
 
         { at: { measure: '*', beat: 1   }, op: OPCODES.STICKS },
+        { at: { measure: '*', beat: 1   }, op: OPCODES.TICK }, // pruned by linker
         { at: { measure: '*', beat: 4   }, op: OPCODES.TACK },
         { at: { measure: '*', beat: '*' }, op: OPCODES.SKIP },
+        { at: { measure: '*', beat: '*' }, op: OPCODES.TOCK }, // pruned by linker
       ],
     }
 
-    const script = compiler.compile(track)
-
-    linker.link(script)
+    const script = sort(compiler.compile(track))
 
     expect(script).to.deep.equal(expected)
   })
@@ -1516,7 +1513,7 @@ describe('clicks', function () {
         { at: { measure: 9, beat: '*' }, op: OPCODES.SKIP },
 
         // ... stop
-        { at: { measure: 14,  beat: 1   }, op: OPCODES.STOP },
+        { at: { measure: 14, beat: 1   }, op: OPCODES.STOP },
 
         // ... default
         { at: { measure: '*', beat: 1   }, op: OPCODES.TICK },
@@ -1524,9 +1521,7 @@ describe('clicks', function () {
       ],
     }
 
-    const script = compiler.compile(track)
-
-    linker.link(script)
+    const script = sort(compiler.compile(track))
 
     expect(script).to.deep.equal(expected)
   })
@@ -1701,3 +1696,72 @@ describe('loops', function () {
     expect(script).to.deep.equal(expected)
   })
 })
+
+// sort ops into measure + beat order
+function sort(script) {
+  const compare = (p, q) => {
+    if (Number.isNaN(p) && Number.isNaN(q)) {
+      return 0
+    }
+
+    if (Number.isNaN(p) && !Number.isNaN(q)) {
+      return 1
+    }
+
+    if (!Number.isNaN(p) && Number.isNaN(q)) {
+      return -1
+    }
+
+    return p - q
+  }
+
+  script.script.sort((p, q) => {
+    const measure = {
+      p: parseInt(`${p.at.measure}`),
+      q: parseInt(`${q.at.measure}`),
+    }
+
+    const beat = {
+      p: parseFloat(`${p.at.beat}`),
+      q: parseFloat(`${q.at.beat}`),
+    }
+
+    const u = compare(measure.p, measure.q)
+
+    if (u !== 0) {
+      return u
+    }
+
+    const v = compare(beat.p, beat.q)
+
+    if (v !== 0) {
+      return v
+    }
+
+    // // ... operator precedence
+    // // FIXME this is really fragile - it depends on operator precendence to let skip, sticks, etc override e.g. tock
+    // const precedence = [
+    //   OPCODES.TEMPO,
+    //   OPCODES.TIME_SIGNATURE,
+    //   OPCODES.SUBDIVISIONS,
+    //   OPCODES.DELAY,
+    //   OPCODES.STOP,
+    //   OPCODES.SKIP,
+    //   OPCODES.DING,
+    //   OPCODES.STICKS,
+    //   OPCODES.TACK,
+    //   OPCODES.TICK,
+    //   OPCODES.TOCK,
+    //   OPCODES.PLAY,
+    // ]
+    //
+    // const ix = precedence.indexOf(p.op)
+    // const jx = precedence.indexOf(q.op)
+    //
+    // return ix - jx
+
+    return 0
+  })
+
+  return script
+}

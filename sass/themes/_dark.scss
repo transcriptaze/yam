@@ -78,7 +78,7 @@ $border: #58585f;
   --editor-subsection-img-none: grayscale(100%) opacity(35%);
   --editor-subsection-img-disabled: grayscale(100%) opacity(50%);
 
-  --sparklines-text: #{charcoal.$fg-2};
+  --sparklines-text: blue; // #{charcoal.$fg-2};
   --sparklines-lines: #b9b9bcc0;
 
   --statistics-history-background: #{charcoal.$bg-2};

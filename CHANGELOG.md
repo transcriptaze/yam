@@ -2,8 +2,19 @@
 
 ## Unreleased
 
+### Added
+1. Add sparklines to metronome UI.
+
 ### Updated
 1. Added explicit position-anchors for popovers (browser behaviour change).
+2. Fixed NaN bug in audio fadeIn/fadeOut on start/stop.
+3. Optimised audio render.
+
+
+## [0.3.3](https://github.com/transcriptaze/yam/releases/tag/v0.3.3) - 2026-09-14
+
+### Added
+1. Replaced worklet inline logic with compiled VM.
 
 
 ## [0.3.2](https://github.com/transcriptaze/yam/releases/tag/v0.3.2) - 2026-07-23

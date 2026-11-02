@@ -25,11 +25,14 @@ export class Metronome extends AudioWorkletProcessor {
   #delay = 0
   #samples = 0
 
+  #level = new level.Level(sampleRate)
+
   constructor() {
     super()
 
+    this.#fs = sampleRate
+
     this.FSM = new FSM.FSM()
-    this.level = new level.Level()
     this.clicks = new Map()
     this.clock = new Clock()
 
@@ -138,9 +141,7 @@ export class Metronome extends AudioWorkletProcessor {
     const sticks = event.data.stick
     const ding = event.data.ding
 
-    this.#fs = event.data.fs
     this.clock.fs = event.data.fs
-    this.level.sampleRate = event.data.fs
     this.clicks = new Map([
       ['default', tock],
       ['count-in', sticks],
@@ -251,7 +252,7 @@ export class Metronome extends AudioWorkletProcessor {
     const pulse = this.section?.pulse ?? parameters.pulse[0]
     const loop = parameters.loop[0] === 1.0
     const ding = parameters.ding[0] === 1.0
-    const gain = this.playing ? this.level.fadeIn() : this.level.fadeOut()
+    const gain = this.playing ? this.#level.fadeIn() : this.#level.fadeOut()
     let clock = this.clock
 
     this.#samples += N > 0 ? N : 0

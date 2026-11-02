@@ -2,7 +2,7 @@
 
 ## In Progress
 
-- [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
+- [x] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
     - [x] widget
     - [x] update on played
     - [x] dark mode text
@@ -10,16 +10,12 @@
     - [x] horizontal gridlines
     - [x] lighter text
     - [x] landscape
-    - [ ] text is weird on Android
+    - [x] text is weird on Android
 
 
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
-        - [x] remove linker from compiler_spec
-        - [ ] // FIXME this is really fragile - it depends on operator precendence to let skip, sticks, etc override e.g. tock. Compiler shouldn't really generate code 
-              like that. (see it('track + section clicks', function ())
-        - [ ] // FIXME redundant ops
-
+        - [x] use subarray copy for sample
         - [ ] rework FSM
             - restart: STOPPING doesn't seem to ever transition to STOPPED
         - [ ] remove old worklet
@@ -32,6 +28,7 @@
             - [ ] dotted quarters
             - [ ] half notes
             - [ ] dotted half notes
+            - [ ] swung triplets
 
         - [ ] 2:2
             - [ ] eighths
@@ -62,10 +59,10 @@
         - [ ] optimise VM::exec
 
         - (?) exec: inject actions
+        - [ ] rethink precedence
         - [ ] linker: combine multiple actions into one
         - [ ] node+worklet per run a la YAD
         - [ ] replace flip with ring buffer + animation timer
-        - (?) bake gain into node::sample 
 
         - [ ] figure out the floating point equality thing for 1.333, etc
             - 1/3 = 85/256 (ref. https://www.youtube.com/watch?v=xs5iOwkX9fU)
@@ -79,6 +76,7 @@
 
 - https://evergarden.moe/
 - https://www.youtube.com/watch?v=6BcpkEL--fU&list=WL&index=13
+- https://alfy.blog/2026/10/27/a-select-should-tell-you-something.html
 
 - [ ] sixteenths
 - [ ] triplets

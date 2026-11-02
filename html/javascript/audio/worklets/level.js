@@ -6,9 +6,7 @@ export class Level {
   #𝛵 = 0.6321205588 / this.#𝛅g
   #gain = 0
 
-  constructor() {}
-
-  set sampleRate(fs) {
+  constructor(fs) {
     this.#fs = fs
     this.#𝛅g = (𝜏 * fs) / 10000
     this.#𝛵 = 0.6321205588 / this.#𝛅g
@@ -20,7 +18,7 @@ export class Level {
 
   fadeIn() {
     if (this.#gain < 0.999) {
-      this.#gain += this.#𝛵 * (1 - this.gain)
+      this.#gain += this.#𝛵 * (1 - this.#gain)
     } else {
       this.#gain = 1
     }

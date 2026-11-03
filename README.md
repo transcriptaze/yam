@@ -64,12 +64,12 @@ It's also in _alpha_ i.e. expect the code, design, architecture, everything to c
 
 ### Current Release
 
-## [0.3.3](https://github.com/transcriptaze/yam/releases/tag/v0.3.3) - 2026-10-16
+## [0.3.4](https://github.com/transcriptaze/yam/releases/tag/v0.3.4) - 2026-11-03
 
-### Updated
-1. Added explicit position-anchors for popovers (browser behaviour change).
-2. Reworked WebAudio node/worklet so to compile tracks outside of the worklet to an executable
-   script that is executed by a VM in the worklet in real-time.
+1. Added sparklines to metronome UI.
+2. Added explicit position-anchors for popovers (browser behaviour change).
+3. Fixed NaN bug in audio fadeIn/fadeOut on start/stop.
+4. Optimised audio render.
 
 
 ## Installation

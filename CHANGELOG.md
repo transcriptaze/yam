@@ -1,6 +1,6 @@
 # CHANGELOG
 
-## Unreleased
+## [0.3.4](https://github.com/transcriptaze/yam/releases/tag/v0.3.4) - 2026-11-03
 
 ### Added
 1. Add sparklines to metronome UI.

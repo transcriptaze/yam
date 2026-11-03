@@ -1,4 +1,4 @@
-![build](https://github.com/twystd/yam/workflows/build/badge.svg)
+![build](https://github.com/transcriptaze/yam/workflows/build/badge.svg)
 
 # Yet Another Metronome
 

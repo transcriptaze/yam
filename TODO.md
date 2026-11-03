@@ -2,18 +2,20 @@
 
 ## In Progress
 
+- [x] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
+    - [x] widget
+    - [x] update on played
+    - [x] dark mode text
+    - [x] scale barlines geometrically
+    - [x] horizontal gridlines
+    - [x] lighter text
+    - [x] landscape
+    - [x] text is weird on Android
+
+
 - [ ] Rework clock as VM (cf. https://github.com/transcriptaze/yam/issues/46)
     - [ ] node/worklet
-        - [ ] compiler_spec: unit test for clicks after count-in and pickup
-        - [ ] compiler_spec: unit test for subsection dings
-        - [ ] linker_spec: unit test for operator precedence
-        - [ ] linker_spec: unit test for e.g. time-signature and tick on the same measure+beat
-
-        - [ ] // FIXME this is really fragile - it depends on operator precendence to let skip, sticks, etc override e.g. tock. Compiler shouldn't really generate code 
-              like that. (see it('track + section clicks', function ())
-        - [ ] // FIXME redundant ops
-        - [ ] remove linker from compiler_spec
-
+        - [x] use subarray copy for sample
         - [ ] rework FSM
             - restart: STOPPING doesn't seem to ever transition to STOPPED
         - [ ] remove old worklet
@@ -26,6 +28,7 @@
             - [ ] dotted quarters
             - [ ] half notes
             - [ ] dotted half notes
+            - [ ] swung triplets
 
         - [ ] 2:2
             - [ ] eighths
@@ -54,13 +57,12 @@
         - [ ] optimise VM::tick
         - [ ] optimise VM::click
         - [ ] optimise VM::exec
-        - [ ] let script drive pads/info/etc
 
         - (?) exec: inject actions
+        - [ ] rethink precedence
         - [ ] linker: combine multiple actions into one
         - [ ] node+worklet per run a la YAD
         - [ ] replace flip with ring buffer + animation timer
-        - (?) bake gain into node::sample 
 
         - [ ] figure out the floating point equality thing for 1.333, etc
             - 1/3 = 85/256 (ref. https://www.youtube.com/watch?v=xs5iOwkX9fU)
@@ -69,16 +71,18 @@
             - f32: 1/3 = 0.3333333432674407958984375
             - f64: 1/3 = 0.333333333333333314829616256247386932373046875
 
-    - [ ] sixteenths
-    - [ ] triplets
-    - https://www.youtube.com/watch?v=6BcpkEL--fU&list=WL&index=13
-
 
 ## To Be Done
 
-https://evergarden.moe/
+- https://evergarden.moe/
+- https://www.youtube.com/watch?v=6BcpkEL--fU&list=WL&index=13
+- https://alfy.blog/2026/10/27/a-select-should-tell-you-something.html
 
-- [ ] sparklines (cf. https://github.com/transcriptaze/yam/issues/57)
+- [ ] sixteenths
+- [ ] triplets
+- [ ] swung triplets
+- [ ] let script drive pads/info/etc
+
 - [ ] passive:true (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 - [ ] capture:down (cf. https://www.youtube.com/watch?v=ILK5KNtJwlA)
 

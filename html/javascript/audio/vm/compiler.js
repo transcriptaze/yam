@@ -47,7 +47,7 @@ export function compile(v) {
 
   // ... dings
   dings(track).forEach((v) => {
-    script.script.push({ at: { measure: v.measure, beat: v.beat }, op: OPCODES.DONG })
+    script.script.push({ at: { measure: v.measure, beat: v.beat }, op: OPCODES.DING })
   })
 
   // ... count-in
@@ -460,7 +460,7 @@ function clicks(track) {
   let measure = 1
   for (const section of sections) {
     if (['count-in', 'anacrusis'].includes(section.role)) {
-      measure += section.measure ?? 1
+      measure += section.measures ?? 1
       continue
     }
 

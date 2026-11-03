@@ -1,6 +1,14 @@
 # CHANGELOG
 
-## Unreleased
+## [0.3.4](https://github.com/transcriptaze/yam/releases/tag/v0.3.4) - 2026-11-03
+
+### Added
+1. Add sparklines to metronome UI.
+
+### Updated
+1. Added explicit position-anchors for popovers (browser behaviour change).
+2. Fixed NaN bug in audio fadeIn/fadeOut on start/stop.
+3. Optimised audio render.
 
 
 ## [0.3.3](https://github.com/transcriptaze/yam/releases/tag/v0.3.3) - 2026-10-16

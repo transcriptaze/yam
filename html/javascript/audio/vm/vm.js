@@ -322,12 +322,6 @@ export class VM {
 
       case OPCODES.DING:
         if (!this.#state.stopped) {
-          this.#push(ops, { opcode: OPCODES.PLAY, sample: 'ding' })
-        }
-        break
-
-      case OPCODES.DONG:
-        if (!this.#state.stopped) {
           if (ding) {
             this.#push(ops, { opcode: OPCODES.PLAY, sample: 'ding' })
           }

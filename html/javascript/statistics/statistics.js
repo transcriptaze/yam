@@ -16,13 +16,17 @@ class Statistics {
   }
 
   #rs = []
+  #subscribers = new EventTarget()
 
   load(list) {
     this.#rs = list
   }
 
+  addEventListener(event, f, options) {
+    this.#subscribers.addEventListener(event, f, options)
+  }
+
   summarize(track) {
-    console.log({ track })
     const stats = {
       track: track,
       played: 0,
@@ -65,6 +69,7 @@ class Statistics {
     const end = new Date(to.getFullYear(), to.getMonth(), to.getDate() + 1)
 
     const records = this.#rs.filter((v) => v.track === track && v.start >= start && v.start < end)
+
     const played = [...query(start, end, records)]
     const total = played.reduce((N, v) => N + v.played, 0)
 
@@ -94,7 +99,19 @@ class Statistics {
 
     save({ ...this.#record })
 
+    const track = datastore.tracks.get(e.detail.track)
+
+    this.#rs.push({
+      ...this.#record,
+      title: track?.title ?? '',
+      countIn: track?.countIn ?? 0,
+      pickup: track?.pickup ?? 0,
+      measures: track?.bars ?? INF,
+      tempo: track?.tempo ?? 120,
+    })
+
     this.#clear()
+    this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.STATISTICS_UPDATED, { detail: { track: e.detail.track } }))
   }
 
   onClick(e) {
@@ -116,7 +133,19 @@ class Statistics {
 
     save({ ...this.#record })
 
+    const track = datastore.tracks.get(e.detail.track)
+
+    this.#rs.push({
+      ...this.#record,
+      title: track?.title ?? '',
+      countIn: track?.countIn ?? 0,
+      pickup: track?.pickup ?? 0,
+      measures: track?.bars ?? INF,
+      tempo: track?.tempo ?? 120,
+    })
+
     this.#clear()
+    this.#subscribers.dispatchEvent(new CustomEvent(EVENTS.STATISTICS_UPDATED, { detail: { track: e.detail.track } }))
   }
 
   #clear() {

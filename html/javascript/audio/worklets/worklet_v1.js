@@ -1,6 +1,5 @@
 import * as FSM from './FSM.js'
 import * as level from './level.js'
-import { Clock } from './clock.js'
 
 import { VM } from '../vm/vm.js'
 import { OPCODES, SUBDIVISIONS } from '../vm/constants.js'
@@ -37,16 +36,15 @@ export class Metronome2 extends AudioWorkletProcessor {
     ding: false,
   }
 
+  #level = new level.Level(sampleRate)
+  #clicks = new Map()
+
   constructor(options) {
     super()
 
     if (options.numberOfOutputs > 0) {
       this.#cued = Array.from({ length: options.numberOfOutputs }, () => [])
     }
-
-    this.level = new level.Level()
-    this.clicks = new Map()
-    this.clock = new Clock()
 
     this.port.onmessage = (event) => this.#onMessage(event)
   }
@@ -109,7 +107,6 @@ export class Metronome2 extends AudioWorkletProcessor {
 
       case 'debug':
         DEBUG = event.data.debug === true
-        this.clock.debug = event.data.debug === true
         break
     }
   }
@@ -122,9 +119,7 @@ export class Metronome2 extends AudioWorkletProcessor {
     const ding = event.data.ding
     const skip = event.data.skip
 
-    this.clock.fs = event.data.fs
-    this.level.sampleRate = event.data.fs
-    this.clicks = new Map([
+    this.#clicks = new Map([
       ['default', tock],
       ['tick', tick],
       ['tock', tock],
@@ -144,9 +139,6 @@ export class Metronome2 extends AudioWorkletProcessor {
   play() {
     if (this.#FSM.state === STATE.PAUSED || this.#FSM.state === STATE.STOPPED || this.#FSM.state === STATE.STOPPING) {
       this.#FSM.state = STATE.STARTING
-
-      this.samples = 0
-      this.clock.reset()
 
       this.#time = 0
       this.#tempo = null
@@ -208,8 +200,6 @@ export class Metronome2 extends AudioWorkletProcessor {
       if (this.#FSM.state === STATE.STOPPED || this.#FSM.state === STATE.STOPPING) {
         this.#FSM.state = STATE.STARTING
 
-        this.clock.reset()
-
         this.#tempo = null
         this.#timeSignature = null
         this.#subdivisions = null
@@ -237,7 +227,7 @@ export class Metronome2 extends AudioWorkletProcessor {
 
   process(_inputs, outputs, parameters) {
     const N = outputs?.[0]?.[0]?.length ?? 0
-    const gain = this.playing ? this.level.fadeIn() : this.level.fadeOut()
+    const gain = this.playing ? this.#level.fadeIn() : this.#level.fadeOut()
 
     // ... internal clock
     const dt = (N * 1000) / sampleRate
@@ -293,7 +283,7 @@ export class Metronome2 extends AudioWorkletProcessor {
   }
 
   #process(t, outputs, parameters) {
-    const N = outputs?.[0]?.[0]?.length ?? -3 // FIXME should be 0 probably
+    const N = outputs?.[0]?.[0]?.length ?? 128
     const BPM = this.#bpm(clamp(parameters.BPM[0], 40, 200))
     const beats = this.#timeSignature?.beats ?? this.#parameters.beats ?? 4
     const divisions = this.#timeSignature?.divisions ?? this.#parameters.divisions ?? 4
@@ -362,29 +352,38 @@ export class Metronome2 extends AudioWorkletProcessor {
 
       this.#loops++
 
-      this.port.postMessage({
-        message: 'stopped',
-        track: this.#script?.UUID ?? '',
-        loops: this.#loops,
-        samples: this.#samples,
-        duration: this.#samples / sampleRate,
-      })
-
+      // NTS: update statistics
       this.port.postMessage({
         message: 'done',
         track: this.#script?.UUID ?? '',
       })
 
-      // NTS minor hack to reset displayed loop count when all looped out
+      // NTS: reset displayed loop count when all looped out
       if (this.#loops < this.#script.loops) {
         this.flip({ state: STATE.STOPPED, bar: 0, beat: 0, loops: this.#loops })
+
+        this.port.postMessage({
+          message: 'stopped',
+          track: this.#script?.UUID ?? '',
+          loops: this.#loops,
+          samples: this.#samples,
+          duration: this.#samples / sampleRate,
+        })
       } else {
         this.flip({ state: STATE.STOPPED, bar: 0, beat: 0, loops: 0 })
+
+        this.port.postMessage({
+          message: 'stopped',
+          track: this.#script?.UUID ?? '',
+          loops: this.#loops,
+          samples: this.#samples,
+          duration: this.#samples / sampleRate,
+        })
       }
     }
 
     const cue = () => {
-      const click = this.clicks.get(opcode.sample) ?? this.clicks.get('default')
+      const click = this.#clicks.get(opcode.sample) ?? this.#clicks.get('default')
       if (click != null) {
         for (const cued of this.#cued) {
           cued.push(sample(click))
@@ -445,9 +444,21 @@ function render(out, click, gain) {
   const remaining = click.buffer.length - click.index
   const N = out.length < remaining ? out.length : remaining
 
-  for (let ix = 0; ix < N; ix++) {
-    out[ix] += gain * click.buffer[click.index++]
+  switch (true) {
+    case gain === 0:
+      break
+
+    case gain === 1:
+      out.set(click.buffer.subarray(click.index, click.index + N), 0)
+      break
+
+    default:
+      for (let ix = 0; ix < N; ix++) {
+        out[ix] += gain * click.buffer[click.index + ix]
+      }
   }
+
+  click.index += N
 }
 
 function sample(object) {

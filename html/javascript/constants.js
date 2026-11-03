@@ -96,4 +96,6 @@ export const EVENTS = {
   SECTION_MEASURES_CHANGE: 'section-measures-change',
   SECTION_EXPAND: 'section-expand',
   SECTION_CHANGED: 'section-changed',
+
+  STATISTICS_UPDATED: 'statistics-updated',
 }
